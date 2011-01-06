@@ -3,4 +3,4 @@
     .icon= image_tag(event.icon_url)
     %time{:datetime => event.event_date.strftime("%Y-%m-%dT%H:%M:%S%z")}= event.event_date.strftime("%d %b")
     %h4= event.title
-    .body= raw event.body
+  .body= raw event.body
