@@ -1,5 +1,5 @@
 %header
-  - form_tag events_url, :method => :get, :remote => true, :id => "event_filter_form" do
+  = form_tag events_url, :method => :get, :remote => true, :id => "event_filter_form" do
     .filter 
       Filter by event type buttons will go here...
       = submit_tag
