@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
 
   def index
-    @events = Event.all(:include => :eventable).map{|event| event.eventable}
+    @events = Event.includes(:eventable).order("event_date DESC").map{|event| event.eventable}
   end
 
 end
