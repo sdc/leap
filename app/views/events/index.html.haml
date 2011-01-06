@@ -1,4 +1,8 @@
 %header
-  .filter Filter by event type buttons will go here...
-  .date_select= select_date
-= render @events
+  - form_tag events_url, :method => :get, :remote => true, :id => "event_filter_form" do
+    .filter 
+      Filter by event type buttons will go here...
+      = submit_tag
+    .date_select= select_date
+  = javascript_tag "new Form.Observer('event_filter_form', 0.3, function(form, value){form.request()})"
+#events= render @events
