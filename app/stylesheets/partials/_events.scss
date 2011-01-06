@@ -1,9 +1,19 @@
+header {
+  .filter {
+    @include column(14);
+  }
+  .date_select {
+    @include column(6,true);
+    text-align: right;
+  }
+}
+
 .event {
   border: 1px solid #222;
   margin-bottom: 1.5em;
   @include border-radius;
   @include box-shadow;
-  @include column(20);
+  @include column(19);
   .icon {
     @include column(2);
     margin-top: 3px;

@@ -13,10 +13,17 @@ body {
 
 .container {
   @include showgrid;
+  @include container;
   @include clearfix;
 }
 
-.side_pane {}
+#side_pane {
+  @include column(4);
+}
+
+#main_pane {
+  @include column(20,true);
+}
 
 form {
   @include blueprint-form; 
