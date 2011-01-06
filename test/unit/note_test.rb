@@ -9,6 +9,10 @@ class NoteTest < ActiveSupport::TestCase
     new_event = new_note.events.first
     assert_equal(new_event.event_date,new_note.created_at)
     assert_equal(new_event.person_id,new_note.person_id)
+    assert_equal(new_event.icon_url,"events/mumble.png")
+    assert_equal(new_event.title,"Mumble")
+    assert_equal(new_event.body,new_note.body)
   end
+
 
 end
