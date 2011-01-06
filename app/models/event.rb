@@ -5,10 +5,14 @@ class Event < ActiveRecord::Base
   validates :eventable_id,   :presence => true
   validates :eventable_type, :presence => true
 
-  delegate :icon_url, :title, :body, :to => :eventable
+  delegate :icon_url, :body, :to => :eventable
 
   belongs_to :eventable, :polymorphic => true
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id)}
+
+  def title
+    eventable.title(event_date)
+  end
 
 end

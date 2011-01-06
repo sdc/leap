@@ -1,4 +1,6 @@
 Ilp2::Application.routes.draw do
+  resources :targets
+
   resources :notes
 
   resources :events
