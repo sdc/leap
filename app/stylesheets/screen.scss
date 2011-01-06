@@ -16,6 +16,8 @@ body {
   @include clearfix;
 }
 
+.side_pane {}
+
 form {
   @include blueprint-form; 
 }

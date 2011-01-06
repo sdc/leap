@@ -9,4 +9,6 @@
     = javascript_include_tag :defaults
     = csrf_meta_tag
   %body
-    .container= yield
+    .container
+      #side_pane
+      #main_pane= yield

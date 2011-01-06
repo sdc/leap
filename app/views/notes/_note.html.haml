@@ -1,5 +1,6 @@
-%div.event[note]
-  .icon= image_tag("events/mumble.png")
-  .date= note.created_at.strftime("%d %b")
-  .title Mumble
-  .body= note.body
+%article.event[note]
+  %header
+    .icon= image_tag("events/mumble.png")
+    %time{:datetime => note.created_at.strftime("%Y-%m-%dT%H:%M:%S%z")}= note.created_at.strftime("%d %b")
+    %h4 Mumble
+    .body= note.body
