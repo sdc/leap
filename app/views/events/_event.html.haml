@@ -1,8 +1,10 @@
-%article{:class => event.eventable_type.downcase}[event]
-  %header
-    .icon= image_tag(event.icon_url)
-    %time{:datetime => event.event_date.strftime("%Y-%m-%dT%H:%M:%S%z")}
-      .date= event.event_date.strftime("%d %b")
-      .time= event.event_date.strftime("%H.%M %P")
-    %h4= event.title
-  .body= raw event.body
+- hidden||= false
+%article{:class => event.eventable_type.downcase, :style => "display:#{hidden ? 'none' : 'block'}"}[event]
+  %div
+    %header
+      .icon= image_tag(event.icon_url)
+      %time{:datetime => event.event_date.strftime("%Y-%m-%dT%H:%M:%S%z")}
+        .date= event.event_date.strftime("%d %b")
+        .time= event.event_date.strftime("%H.%M %P")
+      %h4= event.title
+    .body= raw event.body

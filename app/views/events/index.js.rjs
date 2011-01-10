@@ -1,1 +1,12 @@
-page.replace_html 'events', :partial => @events
+if @since
+  page.insert_html :top, 'events', :partial => @events, :locals => {:hidden => true}
+  @events.each do |event|
+    page.visual_effect :slide_down, dom_id(event)
+    page.delay 1 do
+      page.visual_effect :highlight, dom_id(event)
+    end
+  end
+else
+  page.replace_html 'events', :partial => @events
+end
+page.replace_html 'event_header', :partial => "header"

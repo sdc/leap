@@ -1,0 +1,8 @@
+= form_tag events_url, :method => :get, :id => "event_filter_form" do
+  = link_to "Refresh", events_url(:since => @events.first.event_date), :remote => true, :id => "update_posts"
+  %span#latest_date Whatever
+  .filter 
+    Filter by event type buttons will go here...
+    = submit_tag
+  .date_select= select_date @date - 1
+= javascript_tag "new Form.Observer('event_filter_form', 0.3, function(form, value){form.request()})"
