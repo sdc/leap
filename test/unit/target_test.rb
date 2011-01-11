@@ -24,6 +24,7 @@ class TargetTest < ActiveSupport::TestCase
     new_target.events.reload
     assert_equal(new_target.events.size,2)
     assert_equal(new_target.events.last.title,"Target Complete")
+    assert_nil(new_target.events.last.subtitle)
     assert_equal(new_target.complete_date,new_target.events.last.event_date)
   end
 
