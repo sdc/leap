@@ -19,6 +19,11 @@ class Target < ActiveRecord::Base
     end
   end
 
+  def subtitle(date)
+    return nil if date == complete_date
+    "Due<br />" + target_date.strftime("%d %b")
+  end
+
   def set_complete(date = Time.now)
     raise "Trying to complete an already complete Target (id:#{id})" if complete_date
     update_attribute("complete_date", date)

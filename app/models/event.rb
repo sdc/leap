@@ -15,4 +15,8 @@ class Event < ActiveRecord::Base
     eventable.title(event_date)
   end
 
+  def subtitle
+    eventable.respond_to?("subtitle") ? eventable.subtitle(event_date) : nil
+  end
+
 end

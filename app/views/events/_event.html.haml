@@ -1,10 +1,13 @@
 - hidden||= false
-%article{:class => event.eventable_type.downcase, :style => "display:#{hidden ? 'none' : 'block'}"}[event]
-  %div
+%article{:class => classes_for(event), :style => hidden && 'none'}[event]
+  .inner
     %header
-      .icon= image_tag(event.icon_url)
+      .icon
+        = image_tag(event.icon_url, :size => "48x48", :alt => event.title, :title => event.title)
       %time{:datetime => event.event_date.strftime("%Y-%m-%dT%H:%M:%S%z")}
         .date= event.event_date.strftime("%d %b")
         .time= event.event_date.strftime("%H.%M %P")
-      %h4= event.title
+      %h1= event.title
+      - if event.subtitle
+        %h2= raw event.subtitle
     .body= raw event.body

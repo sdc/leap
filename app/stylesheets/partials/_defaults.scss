@@ -1,3 +1,11 @@
 $default-border-radius       : 13px;
 $default-box-shadow-h-offset : 2px;
 $default-box-shadow-v-offset : 2px;
+
+$border-color: #666;
+
+body {
+  font-family: sans-serif;
+  font-size: 12px;
+  color: $font-color;
+}

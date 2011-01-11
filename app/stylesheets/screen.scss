@@ -5,7 +5,7 @@
 @import "partials/events";
 
 body {
-  @include blueprint-typography(true);
+  //@include blueprint-typography(true);
   @include blueprint-utilities;
   @include blueprint-debug;
   @include blueprint-interaction; 
