@@ -10,11 +10,7 @@ class EventsController < ApplicationController
   private
 
   def get_date
-    if params[:date]
-      Time.gm(params[:date][:year].to_i,params[:date][:month].to_i,params[:date][:day].to_i)
-    else
-      Time.now.midnight
-    end
+    params[:date] ? Time.gm(*[:year,:month,:day].map{|x| params[:date][x].to_i}) : Time.now.midnight
   end
  
 
