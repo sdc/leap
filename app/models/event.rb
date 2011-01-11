@@ -13,8 +13,8 @@
 #
 # == Useful Scopes
 #
-# +backwards+::        Orders the events by reverse +event_date+.
-# +from_to(from,to)+:: Finds the events between the dates _from_ and _to_.
+# backwards::             Orders the events by reverse +event_date+.
+# from_to _from_, _to_::  Finds the events between the dates _from_ and _to_.
 
 class Event < ActiveRecord::Base
 
