@@ -10,7 +10,7 @@ class Note < ActiveRecord::Base
     "events/mumble.png"
   end
 
-  def title(date)
+  def title
     "Mumble"
   end
 

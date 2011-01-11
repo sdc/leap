@@ -5,18 +5,22 @@ class Event < ActiveRecord::Base
   validates :eventable_id,   :presence => true
   validates :eventable_type, :presence => true
 
-  delegate :icon_url, :body, :to => :eventable
+  [:title,:subtitle,:icon_url,:body].each do |method|
+    define_method method do
+      if eventable.respond_to?(method) 
+        if eventable.method(method).arity == 1
+          eventable.send(method,event_date)
+        else
+          eventable.send(method)
+        end
+      else
+        nil
+      end
+    end
+  end
 
   belongs_to :eventable, :polymorphic => true
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id)}
-
-  def title
-    eventable.title(event_date)
-  end
-
-  def subtitle
-    eventable.respond_to?("subtitle") ? eventable.subtitle(event_date) : nil
-  end
 
 end
