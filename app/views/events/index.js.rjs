@@ -1,5 +1,5 @@
 if @since
-  page.insert_html :top, 'events', :partial => @events, :locals => {:hidden => true}
+  page.insert_html :top, 'events', :partial => @events, :hidden => true
   @events.each do |event|
     page.visual_effect :slide_down, dom_id(event)
     page.delay 1 do
