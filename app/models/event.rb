@@ -10,6 +10,11 @@
 # passed the event_date from the Event. This allows the eventable to return different information depending on when the
 # event happened. This is how Target eventables return different event information before and after their completion date,
 # for example.
+#
+# == Useful Scopes
+#
+# +backwards+::        Orders the events by reverse +event_date+.
+# +from_to(from,to)+:: Finds the events between the dates _from_ and _to_.
 
 class Event < ActiveRecord::Base
 
@@ -17,6 +22,9 @@ class Event < ActiveRecord::Base
   validates :event_date,     :presence => true
   validates :eventable_id,   :presence => true
   validates :eventable_type, :presence => true
+
+  scope :backwards, order("event_date DESC")
+  scope :from_to, lambda {|from,to| where(:event_date => from..to)}
 
   belongs_to :eventable, :polymorphic => true
 
