@@ -1,2 +1,13 @@
+- content_for :side_pane do
+  %nav
+    = icon_link "Home"
+    = icon_link "Courses"
+    = icon_link "Targets"
+    = icon_link "Reviews"
+    = icon_link "Timetable"
+    = icon_link "Qualifications"
+    = icon_link "Support"
+    = icon_link "Messages"
+
 %header#event_header= render :partial => "header"
 #events= render @events

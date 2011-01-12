@@ -1,0 +1,16 @@
+nav { 
+  .icon_button {
+    @include column(4);
+    .icon {
+      @include column(1);
+    }
+    .label {
+      @include column(3,true);
+      font-size: 13px;
+      font-weight: bold;
+      a {      
+        @include unstyled-link();
+      }
+    }
+  }
+}
