@@ -1,10 +1,10 @@
 Ilp2::Application.routes.draw do
-  resources :targets
-
+  # resources :targets
   resources :notes
-
   resources :events
-
+  resources :people do
+    resources :events
+  end
   match 'test' => 'test#index', :as => :test
 
   # The priority is based upon order of creation:
