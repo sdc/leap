@@ -46,3 +46,14 @@ header {
 .subtitle .body {
   @include column(8,true);
 }
+
+.event {
+  background-color: #ccc
+}
+
+.bg_reminder {
+  background-color: #fbb;
+}
+.bg_complete {
+  background-color: #eea;
+}

@@ -38,6 +38,11 @@ class Target < ActiveRecord::Base
     "Due<br />" + target_date.strftime("%d %b")
   end
 
+  # Returns the background class for displaying this event, it is +bg_reminder+ unless it is a completion event, when it is +bg_complete+.
+  def background_class(date)
+    date == complete_date ? "bg_complete" : "bg_reminder"
+  end
+
   # Sets the target as complete on +date+. Any future events attached to this eventable are removed from the system (and returned). A
   # new completion event is created.
   def set_complete(date = Time.now)
