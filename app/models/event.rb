@@ -27,6 +27,7 @@ class Event < ActiveRecord::Base
   scope :from_to, lambda {|from,to| where(:event_date => from..to)}
 
   belongs_to :eventable, :polymorphic => true
+  has_many :targets
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id)}
 

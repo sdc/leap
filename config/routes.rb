@@ -1,7 +1,10 @@
 Ilp2::Application.routes.draw do
   # resources :targets
   resources :notes
-  resources :events
+  resources :targets
+  resources :events do
+    resources :targets
+  end
   resources :people do
     resources :events
   end

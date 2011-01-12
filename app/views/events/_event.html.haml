@@ -12,3 +12,7 @@
           .subtitle_word= event.subtitle.first
           .subtitle_date= pretty_date event.subtitle.last,false
     .body= raw event.body
+    .buttons
+      = link_to "[X]", new_event_target_url(event), :remote => true
+    .extended{:style => "display:none"}
+      .inner
