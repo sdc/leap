@@ -5,7 +5,7 @@
       .icon
         = image_tag(event.icon_url, :size => "48x48", :alt => event.title, :title => event.title)
       %time{:datetime => event.event_date.strftime("%Y-%m-%dT%H:%M:%S%z")}
-        .date= event.event_date.strftime("%d %b")
+        .date= pretty_date event.event_date
         .time= event.event_date.strftime("%H.%M %P")
       %h1= event.title
       - if event.subtitle
