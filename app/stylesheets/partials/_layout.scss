@@ -9,7 +9,8 @@ nav {
       font-size: 13px;
       font-weight: bold;
       a {      
-        @include unstyled-link();
+        @include link-colors($font-color, mix($font-color,#00f));
+        @include hover-link;
       }
     }
   }
