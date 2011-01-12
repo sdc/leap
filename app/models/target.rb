@@ -35,7 +35,7 @@ class Target < ActiveRecord::Base
   # Returns the target eventable subtitle. This is the target due date unless the event is the completion of the target, when it is +nil+.
   def subtitle(date)
     return nil if date == complete_date
-    "Due " + target_date.strftime("%d %b")
+    return ["Due", target_date]
   end
 
   # Returns the background class for displaying this event, it is +bg_reminder+ unless it is a completion event, when it is +bg_complete+.

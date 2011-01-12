@@ -7,11 +7,17 @@ module EventsHelper
     ]
   end
 
-  def pretty_date(date)
-    return "Today" if date.midnight == Date.today
-    return "Yesterday" if date.midnight == Date.today - 1
-    return "Tomorrow" if date.midnight == Date.today + 1
-    return date.strftime("%d %b")
+  def pretty_date(date, words = true)
+    if words
+      return "Today" if date.midnight == Date.today
+      return "Yesterday" if date.midnight == Date.today - 1
+      return "Tomorrow" if date.midnight == Date.today + 1
+    end
+    if date.year == Date.today.year
+      return date.strftime("%d %b")
+    else
+      return date.strftime("%d %b %y")
+    end
   end
 
 end
