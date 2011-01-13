@@ -5,7 +5,7 @@ class CreateEvents < ActiveRecord::Migration
       t.string :eventable_type
       t.integer :eventable_id
       t.datetime :event_date
-
+      t.integer :parent_id
       t.timestamps
     end
   end

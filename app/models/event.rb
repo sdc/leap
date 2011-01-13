@@ -25,8 +25,11 @@ class Event < ActiveRecord::Base
 
   scope :backwards, order("event_date DESC")
   scope :from_to, lambda {|from,to| where(:event_date => from..to)}
+  scope :unique_eventable, group("eventable_id,eventable_type")
 
   belongs_to :eventable, :polymorphic => true
+  has_many :children, :class_name => "Event", :foreign_key => "parent_id"
+  belongs_to :parent, :class_name => "Event", :foreign_key => "parent_id"
   has_many :targets
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id)}

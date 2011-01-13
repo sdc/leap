@@ -12,8 +12,8 @@ class Target < ActiveRecord::Base
   belongs_to :event
 
   after_create do |target| 
-    target.events.create!(:event_date => created_at)
-    target.events.create!(:event_date => target_date)
+    target.events.create!(:event_date => created_at,  :parent_id => event_id)
+    target.events.create!(:event_date => target_date, :parent_id => event_id)
   end
 
   # Returns the target eventable icon url. This is always the same.
