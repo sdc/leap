@@ -14,6 +14,7 @@
     .body= raw event.body
     .buttons
       = link_to "[X]", new_event_target_url(event), :remote => true
-    .attachments= render :partial => "events/mini", :collection => event.children.unique_eventable, :as => :event
+    .attachments
+      .inner= render :partial => "events/mini", :collection => event.children.unique_eventable, :as => :event
     .extended{:style => "display:none"}
       .inner

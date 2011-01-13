@@ -1,3 +1,6 @@
-page[@event].down(".extended").visual_effect :slide_up
-page[@event].down(".attachments").replace_html :partial => "events/mini", :collection => @event.children.unique_eventable, :as => :event
-page[@event].down(".attachments").highlight
+page[@event].down(".extended").visual_effect :slide_up, :duration => 0.5
+page[@event].down(".attachments").visual_effect :slide_up, :duration => 0.5
+page.delay(0.6) do 
+  page[@event].down(".attachments").down('.inner').replace_html :partial => "events/mini", :collection => @event.children.unique_eventable, :as => :event
+  page[@event].down(".attachments").visual_effect :slide_down, :duration => 0.5
+end
