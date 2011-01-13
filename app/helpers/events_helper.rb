@@ -20,4 +20,9 @@ module EventsHelper
     end
   end
 
+  def pretty_time(date)
+    return nil if date == date.midnight
+    return date.strftime("%H.%M %P")
+  end
+
 end
