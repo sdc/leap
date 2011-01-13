@@ -1,0 +1,1 @@
+page[@event].down(".extended").visual_effect :slide_up

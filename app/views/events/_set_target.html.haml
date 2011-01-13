@@ -1,4 +1,5 @@
 = form_for event.targets.new, :remote => true do |f|
+  = f.hidden_field :event_id
   .target_body
     %h2 Target:
     = f.text_area :body
