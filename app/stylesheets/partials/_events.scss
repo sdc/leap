@@ -73,12 +73,13 @@ header {
   }
   
   .mini {
-    @include column(9);
+    @include column(18);
     @include border_radius(0);
     border: none;
     .icon {
       @include column(1);
       left:8px;
+      padding-top: 2px;
     }
     .subtitle {
       @include column(2);
@@ -86,7 +87,7 @@ header {
     }
     .body {
       margin:0;
-      @include column(5,true);
+      @include column(14,true);
       padding-top: 3px;
     }
   }

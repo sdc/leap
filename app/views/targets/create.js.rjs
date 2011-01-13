@@ -1,1 +1,3 @@
 page[@event].down(".extended").visual_effect :slide_up
+page[@event].down(".attachments").replace_html :partial => "events/mini", :collection => @event.children.unique_eventable, :as => :event
+page[@event].down(".attachments").highlight
