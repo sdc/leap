@@ -24,8 +24,9 @@ class Event < ActiveRecord::Base
   validates :eventable_type, :presence => true
 
   scope :backwards, order("event_date DESC")
+  scope :forwards, order("event_date")
   scope :from_to, lambda {|from,to| where(:event_date => from..to)}
-  scope :unique_eventable, group("eventable_id,eventable_type")
+  scope :unique_eventable, group("eventable_id,eventable_type").forwards
 
   belongs_to :eventable, :polymorphic => true
   has_many :children, :class_name => "Event", :foreign_key => "parent_id"

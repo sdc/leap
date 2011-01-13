@@ -15,6 +15,6 @@
     .buttons
       = link_to "[X]", new_event_target_url(event), :remote => true
     .attachments
-      .inner= render :partial => "events/mini", :collection => event.children.unique_eventable, :as => :event
+      .inner= render :partial => "events/mini", :collection => event.children.unique_eventable.forwards, :as => :event
     .extended{:style => "display:none"}
       .inner
