@@ -6,7 +6,6 @@ class EventsController < ApplicationController
     @date = get_date + 1.day
     @since = (Time.parse(params[:since]) + 1) if params[:since]
     @events = @scope.from_to(@since||@date - 2.week,@date).backwards.includes(:eventable)
-    render :text => "" if @events.first.nil?
   end
 
   private
