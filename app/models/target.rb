@@ -44,6 +44,11 @@ class Target < ActiveRecord::Base
     date == complete_date ? "bg_complete" : "bg_reminder"
   end
 
+  # Returns the partial to render for the details pane
+  def details_pane
+    "targets/details"
+  end
+
   # Sets the target as complete on +date+. Any future events attached to this eventable are removed from the system (and returned). A
   # new completion event is created.
   def set_complete(date = Time.now)

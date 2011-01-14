@@ -1,14 +1,20 @@
-= form_for Target.new, :remote => true do |f|
-  = f.hidden_field :event_id, :value => event.id
-  .target_body
-    %h2 Target:
-    = f.text_area :body
-  .target_actions
-    %h2 Actions:
-    = f.text_area :actions
-  .target_date
-    %h2 Target date:
-    = f.date_select :target_date, :use_short_month => true, :order => [:day, :month, :year]
-    = submit_tag "Set"
-    = button_to_function "Cancel" do |page|
-      - page[event].down(".extended").slide_up()
+- if event.details_pane
+  .tabs
+    =tab dom_id(event), "Details", "details"
+    =tab dom_id(event), "New Target", "target_set"
+  .details.tab= render :partial => event.details_pane, :locals => {:event => event}
+.target_set.tab{:style => "display: #{event.details_pane ? 'none' : 'block'}"}
+  = form_for Target.new, :remote => true do |f|
+    = f.hidden_field :event_id, :value => event.id
+    .target_body
+      %h2 Target:
+      = f.text_area :body
+    .target_actions
+      %h2 Actions:
+      = f.text_area :actions
+    .target_date
+      %h2 Target date:
+      = f.date_select :target_date, :use_short_month => true, :order => [:day, :month, :year]
+      = submit_tag "Set"
+      = button_to_function "Cancel" do |page|
+        - page[event].down(".extended").slide_up()

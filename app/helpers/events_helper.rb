@@ -1,5 +1,9 @@
 module EventsHelper
 
+  def tab(event_id,text,klass)
+    link_to_function text, "$$('##{event_id} .tab').each(function(t){t.hide()});$$('##{event_id} .#{klass}').first().show()"
+  end
+
   def classes_for(event)
     [event.eventable_type.downcase,
      event.subtitle ? "subtitle" : nil,
