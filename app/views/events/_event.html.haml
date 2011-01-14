@@ -13,7 +13,7 @@
           .subtitle_date= pretty_date event.subtitle.last,false
     .body= raw event.body
     .buttons
-      = link_to "[X]", new_event_target_url(event), :remote => true
+      = link_to image_tag("actions/event_open.png"), new_event_target_url(event), :remote => true
     .attachments
       .inner= render :partial => "events/mini", :collection => event.children.unique_eventable.forwards, :as => :event
     .extended{:style => "display:none"}

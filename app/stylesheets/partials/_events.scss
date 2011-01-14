@@ -45,6 +45,8 @@ header {
   }
 
   .buttons {
+    margin-top: 23px;
+    margin-left: 20px;
     @include column(1,true);
   }
 
