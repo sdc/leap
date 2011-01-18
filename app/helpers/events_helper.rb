@@ -1,7 +1,9 @@
 module EventsHelper
 
   def tab(event_id,text,klass)
-    link_to_function text, "$$('##{event_id} .tab').each(function(t){t.hide()});$$('##{event_id} .#{klass}').first().show()"
+    content_tag :li do
+      link_to_function text, "$$('##{event_id} .tab').each(function(t){t.hide()});$$('##{event_id} .#{klass}').first().show()"
+    end
   end
 
   def classes_for(event)

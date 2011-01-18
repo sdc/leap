@@ -1,5 +1,5 @@
 - if event.details_pane
-  .tabs
+  %ul.tabs
     =tab dom_id(event), "Details", "details"
     =tab dom_id(event), "New Target", "target_set"
   .details.tab= render :partial => event.details_pane, :locals => {:event => event}
