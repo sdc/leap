@@ -8,6 +8,12 @@ class EventsController < ApplicationController
     @events = @scope.from_to(@since||@date - 2.week,@date).backwards.includes(:eventable)
   end
 
+   def open_extended
+    @event = @scope.find(params[:id])
+    render :partial => "extended", :object => @event, :as => :event
+  end
+
+
   private
 
   def get_date

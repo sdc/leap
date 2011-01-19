@@ -1,2 +1,1 @@
 page[@event].down('.extended').down('.inner').replace_html :partial => "events/set_target", :locals => {:event => @event}
-page[@event].down('.extended').slide_down()

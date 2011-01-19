@@ -3,6 +3,9 @@ Ilp2::Application.routes.draw do
   resources :notes
   resources :targets
   resources :events do
+    member do
+      get :open_extended
+    end
     resources :targets
   end
   resources :people do
