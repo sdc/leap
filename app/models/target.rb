@@ -51,9 +51,7 @@ class Target < ActiveRecord::Base
 
   # Sets the target as complete on +date+. Any future events attached to this eventable are removed from the system (and returned). A
   # new completion event is created.
-  def set_complete(date = Time.now)
-    raise "Trying to complete an already complete Target (id:#{id})" if complete_date
-    update_attribute("complete_date", date)
+  def notify_complete(date = Time.now)
     events.create!(:event_date => date)
     events.where("event_date > ?",date).each {|e| e.destroy}
   end

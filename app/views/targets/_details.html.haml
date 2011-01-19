@@ -1,3 +1,12 @@
-.target_body
-  %h2 Actions
-  = event.eventable.actions
+= form_for target, :remote => true do |f|
+  .target_actions
+    %h2 Actions
+    = target.actions
+  .target_reflection
+    %h2 Reflection
+    = f.text_area :reflection
+  .target_date
+    %h2 Complete Date
+    = f.date_select :complete_date, :order => [:day,:month,:year], :use_short_month => true
+    = submit_tag "Complete"
+    = submit_tag "Drop"

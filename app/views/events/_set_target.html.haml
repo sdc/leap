@@ -2,7 +2,7 @@
   %ul.tabs
     =tab dom_id(event), "Details", "details"
     =tab dom_id(event), "New Target", "target_set"
-  .details.tab= render :partial => event.details_pane, :locals => {:event => event}
+  .details.tab= render :partial => event.details_pane, :locals => {:event => event, event.eventable_type.downcase.to_sym => event.eventable}
 .target_set.tab{:style => "display: #{event.details_pane ? 'none' : 'block'}"}
   = form_for Target.new, :remote => true do |f|
     = f.hidden_field :event_id, :value => event.id
