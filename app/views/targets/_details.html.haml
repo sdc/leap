@@ -5,9 +5,15 @@
     = target.actions
   .target_reflection
     %h2 Reflection
-    = f.text_area :reflection
+    - unless target.complete_date
+      = f.text_area :reflection
+    - else
+      = target.reflection
   .target_date
     %h2 Complete Date
-    = f.date_select :complete_date, :order => [:day,:month,:year], :use_short_month => true
-    = submit_tag "Complete"
-    = submit_tag "Drop"
+    - unless target.complete_date
+      = f.date_select :complete_date, :order => [:day,:month,:year], :use_short_month => true
+      = submit_tag "Complete"
+      = submit_tag "Drop"
+    - else
+      = pretty_date(target.complete_date)

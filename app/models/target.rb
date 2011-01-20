@@ -18,7 +18,7 @@ class Target < ActiveRecord::Base
 
   # Returns the target eventable icon url. This is always the same.
   def icon_url
-    "events/target.png"
+    complete_date ? "events/target-complete.png" : "events/target.png"
   end
 
   # Returns the target eventable title. There are three possible titles depending on the event_date passed in:
@@ -40,8 +40,8 @@ class Target < ActiveRecord::Base
   end
 
   # Returns the background class for displaying this event, it is +bg_reminder+ unless it is a completion event, when it is +bg_complete+.
-  def background_class(date)
-    date == complete_date ? "bg_complete" : "bg_reminder"
+  def background_class
+    complete_date ? "bg_complete" : "bg_reminder"
   end
 
   # Returns the partial to render for the details pane

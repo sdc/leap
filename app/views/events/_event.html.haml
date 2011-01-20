@@ -1,4 +1,4 @@
-%article{:style => defined?(hidden) && 'none'}[event]
+%article{:style => defined?(hidden) && 'none',:class => event.background_class}[event]
   %div[event.eventable]
     %header
       .icon= image_tag(event.icon_url, :size => "48x48", :alt => event.title, :title => event.title)
