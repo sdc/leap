@@ -12,21 +12,7 @@ function close_extended_event(ev){
   ev.down('.close_extend_button').hide();
 }
 
-function refresh_event(ev,content){
-  ev = $(ev);
-  //Effect.SlideUp(ev.down('.attachments'));
-  //new Ajax.Request("/events/" + ev.identify(), {
-  //  method: 'get',
-  //  onSuccess: function(transport){
-  //    $(ev).replace(transport.responseText);
-  //  }
-  //})
-  ev.replace(content);
-  ev.fire("ajax:after");
-}
-
-document.observe("dom:loaded", function(){
-  
+function watch_events(){  
   // Buttons for opening/closing extended sections of events
   $$('.extend_button').each(function(element){
     element.observe('ajax:complete',function(event){
@@ -44,12 +30,18 @@ document.observe("dom:loaded", function(){
       close_extended_event(article);
     })
   })
-})
+}
 
 // Submitting new target forms
 function init_new_target_form(element){
   $(element).observe('ajax:complete', function(event){
     close_extended_event(event.findElement('article'));   
-    refresh_event(event.findElement('article'),event.memo.responseText);
+    event.findElement('article').replace(event.memo.responseText);
+    watch_events();
   })
 }
+
+document.observe("dom:loaded", function(){
+    watch_events();
+})
+
