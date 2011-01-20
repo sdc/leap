@@ -13,7 +13,7 @@
     .body{:class => event.subtitle ? "subtitle" : nil}= raw event.body
     .buttons
       = link_to image_tag("actions/event_open.png"), open_extended_event_url(event), :remote => true, :class => "extend_button"
-      = image_tag "actions/event_open.png", :class => "close_extend_button", :style => "display:none"
+      = image_tag "actions/event_opened.png", :class => "close_extend_button", :style => "display:none"
     .attachments
       .inner
         = render :partial => "events/mini", :collection => event.children.unique_eventable.forwards, :as => :event
