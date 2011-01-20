@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
 
+  before_filter :parse_id
   before_filter :set_event_scope
 
   def index
@@ -13,11 +14,19 @@ class EventsController < ApplicationController
     render :partial => "extended", :object => @event, :as => :event
   end
 
+  def show
+    @event = @scope.find(params[:id])
+    render @event
+  end
 
   private
 
   def get_date
     params[:date] ? Time.gm(*[:year,:month,:day].map{|x| params[:date][x].to_i}) : Time.now.midnight
+  end
+
+  def parse_id
+    params[:id].sub!(/^event_/,"") if params[:id]
   end
 
   def set_event_scope

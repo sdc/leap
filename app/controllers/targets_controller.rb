@@ -4,7 +4,7 @@ class TargetsController < ApplicationController
     @event = Event.find(params[:target][:event_id])
     @target = @event.targets.create(params[:target].merge(:person_id => @event.person_id))
     @events = [@event]
-    render :refresh_extended
+    render @event
   end
 
   def update
