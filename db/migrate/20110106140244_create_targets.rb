@@ -5,6 +5,7 @@ class CreateTargets < ActiveRecord::Migration
       t.integer :event_id
       t.text :body
       t.text :actions
+      t.text :reflection
       t.datetime :target_date
       t.datetime :complete_date
       t.timestamps
