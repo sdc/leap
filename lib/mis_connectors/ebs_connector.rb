@@ -1,18 +1,6 @@
-module MisPerson
+class MisConnector
 
-  def Person.driver
-    "EbsDriver"
-  end
-
-  #def Person.photo_path
-  #  "/mnt/photos"
-  #end
-
-  def mis_person
-    Ebs::Person.find_by_unique_learn_no(uln)
-  end
-
-  def Person.import_from_mis(uln)
+  def self.get_person(uln)
     puts "Importing ebs person"
     if (ep = Ebs::Person.find_by_unique_learn_no(uln))
       @person = Person.find_or_create_by_uln(uln)
@@ -29,9 +17,6 @@ module MisPerson
 	      :date_of_birth => ep.date_of_birth,
         :uln           => uln
       )
-      #if File.exists?(Person.photo_path + "/#{ep.id}.jpg")
-      #  @person.photo = File.read(Person.photo_path + "/#{ep.id}.jpg")
-      #end
       @person.save
       return @person
     else

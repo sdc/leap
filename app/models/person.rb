@@ -1,7 +1,5 @@
 class Person < ActiveRecord::Base
 
-  include MisPerson
-
   has_many :events
 
   serialize :middle_names
@@ -24,7 +22,7 @@ class Person < ActiveRecord::Base
   end
 
   def Person.get(uln,fresh=false)
-    (fresh ? false : find_by_uln(uln)) or import_from_mis(uln) 
+    (fresh ? false : find_by_uln(uln)) or MisConnector.get_person(uln)
   end
 
 end

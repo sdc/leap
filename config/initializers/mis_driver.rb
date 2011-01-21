@@ -1,1 +1,1 @@
-require "mis_driver/ebs_driver.rb"
+require 'mis_connectors/ebs_connector'
