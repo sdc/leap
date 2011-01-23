@@ -13,7 +13,7 @@ class TargetsController < ApplicationController
     @events = @target.events
     @target.update_attributes(params[:target])
     if params[:commit] == "Complete"
-      @target.notify_complete(@target.complete_date)
+      @target.notify_complete
     end
     render @event
   end
