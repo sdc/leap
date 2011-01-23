@@ -20,7 +20,8 @@ class TargetTest < ActiveSupport::TestCase
     assert_equal(due_event.title,"Target Due")
     assert_equal(due_event.body,new_target.body)
 
-    new_target.set_complete(Time.now + 1.day)
+    new_target.update_attribute("complete_date",Time.now + 1.day)
+    new_target.notify_complete
     new_target.events.reload
     assert_equal(new_target.events.size,2)
     assert_equal(new_target.events.last.title,"Target Complete")
