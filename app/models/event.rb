@@ -11,10 +11,6 @@
 # event happened. This is how Target eventables return different event information before and after their completion date,
 # for example.
 #
-# == Useful Scopes
-#
-# backwards::             Orders the events by reverse +event_date+.
-# from_to _from_, _to_::  Finds the events between the dates _from_ and _to_.
 
 class Event < ActiveRecord::Base
 
@@ -28,10 +24,7 @@ class Event < ActiveRecord::Base
   belongs_to :parent, :class_name => "Event", :foreign_key => "parent_id"
   has_many :targets
 
-  scope :backwards, order("event_date DESC")
-  scope :forwards, order("event_date")
-  scope :from_to, lambda {|from,to| where(:event_date => from..to)}
-  scope :unique_eventable, group("eventable_id,eventable_type").forwards
+  scope :unique_eventable, group("eventable_id,eventable_type")
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id)}
 

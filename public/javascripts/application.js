@@ -44,5 +44,8 @@ function init_new_target_form(element){
 
 document.observe("dom:loaded", function(){
     watch_events("events");
+    $('more_events').observe('ajax:complete', function(event){
+      $('events').insert(event.memo.responseText);
+    })
 })
 

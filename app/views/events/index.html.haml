@@ -11,3 +11,4 @@
 
 %header#event_header= render :partial => "header"
 #events= render @events
+#more_events= link_to raw("Older &darr;"), events_url(:date => @bottom_date), :remote => true, :id => "more_events"

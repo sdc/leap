@@ -5,8 +5,12 @@ class EventsController < ApplicationController
 
   def index
     @date = get_date + 1.day
-    @since = (Time.parse(params[:since]) + 1) if params[:since]
-    @events = @scope.from_to(@since||@date - 2.week,@date).backwards.includes(:eventable)
+    @events = @scope.
+      where(:event_date => (@date - 2.week)..@date).
+      order("event_date DESC").
+      includes(:eventable)
+    @bottom_date = @events.last.event_date
+    render @events if request.xhr?
   end
 
    def open_extended
@@ -22,7 +26,16 @@ class EventsController < ApplicationController
   private
 
   def get_date
-    params[:date] ? Time.gm(*[:year,:month,:day].map{|x| params[:date][x].to_i}) : Time.now.midnight
+    if params[:date]
+      if params[:date].kind_of? Hash
+        Time.gm(*[:year,:month,:day].map{|x| params[:date][x].to_i})
+      else
+        Time.parse(params[:date])
+      end
+    else
+      Time.now.midnight
+    end
+
   end
 
   def parse_id

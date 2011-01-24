@@ -16,6 +16,6 @@
       = image_tag "actions/event_opened.png", :class => "close_extend_button", :style => "display:none"
     .attachments
       .inner
-        = render :partial => "events/mini", :collection => event.children.unique_eventable.forwards, :as => :event
+        = render :partial => "events/mini", :collection => event.children.unique_eventable.order("event_date"), :as => :event
     .extended{:style => "display:none"}
       .inner

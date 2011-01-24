@@ -6,6 +6,11 @@ header {
   }
 }
 
+#more_events {
+  clear: both;
+  @include hover-link;
+}
+
 .event {
   @include column(19);
   //height: 65px;
