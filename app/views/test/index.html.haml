@@ -11,3 +11,15 @@
         %label Body Text
       %div= f.text_area :body
       %div= submit_tag
+
+%h3= link_to_function "Login as someone", "Effect.toggle('login_as','blind')"
+#login_as{:style => "display:none"}
+  %div
+    = form_tag test_login_url do
+      %div
+        %label Person Id
+      %div= text_field_tag 'login'
+      %div
+        %label User Affiliation
+      %div= select_tag "affiliation", options_for_select(["staff","student","affiliate"])
+      %div= submit_tag "Login"

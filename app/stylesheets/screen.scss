@@ -7,7 +7,7 @@
 @import "partials/layout";
 
 body {
-  //@include blueprint-typography(true);
+  @include blueprint-typography(true);
   @include blueprint-utilities;
   @include blueprint-debug;
   @include blueprint-interaction; 

@@ -23,15 +23,15 @@ class Event < ActiveRecord::Base
   validates :eventable_id,   :presence => true
   validates :eventable_type, :presence => true
 
-  scope :backwards, order("event_date DESC")
-  scope :forwards, order("event_date")
-  scope :from_to, lambda {|from,to| where(:event_date => from..to)}
-  scope :unique_eventable, group("eventable_id,eventable_type").forwards
-
   belongs_to :eventable, :polymorphic => true
   has_many :children, :class_name => "Event", :foreign_key => "parent_id"
   belongs_to :parent, :class_name => "Event", :foreign_key => "parent_id"
   has_many :targets
+
+  scope :backwards, order("event_date DESC")
+  scope :forwards, order("event_date")
+  scope :from_to, lambda {|from,to| where(:event_date => from..to)}
+  scope :unique_eventable, group("eventable_id,eventable_type").forwards
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id)}
 
