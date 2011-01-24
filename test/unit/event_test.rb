@@ -1,7 +1,14 @@
 require 'test_helper'
 
 class EventTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
+
+  test "Generated methods exist" do
+    ev = Event.new
+    [:title,:subtitle,:icon_url,:body,:background_class,:details_pane].each do |m|
+      assert_respond_to(ev,m)
+    end
+  end
+
   test "event_content_methods" do
     note = Note.create(:person_id => 1, :body => "Blah")
     event = Event.first
@@ -10,4 +17,5 @@ class EventTest < ActiveSupport::TestCase
     assert_equal(event.icon_url, note.icon_url)
     assert_nil(event.subtitle)
   end
+
 end
