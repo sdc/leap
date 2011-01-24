@@ -14,7 +14,8 @@ function close_extended_event(ev){
 
 function watch_events(e){  
   // Buttons for opening/closing extended sections of events
-  $(e).select('.extend_button').each(function(element){
+  $(e).select('.extend_button[observer="false"]').each(function(element){
+    element.writeAttribute("observer","true");
     element.observe('ajax:complete',function(event){
       article = event.findElement('article')
       article.down('.extended .inner').update(event.memo.responseText);
@@ -24,7 +25,8 @@ function watch_events(e){
       open_extended_event(article);
     })
   })
-  $(e).select('.close_extend_button').each(function(element){
+  $(e).select('.close_extend_button[observer="false"]').each(function(element){
+    element.writeAttribute("observer","true");
     element.observe('click',function(event){
       article = event.findElement('article');
       close_extended_event(article);
@@ -46,6 +48,7 @@ document.observe("dom:loaded", function(){
     watch_events("events");
     $('more_events').observe('ajax:complete', function(event){
       $('events').insert(event.memo.responseText);
+      watch_events("events");
     })
 })
 

@@ -12,8 +12,8 @@
           .subtitle_date= pretty_date event.subtitle.last,false
     .body{:class => event.subtitle ? "subtitle" : nil}= raw event.body
     .buttons
-      = link_to image_tag("actions/event_open.png"), open_extended_event_url(event), :remote => true, :class => "extend_button"
-      = image_tag "actions/event_opened.png", :class => "close_extend_button", :style => "display:none"
+      = link_to image_tag("actions/event_open.png"), open_extended_event_url(event), :remote => true, :class => "extend_button", :observer => "false"
+      = image_tag "actions/event_opened.png", :class => "close_extend_button", :style => "display:none", :observer => "false"
     .attachments
       .inner
         = render :partial => "events/mini", :collection => event.children.unique_eventable.order("event_date"), :as => :event
