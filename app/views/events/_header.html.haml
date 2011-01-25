@@ -1,5 +1,8 @@
 = form_tag events_url, :method => :get, :id => "event_filter_form" do
-  = link_to "Refresh", events_url(:since => @events.first ? @events.first.event_date : @date), :remote => true, :id => "update_posts"
+  - Event.group("eventable_type").map{|e| e.eventable_type }.each do|et|
+    = label_tag "eventable_type[#{et}]", et.pluralize
+    = check_box_tag "eventable_type[#{et}]", "1", ((params[:eventable_type] && params[:eventable_type][et]) or !params[:eventable_type])
+  /= link_to "Refresh", events_url(:since => @events.first ? @events.first.event_date : @date), :remote => true, :id => "update_posts"
   = submit_tag
-  .date_select= select_date @date - 1
-= javascript_tag "new Form.Observer('event_filter_form', 0.3, function(form, value){form.request()})"
+  /.date_select= select_date @date - 1
+/= javascript_tag "new Form.Observer('event_filter_form', 0.3, function(form, value){form.request()})"
