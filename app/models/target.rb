@@ -54,7 +54,7 @@ class Target < ActiveRecord::Base
   def notify_complete
     raise "Trying to notify completion of an incomplete Target (id:#{id})" unless complete_date
     events.create!(:event_date => complete_date)
-    events.where("event_date > ?",complete_date).each {|e| e.destroy}
+    #events.where("event_date > ?",complete_date).each {|e| e.destroy}
   end
 
 end
