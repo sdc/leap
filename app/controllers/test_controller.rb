@@ -1,5 +1,7 @@
 class TestController < ApplicationController
 
+  skip_before_filter :set_user
+
   def index
   end
 

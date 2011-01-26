@@ -14,3 +14,10 @@
     .container
       #side_pane= yield :side_pane
       #main_pane= yield
+      #footer
+        %h3 Params
+        = debug(params)
+        %h3 Session
+        = debug(session.to_yaml)
+        %h3 Topic
+        = debug(@topic.to_yaml)
