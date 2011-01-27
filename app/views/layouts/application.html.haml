@@ -12,7 +12,7 @@
     = csrf_meta_tag
   %body
     .container
-      #side_pane= yield :side_pane
+      #side_pane= render :partial => "layouts/person_sidebar" if @topic
       #main_pane= yield
       #footer
         %h3 Params

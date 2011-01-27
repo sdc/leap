@@ -1,11 +1,14 @@
 class ApplicationController < ActionController::Base
+
   protect_from_forgery
+
+  layout proc{ |c| c.request.xhr? ? false : "application" }
 
   before_filter :set_user
   before_filter :set_topic
 
   def set_user
-    @user = Person.get(session[:user_id])
+    @user = session[:user_id] ? Person.get(session[:user_id]) : nil
     @affiliation = session[:user_affiliation]
     redirect_to test_url unless @user && @affiliation
   end

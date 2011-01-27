@@ -8,10 +8,9 @@ class EventsController < ApplicationController
       where(conds).
       order("event_date DESC").
       includes(:eventable)
-    render @events if request.xhr?
   end
 
-   def open_extended
+  def open_extended
     @event = @topic.events.find(params[:id])
     render :partial => "extended", :object => @event, :as => :event
   end

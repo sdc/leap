@@ -45,10 +45,16 @@ function init_new_target_form(element){
 }
 
 document.observe("dom:loaded", function(){
+  watch_events("events");
+  $('more_events').observe('ajax:complete', function(event){
+    $('events').insert(event.memo.responseText);
     watch_events("events");
-    $('more_events').observe('ajax:complete', function(event){
-      $('events').insert(event.memo.responseText);
+  })
+  $$('nav .sidebar_button a').each(function(element){
+    element.observe('ajax:complete', function(event){
+      $('main_pane').update(event.memo.responseText);
       watch_events("events");
     })
+  })
 })
 
