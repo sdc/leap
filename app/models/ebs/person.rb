@@ -12,4 +12,8 @@ class Ebs::Person < Ebs::Model
   has_many :unit_instance_occurrences, 
            :through => :people_units
 
+  def uln
+    unique_learn_no
+  end
+
 end

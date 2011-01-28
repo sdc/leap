@@ -1,7 +1,9 @@
 class Person < ActiveRecord::Base
 
   has_many :events
-
+  has_many :person_courses
+  has_many :courses, :through => :person_courses
+  
   serialize :middle_names
   serialize :address
   serialize :cars

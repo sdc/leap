@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  person_id: 1
+  course_id: 1
+  application_date: 2011-01-27 14:16:43
+  enrolment_date: 2011-01-27 14:16:43
+  end_date: 2011-01-27 14:16:43
+
+two:
+  person_id: 1
+  course_id: 1
+  application_date: 2011-01-27 14:16:43
+  enrolment_date: 2011-01-27 14:16:43
+  end_date: 2011-01-27 14:16:43

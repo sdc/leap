@@ -17,6 +17,7 @@ class MisConnector
         :uln           => uln
       )
       @person.save
+      update_courses_for(@person)
       return @person
     else
       return false
@@ -38,5 +39,25 @@ class MisConnector
       return false
     end
   end
+
+  def self.update_courses_for(person_or_course)
+    # I'm assuming person (ebs or ilp) for now
+    uln = person_or_course.uln
+    @iperson = Person.find_by_uln(uln)
+    @eperson = Ebs::Person.where(:unique_learn_no => uln).first#.include(:people_units)
+    @eperson.people_units.each do |pu|
+      puts pu.id
+      course = get_course(pu.uio_id)
+      pc= PersonCourse.find_or_create_by_person_id_and_course_id(@iperson.id,course.id)
+      if pu.unit_type == "A" 
+        pc.update_attribute("application_date",pu.created_date)
+      elsif pu.unit_type == "R"
+        pc.update_attribute("enrolment_date",pu.created_date)
+      end
+    end
+  end
+
+
+
 
 end
