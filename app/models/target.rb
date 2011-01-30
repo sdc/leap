@@ -45,8 +45,8 @@ class Target < ActiveRecord::Base
   end
 
   # Returns the partial to render for the details pane
-  def details_pane
-    "targets/details"
+  def extra_panes
+    [["Details","targets/details"]]
   end
 
   # Run this afrer an event is completed. Any future events attached to this eventable are removed from the system (and returned). A

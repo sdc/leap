@@ -78,6 +78,9 @@ header {
         }
       }
     }
+    .tab {
+      clear: both
+    }
     .target_body,.target_actions,.target_reflection {
       @include column(7);
     }
