@@ -1,5 +1,6 @@
-@import "blueprint";
+@import "screen";
 
 //Recommended Blueprint configuration with scoping and semantic layout:
 body {
-  @include blueprint-print(true); }
+  @include blueprint-print(true); 
+}
