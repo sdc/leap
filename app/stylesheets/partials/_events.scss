@@ -1,33 +1,22 @@
-header {
-  .date_select {
-    @include column(6,true);
-    text-align: right;
-    height:36px;
-  }
-}
-
 #more_events {
   clear: both;
   @include hover-link;
 }
 
-.event {
+article.event {
   @include column(19);
-  //height: 65px;
   margin-bottom: 9px;
   border: 2px solid $border-color;
   @include border-radius;
+  padding-top: 9px;
 
-  h1,h2,.date {
+  h1,h2 {
     font-size: 13px;
     font-weight: bold;
   }
 
-  header {
-    h1,h2,time {
-      border-right: 2px solid lighten($border-color,33%);
-      height:48px;
-    }
+  .icon{
+    text-align: center
   }
 
   .time {
@@ -35,23 +24,21 @@ header {
   }
 
   header>* {
-    margin-top: 9px;
     @include column(2);
-  }
-
-  .icon {
-    position: relative;
-    left: 15px;
+    height:48px;
+    @include border(lighten($border-color,33%),2px);
   }
 
   .body {
-    margin-top: 9px;
-    @include column(11);
+    @include column(12);
+  }
+
+  header.subtitle+.body {
+    @include column(10);
   }
 
   .buttons {
-    margin-top: 23px;
-    margin-left: 20px;
+    padding-top: 15px;
     @include column(1,true);
   }
 
@@ -107,7 +94,7 @@ header {
     border: none;
     .icon {
       @include column(1);
-      left:8px;
+      text-align:center;
       padding-top: 2px;
     }
     .subtitle {
@@ -120,10 +107,6 @@ header {
       padding-top: 3px;
     }
   }
-}
-
-.subtitle.body {
-  @include column(9);
 }
 
 .event {

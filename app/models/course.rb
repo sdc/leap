@@ -4,7 +4,7 @@ class Course < ActiveRecord::Base
   has_many :people, :through => :person_courses
 
   def name(options = {})
-    title + " (#{code})"
+    title.titleize + " (#{code})"
   end
 
   def Course.get(mis_id,fresh=false)
