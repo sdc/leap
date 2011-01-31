@@ -2,9 +2,10 @@ class EventsController < ApplicationController
 
   def index
     @date = get_date + 1.day
-    conds = {:event_date => (@date - 2.week)..@date}
+    conds = {}
     conds[:eventable_type] = params[:eventable_type].keys if params[:eventable_type]
     @events = @topic.events.
+      where("event_date <= ?", @date).
       where(conds).
       order("event_date DESC").
       includes(:eventable)
@@ -32,7 +33,6 @@ class EventsController < ApplicationController
     else
       Time.now.midnight
     end
-
   end
 
 end
