@@ -3,6 +3,7 @@
   h1 {
     font-size: 20px;
     @include text-shadow;
+    text-align: center;
   }
   
   .person_photo img{
