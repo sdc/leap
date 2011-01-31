@@ -11,6 +11,7 @@ body {
   @include blueprint-utilities;
   @include blueprint-debug;
   @include blueprint-interaction; 
+  @include prepend-top;
 }
 
 .container {

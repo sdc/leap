@@ -1,4 +1,5 @@
-%h2= @topic.name
+%h1= @topic.name
+.person_photo= image_tag(url_for(@topic), :size => "140x140")
 %nav
     = icon_link "Home"
     = icon_link "Events", person_events_url(@topic)

@@ -11,6 +11,7 @@ class CreatePeople < ActiveRecord::Migration
       t.string   :next_of_kin
       t.date     :date_of_birth
       t.integer  :uln, :null => false
+      t.string   :mis_id
       t.timestamps
     end
   end

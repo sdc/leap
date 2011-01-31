@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   before_filter :set_user
   before_filter :set_topic
 
+  private
+
   def set_user
     @user = session[:user_id] ? Person.get(session[:user_id]) : nil
     @affiliation = session[:user_affiliation]

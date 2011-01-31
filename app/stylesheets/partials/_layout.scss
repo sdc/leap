@@ -1,16 +1,30 @@
-nav { 
-  .sidebar_button{
-    @include column(4);
-    .icon {
-      @include column(1);
-    }
-    .label {
-      @include column(3,true);
-      font-size: 13px;
-      font-weight: bold;
-      a {      
-        @include link-colors($font-color, mix($font-color,#00f));
-        @include hover-link;
+#side_pane {
+
+  h1 {
+    font-size: 20px;
+    @include text-shadow;
+  }
+  
+  .person_photo img{
+    border: 1px $border-color solid;
+    @include box-shadow;
+  }
+
+  nav { 
+    @include prepend-top;
+    .sidebar_button{
+      @include column(4);
+      .icon {
+        @include column(1);
+      }
+      .label {
+        @include column(3,true);
+        font-size: 13px;
+        font-weight: bold;
+        a {      
+          @include link-colors($font-color, mix($font-color,#00f));
+          @include hover-link;
+        }
       }
     }
   }

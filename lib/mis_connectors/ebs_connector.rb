@@ -14,7 +14,8 @@ class MisConnector
 	      :mobile_number => ep.mobile_phone_number,
 	      :next_of_kin   => ep.fes_nok_contact_no,
 	      :date_of_birth => ep.date_of_birth,
-        :uln           => uln
+        :uln           => uln,
+        :mis_id        => ep.id
       )
       @person.save
       update_courses_for(@person)
@@ -22,6 +23,10 @@ class MisConnector
     else
       return false
     end
+  end
+
+  def self.person_photo(person)
+    return Ilp2::Application.config.mis_photo_path + "/" + person.mis_id.to_s + ".jpg"
   end
 
   def self.get_course(mis_id)
