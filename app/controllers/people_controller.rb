@@ -6,7 +6,11 @@ class PeopleController < ApplicationController
   def show
     respond_to do |format|
       format.jpg do
-        send_file(MisConnector.person_photo(@topic), :type => "image/jpeg", :disposition => 'inline')
+        if File.exists? MisConnector.person_photo(@topic)
+          send_file(MisConnector.person_photo(@topic), :type => "image/jpeg", :disposition => 'inline')
+        else
+          redirect_to "/images/noone.jpg"
+        end
       end
     end
   end
