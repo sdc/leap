@@ -31,3 +31,8 @@ body {
 form {
   @include blueprint-form; 
 }
+
+#footer {
+  border-top: 2px solid $border-color;
+  clear:both;
+}
