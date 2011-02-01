@@ -1,0 +1,14 @@
+#personal_details{
+  border: $border-color 2px solid;
+  @include clearfix;
+  @include border-radius;
+  dt{
+    @include column(2);
+    text-align: right;
+  }
+  dd{
+    @include column(7);
+    margin-left: 0;
+  }
+
+}

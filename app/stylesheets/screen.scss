@@ -5,6 +5,7 @@
 @import "partials/defaults";
 @import "partials/events";
 @import "partials/layout";
+@import "partials/home";
 
 body {
   @include blueprint-typography(true);

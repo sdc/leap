@@ -1,0 +1,13 @@
+#personal_details
+  %h3 Personal Details
+  %dl
+    %dt Name:
+    %dd= @topic.name
+    %dt Birth Date:
+    %dd= @topic.date_of_birth.strftime("%d %B %Y")
+    %dt Address:
+    %dd= (@topic.address + [@topic.town,@topic.postcode]).reject{|x|x.blank?}.join(", ")
+    %dt Mobile:
+    %dd= @topic.mobile_number or "-"
+    %dt Next of Kin:
+    %dd= @topic.next_of_kin or "-"
