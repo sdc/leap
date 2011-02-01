@@ -1,8 +1,12 @@
 #side_pane {
-
+ 
   h1 {
     font-size: 20px;
     @include text-shadow;
+    margin-bottom:0;
+  }
+
+  h1,h2,h3,h4,h5,.person_photo{
     text-align: center;
   }
   
