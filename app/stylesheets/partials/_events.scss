@@ -3,7 +3,7 @@
   @include hover-link;
 }
 
-article.event {
+.event {
   @include column(19);
   margin-bottom: 9px;
   border: 2px solid $border-color;
