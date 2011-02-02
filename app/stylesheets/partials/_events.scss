@@ -113,8 +113,8 @@
   background-color: #ccc
 }
 
-.bg_reminder {background-color: #fbb }
-.bg_complete {background-color: #eea }
-.bg_success  {background-color: #bfb }
-.bg_fail     {background-color: #aaa }
-.bg_active   {background-color: #bbf }
+.current     {background-color: #eed }
+.complete    {background-color: #ded }
+.incomplete  {background-color: #edd }
+.unknown     {background-color: #ddd }
+.not_started {background-color: #dde }

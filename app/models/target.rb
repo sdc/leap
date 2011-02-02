@@ -39,9 +39,10 @@ class Target < ActiveRecord::Base
     return ["Due", target_date]
   end
 
-  # Returns the background class for displaying this event, it is +bg_reminder+ unless it is a completion event, when it is +bg_complete+.
-  def background_class
-    complete_date ? "bg_complete" : "bg_reminder"
+  # Returns the status for this event, it is +:current+ unless it is a completion event, when it is +:complete+.
+  # TODO: Have an incomplete status too.
+  def status
+    complete_date ? :complete : :current
   end
 
   # Returns the partial to render for the details pane

@@ -1,4 +1,4 @@
-%div{:style => defined?(hidden) && 'none',:class => event.background_class}[event]
+%div{:style => defined?(hidden) && 'none',:class => event.status}[event]
   %div[event.eventable]
     %header{:class => event.subtitle ? "subtitle" : nil}
       %h1.icon= image_tag(event.icon_url, :size => "48x48", :alt => event.title, :title => event.title)

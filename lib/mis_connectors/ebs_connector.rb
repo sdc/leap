@@ -54,13 +54,13 @@ class MisConnector
       course = get_course(pu.uio_id)
       pc= PersonCourse.find_or_create_by_person_id_and_course_id(@iperson.id,course.id)
       if pu.unit_type == "A" 
-        pc.update_attributes(:status => "application",
+        pc.update_attributes(:status => :not_started,
                              :application_date => pu.created_date
                             )
       elsif pu.unit_type == "R"
         pc.update_attributes(:enrolment_date => pu.created_date,
-                             :status => Ilp2::Application.config.mis_progress_codes.select{|k,v| v.include?(pu.progress_code)}[0][0],
-                             :end_date => pu.progress_date) unless pc.status == "active"
+                             :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
+                             :end_date => pu.progress_date) unless pc.status == :not_started
       end
     end
   end
