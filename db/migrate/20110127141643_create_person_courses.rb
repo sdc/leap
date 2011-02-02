@@ -6,7 +6,7 @@ class CreatePersonCourses < ActiveRecord::Migration
       t.datetime :application_date
       t.datetime :enrolment_date
       t.datetime :end_date
-
+      t.string   :status
       t.timestamps
     end
   end

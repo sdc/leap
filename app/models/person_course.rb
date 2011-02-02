@@ -28,4 +28,12 @@ class PersonCourse < ActiveRecord::Base
     course.name
   end
 
+  def background_class
+    case status
+    when "active"  : "bg_status"
+    when "success" : "bg_success"
+    when "fail"    : "bg_fail"
+    end
+  end
+
 end
