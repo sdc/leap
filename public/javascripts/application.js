@@ -56,5 +56,8 @@ document.observe("dom:loaded", function(){
       watch_events("events");
     })
   })
+  $('person_photo').down('img').observe("load", function(){
+    event.findElement('img').appear();
+  })
 })
 
