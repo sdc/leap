@@ -3,7 +3,7 @@
   @include hover-link;
 }
 
-article.event {
+.event {
   @include column(19);
   margin-bottom: 9px;
   border: 2px solid $border-color;
@@ -113,9 +113,8 @@ article.event {
   background-color: #ccc
 }
 
-.bg_reminder {
-  background-color: #fbb;
-}
-.bg_complete {
-  background-color: #eea;
-}
+.current     {background-color: #eed }
+.complete    {background-color: #ded }
+.incomplete  {background-color: #edd }
+.unknown     {background-color: #ddd }
+.not_started {background-color: #dde }

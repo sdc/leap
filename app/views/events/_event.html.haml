@@ -1,4 +1,4 @@
-%article{:style => defined?(hidden) && 'none',:class => event.background_class}[event]
+%div{:style => defined?(hidden) && 'none',:class => event.status}[event]
   %div[event.eventable]
     %header{:class => event.subtitle ? "subtitle" : nil}
       %h1.icon= image_tag(event.icon_url, :size => "48x48", :alt => event.title, :title => event.title)
@@ -12,7 +12,7 @@
           .subtitle_date= pretty_date event.subtitle.last,false
     .body= raw event.body
     .buttons
-      = link_to image_tag("actions/event_open.png"), open_extended_event_url(event), :remote => true, :class => "extend_button", :observer => "false"
+      = link_to image_tag("actions/event_open.png"), open_extended_event_url(event,:person_id => @topic.uln), :remote => true, :class => "extend_button", :observer => "false"
       = image_tag "actions/event_opened.png", :class => "close_extend_button", :style => "display:none", :observer => "false"
     .attachments
       .inner

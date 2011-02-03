@@ -51,13 +51,16 @@ class MisConnector
     @iperson = Person.find_by_uln(uln)
     @eperson = Ebs::Person.where(:unique_learn_no => uln).first#.include(:people_units)
     @eperson.people_units.each do |pu|
-      puts pu.id
       course = get_course(pu.uio_id)
       pc= PersonCourse.find_or_create_by_person_id_and_course_id(@iperson.id,course.id)
       if pu.unit_type == "A" 
-        pc.update_attribute("application_date",pu.created_date)
+        pc.update_attributes(:status => :not_started,
+                             :application_date => pu.created_date
+                            )
       elsif pu.unit_type == "R"
-        pc.update_attribute("enrolment_date",pu.created_date)
+        pc.update_attributes(:enrolment_date => pu.created_date,
+                             :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
+                             :end_date => pu.progress_date) unless pc.status == :not_started
       end
     end
   end
