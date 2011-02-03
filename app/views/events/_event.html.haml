@@ -12,7 +12,7 @@
           .subtitle_date= pretty_date event.subtitle.last,false
     .body= raw event.body
     .buttons
-      = link_to image_tag("actions/event_open.png"), open_extended_event_url(event), :remote => true, :class => "extend_button", :observer => "false"
+      = link_to image_tag("actions/event_open.png"), open_extended_event_url(event,:person_id => @topic.uln), :remote => true, :class => "extend_button", :observer => "false"
       = image_tag "actions/event_opened.png", :class => "close_extend_button", :style => "display:none", :observer => "false"
     .attachments
       .inner
