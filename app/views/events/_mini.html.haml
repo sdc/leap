@@ -1,6 +1,6 @@
 %div{:class => classes_for(event) + ["mini"]}[event]
   .icon= image_tag(event.icon_url, :size => "24x24", :alt => event.title, :title => event.title)
+  %h1= event.title
   - if event.subtitle
-    .subtitle
-      %h2= [event.subtitle.first,pretty_date(event.subtitle.last)].join(" ")
+    %h2= [event.subtitle.first,pretty_date(event.subtitle.last)].join(" ")
   .body= raw event.body
