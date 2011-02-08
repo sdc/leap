@@ -24,6 +24,8 @@ class Event < ActiveRecord::Base
   belongs_to :parent, :class_name => "Event", :foreign_key => "parent_id"
   has_many :targets
 
+  symbolize :transition , :in => [:create,:start,:overdue,:complete,:drop], :methods => true, :scopes => true, :allow_nil => true
+
   scope :unique_eventable, group("eventable_id,eventable_type")
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id)}
@@ -33,7 +35,7 @@ class Event < ActiveRecord::Base
       if eventable.respond_to?(method) 
         m = eventable.method(method)
         if m.arity == 1
-          m.call(event_date)
+          m.call(transition)
         else
           m.call
         end
