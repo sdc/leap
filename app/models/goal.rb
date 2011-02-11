@@ -11,7 +11,7 @@ class Goal < ActiveRecord::Base
     "events/goal.png"
   end
 
-  def title(date)
+  def title
     "Goal"
   end
 
