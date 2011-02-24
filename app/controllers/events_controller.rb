@@ -4,6 +4,7 @@ class EventsController < ApplicationController
     @date = get_date + 1.day
     conds = {}
     conds[:eventable_type] = params[:eventable_type].keys if params[:eventable_type]
+    conds[:transition] = params[:transition].keys if params[:transition]
     @events = @topic.events.
       where("event_date <= ?", @date).
       where(conds).

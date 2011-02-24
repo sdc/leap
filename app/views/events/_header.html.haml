@@ -1,7 +1,14 @@
 = form_tag events_url, :method => :get, :id => "event_filter_form" do
-  - Event.group("eventable_type").map{|e| e.eventable_type }.each do|et|
-    = label_tag "eventable_type[#{et}]", et.pluralize
-    = check_box_tag "eventable_type[#{et}]", "1", ((params[:eventable_type] && params[:eventable_type][et]) or !params[:eventable_type])
+  %h4 Event Types
+  #eventable_selectors
+    - Event.group("eventable_type").map{|e| e.eventable_type }.each do |et|
+      = label_tag "eventable_type[#{et}]", et.tableize.humanize
+      = check_box_tag "eventable_type[#{et}]", "1", ((params[:eventable_type] && params[:eventable_type][et]) or !params[:eventable_type])
+  %h4 Transitions
+  #transition_selectors
+    - Event.group("transition").map{|e| e.transition }.each do |tr|
+      = label_tag "transition[#{tr}]", tr.to_s.humanize
+      = check_box_tag "transition[#{tr}]", "1", ((params[:transition] && params[:transition][tr]) or !params[:transition])
   /= link_to "Refresh", events_url(:since => @events.first ? @events.first.event_date : @date), :remote => true, :id => "update_posts"
   = submit_tag
   /.date_select= select_date @date - 1
