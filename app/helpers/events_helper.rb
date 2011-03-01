@@ -31,7 +31,7 @@ module EventsHelper
     return date.strftime("%H.%M %P")
   end
 
-  def event_filter_url(options = {})
+  def event_filter_url(topic,options = {})
     params = {:eventable_type => {}, :transition => {}}
     [:eventable_type,:transition].each do |k|
       if options[k]
@@ -42,7 +42,7 @@ module EventsHelper
         end
       end
     end
-    return events_url(params)
+    return person_events_url(topic,params)
   end
 
 end
