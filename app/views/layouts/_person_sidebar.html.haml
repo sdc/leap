@@ -2,7 +2,6 @@
 %h1= @topic.name
 %h5.quiet= @topic.uln
 %nav
-  %h3= debug(event_filter_url(:eventable_type => :target))
   = icon_link "Home"
   = icon_link "Events", person_events_url(@topic)
   = icon_link "Courses", event_filter_url(:eventable_type => :PersonCourse, :transition => :start)
