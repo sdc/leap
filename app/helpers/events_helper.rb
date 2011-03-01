@@ -31,4 +31,18 @@ module EventsHelper
     return date.strftime("%H.%M %P")
   end
 
+  def event_filter_url(options = {})
+    params = {:eventable_type => {}, :transition => {}}
+    [:eventable_type,:transition].each do |k|
+      if options[k]
+        if options[k].respond_to? "first"
+          options[k].each{|et|params[k][et] = 1}
+        else
+          params[k][options[k]] = 1
+        end
+      end
+    end
+    return events_url(params)
+  end
+
 end

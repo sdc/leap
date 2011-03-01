@@ -1,4 +1,4 @@
-= form_tag events_url, :method => :get, :id => "event_filter_form" do
+= form_tag events_url, :remote => true, :method => :get, :id => "event_filter_form", :class => "ajax_update_main_pane" do
   %h4 Event Types
   #eventable_selectors
     - Event.group("eventable_type").map{|e| e.eventable_type }.each do |et|
@@ -12,4 +12,4 @@
   /= link_to "Refresh", events_url(:since => @events.first ? @events.first.event_date : @date), :remote => true, :id => "update_posts"
   = submit_tag
   /.date_select= select_date @date - 1
-/= javascript_tag "new Form.Observer('event_filter_form', 0.3, function(form, value){form.request()})"
+= javascript_tag "new Form.Observer('event_filter_form', 0.3, function(form, value){form.request()})"

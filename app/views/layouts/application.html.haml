@@ -11,7 +11,7 @@
     = javascript_include_tag :defaults
     = csrf_meta_tag
   %body
-    .container
+    .container#main_container
       #side_pane= render :partial => "layouts/person_sidebar" if @topic
       #main_pane= yield
       #footer

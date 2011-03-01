@@ -34,6 +34,16 @@ function watch_events(e){
   })
 }
 
+function watch_main_pane_updaters(e){
+  $(e).select('.ajax_update_main_pane').each(function(element){
+    element.observe('ajax:complete', function(event){
+      $('main_pane').update(event.memo.responseText);
+      watch_events("events");
+      watch_main_pane_updaters(e);
+    })
+  })
+}
+
 // Submitting new target forms
 function init_new_target_form(element){
   $(element).observe('ajax:complete', function(event){
@@ -46,15 +56,10 @@ function init_new_target_form(element){
 
 document.observe("dom:loaded", function(){
   watch_events("events");
+  watch_main_pane_updaters("main_container");
   $('more_events').observe('ajax:complete', function(event){
     $('events').insert(event.memo.responseText);
     watch_events("events");
-  })
-  $$('nav .sidebar_button a').each(function(element){
-    element.observe('ajax:complete', function(event){
-      $('main_pane').update(event.memo.responseText);
-      watch_events("events");
-    })
   })
   $('person_photo').down('img').observe("load", function(){
     event.findElement('img').appear();
