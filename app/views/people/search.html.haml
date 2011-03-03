@@ -1,0 +1,8 @@
+%h1 Search
+- if @people
+  = render @people
+- else
+  - form_tag search_people_url, :method => :get do
+    = text_field_tag :q
+    = submit_tag
+

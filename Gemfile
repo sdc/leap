@@ -5,6 +5,7 @@ gem "compass", ">= 0.10.6"
 gem 'ruby-oci8'
 gem 'activerecord-oracle_enhanced-adapter'
 gem 'symbolize'
+gem 'scoped_search'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
