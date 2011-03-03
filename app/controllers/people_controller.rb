@@ -1,7 +1,7 @@
 class PeopleController < ApplicationController
 
   skip_before_filter :set_topic
-  before_filter      :person_set_topic
+  before_filter      :person_set_topic, :except => [:search]
 
   def show
     respond_to do |format|
@@ -12,6 +12,12 @@ class PeopleController < ApplicationController
           redirect_to "/images/noone.jpg"
         end
       end
+    end
+  end
+
+  def search
+    if params[:q]
+      @people = Person.search_for(params[:q])
     end
   end
 

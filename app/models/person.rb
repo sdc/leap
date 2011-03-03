@@ -2,6 +2,8 @@ class Person < ActiveRecord::Base
 
   include MisPerson
 
+  scoped_search :on => [:forename, :surname]
+
   has_many :events
   has_many :person_courses
   has_many :courses, :through => :person_courses
