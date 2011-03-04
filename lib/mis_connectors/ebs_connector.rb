@@ -11,7 +11,10 @@ module MisPerson
       "EBS connector"
     end
 
-    def import(uln)
+    def import(uln, options = {})
+      uln = uln.unique_learn_no if uln.kind_of? Ebs::Person
+      options.reverse_merge! :save => true, :courses => true
+      logger.info "Importing user #{uln}"
       if (ep = Ebs::Person.find_by_unique_learn_no(uln))
         @person = Person.find_or_create_by_uln(uln)
         @person.update_attributes(
@@ -28,13 +31,18 @@ module MisPerson
           :uln           => uln,
           :mis_id        => ep.id
         )
-        @person.save
-        @person.import_courses
+        @person.save if options[:save] 
+        @person.import_courses if options[:courses]
         return @person
       else
         return false
       end
     end
+ 
+    def mis_search_for(query)
+      Ebs::Person.search_for(query).limit(10).map{|p| import(p,:save => false, :courses => false)}
+    end
+
   end
 
   def photo_path
