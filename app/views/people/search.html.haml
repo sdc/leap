@@ -1,8 +1,12 @@
 %h1 Search
+- if params[:search_mis]
+  %h2 Extended
 - if @people
   = render @people
 - else
   - form_tag search_people_url, :method => :get do
     = text_field_tag :q
+    = check_box_tag :search_mis
+    Extended
     = submit_tag
 

@@ -17,7 +17,11 @@ class PeopleController < ApplicationController
 
   def search
     if params[:q]
-      @people = Person.search_for(params[:q])
+      if params[:search_mis] == "1"
+        @people = Person.mis_search_for(params[:q])
+      else
+        @people = Person.search_for(params[:q])
+      end
     end
   end
 

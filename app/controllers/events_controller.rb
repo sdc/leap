@@ -10,6 +10,10 @@ class EventsController < ApplicationController
       where(conds).
       order("event_date DESC").
       includes(:eventable)
+    respond_to do |f|
+      f.html
+      f.atom
+    end
   end
 
   def open_extended
