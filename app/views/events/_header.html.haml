@@ -12,4 +12,5 @@
   /= link_to "Refresh", events_url(:since => @events.first ? @events.first.event_date : @date), :remote => true, :id => "update_posts"
   = submit_tag
   /.date_select= select_date @date - 1
-= javascript_tag "new Form.Observer('event_filter_form', 0.3, function(form, value){form.request()})"
+  /= javascript_tag "new Form.Observer('event_filter_form', 0.3, function(form, value){form.request()})"
+  = link_to request.request_uri, request.request_uri
