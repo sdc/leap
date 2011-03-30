@@ -4,7 +4,7 @@
 # taken to be the event which inspired the target or towards which the target is working. 
 #
 # This model is eventable. It creates two events when set, one showing the creation of the target and one as a reminder of the target's
-# completion date. When it is completed it removes any other future events and creates a new event noting its completion.
+# completion date. When it is completed it new event noting its completion.
 #
 class Target < ActiveRecord::Base
 
@@ -12,31 +12,27 @@ class Target < ActiveRecord::Base
   belongs_to :event
 
   after_create do |target| 
-    target.events.create!(:event_date => created_at,  :parent_id => event_id)
-    target.events.create!(:event_date => target_date, :parent_id => event_id)
+    target.events.create!(:event_date => created_at,  :parent_id => event_id, :transition => :start)
+    target.events.create!(:event_date => target_date, :parent_id => event_id, :transition => :overdue)
   end
 
-  # Returns the target eventable icon url. This is always the same.
+  # Returns the target eventable icon url. Complete or not?
   def icon_url
-    complete_date ? "events/target-complete.png" : "events/target.png"
+    status == :complete ? "events/target-complete.png" : "events/target.png"
   end
 
-  # Returns the target eventable title. There are three possible titles depending on the event_date passed in:
-  # created_date::                       Target Set
-  # completed_date::                     Target Complete
-  # between created and completed_date:: Target Due
-  def title(date)
-    if complete_date
-      date <= created_at ? "Target Set" : date == complete_date ? "Target Complete" : "Target Due"
-    else
-      date <= created_at ? "Target Set" : "Target Due"
+  # Returns the target eventable title.
+  def title(tr)
+    case tr
+    when :complete : "Target Complete"
+    when :start    : "Target Set"
+    else "Target Due"
     end
   end
 
   # Returns the target eventable subtitle. This is the target due date unless the event is the completion of the target, when it is +nil+.
-  def subtitle(date)
-    return nil if date == complete_date
-    return ["Due", target_date]
+  def subtitle(tr)
+    return ["Due", target_date] unless [:start,:overdue].include?(tr)
   end
 
   # Returns the status for this event, it is +:current+ unless it is a completion event, when it is +:complete+.
@@ -50,12 +46,10 @@ class Target < ActiveRecord::Base
     [["Details","targets/details"]]
   end
 
-  # Run this afrer an event is completed. Any future events attached to this eventable are removed from the system (and returned). A
-  # new completion event is created.
+  # Run this after an event is completed to create the completion event.
   def notify_complete
     raise "Trying to notify completion of an incomplete Target (id:#{id})" unless complete_date
-    events.create!(:event_date => complete_date)
-    #events.where("event_date > ?",complete_date).each {|e| e.destroy}
+    events.create!(:event_date => complete_date, :transition => :complete)
   end
 
 end

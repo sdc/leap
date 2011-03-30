@@ -2,12 +2,12 @@
 %h1= @topic.name
 %h5.quiet= @topic.uln
 %nav
-    = icon_link "Home"
-    = icon_link "Events", person_events_url(@topic)
-    = icon_link "Courses"
-    = icon_link "Targets"
-    = icon_link "Reviews"
-    = icon_link "Timetable"
-    = icon_link "Qualifications"
-    = icon_link "Support"
-    = icon_link "Messages"
+  = icon_link "Home"
+  = icon_link "Events", person_events_url(@topic)
+  = icon_link "Courses", event_filter_url(@topic, {:eventable_type => :PersonCourse, :transition => :start})
+  = icon_link "Targets", event_filter_url(@topic, {:eventable_type => :Target})
+  = icon_link "Messages", event_filter_url(@topic, {:eventable_type => :Note})
+  = icon_link "Reviews"
+  = icon_link "Timetable"
+  = icon_link "Qualifications"
+  = icon_link "Support"
