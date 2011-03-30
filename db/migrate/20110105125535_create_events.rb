@@ -9,7 +9,12 @@ class CreateEvents < ActiveRecord::Migration
       t.string   :transition
       t.timestamps
     end
-    add_index(:events, :person_id,:eventable_type,:eventable_id,:event_date,:parent_id,:transition)
+    add_index :events, :person_id
+    add_index :events, :eventable_type
+    add_index :events, :eventable_id
+    add_index :events, :event_date
+    add_index :events, :parent_id
+    add_index :events, :transition
   end
 
   def self.down
