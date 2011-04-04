@@ -9,7 +9,13 @@ class EventsController < ApplicationController
       where("event_date <= ?", @date).
       where(conds).
       order("event_date DESC").
-      includes(:eventable)
+      includes(:eventable).
+      includes(:children => [:eventable])
+    respond_to do |f|
+      f.html
+      f.xml  { render :xml  => @events.to_xml( :include => :eventable) }
+      f.json { render :json => @events.to_json(:include => :eventable) }
+    end
   end
 
   def open_extended
