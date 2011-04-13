@@ -18,13 +18,13 @@ module MisPerson
           :forename      => ep.forename,
           :surname       => ep.surname,
           :middle_names  => ep.middle_names && ep.middle_names.split,
-	        :address       => [ep.address.address_line_1,ep.address.address_line_2,
-  		                       ep.address.address_line_3,ep.address.address_line_4].reject{|a| a.blank?},
-	        :town          => ep.address.town,
-	        :postcode      => [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" "),
-	        :mobile_number => ep.mobile_phone_number,
-	        :next_of_kin   => ep.fes_nok_contact_no,
-	        :date_of_birth => ep.date_of_birth,
+          :address       => [ep.address.address_line_1,ep.address.address_line_2,
+                             ep.address.address_line_3,ep.address.address_line_4].reject{|a| a.blank?},
+          :town          => ep.address.town,
+          :postcode      => [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" "),
+          :mobile_number => ep.mobile_phone_number,
+          :next_of_kin   => ep.fes_nok_contact_no,
+          :date_of_birth => ep.date_of_birth,
           :uln           => uln,
           :mis_id        => ep.id
         )
@@ -34,6 +34,19 @@ module MisPerson
       else
         return false
       end
+    end
+
+  end
+
+  def timetable_events(options = {})
+    from = options[:from] || Date.today.beginning_of_week
+    to   = options[:to  ] || from.end_of_week
+    Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T'], :planned_start_date => from..to).map do |s| 
+      TimetableEvent.create(
+        :title => s.description,
+        :start => s.actual_start_date || s.planned_start_date,
+        :end   => s.actual_end_date   || s.planned_end_date
+      )
     end
   end
 
