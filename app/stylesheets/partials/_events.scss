@@ -77,6 +77,12 @@
       #target_target_date {
         @include column(4)
       }
+      #target_complete_date_1i {
+        width: 54px;
+      }
+      input#complete {
+        width: 88px;
+      }
     }
     textarea {
       width: 250px;
