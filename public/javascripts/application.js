@@ -55,7 +55,7 @@ function init_new_target_form(element){
 }
 
 document.observe("dom:loaded", function(){
-  watch_events("events");
+  watch_events("main_pane");
   watch_main_pane_updaters("main_container");
   $('more_events').observe('ajax:complete', function(event){
     $('events').insert(event.memo.responseText);
@@ -64,5 +64,13 @@ document.observe("dom:loaded", function(){
   $('person_photo').down('img').observe("load", function(event){
     event.findElement('img').appear();
   })
+  $$('.timetable_event').each(function(e){
+    e.observe('mouseover', function(event){
+      event.findElement('.timetable_event').setStyle({'height' : 'auto'});
+    })
+    e.observe('mouseout', function(event){
+      te = event.findElement('.timetable_event');
+      te.setStyle({'height' : (te.readAttribute('o_height') + 'px')});
+    })
+  })
 })
-

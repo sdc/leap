@@ -1,0 +1,30 @@
+#hours {
+  @include prepend-top(18px);
+  @include column(1);
+  .hour {
+    height: 72px;
+    text-align: top;
+  }
+}
+#tt_day {
+  @include column(3);
+}
+
+#tt_day,#hours {
+  h2 {
+    font-size: 13px;
+    font-weight: bold;
+  }
+}
+
+.timetable_event {
+  @include column(3);
+  @include border-radius(5px);
+  @include box-shadow;
+  position: absolute;
+  border: 1px $border-color solid;
+  overflow: hidden;
+  .inner {
+    margin: 3px;
+  }
+}

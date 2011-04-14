@@ -45,7 +45,8 @@ module MisPerson
       TimetableEvent.create(
         :title => s.description,
         :start => s.actual_start_date || s.planned_start_date,
-        :end   => s.actual_end_date   || s.planned_end_date
+        :end   => s.actual_end_date   || s.planned_end_date,
+        :mark  => s.mark
       )
     end
   end

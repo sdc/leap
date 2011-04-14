@@ -1,4 +1,4 @@
-class RegistersController < ApplicationController
+class TimetablesController < ApplicationController
   
   def index
     if params[:date]
@@ -11,12 +11,10 @@ class RegistersController < ApplicationController
       @date = Date.today.at_beginning_of_week
       @end_date = @date.next_week
     end
-    @registers = @topic.register_event_details_slots.find(:all,:conditions => ["planned_start_date <= ? and planned_end_date >= ?",@end_date,@date])
+    @registers = @topic.timetable_events(:from => @date, :to => @end_date)
     respond_to do |format|
       format.html 
-      format.xml  { render :text => 
-	   (@registers.to_xml(:include => 
-		{:register_event => {}, :register_event_slot => {:methods => ["count_learners"]}})) }
+      format.xml { render :xml => @topic }
     end
   end
 
