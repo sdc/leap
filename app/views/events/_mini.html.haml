@@ -2,5 +2,8 @@
   .icon= image_tag(event.icon_url, :size => "24x24", :alt => event.title, :title => event.title)
   %h1= event.title
   - if event.subtitle
+    .target_date
+      %h2 Target date:
+      = f.date_select :due_date, :use_short_month => true, :order => [:day, :month, :year]  
     %h2= [event.subtitle.first,pretty_date(event.subtitle.last)].join(" ")
   .body= raw event.body
