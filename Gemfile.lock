@@ -97,7 +97,7 @@ DEPENDENCIES
   activerecord-oracle_enhanced-adapter
   compass (>= 0.10.6)
   haml-rails
-  rails (= 3.0.3)
+  rails
   rails_code_qa
   ruby-oci8
   sqlite3-ruby
