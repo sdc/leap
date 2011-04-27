@@ -13,4 +13,4 @@
   = submit_tag
   /.date_select= select_date @date - 1
   /= javascript_tag "new Form.Observer('event_filter_form', 0.3, function(form, value){form.request()})"
-  = link_to request.request_uri, request.request_uri
+  = link_to request.fullpath, request.fullpath
