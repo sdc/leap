@@ -61,7 +61,7 @@ document.observe("dom:loaded", function(){
     $('events').insert(event.memo.responseText);
     watch_events("events");
   })
-  $('person_photo').down('img').observe("load", function(){
+  $('person_photo').down('img').observe("load", function(event){
     event.findElement('img').appear();
   })
 })
