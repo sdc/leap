@@ -13,13 +13,10 @@ Ilp2::Application.routes.draw do
   end
   resources :people do
     resources :events
-<<<<<<< HEAD
     resources :timetables
-=======
     collection do
       get :search
     end
->>>>>>> search
   end
 
   match 'test'       => 'test#index', :as => :test
