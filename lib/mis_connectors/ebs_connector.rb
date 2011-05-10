@@ -41,7 +41,10 @@ module MisPerson
 
   end
 
+  # Instance methods
+
   def timetable_events(options = {})
+    logger.warn(options)
     from = options[:from] || Date.today.beginning_of_week
     to   = options[:to  ] || from.end_of_week
     Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T'], :planned_start_date => from..to).map do |s| 
@@ -49,14 +52,13 @@ module MisPerson
         :title => s.description,
         :start => s.actual_start_date || s.planned_start_date,
         :end   => s.actual_end_date   || s.planned_end_date,
-        :mark  => s.mark
+        :mark  => s.usage_code
       )
     end
+  end
  
-    def mis_search_for(query)
-      Ebs::Person.search_for(query).limit(10).map{|p| import(p,:save => false, :courses => false)}
-    end
-
+  def mis_search_for(query)
+    Ebs::Person.search_for(query).limit(10).map{|p| import(p,:save => false, :courses => false)}
   end
 
   def photo_path
