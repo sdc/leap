@@ -7,6 +7,9 @@ class TimetableEvent < SuperModel::Base
   def timetable_height
     ((self.end - start) /50).floor
   end
- 
+
+  def css_class
+    mark
+  end
 
 end
