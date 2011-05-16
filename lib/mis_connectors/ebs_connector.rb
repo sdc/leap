@@ -39,6 +39,10 @@ module MisPerson
       end
     end
 
+  def mis_search_for(query)
+    Ebs::Person.search_for(query).limit(10).map{|p| import(p,:save => false, :courses => false)}
+  end
+
   end
 
   # Instance methods
@@ -57,10 +61,6 @@ module MisPerson
     end
   end
  
-  def mis_search_for(query)
-    Ebs::Person.search_for(query).limit(10).map{|p| import(p,:save => false, :courses => false)}
-  end
-
   def photo_path
     return Ilp2::Application.config.mis_photo_path + "/" + mis_id.to_s + ".jpg"
   end
