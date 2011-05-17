@@ -2,4 +2,4 @@
   .inner
     %h2= slot.title
     %time= "#{slot.start.strftime('%H.%M')} - #{slot.end.strftime('%H.%M')}"
-    
+    .rooms= slot.rooms.join ", "
