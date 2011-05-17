@@ -35,13 +35,22 @@
   @include box-shadow;
   position: absolute;
   /*border: 1px $border-color solid;*/
-  background-color: #f6f6f6;
+  background-color: #C9D6F5;
   overflow: hidden;
+  text-align: left;
   .inner {
     margin: 3px;
   }
-  h2 {
-    background-color: #f6f6f6!important;
-    border: none!important;
+  .inner {
+    line-height: 1.2em;
+    h2 {
+      background-color: #C9D6F5!important;
+      border: none!important;
+      font-size: 11px!important;
+      text-align: left!important;
+    }
+    time {
+      font-size: 10px!important;
+    }
   }
 }
