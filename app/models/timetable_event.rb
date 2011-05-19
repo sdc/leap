@@ -8,8 +8,8 @@ class TimetableEvent < SuperModel::Base
     ((self.end - start) /50).floor
   end
 
-  def css_class
-    mark
+  def css_classes
+    ["mark_#{mark}","generic_mark_#{generic_mark}"]
   end
 
 end
