@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   def set_topic
     if @affiliation == "staff"
       if params[:person_id]
-        @topic = Person.get(params[:person_id]) or raise "No such user uln:#{params[:person_id]}"
+        @topic = Person.get(params[:person_id], true) or raise "No such user uln:#{params[:person_id]}"
       elsif params[:course_id]
         raise("Courses not implemented yet!")
       else
