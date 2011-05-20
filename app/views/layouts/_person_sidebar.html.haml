@@ -1,6 +1,6 @@
 #person_photo= image_tag("#{url_for(@topic)}.jpg", :size => "130x130", :style => "display:none")
 %h1= @topic.name
-%h5.quiet= @topic.uln
+%h5.quiet= @topic.mis_id
 %nav
   = icon_link "Home"
   = icon_link "Events", person_events_url(@topic)

@@ -11,12 +11,12 @@ module MisPerson
       "EBS connector"
     end
 
-    def import(uln, options = {})
-      uln = uln.unique_learn_no if uln.kind_of? Ebs::Person
+    def import(mis_id, options = {})
+      mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
       options.reverse_merge! :save => true, :courses => true
-      logger.info "Importing user #{uln}"
-      if (ep = Ebs::Person.find_by_unique_learn_no(uln))
-        @person = Person.find_or_create_by_uln(uln)
+      logger.info "Importing user #{mis_id}"
+      if (ep = Ebs::Person.find(mis_id))
+        @person = Person.find_or_create_by_mis_id(mis_id)
         @person.update_attributes(
           :forename      => ep.forename,
           :surname       => ep.surname,
@@ -28,8 +28,8 @@ module MisPerson
           :mobile_number => ep.mobile_phone_number,
           :next_of_kin   => ep.fes_nok_contact_no,
           :date_of_birth => ep.date_of_birth,
-          :uln           => uln,
-          :mis_id        => ep.id
+          :uln           => ep.unique_learn_no,
+          :mis_id        => mis_id
         )
         @person.save if options[:save] 
         @person.import_courses if options[:courses]
