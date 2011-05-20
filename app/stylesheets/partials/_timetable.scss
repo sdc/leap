@@ -34,24 +34,23 @@
   @include border-radius(5px);
   @include box-shadow;
   position: absolute;
-  /*border: 1px $border-color solid;*/
   background-color: #C9D6F5;
   overflow: hidden;
   text-align: left;
+  font-size: 10px!important;
   @include opacity(.85);
   .inner {
     margin: 3px;
   }
   .inner {
     line-height: 1.2em;
-    h2 {
-      background-color: #C9D6F5!important;
-      border: none!important;
-      font-size: 11px!important;
-      text-align: left!important;
+    .course_title {
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 5px;
     }
-    time {
-      font-size: 10px!important;
+    .rooms {
+      margin: 2px 0px;
     }
   }
   &.extended {
@@ -59,4 +58,14 @@
     z-index: 1000;
     @include box-shadow(#666666, 7px, 7px);
   }
+  &.generic_mark_Y {
+    background-color: #ccffcc;
+  }
+  &.generic_mark_N {
+    background-color: #ffcccc;
+  }
+  &.generic_mark_S {
+    background-color: #ffaa44;
+  }
 }
+
