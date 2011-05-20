@@ -38,6 +38,7 @@
   background-color: #C9D6F5;
   overflow: hidden;
   text-align: left;
+  @include opacity(.85);
   .inner {
     margin: 3px;
   }
@@ -52,5 +53,10 @@
     time {
       font-size: 10px!important;
     }
+  }
+  &.extended {
+    @include column(5);
+    z-index: 1000;
+    @include box-shadow(#666666, 7px, 7px);
   }
 }

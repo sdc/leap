@@ -15,11 +15,10 @@ document.observe("dom:loaded", function(){
   })
   $$('.timetable_event').each(function(e){
     e.observe('mouseover', function(event){
-      event.findElement('.timetable_event').setStyle({'height' : 'auto'});
+      event.findElement('.timetable_event').addClassName('extended')
     })
     e.observe('mouseout', function(event){
-      te = event.findElement('.timetable_event');
-      te.setStyle({'height' : (te.readAttribute('o_height') + 'px')});
+      event.findElement('.timetable_event').removeClassName('extended')
     })
   })
 })
