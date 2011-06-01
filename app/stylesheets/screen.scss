@@ -3,9 +3,10 @@
 @import "compass/css3";
 @import "compass/utilities/links";
 @import "partials/defaults";
-@import "partials/events";
 @import "partials/layout";
 @import "partials/home";
+@import "partials/events";
+@import "partials/timetable";
 
 body {
   @include blueprint-typography(true);

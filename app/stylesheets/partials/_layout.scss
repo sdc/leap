@@ -7,14 +7,9 @@
     @include prepend-top(1ex);
   }
 
-  h1,h2,h3,h4,h5,#person_photo{
-    text-align: center;
-  }
-  
   #person_photo{
     width: 130px;
     height: 130px;
-    margin-left:8px;
     background-image: url(/images/pic-loading.gif);
     background-position: 50% 50%;
     background-color: #fff;

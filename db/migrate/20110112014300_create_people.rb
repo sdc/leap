@@ -10,8 +10,8 @@ class CreatePeople < ActiveRecord::Migration
       t.string   :mobile_number
       t.string   :next_of_kin
       t.date     :date_of_birth
-      t.integer  :uln, :null => false
-      t.string   :mis_id
+      t.integer  :uln
+      t.string   :mis_id, :null => :false
       t.timestamps
     end
   end

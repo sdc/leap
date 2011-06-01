@@ -1,6 +1,6 @@
 #person_photo= image_tag("#{url_for(@topic)}.jpg", :size => "130x130", :style => "display:none")
 %h1= @topic.name
-%h5.quiet= @topic.uln
+%h5.quiet= @topic.mis_id
 %nav
   = icon_link "Home"
   = icon_link "Events", person_events_url(@topic)
@@ -8,6 +8,6 @@
   = icon_link "Targets", event_filter_url(@topic, {:eventable_type => :Target})
   = icon_link "Messages", event_filter_url(@topic, {:eventable_type => :Note})
   = icon_link "Reviews"
-  = icon_link "Timetable"
+  = icon_link "Timetable", person_timetables_url(@topic)
   = icon_link "Qualifications"
   = icon_link "Support"

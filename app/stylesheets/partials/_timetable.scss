@@ -1,0 +1,71 @@
+#hours {
+  @include prepend-top(18px);
+  @include column(1);
+  .hour {
+    height: 72px;
+    text-align: top;
+  }
+}
+#tt_day {
+  @include column(3);
+  background-image: url('../../images/timetable_grid.png');
+  background-position: 0 18px;
+  height: 964px;
+}
+
+#tt_day,#hours {
+  h2 {
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0;   
+  }
+}
+
+#tt_day {
+  h2 {
+    background-color: #fff;    
+    border: 1px $border-color solid;
+    text-align: center;
+  }
+}
+
+.timetable_event {
+  @include column(3);
+  @include border-radius(5px);
+  @include box-shadow;
+  position: absolute;
+  background-color: #C9D6F5;
+  overflow: hidden;
+  text-align: left;
+  font-size: 10px!important;
+  @include opacity(.85);
+  .inner {
+    margin: 3px;
+  }
+  .inner {
+    line-height: 1.2em;
+    .course_title {
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .rooms {
+      margin: 2px 0px;
+    }
+  }
+  &.extended {
+    @include column(5);
+    z-index: 1000;
+    @include box-shadow(#666666, 7px, 7px);
+  }
+  &.generic_mark_Y {
+    background-color: #ccffcc;
+  }
+  &.generic_mark_N {
+    background-color: #ffcccc;
+  }
+  &.generic_mark_S {
+    background-color: #ffaa44;
+  }
+}
+

@@ -2,6 +2,8 @@ class Person < ActiveRecord::Base
 
   include MisPerson
 
+  scoped_search :on => [:forename, :surname]
+
   has_many :events
   has_many :person_courses
   has_many :courses, :through => :person_courses
@@ -11,7 +13,7 @@ class Person < ActiveRecord::Base
   serialize :cars
 
   def to_param
-    uln.to_s
+    mis_id.to_s
   end
 
   def name(options = {})
@@ -25,8 +27,8 @@ class Person < ActiveRecord::Base
     names.join " "
   end
 
-  def Person.get(uln,fresh=false)
-    (fresh ? false : find_by_uln(uln)) or import(uln)
+  def Person.get(mis_id,fresh=false)
+    (fresh ? false : find_by_mis_id(mis_id)) or import(mis_id)
   end
 
 end

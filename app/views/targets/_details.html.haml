@@ -13,7 +13,7 @@
     %h2 Complete Date
     - unless target.complete_date
       = f.date_select :complete_date, :order => [:day,:month,:year], :use_short_month => true
-      = submit_tag "Complete"
+      = submit_tag "Complete", :id => "complete"
       = submit_tag "Drop"
     - else
       = pretty_date(target.complete_date)
