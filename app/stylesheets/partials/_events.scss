@@ -4,13 +4,17 @@
 }
 
 .event {
-  @include column(19);
+  @include column(20, true);
   margin-bottom: 9px;
-  border: 2px solid $border-color;
-  @include border-radius;
-  padding-top: 9px;
   line-height:1;
-
+  
+  &>div {
+    padding-top: 9px;  
+    border: 2px solid $border-color;
+    @include border-radius;
+    @include clearfix;  
+  }
+  
   h1,h2 {
     font-size: 13px;
     font-weight: bold;
