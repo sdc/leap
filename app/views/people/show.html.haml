@@ -1,4 +1,4 @@
-#personal_details
+#personal_details.person_home_full_block
   %h3 Personal Details
   %dl
     %dt Name:
@@ -11,3 +11,23 @@
     %dd= @topic.mobile_number or "-"
     %dt Next of Kin:
     %dd= @topic.next_of_kin or "-"
+#your_thoughts.person_home_full_block
+  %h3 What's on your mind?
+.person_home_container
+  .person_home_small_block
+    %h3 Next lesson
+.person_home_container.last
+  .person_home_small_block
+    %h3 Progress
+.person_home_container  
+  .person_home_small_block
+    %h3 Attendance
+.person_home_container.last
+  .person_home_small_block
+    %h3 Targets
+.person_home_container
+  .person_home_small_block
+    %h3 Advert
+.person_home_container.last
+  .person_home_small_block
+    %h3 Moodle Courses
