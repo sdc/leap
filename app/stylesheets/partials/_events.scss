@@ -55,7 +55,7 @@
     margin: 3px 15px;
     .tabs {
       margin: 5px 0;
-      @include column(17);
+      @include column(18);
       border-bottom: 1px solid lighten($border-color,33%);
       li {
         @include column(3);
