@@ -6,7 +6,7 @@ class PeopleController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        @next_timetable_event = @topic.timetable_events(:next).first
+        @next_timetable_event = @topic.timetable_events(:next)
       end
       format.jpg do
         if File.exists? @topic.photo_path

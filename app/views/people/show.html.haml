@@ -16,6 +16,14 @@
 .person_home_container
   .person_home_small_block
     %h3 Next lesson
+    - if @next_timetable_event
+      .timetable_start= @next_timetable_event.start.strftime('%H.%M')
+      .timetable_title= @next_timetable_event.title
+      .timetable_room= @next_timetable_event.rooms.join ", "
+      .timetable_desc 
+        %p cheese making for dummies
+    - else 
+      %p you have no current timetable events
 .person_home_container.last
   .person_home_small_block
     %h3 Progress

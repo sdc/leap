@@ -28,3 +28,25 @@ h3 {
 .person_home_container {
   @include column(10);
 }
+.timetable_start {
+  @include column(3);
+  font-size: 16px;
+  font-weight: bold;
+  margin-left:15px;
+}
+.timetable_title {
+  @include column(6);
+  font-size: 14px;
+  font-weight: bold;  
+}
+.timetable_room {
+  @include column(3);
+  clear: left;
+  font-size: 14px;
+  font-weight: bold;    
+  margin-left:15px;  
+}
+
+.timetable_desc {
+  @include column(6);
+}

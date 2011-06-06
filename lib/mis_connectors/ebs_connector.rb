@@ -49,9 +49,17 @@ module MisPerson
 
   def timetable_events(options = {})
     if options == :next
-      Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T']).
+      s = Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T']).
         where("planned_start_date > ?", Time.now).
-        order(:planned_start_date).limit(1)
+        order(:planned_start_date).first
+        TimetableEvent.create(
+          :title        => s.description,
+          :start        => s.actual_start_date || s.planned_start_date,
+          :end          => s.actual_end_date   || s.planned_end_date,
+          :mark         => s.usage_code,
+          :generic_mark => s.generic_mark,
+          :rooms        => s.rooms.map{|r| r.room_code}
+        )
     else
       from = options[:from] || Date.today.beginning_of_week
       to   = options[:to  ] || from.end_of_week
