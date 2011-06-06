@@ -35,7 +35,7 @@
   }
 
   .body {
-    @include column(12);
+    @include column(13);
   }
 
   header.subtitle+.body {
@@ -44,7 +44,10 @@
 
   .buttons {
     padding-top: 15px;
-    @include column(1,true);
+    display: inline;
+    float: left;
+    margin-right: 0;
+    width: 25px;
   }
 
   .extended {
