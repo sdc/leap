@@ -1,6 +1,3 @@
-h3 {
-  margin: 5px 0 0 10px;
-}
 .person_home_full_block, .person_home_small_block{
   border: $border-color 2px solid;
   @include clearfix;
@@ -8,11 +5,13 @@ h3 {
   background-color: #fff;
   margin: 0 0 10px 0;
 }
+.person_home_full_block {
+  padding: 10px;
+}
 #personal_details{
   dt{
     @include column(2);
     text-align: left;
-    margin-left: 15px;
   }
   dd{
     @include column(7);
@@ -20,13 +19,15 @@ h3 {
   }
 }
 .person_home_small_block {
-
+  padding: 10px;
+  margin: 0px;
 }
 .last {
   @include column(10, true);  
 }
 .person_home_container {
   @include column(10);
+  margin-bottom: 10px;
 }
 .timetable_start {
   @include column(3);
