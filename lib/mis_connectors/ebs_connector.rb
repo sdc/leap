@@ -48,31 +48,24 @@ module MisPerson
   # Instance methods
 
   def timetable_events(options = {})
-    if options == :next
-      s = Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T']).
+    reds = if options == :next
+      Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T']).
         where("planned_start_date > ?", Time.now).
-        order(:planned_start_date).first
-        TimetableEvent.create(
-          :title        => s.description,
-          :start        => s.actual_start_date || s.planned_start_date,
-          :end          => s.actual_end_date   || s.planned_end_date,
-          :mark         => s.usage_code,
-          :generic_mark => s.generic_mark,
-          :rooms        => s.rooms.map{|r| r.room_code}
-        )
+        order(:planned_start_date).limit(1)
     else
       from = options[:from] || Date.today.beginning_of_week
       to   = options[:to  ] || from.end_of_week
-      Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T'], :planned_start_date => from..to).map do |s| 
-        TimetableEvent.create(
-          :title        => s.description,
-          :start        => s.actual_start_date || s.planned_start_date,
-          :end          => s.actual_end_date   || s.planned_end_date,
-          :mark         => s.usage_code,
-          :generic_mark => s.generic_mark,
-          :rooms        => s.rooms.map{|r| r.room_code}
-        )
-      end
+      Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T'], :planned_start_date => from..to)
+    end
+    reds.map do |s| 
+      TimetableEvent.create(
+        :title        => s.description,
+        :start        => s.actual_start_date || s.planned_start_date,
+        :end          => s.actual_end_date   || s.planned_end_date,
+        :mark         => s.usage_code,
+        :generic_mark => s.generic_mark,
+        :rooms        => s.rooms.map{|r| r.room_code}
+      )
     end
   end
  
