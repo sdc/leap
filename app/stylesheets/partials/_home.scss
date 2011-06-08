@@ -40,3 +40,18 @@
   }
 }
 
+#attendance {
+  img {
+    @include column(6);
+  }
+  .percent {
+    @include column(3);
+    * {
+      margin: 0;
+    }
+    h1 {
+      @include text-shadow;
+      font-weight: bold;
+    }
+  }
+}
