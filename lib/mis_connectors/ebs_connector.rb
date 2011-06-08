@@ -41,8 +41,7 @@ module MisPerson
 
   def mis_search_for(query)
     Ebs::Person.search_for(query).limit(10).map{|p| import(p,:save => false, :courses => false)}
-  end
-
+  end 
   end
 
   # Instance methods
@@ -73,6 +72,7 @@ module MisPerson
     return Ilp2::Application.config.mis_photo_path + "/" + mis_id.to_s + ".jpg"
   end
 
+
   def import_courses
     mis_person.people_units.each do |pu|
       course = Course.get(pu.uio_id)
@@ -89,6 +89,23 @@ module MisPerson
     end
   end
 
+  def import_attendances
+    last_date = unless attendances.empty?
+      attendances.last.week_beginning
+    else
+      Date.civil(1900,1,1)
+    end
+    mis_person.attendances.
+      where("start_week > ?",last_date).
+      each do |att|
+        attendances.create(
+          :week_beginning => att.start_week,
+          :att_year   => att.attendance,
+          :att_3_week => att.attendance_last3wks,
+          :att_week   => att.attendance_weekly
+        )
+      end
+  end
 end
 
 module MisCourse
