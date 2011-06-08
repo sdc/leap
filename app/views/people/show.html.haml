@@ -33,10 +33,13 @@
   .person_home_container  
     #attendance.block
       %h3 Attendance
-      %img{:src => attendance_graph(@attendances)}
-      .percent
-        %h1= "#{@topic.attendances.last.att_year}%"
-        %h4.quiet= "at #{@topic.attendances.last.week_beginning}"
+      - unless @attendances.empty?
+        %img{:src => attendance_graph(@attendances)}
+        .percent
+          %h1= "#{@topic.attendances.last.att_year}%"
+          %h4.quiet= "at #{@topic.attendances.last.week_beginning}"
+      - else
+        %p You have no attendance data, yet.
   .person_home_container.last
     .block
       %h3 Targets
