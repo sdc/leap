@@ -1,53 +1,37 @@
-.person_home_full_block, .person_home_small_block{
+#person_home .block {
   border: $border-color 2px solid;
   @include clearfix;
   @include border-radius;
   background-color: #fff;
   margin: 0 0 10px 0;
-}
-.person_home_full_block {
   padding: 10px;
 }
-#personal_details{
-  dt{
-    @include column(2);
-    text-align: left;
-  }
-  dd{
-    @include column(7);
-    margin-left: 0;
-  }
-}
-.person_home_small_block {
-  padding: 10px;
-  margin: 0px;
-}
-.last {
-  @include column(10, true);  
-}
+
 .person_home_container {
   @include column(10);
   margin-bottom: 10px;
 }
-.timetable_start {
-  @include column(3);
-  font-size: 16px;
-  font-weight: bold;
-  margin-left:15px;
-}
-.timetable_title {
+
+#next_lesson {
+  h4{
+    @include column(3);
+    font-size: 18px;
+    font-weight: bold;    
+  }
+  h5 {
   @include column(6);
   font-size: 14px;
-  font-weight: bold;  
-}
-.timetable_room {
-  @include column(3);
-  clear: left;
-  font-size: 14px;
-  font-weight: bold;    
-  margin-left:15px;  
+  font-weight: normal;
+  }
 }
 
-.timetable_desc {
-  @include column(6);
+#personal_details{
+  dt{
+    @include column(3);
+    text-align: left;
+  }
+  dd{
+    @include column(6);
+  }
 }
+

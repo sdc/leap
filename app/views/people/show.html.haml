@@ -1,41 +1,41 @@
-#personal_details.person_home_full_block
-  %h3 Personal Details
-  %dl
-    %dt Name:
-    %dd= @topic.name
-    %dt Birth Date:
-    %dd= @topic.date_of_birth.strftime("%d %B %Y")
-    %dt Address:
-    %dd= (@topic.address + [@topic.town,@topic.postcode]).reject{|x|x.blank?}.join(", ")
-    %dt Mobile:
-    %dd= @topic.mobile_number or "-"
-    %dt Next of Kin:
-    %dd= @topic.next_of_kin or "-"
-#your_thoughts.person_home_full_block
-  %h3 What's on your mind?
-.person_home_container
-  .person_home_small_block
-    %h3 Next lesson
-    - if @next_timetable_event
-      .timetable_start= @next_timetable_event.start.strftime('%H.%M')
-      .timetable_title= @next_timetable_event.title
-      .timetable_room= @next_timetable_event.rooms.join ", "
-      .timetable_desc 
-        %p cheese making for dummies
-    - else 
-      %p You have no current timetable events.
-.person_home_container.last
-  .person_home_small_block
-    %h3 Progress
-.person_home_container  
-  .person_home_small_block
-    %h3 Attendance
-.person_home_container.last
-  .person_home_small_block
-    %h3 Targets
-.person_home_container
-  .person_home_small_block
-    %h3 Advert
-.person_home_container.last
-  .person_home_small_block
-    %h3 Moodle Courses
+#person_home
+  #personal_details.block
+    %h3 Personal Details
+    %dl
+      %dt Name:
+      %dd= @topic.name
+      %dt Birth Date:
+      %dd.last= @topic.date_of_birth.strftime("%d %B %Y")
+      %dt Address:
+      %dd= (@topic.address + [@topic.town,@topic.postcode]).reject{|x|x.blank?}.join(", ")
+      %dt Mobile:
+      %dd= @topic.mobile_number or "-"
+      %dt Next of Kin:
+      %dd= @topic.next_of_kin or "-"
+  #your_thoughts.block
+    %h3 What's on your mind?
+  .person_home_container
+    #next_lesson.block
+      %h3 Next lesson
+      - if @next_timetable_event
+        %h4= @next_timetable_event.start.strftime('%H.%M')
+        %h5= @next_timetable_event.title
+        %h4= @next_timetable_event.rooms.join ", "
+        %h5 A course
+      - else 
+        %p You have no current timetable events.
+  .person_home_container.last
+    .block
+      %h3 Progress
+  .person_home_container  
+    .block
+      %h3 Attendance
+  .person_home_container.last
+    .block
+      %h3 Targets
+  .person_home_container
+    .block
+      %h3 Advert
+  .person_home_container.last
+    .block
+      %h3 Moodle Courses
