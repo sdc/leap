@@ -12,6 +12,9 @@
       %dd= @topic.mobile_number or "-"
       %dt Next of Kin:
       %dd= @topic.next_of_kin or "-"
+    %p{:style => "margin:3px 0 0 0"}
+      Are any of your personal details incorrect?
+      = link_to "Notify us...", "cheese.com"
   #your_thoughts.block
     %h3 What's on your mind?
   .person_home_container
@@ -21,7 +24,7 @@
         %h4= @next_timetable_event.start.strftime('%H.%M')
         %h5= @next_timetable_event.title
         %h4= @next_timetable_event.rooms.join ", "
-        %h5 A course
+        %h5  A course
       - else 
         %p You have no current timetable events.
   .person_home_container.last

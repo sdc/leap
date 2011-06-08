@@ -17,15 +17,20 @@
     @include column(3);
     font-size: 18px;
     font-weight: bold;    
+    margin-bottom: 0;
   }
   h5 {
-  @include column(6);
-  font-size: 14px;
-  font-weight: normal;
+    @include column(6);
+    font-size: 14px;
+    font-weight: normal;
+    margin-bottom: 0;
   }
 }
 
 #personal_details{
+  dl{
+    @include clearfix;
+  }
   dt{
     @include column(3);
     text-align: left;
