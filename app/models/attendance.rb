@@ -21,7 +21,7 @@ class Attendance < ActiveRecord::Base
   end
 
   def subtitle
-    "#{att_week}%"
+    "#{att_year}%"
   end
 
   def body
