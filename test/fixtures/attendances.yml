@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  week_beginning: 2011-06-07
+  person_id: 1
+  att_year: 1
+  att_3_week: 1
+  att_week: 1
+
+two:
+  week_beginning: 2011-06-07
+  person_id: 1
+  att_year: 1
+  att_3_week: 1
+  att_week: 1

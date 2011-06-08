@@ -7,6 +7,7 @@ class Person < ActiveRecord::Base
   has_many :events
   has_many :person_courses
   has_many :courses, :through => :person_courses
+  has_many :attendances
   
   serialize :middle_names
   serialize :address

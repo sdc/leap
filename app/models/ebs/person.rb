@@ -13,5 +13,7 @@ class Ebs::Person < Ebs::Model
            :foreign_key => "person_code"
   has_many :unit_instance_occurrences, 
            :through => :people_units
+  has_many :attendances,
+           :foreign_key => "person_code"
 
 end
