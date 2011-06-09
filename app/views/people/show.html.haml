@@ -28,7 +28,7 @@
         %table
           %tr
             %th= @next_timetable_event.start.strftime('%H.%M')
-            %td= @next_timetable_event.title
+            %td= link_to @next_timetable_event.title, person_timetables_url(@topic)
           %tr
             %th= @next_timetable_event.rooms.join ", "
             %td  A course

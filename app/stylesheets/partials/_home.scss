@@ -13,12 +13,17 @@
 }
 
 #next_lesson {
+  cursor: pointer;
+  font-weight: bold;    
+  table {
+    margin: 0px;
+  }
   th{
-    font-size: 18px;
-    font-weight: bold;    
+    font-size: 20px;
+    width:190px;
   }
   td {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
