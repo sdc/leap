@@ -27,7 +27,7 @@
       - if @next_timetable_event
         %table
           %tr
-            %th= @next_timetable_event.start.strftime('%H.%M')
+            %th= @next_timetable_event.start.strftime('%H.%M%P')
             %td= link_to @next_timetable_event.title, person_timetables_url(@topic)
           %tr
             %th= @next_timetable_event.rooms.join ", "
