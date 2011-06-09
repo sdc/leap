@@ -25,10 +25,13 @@
     #next_lesson.block
       %h3 Next lesson
       - if @next_timetable_event
-        %h4= @next_timetable_event.start.strftime('%H.%M')
-        %h5= @next_timetable_event.title
-        %h4= @next_timetable_event.rooms.join ", "
-        %h5  A course
+        %table
+          %tr
+            %th= @next_timetable_event.start.strftime('%H.%M')
+            %td= @next_timetable_event.title
+          %tr
+            %th= @next_timetable_event.rooms.join ", "
+            %td  A course
       - else 
         %p You have no current timetable events.
   .person_home_container.last

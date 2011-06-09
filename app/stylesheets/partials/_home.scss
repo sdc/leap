@@ -13,17 +13,12 @@
 }
 
 #next_lesson {
-  h4{
-    @include column(3);
+  th{
     font-size: 18px;
     font-weight: bold;    
-    margin-bottom: 0;
   }
-  h5 {
-    @include column(6);
+  td {
     font-size: 14px;
-    font-weight: normal;
-    margin-bottom: 0;
   }
 }
 
