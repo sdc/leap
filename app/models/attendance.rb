@@ -17,7 +17,13 @@ class Attendance < ActiveRecord::Base
   end
 
   def status
-    :complete
+    if att_year > 89
+      :complete
+    elsif att_year > 84
+      :start
+    else
+      :overdue
+    end
   end
 
   def subtitle

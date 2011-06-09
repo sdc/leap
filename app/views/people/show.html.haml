@@ -38,7 +38,7 @@
     .block
       %h3 Progress
   .person_home_container  
-    #attendance.block
+    #attendance.block{:class => @attendances.empty? ? "blank" : @attendances.last.status}
       %h3 Attendance
       - unless @attendances.empty?
         %img{:src => attendance_graph(@attendances)}

@@ -38,9 +38,3 @@ form {
   border-top: 2px solid $border-color;
   clear:both;
 }
-
-.current     {background-color: #eed }
-.complete    {background-color: #cfc }
-.incomplete  {background-color: #edd }
-.unknown     {background-color: #ddd }
-.not_started {background-color: #dde }
