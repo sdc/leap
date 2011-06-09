@@ -55,3 +55,14 @@
     }
   }
 }
+
+#your_thoughts {
+  #note_body {
+    @include column(17);
+  }
+  input {
+    margin:0;
+    font-size: 18px;
+    color: $quiet-color;
+  }
+}

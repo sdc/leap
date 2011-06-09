@@ -17,6 +17,10 @@
       = link_to "Notify us...", "cheese.com"
   #your_thoughts.block
     %h3 What's on your mind?
+    = form_for @topic.notes.new do |f|
+      = f.hidden_field :person_id
+      = f.text_field :body 
+      = submit_tag "Post"
   .person_home_container
     #next_lesson.block
       %h3 Next lesson

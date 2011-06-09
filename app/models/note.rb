@@ -8,6 +8,7 @@
 class Note < ActiveRecord::Base
 
   has_many :events, :as => :eventable, :dependent => :destroy
+  belongs_to :person
 
   validates :person_id, :presence => true
 

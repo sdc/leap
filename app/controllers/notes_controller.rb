@@ -1,8 +1,8 @@
 class NotesController < ApplicationController
 
   def create
-    Note.create!(params[:note])
-    redirect_to events_url
+    a = Note.create!(params[:note])
+    redirect_to person_events_url(a.person)
   end
 
 end

@@ -8,6 +8,7 @@ class Person < ActiveRecord::Base
   has_many :person_courses
   has_many :courses, :through => :person_courses
   has_many :attendances
+  has_many :notes
   
   serialize :middle_names
   serialize :address
