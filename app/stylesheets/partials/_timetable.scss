@@ -1,3 +1,21 @@
+#timetable_date {
+  @include column(20, true);
+  p {
+    font-size: 13px;
+    font-weight: bold;
+  }
+  #previous_week {
+    @include prepend(1);
+    @include column(7);
+  }
+  #calendar {
+    @include column(9);
+  }
+  #next_week {
+    @include column(3, true);  
+  }
+}
+
 #hours {
   @include prepend-top(18px);
   @include column(1);
