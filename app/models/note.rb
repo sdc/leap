@@ -24,4 +24,8 @@ class Note < ActiveRecord::Base
     "Mumble"
   end
 
+  def sanitize_options
+    {:tags => [:b,:i,:strong,:em]}
+  end
+
 end

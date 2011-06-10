@@ -13,7 +13,10 @@
             .subtitle_date= pretty_date event.subtitle.last,false
         - else
           %h2= event.subtitle
-    .body= raw event.body
+    - if event.sanitize_options
+      .body= sanitize event.body, event.sanitize_options
+    - else
+      .body= raw event.body
     .buttons
       = link_to image_tag("actions/event_open.png"), open_extended_event_url(event,:person_id => @topic.mis_id), :remote => true, :class => "extend_button", :observer => "false"
       = image_tag "actions/event_opened.png", :class => "close_extend_button", :style => "display:none", :observer => "false"
