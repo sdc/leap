@@ -1,3 +1,10 @@
+#timetable_date
+  #previous_week
+    =link_to "< previous week", person_timetables_url(@topic,:date => @date - 1.week)
+  #calendar
+    %p calendar placeholder
+  #next_week
+    =link_to "next week >", person_timetables_url(@topic,:date => @date + 1.week)  
 #hours
   - 8.upto(20) do |h|
     .hour
