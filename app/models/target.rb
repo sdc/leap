@@ -10,6 +10,7 @@ class Target < ActiveRecord::Base
 
   has_many :events, :as => :eventable, :dependent => :destroy
   belongs_to :event
+  belongs_to :person
 
   after_create do |target| 
     target.events.create!(:event_date => created_at,  :parent_id => event_id, :transition => :start)

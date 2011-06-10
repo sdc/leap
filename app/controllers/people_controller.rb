@@ -8,6 +8,7 @@ class PeopleController < ApplicationController
       format.html do
         @next_timetable_event = @topic.timetable_events(:next).first
         @attendances = @topic.attendances
+        @targets = @topic.targets.limit(8)
       end
       format.jpg do
         if File.exists? @topic.photo_path
