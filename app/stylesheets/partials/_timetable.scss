@@ -11,6 +11,13 @@
   #calendar {
     @include column(9);
   }
+    input {
+    @include column(3);
+    }
+    input#woo {
+    @include column(1);
+    margin: 10px 10px 10px 0;
+    }
   #next_week {
     @include column(3, true);  
   }
