@@ -1,5 +1,7 @@
 class PersonCourse < ActiveRecord::Base
 
+  delegate :code, :to => :course
+
   belongs_to :person, :dependent => :destroy
   belongs_to :course, :dependent => :destroy
   has_many :events, :as => :eventable, :dependent => :destroy
@@ -33,6 +35,10 @@ class PersonCourse < ActiveRecord::Base
 
   def body
     course.name
+  end
+
+  def to_xml(options = {})
+    super({:include => :course}.merge(options))
   end
 
 end
