@@ -17,7 +17,7 @@
     input {
     @include column(3);
     }
-    input#woo {
+    input#calendar {
     @include column(1);
     margin: 10px 10px 10px 0;
     }
