@@ -1,18 +1,29 @@
 #timetable_date {
   @include column(20, true);
-  p {
+  a {
+    color: #333;
+    text-decoration: none;
     font-size: 13px;
-    font-weight: bold;
-  }
+    font-weight: bold;    
+  }  
   #previous_week {
     @include prepend(1);
     @include column(7);
+    margin-top: 10px;
   }
   #calendar {
     @include column(9);
   }
+    input {
+    @include column(3);
+    }
+    input#calendar {
+    @include column(1);
+    margin: 10px 10px 10px 0;
+    }
   #next_week {
-    @include column(3, true);  
+    @include column(3, true);
+    margin-top: 10px;
   }
 }
 
@@ -86,4 +97,5 @@
     background-color: #ffaa44;
   }
 }
+
 

@@ -2,7 +2,9 @@
   #previous_week
     =link_to "< previous week", person_timetables_url(@topic,:date => @date - 1.week)
   #calendar
-    %p calendar placeholder
+    =form_tag person_timetables_url(@topic), :method => :get do
+      =text_field_tag :date, @date
+      =submit_tag "go", :id => "calendar"
   #next_week
     =link_to "next week >", person_timetables_url(@topic,:date => @date + 1.week)  
 #hours
