@@ -13,6 +13,7 @@
     border: 2px solid $border-color;
     @include border-radius;
     @include clearfix;  
+    background-color: #ccc    
   }
   
   h1,h2 {
@@ -137,5 +138,4 @@
 }
 
 .event {
-  background-color: #ccc
 }
