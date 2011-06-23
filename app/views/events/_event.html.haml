@@ -1,10 +1,14 @@
-%div{:style => defined?(hidden) && 'none',:class => event.status}[event]
+%div{:style => defined?(hidden) && 'none',:class => [event.status, @multi ? "multi" : "single"]}[event]
   %div.inner[event.eventable]
     %header{:class => event.subtitle ? "subtitle" : nil}
       %h2.icon= image_tag(event.icon_url, :size => "48x48", :alt => event.title, :title => event.title)
       %time{:datetime => event.event_date.strftime("%Y-%m-%dT%H:%M:%S%z")}
         %h2.date= pretty_date event.event_date
         .time= pretty_time event.event_date
+      - if @multi
+        %h1.event_person
+          = image_tag("#{url_for(event.person)}.jpg", :size => "48x48")
+          = event.person.name
       %h1= event.title
       - if event.subtitle
         - if event.respond_to? :last

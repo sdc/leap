@@ -1,12 +1,14 @@
 class EventsController < ApplicationController
 
+  before_filter :set_scope, :only => [:index]
+
   def index
     @date = get_date + 1.day
     conds = {}
     conds[:eventable_type] = params[:eventable_type].keys if params[:eventable_type]
     conds[:transition] = params[:transition].keys if params[:transition]
-    @events = @topic.events.
-      where("event_date <= ?", @date).
+    @events =
+      @scope.where("event_date <= ?", @date).
       where(conds).
       order("event_date DESC").
       includes(:eventable).
@@ -39,6 +41,16 @@ class EventsController < ApplicationController
       end
     else
       Time.now.midnight
+    end
+  end
+
+  def set_scope
+    @scope = if (@affiliation == "staff" and params[:all])
+      @multi = true
+      Event.scoped
+    else
+      @multi = false
+      @topic.events
     end
   end
 

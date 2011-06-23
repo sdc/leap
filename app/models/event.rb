@@ -19,6 +19,7 @@ class Event < ActiveRecord::Base
   validates :eventable_id,   :presence => true
   validates :eventable_type, :presence => true
 
+  belongs_to :person
   belongs_to :eventable, :polymorphic => true
   has_many :children, :class_name => "Event", :foreign_key => "parent_id"
   belongs_to :parent, :class_name => "Event", :foreign_key => "parent_id"

@@ -15,7 +15,11 @@
     = csrf_meta_tag
   %body
     .container#main_container
-      #side_pane= render :partial => "layouts/person_sidebar" if @topic
+      #side_pane
+        - if @multi
+          = render :partial => "layouts/multi_sidebar"
+        - else
+          = render :partial => "layouts/person_sidebar" if @topic
       #main_pane= yield
       #footer
         %h3 Params

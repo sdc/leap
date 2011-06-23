@@ -17,7 +17,7 @@ body {
 }
 
 .container {
-//  @include showgrid;
+  @include showgrid;
   @include container;
   @include clearfix;
 }
