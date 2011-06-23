@@ -65,3 +65,14 @@
     color: $quiet-color;
   }
 }
+
+#moodle_course {
+  img {
+    @include column(2);
+  }
+  #moodle_course_list {
+    @include column(7,true);
+    height: 100px;
+    overflow:auto;
+  }
+}
