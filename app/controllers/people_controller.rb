@@ -9,6 +9,7 @@ class PeopleController < ApplicationController
         @next_timetable_event = @topic.timetable_events(:next).first
         @attendances = @topic.attendances
         @targets = @topic.targets.limit(8)
+        @moodle_courses = ActiveResource::Connection.new("http://172.21.4.85").get("/sdcmoodle2/webservice/rest/server.php?wstoken=e550aeec89ab34a83f1b19f94b171d3f&wsfunction=moodle_course_get_user_courses&username=si")["MULTIPLE"]["SINGLE"].map{|x| x["KEY"]}.map{|a| a.map{|b| [b["name"],b["VALUE"]]}}.map{|x| Hash[x]}.select{|x| x["visible"] == "1"}
       end
       format.jpg do
         if File.exists? @topic.photo_path
