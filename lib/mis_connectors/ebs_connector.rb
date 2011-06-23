@@ -29,7 +29,8 @@ module MisPerson
           :next_of_kin   => ep.fes_nok_contact_no,
           :date_of_birth => ep.date_of_birth,
           :uln           => ep.unique_learn_no,
-          :mis_id        => mis_id
+          :mis_id        => mis_id,
+          :username      => (ep.network_userid or mis_id)
         )
         @person.save if options[:save] 
         @person.import_courses if options[:courses]

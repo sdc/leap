@@ -12,6 +12,7 @@ class CreatePeople < ActiveRecord::Migration
       t.date     :date_of_birth
       t.integer  :uln
       t.string   :mis_id, :null => :false
+      t.string   :username
       t.timestamps
     end
   end
