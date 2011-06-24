@@ -4,7 +4,6 @@ class CreateGoals < ActiveRecord::Migration
       t.integer :person_id
       t.text :body
       t.string :status
-
       t.timestamps
     end
   end

@@ -11,6 +11,7 @@ class Target < ActiveRecord::Base
   has_many :events, :as => :eventable, :dependent => :destroy
   belongs_to :event
   belongs_to :person
+  belongs_to :set_by, :class_name => "Person", :foreign_key => "set_by_person_id"
 
   after_create do |target| 
     target.events.create!(:event_date => created_at,  :parent_id => event_id, :transition => :start)
@@ -51,6 +52,15 @@ class Target < ActiveRecord::Base
   def notify_complete
     raise "Trying to notify completion of an incomplete Target (id:#{id})" unless complete_date
     events.create!(:event_date => complete_date, :transition => :complete)
+  end
+
+  # If the target was set by someone else (a tutor), flag this.
+  def body
+    if (set_by.nil? or set_by == person)
+      self[:body]
+    else
+      "<b>Set by #{set_by.name}.</b> " + self[:body]
+    end
   end
 
 end
