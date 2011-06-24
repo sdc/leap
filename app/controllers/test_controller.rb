@@ -8,8 +8,7 @@ class TestController < ApplicationController
   def login
     session[:user_id] = params[:login]
     session[:user_affiliation] = params[:affiliation]
-    redirect_to events_url
+    redirect_to person_url(Person.find_by_mis_id(session[:user_id]))
   end
-
 
 end

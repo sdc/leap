@@ -3,7 +3,6 @@ class ContactLogs < ActiveRecord::Migration
     create_table :contact_logs do |t|
       t.integer :person_id
       t.text :body
-
       t.timestamps
     end
   end
