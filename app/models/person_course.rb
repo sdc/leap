@@ -26,15 +26,15 @@ class PersonCourse < ActiveRecord::Base
   end
 
   def title(tr)
-    case tr
-      when :create   then "Course Application"
-      when :start    then "Course Enrolment"
-      when :complete then "Course Complete" # TODO: distinguish between complete, w/d, incomplete etc
+    "#{course.code} " + case tr
+      when :create   then "Application"
+      when :start    then "Enrolment"
+      when :complete then "Complete" # TODO: distinguish between complete, w/d, incomplete etc
     end
   end
 
   def body
-    course.name
+    course.title
   end
 
   def to_xml(options = {})
