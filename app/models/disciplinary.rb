@@ -1,5 +1,3 @@
-
-
 class Disciplinary < ActiveRecord::Base
 
   has_many :events, :as => :eventable, :dependent => :destroy

@@ -11,6 +11,30 @@
   margin-bottom: 10px;
 }
 
+#personal_details{
+  dl{
+    @include clearfix;
+  }
+  dt{
+    @include column(3);
+    text-align: left;
+  }
+  dd{
+    @include column(6);
+  }
+}
+
+#your_thoughts {
+  #note_body {
+    @include column(17);
+  }
+  input {
+    margin:0;
+    font-size: 18px;
+    color: $quiet-color;
+  }
+}
+
 #next_lesson {
   cursor: pointer;
   font-weight: bold;    
@@ -23,19 +47,6 @@
   }
   td {
     font-size: 16px;
-  }
-}
-
-#personal_details{
-  dl{
-    @include clearfix;
-  }
-  dt{
-    @include column(3);
-    text-align: left;
-  }
-  dd{
-    @include column(6);
   }
 }
 
@@ -55,14 +66,14 @@
   }
 }
 
-#your_thoughts {
-  #note_body {
-    @include column(17);
+#targets{
+  img {
+    @include column(2);
   }
-  input {
-    margin:0;
-    font-size: 18px;
-    color: $quiet-color;
+  #target_list {
+    @include column(7,true);
+    height: 72px;
+    overflow:auto;
   }
 }
 
