@@ -9,10 +9,14 @@ class PeopleController < ApplicationController
         @next_timetable_event = @topic.timetable_events(:next).first
         @attendances = @topic.attendances
         @targets = @topic.targets.limit(8)
-        @moodle_courses = ActiveResource::Connection.new(Ilp2::Application.config.moodle_host).
-                         get("#{Ilp2::Application.config.moodle_path}/webservice/rest/server.php?" +
-                         "wstoken=#{Ilp2::Application.config.moodle_token}&wsfunction=moodle_course_get_user_courses&username=#{@topic.username}")["MULTIPLE"]["SINGLE"].
-                         map{|x| x["KEY"]}.map{|a| a.map{|b| [b["name"],b["VALUE"]]}}.map{|x| Hash[x]}.select{|x| x["visible"] == "1"}
+        begin
+          @moodle_courses = ActiveResource::Connection.new(Ilp2::Application.config.moodle_host).
+                           get("#{Ilp2::Application.config.moodle_path}/webservice/rest/server.php?" +
+                           "wstoken=#{Ilp2::Application.config.moodle_token}&wsfunction=moodle_course_get_user_courses&username=#{@topic.username}")["MULTIPLE"]["SINGLE"].
+                           map{|x| x["KEY"]}.map{|a| a.map{|b| [b["name"],b["VALUE"]]}}.map{|x| Hash[x]}.select{|x| x["visible"] == "1"}
+        rescue
+          @moodle_courses = false
+        end
       end
       format.jpg do
         if File.exists? @topic.photo_path

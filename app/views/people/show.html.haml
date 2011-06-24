@@ -61,6 +61,9 @@
   .person_home_container.last
     #moodle_course.block
       = image_tag "moodle.jpg"
-      #moodle_course_list      
-        - @moodle_courses.each do |mdl|
-          .mdl_course{:style => "font-weight: #{mdl["canedit"] == "1" ? "bold" : "normal"}"}= link_to mdl["fullname"], "http://172.21.4.85/sdcmoodle2/course/view.php?id=#{mdl["id"]}"
+      - if @moodle_courses
+        #moodle_course_list      
+          - @moodle_courses.each do |mdl|
+            .mdl_course{:style => "font-weight: #{mdl["canedit"] == "1" ? "bold" : "normal"}"}= link_to mdl["fullname"], "http://172.21.4.85/sdcmoodle2/course/view.php?id=#{mdl["id"]}"
+      - else
+        %p You have no current Moodle enrolments
