@@ -1,3 +1,7 @@
-= form_for ContactLog.new(:person_id => @topic.id) do |f|
+= form_for @topic.events.new(:eventable_type => "ContactLog") do |f|
   = f.text_area :body
+  = f.hidden_field :person_id
+  = f.hidden_field :eventable_type
+  = hidden_field_tag "event[contact_person_id]", @user.id
+  = hidden_field_tag :person_id, @topic.mis_id
   = submit_tag

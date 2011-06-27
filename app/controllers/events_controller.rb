@@ -34,6 +34,12 @@ class EventsController < ApplicationController
     render :partial => "#{params[:eventable_type].tableize}/new"
   end
 
+  def create
+    et = params[:event].delete(:eventable_type).tableize
+    @topic.send(et).create(params[:event])
+    redirect_to person_events_url(@topic)
+  end
+
   private
 
   def get_date

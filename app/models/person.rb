@@ -10,6 +10,7 @@ class Person < ActiveRecord::Base
   has_many :attendances
   has_many :notes
   has_many :targets
+  has_many :contact_logs
   
   serialize :middle_names
   serialize :address

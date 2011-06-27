@@ -9,6 +9,7 @@ class ContactLog < ActiveRecord::Base
 
   has_many :events, :as => :eventable, :dependent => :destroy
   belongs_to :person
+  belongs_to :contact, :class_name => "Person", :foreign_key => "contact_person_id"
 
   validates :person_id, :presence => true
 
@@ -21,7 +22,11 @@ class ContactLog < ActiveRecord::Base
 
   # Returns the note eventable  Title. This is always the same.
   def title
-    "Contact Log"
+    if contact
+      "Contact: #{contact.name}"
+    else
+      "Contact Log"
+    end
   end
 
 end
