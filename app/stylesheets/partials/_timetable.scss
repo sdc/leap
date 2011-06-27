@@ -8,11 +8,11 @@
   }  
   #previous_week {
     @include prepend(1);
-    @include column(7);
+    @include column(6);
     margin-top: 10px;
   }
   #calendar {
-    @include column(9);
+    @include column(10);
   }
     input {
     @include column(3);
