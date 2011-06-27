@@ -16,7 +16,7 @@ class Note < ActiveRecord::Base
 
   # Returns the note eventable icon URL. This is always the same.
   def icon_url
-    "events/mumble.png"
+    "events/notes.png"
   end
 
   # Returns the note eventable  Title. This is always the same.
