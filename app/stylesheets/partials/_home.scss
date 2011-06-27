@@ -4,6 +4,17 @@
   @include border-radius;
   margin: 0 0 10px 0;
   padding: 10px;
+  h4 {
+    @include column(2);
+    text-align: center;
+    margin: 0;
+  }
+  .left {
+    @include column(2); 
+  }
+  .right {
+    @include column(7,true);  
+  }
 }
 
 .person_home_container {
@@ -72,8 +83,18 @@
   }
   #target_list {
     @include column(7,true);
-    height: 72px;
+    height: 75px;
     overflow:auto;
+    .stu_target {
+      height: 20px;
+      .target_date {
+        @include column(2);
+        font-weight: bold;
+      }
+      .target_body {
+        @include column(4, true);
+      }
+    }
   }
 }
 
@@ -83,7 +104,7 @@
   }
   #moodle_course_list {
     @include column(7,true);
-    height: 100px;
+    height: 75px;
     overflow:auto;
   }
 }
