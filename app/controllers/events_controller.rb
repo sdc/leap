@@ -30,6 +30,10 @@ class EventsController < ApplicationController
     render @event
   end
 
+  def new
+    render :partial => "#{params[:eventable_type].tableize}/new"
+  end
+
   private
 
   def get_date
