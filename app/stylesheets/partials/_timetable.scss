@@ -14,13 +14,6 @@
   #calendar {
     @include column(10);
   }
-    input {
-    @include column(3);
-    }
-    input#calendar {
-    @include column(1);
-    margin: 10px 10px 10px 0;
-    }
   #next_week {
     @include column(3, true);
     margin-top: 10px;

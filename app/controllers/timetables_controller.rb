@@ -2,7 +2,11 @@ class TimetablesController < ApplicationController
   
   def index
     if params[:date]
-      @date = Date.parse(params[:date]).at_beginning_of_week
+      if params[:date]["year"]
+        @date = Date.civil((params[:date]["year"]).to_i,(params[:date]["month"]).to_i,(params[:date]["day"]).to_i).at_beginning_of_week
+      else
+        @date = Date.parse(params[:date]).at_beginning_of_week
+      end
       @end_date = @date.next_week
     elsif params[:start_date] and params[:end_date]
       @date = Date.parse(params[:start_date])
