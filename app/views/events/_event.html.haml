@@ -11,7 +11,7 @@
           = event.person.name
       %h1= event.title
       - if event.subtitle
-        - if event.respond_to? :last
+        - if event.subtitle.respond_to? :last
           %h2
             .subtitle_word= event.subtitle.first
             .subtitle_date= pretty_date event.subtitle.last,false
@@ -22,7 +22,7 @@
     - else
       .body= raw event.body
     .buttons
-      = link_to image_tag("actions/event_open.png"), open_extended_event_url(event,:person_id => @topic.mis_id), :remote => true, :class => "extend_button", :observer => "false"
+      = link_to image_tag("actions/event_open.png"), open_extended_event_url(event,:person_id => event.person.mis_id), :remote => true, :class => "extend_button", :observer => "false"
       = image_tag "actions/event_opened.png", :class => "close_extend_button", :style => "display:none", :observer => "false"
     .attachments
       .inner

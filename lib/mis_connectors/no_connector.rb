@@ -10,8 +10,8 @@ module MisPerson
       "No connector"
     end
 
-    def import(uln)
-      return Person.find_by_uln(uln) || false
+    def import(mis_id)
+      return Person.find_by_mis_id(mis_id) || false
     end
   end
 
@@ -20,7 +20,11 @@ module MisPerson
   end
 
   def import_courses
-      return Person.find_by_uln(uln) || false
+      return Person.find_by_mis_id(mis_id) || false
+  end
+  
+  def timetable_events(*junk)
+    return []
   end
 
 end
