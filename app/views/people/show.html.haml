@@ -48,13 +48,14 @@
       - else
         %p You have no attendance data, yet.
   .person_home_container.last
-    #target_list.block
-      %h3 Targets
-      %table
-        - @targets.each do |target|
-          %tr
-            %td= pretty_date target.target_date
-            %td= target.body
+    #targets.block
+      = image_tag "target_home.png"
+      #target_list 
+        %table
+          - @targets.each do |target|
+            %tr
+              %th= pretty_date target.target_date
+              %td= target.body
   .person_home_container
     .block
       %h3 Advert
