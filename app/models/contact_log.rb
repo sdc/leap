@@ -16,7 +16,7 @@ class ContactLog < ActiveRecord::Base
 
   # Returns the note eventable icon URL. This is always the same.
   def icon_url
-    "events/contact_log.png"
+    "events/contact_logs.png"
   end
 
   # Returns the note eventable  Title. This is always the same.
