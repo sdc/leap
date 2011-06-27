@@ -49,10 +49,10 @@
         %p You have no attendance data, yet.
   .person_home_container.last
     #targets.block
-      .left
+      .person_left
         %h4 Targets    
         = link_to image_tag("target_home.png"), event_filter_url(@topic, {:eventable_type => :Target})
-      .right      
+      .person_right      
         #target_list 
           - @targets.each do |target|
             .stu_target
@@ -63,10 +63,10 @@
       %h3 Advert
   .person_home_container.last
     #moodle_course.block
-      .left
+      .person_left
         %h4 Moodle
         = link_to image_tag("moodle.png"), "#{Ilp2::Application.config.moodle_host}#{Ilp2::Application.config.moodle_path}"
-      .right
+      .person_right
       - if @moodle_courses
         #moodle_course_list      
           - @moodle_courses.each do |mdl|

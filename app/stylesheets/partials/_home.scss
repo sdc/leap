@@ -8,11 +8,12 @@
     @include column(2);
     text-align: center;
     margin: 0;
+    font-size: 1.4em;
   }
-  .left {
+  .person_left {
     @include column(2); 
   }
-  .right {
+  .person_right {
     @include column(7,true);  
   }
 }
