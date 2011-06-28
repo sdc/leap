@@ -33,7 +33,7 @@
             %th= @next_timetable_event.rooms.join ", "
             %td  A course
       - else 
-        %p You have no current timetable events.
+        %b You have no current timetable events.
   .person_home_container.last
     .block
       %h3 Progress
@@ -46,7 +46,7 @@
           %h1= "#{@topic.attendances.last.att_year}%"
           %h4.quiet= "at #{@topic.attendances.last.week_beginning}"
       - else
-        %p You have no attendance data, yet.
+        %b You have no attendance data, yet.
   .person_home_container.last
     #targets.block
       .person_left
@@ -55,7 +55,7 @@
       .person_right      
         #target_list 
           - if @targets.empty?
-            %p You have no targets, yet.
+            %b You have no targets, yet.
           - else
             - @targets.each do |target|
               .stu_target
