@@ -8,7 +8,7 @@ class TestController < ApplicationController
   def login
     session[:user_id] = params[:login]
     session[:user_affiliation] = params[:affiliation]
-    redirect_to person_url(Person.find_by_mis_id(session[:user_id]))
+    redirect_to person_url(Person.get(session[:user_id]))
   end
 
 end
