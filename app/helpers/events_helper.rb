@@ -42,7 +42,11 @@ module EventsHelper
         end
       end
     end
-    return person_events_url(topic,params)
+    if options[:anchor]
+      return person_events_url(topic,params.merge(:anchor => options[:anchor]))
+    else
+      return person_events_url(topic,params)
+    end
   end
 
 end
