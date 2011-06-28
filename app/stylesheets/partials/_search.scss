@@ -1,8 +1,10 @@
-
-#search_notice {
-  text-align: center;
-}
-
-form { 
-  margin: 0.5em;
+.search_person {
+  a {
+    @include hover-link;
+  }
+  .person_photo {
+    img {
+      @include border-radius(4px);
+    }
+  }
 }
