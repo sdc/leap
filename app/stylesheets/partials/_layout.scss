@@ -59,14 +59,14 @@
     margin-bottom: 1ex;
   }
   .new_event_link {
-    @include column(4);
+    @include column(3);
     @include link-colors($font-color, mix($font-color,#00f));
     @include hover-link;
     .icon {
       @include column(1);
     }
     .text {
-      @include column(3,true);
+      @include column(2,true);
     }
   }
   .new_event {

@@ -1,10 +1,9 @@
 #event_controls
-  Create new:
   - Ilp2::Application.config.creatable_events.each do |et|
     = link_to new_event_url(:eventable_type => et, :person_id => @topic.mis_id), :class => "new_event_link", :remote => true do
       .icon= image_tag "icons/" + et.underscore.pluralize + ".png"
-      .text= et.humanize
-  = button_to_function "Filter Options", "Effect.toggle('event_filter_form','blind')"
+      .text= "New #{et.underscore.humanize}"
+  = link_to_function(image_tag("actions/filter.png") + "Toggle filters", "Effect.toggle('event_filter_form','blind')", :class => "new_event_link")
 #new_event_box
 = form_tag person_events_url(@topic), :method => :get, :id => "event_filter_form", :class => "ajax_update_main_pane", :style => "display:none" do
   %div
