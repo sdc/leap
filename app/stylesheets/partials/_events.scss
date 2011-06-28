@@ -1,6 +1,11 @@
-#more_events {
+#more_events_div {
   clear: both;
-  @include hover-link;
+  text-align:center;
+  font-size:14px;
+  font-weight: bold;
+  a {
+    @include hover-link;
+  }
 }
 
 .event {
