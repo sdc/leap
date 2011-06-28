@@ -46,11 +46,13 @@ function init_new_target_form(element){
 
 document.observe("dom:loaded", function(){
   watch_events("main_pane");
-  $('more_events').observe('ajax:complete', function(event){
-    $('more_events_div').remove();
-    $('events').insert(event.memo.responseText);
-    watch_events("events");
-  })
+  if($('more_events')){
+    $('more_events').observe('ajax:complete', function(event){
+      $('more_events_div').remove();
+      $('events').insert(event.memo.responseText);
+      watch_events("events");
+    })
+  };
   $$('.new_event_link').each(function(button){
     button.observe('ajax:complete', function(event){
       $('new_event_box').update(event.memo.responseText);

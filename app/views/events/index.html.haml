@@ -1,4 +1,9 @@
 - unless request.xhr?
   %header#event_header= render :partial => "header"
-#events= render @events
-#more_events_div= link_to raw("&darr; Load more events &darr;"), events_url(:date => @bottom_date), :remote => true, :id => "more_events"
+- if @events.empty?
+  #events
+    %br{:style => "clear:both"}
+    %h1 You don't have any events, yet!
+- else
+  #events= render @events
+  #more_events_div= link_to raw("&darr; Load more events &darr;"), events_url(:date => @bottom_date), :remote => true, :id => "more_events"
