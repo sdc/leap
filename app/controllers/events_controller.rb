@@ -10,10 +10,10 @@ class EventsController < ApplicationController
     @events =
       @scope.where("event_date <= ?", @date).
       where(conds).
-      order("event_date DESC").
-      includes(:eventable).
-      includes(:children => [:eventable])
-    @bottom_date = @events.last.event_date
+      order("event_date DESC")
+      #includes(:eventable).
+      #includes(:children => [:eventable])
+    @bottom_date = @events.last.event_date unless @events.empty?
     respond_to do |f|
       f.html
       f.xml  { render :xml  => @events.to_xml( :include => :eventable) }
