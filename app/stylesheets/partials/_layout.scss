@@ -43,7 +43,7 @@
 }
 
 #event_header {
-  #event_filter_form{
+  form{
     background: #fff;
     border: 1px solid $border-color;
     padding:1em;
@@ -67,6 +67,21 @@
     }
     .text {
       @include column(3,true);
+    }
+  }
+  .new_event {
+    .icon {
+      @include column(2);
+    }
+    textarea {
+      height: 48px;
+      @include column(14);
+    }
+    input,textarea {
+      margin-top:0;
+    }
+    .sumbit {
+      @include column(2);
     }
   }
 }
