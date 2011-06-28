@@ -1,0 +1,10 @@
+= form_for @topic.events.new(:eventable_type => "Disciplinary") do |f|
+  %h3
+    Log a disciplinary
+  .icon= image_tag "events/disciplinaries.png"
+  = f.text_area :body
+  = f.hidden_field :eventable_type
+  = hidden_field_tag :person_id, @topic.mis_id
+  .sumbit
+    = select_tag "event[level]", options_for_select([["One",1],["Two",2],["Three",3]])
+    = submit_tag "Add Log"

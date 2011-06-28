@@ -12,6 +12,7 @@ class Person < ActiveRecord::Base
   has_many :targets
   has_many :contact_logs
   has_many :goals
+  has_many :disciplinaries
   
   serialize :middle_names
   serialize :address
