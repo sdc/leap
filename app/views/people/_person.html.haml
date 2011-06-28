@@ -1,1 +1,4 @@
-%h3= link_to person.name, person_events_url(person)
+.search_person
+  = link_to person_events_url(person) do
+    .person_photo= image_tag("#{url_for(person)}.jpg", :size => "50x50")
+    %h3= person.name
