@@ -8,7 +8,7 @@ class Goal < ActiveRecord::Base
   end
 
   def icon_url
-    "events/goal.png"
+    "events/goals.png"
   end
 
   def title
