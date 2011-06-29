@@ -36,7 +36,10 @@ form {
 }
 
 #footer {
-  border-top: 2px solid $border-color;
+  border-top: 1px solid lighten($border-color, 40%);
+  color: lighten($font-color, 30%);
+  font-style: italic;
+  text-align: right;
   clear:both;
 }
 

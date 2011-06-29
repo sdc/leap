@@ -41,6 +41,12 @@ class EventsController < ApplicationController
     redirect_to person_events_url(@topic)
   end
 
+  def destroy
+    @event = Event.find(params[:id])
+    @event.destroy
+    redirect_to :back
+  end
+
   private
 
   def get_date
@@ -51,7 +57,7 @@ class EventsController < ApplicationController
         Time.parse(params[:date])
       end
     else
-      Time.now.midnight
+      Time.now.midnight + 2.years
     end
   end
 

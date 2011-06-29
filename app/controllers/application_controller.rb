@@ -10,9 +10,10 @@ class ApplicationController < ActionController::Base
   private
 
   def set_user
-    @user = session[:user_id] ? Person.get(session[:user_id]) : nil
+    #@user = session[:user_id] ? Person.get(session[:user_id]) : nil
+    @user = Person.get(10083332)
     @affiliation = session[:user_affiliation]
-    redirect_to test_url unless @user && @affiliation
+    #redirect_to test_url unless @user && @affiliation
   end
 
   def set_topic
