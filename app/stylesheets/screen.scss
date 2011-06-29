@@ -14,7 +14,16 @@ body {
   @include blueprint-utilities;
   @include blueprint-debug;
   @include blueprint-interaction; 
-  @include prepend-top;
+}
+
+#top_bar {
+  height: 30px;
+  background: #ddd;
+  .inner {
+    width: 950px;
+    margin: 0 auto;
+  }
+  margin-bottom:10px;
 }
 
 .container {

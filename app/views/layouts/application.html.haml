@@ -14,6 +14,10 @@
     = javascript_include_tag "home.js"
     = csrf_meta_tag
   %body
+    - if @affiliation == "staff"
+      #top_bar
+        .inner
+          = link_to "New search", search_people_url
     .container#main_container
       #side_pane
         - if @multi
