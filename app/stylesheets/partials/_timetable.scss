@@ -81,14 +81,33 @@
     @include box-shadow(#666666, 7px, 7px);
   }
   &.generic_mark_Y {
-    background-color: #ccffcc;
+    background-color: #84E88B;
+    .mark{
+      color: #2E7832;
+    }    
   }
   &.generic_mark_N {
     background-color: #ffcccc;
+    .mark{
+      color: #E32424;    
+    }
   }
   &.generic_mark_S {
-    background-color: #ffaa44;
+    background-color: #F0B837;
+    .mark{
+      color: #BF6702;    
+    }    
   }
 }
-
-
+.mark {
+  @include column(1);
+  font-size: 45px;
+  font-weight: bold;
+  height: 35px;
+  text-align: right;
+  position: absolute;
+  bottom: -5px;
+  right: 0px;
+  z-index: -100;
+  @include text-shadow
+}
