@@ -22,17 +22,18 @@
       %h2 Target date:
       = f.date_select :target_date, :use_short_month => true, :order => [:day, :month, :year]
       = submit_tag "Set"
-.tab.full_details{:style => "display:none"}
-  = link_to "Delete", event_url(event), :method => :delete
-  %h1 Event Details
-  %table
-    - event.attributes.each do |attr|
-      %tr
-        %th= attr.first
-        %td= attr.last
-  %h1= event.eventable.class.name
-  %table
-    - event.eventable.attributes.each do |attr|
-      %tr
-        %th= attr.first
-        %td= attr.last
+- if @affiliation == "staff"
+  .tab.full_details{:style => "display:none"}
+    = link_to "Delete", event_url(event), :method => :delete
+    %h1 Event Details
+    %table
+      - event.attributes.each do |attr|
+        %tr
+          %th= attr.first
+          %td= attr.last
+    %h1= event.eventable.class.name
+    %table
+      - event.eventable.attributes.each do |attr|
+        %tr
+          %th= attr.first
+          %td= attr.last
