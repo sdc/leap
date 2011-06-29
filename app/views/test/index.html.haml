@@ -1,19 +1,6 @@
-%h2 Test Controls
+%h2 Test Login
 
-%h3= link_to_function "Create Note", "Effect.toggle('create_note','blind')"
-#create_note{:style => "display:none"}
-  %div
-    = form_for Note.new do |f|
-      %div
-        %label Person Id
-      %div= f.text_field :person_id
-      %div
-        %label Body Text
-      %div= f.text_area :body
-      %div= submit_tag
-
-%h3= link_to_function "Login as someone", "Effect.toggle('login_as','blind')"
-#login_as{:style => "display:none"}
+#login_as
   %div
     = form_tag test_login_url do
       %div
