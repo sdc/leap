@@ -17,7 +17,10 @@
     - if @affiliation == "staff"
       #top_bar
         .inner
-          = link_to "New search", search_people_url
+          #new_search_link
+            = link_to search_people_url do
+              = image_tag "icons/search.png"
+              New Search
     .container#main_container
       #side_pane
         - if @multi

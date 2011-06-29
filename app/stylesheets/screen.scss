@@ -19,11 +19,15 @@ body {
 #top_bar {
   height: 30px;
   background: #ddd;
+  @include box-shadow;
   .inner {
     width: 950px;
     margin: 0 auto;
   }
-  margin-bottom:10px;
+  @include append-bottom;
+  a {
+    @include hover-link;
+  }
 }
 
 .container {
