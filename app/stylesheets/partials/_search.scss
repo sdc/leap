@@ -1,10 +1,23 @@
 .search_person {
+  @include column(6);
+  @include append-bottom;
+  h3,h5 {
+    margin-bottom: 0px;
+  }
   a {
-    @include hover-link;
+    text-decoration: none;
   }
   .person_photo {
+    text-align: center;
+    @include column(2);
     img {
       @include border-radius(4px);
     }
+  }
+  .details {
+    @include column(4,true);
+  }
+  .dob {
+    line-height: 13px;
   }
 }

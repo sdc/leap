@@ -1,4 +1,8 @@
 .search_person
   = link_to person_events_url(person) do
     .person_photo= image_tag("#{url_for(person)}.jpg", :size => "50x50")
-    %h3= person.name
+    .details
+      %h3= person.name
+      %h5.quiet= person.mis_id
+      - if person.date_of_birth and person.date_of_birth != Date.new(1901,1,1)
+        %h5.dob.quiet= person.date_of_birth.strftime("%d %b %Y")
