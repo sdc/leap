@@ -12,13 +12,14 @@
   @include column(20, true);
   margin-bottom: 9px;
   line-height:1;
+  background-color: #ccc;    
+  @include border-radius;
   
   &>.inner{
     padding-top: 9px;  
     border: 2px solid $border-color;
     @include border-radius;
     @include clearfix;  
-    background-color: #ccc    
   }
   
   h1,h2 {
