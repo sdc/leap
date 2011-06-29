@@ -44,6 +44,7 @@
   header>h1 {
     @include column(3);
     &.event_person {
+      @include column(4);
       * {
         float: left
       }
@@ -60,10 +61,10 @@
 
   &.multi {
     .body {
-      @include column(9,true);
+      @include column(8,true);
     }
     header.subtitle+.body {
-      @include column(7,true);
+      @include column(6,true);
     }
   }
 
