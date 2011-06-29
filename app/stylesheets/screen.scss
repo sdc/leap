@@ -28,6 +28,12 @@ body {
   a {
     @include hover-link;
   }
+  #new_search_link {
+    @include column(3);
+  }
+  #login_name {
+    float: right;
+  }
 }
 
 .container {
