@@ -8,10 +8,6 @@ class Attendance < ActiveRecord::Base
     attendance.events.create!(:event_date => week_beginning, :transition => :complete)
   end
 
-  def icon_url
-    "events/attendance.png" 
-  end
-
   def title
     "Weekly Attendance"
   end

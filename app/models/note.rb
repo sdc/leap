@@ -10,11 +10,6 @@ class Note < Eventable
 
   after_create {|note| note.events.create!(:event_date => created_at)}
 
-  # Returns the note eventable  Title. This is always the same.
-  def title
-    "Mumble"
-  end
-
   def sanitize_options
     {:tags => [:b,:i,:strong,:em]}
   end

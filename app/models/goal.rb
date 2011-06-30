@@ -4,12 +4,4 @@ class Goal < Eventable
     target.events.create!(:event_date => created_at)
   end
 
-  def title
-    "Goal"
-  end
-
-  def status
-    :current
-  end
-
 end
