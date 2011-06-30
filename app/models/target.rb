@@ -6,11 +6,9 @@
 # This model is eventable. It creates two events when set, one showing the creation of the target and one as a reminder of the target's
 # completion date. When it is completed it new event noting its completion.
 #
-class Target < ActiveRecord::Base
+class Target < Eventable
 
-  has_many :events, :as => :eventable, :dependent => :destroy
   belongs_to :event
-  belongs_to :person
   belongs_to :set_by, :class_name => "Person", :foreign_key => "set_by_person_id"
 
   after_create do |target| 
