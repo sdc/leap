@@ -82,16 +82,18 @@ in the related line in the _Events_ table.
 
 [options="header"]
 |===========================================================================================
-|Field          |Type    |Index  |Null|Notes
-|id             |integer |Primary|No  |
-|person_id      |integer |Yes    |Yes |Foreign Key to People
-|body           |text    |No     |Yes |
-|actions        |text    |No     |No  |
-|reflection     |text    |No     |Yes |
-|target_date    |datetime|No     |Yes |
-|complete_date  |datetime|No     |Yes |
-|created_at     |datetime|No     |No  |
-|modified_at    |datetime|No     |No  |
+|Field           |Type    |Index  |Null|Notes
+|id              |integer |Primary|No  |
+|person_id       |integer |Yes    |Yes |Foreign Key to People
+|event_id        |integer |Yes    |Yes |Foreign Key to the Events - the event the target is set against
+|body            |text    |No     |Yes |
+|actions         |text    |No     |Yes |
+|reflection      |text    |No     |Yes |
+|target_date     |datetime|No     |Yes |
+|complete_date   |datetime|No     |Yes |
+|set_by_person_id|integer |No     |Yes |Foreign Key to People - the person the target was set by
+|created_at      |datetime|No     |No  |
+|modified_at     |datetime|No     |No  |
 |===========================================================================================
 
 ==== Goals
@@ -107,6 +109,18 @@ in the related line in the _Events_ table.
 |modified_at    |datetime|No     |No  |
 |===========================================================================================
 
+==== Contact Logs
+
+[options="header"]
+|===========================================================================================
+|Field            |Type    |Index  |Null|Notes
+|id               |integer |Primary|No  |
+|person_id        |integer |Yes    |Yes |Foreign Key to People
+|body             |text    |No     |Yes |
+|contact_person_id|string  |Yes    |Yes |Foreign Key to People - the person contacted
+|created_at       |datetime|No     |No  |
+|modified_at      |datetime|No     |No  |
+|===========================================================================================
 
 
 === MIS Shadow Tables

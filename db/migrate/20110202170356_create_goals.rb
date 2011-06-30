@@ -6,6 +6,7 @@ class CreateGoals < ActiveRecord::Migration
       t.string :status
       t.timestamps
     end
+    add_index :goals, :person_id
   end
 
   def self.down

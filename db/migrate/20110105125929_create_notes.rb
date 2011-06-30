@@ -5,6 +5,7 @@ class CreateNotes < ActiveRecord::Migration
       t.text :body
       t.timestamps
     end
+    add_index :notes, :person_id
   end
 
   def self.down

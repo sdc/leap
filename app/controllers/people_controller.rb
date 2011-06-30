@@ -8,7 +8,7 @@ class PeopleController < ApplicationController
       format.html do
         @next_timetable_event = @topic.timetable_events(:next).first
         @attendances = @topic.attendances
-        @targets = @topic.targets.limit(8)
+        @targets = @topic.targets.limit(8).where("complete_date is null")
         begin
           @moodle_courses = ActiveResource::Connection.new(Ilp2::Application.config.moodle_host).
                            get("#{Ilp2::Application.config.moodle_path}/webservice/rest/server.php?" +

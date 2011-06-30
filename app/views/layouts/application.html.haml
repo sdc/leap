@@ -21,6 +21,11 @@
             = link_to search_people_url do
               = image_tag "icons/search.png"
               New Search
+          #login_name
+            logged in as
+            = link_to @user.name, person_url(@user)
+            = "(#{@affiliation})" unless @affiliation == "student"
+              
     .container#main_container
       #side_pane
         - if @multi

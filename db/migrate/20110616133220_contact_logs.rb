@@ -6,6 +6,8 @@ class ContactLogs < ActiveRecord::Migration
       t.text :body
       t.timestamps
     end
+    add_index :contact_logs, :person_id
+    add_index :contact_logs, :contact_person_id
   end
 
   def self.down
