@@ -58,7 +58,7 @@
             %b You have no targets, yet.
           - else
             - @targets.each do |target|
-              .stu_target
+              .stu_target{:class => target.complete_date ? "complete" : "current"}
                 .target_date= pretty_date target.target_date
                 .target_body= link_to truncate(target[:body], :length => 25), event_filter_url(@topic, {:eventable_type => :Target, :anchor => dom_id(target.events.last)})
   .person_home_container
