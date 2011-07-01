@@ -87,6 +87,7 @@
     height: 75px;
     overflow:auto;
     .stu_target {
+      @include border-radius(7px);    
       height: 20px;
       .target_date {
         @include column(2);
