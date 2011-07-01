@@ -34,7 +34,13 @@ class PersonCourse < ActiveRecord::Base
   end
 
   def body
-    course.title
+    "<div class='course_title'><b>#{course.title}</b></div>" +
+    "<div class='course_status'>#{status.humanize}</div>" +
+    "<div class='course_start'>Start Date: " +
+    "#{enrolment_date.strftime("%d %b %Y")}</div>" +
+    "<div class='course_end'>End Date: " +
+    "#{end_date.strftime("%d %b %Y")}</div>"
+  
   end
 
   def to_xml(options = {})
