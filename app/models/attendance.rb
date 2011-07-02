@@ -34,4 +34,8 @@ class Attendance < ActiveRecord::Base
     "<dl><dt>This week:</dt><dd>#{att_week}%</dd><dt>Last three weeks:</dt><dd>#{att_3_week}%</dd></dl>"
   end
 
+  def icon_url 
+    "events/attendances.png"
+  end
+
 end

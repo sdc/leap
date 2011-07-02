@@ -11,7 +11,7 @@
           = event.person.name
       %h1= event.title
       - if event.subtitle
-        - if event.subtitle.respond_to? :last
+        - if event.subtitle.kind_of? Array
           %h2
             .subtitle_word= event.subtitle.first
             .subtitle_date= pretty_date event.subtitle.last,false
