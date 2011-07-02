@@ -33,7 +33,7 @@ class Event < ActiveRecord::Base
 
   delegate :body, :to => :eventable
 
-  [:title,:subtitle,:icon_url,:body,:background_class,:extra_panes,:status,:sanitize_options].each do |method|
+  [:title,:subtitle,:icon_url,:body,:background_class,:extra_panes,:status,:sanitize_options,:body_partial].each do |method|
     define_method method do
       if eventable.respond_to?(method) 
         m = eventable.method(method)

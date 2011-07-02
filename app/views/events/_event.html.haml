@@ -17,7 +17,9 @@
             .subtitle_date= pretty_date event.subtitle.last,false
         - else
           %h2= event.subtitle
-    - if event.sanitize_options
+    - if event.body_partial
+      .body= render :partial => event.eventable, :locals => {:event => event}
+    - elsif event.sanitize_options
       .body= sanitize event.body, event.sanitize_options
     - else
       .body= raw event.body

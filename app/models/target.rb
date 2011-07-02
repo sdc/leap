@@ -52,13 +52,8 @@ class Target < Eventable
     events.create!(:event_date => complete_date, :transition => :complete)
   end
 
-  # If the target was set by someone else (a tutor), flag this.
-  def body
-    if (set_by.nil? or set_by == person)
-      self[:body]
-    else
-      "<b>Set by #{set_by.name}.</b> " + self[:body]
-    end
+  def body_partial
+    true
   end
 
 end

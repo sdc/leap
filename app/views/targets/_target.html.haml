@@ -1,0 +1,9 @@
+- unless target.set_by.nil? or target.set_by == target.person
+  %b 
+    Set by 
+    = target.set_by.name
+%p= target.body
+- unless target.actions.blank?
+  %p
+    %b Actions: 
+    = target.actions

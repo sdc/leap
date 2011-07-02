@@ -26,16 +26,12 @@ class Attendance < ActiveRecord::Base
     "#{att_year}%"
   end
 
-  def body
-    "<img src='https://chart.googleapis.com/chart?" +
-    "chs=200x48&cht=ls&chco=0077CC&chf=bg,s,00000000&chd=t:" +
-    person.attendances.select{|a| a.week_beginning < week_beginning}.map{|a| a.att_year}.join(',') +
-    "' />" +
-    "<dl><dt>This week:</dt><dd>#{att_week}%</dd><dt>Last three weeks:</dt><dd>#{att_3_week}%</dd></dl>"
-  end
-
   def icon_url 
     "events/attendances.png"
+  end
+
+  def body_partial
+    true
   end
 
 end
