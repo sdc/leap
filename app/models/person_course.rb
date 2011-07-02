@@ -31,12 +31,8 @@ class PersonCourse < Eventable
     end
   end
 
-  def body
-    "<div class='course_title'><b>#{course.title}</b></div>" +
-    "<div class='course_status'>#{status.humanize}</div>" +
-    (enrolment_date ? "<div class='course_start'>Start Date: #{enrolment_date.strftime("%d %b %Y")}</div>" : "") +
-    (end_date ? "<div class='course_end'>End Date: #{end_date.strftime("%d %b %Y")}</div>" : "")
-  
+  def body_partial
+    true
   end
 
   def to_xml(options = {})

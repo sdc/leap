@@ -1,0 +1,11 @@
+%h6= person_course.course.title
+%h6= person_course.status.humanize
+- if person_course.enrolment_date
+  %b Start Date:
+  = person_course.enrolment_date.strftime("%d %B %Y")
+  %br
+- if person_course.end_date
+  %b End:date
+  = person_course.end_date.strftime("%d %B %Y")
+
+
