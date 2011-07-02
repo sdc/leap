@@ -25,7 +25,10 @@
   nav { 
     @include prepend-top;
     .sidebar_button{
+      @include append-bottom;
       @include column(4);
+      @include link-colors($font-color, mix($font-color,#00f));
+      @include hover-link;
       .icon {
         @include column(1);
       }
@@ -33,10 +36,6 @@
         @include column(3,true);
         font-size: 13px;
         font-weight: bold;
-        a {      
-          @include link-colors($font-color, mix($font-color,#00f));
-          @include hover-link;
-        }
       }
     }
   }

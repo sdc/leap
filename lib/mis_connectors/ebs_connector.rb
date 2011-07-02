@@ -13,7 +13,7 @@ module MisPerson
 
     def import(mis_id, options = {})
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
-      options.reverse_merge! :save => true, :courses => true
+      options.reverse_merge! :save => true, :courses => true, :attendances => true
       logger.info "Importing user #{mis_id}"
       if (ep = Ebs::Person.find(mis_id))
         @person = Person.find_or_create_by_mis_id(mis_id)
@@ -34,6 +34,7 @@ module MisPerson
         )
         @person.save if options[:save] 
         @person.import_courses if options[:courses]
+        @person.import_attendances if options[:attendances]
         return @person
       else
         return false

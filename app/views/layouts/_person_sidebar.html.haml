@@ -7,7 +7,7 @@
   = icon_link "Courses", event_filter_url(@topic, {:eventable_type => :PersonCourse, :transition => :start})
   = icon_link "Targets", event_filter_url(@topic, {:eventable_type => :Target})
   = icon_link "Contact Logs", event_filter_url(@topic, {:eventable_type => :ContactLog})
-  = icon_link "Disciplinaries", event_filter_url(@topic, {:eventable_type => :Disciplinary})
+  = icon_link "Positive Intervention", event_filter_url(@topic, {:eventable_type => :Disciplinary}), "disciplinaries"
   /= icon_link "Messages", event_filter_url(@topic, {:eventable_type => :Note})
   /= icon_link "Reviews"
   = icon_link "Timetable", person_timetables_url(@topic)

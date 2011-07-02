@@ -9,6 +9,7 @@
     text-align: center;
     margin: 0;
     font-size: 1.4em;
+    font-weight: bold;
   }
   .person_left {
     @include column(2); 
