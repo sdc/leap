@@ -64,17 +64,25 @@
 }
 
 #attendance {
-  img {
+  h3,img {
+    @include column(6,true);
+  }
+  .graph {
     @include column(6);
   }
   .percent {
-    @include column(3);
+    @include prepend-top;
+    @include column(3,true);
     * {
       margin: 0;
     }
     h1 {
       @include text-shadow;
+      @include column(3,true);
       font-weight: bold;
+    }
+    h4 {
+      @include column(3,true);
     }
   }
 }
