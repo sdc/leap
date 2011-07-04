@@ -49,17 +49,19 @@
 }
 
 #next_lesson {
+  img {
+    @include column(2);
+  }
   cursor: pointer;
   font-weight: bold;    
   table {
     margin: 0px;
   }
   th{
-    font-size: 20px;
-    width:190px;
+    font-size: 18px;
   }
   td {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 

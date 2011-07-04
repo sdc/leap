@@ -23,17 +23,22 @@
       = submit_tag "Post"
   .person_home_container
     #next_lesson.block
-      %h3 Next lesson
-      - if @next_timetable_event
-        %table
-          %tr
-            %th= @next_timetable_event.start.strftime('%H.%M%P')
-            %td= link_to @next_timetable_event.title, person_timetables_url(@topic)
-          %tr
-            %th= @next_timetable_event.rooms.join ", "
-            %td  A course
-      - else 
-        %b You have no current timetable events.
+      .person_left
+        %h4 Next lesson
+        = link_to image_tag("timetable.png"), event_filter_url(@topic, {:eventable_type => :Target})   
+      .person_right   
+        - if @next_timetable_event
+          %table
+            %tr
+              %th
+                = @next_timetable_event.start.strftime('%A')
+                .small= @next_timetable_event.start.strftime('%H.%M%P')
+              %td= link_to @next_timetable_event.title, person_timetables_url(@topic)
+            %tr
+              %th= @next_timetable_event.rooms.join ", "
+              %td  A course
+        - else 
+          %b You have no current timetable events.
   .person_home_container.last
     #attendance.block{:class => @attendances.empty? ? "blank" : @attendances.last.status}
       - unless @attendances.empty?
@@ -49,7 +54,7 @@
   .person_home_container  
     #targets.block
       .person_left
-        %h4 Targets    
+        %h4 Targets
         = link_to image_tag("target_home.png"), event_filter_url(@topic, {:eventable_type => :Target})
       .person_right      
         #target_list 
