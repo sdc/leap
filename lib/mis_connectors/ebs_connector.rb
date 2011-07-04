@@ -26,7 +26,7 @@ module MisPerson
           :town          => ep.address.town,
           :postcode      => [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" "),
           :mobile_number => ep.mobile_phone_number,
-          :next_of_kin   => ep.fes_nok_contact_no,
+          :next_of_kin   => [ep.fes_next_of_kin, ep.fes_nok_contact_no].join (" "),
           :date_of_birth => ep.date_of_birth,
           :uln           => ep.unique_learn_no,
           :mis_id        => mis_id,
