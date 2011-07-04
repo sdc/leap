@@ -12,8 +12,8 @@ class Target < Eventable
   belongs_to :set_by, :class_name => "Person", :foreign_key => "set_by_person_id"
 
   after_create do |target| 
-    target.events.create!(:event_date => created_at,  :parent_id => event_id, :transition => :start)
-    target.events.create!(:event_date => target_date, :parent_id => event_id, :transition => :overdue)
+    target.events.create!(:event_date => created_at, :parent_id => event.id, :transition => :start)
+    target.events.create!(:event_date => target_date, :transition => :overdue)
   end
 
   # Returns the target eventable icon url. Complete or not?
