@@ -7,10 +7,11 @@ class EventsController < ApplicationController
     conds = {}
     conds[:eventable_type] = params[:eventable_type].keys if params[:eventable_type]
     conds[:transition] = params[:transition].keys if params[:transition]
-    @events =
+    @events, @future_events =
       @scope.where("event_date <= ?", @date).
       where(conds).
-      order("event_date DESC")
+      order("event_date DESC").
+      partition {|e| e.event_date <= Time.now}
       #includes(:eventable).
       #includes(:children => [:eventable])
     @bottom_date = @events.last.event_date unless @events.empty?

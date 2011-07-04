@@ -8,6 +8,15 @@
   }
 }
 
+#current_time_break {
+  @include column(20,true);
+  font-weight: bold;
+  margin-bottom: 9px;
+  hr {
+    border: solid 1px $border-color;
+  }
+}
+
 .event {
   @include column(20, true);
   margin-bottom: 9px;
