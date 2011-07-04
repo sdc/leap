@@ -1,4 +1,4 @@
-%h6= person_course.course.title
+%h6= link_to person_course.course.title, (Ilp2::Application.config.course_base_url + person_course.course.mis_id)
 %h6= person_course.status.humanize
 - if person_course.enrolment_date
   %b Start Date:
