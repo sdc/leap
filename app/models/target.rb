@@ -55,5 +55,9 @@ class Target < Eventable
   def body_partial
     true
   end
+  
+  def sanitize_options
+    {:tags => [:b,:i,:strong,:em]}
+  end  
 
 end
