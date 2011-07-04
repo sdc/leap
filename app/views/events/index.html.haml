@@ -1,4 +1,4 @@
-- unless request.xhr?
+- unless request.xhr? or @affiliation != "staff"
   %header#event_header= render :partial => "header"
 - if @events.empty?
   #events

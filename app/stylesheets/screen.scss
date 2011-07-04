@@ -46,6 +46,7 @@ body {
   @include showgrid;
   @include container;
   @include clearfix;
+  @include prepend-top;
 }
 
 #side_pane {
