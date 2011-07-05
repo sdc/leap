@@ -8,16 +8,6 @@ class ApplicationController < ActionController::Base
   before_filter :set_topic
   before_filter :get_views
 
-  def set_scope
-    @scope = if (@affiliation == "staff" and params[:all])
-      @multi = true
-      Event.scoped
-    else
-      @multi = false
-      @topic.events
-    end
-  end
-
   def get_date
     if params[:date]
       if params[:date].kind_of? Hash

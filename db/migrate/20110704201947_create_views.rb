@@ -11,6 +11,15 @@ class CreateViews < ActiveRecord::Migration
       t.timestamps
     end
     View.create(
+      :label       => "All",
+      :name        => "all",
+      :transitions => ["create","start","overdue","complete","drop"],
+      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target"],
+      :icon_url    => "icons/all.png",
+      :affiliations=> ["staff","student","affiliate"],
+      :position    => 1
+    )
+    View.create(
       :label       => "Courses",
       :name        => "courses",
       :transitions => ["start"],
