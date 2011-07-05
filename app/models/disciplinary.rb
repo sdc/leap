@@ -3,7 +3,7 @@ class Disciplinary < Eventable
   validates :body, :presence => true
   validates :level, :presence => true, :numericality => true, :inclusion => {:in => 0..3}
 
-  after_create {|disciplinary| disciplinary.events.create!(:event_date => created_at)}
+  after_create {|disciplinary| disciplinary.events.create!(:event_date => created_at, :transition => :create)}
 
   # Returns the note eventable  Title. This is always the same.
   def title
