@@ -7,6 +7,7 @@ class CreateViews < ActiveRecord::Migration
       t.string :affiliations
       t.string :name
       t.string :label
+      t.boolean :create_button
       t.integer :position
       t.timestamps
     end
@@ -17,6 +18,7 @@ class CreateViews < ActiveRecord::Migration
       :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target"],
       :icon_url    => "icons/all.png",
       :affiliations=> ["staff","student","affiliate"],
+      :create_button => false,
       :position    => 1
     )
     View.create(
@@ -26,6 +28,7 @@ class CreateViews < ActiveRecord::Migration
       :events      => ["PersonCourse"],
       :icon_url    => 'icons/courses.png',
       :affiliations => ['staff','student','affiliate'],
+      :create_button => false,
       :position    => 2
     )
     View.create(
@@ -35,6 +38,7 @@ class CreateViews < ActiveRecord::Migration
       :events      => ['Target'],
       :icon_url    => 'icons/targets.png',
       :affiliations => ['staff','student','affiliate'],
+      :create_button => true,
       :position    => 3
     )
     View.create(
@@ -44,6 +48,7 @@ class CreateViews < ActiveRecord::Migration
       :events      => ['ContactLog'],
       :icon_url    => 'icons/contact_logs.png',
       :affiliations => ['staff','student','affiliate'],
+      :create_button => true,
       :position    => 4
     )
     View.create(
@@ -53,6 +58,7 @@ class CreateViews < ActiveRecord::Migration
       :events      => ['Disciplinary'],
       :icon_url    => 'icons/disciplinaries.png',
       :affiliations => ['staff','student','affiliate'],
+      :create_button => true,
       :position    => 5
     )
   end
