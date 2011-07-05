@@ -48,28 +48,4 @@ class EventsController < ApplicationController
     redirect_to :back
   end
 
-  private
-
-  def get_date
-    if params[:date]
-      if params[:date].kind_of? Hash
-        Time.gm(*[:year,:month,:day].map{|x| params[:date][x].to_i})
-      else
-        Time.parse(params[:date])
-      end
-    else
-      Time.now.midnight + 2.years
-    end
-  end
-
-  def set_scope
-    @scope = if (@affiliation == "staff" and params[:all])
-      @multi = true
-      Event.scoped
-    else
-      @multi = false
-      @topic.events
-    end
-  end
-
 end

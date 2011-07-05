@@ -6,11 +6,4 @@
   = icon_link "Timetable", person_timetables_url(@topic)
   %h3 Events
   = icon_link "All", person_events_url(@topic), "events"
-  = icon_link "Courses", event_filter_url(@topic, {:eventable_type => :PersonCourse, :transition => :start})
-  = icon_link "Targets", event_filter_url(@topic, {:eventable_type => :Target, :transition => :overdue})
-  = icon_link "Contact Logs", event_filter_url(@topic, {:eventable_type => :ContactLog})
-  = icon_link "Positive Intervention", event_filter_url(@topic, {:eventable_type => :Disciplinary}), "disciplinaries"
-  /= icon_link "Messages", event_filter_url(@topic, {:eventable_type => :Note})
-  /= icon_link "Reviews"
-  /= icon_link "Qualifications"
-  /= icon_link "Support"
+  = render @views

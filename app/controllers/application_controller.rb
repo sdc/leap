@@ -6,6 +6,29 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_user
   before_filter :set_topic
+  before_filter :get_views
+
+  def set_scope
+    @scope = if (@affiliation == "staff" and params[:all])
+      @multi = true
+      Event.scoped
+    else
+      @multi = false
+      @topic.events
+    end
+  end
+
+  def get_date
+    if params[:date]
+      if params[:date].kind_of? Hash
+        Time.gm(*[:year,:month,:day].map{|x| params[:date][x].to_i})
+      else
+        Time.parse(params[:date])
+      end
+    else
+      Time.now.midnight + 2.years
+    end
+  end
 
   private
 
@@ -28,6 +51,10 @@ class ApplicationController < ActionController::Base
     else
       @topic = @user
     end
+  end
+
+  def get_views
+    @views = View.order("position").select{|v| v.affiliations.include? @affiliation}
   end
 
 end

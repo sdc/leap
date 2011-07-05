@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  transitions: MyString
+  events: MyString
+  icon_url: MyString
+  affiliations: MyString
+
+two:
+  transitions: MyString
+  events: MyString
+  icon_url: MyString
+  affiliations: MyString

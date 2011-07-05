@@ -1,0 +1,5 @@
+
+
+= link_to person_view_url(@topic,view), :class => ["sidebar_button", current_page?(person_view_url(@topic,view)) ? "current" : nil] do
+  .icon= image_tag view.icon_url, :size => "30x30"
+  .label= view.label

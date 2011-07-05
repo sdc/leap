@@ -9,7 +9,7 @@ class ContactLog < Eventable
 
   belongs_to :contact, :class_name => "Person", :foreign_key => "contact_person_id"
 
-  after_create {|contact_log| contact_log.events.create!(:event_date => created_at)}
+  after_create {|contact_log| contact_log.events.create!(:event_date => created_at, :transition => :create)}
 
   # Returns the note eventable  Title. This is always the same.
   def title

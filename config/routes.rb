@@ -1,4 +1,6 @@
 Ilp2::Application.routes.draw do
+
+    resources :views
   resources :notes
   resources :targets
   resources :timetables
@@ -15,6 +17,7 @@ Ilp2::Application.routes.draw do
   resources :people do
     resources :events
     resources :timetables
+    resources :views
     collection do
       get :search
     end
