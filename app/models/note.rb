@@ -8,7 +8,7 @@
 class Note < Eventable
 
 
-  after_create {|note| note.events.create!(:event_date => created_at)}
+  after_create {|note| note.events.create!(:event_date => created_at, :transition => :create)}
 
   def sanitize_options
     {:tags => [:b,:i,:strong,:em]}
