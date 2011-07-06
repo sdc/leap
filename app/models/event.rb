@@ -28,6 +28,7 @@ class Event < ActiveRecord::Base
   symbolize :transition , :in => [:create,:start,:overdue,:complete,:drop], :methods => true, :scopes => true, :allow_nil => true
 
   scope :unique_eventable, group("eventable_id,eventable_type")
+  scope :creation, where(:transition => :create)
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id)}
 

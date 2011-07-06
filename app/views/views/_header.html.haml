@@ -1,7 +1,4 @@
-- if @view.create_button
+- if @view.controls
   #event_controls
-    - @view.events.each do |et|
-      = link_to new_event_url(:eventable_type => et, :person_id => @topic.mis_id), :class => "new_event_link", :remote => true do
-        .icon= image_tag "icons/" + et.underscore.pluralize + ".png"
-        .text= "New #{et.underscore.humanize}"
-#new_event_box
+    - @view.controls.each do |p|
+      = render p

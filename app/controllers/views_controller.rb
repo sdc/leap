@@ -13,8 +13,8 @@ class ViewsController < ApplicationController
     @bottom_line = @events.last.event_date unless @events.empty?
     respond_to do |f|
       f.html
-      f.xml { render :xml  => @event.to_xml (:include => :eventable)}
-      f.xml { render :json => @event.to_json(:include => :eventable)}
+      f.xml { render :xml  => @events.to_xml (:include => :eventable)}
+      f.json{ render :json => @events.to_json(:include => :eventable)}
     end
   end
 

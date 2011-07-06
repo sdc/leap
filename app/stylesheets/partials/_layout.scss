@@ -76,6 +76,8 @@
     }
     textarea {
       height: 48px;
+    }
+    textarea,table {
       @include column(14);
     }
     input,textarea {

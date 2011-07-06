@@ -60,6 +60,7 @@ module MisPerson
     end
     reds.map do |s| 
       TimetableEvent.create(
+        :mis_id       => s.register_event_id,
         :title        => s.description,
         :start        => s.actual_start_date || s.planned_start_date,
         :end          => s.actual_end_date   || s.planned_end_date,
@@ -69,7 +70,7 @@ module MisPerson
       )
     end
   end
- 
+
   def photo_path
     return Ilp2::Application.config.mis_photo_path + "/" + mis_id.to_s + ".jpg"
   end
