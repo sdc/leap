@@ -3,4 +3,5 @@
     .course_title= slot.title
     %time= "#{slot.start.strftime('%H.%M')} - #{slot.end.strftime('%H.%M')}"
     .rooms= slot.rooms.join ", "
+    .teachers= slot.teachers.map{|t| t.name}.join ", "
     .mark= slot.mark

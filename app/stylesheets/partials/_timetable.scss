@@ -74,6 +74,9 @@
     .rooms {
       margin: 2px 0px;
     }
+    .teachers {
+      font-style: italic;
+    }
   }
   &.extended {
     @include column(5);

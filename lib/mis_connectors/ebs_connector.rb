@@ -66,7 +66,8 @@ module MisPerson
         :end          => s.actual_end_date   || s.planned_end_date,
         :mark         => s.usage_code,
         :generic_mark => s.generic_mark,
-        :rooms        => s.rooms.map{|r| r.room_code}
+        :rooms        => s.rooms.map{|r| r.room_code},
+        :teachers     => s.teachers.map{|t| Person.get(t)}
       )
     end
   end

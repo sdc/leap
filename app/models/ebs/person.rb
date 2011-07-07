@@ -18,4 +18,8 @@ class Ebs::Person < Ebs::Model
   has_many :attendances,
            :foreign_key => "person_code"
 
+  def name
+    [forename,surname].join(" ")
+  end
+
 end
