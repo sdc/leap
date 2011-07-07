@@ -65,7 +65,7 @@ class CreateViews < ActiveRecord::Migration
       :label       => 'Reviews',
       :name        => 'reviews',
       :transitions => ['create'],
-      :events      => ['Review'],
+      :events      => ['Review','ReviewLine'],
       :icon_url    => 'icons/reviews.png',
       :affiliations => ['staff'],
       :controls    => ['reviews/new.html.haml'],
