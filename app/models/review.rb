@@ -22,7 +22,7 @@ class Review < Eventable
     a = person.timetable_events(:from => start_date, :to => end_date)
     a.each do |l|
       next if review_lines.detect{|la| la.mis_id == l.id}
-      review_lines.create(:person_id => person.id, :mis_id => l.mis_id, :title => l.title)
+      review_lines.create(:person_id => person.id, :mis_id => l.mis_id, :title => l.title, :teachers => l.teachers.map{|t| t.id})
     end
   end
 

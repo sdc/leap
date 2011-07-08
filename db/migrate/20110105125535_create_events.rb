@@ -5,6 +5,7 @@ class CreateEvents < ActiveRecord::Migration
       t.string   :eventable_type, :null => false
       t.integer  :eventable_id,   :null => false
       t.datetime :event_date,     :null => false
+      t.integer  :about_person_id
       t.integer  :parent_id
       t.string   :transition
       t.timestamps

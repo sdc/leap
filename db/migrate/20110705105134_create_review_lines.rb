@@ -6,7 +6,7 @@ class CreateReviewLines < ActiveRecord::Migration
       t.integer :mis_id
       t.string :title
       t.date :published_at
-
+      t.string :teachers
       t.timestamps
     end
   end
