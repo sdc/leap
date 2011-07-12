@@ -38,6 +38,10 @@ class PeopleController < ApplicationController
     end
   end
 
+  def index
+    redirect_to person_url(@user)
+  end
+
   private
 
   def person_set_topic

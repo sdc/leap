@@ -15,7 +15,7 @@ module MisPerson
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
       options.reverse_merge! :save => true, :courses => true, :attendances => true
       logger.info "Importing user #{mis_id}"
-      if (ep = Ebs::Person.find(mis_id))
+      if (ep = (Ebs::Person.find_by_person_code(mis_id) or Ebs::Person.find_by_network_userid(mis_id)))
         @person = Person.find_or_create_by_mis_id(mis_id)
         @person.update_attributes(
           :forename      => ep.forename,
@@ -29,7 +29,7 @@ module MisPerson
           :next_of_kin   => [ep.fes_next_of_kin, ep.fes_nok_contact_no].join (" "),
           :date_of_birth => ep.date_of_birth,
           :uln           => ep.unique_learn_no,
-          :mis_id        => mis_id,
+          :mis_id        => ep.person_code,
           :username      => (ep.network_userid or mis_id)
         )
         @person.save if options[:save] 

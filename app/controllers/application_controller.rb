@@ -23,9 +23,9 @@ class ApplicationController < ActionController::Base
   private
 
   def set_user
-    @user = session[:user_id] ? Person.get(session[:user_id]) : nil
+    @user = request.env["eppn"] ? Person.get(request.env["eppn"].split("@").first.downcase) : nil
     #@user = Person.get(10083332)
-    @affiliation = session[:user_affiliation]
+    @affiliation = request.env["affiliation"] ? request.env["affiliation"].split("@").first.downcase : nil
     redirect_to test_url unless @user && @affiliation
   end
 
