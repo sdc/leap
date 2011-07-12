@@ -7,6 +7,7 @@ gem 'activerecord-oracle_enhanced-adapter'
 gem 'symbolize'
 gem 'supermodel'
 gem 'scoped_search'
+gem 'mysql2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
