@@ -7,7 +7,6 @@ class EventsController < ApplicationController
 
   def show
     @event = @topic.events.find(params[:id])
-    render @event
   end
 
   def new

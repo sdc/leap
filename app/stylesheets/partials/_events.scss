@@ -130,6 +130,25 @@
         width: 88px;
       }
     }
+    .review_scores {
+      @include column(6);
+    }
+    textarea{
+      @include column(8);
+
+    }
+    .review_attendance {
+      margin-top: 1ex;
+      @include column(2);
+      text-align: center;
+      .score {
+        font-size: 18px;
+      }
+    }
+    .review_controls {
+      margin-top: 1ex;
+      @include column(3,true);
+    }
     textarea {
       width: 250px;
       height: 54px;

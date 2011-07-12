@@ -5,6 +5,7 @@ Ilp2::Application.routes.draw do
   resources :targets
   resources :timetables
   resources :contact_logs
+  resources :review_lines
   resources :events do
     collection do
       get :more
