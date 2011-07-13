@@ -8,7 +8,8 @@
   }
 
   h5 a {
-    @include unstyled-link
+    @include unstyled-link;
+    @include hover-link;
   }
 
   #person_photo{
