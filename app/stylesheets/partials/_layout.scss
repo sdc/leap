@@ -7,6 +7,10 @@
     @include prepend-top(1ex);
   }
 
+  h5 a {
+    @include unstyled-link
+  }
+
   #person_photo{
     width: 130px;
     height: 130px;
