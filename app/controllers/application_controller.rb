@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     else
       @user = request.env["eppn"] ? Person.get(request.env["eppn"].split("@").first.downcase) : nil
       @affiliation = request.env["affiliation"] ? request.env["affiliation"].split("@").first.downcase : nil
-      render :text => "A problem has occurred!" unless @user && @affiliation
+      render :text => "A problem has occurred! #{@user} <br />#{@affiliation}" unless @user && @affiliation
     end
   end
 
