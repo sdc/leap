@@ -1,11 +1,11 @@
 = form_for event.eventable, :remote => true do |f|
   = hidden_field_tag :event_id, event.id
   .review_attendance
+    %h2 Attendance
     - if event.person.attendances.empty?
-      %h2 Attendance
       .score ?
     - else
-      .score= event.person.attendances.last.att_year
+      .score= "#{event.person.attendances.last.att_year}%"
   .review_scores
     %table
       %tr
