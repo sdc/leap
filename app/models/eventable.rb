@@ -10,4 +10,8 @@ class Eventable < ActiveRecord::Base
     "events/#{self.class.name.tableize}.png"
   end
 
+  def title
+    self.class.name.humanize.titleize
+  end
+
 end
