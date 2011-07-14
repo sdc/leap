@@ -11,7 +11,7 @@ class Eventable < ActiveRecord::Base
   end
 
   def title
-    self.class.name.humanize.titleize
+    self.class.name.underscore.humanize.titleize
   end
 
 end
