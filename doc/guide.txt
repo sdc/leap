@@ -66,6 +66,45 @@ in the related line in the _Events_ table.
 |modified_at    |datetime|No     |No  |
 |===========================================================================================
 
+==== Attendances
+
+[options="header"]
+|===========================================================================================
+|Field          |Type    |Index  |Null|Notes
+|id             |integer |Primary|No  |
+|person_id      |integer |Yes    |Yes |Foreign Key to People
+|week_beginning |date    |Yes    |Yes |
+|att_year       |integer |No     |Yes |
+|att_3_week     |integer |No     |Yes |
+|att_week       |integer |No     |Yes |
+|created_at     |datetime|No     |No  |
+|modified_at    |datetime|No     |No  |
+|===========================================================================================
+
+==== Disiplinaries
+
+[options="header"]
+|===========================================================================================
+|Field          |Type    |Index  |Null|Notes
+|id             |integer |Primary|No  |
+|person_id      |integer |Yes    |Yes |Foreign Key to People
+|body           |text    |No     |Yes |
+|level          |integer |No     |Yes |
+|created_at     |datetime|No     |No  |
+|modified_at    |datetime|No     |No  |
+|===========================================================================================
+
+==== Settings
+
+[options="header"]
+|===========================================================================================
+|Field          |Type    |Index  |Null|Notes
+|var            |string  |no     |no  |
+|value          |text    |No     |no  |
+|created_at     |datetime|No     |No  |
+|modified_at    |datetime|No     |No  |
+|===========================================================================================
+
 ==== Notes
 
 [options="header"]
@@ -160,6 +199,7 @@ to provide a compatability layer for different MIS systems and a structure more 
 |date_of_birth  |datetime|No     |No  |
 |uln            |integer |Yes    |No  |Universal Learner Number
 |mis_id         |string  |Yes    |Yes |Person's id in relevant MIS system
+|username       |string  |Yes    |No  |
 |created_at     |datetime|No     |No  |
 |modified_at    |datetime|No     |No  |
 |==============================================================================

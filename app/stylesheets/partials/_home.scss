@@ -6,16 +6,18 @@
   padding: 10px;
   h4 {
     @include column(2);
-    text-align: center;
     margin: 0;
     font-size: 1.4em;
-    font-weight: bold;
+    color: #666;
   }
   .person_left {
     @include column(2); 
   }
   .person_right {
     @include column(7,true);  
+  }
+  img {
+  width: 60px;
   }
 }
 
@@ -52,16 +54,23 @@
   img {
     @include column(2);
   }
-  cursor: pointer;
-  font-weight: bold;    
-  table {
-    margin: 0px;
+  cursor: pointer;   
+  timetable_event_link {
+    @include column(6, true);
   }
-  th{
-    font-size: 18px;
+  .timetable_event_link a {
+    @include unstyled-link;
+    font-size: 16px;
+    margin-bottom: 10px;    
   }
-  td {
+  .timetable_event_header {
     font-size: 14px;
+  }
+  .timetable_event_date {
+    @include column(3);
+  }
+  .timetable_event_location {
+    @include column(3, true);
   }
 }
 
@@ -104,7 +113,7 @@
         @include column(2);
         font-weight: bold;
       }
-      .target_body {
+      .mini_event_body {
         @include column(4, true);
       }
     }

@@ -28,15 +28,17 @@
         = link_to image_tag("timetable.png"), event_filter_url(@topic, {:eventable_type => :Target})   
       .person_right   
         - if @next_timetable_event
-          %table
-            %tr
-              %th
-                = @next_timetable_event.start.strftime('%A')
-                .small= @next_timetable_event.start.strftime('%H.%M%P')
-              %td= link_to @next_timetable_event.title, person_timetables_url(@topic)
-            %tr
-              %th= @next_timetable_event.rooms.join ", "
-              %td  A course
+          #lesson_block
+            .timetable_event_link= link_to @next_timetable_event.title, person_timetables_url(@topic)          
+            .timetable_event_date
+              .timetable_event_header= @next_timetable_event.start.strftime('%A')
+              .small_text= @next_timetable_event.start.strftime('%H.%M%P')
+              .small_text
+                Room:
+                = @next_timetable_event.rooms.join ", "
+            .timetable_event_location
+              .small_text= @next_timetable_event.start.strftime('%d/%m/%y')            
+              .small_text= @next_timetable_event.teachers.map{|t| t.name}.join ", "
         - else 
           %b You have no current timetable events.
   .person_home_container.last
@@ -56,7 +58,7 @@
       .person_left
         %h4 Targets
         = link_to image_tag("target_home.png"), event_filter_url(@topic, {:eventable_type => :Target})
-      .person_right      
+      .person_right
         #target_list 
           - if @targets.empty?
             %b You have no targets, yet.
@@ -69,7 +71,7 @@
             - @targets.each do |target|
               .stu_target{:class => target.complete_date ? "complete" : "current", :title => target[:body]}
                 .target_date= pretty_date target.target_date
-                .target_body= link_to truncate(target[:body], :length => 25), event_filter_url(@topic, {:eventable_type => :Target, :anchor => dom_id(target.events.last)})
+                .mini_event_body= link_to truncate(target[:body], :length => 25), event_filter_url(@topic, {:eventable_type => :Target, :anchor => dom_id(target.events.last)})
   .person_home_container.last
     .block
       %h3 Advert
