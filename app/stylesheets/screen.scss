@@ -12,7 +12,6 @@
 body {
   @include blueprint-typography(true);
   @include blueprint-utilities;
-  @include blueprint-debug;
   @include blueprint-interaction; 
 }
 
@@ -43,7 +42,6 @@ body {
 }
 
 .container {
-  @include showgrid;
   @include container;
   @include clearfix;
   @include prepend-top;

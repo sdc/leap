@@ -16,4 +16,12 @@ class ReviewLine < Eventable
     "events/reviews.png"
   end
 
+  def extra_panes
+    [["Edit","review_lines/edit"]]
+  end
+
+  def body
+    comments
+  end
+
 end

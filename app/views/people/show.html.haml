@@ -25,7 +25,7 @@
     #next_lesson.block
       .person_left
         %h4 Next lesson
-        = link_to image_tag("timetable.png"), event_filter_url(@topic, {:eventable_type => :Target})   
+        = link_to image_tag("timetable.png"), person_timetables_url(@topic)
       .person_right   
         - if @next_timetable_event
           #lesson_block
@@ -57,8 +57,8 @@
     #targets.block
       .person_left
         %h4 Targets
-        = link_to image_tag("target_home.png"), event_filter_url(@topic, {:eventable_type => :Target})
-      .person_right
+        = link_to image_tag("target_home.png"), person_view_url(@topic,View.find_by_name("targets"))
+      .person_right      
         #target_list 
           - if @targets.empty?
             %b You have no targets, yet.
@@ -71,7 +71,7 @@
             - @targets.each do |target|
               .stu_target{:class => target.complete_date ? "complete" : "current", :title => target[:body]}
                 .target_date= pretty_date target.target_date
-                .mini_event_body= link_to truncate(target[:body], :length => 25), event_filter_url(@topic, {:eventable_type => :Target, :anchor => dom_id(target.events.last)})
+                .target_body= link_to truncate(target[:body], :length => 25), person_view_url(@topic, View.find_by_name("targets"), :anchor => dom_id(target.events.last))
   .person_home_container.last
     .block
       %h3 Advert

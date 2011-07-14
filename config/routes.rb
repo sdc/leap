@@ -5,6 +5,7 @@ Ilp2::Application.routes.draw do
   resources :targets
   resources :timetables
   resources :contact_logs
+  resources :review_lines
   resources :events do
     collection do
       get :more
@@ -26,5 +27,5 @@ Ilp2::Application.routes.draw do
   match 'test'       => 'test#index', :as => :test
   match 'test/login' => 'test#login', :as => :test_login
 
-  root :to => "test#index"
+  root :to => "people#index"
 end

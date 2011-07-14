@@ -7,6 +7,11 @@ class CreateReviewLines < ActiveRecord::Migration
       t.string :title
       t.date :published_at
       t.string :teachers
+      t.text :comments
+      t.integer :quality
+      t.integer :attitude
+      t.integer :punctuality
+      t.integer :completion
       t.timestamps
     end
   end

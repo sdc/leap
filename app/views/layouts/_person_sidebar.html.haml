@@ -1,6 +1,6 @@
 #person_photo= image_tag("#{url_for(@topic)}.jpg", :size => "130x130", :style => "display:none")
 %h1= @topic.name
-%h5.quiet= @topic.mis_id
+%h5.quiet= link_to @topic.mis_id, Ilp2::Application.config.person_base_url + @topic.mis_id.to_s
 %nav
   = icon_link "Home", @topic
   = icon_link "Timetable", person_timetables_url(@topic)

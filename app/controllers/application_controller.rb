@@ -23,10 +23,15 @@ class ApplicationController < ActionController::Base
   private
 
   def set_user
-    @user = session[:user_id] ? Person.get(session[:user_id]) : nil
-    #@user = Person.get(10083332)
-    @affiliation = session[:user_affiliation]
-    redirect_to test_url unless @user && @affiliation
+    if Rails.env == "development"
+      @user = session[:user_id] ? Person.get(session[:user_id]) : nil
+      @affiliation = session[:user_affiliation]
+      redirect_to test_url unless @user && @affiliation
+    else
+      @user = request.env["eppn"] ? Person.get(request.env["eppn"].split("@").first.downcase) : nil
+      @affiliation = request.env["affiliation"] ? request.env["affiliation"].split("@").first.downcase : nil
+      render :text => "A problem has occurred! #{@user} <br />#{@affiliation}" unless @user && @affiliation
+    end
   end
 
   def set_topic

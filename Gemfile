@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'haml'
 gem 'rails'
 gem "compass", ">= 0.10.6"
 gem 'ruby-oci8'
@@ -7,6 +8,7 @@ gem 'activerecord-oracle_enhanced-adapter'
 gem 'symbolize'
 gem 'supermodel'
 gem 'scoped_search'
+gem 'mysql2', "< 0.3"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
