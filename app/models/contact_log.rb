@@ -11,4 +11,6 @@ class ContactLog < Eventable
 
   after_create {|contact_log| contact_log.events.create!(:event_date => created_at, :transition => :create, :about_person_id => contact_person_id)}
 
+  def title; "Contact Log: #{contact.name}" end
+
 end
