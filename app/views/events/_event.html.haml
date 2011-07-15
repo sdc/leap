@@ -7,8 +7,9 @@
         .time= pretty_time event.event_date
       - if @multi
         %h1.event_person
-          = image_tag("#{url_for(event.person)}.jpg", :size => "48x48")
-          = event.person.name
+          = link_to event.person do
+            = image_tag("#{url_for(event.person)}.jpg", :size => "48x48")
+            = event.person.name
       - elsif event.about_person
         %h1.event_person
           = image_tag("#{url_for(event.about_person)}.jpg", :size => "48x48")

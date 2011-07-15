@@ -77,6 +77,9 @@
       @include column(6,true);
     }
   }
+  .event_person a{
+    @include hover-link;
+  }
 
   header.subtitle+.body {
     @include column(10,true);

@@ -9,6 +9,7 @@ class ViewsController < ApplicationController
       @scope.where("event_date <= ?", @date).
       where(:transition => @view.transitions, :eventable_type => @view.events).
       order("event_date DESC").
+      limit(20).
       partition {|e| e.event_date <= Time.now}
     @bottom_line = @events.last.event_date unless @events.empty?
     respond_to do |f|
