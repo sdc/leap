@@ -32,7 +32,10 @@ class Target < Eventable
 
   # Returns the target eventable subtitle. This is the target due date unless the event is the completion of the target, when it is +nil+.
   def subtitle(tr)
-    return ["Due", target_date] unless [:overdue].include?(tr)
+    case tr
+    when :start :["Due", target_date]
+    when :complete : ["Complete", complete_date]
+    end
   end
 
   # Returns the status for this event, it is +:current+ unless it is a completion event, when it is +:complete+.
