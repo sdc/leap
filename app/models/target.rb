@@ -43,7 +43,7 @@ class Target < Eventable
 
   # Returns the partial to render for the details pane
   def extra_panes
-    [["Details","targets/details"]]
+    [["Complete","targets/details"]]
   end
 
   # Run this after an event is completed to create the completion event.
