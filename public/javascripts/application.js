@@ -14,6 +14,9 @@ function watch_main_pane_updaters(e){
 
 document.observe("dom:loaded", function(){
   watch_main_pane_updaters("main_container");
+  if ($('q')) {
+    $('q').activate();
+  }
   $('person_photo').down('img').observe("load", function(event){
     event.findElement('img').appear();
   })
