@@ -1,5 +1,6 @@
 class PeopleController < ApplicationController
 
+  layout "search", :only => [:search]
   skip_before_filter :set_topic
   before_filter      :person_set_topic, :except => [:search]
 
@@ -30,7 +31,7 @@ class PeopleController < ApplicationController
 
   def search
     if params[:q]
-      if params[:search_mis] == "1"
+      if params[:commit] == "Search Everyone"
         @people = Person.mis_search_for(params[:q])
       else
         @people = Person.search_for(params[:q])

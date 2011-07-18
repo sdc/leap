@@ -1,6 +1,17 @@
+.main_search {
+  margin-top: 50px;
+  text-align: center;
+  margin-bottom: 400px;
+}
+.search_logo {
+}
+input#q {
+  width: 450px;
+}
 .search_person {
-  @include column(6);
+  @include column(6, true);
   @include append-bottom;
+  height: 70px;
   h3,h5 {
     margin-bottom: 0px;
   }
@@ -12,6 +23,8 @@
     @include column(2);
     img {
       @include border-radius(4px);
+      width: 70px;
+      height: 70px;
     }
   }
   .details {
@@ -20,4 +33,12 @@
   .dob {
     line-height: 13px;
   }
+}
+.search_fields {
+  margin-bottom: 35px;
+}
+.search_notice {
+  font-size: 1.2em;
+  width: 650px;
+  margin: 0 auto;
 }

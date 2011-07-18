@@ -14,12 +14,6 @@
     = csrf_meta_tag
   %body
     .container#main_container
-      #side_pane= render :partial => "layouts/person_sidebar" if @topic
-      #main_pane= yield
+      #full_pane= yield
       #footer
-        %h3 Params
-        = debug(params)
-        %h3 Session
-        = debug(session.to_yaml)
-        %h3 Topic
-        = debug(@topic.to_yaml)
+        blah blah blah...
