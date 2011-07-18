@@ -24,4 +24,8 @@ class ReviewLine < Eventable
     comments
   end
 
+  def title
+    self[:title]
+  end
+
 end
