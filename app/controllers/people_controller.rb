@@ -1,6 +1,5 @@
 class PeopleController < ApplicationController
 
-  layout "search", :only => [:search]
   skip_before_filter :set_topic
   before_filter      :person_set_topic, :except => [:search]
 
@@ -37,6 +36,7 @@ class PeopleController < ApplicationController
         @people = Person.search_for(params[:q])
       end
     end
+    render :layout => "search"
   end
 
   def index
