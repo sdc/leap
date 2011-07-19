@@ -24,11 +24,11 @@ class PersonCourse < Eventable
   end
 
   def title(tr)
-    "#{course.code} " + case tr
+    [course, case tr
       when :create   then "Application"
       when :start    then "Enrolment"
       when :complete then "Complete" # TODO: distinguish between complete, w/d, incomplete etc
-    end
+    end]
   end
 
   def body_partial

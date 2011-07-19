@@ -4,6 +4,18 @@ module EventsHelper
     link_to_function content_tag(:li, text), "$$('##{event_id} .tab').each(function(t){t.hide()});$$('##{event_id} .#{klass}').first().show()"
   end
 
+  def special_title(thing)
+    case thing.class.name
+    when "String" : return thing
+    when "Array"  : thing.map{|t| special_title(t)}.join " "
+    when "Date"   : pretty_date thing
+    when "Time"   : pretty_date thing
+    when "Course" : link_to_if @affiliation == "staff", thing.code, course_view_url(thing)
+    when "Person" : link_to_if @affiliation == "staff", thing.name, thing
+    end
+  end
+    
+
   def classes_for(event)
     [event.eventable_type.downcase,
      event.subtitle ? "subtitle" : nil,

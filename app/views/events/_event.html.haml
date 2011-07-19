@@ -14,7 +14,7 @@
         %h1.event_person
           = image_tag("#{url_for(event.about_person)}.jpg", :size => "48x48")
           = event.about_person.name
-      %h1= event.title
+      %h1= raw special_title event.title
       - if event.subtitle
         - if event.subtitle.kind_of? Array
           %h2
