@@ -6,7 +6,11 @@ class Course < ActiveRecord::Base
   has_many :people, :through => :person_courses
 
   def Course.get(mis_id,fresh=false)
-    (fresh ? false : find_by_mis_id(mis_id)) or self.import(mis_id)
+    (fresh ? import(mis_id, :people => true) : find_by_mis_id(mis_id)) or import(mis_id, :courses => true)
+  end
+
+  def name
+    title
   end
 
 end

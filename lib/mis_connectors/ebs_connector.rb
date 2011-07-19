@@ -91,6 +91,7 @@ module MisPerson
                              :end_date => pu.progress_date) unless pc.status == :not_started
       end
     end
+    return self
   end
 
   def import_attendances
@@ -116,10 +117,28 @@ module MisCourse
 
   def self.included receiver
     receiver.extend ClassMethods
+    receiver.belongs_to :mis_course, :class_name => "Ebs::UnitInstanceOccurrence", :foreign_key => :mis_id
+  end
+
+  def import_people
+    mis_course.people_units.each do |pu|
+      person = Person.get(pu.person_code)
+      pc= PersonCourse.find_or_create_by_person_id_and_course_id(person.id,id)
+      if pu.unit_type == "A" 
+        pc.update_attributes(:status => :not_started,
+                             :application_date => pu.created_date
+                            )
+      elsif pu.unit_type == "R"
+        pc.update_attributes(:enrolment_date => pu.created_date,
+                             :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
+                             :end_date => pu.progress_date) unless pc.status == :not_started
+      end
+    end
   end
 
   module ClassMethods
-    def import(mis_id)
+    def import(mis_id, options = {})
+      options.reverse_merge! :save => true, :people => false
       if (ec = Ebs::UnitInstanceOccurrence.find_by_uio_id(mis_id))
         @course = Course.find_or_create_by_mis_id(mis_id)
         @course.update_attributes(
@@ -128,12 +147,12 @@ module MisCourse
           :year   => ec.calocc_occurrence_code,
           :mis_id => ec.id
         )
-        @course.save
+        @course.save if options[:save]
+        @course.import_people if options[:people]
         return @course
       else
         return false
       end
     end
   end
-
 end

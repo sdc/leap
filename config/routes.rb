@@ -23,6 +23,9 @@ Ilp2::Application.routes.draw do
       get :search
     end
   end
+  resources :courses do
+    resources :views
+  end
 
   match 'test'       => 'test#index', :as => :test
   match 'test/login' => 'test#login', :as => :test_login

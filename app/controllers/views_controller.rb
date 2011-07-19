@@ -25,6 +25,9 @@ class ViewsController < ApplicationController
     @scope = if (@affiliation == "staff" and params[:all])
       @multi = true
       Event.scoped
+    elsif (@affiliation == "staff" and @topic.kind_of? Course)
+      @multi = true
+      Event.where(:person_id => @topic.people.map{|p| p.id})
     else
       @multi = false
       @topic.events

@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
       if params[:person_id]
         @topic = Person.get(params[:person_id],params[:refresh]) or raise "No such user mis_id:#{params[:person_id]}"
       elsif params[:course_id]
-        raise("Courses not implemented yet!")
+        @topic = Course.get(params[:course_id],params[:refresh]) or raise "No such course mis_id:#{params[:course_id]}"
       else
         @topic = @user
       end
