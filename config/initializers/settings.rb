@@ -1,2 +1,6 @@
-Ilp2::Application.config.course_base_url = "http://ebs4agent-live.southdevon.internal/#/DynamicPage?page=CourseDetails&dp2=uio_id%2cDecimal%2c"
-Ilp2::Application.config.person_base_url = "http://ebs4agent-live.southdevon.internal/#/DynamicPage?page=LearnerDetails&dp2=PersonCode%2cDecimal%2c"
+Settings.defaults[:ebs_course_base_url]    = "http://ebs4agent-live.southdevon.internal/#/DynamicPage?page=CourseDetails&dp2=uio_id%2cDecimal%2c"
+Settings.defaults[:ebs_person_base_url]    = "http://ebs4agent-live.southdevon.internal/#/DynamicPage?page=LearnerDetails&dp2=PersonCode%2cDecimal%2c"
+Settings.defaults[:moodle_host]            = "http://moodle2.southdevon.ac.uk/"
+Settings.defaults[:moodle_path]            = "/"
+Settings.defaults[:moodle_token]           = "585d9c9fa81425ed803ac03666b75998"
+Settings.defaults[:front_page_note_prompt] = "What do I need to do today?"

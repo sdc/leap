@@ -16,7 +16,7 @@
       Are any of your personal details incorrect?
       = link_to "Notify us...", "cheese.com"
   #your_thoughts.block
-    %h3 What do I need to do today?
+    %h3= Settings.front_page_note_prompt
     = form_for @topic.notes.new do |f|
       = f.hidden_field :person_id
       = f.text_field :body 
@@ -79,12 +79,12 @@
     #moodle_course.block
       .person_left
         %h4 Moodle
-        = link_to image_tag("moodle.png"), "#{Ilp2::Application.config.moodle_host}#{Ilp2::Application.config.moodle_path}"
+        = link_to image_tag("moodle.png"), "#{Settings.moodle_host}#{Settings.moodle_path}"
       .person_right
       - if @moodle_courses
         #moodle_course_list      
           - @moodle_courses.each do |mdl|
-            .mdl_course{:style => "font-weight: #{mdl["canedit"] == "1" ? "bold" : "normal"}"}= link_to mdl["fullname"], "#{Ilp2::Application.config.moodle_host}#{Ilp2::Application.config.moodle_path}/course/view.php?id=#{mdl["id"]}"
+            .mdl_course{:style => "font-weight: #{mdl["canedit"] == "1" ? "bold" : "normal"}"}= link_to mdl["fullname"], "#{Settings.moodle_host}#{Settings.moodle_path}/course/view.php?id=#{mdl["id"]}"
       - else
         %p You have no current Moodle enrolments
   .person_home_container.last

@@ -10,9 +10,9 @@ class PeopleController < ApplicationController
         @attendances = @topic.attendances
         @targets = @topic.targets.limit(8).where("complete_date is null")
         begin
-          @moodle_courses = ActiveResource::Connection.new(Ilp2::Application.config.moodle_host).
-                           get("#{Ilp2::Application.config.moodle_path}/webservice/rest/server.php?" +
-                           "wstoken=#{Ilp2::Application.config.moodle_token}&wsfunction=moodle_course_get_user_courses&username=#{@topic.username}")["MULTIPLE"]["SINGLE"].
+          @moodle_courses = ActiveResource::Connection.new(Settings.moodle_host).
+                           get("#{Settings.moodle_path}/webservice/rest/server.php?" +
+                           "wstoken=#{Settings.moodle_token}&wsfunction=moodle_course_get_user_courses&username=#{@topic.username}")["MULTIPLE"]["SINGLE"].
                            map{|x| x["KEY"]}.map{|a| a.map{|b| [b["name"],b["VALUE"]]}}.map{|x| Hash[x]}.select{|x| x["visible"] == "1"}
         rescue
           @moodle_courses = false
