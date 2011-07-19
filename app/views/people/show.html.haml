@@ -14,7 +14,7 @@
       %dd= @topic.next_of_kin or "-"
     %p{:style => "margin:3px 0 0 0"}
       Are any of your personal details incorrect?
-      = link_to "Notify us...", "cheese.com"
+      = link_to "Notify us...", Settings.notify_details_change_url
   #your_thoughts.block
     %h3= Settings.front_page_note_prompt
     = form_for @topic.notes.new do |f|
