@@ -13,4 +13,8 @@ class Course < ActiveRecord::Base
     title
   end
 
+  def to_param
+    mis_id.to_s
+  end
+
 end

@@ -1,0 +1,5 @@
+#person_photo= image_tag("multiple_people.png", :size => "130x130", :style => "display:none")
+%h1= @topic.name
+%nav
+  = icon_link "Home", @user
+  = render @views
