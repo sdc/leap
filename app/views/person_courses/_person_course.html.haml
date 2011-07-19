@@ -1,4 +1,4 @@
-%h6= link_to person_course.course.title, (Settings.ebs_course_base_url + person_course.course.mis_id)
+%h6= link_to_if @affiliation == "staff", person_course.course.title, (Settings.ebs_course_base_url + person_course.course.mis_id)
 %h6= person_course.status.humanize
 - if person_course.enrolment_date
   %b Start Date:
@@ -7,5 +7,3 @@
 - if person_course.end_date
   %b End:date
   = person_course.end_date.strftime("%d %B %Y")
-
-
