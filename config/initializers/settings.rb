@@ -5,3 +5,4 @@ Settings.defaults[:moodle_path]               = "/"
 Settings.defaults[:moodle_token]              = "585d9c9fa81425ed803ac03666b75998"
 Settings.defaults[:front_page_note_prompt]    = "What do I need to do today?"
 Settings.defaults[:notify_details_change_url] = "https://spreadsheets.google.com/a/southdevon.ac.uk/viewform?formkey=dEtUWldxeTJMMXhLWTI5d3ZIRmtSUnc6MQ"
+Settings.defaults[:target_default_length]     = 2.weeks
