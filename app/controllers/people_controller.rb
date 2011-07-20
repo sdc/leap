@@ -19,8 +19,8 @@ class PeopleController < ApplicationController
         end
       end
       format.jpg do
-        if File.exists? @topic.photo_path
-          send_file(@topic.photo_path, :type => "image/jpeg", :disposition => 'inline')
+        if File.exists? "#{Rails.root}/public/photos/#{@topic.mis_id}.jpg"
+          redirect_to "/photos/#{@topic.mis_id}.jpg"
         else
           redirect_to "/images/noone.png"
         end
