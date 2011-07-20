@@ -15,7 +15,7 @@ class CreateViews < ActiveRecord::Migration
       :label       => "All",
       :name        => "all",
       :transitions => ["create","start","overdue","complete","drop"],
-      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine"],
+      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification"],
       :icon_url    => "icons/events.png",
       :affiliations=> ["staff","student","affiliate"],
       :controls    => nil,
