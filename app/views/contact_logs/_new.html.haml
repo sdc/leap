@@ -2,7 +2,7 @@
   %h3
     Log a contact as 
     = @user.name
-  .icon= image_tag "events/contact_logs.png"
+  .icon= image_tag("#{url_for(Person.user)}.jpg", :size => "48x48")
   = f.text_area :body
   = f.hidden_field :person_id
   = f.hidden_field :eventable_type

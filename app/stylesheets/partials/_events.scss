@@ -38,7 +38,10 @@
   }
 
   .icon{
-    text-align: center
+    text-align: center;
+    img {
+      @include border-radius;
+    }
   }
 
   .time {
