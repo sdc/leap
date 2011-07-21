@@ -40,4 +40,12 @@ class Person < ActiveRecord::Base
     (fresh ? false : find_by_mis_id(mis_id)) or import(mis_id)
   end
 
+  def self.user
+    Thread.current[:user]
+  end
+
+  def self.user=(user)
+    Thread.current[:user] = user
+  end
+
 end

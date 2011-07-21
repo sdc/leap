@@ -5,6 +5,7 @@ class CreateQualifications < ActiveRecord::Migration
       t.string :title
       t.string :grade
       t.integer :mis_id
+      t.integer :created_by_id
       t.timestamps
     end
   end

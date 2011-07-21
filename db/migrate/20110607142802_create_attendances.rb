@@ -6,6 +6,7 @@ class CreateAttendances < ActiveRecord::Migration
       t.integer :att_year
       t.integer :att_3_week
       t.integer :att_week
+      t.integer :created_by_id
       t.timestamps
     end
   end
