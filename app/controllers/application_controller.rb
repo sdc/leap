@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
 
   def set_user
     if Rails.env == "development"
-      @user = session[:user_id] ? Person.get(session[:user_id]) : nil
+      Person.user = @user = session[:user_id] ? Person.get(session[:user_id]) : nil
       @affiliation = session[:user_affiliation]
       redirect_to test_url unless @user && @affiliation
     else

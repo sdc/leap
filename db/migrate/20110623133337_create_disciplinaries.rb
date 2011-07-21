@@ -4,6 +4,7 @@ class CreateDisciplinaries < ActiveRecord::Migration
       t.integer :person_id
       t.text :body
       t.integer :level
+      t.integer :created_by_id
       t.timestamps
     end
   end

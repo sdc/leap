@@ -12,6 +12,7 @@ class CreateReviewLines < ActiveRecord::Migration
       t.integer :attitude
       t.integer :punctuality
       t.integer :completion
+      t.integer :created_by_id
       t.timestamps
     end
   end

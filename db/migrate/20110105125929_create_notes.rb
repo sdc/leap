@@ -3,6 +3,7 @@ class CreateNotes < ActiveRecord::Migration
     create_table :notes do |t|
       t.integer :person_id
       t.text :body
+      t.integer :created_by_id
       t.timestamps
     end
     add_index :notes, :person_id
