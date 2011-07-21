@@ -62,6 +62,16 @@ class CreateViews < ActiveRecord::Migration
       :position    => 5
     )
     View.create(
+      :label       => "Qualifications",
+      :name        => "qualifications",
+      :transitions => ["create"],
+      :events      => ["Qualification"],
+      :icon_url    => "icons/qualifications.png",
+      :affiliations => ["staff","student","affiliate"],
+      :controls    => nil,
+      :position    => 6
+    )
+    View.create(
       :label       => 'Reviews',
       :name        => 'reviews',
       :transitions => ['create'],
@@ -69,7 +79,7 @@ class CreateViews < ActiveRecord::Migration
       :icon_url    => 'icons/reviews.png',
       :affiliations => ['staff'],
       :controls    => ['reviews/new.html.haml'],
-      :position    => 6
+      :position    => 7
     )
   end
 
