@@ -3,6 +3,7 @@ module MisPerson
   def self.included receiver
     receiver.extend ClassMethods
     receiver.belongs_to :mis_person, :class_name => "Ebs::Person", :foreign_key => :mis_id
+    receiver.belongs_to :mis,        :class_name => "Ebs::Person", :foreign_key => :mis_id
   end
 
   module ClassMethods
@@ -116,9 +117,10 @@ module MisPerson
     mis_person.learner_aims.each do |la|
       next unless la.unit_instance_occurrence && la.grade
       q = Qualification.find_or_create_by_mis_id(la.id)
-      q.update_attributes(:title     => la.unit_instance_occurrence.long_description,
-                          :grade     => la.grade,
-                          :person_id => id)
+      q.update_attributes(:title      => la.unit_instance_occurrence.long_description,
+                          :grade      => la.grade,
+                          :person_id  => id,
+                          :created_at => la.exp_end_date)
       q.save!
     end
   end
@@ -128,6 +130,7 @@ module MisCourse
 
   def self.included receiver
     receiver.extend ClassMethods
+    receiver.belongs_to :mis, :class_name => "Ebs::UnitInstanceOccurrences", :foreign_key => :mis_id
   end
 
   module ClassMethods
@@ -148,4 +151,10 @@ module MisCourse
     end
   end
 
+end
+
+module MisQualification
+  def self.included receiver
+    receiver.belongs_to :mis, :class_name => "Ebs::LearnerAim", :foreign_key => :mis_id
+  end
 end
