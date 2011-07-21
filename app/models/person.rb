@@ -45,7 +45,7 @@ class Person < ActiveRecord::Base
   end
 
   def self.user=(user)
-    Thread.current[:user] = user.id
+    Thread.current[:user] = user
   end
 
 end

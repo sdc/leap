@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
       @affiliation = session[:user_affiliation]
       redirect_to test_url unless @user && @affiliation
     else
-      @user = request.env["eppn"] ? Person.get(request.env["eppn"].split("@").first.downcase) : nil
+      Person.user = @user = request.env["eppn"] ? Person.get(request.env["eppn"].split("@").first.downcase) : nil
       @affiliation = request.env["affiliation"] ? request.env["affiliation"].split("@").first.downcase : nil
       render :text => "Problem contacting Shibboleth Service Provider" unless @user && @affiliation
     end
