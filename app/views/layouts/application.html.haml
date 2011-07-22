@@ -24,8 +24,15 @@
             = link_to search_people_url do
               = image_tag "icons/search.png"
               New Search
+          #multi-view
+            - if controller.controller_name == "views"
+              = link_to :all => true do
+                = image_tag "icons/multi.png"
+                Everyone
+            - else
+              &nbsp;
           #notice
-            Please Note: This is beta software. Changes you make will be temporary.
+            This is beta software. Changes you make will be temporary!
           #login_name
             logged in as
             = link_to @user.name, person_url(@user)
