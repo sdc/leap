@@ -3,8 +3,8 @@ Support requested by
 %br
 %dl
   %dt Difficulties:
-  %dl= support_request.difficulties.join ", "
+  %dl= support_request.difficulties ? support_request.difficulties.join(", ") : "--"
 %br
 %dl
   %dt Sessions:
-  %dl= support_request.sessions.join ", "
+  %dl= support_request.sessions ? support_request.sessions.join(", ") : "--"
