@@ -16,6 +16,7 @@ class Person < ActiveRecord::Base
   has_many :goals
   has_many :disciplinaries
   has_many :qualifications
+  has_many :support_requests
   
   serialize :middle_names
   serialize :address

@@ -199,3 +199,25 @@
     }
   }
 }
+
+#new_support_request {
+  .select{
+    @include column(5);
+  }
+  select {
+    margin-top:0;
+    height: 90px;
+    @include column(4,true);
+  }
+  .sumbit {
+    @include column(2);
+    @include prepend-top;
+  }
+}
+
+.support_request .body {
+  line-height: 18px;
+  dl,dt,dd {
+    display: inline
+  }
+}

@@ -1,0 +1,13 @@
+#new_support_request
+  = form_for @topic.events.new(:eventable_type => "SupportRequest") do |f|
+    %h3 Request Support for learner
+    .icon= image_tag "events/support_requests.png"
+    .select
+      %h4 Difficulties
+      = select_tag "event[difficulties]", options_for_select(["woo","cheese","pigs","wimpy","beefburger, alright"]), :multiple => true
+    .select
+      %h4 Sessions
+      = select_tag "event[sessions]", options_for_select(["One","Two","Another","Cheese"]), :multiple => true
+    = f.hidden_field :eventable_type
+    = hidden_field_tag :person_id, @topic.mis_id
+    .sumbit= submit_tag "Request"

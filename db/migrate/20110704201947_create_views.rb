@@ -15,7 +15,7 @@ class CreateViews < ActiveRecord::Migration
       :label       => "All",
       :name        => "all",
       :transitions => ["create","start","overdue","complete","drop"],
-      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification"],
+      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification","SupportRequest"],
       :icon_url    => "icons/events.png",
       :affiliations=> ["staff","student","affiliate"],
       :controls    => nil,
@@ -80,6 +80,16 @@ class CreateViews < ActiveRecord::Migration
       :affiliations => ['staff'],
       :controls    => ['reviews/new.html.haml'],
       :position    => 7
+    )
+    View.create(
+      :label       => 'Support Request',
+      :name        => 'support_requests',
+      :transitions => ['create'],
+      :events      => ['SupportRequest'],
+      :icon_url    => 'icons/support_requests.png',
+      :affiliations => ['staff','student','affiliate'],
+      :controls    => ['support_requests/new'],
+      :position    => 8
     )
   end
 
