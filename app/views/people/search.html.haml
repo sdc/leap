@@ -1,16 +1,17 @@
 .main_search
   .search_logo
-  =link_to image_tag("leap-logo.png"), search_people_url
+    =link_to image_tag("leap-logo.png"), search_people_url
   - form_tag search_people_url, :method => :get do
     = text_field_tag :q, params[:q]
     .search_fields
-      = submit_tag "Search"
-      = submit_tag "Search Everyone"
-    - if @people
-      = render @people
-    - else 
-      .search_notice
-        %b You are about to access an area containing personal data.
-        %br 
-        %br 
-        %p Information in this area must be treated in accordance with the requirements of the Data Protection Act 1998 and should not be divulged to anyone other than the student or the student’s tutor. 
+      = submit_tag "Search", :class => "search"
+      = submit_tag "Search Everyone", :class => "search"
+    .results  
+      - if @people
+        = render @people
+      - else 
+        .search_notice
+          %b You are about to access an area containing personal data.
+          %br 
+          %br 
+          %p Information in this area must be treated in accordance with the requirements of the Data Protection Act 1998 and should not be divulged to anyone other than the student or the student’s tutor. 

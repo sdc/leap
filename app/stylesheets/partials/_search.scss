@@ -1,17 +1,50 @@
 .main_search {
-  margin-top: 50px;
+  margin-top: 30px;
   text-align: center;
   margin-bottom: 400px;
 }
-.search_logo {
+.search_logo img {
+  width: 300px;
 }
 input#q {
   width: 450px;
 }
+input.search {
+  width: 125px;
+  height: 29px;
+  background-color: #F5F5F5;
+  @include border-radius(2px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9em; 
+  color: #666;
+  line-height: 27px;
+  &:hover {
+    background-color: #f2f2f2;
+    @include single-box-shadow(#999, 0px, 0px, 1px, false, false);  
+    border: 1px solid rgba(103, 103, 103, 0.1);
+  }
+}
+.results {
+  @include prepend(1);
+  @include column(25, true);
+}
 .search_person {
-  @include column(6, true);
+  @include column(5, true);
   @include append-bottom;
+  @include border-radius(2px);
+  @include single-box-shadow(#333, 0px, 0px, 2px, false, false);  
+  border: 1px solid rgba(0, 0, 0, 0.1);
   height: 70px;
+  padding: 4px;
+  margin: 0 1.5em 1.5em 0;
+  background-color: #fcfcfc;
+  &:hover {
+    background-color: #f9f9f9;
+    @include border-radius(4px);
+    @include box-shadow;
+  }
   h3,h5 {
     margin-bottom: 0px;
   }
@@ -28,7 +61,7 @@ input#q {
     }
   }
   .details {
-    @include column(4,true);
+    @include column(3,true);
   }
   .dob {
     line-height: 13px;
