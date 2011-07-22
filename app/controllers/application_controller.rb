@@ -24,11 +24,11 @@ class ApplicationController < ActionController::Base
 
   def set_user
     if Rails.env == "development"
-      @user = session[:user_id] ? Person.get(session[:user_id]) : nil
+      Person.user = @user = session[:user_id] ? Person.get(session[:user_id]) : nil
       @affiliation = session[:user_affiliation]
       redirect_to test_url unless @user && @affiliation
     else
-      @user = request.env["eppn"] ? Person.get(request.env["eppn"].split("@").first.downcase) : nil
+      Person.user = @user = request.env["eppn"] ? Person.get(request.env["eppn"].split("@").first.downcase) : nil
       @affiliation = request.env["affiliation"] ? request.env["affiliation"].split("@").first.downcase : nil
       render :text => "Problem contacting Shibboleth Service Provider" unless @user && @affiliation
     end

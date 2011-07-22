@@ -8,3 +8,4 @@ tmp/**/*
 public/stylesheets
 doc/app
 config/database.yml
+public/photos

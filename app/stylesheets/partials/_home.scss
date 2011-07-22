@@ -1,5 +1,6 @@
 #person_home .block {
   border: $border-color 2px solid;
+  background-color: #f6f6f6;
   @include clearfix;
   @include border-radius;
   margin: 0 0 10px 0;

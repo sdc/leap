@@ -15,6 +15,8 @@ class Person < ActiveRecord::Base
   has_many :contact_logs
   has_many :goals
   has_many :disciplinaries
+  has_many :qualifications
+  has_many :support_requests
   
   serialize :middle_names
   serialize :address
@@ -37,6 +39,14 @@ class Person < ActiveRecord::Base
 
   def Person.get(mis_id,fresh=false)
     (fresh ? import(mis_id) : find_by_mis_id(mis_id)) or import(mis_id)
+  end
+
+  def self.user
+    Thread.current[:user]
+  end
+
+  def self.user=(user)
+    Thread.current[:user] = user
   end
 
 end

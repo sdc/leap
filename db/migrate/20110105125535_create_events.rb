@@ -8,6 +8,7 @@ class CreateEvents < ActiveRecord::Migration
       t.integer  :about_person_id
       t.integer  :parent_id
       t.string   :transition
+      t.integer  :created_by_id
       t.timestamps
     end
     add_index :events, :person_id

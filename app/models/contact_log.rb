@@ -7,10 +7,12 @@
 
 class ContactLog < Eventable
 
-  belongs_to :contact, :class_name => "Person", :foreign_key => "contact_person_id"
+  after_create {|contact_log| contact_log.events.create!(:event_date => created_at, :transition => :create)}
 
-  after_create {|contact_log| contact_log.events.create!(:event_date => created_at, :transition => :create, :about_person_id => contact_person_id)}
+  def title; "Contact Log: #{created_by.name}" end
 
-  def title; "Contact Log: #{contact.name}" end
+  def icon_url
+    "/people/#{created_by.mis_id}.jpg"
+  end
 
 end

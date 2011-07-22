@@ -7,6 +7,7 @@ class CreatePersonCourses < ActiveRecord::Migration
       t.datetime :enrolment_date
       t.datetime :end_date
       t.string   :status
+      t.integer :created_by_id
       t.timestamps
     end
   end

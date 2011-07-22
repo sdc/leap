@@ -3,6 +3,7 @@ module MisPerson
   def self.included receiver
     receiver.extend ClassMethods
     receiver.belongs_to :mis_person, :class_name => "Ebs::Person", :foreign_key => :mis_id
+    receiver.belongs_to :mis,        :class_name => "Ebs::Person", :foreign_key => :mis_id
   end
 
   module ClassMethods
@@ -13,7 +14,7 @@ module MisPerson
 
     def import(mis_id, options = {})
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
-      options.reverse_merge! :save => true, :courses => true, :attendances => true
+      options.reverse_merge! :save => true, :courses => true, :attendances => true, :quals => true
       logger.info "Importing user #{mis_id}"
       if (ep = (Ebs::Person.find_by_person_code(mis_id) or Ebs::Person.find_by_network_userid(mis_id)))
         @person = Person.find_or_create_by_mis_id(ep.id)
@@ -35,6 +36,7 @@ module MisPerson
         @person.save if options[:save] 
         @person.import_courses if options[:courses]
         @person.import_attendances if options[:attendances]
+        @person.import_quals if options[:quals]
         return @person
       else
         return false
@@ -111,12 +113,25 @@ module MisPerson
         )
       end
   end
+
+  def import_quals
+    mis_person.learner_aims.each do |la|
+      next unless la.unit_instance_occurrence && la.grade
+      q = Qualification.find_or_create_by_mis_id(la.id)
+      q.update_attributes(:title      => la.unit_instance_occurrence.long_description,
+                          :grade      => la.grade,
+                          :person_id  => id,
+                          :created_at => la.exp_end_date)
+      q.save!
+    end
+  end
 end
 
 module MisCourse
 
   def self.included receiver
     receiver.extend ClassMethods
+    receiver.belongs_to :mis, :class_name => "Ebs::UnitInstanceOccurrences", :foreign_key => :mis_id
     receiver.belongs_to :mis_course, :class_name => "Ebs::UnitInstanceOccurrence", :foreign_key => :mis_id
   end
 
@@ -154,5 +169,11 @@ module MisCourse
         return false
       end
     end
+  end
+end
+
+module MisQualification
+  def self.included receiver
+    receiver.belongs_to :mis, :class_name => "Ebs::LearnerAim", :foreign_key => :mis_id
   end
 end

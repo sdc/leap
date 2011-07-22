@@ -2,10 +2,9 @@
   %h3
     Log a contact as 
     = @user.name
-  .icon= image_tag "events/contact_logs.png"
+  .icon= image_tag("#{url_for(Person.user)}.jpg", :size => "48x48")
   = f.text_area :body
   = f.hidden_field :person_id
   = f.hidden_field :eventable_type
-  = hidden_field_tag "event[contact_person_id]", @user.id
   = hidden_field_tag :person_id, @topic.mis_id
   .sumbit= submit_tag "Add Log"
