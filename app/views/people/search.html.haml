@@ -1,14 +1,18 @@
 .main_search
   .search_logo
     =link_to image_tag("leap-logo.png"), search_people_url
-  - form_tag search_people_url, :method => :get do
+  - form_tag search_people_url, :method => :get, :id=> "search_form" do
     = text_field_tag :q, params[:q]
     .search_fields
       = submit_tag "Search", :class => "search"
-      = submit_tag "Search Everyone", :class => "search"
     .results  
       - if @people
         = render @people
+        .search_extended
+          .person_photo
+            =image_tag("not_found.png", :size => "50x50")
+          .details
+            Click here to extend your search
       - else 
         .search_notice
           %b You are about to access an area containing personal data.

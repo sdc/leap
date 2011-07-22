@@ -30,10 +30,10 @@ class PeopleController < ApplicationController
 
   def search
     if params[:q]
-      if params[:commit] == "Search Everyone"
-        @people = Person.mis_search_for(params[:q])
+      if params[:commit] == "Search"
+         @people = Person.search_for(params[:q])        
       else
-        @people = Person.search_for(params[:q])
+        @people = Person.mis_search_for(params[:q])
       end
     end
     render :layout => "search"
