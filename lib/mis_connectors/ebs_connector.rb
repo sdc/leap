@@ -117,12 +117,14 @@ module MisPerson
   def import_quals
     mis_person.learner_aims.each do |la|
       next unless la.unit_instance_occurrence && la.grade
-      q = Qualification.find_or_create_by_mis_id(la.id)
-      q.update_attributes(:title      => la.unit_instance_occurrence.long_description,
-                          :grade      => la.grade,
-                          :person_id  => id,
-                          :created_at => la.exp_end_date)
-      q.save!
+      next unless Qualification.where(:mis_id => la.id).empty?
+      Qualification.create(
+        :mis_id     => la.id,
+        :title      => la.unit_instance_occurrence.long_description,
+        :grade      => la.grade,
+        :person_id  => id,
+        :created_at => la.exp_end_date
+      )
     end
   end
 end
