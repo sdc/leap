@@ -8,11 +8,12 @@
     .results  
       - if @people
         = render @people
-        .search_extended
-          .person_photo
-            =image_tag("not_found.png", :size => "50x50")
-          .details
-            Click here to extend your search
+        - if params[:commit] == "Search"
+          #search_extended
+            .person_photo
+              =image_tag("not_found.png", :size => "50x50")
+            .details
+              Click here to extend your search
       - else 
         .search_notice
           %b You are about to access an area containing personal data.
