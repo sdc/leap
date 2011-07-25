@@ -5,15 +5,16 @@
     = text_field_tag :q, params[:q]
     .search_fields
       = submit_tag "Search", :class => "search"
-    .results  
+    #results  
       - if @people
-        = render @people
-        - if params[:commit] == "Search"
-          #search_extended
-            .person_photo
-              =image_tag("not_found.png", :size => "50x50")
-            .details
-              Click here to extend your search
+        .results_people
+          = render @people
+          - if params[:commit] == "Search"
+            #search_extended
+              .person_photo
+                =image_tag("not_found.png", :size => "50x50")
+              .details
+                Click here to extend your search
       - else 
         .search_notice
           %b You are about to access an area containing personal data.

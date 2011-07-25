@@ -45,16 +45,22 @@ input.search {
     border: 1px solid rgba(103, 103, 103, 0.1);
   }
 }
-.results {
+.results_people {
   @include prepend(1);
   @include column(25, true);
+
+}
+.search_notice {
+  font-size: 1.2em;
+  width: 650px;
+  margin: 0 auto;
 }
 .search_person {
   @include column(5, true);
   @include append-bottom;
   @include border-radius(2px);
   @include single-box-shadow(#333, 0px, 0px, 2px, false, false);  
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid lighten($border-color, 66%);
   height: 70px;
   padding: 4px;
   margin: 0 1.5em 1.5em 0;
@@ -89,10 +95,4 @@ input.search {
 
 .search_fields {
   margin-bottom: 35px;
-}
-
-.search_notice {
-  font-size: 1.2em;
-  width: 650px;
-  margin: 0 auto;
 }
