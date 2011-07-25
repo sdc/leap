@@ -26,6 +26,25 @@ input.search {
     border: 1px solid rgba(103, 103, 103, 0.1);
   }
 }
+.search_extended {
+  @include column(5, true);
+  @include append-bottom;
+  @include border-radius(2px);
+  @include single-box-shadow(#999, 0px, 0px, 2px, false, false);    
+  height: 70px;
+  border: 1px soild #CCCCCC;
+  cursor: pointer;
+  font-size: 1em; 
+  color: #333;
+  line-height: 27px;
+  padding: 4px;
+  background-color: #e8e8e8;
+  text-align: left;
+  &:hover {
+    @include single-box-shadow(#7a7a7a, 0px, 0px, 2px, false, false);  
+    border: 1px solid rgba(103, 103, 103, 0.1);
+  }
+}
 .results {
   @include prepend(1);
   @include column(25, true);
@@ -41,7 +60,7 @@ input.search {
   margin: 0 1.5em 1.5em 0;
   background-color: #fcfcfc;
   &:hover {
-    background-color: #f9f9f9;
+    background-color: #f5f5f;
     @include border-radius(4px);
     @include box-shadow;
   }
@@ -51,25 +70,27 @@ input.search {
   a {
     text-decoration: none;
   }
-  .person_photo {
-    text-align: center;
-    @include column(2);
-    img {
-      @include border-radius(4px);
-      width: 70px;
-      height: 70px;
-    }
-  }
-  .details {
-    @include column(3,true);
-  }
   .dob {
     line-height: 13px;
   }
 }
+.person_photo {
+  text-align: center;
+  @include column(2);
+  img {
+    @include border-radius(4px);
+    width: 70px;
+    height: 70px;
+  }
+}
+.details {
+  @include column(3,true);
+}
+
 .search_fields {
   margin-bottom: 35px;
 }
+
 .search_notice {
   font-size: 1.2em;
   width: 650px;
