@@ -19,24 +19,7 @@
   %body
     - if @affiliation == "staff"
       #top_bar
-        .inner
-          - form_tag search_people_url, :method => :get, :id=> "search_form" do
-            = text_field_tag :q, params[:q]
-            = submit_tag "Search"
-          #multi-view
-            - if controller.controller_name == "views"
-              = link_to :all => true do
-                = image_tag "icons/multi.png"
-                Everyone
-            - else
-              &nbsp;
-          #notice
-            This is beta software. Changes you make will be temporary!
-          #login_name
-            logged in as
-            = link_to @user.name, person_url(@user)
-            = "(#{@affiliation})" unless @affiliation == "student"
-              
+        = render :partial => "layouts/top_bar"
     .container#main_container
       #side_pane
         = render :partial => "layouts/#{@topic.class.name.underscore}_sidebar" if @topic

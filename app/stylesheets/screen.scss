@@ -8,43 +8,12 @@
 @import "partials/events";
 @import "partials/timetable";
 @import "partials/search";
+@import "partials/top_bar";
 
 body {
   @include blueprint-typography(true);
   @include blueprint-utilities;
   @include blueprint-interaction; 
-}
-
-#top_bar {
-  height: 30px;
-  background: #ddd;
-  @include box-shadow;
-  .inner {
-    width: 950px;
-    margin: 0 auto;
-  }
-  @include append-bottom;
-  a {
-    @include hover-link;
-  }
-  #new_search_link {
-    @include column(3);
-    input {
-      width: 20px;
-    }
-  }
-  #multi-view {
-    @include column(3);
-  }
-  #notice {
-    @include column(9);
-    color: red;
-    font-weight: bold;
-  }
-  #login_name {
-    @include column(9,true);
-    text-align:right;
-  }
 }
 
 .container {
