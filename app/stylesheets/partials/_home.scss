@@ -81,6 +81,9 @@
   }
   .graph {
     @include column(6);
+    img {
+      width: 100%;
+    }
   }
   .percent {
     @include prepend-top;
