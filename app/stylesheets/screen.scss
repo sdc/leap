@@ -29,6 +29,9 @@ body {
   }
   #new_search_link {
     @include column(3);
+    input {
+      width: 20px;
+    }
   }
   #multi-view {
     @include column(3);
