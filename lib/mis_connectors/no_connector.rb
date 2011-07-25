@@ -42,3 +42,6 @@ module MisCourse
   end
 
 end
+
+module MisQualification
+end

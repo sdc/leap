@@ -6,7 +6,7 @@ class Eventable < ActiveRecord::Base
   belongs_to :created_by, :foreign_key => "created_by_id", :class_name => "Person", :dependent => :destroy
   has_many :events, :as => :eventable, :dependent => :destroy
 
-  before_validation {|e| update_attribute("created_by_id", Person.user)}
+  before_validation {|e| update_attribute("created_by_id", Person.user.id)}
 
   validates :person_id, :presence => true
 
