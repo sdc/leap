@@ -18,8 +18,7 @@
     = csrf_meta_tag
   %body
     - if @affiliation == "staff"
-      #top_bar
-        = render :partial => "layouts/top_bar"
+      #top_bar= render :partial => "layouts/top_bar"
     .container#main_container
       #side_pane
         = render :partial => "layouts/#{@topic.class.name.underscore}_sidebar" if @topic
