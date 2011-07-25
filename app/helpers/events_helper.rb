@@ -10,7 +10,7 @@ module EventsHelper
     when "Array"  : thing.map{|t| special_title(t)}.join " "
     when "Date"   : pretty_date thing
     when "Time"   : pretty_date thing
-    when "Course" : link_to_if @affiliation == "staff", thing.code, course_view_url(thing)
+    when "Course" : link_to_if @affiliation == "staff", thing.code, course_view_url(thing,View.find_all_by_name("all").detect{|x| x.affiliations.include?("staff")})
     when "Person" : link_to_if @affiliation == "staff", thing.name, thing
     end
   end

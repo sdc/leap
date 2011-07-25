@@ -20,10 +20,9 @@
     - if @affiliation == "staff"
       #top_bar
         .inner
-          #new_search_link
-            = link_to search_people_url do
-              = image_tag "icons/search.png"
-              New Search
+          - form_tag search_people_url, :method => :get, :id=> "search_form" do
+            = text_field_tag :q, params[:q]
+            = submit_tag "Search"
           #multi-view
             - if controller.controller_name == "views"
               = link_to :all => true do
