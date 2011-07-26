@@ -1,4 +1,4 @@
-.person.course{:class => cycle(nil,nil,nil,"last")}
+.person.course{:class => cycle("first",nil,nil,"last")}
   = link_to person_url(person, :refresh => true) do
     .person_photo.course= image_tag("#{url_for(person)}.jpg")
     .details.course

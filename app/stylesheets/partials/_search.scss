@@ -77,7 +77,10 @@ input.search {
     @include column(4);
     height: 60px;
     @include append-bottom;
-
+    margin: 0 1.5em 1.5em 0;
+    &.first {
+      margin-left: 37px;
+    }
   }
   h3,h5 {
     margin-bottom: 0px;
