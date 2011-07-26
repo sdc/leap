@@ -44,7 +44,7 @@ module MisPerson
     end
 
   def mis_search_for(query)
-    Ebs::Person.search_for(query).limit(10).map{|p| import(p,:save => false, :courses => false)}
+    Ebs::Person.search_for(query).order("surname,forename").limit(50).map{|p| import(p,:save => false, :courses => false)}
   end 
   end
 

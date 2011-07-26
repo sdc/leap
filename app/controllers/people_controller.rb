@@ -33,7 +33,7 @@ class PeopleController < ApplicationController
       if params[:commit] == "Search"
          @people = Person.search_for(params[:q]).order("surname,forename").limit(50)
       else
-        @people = Person.mis_search_for(params[:q]).order("surname,forename").limit(50)
+        @people = Person.mis_search_for(params[:q])
       end
     end
     render :layout => "search"
