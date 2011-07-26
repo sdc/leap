@@ -1,5 +1,5 @@
-#person_home
-  #personal_details.block
+#details_home
+  #details.block
     %h3 Personal Details
     %dl
       %dt Name:
@@ -21,12 +21,12 @@
       = f.hidden_field :person_id
       = f.text_field :body 
       = submit_tag "Post"
-  .person_home_container
+  .details_home_container
     #next_lesson.block
-      .person_left
+      .details_left
         %h4 Next lesson
         = link_to image_tag("timetable.png"), person_timetables_url(@topic)
-      .person_right   
+      .details_right   
         - if @next_timetable_event
           #lesson_block
             .timetable_event_link= link_to @next_timetable_event.title, person_timetables_url(@topic)          
@@ -41,7 +41,7 @@
               .small_text= @next_timetable_event.teachers.map{|t| t.name}.join ", "
         - else 
           %b You have no current timetable events.
-  .person_home_container.last
+  .details_home_container.last
     #attendance.block{:class => @attendances.empty? ? "blank" : @attendances.last.status}
       - unless @attendances.empty?
         .graph
@@ -53,12 +53,12 @@
       - else
         %b You have no attendance data, yet.
 
-  .person_home_container  
+  .details_home_container  
     #targets.block
-      .person_left
+      .details_left
         %h4 Targets
         = link_to image_tag("target_home.png"), person_view_url(@topic,View.find_by_name("targets"))
-      .person_right      
+      .details_right      
         #target_list 
           - if @targets.empty?
             %b You have no targets, yet.
@@ -72,20 +72,20 @@
               .stu_target{:class => target.complete_date ? "complete" : "current", :title => target[:body]}
                 .target_date= pretty_date target.target_date
                 .target_body= link_to truncate(target[:body], :length => 25), person_view_url(@topic, View.find_by_name("targets"), :anchor => dom_id(target.events.last))
-  .person_home_container.last
+  .details_home_container.last
     .block
       %h3 Advert
-  .person_home_container
+  .details_home_container
     #moodle_course.block
-      .person_left
+      .details_left
         %h4 Moodle
         = link_to image_tag("moodle.png"), "#{Settings.moodle_host}#{Settings.moodle_path}"
-      .person_right
+      .details_right
       - if @moodle_courses
         #moodle_course_list      
           - @moodle_courses.each do |mdl|
             .mdl_course{:style => "font-weight: #{mdl["canedit"] == "1" ? "bold" : "normal"}"}= link_to mdl["fullname"], "#{Settings.moodle_host}#{Settings.moodle_path}/course/view.php?id=#{mdl["id"]}"
       - else
         %p You have no current Moodle enrolments
-  .person_home_container.last
+  .details_home_container.last
     

@@ -1,0 +1,51 @@
+#details_home
+  #details.block
+    %h3 Course Details
+    %dl
+      %dt Course Title:
+      %dd= @topic.title
+      %dt Course Code:
+      %dd.last= @topic.code
+      %dt Course Date:
+      %dd.last= @topic.year
+  #students.block
+    - @topic.person_courses.each do |pc|
+      = render :partial => "person", :object => pc.person, :locals => {:status => pc.status}
+  .details_home_container    
+    #next_lesson.block
+      .details_left
+        %h4 Next lesson
+        = link_to image_tag("timetable.png"), person_timetables_url(@topic)
+      .details_right   
+        - if @next_timetable_event
+          #lesson_block
+            .timetable_event_link= link_to @next_timetable_event.title, person_timetables_url(@topic)          
+            .timetable_event_date
+              .timetable_event_header= @next_timetable_event.start.strftime('%A')
+              .small_text= @next_timetable_event.start.strftime('%H.%M%P')
+              .small_text
+                Room:
+                = @next_timetable_event.rooms.join ", "
+            .timetable_event_location
+              .small_text= @next_timetable_event.start.strftime('%d/%m/%y')            
+              .small_text= @next_timetable_event.teachers.map{|t| t.name}.join ", "
+        - else 
+          %b There are no current timetable events.
+  .details_home_container.last
+    #reviews.block
+      .details_left
+        %h4 Reviews
+      .details_right
+  .details_home_container
+    #moodle_course.block
+      .details_left
+        %h4 Moodle
+        = link_to image_tag("moodle.png"), "#{Settings.moodle_host}#{Settings.moodle_path}"
+      .details_right
+      - if @moodle_courses
+        #moodle_course_list      
+          - @moodle_courses.each do |mdl|
+            .mdl_course{:style => "font-weight: #{mdl["canedit"] == "1" ? "bold" : "normal"}"}= link_to mdl["fullname"], "#{Settings.moodle_host}#{Settings.moodle_path}/course/view.php?id=#{mdl["id"]}"
+      - else
+        %p There are no current Moodle enrolments
+  .details_home_container.last      

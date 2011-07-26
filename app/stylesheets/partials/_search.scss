@@ -1,3 +1,9 @@
+#full_pane {
+  @include column (25, true);
+  input#q {
+    width: 450px;
+  }
+}
 .main_search {
   margin-top: 30px;
   text-align: center;
@@ -5,9 +11,6 @@
 }
 .search_logo img {
   width: 300px;
-}
-#full_pane input#q {
-  width: 450px;
 }
 input.search {
   width: 125px;
@@ -45,17 +48,17 @@ input.search {
     border: 1px solid rgba(103, 103, 103, 0.1);
   }
 }
-.results_people {
+#results {
   @include prepend(1);
   @include column(25, true);
-
+  text-align: left;
 }
 .search_notice {
   font-size: 1.2em;
   width: 650px;
   margin: 0 auto;
 }
-.search_person {
+.person {
   @include column(5, true);
   @include append-bottom;
   @include border-radius(2px);
@@ -70,6 +73,12 @@ input.search {
     @include border-radius(4px);
     @include box-shadow;
   }
+  &.course {
+    @include column(4);
+    height: 60px;
+    @include append-bottom;
+
+  }
   h3,h5 {
     margin-bottom: 0px;
   }
@@ -79,18 +88,29 @@ input.search {
   .dob {
     line-height: 13px;
   }
-}
-.person_photo {
-  text-align: center;
-  @include column(2);
-  img {
-    @include border-radius(4px);
-    width: 70px;
-    height: 70px;
+  .person_photo {
+    text-align: center;
+    @include column(2);
+    img {
+      @include border-radius(4px);
+      width: 70px;
+      height: 70px;
+    }
+    &.course img {
+      @include border-radius(4px);
+      width: 55px;
+      height: 55px;
+    }
   }
-}
-.details {
-  @include column(3,true);
+  .details {
+    @include column(3,true);
+    &.course {
+      @include column(2,true);
+      h3 {
+        font-size: 1.1em;
+      }
+    }
+  }
 }
 
 .search_fields {
