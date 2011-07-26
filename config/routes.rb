@@ -28,6 +28,7 @@ Ilp2::Application.routes.draw do
   end
 
   match 'test'       => 'test#index', :as => :test
+  match 'stats'      => 'test#stats'
   match 'test/login' => 'test#login', :as => :test_login
 
   root :to => "people#index"

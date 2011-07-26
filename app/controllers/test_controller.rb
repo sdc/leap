@@ -11,4 +11,7 @@ class TestController < ApplicationController
     redirect_to person_url(Person.get(session[:user_id]))
   end
 
+  def stats
+  end
+
 end
