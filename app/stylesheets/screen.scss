@@ -42,16 +42,16 @@ form {
   clear:both;
 }
 
-.current     {background-color: #fe9 }
-.start       {background-color: #ed9 }
-.complete    {background-color: #ada }
-.overdue     {background-color: #ebb }
-.incomplete  {background-color: #faa }
-.unknown     {background-color: #ccc }
-.not_started {background-color: #cce }
+.current        {background-color: #fe9 }
+.start          {background-color: #ed9 }
+.complete       {background-color: #ada }
+.overdue        {background-color: #ebb }
+.incomplete     {background-color: #faa }
+.unknown        {background-color: #ccc }
+.not_started    {background-color: #cce }
 .fg_current     {color: #fe9 }
 .fg_start       {color: #ed9 }
-.fg_complete    {color: #ada }
+.fg_complete    {color: #6a6 }
 .fg_overdue     {color: #ebb }
 .fg_incomplete  {color: #faa }
 .fg_unknown     {color: #ccc }

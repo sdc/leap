@@ -1,6 +1,12 @@
+#course_home .block {
+  background-color: #F2F2AC;
+}
 #person_home .block {
-  border: $border-color 2px solid;
   background-color: #f6f6f6;
+}
+
+#main_pane .block {
+  border: $border-color 2px solid;
   @include clearfix;
   @include border-radius;
   margin: 0 0 10px 0;
@@ -11,23 +17,23 @@
     font-size: 1.4em;
     color: #666;
   }
-  .person_left {
+  .details_left {
     @include column(2); 
+    img {
+    width: 60px;
+    }
   }
-  .person_right {
+  .details_right {
     @include column(7,true);  
-  }
-  img {
-  width: 60px;
   }
 }
 
-.person_home_container {
+.details_home_container {
   @include column(10);
   margin-bottom: 10px;
 }
 
-#personal_details{
+#details{
   dl{
     @include clearfix;
   }
@@ -133,4 +139,7 @@
     height: 75px;
     overflow:auto;
   }
+}
+
+#students {
 }

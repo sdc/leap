@@ -7,17 +7,15 @@
       = submit_tag "Search", :class => "search"
     #results  
       - if @people
-        .results_people
-          = render @people
-          - if params[:commit] == "Search"
-            #search_extended
-              .person_photo
-                =image_tag("not_found.png", :size => "50x50")
-              .details
-                Click here to extend your search
+        = render @people
+        - if params[:commit] == "Search"
+          #search_extended
+            .person_photo
+              =image_tag("not_found.png", :size => "50x50")
+            .details
+              Click here to extend your search
       - else 
-        .search_notice
-          %b You are about to access an area containing personal data.
-          %br 
-          %br 
-          %p Information in this area must be treated in accordance with the requirements of the Data Protection Act 1998 and should not be divulged to anyone other than the student or the student’s tutor. 
+        %b You are about to access an area containing personal data.
+        %br 
+        %br 
+        %p Information in this area must be treated in accordance with the requirements of the Data Protection Act 1998 and should not be divulged to anyone other than the student or the student’s tutor. 
