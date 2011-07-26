@@ -81,6 +81,7 @@ module MisPerson
 
   def import_courses
     mis_person.people_units.each do |pu|
+      next unless pu.uio_id
       course = Course.get(pu.uio_id)
       pc= PersonCourse.find_or_create_by_person_id_and_course_id(id,course.id)
       if pu.unit_type == "A" 
