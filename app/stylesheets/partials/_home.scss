@@ -1,6 +1,12 @@
-#details_home .block {
-  border: $border-color 2px solid;
+#course_home .block {
+  background-color: #F2F2AC;
+}
+#person_home .block {
   background-color: #f6f6f6;
+}
+
+#main_pane .block {
+  border: $border-color 2px solid;
   @include clearfix;
   @include border-radius;
   margin: 0 0 10px 0;
