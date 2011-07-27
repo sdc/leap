@@ -16,12 +16,7 @@
           = event.about_person.name
       %h1= raw special_title event.title
       - if event.subtitle
-        - if event.subtitle.kind_of? Array
-          %h2
-            .subtitle_word= event.subtitle.first
-            .subtitle_date= pretty_date event.subtitle.last,false
-        - else
-          %h2= event.subtitle
+        %h2= raw special_title event.subtitle
     - if event.body_partial
       .body= render :partial => event.eventable, :locals => {:event => event}
     - elsif event.sanitize_options
