@@ -7,13 +7,17 @@
       = submit_tag "Search", :class => "search"
     #results  
       - if @people
-        = render @people
-        - if params[:commit] == "Search"
-          #search_extended
-            .person_photo
-              =image_tag("not_found.png", :size => "50x50")
-            .details
-              Click here to extend your search
+        - if @people.empty? 
+          = render @people
+          - if params[:commit] == "Search"
+            #search_extended.person
+              .person_photo
+                =image_tag("not_found.png")
+              .details
+                Click here to extend your search
+          - else
+          .no_results
+            %b Unfortunately, your search yielded no results. Please try again.
       - else 
         %b You are about to access an area containing personal data.
         %br 
