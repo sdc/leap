@@ -4,15 +4,20 @@ module EventsHelper
     link_to_function content_tag(:li, text), "$$('##{event_id} .tab').each(function(t){t.hide()});$$('##{event_id} .#{klass}').first().show()"
   end
 
+  def title_class(thing)
+    thing.size < 4 ? "big" : nil
+  end
+
   def special_title(thing)
-    case thing.class.name
-    when "String" : return thing
+    text = case thing.class.name
+    when "String" : thing
     when "Array"  : thing.map{|t| special_title(t)}.join " "
     when "Date"   : pretty_date thing
     when "Time"   : pretty_date thing
     when "Course" : link_to_if @affiliation == "staff", thing.code, thing
     when "Person" : link_to_if @affiliation == "staff", thing.name, thing
     end
+    text.size < 4 ? content_tag(:span,text,:class => "big") : text
   end
     
 

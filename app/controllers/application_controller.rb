@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_views
-    @views = View.order("position").select{|v| v.affiliations.include? @affiliation}
+    @views = View.order("position").affiliation(@affiliation)
   end
 
 end

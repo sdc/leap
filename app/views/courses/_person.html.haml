@@ -2,6 +2,6 @@
   = link_to person_url(person, :refresh => true) do
     .person_photo.course= image_tag("#{url_for(person)}.jpg")
     .details.course
-      %h3= truncate(person.name, :length => 20)
+      %h3= truncate(person.name, :length => 17)
       %h5.quiet= person.mis_id      
       .status{:class => "fg_#{status}"}= status.humanize
