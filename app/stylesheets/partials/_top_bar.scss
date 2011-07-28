@@ -11,10 +11,14 @@
     @include hover-link;
   }
   form#search_form {
-    @include column (7);
+    @include column (9);
     img {
-      @include column (1);
+      @include column (2);
       margin: 0 3px 0 0;
+      width: 45px;
+      &.icon {
+        @include column (1);
+      }
     }
     input#q {
       @include column (4);
@@ -32,9 +36,11 @@
     @include column(3);
   }
   #notice {
-    @include column(9);
+    @include column(6);
     color: red;
     font-weight: bold;
+    font-size: 0.9em;
+    text-align: center;
   }
   #login_name {
     @include column(5,true);
