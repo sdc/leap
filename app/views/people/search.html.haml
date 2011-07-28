@@ -9,7 +9,7 @@
       - if @people
         = render @people
         - if params[:commit] == "Search"
-          #search_extended
+          #search_extended.person
             .person_photo
               =image_tag("not_found.png", :size => "50x50")
             .details
