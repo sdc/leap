@@ -24,4 +24,8 @@
         = render :partial => "layouts/#{@topic.class.name.underscore}_sidebar" if @topic
       #main_pane= yield
       #footer
-        leap &mdash; electronic individual learning plans &mdash; &copy; South Devon College 2011
+        leap &mdash; electronic individual learning plans &mdash; &copy; South Devon College 2011 &mdash; (
+        = @affiliation
+        )
+      - if @affiliation == "affiliate"
+        .hovery= image_tag "parent_mode.png"
