@@ -51,7 +51,10 @@ input.search {
 #results {
   @include prepend(1);
   @include column(25, true);
-  text-align: left;
+  text-align: center;
+  .no_results {
+    padding:0;
+  }
 }
 .search_notice {
   font-size: 1.2em;
@@ -92,9 +95,8 @@ input.search {
     line-height: 13px;
   }
   .person_photo {
-    text-align: center;
-    @include column(2);
-    img {
+    @include column(2);  
+    img {       
       @include border-radius(4px);
       width: 70px;
       height: 70px;
@@ -107,6 +109,7 @@ input.search {
   }
   .details {
     @include column(3,true);
+    text-align: left;
     &.course {
       @include column(2,true);
       h3 {
