@@ -1,5 +1,7 @@
 class TimetableEvent < SuperModel::Base
 
+  attributes :title, :start, :end, :rooms, :teachers, :mark
+
   def timetable_margin
    ((start - start.change(:hour => 8,:minute => 0, :sec => 0, :usec => 0)) / 50).floor 
   end

@@ -31,7 +31,7 @@ class Event < ActiveRecord::Base
   scope :unique_eventable, group("eventable_id,eventable_type")
   scope :creation, where(:transition => :create)
 
-  before_validation {|event| update_attribute("person_id", event.eventable.person_id)}
+  before_validation {|event| update_attribute("person_id", event.eventable.person_id) unless person_id}
 
   delegate :body, :to => :eventable
 

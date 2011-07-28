@@ -142,5 +142,10 @@
 }
 
 #students {
-
+  #expand_students {
+    text-align:right;
+    a {
+      @include hover-link;
+    }
+  }
 }
