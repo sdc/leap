@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     else
       @affiliation = request.env["affiliation"] ? request.env["affiliation"].split("@").first.downcase : nil
       uname,domain = request.env["eppn"].downcase.split('@')
-      uname = uname[0..-2] if @affiliation == "affiliate"
+      uname = uname[1..-1] if @affiliation == "affiliate"
       Person.user = @user = Person.get(uname)
       render :text => "Problem contacting Shibboleth Service Provider" unless @user && @affiliation
     end
