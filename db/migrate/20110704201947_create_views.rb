@@ -82,6 +82,16 @@ class CreateViews < ActiveRecord::Migration
       :position    => 7
     )
     View.create(
+      :label       => "Reviews",
+      :name        => "reviews",
+      :transitions => ['complete'],
+      :events      => ['Review','ReviewLine'],
+      :icon_url    => 'icons/reviews.png',
+      :affiliations => ['student','affiliate'],
+      :controls    => nil,
+      :position    => 7
+    )
+    View.create(
       :label       => 'Support Request',
       :name        => 'support_requests',
       :transitions => ['create'],
