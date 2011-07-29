@@ -8,3 +8,4 @@ Settings.defaults[:notify_details_change_url]    = "https://spreadsheets.google.
 Settings.defaults[:target_default_length]        = 2.weeks
 Settings.defaults[:support_request_difficulties] = "Reading,Comprehension,Spelling,Writing,Proof-reading,Planning work,
                                                     Organising work,Concentration,Study Skills,Numeracy"
+Settings.defaults[:admin_users]                  = "khughes"

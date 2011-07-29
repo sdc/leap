@@ -54,4 +54,8 @@ class ApplicationController < ActionController::Base
     @views = View.order("position").affiliation(@affiliation)
   end
 
+  def admin_only
+    Settings.admin_users.split(/,/).include? @user.username or redirect_to "/404.html"
+  end
+
 end
