@@ -14,8 +14,8 @@ class EventsController < ApplicationController
   end
 
   def create
-    et = params[:event].delete(:eventable_type).tableize
-    @event = @topic.send(et).create(params[:event])
+    et = params.delete(:eventable_type).tableize
+    @event = @topic.send(et).create(params[et.singularize])
     redirect_to :back
   end
 

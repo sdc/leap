@@ -1,4 +1,4 @@
-= form_for @topic.events.new(:eventable_type => "Review") do |f|
+= form_for @topic.reviews.new, :url => "/events" do |f|
   %h3
     New Review
   .icon= image_tag "events/reviews.png"
@@ -17,9 +17,8 @@
           - if rev = @topic.reviews.where(:review_window_id => rw.id).last
             = link_to "View", event_url(rev.events.last, :person_id => @topic.mis_id)
           - else
-            = radio_button_tag "event[review_window_id]", rw.id, true
-  = f.hidden_field :person_id
-  = f.hidden_field :eventable_type
+            = f.radio_button :review_window_id, rw.id
+  = hidden_field_tag :eventable_type, "Review"
   = hidden_field_tag :person_id, @topic.mis_id
   .sumbit= submit_tag "Create Review"
 

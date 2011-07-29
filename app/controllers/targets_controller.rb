@@ -1,14 +1,7 @@
 class TargetsController < ApplicationController
 
-  def create
-    @event = Event.find(params[:target][:event_id])
-    @target = @event.targets.create(params[:target].merge(:person_id => @event.person_id))
-    @events = [@event]
-    render @event
-  end
-
   def update
-    @target = Target.find(params[:id])
+    @target = @topic.targets.find(params[:id])
     @event = Event.find(params[:event_id])
     @events = @target.events
     @target.update_attributes(params[:target])
