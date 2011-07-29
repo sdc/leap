@@ -17,4 +17,8 @@ class Course < ActiveRecord::Base
     mis_id.to_s
   end
 
+  def as_param
+    {:course_id => mis_id.to_s}
+  end
+
 end

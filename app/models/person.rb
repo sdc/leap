@@ -49,4 +49,8 @@ class Person < ActiveRecord::Base
     Thread.current[:user] = user
   end
 
+  def as_param
+    {:person_id => mis_id.to_s}
+  end
+
 end
