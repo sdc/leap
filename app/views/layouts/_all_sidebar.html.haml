@@ -1,10 +1,10 @@
 #person_photo= image_tag("multiple_people.png", :size => "130x130", :style => "display:none")
-%h1 Multiple Users
+%h1 Everybody
 %nav
-  = icon_link "Home", @user
-  = icon_link "Events", events_url(:all => true)
-  = icon_link "Courses", event_filter_url(Event, {:eventable_type => :PersonCourse, :transition => :start})
-  = icon_link "Targets", event_filter_url(Event, {:eventable_type => :Target})
+  /= icon_link "Home", @user
+  /= icon_link "Events", events_url(:all => true)
+  /= icon_link "Courses", event_filter_url(Event, {:eventable_type => :PersonCourse, :transition => :start})
+  /= icon_link "Targets", event_filter_url(Event, {:eventable_type => :Target})
   /= icon_link "Messages", event_filter_url(@topic, {:eventable_type => :Note})
   /= icon_link "Reviews"
   /= icon_link "Timetable", person_timetables_url(@topic)

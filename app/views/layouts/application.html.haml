@@ -21,7 +21,10 @@
       #top_bar= render :partial => "layouts/top_bar"
     .container#main_container
       #side_pane
-        = render :partial => "layouts/#{@topic.class.name.underscore}_sidebar" if @topic
+        - if params[:all]
+          = render :partial => "layouts/all_sidebar"
+        - else
+          = render :partial => "layouts/#{@topic.class.name.underscore}_sidebar" if @topic
       #main_pane= yield
       #footer
         leap &mdash; electronic individual learning plans &mdash; &copy; South Devon College 2011 &mdash; (
