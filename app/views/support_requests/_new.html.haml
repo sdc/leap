@@ -4,7 +4,7 @@
     .icon= image_tag "events/support_requests.png"
     .select
       %h4 Difficulties
-      = select_tag "support_request[difficulties]", options_for_select(Settings.support_request_difficulties), :multiple => true
+      = select_tag "support_request[difficulties]", options_for_select(Settings.support_request_difficulties.split(/,/)), :multiple => true
     .select
       %h4 Sessions
       = select_tag "support_request[sessions]", options_for_select(@topic.timetable_events(:from => (Date.today - 1.month), :to => (Date.today + 1.month)).map{|e| e.title}.uniq), :multiple => true

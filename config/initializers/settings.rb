@@ -6,5 +6,5 @@ Settings.defaults[:moodle_token]                 = "585d9c9fa81425ed803ac03666b7
 Settings.defaults[:front_page_note_prompt]       = "What do I need to do today?"
 Settings.defaults[:notify_details_change_url]    = "https://spreadsheets.google.com/a/southdevon.ac.uk/viewform?formkey=dEtUWldxeTJMMXhLWTI5d3ZIRmtSUnc6MQ"
 Settings.defaults[:target_default_length]        = 2.weeks
-Settings.defaults[:support_request_difficulties] = ["Reading","Comprehension","Spelling","Writing","Proof-reading","Planning work",
-                                                    "Organising work","Concentration","Study Skills","Numeracy"]
+Settings.defaults[:support_request_difficulties] = "Reading,Comprehension,Spelling,Writing,Proof-reading,Planning work,
+                                                    Organising work,Concentration,Study Skills,Numeracy"

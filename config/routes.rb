@@ -1,6 +1,7 @@
 Ilp2::Application.routes.draw do
 
-    resources :views
+  resources :views
+  resources :settings
   resources :notes
   resources :targets
   resources :timetables
