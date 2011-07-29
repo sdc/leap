@@ -11,7 +11,7 @@ module EventsHelper
   def special_title(thing)
     text = case thing.class.name
     when "String" : thing
-    when "Array"  : thing.map{|t| special_title(t)}.join " "
+    when "Array"  : thing.map{|t| content_tag(:div, special_title(t), :class => "double_title")}.join
     when "Date"   : pretty_date thing
     when "Time"   : pretty_date thing
     when "Course" : link_to_if @affiliation == "staff", thing.code, thing
