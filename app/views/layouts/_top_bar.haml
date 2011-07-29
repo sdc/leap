@@ -1,6 +1,7 @@
 .inner
   - form_tag search_people_url, :method => :get, :id=> "search_form" do
-    =link_to image_tag("icons/search.png"), search_people_url
+    =link_to image_tag("icons/leap-logo.png"), search_people_url
+    =link_to image_tag("icons/search.png", :class => "icon"), search_people_url
     = text_field_tag :q, params[:q]
     = submit_tag "Search", :class => "search"
   #multi-view
