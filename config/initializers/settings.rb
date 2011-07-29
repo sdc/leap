@@ -9,3 +9,4 @@ Settings.defaults[:target_default_length]        = 2.weeks
 Settings.defaults[:support_request_difficulties] = "Reading,Comprehension,Spelling,Writing,Proof-reading,Planning work,
                                                     Organising work,Concentration,Study Skills,Numeracy"
 Settings.defaults[:admin_users]                  = "khughes"
+Settings.defaults[:top_bar_notice]               = "This is beta software. Changes you make will be temporary!" 
