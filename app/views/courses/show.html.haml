@@ -9,8 +9,9 @@
       %dt Course Date:
       %dd.last= @topic.year
   #students.block
-    .clearfix{:style => "height:250px;padding-top:1ex"}
+    .clearfix{:style => "height:#{[255,(@topic.person_courses.count / 4) * 85].min}px;padding-top:1ex"}
       - @topic.person_courses.each do |pc|
+        - next unless pc.person
         = render :partial => "person", :object => pc.person, :locals => {:status => pc.status}
     - if @topic.person_courses.count > 12
       #expand_students=   link_to_function "See all students...", "$('students').down('.clearfix').setStyle({height:'auto'});$('expand_students').hide()"
