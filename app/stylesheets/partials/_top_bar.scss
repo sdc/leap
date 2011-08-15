@@ -2,6 +2,7 @@
   height: 30px;
   background: #ddd;
   @include box-shadow;
+  vertical-align: middle;
   .inner {
     width: 950px;
     margin: 0 auto;
@@ -34,6 +35,7 @@
   }
   #multi-view {
     @include column(3);
+    margin: 3px 3px 0 0;    
   }
   #notice {
     @include column(6);
@@ -43,7 +45,11 @@
     text-align: center;
   }
   #login_name {
-    @include column(5,true);
+    @include column(6,true);
     text-align:right;
+    img {
+      width: 25px;
+      margin: 3px 3px 0 0;        
+    }    
   }
 }

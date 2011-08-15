@@ -13,7 +13,5 @@
       &nbsp;
   #notice= Settings.top_bar_notice
   #login_name
-    logged in as
+    = image_tag("#{url_for(@user)}.jpg")
     = link_to @user.name, person_url(@user)
-    = "(#{@affiliation})" unless @affiliation == "student"
-              
