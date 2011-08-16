@@ -8,11 +8,12 @@
   #multi-view
     - if controller.controller_name == "views"
       = link_to :class => "search", :all => true do
-        .block
-          .left
-            = image_tag "icons/multi.png"
-          .right
-            Everyone
+        .block_border
+          .block
+            .left
+              = image_tag "icons/multi.png"
+            .right
+              Everyone
     - else
       &nbsp;
   #notice= Settings.top_bar_notice
