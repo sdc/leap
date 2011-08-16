@@ -82,6 +82,7 @@
 }
 
 #attendance {
+  height: 102px;
   h3,img {
     @include column(6,true);
   }
@@ -107,30 +108,30 @@
     }
   }
 }
-
-#targets{
-  img {
-    @include column(2);
-  }
-  #target_list {
-    @include column(7,true);
-    height: 75px;
-    overflow:auto;
-    .stu_target {
-      @include border-radius(7px);    
-      height: 20px;
-      .target_date {
-        @include column(2);
-        font-weight: bold;
-      }
-      .mini_event_body {
-        @include column(4, true);
+.multiple_left_blocks {
+  @include column(10);  
+  #targets{
+    img {
+      @include column(2);
+    }
+    #target_list {
+      @include column(7);
+      height: 75px;
+      overflow:auto;
+      .stu_target {
+        @include border-radius(7px);    
+        height: 20px;
+        .target_date {
+          @include column(2);
+          font-weight: bold;
+        }
+        .mini_event_body {
+          @include column(4, true);
+        }
       }
     }
   }
-}
-
-#moodle_course {
+  #moodle_course {
   img {
     @include column(2);
   }
@@ -139,6 +140,10 @@
     height: 75px;
     overflow:auto;
   }
+}
+}
+
+#advert {
 }
 
 #students {
