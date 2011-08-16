@@ -2,8 +2,9 @@
   %b 
     Set by 
     = target.created_by.name
-%p= target.body
-- unless target.actions.blank?
-  %p
+%p
+  = target.body
+  - unless target.actions.blank?
+    %br
     %b Actions: 
     = target.actions
