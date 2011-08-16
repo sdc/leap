@@ -111,6 +111,7 @@
 .multiple_left_blocks {
   @include column(10);  
   #targets{
+    height: 84px;  
     img {
       @include column(2);
     }
@@ -132,6 +133,7 @@
     }
   }
   #moodle_course {
+  height: 85px;   
   img {
     @include column(2);
   }
