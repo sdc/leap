@@ -1,0 +1,12 @@
+#new_support_history
+  = form_for @topic.support_histories.new, :url => "/events" do |f|
+    %h3 Add support history information
+    .icon= image_tag "events/support_requests.png"
+    .select
+      %h4 Category
+      = select_tag "support_history[category]", options_for_select(Settings.support_history_categories.split(/,/))
+    .select
+      = f.text_area :body
+    = hidden_field_tag :eventable_type, "SupportHistory"
+    = hidden_field_tag :person_id, @topic.mis_id
+    .sumbit= submit_tag "Add"
