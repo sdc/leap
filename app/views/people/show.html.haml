@@ -52,39 +52,40 @@
           %h4.quiet= "at #{@topic.attendances.last.week_beginning}"
       - else
         %b You have no attendance data, yet.
-
-  .details_home_container  
-    #targets.block
-      .details_left
-        %h4 Targets
-        = link_to image_tag("target_home.png"), person_view_url(@topic,View.find_by_name("targets"))
-      .details_right      
-        #target_list 
-          - if @targets.empty?
-            %b You have no targets, yet.
-          - else
-            .stu_target
-              .target_date
-                %b Due
-              .target_body
-                %b Target
-            - @targets.each do |target|
-              .stu_target{:class => target.complete_date ? "complete" : "current", :title => target[:body]}
-                .target_date= pretty_date target.target_date
-                .target_body= link_to truncate(target[:body], :length => 25), person_view_url(@topic, View.find_by_name("targets"), :anchor => dom_id(target.events.last))
+  .multiple_left_blocks
+    .details_home_container  
+      #targets.block
+        .details_left
+          %h4 Targets
+          = link_to image_tag("target_home.png"), person_view_url(@topic,View.find_by_name("targets"))
+        .details_right      
+          #target_list 
+            - if @targets.empty?
+              %b You have no targets, yet.
+            - else
+              .stu_target
+                .target_date
+                  %b Due
+                .target_body
+                  %b Target
+              - @targets.each do |target|
+                .stu_target{:class => target.complete_date ? "complete" : "current", :title => target[:body]}
+                  .target_date= pretty_date target.target_date
+                  .target_body= link_to truncate(target[:body], :length => 25), person_view_url(@topic, View.find_by_name("targets"), :anchor => dom_id(target.events.last))
+    .details_home_container
+      #moodle_course.block
+        .details_left
+          %h4 Moodle
+          = link_to image_tag("moodle.png"), "#{Settings.moodle_host}#{Settings.moodle_path}"
+        .details_right
+        - if @moodle_courses
+          #moodle_course_list      
+            - @moodle_courses.each do |mdl|
+              .mdl_course{:style => "font-weight: #{mdl["canedit"] == "1" ? "bold" : "normal"}"}= link_to mdl["fullname"], "#{Settings.moodle_host}#{Settings.moodle_path}/course/view.php?id=#{mdl["id"]}"
+        - else
+          %p Moodle is currently unavailable.
   .details_home_container.last
-    .block
-      %h3 Advert
-  .details_home_container
-    #moodle_course.block
-      .details_left
-        %h4 Moodle
-        = link_to image_tag("moodle.png"), "#{Settings.moodle_host}#{Settings.moodle_path}"
-      .details_right
-      - if @moodle_courses
-        #moodle_course_list      
-          - @moodle_courses.each do |mdl|
-            .mdl_course{:style => "font-weight: #{mdl["canedit"] == "1" ? "bold" : "normal"}"}= link_to mdl["fullname"], "#{Settings.moodle_host}#{Settings.moodle_path}/course/view.php?id=#{mdl["id"]}"
-      - else
-        %p Moodle is currently unavailable.
+    #advert.block
+      %iframe{:width => 364, :height => 207, :src => "http://www.youtube.com/embed/0vKjRmlSJ_o?rel=0&amp", :hd => 1, :frameborder => 0}
+    
   .person_home_container.last
