@@ -106,7 +106,7 @@ class CreateViews < ActiveRecord::Migration
       :name        => 'support_history',
       :transitions => ['create'],
       :events      => ['SupportHistory'],
-      :icon_url    => 'icons/support_requests.png',
+      :icon_url    => 'icons/support_history.png',
       :affiliations => ['staff','student','affiliate'],
       :controls    => ['support_histories/new'],
       :position    => 9
