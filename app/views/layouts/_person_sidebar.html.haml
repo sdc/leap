@@ -2,7 +2,7 @@
 %h1= @topic.name
 %h5.quiet= link_to_if @affiliation == "staff", @topic.mis_id, Settings.ebs_person_base_url + @topic.mis_id.to_s
 %nav
-  = icon_link "Home", @topic
+  = icon_link @affiliation == "staff" ? "Person Home" : "Home", @topic, "home"
   = icon_link "Timetable", person_timetables_url(@topic)
   %h3 Events
   = render @views
