@@ -17,7 +17,7 @@ module EventsHelper
     when "Course" : link_to_if @affiliation == "staff", thing.code, thing
     when "Person" : link_to_if @affiliation == "staff", thing.name, thing
     end
-    text.size < 4 ? content_tag(:span,text,:class => "big") : text
+    text.size < 3 ? content_tag(:span,text,:class => "big") : text
   end
     
 
