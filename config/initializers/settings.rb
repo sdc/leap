@@ -12,3 +12,4 @@ Settings.defaults[:support_request_difficulties] = "Reading,Comprehension,Spelli
 Settings.defaults[:support_history_categories]   = "Identified specific learning difficulty,Difficulties with literacy,Difficulties with numeracy,Difficulties with english as a foreign language,Visual and/or hearing impairment,Physical disability,Medical condition/mental health,Support at school,Support at college,Statement at school,Extra time in exams,Reader in exams,Scribe in exams"
 Settings.defaults[:admin_users]                  = "khughes,briancrocker,paulvaughan"
 Settings.defaults[:top_bar_notice]               = "This is beta software. Changes you make will be temporary!" 
+Settings.defaults[:google_analytics_code]        = ""
