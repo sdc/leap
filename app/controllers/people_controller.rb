@@ -14,7 +14,7 @@ class PeopleController < ApplicationController
                            get("#{Settings.moodle_path}/webservice/rest/server.php?" +
                            "wstoken=#{Settings.moodle_token}&wsfunction=moodle_course_get_user_courses&username=" +
                            @topic.username + Settings.moodle_user_postfix)["MULTIPLE"]["SINGLE"].
-                           map{|x| x.last}.map{|a| a.map{|b| [b["name"],b["VALUE"]]}}.map{|x| Hash[x]}.select{|x| x["visible"] == "1"}
+                           map{|x| x.respond_to?(:last) ? x.last : x["KEY"]}.map{|a| a.map{|b| [b["name"],b["VALUE"]]}}.map{|x| Hash[x]}.select{|x| x["visible"] == "1"}
         rescue
           logger.error "Can't connect to Moodle: #{$!}"
           @moodle_courses = false
