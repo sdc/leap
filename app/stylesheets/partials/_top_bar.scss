@@ -1,5 +1,5 @@
 #top_bar {
-  height: 30px;
+  height: 36px;
   background: #ddd;
   @include box-shadow;
   vertical-align: middle;
@@ -11,45 +11,63 @@
   a {
     @include hover-link;
   }
-  form#search_form {
-    @include column (9);
+  #nav_logo {
+    @include column (2);
     img {
-      @include column (2);
-      margin: 0 3px 0 0;
-      width: 45px;
-      &.icon {
-        @include column (1);
-      }
-    }
+      width: 56px;
+    }    
+  }
+  form#search_form {
+    @include column (6);
     input#q {
       @include column (4);
-      margin: 2px 5px 0 0;
+      margin: 5px 5px 0 0;
       font-size: 0.8em;
     }
     input.search {
       @include column (2);
       width: 60px;
       height: 24px;
-      margin-top: 2px;
+      margin: 5px 0 0;
     }
   }
   #multi-view {
     @include column(3);
-    margin: 3px 3px 0 0;    
+    margin: 2px 3px 0 0;
+    border: 1px solid #BBBBBB;    
+    .block {
+      border-radius: 7px;
+      overflow: hidden;
+      .left {
+        float: left;
+        img {
+          @include column(1);
+        }
+      }
+      .right {
+      @include column(2,true);
+      margin-top: 7px;
+      }
+    }
   }
   #notice {
-    @include column(6);
+    @include column(8);
     color: red;
     font-weight: bold;
-    font-size: 0.9em;
     text-align: center;
   }
   #login_name {
-    @include column(6,true);
-    text-align:right;
-    img {
-      width: 25px;
-      margin: 3px 3px 0 0;        
-    }    
+    @include column(5,true);
+    text-align:left;
+    .left {
+      float: left;
+      img {
+        @include column(1);
+        margin-top: 2px;
+      }
+    }
+    .right {
+      @include column(4,true);
+    }
   }
 }
