@@ -1,6 +1,6 @@
 class CreateSettings < ActiveRecord::Migration
   def self.up
-    create_table :settings, :force => true do |t|
+    create_table :settings do |t|
       t.string :var,   :null => false
       t.text   :value, :null => true
       t.timestamps
@@ -8,6 +8,7 @@ class CreateSettings < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :settings
+    #drop_table :settings 
+    #TODO: Turn this back on before release
   end
 end
