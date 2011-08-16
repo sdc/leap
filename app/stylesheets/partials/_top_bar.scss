@@ -24,7 +24,7 @@
       margin: 5px 5px 0 0;
       font-size: 0.8em;
     }
-    input.search {
+    input#top_nav_search.search {
       @include column (2);
       width: 60px;
       height: 24px;
