@@ -1,5 +1,4 @@
 document.observe("dom:loaded", function(){
-  watch_main_pane_updaters("main_container");
   if ($('q')) {
     $('q').activate();
     if ($('search_extended')) {
