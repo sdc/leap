@@ -51,9 +51,12 @@
   }
   input {
     margin:0;
-    font-size: 18px;
+    font-size: 0.9em; 
     color: $quiet-color;
   }
+  input#thoughts_button {
+    height: 26px;
+  }  
 }
 
 #next_lesson {

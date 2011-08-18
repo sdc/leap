@@ -101,3 +101,17 @@
   right:0px;
   font-size:0;
 }
+.styled_button {
+  background-color: #F5F5F5;
+  @include border-radius(2px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9em; 
+  color: #666;
+  &:hover {
+    background-color: #f2f2f2;
+    @include single-box-shadow(#999, 0px, 0px, 1px, false, false);  
+    border: 1px solid rgba(103, 103, 103, 0.1);
+  }
+}  

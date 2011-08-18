@@ -20,7 +20,7 @@
     = form_for @topic.notes.new do |f|
       = f.hidden_field :person_id
       = f.text_field :body 
-      = submit_tag "Post"
+      = submit_tag "Post", :class => "styled_button", :id => "thoughts_button"
   .details_home_container
     #next_lesson.block
       .details_left
