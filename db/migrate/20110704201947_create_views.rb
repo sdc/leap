@@ -11,13 +11,23 @@ class CreateViews < ActiveRecord::Migration
       t.integer :position
       t.timestamps
     end
-    View.create(
+    all = View.create(
       :label       => "All",
       :name        => "all",
       :transitions => ["create","start","overdue","complete","drop"],
       :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification","SupportRequest","SupportHistory"],
       :icon_url    => "icons/events.png",
-      :affiliations=> ["staff","student","affiliate"],
+      :affiliations=> ["student","affiliate"],
+      :controls    => nil,
+      :position    => 1
+    )
+    View.create(
+      :label       => "All",
+      :name        => "all",
+      :transitions => ["create","start","overdue","complete","drop","hidden"],
+      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification","SupportRequest","SupportHistory"],
+      :icon_url    => "icons/events.png",
+      :affiliations=> ["staff"],
       :controls    => nil,
       :position    => 1
     )
