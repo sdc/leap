@@ -30,7 +30,6 @@
 
 .details_home_container {
   @include column(10);
-  margin-bottom: 10px;
 }
 
 #details{
@@ -111,7 +110,7 @@
 .multiple_left_blocks {
   @include column(10);  
   #targets{
-    height: 84px;  
+    height: 89px;
     img {
       @include column(2);
     }
@@ -133,7 +132,7 @@
     }
   }
   #moodle_course {
-  height: 85px;   
+  height: 90px;   
   img {
     @include column(2);
   }
