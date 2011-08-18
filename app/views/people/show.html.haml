@@ -85,7 +85,6 @@
         - else
           %p Moodle is currently unavailable.
   .details_home_container.last
-    #advert.block
-      %iframe{:width => 364, :height => 207, :src => "https://www.youtube.com/embed/0vKjRmlSJ_o?rel=0&amp", :hd => 1, :frameborder => 0}
+    #advert.block= raw Settings.advert_box_html
     
   .person_home_container.last
