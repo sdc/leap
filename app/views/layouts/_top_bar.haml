@@ -4,7 +4,7 @@
   - form_tag search_people_url, :method => :get, :id=> "search_form" do
     /*=link_to image_tag("icons/search.png", :class => "icon"), search_people_url*/
     = text_field_tag :q, params[:q]
-    = submit_tag "Search", :class => "search", :id => "top_nav_search"
+    = submit_tag "Search", :class => "styled_button", :id => "top_nav_search"
   #multi-view
     - if controller.controller_name == "views"
       = link_to :class => "search", :all => true do
