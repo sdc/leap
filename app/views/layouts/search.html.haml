@@ -12,6 +12,15 @@
     = javascript_include_tag :defaults
     = csrf_meta_tag
   %body
+    #top_bar
+      .inner
+        #login_name.search
+          .left
+            = image_tag("#{url_for(@user)}.jpg")
+          .right
+            = link_to @user.forename, person_url(@user)
+            %br
+            = link_to @user.surname, person_url(@user)
     .container#main_container
       #full_pane= yield
       #footer

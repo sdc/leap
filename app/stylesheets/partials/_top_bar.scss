@@ -60,6 +60,9 @@
     text-align: center;
   }
   #login_name {
+    &.search {
+      @include prepend(19);
+    }
     @include column(5,true);
     text-align:left;
     .left {
