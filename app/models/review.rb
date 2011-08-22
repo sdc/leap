@@ -7,7 +7,7 @@ class Review < Eventable
   delegate :start_date, :to => :review_window
   delegate :end_date,   :to => :review_window
 
-  after_create {|review| review.events.create!(:event_date => created_at, :transition => :create)}
+  after_create {|review| review.events.create!(:event_date => created_at, :transition => :hidden)}
   after_create :create_review_lines
 
   def body_partial 

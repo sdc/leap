@@ -8,7 +8,7 @@ class ReviewLine < Eventable
 
   def notify_teachers
     teachers.each do |t|
-      events.create!(:person_id => t,:event_date => created_at, :transition => :create, :parent_id => review.events.creation.first.id, :about_person_id => person_id)
+      events.create!(:person_id => t,:event_date => created_at, :transition => :hidden, :parent_id => review.events.hidden.first.id, :about_person_id => person_id)
     end
   end
 
