@@ -188,6 +188,7 @@
     }
     .status {
       @include column(2,true);
+      font-weight: bold;
     }
   }
   &.multi .person_course h6 {
