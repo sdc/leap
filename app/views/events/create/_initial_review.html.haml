@@ -1,0 +1,9 @@
+= form_for @topic.initial_reviews.new, :url => "/events" do |f|
+  %h3
+    Add a an initial review
+  .icon= image_tag "events/reviews.png"
+  = f.text_area :body
+  = f.hidden_field :person_id
+  = hidden_field_tag :eventable_type, "InitialReview"
+  = hidden_field_tag :person_id, @topic.mis_id
+  .sumbit= submit_tag "Add"

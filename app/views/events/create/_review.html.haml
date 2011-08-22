@@ -1,0 +1,25 @@
+= form_for @topic.reviews.new, :url => "/events" do |f|
+  %h3
+    New Review
+  .icon= image_tag "events/reviews.png"
+  %table
+    %tr
+      %th Name
+      %th Start Date
+      %th End Date
+      %td 
+    - ReviewWindow.all.each do  |rw|
+      %tr[rw]
+        %td= rw.name
+        %td= pretty_date rw.start_date
+        %td= pretty_date rw.end_date
+        %td
+          - if rev = @topic.reviews.where(:review_window_id => rw.id).last
+            = link_to "View", event_url(rev.events.last, :person_id => @topic.mis_id)
+          - else
+            = f.radio_button :review_window_id, rw.id
+  = hidden_field_tag :eventable_type, "Review"
+  = hidden_field_tag :person_id, @topic.mis_id
+  .sumbit= submit_tag "Create Review"
+
+%h3 Please note: This section is still under development!
