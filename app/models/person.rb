@@ -18,6 +18,7 @@ class Person < ActiveRecord::Base
   has_many :qualifications
   has_many :support_requests
   has_many :support_histories
+  has_many :initial_reviews
   
   serialize :middle_names
   serialize :address
