@@ -1,7 +1,5 @@
-class Attendance < ActiveRecord::Base
+class Attendance < Eventable
 
-  has_many :events, :as => :eventable, :dependent => :destroy
-  belongs_to :person
   default_scope :order => 'week_beginning'
 
   after_create do |attendance|
@@ -24,10 +22,6 @@ class Attendance < ActiveRecord::Base
 
   def subtitle
     "#{att_year}%"
-  end
-
-  def icon_url 
-    "events/attendances.png"
   end
 
   def body_partial
