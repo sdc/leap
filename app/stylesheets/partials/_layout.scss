@@ -95,6 +95,17 @@
       @include column(2);
     }
   }
+  #new_initial_review {
+    textarea {
+      @include column(8);
+    }
+    .review_scores {
+      @include column(6);
+      td {
+        padding: 0 10px 0 0;
+      }
+    }
+  }
 }
 
 .hovery {
