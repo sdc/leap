@@ -1,4 +1,4 @@
-- if @affiliation == "staff" and !request.xhr? and @topic.kind_of?(Person)
+- if @affiliation == "staff" and !request.xhr? and !@multi and @topic.kind_of?(Person)
   %header#event_header= render :partial => "header"
 - if @events.empty? and @future_events.empty? and !request.xhr?
   #events
