@@ -1,7 +1,8 @@
-#event_controls
-  - if @view.controls.kind_of? String
+- if @view.controls.kind_of? String
+  #event_controls
     = render @view.controls
-  - elsif @view.controls.kind_of? Hash
+- elsif @view.controls.kind_of? Hash
+  #event_controls
     .tabs
       - @view.controls.each do |k,v|
         = tab "event_controls", k

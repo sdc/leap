@@ -50,12 +50,14 @@
 }
 
 #event_header {
-  background: #fff;
-  border: 1px solid $border-color;
-  padding:1em;
-  @include border-radius;
-  @include column(19,true);
-  @include append-bottom;
+  #event_controls {
+    background: #fff;
+    border: 1px solid $border-color;
+    padding:1em;
+    @include border-radius;
+    @include column(19,true);
+    @include append-bottom;
+  }
   h4 {
     font-weight: bold;
     margin-bottom: 3px;
