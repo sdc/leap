@@ -58,7 +58,7 @@ class CreateViews < ActiveRecord::Migration
       :events      => ['ContactLog'],
       :icon_url    => 'icons/contact_logs.png',
       :affiliations => ['staff','student','affiliate'],
-      :controls    => ['events/create/contact_log'],
+      :controls    => 'events/create/contact_log',
       :position    => 4
     )
     View.create(
@@ -68,7 +68,7 @@ class CreateViews < ActiveRecord::Migration
       :events      => ['Disciplinary'],
       :icon_url    => 'icons/disciplinaries.png',
       :affiliations => ['staff','student','affiliate'],
-      :controls    => ['events/create/disciplinary'],
+      :controls    => 'events/create/disciplinary',
       :position    => 5
     )
     View.create(
@@ -88,7 +88,7 @@ class CreateViews < ActiveRecord::Migration
       :events      => ['Review','ReviewLine','InitialReview'],
       :icon_url    => 'icons/reviews.png',
       :affiliations => ['staff'],
-      :controls    => ['events/create/review','events/create/initial_review'],
+      :controls    => {"Review" => 'events/create/review', 'Initial Review' => 'events/create/initial_review'},
       :position    => 7
     )
     View.create(
@@ -108,7 +108,7 @@ class CreateViews < ActiveRecord::Migration
       :events      => ['SupportRequest','SupportHistory'],
       :icon_url    => 'icons/support_requests.png',
       :affiliations => ['staff','student','affiliate'],
-      :controls    => ['events/create/support_request','events/create/support_history'],
+      :controls    => {"Support Request" => 'events/create/support_request', "Support History" => 'events/create/support_history'},
       :position    => 8
     )
   end

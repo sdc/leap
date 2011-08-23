@@ -1,4 +1,9 @@
-- if @view.controls
-  #event_controls
-    - @view.controls.each do |p|
-      = render p
+#event_controls
+  - if @view.controls.kind_of? String
+    = render @view.controls
+  - elsif @view.controls.kind_of? Hash
+    .tabs
+      - @view.controls.each do |k,v|
+        = tab "event_controls", k
+    - @view.controls.each do |k,v|
+      .tab{:class => k.titleize.tr(" ","").underscore, :style => "display: #{@view.controls.first.first == k ? "block" : "none"}"}= render v
