@@ -40,8 +40,4 @@ class Attendance < Eventable
     "#{att_year}%"
   end
 
-  def body_partial
-    true
-  end
-
 end

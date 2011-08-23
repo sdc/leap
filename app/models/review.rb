@@ -26,10 +26,6 @@ class Review < Eventable
   after_create {|review| review.events.create!(:event_date => created_at, :transition => :hidden)}
   after_create :create_review_lines
 
-  def body_partial 
-    true
-  end
-
   def title
     review_window.name
   end

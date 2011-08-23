@@ -68,10 +68,6 @@ class Target < Eventable
     events.create!(:event_date => complete_date, :transition => :complete)
   end
 
-  def body_partial
-    true
-  end
-  
   def sanitize_options
     {:tags => [:b,:i,:strong,:em]}
   end  

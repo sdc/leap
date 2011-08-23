@@ -47,10 +47,6 @@ class PersonCourse < Eventable
     end]
   end
 
-  def body_partial
-    true
-  end
-
   def to_xml(options = {})
     super({:include => :course}.merge(options))
   end
