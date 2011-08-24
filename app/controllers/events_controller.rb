@@ -25,10 +25,6 @@ class EventsController < ApplicationController
     @event = @topic.events.find(params[:id])
   end
 
-  def new
-    render :partial => "#{params[:eventable_type].tableize}/new"
-  end
-
   def create
     et = params.delete(:eventable_type).tableize
     @event = @topic.send(et).create(params[et.singularize])
