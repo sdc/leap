@@ -54,7 +54,13 @@ class Target < Eventable
   # Returns the status for this event, it is +:current+ unless it is a completion event, when it is +:complete+.
   # TODO: Have an incomplete status too.
   def status
-    complete_date ? :complete : :current
+    if complete_date
+      :complete
+    elsif drop_date
+      :incomplete
+    else
+      :current
+    end
   end
 
   # Returns the partial to render for the details pane
@@ -64,8 +70,13 @@ class Target < Eventable
 
   # Run this after an event is completed to create the completion event.
   def notify_complete
-    raise "Trying to notify completion of an incomplete Target (id:#{id})" unless complete_date
-    events.create!(:event_date => complete_date, :transition => :complete)
+    if complete_date
+      events.create!(:event_date => complete_date, :transition => :complete)
+    elsif drop_date
+      events.create!(:event_date => drop_date, :transition => :incomplete)
+    else
+      raise "Trying to notify completion of an incomplete Target (id:#{id})"
+    end
   end
 
   def sanitize_options

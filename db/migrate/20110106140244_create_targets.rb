@@ -8,6 +8,7 @@ class CreateTargets < ActiveRecord::Migration
       t.text :reflection
       t.datetime :target_date
       t.datetime :complete_date
+      t.datetime :drop_date
       t.integer :created_by_id
       t.timestamps
     end

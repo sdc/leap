@@ -20,6 +20,7 @@ class TargetsController < ApplicationController
     @target = @topic.targets.find(params[:id])
     @event = Event.find(params[:event_id])
     @events = @target.events
+    params[:drop_date] = params.delete(:complete_date) if params[:commit] == "Drop"
     @target.update_attributes(params[:target])
     if params[:commit] == "Complete"
       @target.notify_complete
