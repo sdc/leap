@@ -19,7 +19,7 @@
   #notice= Settings.top_bar_notice
   #login_name
     .left
-      = image_tag("#{url_for(@user)}.jpg")
+      = link_to image_tag("#{url_for(@user)}.jpg"), person_url(@user)
     .right
       = link_to @user.forename, person_url(@user)
       %br
