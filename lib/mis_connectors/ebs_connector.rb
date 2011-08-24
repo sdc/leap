@@ -53,6 +53,7 @@ module MisPerson
         @person.import_courses if options[:courses]
         @person.import_attendances if options[:attendances]
         @person.import_quals if options[:quals]
+        @person.import_support_history if options[:support_history]
         return @person
       else
         return false
@@ -141,6 +142,22 @@ module MisPerson
         :grade      => la.grade,
         :person_id  => id,
         :created_at => la.exp_end_date
+      )
+    end
+  end
+
+  # Thist is an SDC-only import for moving from eilp1 - I will probably delete
+  # it once we've launched
+
+  def import_support_history
+    Ebs::SupportNote.find_all_by_person_id(mis_id).each do |n|
+      next unless n.tick
+      next if support_histories.detect{|h| h.category == n.support_note_title}
+      support_histories.create(
+        :category      => n.support_note_title,
+        :body          => n.notes,
+        :created_at    => n.created_at,
+        :created_by_id => Person.first.id
       )
     end
   end

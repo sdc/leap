@@ -14,24 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-class Eventable < ActiveRecord::Base
+class Ebs::SupportNote < Ebs::Model
 
-  self.abstract_class = true
+  set_table_name "sdc_ilp_support_notes"
 
-  belongs_to :person, :dependent => :destroy
-  belongs_to :created_by, :foreign_key => "created_by_id", :class_name => "Person", :dependent => :destroy
-  has_many :events, :as => :eventable, :dependent => :destroy
-
-  before_validation {|e| update_attribute("created_by_id", Person.user.id) unless e.created_by_id}
-
-  validates :person_id, :presence => true
-
-  def icon_url
-    "events/#{self.class.name.tableize}.png"
-  end
-
-  def title
-    self.class.name.underscore.humanize.titleize
-  end
+  belongs_to :person
 
 end
