@@ -27,8 +27,12 @@ class EventsController < ApplicationController
 
   def create
     et = params.delete(:eventable_type).tableize
-    @event = @topic.send(et).create(params[et.singularize])
-    redirect_to :back
+    if @affiliation == "staff" or Settings.students_create_events.split(",").include? et
+      @event = @topic.send(et).create(params[et.singularize])
+      redirect_to :back
+    else
+      redirect_to "/404.html"
+    end
   end
 
   def destroy
