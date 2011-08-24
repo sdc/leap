@@ -54,6 +54,7 @@ module MisPerson
         @person.import_attendances if options[:attendances]
         @person.import_quals if options[:quals]
         @person.import_support_history if options[:support_history]
+        @person.import_support_requests if options[:support_requests]
         return @person
       else
         return false
@@ -146,18 +147,32 @@ module MisPerson
     end
   end
 
-  # Thist is an SDC-only import for moving from eilp1 - I will probably delete
-  # it once we've launched
+  # Tese are an SDC-only imports for moving from eilp1 - I will probably delete
+  # them once we've launched
 
   def import_support_history
     Ebs::SupportNote.find_all_by_person_id(mis_id).each do |n|
       next unless n.tick
+      next if n.notes.blank?
       next if support_histories.detect{|h| h.category == n.support_note_title}
       support_histories.create(
         :category      => n.support_note_title,
         :body          => n.notes,
         :created_at    => n.created_at,
         :created_by_id => Person.first.id
+      )
+    end
+  end
+
+  def import_support_requests
+    Ebs::SupportRequest.find_all_by_person_id(mis_id).each do |r|
+      next if r.difficulty.nil? or r.difficulty.empty?
+      next if support_requests.detect{|s| s.created_at == r.created_at}
+      support_requests.create(
+        :sessions => r.res,
+        :difficulties  => r.difficulty,
+        :created_at    => r.created_at,
+        :created_by_id => Person.get(r.created_by)
       )
     end
   end
