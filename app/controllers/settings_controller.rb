@@ -16,6 +16,7 @@
 
 class SettingsController < ApplicationController
 
+  skip_before_filter :maintenance_mode
   before_filter :admin_only
 
   def index

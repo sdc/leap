@@ -14,3 +14,4 @@ Settings.defaults[:admin_users]                  = "khughes,briancrocker,paulvau
 Settings.defaults[:top_bar_notice]               = "This is beta software. Changes you make will be temporary!" 
 Settings.defaults[:google_analytics_code]        = ""
 Settings.defaults[:advert_box_html]              = "<p>Blank Space!</p>"
+Settings.defaults[:maintenance_mode]             = ""

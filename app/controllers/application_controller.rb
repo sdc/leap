@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
 
   layout proc{ |c| c.request.xhr? ? false : "application" }
 
+  before_filter :maintenance_mode
   before_filter :set_user
   before_filter :set_topic
   before_filter :get_views
@@ -37,6 +38,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def maintenance_mode
+    render :file => "public/maintenance_mode.html.erb", :layout => nil, :locals => {:message => Settings.maintenance_mode} unless Settings.maintenance_mode.blank?
+  end
 
   def set_user
     if Rails.env == "development"
