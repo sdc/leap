@@ -20,6 +20,7 @@ class CoursesController < ApplicationController
   before_filter       :course_set_topic
 
   def show
+    redirect_to "/404.html" unless @topic.kind_of? Course
     begin
       mcourses = ActiveResource::Connection.new(Settings.moodle_host).
                  get("#{Settings.moodle_path}/webservice/rest/server.php?" +
