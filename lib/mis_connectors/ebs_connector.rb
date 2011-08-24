@@ -175,7 +175,7 @@ module MisPerson
         :sessions => r.res,
         :difficulties  => r.difficulty,
         :created_at    => r.created_at,
-        :created_by_id => Person.get(r.created_by)
+        :created_by_id => Person.get(r.created_by).id
       )
     end
   end
