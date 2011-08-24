@@ -38,7 +38,6 @@ class Person < ActiveRecord::Base
   
   serialize :middle_names
   serialize :address
-  serialize :cars
 
   def to_param
     mis_id.to_s
