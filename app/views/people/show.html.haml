@@ -17,9 +17,10 @@
       = link_to "Notify us...", Settings.notify_details_change_url
   #your_thoughts.block
     %h3= Settings.front_page_note_prompt
-    = form_for @topic.notes.new do |f|
-      = f.hidden_field :person_id
-      = f.text_field :body 
+    = form_for @topic.notes.new, :url => "/events" do |f|
+      = f.text_field :body
+      = hidden_field_tag :eventable_type, "Note"
+      = hidden_field_tag :person_id, @topic.mis_id
       = submit_tag "Post", :class => "styled_button", :id => "thoughts_button"
   .details_home_container
     #next_lesson.block
