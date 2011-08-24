@@ -30,7 +30,9 @@ module MisPerson
 
     def import(mis_id, options = {})
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
-      options.reverse_merge! :save => true, :courses => true, :attendances => true, :quals => true
+      # NOTE: Need to change these defaults after launch
+      options.reverse_merge! :save => true, :courses => true, :attendances => true, 
+                             :quals => true, :support_history => true, :support_requests => true
       logger.info "Importing user #{mis_id}"
       if (ep = (Ebs::Person.find_by_person_code(mis_id) or Ebs::Person.find_by_network_userid(mis_id)))
         @person = Person.find_or_create_by_mis_id(ep.id)
