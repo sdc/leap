@@ -32,7 +32,7 @@ module MisPerson
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
       # NOTE: Need to change these defaults after launch
       options.reverse_merge! :save => true, :courses => true, :attendances => true, 
-                             :quals => true, :support_history => true, :support_requests => true
+                             :quals => true, :support_history => true, :support_requests => true, :targets => true
       logger.info "Importing user #{mis_id}"
       if (ep = (Ebs::Person.find_by_person_code(mis_id) or Ebs::Person.find_by_network_userid(mis_id)))
         @person = Person.find_or_create_by_mis_id(ep.id)
@@ -55,6 +55,7 @@ module MisPerson
         @person.import_courses if options[:courses]
         @person.import_attendances if options[:attendances]
         @person.import_quals if options[:quals]
+        @person.import_targets if options[:targets]
         @person.import_support_history if options[:support_history]
         @person.import_support_requests if options[:support_requests]
         return @person
@@ -176,6 +177,22 @@ module MisPerson
         :created_at    => r.created_at,
         :created_by_id => Person.get(r.created_by)
       )
+    end
+  end
+
+  def import_targets
+    Ebs::Target.find_all_by_person_id(mis_id).each do |t|
+      next if t.target.blank?
+      next if targets.detect{|nt| t.created_at == nt.created_at}
+      nt = targets.create(
+        :body => t.target,
+        :actions => t.action,
+        :target_date => t.target_date,
+        :complete_date => t.completed_at,
+        :created_by_id => t.person_id,
+        :created_at    => t.created_at
+      )
+      nt.notify_complete if nt.complete_date
     end
   end
 end
