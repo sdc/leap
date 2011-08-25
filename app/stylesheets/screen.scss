@@ -41,4 +41,8 @@ form {
   font-style: italic;
   text-align: right;
   clear:both;
+  a {
+    @include unstyled-link;
+    @include hover-link;
+  }
 }

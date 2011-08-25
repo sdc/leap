@@ -26,5 +26,4 @@
             = link_to @user.surname, person_url(@user)
     .container#main_container
       #full_pane= yield
-      #footer
-        leap &mdash; electronic individual learning plans &mdash; &copy; South Devon College 2011
+      #footer= render :partial => "layouts/footer"
