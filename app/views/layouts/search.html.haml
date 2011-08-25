@@ -1,7 +1,10 @@
 !!!
 %html
   %head
-    %title ilp2
+    %title 
+      Leap
+      - if params[:q]
+        = " : search for #{params[:q]}"
     = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
     = stylesheet_link_tag 'print.css', :media => 'print'
     /[if lt IE 8]
