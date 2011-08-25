@@ -33,7 +33,7 @@ class TimetablesController < ApplicationController
     end
     @registers = @topic.timetable_events(:from => @date, :to => @end_date)
     view = View.affiliation(@affiliation).find_by_name("timetable")
-    @events    = @topic.events.where(:event_date => @date..@end_date, :transition => view.transitions, :eventable_type => view.events)
+    @events    = @topic.events.where(:event_date => (@date.to_time + 1.hour + 1.second)..@end_date, :transition => view.transitions, :eventable_type => view.events)
     respond_to do |format|
       format.html 
       format.xml { render :xml => @topic }
