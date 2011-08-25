@@ -1,4 +1,7 @@
 document.observe("dom:loaded", function(){
+  if ($('flash_notice')){
+    Element.fade.delay(4,'flash_notice');
+  }
   if ($('q')) {
     $('q').activate();
     if ($('search_extended')) {

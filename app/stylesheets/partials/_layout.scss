@@ -153,3 +153,19 @@
 .tab {
    clear: both
 }
+
+#flash_notice {
+  position: fixed;
+  margin:0px;
+  padding:10px;
+  bottom: 10px;
+  right: 10px;
+  background: #06c;
+  color: #eee;
+  @include border-radius;
+  width:200px;
+  @include opacity(0.75);
+  &:hover {
+    @include opacity(0.25);
+  }
+}
