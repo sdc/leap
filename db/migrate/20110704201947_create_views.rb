@@ -88,7 +88,8 @@ class CreateViews < ActiveRecord::Migration
       :events      => ['Review','ReviewLine','InitialReview'],
       :icon_url    => 'icons/reviews.png',
       :affiliations => ['staff'],
-      :controls    => {"Review" => 'events/create/review', 'Initial Review' => 'events/create/initial_review'},
+      #:controls    => {'Initial Review' => 'events/create/initial_review', "Review" => 'events/create/review'},
+      :controls    => {'Initial Review' => 'events/create/initial_review'},
       :position    => 7
     )
     View.create(
