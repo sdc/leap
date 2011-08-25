@@ -3,5 +3,6 @@
 %h5.quiet= link_to_if @affiliation == "staff", @topic.code, Settings.ebs_course_base_url + @topic.mis_id.to_s
 %nav
   = icon_link "Course Home", @topic, "home"
+  = icon_link "Timetable", course_timetables_url(@topic)
   %h3 Events
   = render @views

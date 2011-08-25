@@ -221,6 +221,30 @@ module MisCourse
     end
   end
 
+  def timetable_events(options = {})
+    reds = if options == :next
+      Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => 'U').
+        where("planned_start_date > ?", Time.now).
+        order(:planned_start_date).limit(1)
+    else
+      from = options[:from] || Date.today.beginning_of_week
+      to   = options[:to  ] || from.end_of_week
+      Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => 'U', :planned_start_date => from..to)
+    end
+    reds.map do |s| 
+      TimetableEvent.create(
+        :mis_id       => s.register_event_id,
+        :title        => s.description,
+        :start        => s.actual_start_date || s.planned_start_date,
+        :end          => s.actual_end_date   || s.planned_end_date,
+        :mark         => s.usage_code,
+        :generic_mark => s.generic_mark,
+        :rooms        => s.rooms.map{|r| r.room_code},
+        :teachers     => s.teachers.map{|t| Person.get(t)}
+      )
+    end
+  end
+
   module ClassMethods
     def import(mis_id, options = {})
       options.reverse_merge! :save => true, :people => false
