@@ -33,7 +33,7 @@ class EventsController < ApplicationController
     else
       redirect_to "/404.html"
     end
-    flash[:notice] = "New #{et.singularize} created"
+    flash[:notice] = "New #{et.singularize.humanize.titleize} created"
   end
 
   def destroy
