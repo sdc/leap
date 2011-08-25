@@ -1,4 +1,4 @@
-%div[slot]{:style => "top:#{slot.timetable_margin + 36}px;height:#{slot.timetable_height}px", :o_height => slot.timetable_height, :class => slot.css_classes}
+%div[slot]{:style => "top:#{slot.timetable_margin}px;height:#{slot.timetable_height}px", :o_height => slot.timetable_height, :class => slot.css_classes}
   .inner
     .course_title= slot.title
     %time= "#{slot.start.strftime('%H.%M')} - #{slot.end.strftime('%H.%M')}"

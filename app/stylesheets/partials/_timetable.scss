@@ -51,11 +51,18 @@
   }
 }
 
+#timetable{
+  @include column(20);
+  height: 504px;
+  overflow: auto;
+  margin-bottom: 10px;
+}
+
 .timetable_event {
   @include column(3);
   @include border-radius(5px);
   @include box-shadow;
-  position: absolute;
+  position: relative;
   background-color: #C9D6F5;
   overflow: hidden;
   text-align: left;

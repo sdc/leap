@@ -9,6 +9,7 @@ class CreateViews < ActiveRecord::Migration
       t.string :label
       t.string :controls
       t.integer :position
+      t.boolean :in_list
       t.timestamps
     end
     all = View.create(
@@ -19,6 +20,7 @@ class CreateViews < ActiveRecord::Migration
       :icon_url    => "icons/events.png",
       :affiliations=> ["student","affiliate"],
       :controls    => nil,
+      :in_list     => true,
       :position    => 1
     )
     View.create(
@@ -29,6 +31,7 @@ class CreateViews < ActiveRecord::Migration
       :icon_url    => "icons/events.png",
       :affiliations=> ["staff"],
       :controls    => nil,
+      :in_list     => true,
       :position    => 1
     )
     View.create(
@@ -39,6 +42,7 @@ class CreateViews < ActiveRecord::Migration
       :icon_url    => 'icons/courses.png',
       :affiliations => ['staff','student','affiliate'],
       :controls    => nil,
+      :in_list     => true,
       :position    => 2
     )
     View.create(
@@ -49,6 +53,7 @@ class CreateViews < ActiveRecord::Migration
       :icon_url    => 'icons/targets.png',
       :affiliations => ['staff','student','affiliate'],
       :controls    => nil,
+      :in_list     => true,
       :position    => 3
     )
     View.create(
@@ -59,6 +64,7 @@ class CreateViews < ActiveRecord::Migration
       :icon_url    => 'icons/contact_logs.png',
       :affiliations => ['staff','student','affiliate'],
       :controls    => 'events/create/contact_log',
+      :in_list     => true,
       :position    => 4
     )
     View.create(
@@ -69,6 +75,7 @@ class CreateViews < ActiveRecord::Migration
       :icon_url    => 'icons/disciplinaries.png',
       :affiliations => ['staff','student','affiliate'],
       :controls    => 'events/create/disciplinary',
+      :in_list     => true,
       :position    => 5
     )
     View.create(
@@ -79,6 +86,7 @@ class CreateViews < ActiveRecord::Migration
       :icon_url    => "icons/qualifications.png",
       :affiliations => ["staff","student","affiliate"],
       :controls    => nil,
+      :in_list     => true,
       :position    => 6
     )
     View.create(
@@ -89,6 +97,7 @@ class CreateViews < ActiveRecord::Migration
       :icon_url    => 'icons/reviews.png',
       :affiliations => ['staff'],
       #:controls    => {'Initial Review' => 'events/create/initial_review', "Review" => 'events/create/review'},
+      :in_list     => true,
       :controls    => {'Initial Review' => 'events/create/initial_review'},
       :position    => 7
     )
@@ -100,6 +109,7 @@ class CreateViews < ActiveRecord::Migration
       :icon_url    => 'icons/reviews.png',
       :affiliations => ['student','affiliate'],
       :controls    => nil,
+      :in_list     => true,
       :position    => 7
     )
     View.create(
@@ -110,8 +120,17 @@ class CreateViews < ActiveRecord::Migration
       :icon_url    => 'icons/support_requests.png',
       :affiliations => ['staff','student','affiliate'],
       :controls    => {"Support Request" => 'events/create/support_request', "Support History" => 'events/create/support_history'},
+      :in_list     => true,
       :position    => 8
     )
+    View.create(
+      :name        => "timetable",
+      :transitions => ['complete','start','overdue'],
+      :events      => ['Qualifications','attendance'],
+      :affiliations=> ['staff','student','affiliate'],
+      :in_list     => false
+    )
+
   end
 
   def self.down

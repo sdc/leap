@@ -7,9 +7,13 @@
       = submit_tag "go"
   #next_week
     =link_to "next week >", send("#{@topic.class.name.underscore}_timetables_url",@topic,:date => @date + 1.week)
-#hours
-  - 8.upto(20) do |h|
-    .hour
-      %h2= "#{h}.00"
-- @date.upto(@date.end_of_week - 1.day) do |day|
-  = render :partial => "day", :object => day, :locals => {:slots => @registers.select {|r| r.start > day and r.start < day.tomorrow.midnight }}
+#timetable
+  #hours
+    - 8.upto(20) do |h|
+      .hour
+        %h2= "#{h}.00"
+  - @date.upto(@date.end_of_week - 1.day) do |day|
+    = render :partial => "day", :object => day, :locals => {:slots => @registers.select {|r| r.start > day and r.start < day.tomorrow.midnight }}
+
+#events
+  = render @events

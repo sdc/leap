@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_views
-    @views = View.order("position").affiliation(@affiliation)
+    @views = View.order("position").in_list.affiliation(@affiliation)
   end
 
   def admin_only
