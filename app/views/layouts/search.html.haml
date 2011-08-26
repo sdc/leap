@@ -18,12 +18,13 @@
     #top_bar
       .inner
         #login_name.search
-          .left
-            = image_tag("#{url_for(@user)}.jpg")
-          .right
-            = link_to @user.forename, person_url(@user)
-            %br
-            = link_to @user.surname, person_url(@user)
+          = link_to person_url(@user) do
+            .left
+              = image_tag("#{url_for(@user)}.jpg")
+            .right
+              = @user.forename
+              %br
+              = @user.surname
     .container#main_container
       #full_pane= yield
       #footer= render :partial => "layouts/footer"
