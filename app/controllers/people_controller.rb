@@ -57,7 +57,6 @@ class PeopleController < ApplicationController
          @courses = Course.search_for(params[:q]).order("year DESC,title").limit(50)
       else
         @people = Person.mis_search_for(params[:q])
-        @courses = Course.mis_search_for(params[:q]).limit(50)
       end
     end
     @people  ||= []
