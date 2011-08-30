@@ -70,15 +70,6 @@ input#home_search.styled_button {
     @include border-radius(4px);
     @include box-shadow;
   }
-  &.course {
-    @include column(4);
-    height: 60px;
-    @include append-bottom;
-    margin: 0 1.5em 1.5em 0;
-    &.first {
-      margin-left: 37px;
-    }
-  }
   h3,h5 {
     margin-bottom: 0px;
   }
@@ -95,11 +86,6 @@ input#home_search.styled_button {
       width: 70px;
       height: 70px;
     }
-    &.course img {
-      @include border-radius(4px);
-      width: 55px;
-      height: 55px;
-    }
   }
   .details {
     @include column(3,true);
@@ -110,6 +96,20 @@ input#home_search.styled_button {
         font-size: 1.1em;
       }
     }
+  }
+}
+#course_home .person{
+  @include column(4);
+  height: 60px;
+  @include append-bottom;
+  margin: 0 1.5em 1.5em 0;
+  &.first {
+    margin-left: 37px;
+  }
+  img {
+    @include border-radius(4px);
+    width: 55px;
+    height: 55px;
   }
 }
 
