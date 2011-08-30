@@ -67,17 +67,6 @@
   div {
     margin-bottom: 1ex;
   }
-  .new_event_link {
-    @include column(3);
-    @include link-colors($font-color, mix($font-color,#00f));
-    @include hover-link;
-    .icon {
-      @include column(1);
-    }
-    .text {
-      @include column(2,true);
-    }
-  }
   #event_controls {
     .icon {
       @include column(2);

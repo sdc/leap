@@ -53,9 +53,4 @@ document.observe("dom:loaded", function(){
       watch_events("events");
     })
   };
-  $$('.new_event_link').each(function(button){
-    button.observe('ajax:complete', function(event){
-      $('new_event_box').update(event.memo.responseText);
-    })
-  })
 })
