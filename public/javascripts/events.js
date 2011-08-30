@@ -32,6 +32,13 @@ function watch_events(e){
       close_extended_event(article);
     })
   })
+  if($('more_events')){
+    $('more_events').observe('ajax:complete', function(event){
+      $('more_events_div').remove();
+      $('events').insert(event.memo.responseText);
+      watch_events("events");
+    })
+  };
 }
 
 // Submitting new target forms
@@ -46,11 +53,4 @@ function init_new_target_form(element){
 
 document.observe("dom:loaded", function(){
   watch_events("main_pane");
-  if($('more_events')){
-    $('more_events').observe('ajax:complete', function(event){
-      $('more_events_div').remove();
-      $('events').insert(event.memo.responseText);
-      watch_events("events");
-    })
-  };
 })

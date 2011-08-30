@@ -27,7 +27,13 @@ class ViewsController < ApplicationController
         order("event_date DESC").
         limit(20).
         partition {|e| e.event_date <= Time.now}
-      @bottom_date = @events.last.event_date unless @events.empty?
+      @bottom_date = if @events.last
+        @events.last.event_date
+      elsif @future_events.last
+        @future_events.last.event_date
+      else
+        nil
+      end
       respond_to do |f|
         f.html
         f.xml { render :xml  => @events.to_xml (:include => :eventable)}
