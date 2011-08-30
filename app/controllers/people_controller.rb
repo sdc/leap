@@ -59,9 +59,9 @@ class PeopleController < ApplicationController
         @people = Person.mis_search_for(params[:q])
         @courses = Course.mis_search_for(params[:q]).limit(50)
       end
-      @people  ||= []
-      @courses ||= []
     end
+    @people  ||= []
+    @courses ||= []
     render :layout => "search"
   end
 

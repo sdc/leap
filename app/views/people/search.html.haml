@@ -18,16 +18,18 @@
               .details
                 Click here to extend your search
       - unless @people.empty? or @courses.empty?
-        .results_courses
-          %h2 Courses
+        %h2 Courses
       - unless @courses.empty?
-        = render @courses
-      - if @people.empty? and params[:commit] != "Search"
-        .no_results
-          %b Unfortunately, your search yielded no results. Please check your search.
-      - else
-        .results_notice
-          %b You are about to access an area containing personal data.
-          %br 
-          %br 
-          %p Information in this area must be treated in accordance with the requirements of the Data Protection Act 1998 and should not be divulged to anyone other than the student or the student’s tutor. 
+        .results_courses= render @courses
+      - if @people.empty? and @courses.empty?
+        -if params[:q]
+          .no_results
+            %b Unfortunately, your search yielded no results. Please check your search.
+        -else
+          .results_notice
+            %b You are about to access an area containing personal data.
+            %br 
+            %br 
+            %p 
+              Information in this area must be treated in accordance with the requirements of the Data Protection Act 
+              1998 and should not be divulged to anyone other than the student or the student’s tutor. 
