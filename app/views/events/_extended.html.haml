@@ -13,7 +13,7 @@
   = render :partial => "targets/new", :locals => {:event => event}
 - if @affiliation == "staff"
   .tab.full_details{:style => "display:none"}
-    = link_to "Delete", event_url(event), :method => :delete
+    -# = link_to "Delete", event_url(event), :method => :delete
     %h1 Event Details
     %table
       - event.attributes.each do |attr|
