@@ -37,7 +37,7 @@ input#home_search.styled_button {
 }
 #results {
   text-align: center;
-  .results_people {
+  .results_people,.results_courses {
     @include prepend(1);
     @include column(25, true);
   }
@@ -55,7 +55,7 @@ input#home_search.styled_button {
   width: 650px;
   margin: 0 auto;
 }
-.person {
+.person,.course {
   @include column(5, true);
   @include append-bottom;
   @include border-radius(2px);
@@ -90,14 +90,15 @@ input#home_search.styled_button {
   .details {
     @include column(3,true);
     text-align: left;
-    &.course {
-      @include column(2,true);
-      h3 {
-        font-size: 1.1em;
-      }
-    }
   }
 }
+.course .details  {
+  @include column(5,true);
+  h5{
+    @include column(2);
+  }
+}
+
 #course_home .person{
   @include column(4);
   height: 60px;
@@ -110,6 +111,12 @@ input#home_search.styled_button {
     @include border-radius(4px);
     width: 55px;
     height: 55px;
+  }
+  .details {
+    @include column(2,true);
+    h3 {
+      font-size: 1.1em;
+    }
   }
 }
 

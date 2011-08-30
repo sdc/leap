@@ -1,1 +1,6 @@
-%h3= link_to "#{course.code} #{course.title} (#{course.year})", course
+.course
+  = link_to course, {:title => course.title} do
+    .details
+      %h3= truncate(course.name, :length => 35).titleize
+      %h5.quiet= course.code
+      %h5.quiet= course.year
