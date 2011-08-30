@@ -6,7 +6,9 @@
     .search_fields
       = submit_tag "Search", :class => "styled_button", :id => "home_search"
     #results  
-      - if @people
+      - unless @people.empty? or @courses.empty?
+        %h2 People
+      - unless @people.empty?
         .results_people
           = render @people
           - if params[:commit] == "Search"
@@ -15,9 +17,14 @@
                 =image_tag("not_found.png")
               .details
                 Click here to extend your search
-        - if @people.empty? and params[:commit] != "Search"
-          .no_results
-            %b Unfortunately, your search yielded no results. Please check your search.
+      - unless @people.empty? or @courses.empty?
+        .results_courses
+          %h2 Courses
+      - unless @courses.empty?
+        = render @courses
+      - if @people.empty? and params[:commit] != "Search"
+        .no_results
+          %b Unfortunately, your search yielded no results. Please check your search.
       - else
         .results_notice
           %b You are about to access an area containing personal data.
