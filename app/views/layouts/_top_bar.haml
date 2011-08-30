@@ -16,7 +16,7 @@
               Everyone
     - else
       &nbsp;
-  #notice= Settings.top_bar_notice
+  #notice= raw auto_link Settings.top_bar_notice
   #login_name
     = link_to person_url(@user) do
       .left
