@@ -36,10 +36,4 @@ class EventsController < ApplicationController
     flash[:notice] = "New #{et.singularize.humanize.titleize} created"
   end
 
-  def destroy
-    @event = Event.find(params[:id])
-    @event.destroy
-    redirect_to :back
-  end
-
 end

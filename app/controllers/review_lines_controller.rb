@@ -16,6 +16,8 @@
 
 class ReviewLinesController < ApplicationController
 
+  before_filter :staff_only
+
   def update
     @review_line = ReviewLine.find(params[:id])
     @event = Event.find(params[:event_id])
