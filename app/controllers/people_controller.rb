@@ -18,6 +18,7 @@ class PeopleController < ApplicationController
 
   skip_before_filter :set_topic
   before_filter      :person_set_topic, :except => [:search]
+  before_filter      :staff_only, :only => [:search]
 
   def show
     respond_to do |format|

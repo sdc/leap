@@ -79,4 +79,8 @@ class ApplicationController < ActionController::Base
     Settings.admin_users.split(/,/).include? @user.username or redirect_to "/404.html"
   end
 
+  def staff_only
+    redirect_to "/404.html" unless @affiliation == "staff"
+  end
+
 end
