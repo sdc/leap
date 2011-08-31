@@ -2,6 +2,8 @@
   %h3
     Log a contact as 
     = @user.name
+  - if @user == @topic
+    %h4.quiet Are you sure you want to create a contact log with yourself?
   .icon= image_tag("#{url_for(Person.user)}.jpg", :size => "48x48")
   = f.text_area :body
   = hidden_field_tag :eventable_type, "ContactLog"
