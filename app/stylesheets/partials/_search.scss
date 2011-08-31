@@ -41,6 +41,9 @@ input#home_search.styled_button {
     @include prepend(1);
     @include column(25, true);
   }
+  .results_people {
+    border-bottom: 1px solid rgba(103, 103, 103, 0.1);
+  }  
   .results_notice {
     @include prepend(5);  
     @include column(15, true);
@@ -48,6 +51,11 @@ input#home_search.styled_button {
   .no_results {
     @include prepend(5);
     @include column(15, true);
+  }
+  h2 {
+  color: #0066bb;
+  font-size: 2.5em;
+  @include single-text-shadow;
   }
 }
 .search_notice {
@@ -90,6 +98,9 @@ input#home_search.styled_button {
   .details {
     @include column(3,true);
     text-align: left;
+    h3 {
+      margin-bottom: 6px;
+    }
   }
 }
 .course .details  {
