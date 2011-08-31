@@ -7,7 +7,7 @@
     = submit_tag "Search", :class => "styled_button", :id => "top_nav_search"
   #multi-view
     - if controller.controller_name == "views"
-      = link_to :all => true do
+      = link_to :all => true, :date => @date do
         .block_border
           .block
             .left
