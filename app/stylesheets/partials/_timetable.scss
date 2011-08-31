@@ -53,8 +53,6 @@
 
 #timetable{
   @include column(20);
-  height: 504px;
-  overflow: auto;
   margin-bottom: 10px;
 }
 
