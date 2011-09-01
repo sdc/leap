@@ -29,7 +29,11 @@ class EventsController < ApplicationController
     et = params.delete(:eventable_type).tableize
     if @affiliation == "staff" or Settings.students_create_events.split(",").include? et
       @event = @topic.send(et).create(params[et.singularize])
-      redirect_to :back
+      if view = params[:redirect_to] 
+        redirect_to params[:redirect_to]
+      else
+        redirect_to :back
+      end
     else
       redirect_to "/404.html"
     end
