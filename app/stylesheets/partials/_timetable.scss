@@ -60,7 +60,7 @@
   @include column(3);
   @include border-radius(5px);
   @include box-shadow;
-  position: relative;
+  position: absolute;
   background-color: #C9D6F5;
   overflow: hidden;
   text-align: left;
