@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
       uname,domain = request.env["eppn"].downcase.split('@')
       uname = uname[1..-1] if @affiliation == "affiliate"
       Person.user = @user = Person.get(uname)
-      render :text => "Problem contacting Shibboleth Service Provider" unless @user && @affiliation
+      render :text => "Authentication Error! username: '#{@user}' and affiliation: '#{@affiliation}'" unless @user && @affiliation
     end
   end
 
