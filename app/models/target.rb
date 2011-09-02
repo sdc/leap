@@ -56,7 +56,7 @@ class Target < Eventable
   def status
     if complete_date
       :complete
-    elsif drop_date
+    elsif target_date < Time.now
       :incomplete
     else
       :current
