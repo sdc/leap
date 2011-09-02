@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
 
   def get_date
     if params[:date]
-      if params[:date]="now"
+      if params[:date]=="now"
         Time.now
       elsif params[:date].kind_of? Hash
         Time.gm(*[:year,:month,:day].map{|x| params[:date][x].to_i})
