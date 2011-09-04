@@ -15,5 +15,5 @@
   - @date.upto(@date.end_of_week - 1.day) do |day|
     = render :partial => "day", :object => day, :locals => {:slots => @registers.select {|r| r.start > day and r.start < day.tomorrow.midnight }}
 
-#events
-  = render @events
+- if @events
+  #events= render @events
