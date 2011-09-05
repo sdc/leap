@@ -26,6 +26,8 @@ class Note < Eventable
 
   after_create {|note| note.events.create!(:event_date => created_at, :transition => :create)}
 
+  validates :body, :presence => true
+
   def sanitize_options
     {:tags => [:b,:i,:strong,:em]}
   end

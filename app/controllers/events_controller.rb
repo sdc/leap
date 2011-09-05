@@ -28,7 +28,12 @@ class EventsController < ApplicationController
   def create
     et = params.delete(:eventable_type).tableize
     if @affiliation == "staff" or Settings.students_create_events.split(",").include? et
-      @event = @topic.send(et).create(params[et.singularize])
+      @event = @topic.send(et).build(params[et.singularize])
+      if @event.save
+        flash[:notice] = "New #{et.singularize.humanize.titleize} created"
+      else
+        flash[:notice] = "#{et.singularize.humanize.titleize} could not be created!"
+      end
       if view = params[:redirect_to] 
         redirect_to params[:redirect_to]
       else
@@ -37,7 +42,6 @@ class EventsController < ApplicationController
     else
       redirect_to "/404.html"
     end
-    flash[:notice] = "New #{et.singularize.humanize.titleize} created"
   end
 
 end

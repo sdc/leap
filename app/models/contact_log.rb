@@ -25,6 +25,8 @@ class ContactLog < Eventable
 
   after_create {|contact_log| contact_log.events.create!(:event_date => created_at, :transition => :create)}
 
+  validates :body, :presence => true
+
   def title; "Contact Log: #{created_by.name}" end
 
   def icon_url
