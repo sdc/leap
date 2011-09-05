@@ -98,9 +98,6 @@ input#home_search.styled_button {
   .details {
     @include column(3,true);
     text-align: left;
-    h3 {
-      margin-bottom: 6px;
-    }
   }
 }
 .course .details  {
