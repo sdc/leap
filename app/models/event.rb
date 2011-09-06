@@ -42,7 +42,7 @@ class Event < ActiveRecord::Base
   belongs_to :parent, :class_name => "Event", :foreign_key => "parent_id"
   has_many :targets
 
-  symbolize :transition , :in => [:create,:start,:overdue,:complete,:drop,:hidden], :methods => true, :scopes => true, :allow_nil => true
+  symbolize :transition , :in => [:create,:to_start,:start,:overdue,:complete,:drop,:hidden], :methods => true, :scopes => true, :allow_nil => true
 
   scope :unique_eventable, group("eventable_id,eventable_type")
   scope :creation, where(:transition => :create)

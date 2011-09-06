@@ -18,7 +18,7 @@ class Person < ActiveRecord::Base
 
   include MisPerson
 
-  scoped_search :on => [:forename, :surname]
+  scoped_search :on => [:forename, :surname, :mis_id]
 
   has_many :events
   has_many :reviews

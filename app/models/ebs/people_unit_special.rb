@@ -14,10 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-class Ebs::PeopleUnit < Ebs::Model
+class Ebs::PeopleUnitSpecial < Ebs::Model
 
-  belongs_to :person, :foreign_key => "person_code"
-  belongs_to :unit_instance_occurrence , :foreign_key => "uio_id"
-  has_one    :people_unit_special, :foreign_key => "people_units_id"
+  set_table_name "people_units_special"
+  belongs_to :people_unit, :foreign_key => "people_units_id"
 
 end

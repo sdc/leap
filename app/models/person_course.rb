@@ -28,7 +28,10 @@ class PersonCourse < Eventable
       person_course.events.create(:event_date => person_course.application_date, :transition => :create)
     end
     if person_course.enrolment_date_changed? and person_course.enrolment_date_was == nil
-      person_course.events.create(:event_date => person_course.enrolment_date, :transition => :start)
+      person_course.events.create(:event_date => person_course.enrolment_date, :transition => :to_start)
+    end
+    if person_course.start_date_changed? and person_course.start_date_was == nil
+      person_course.events.create(:event_date => person_course.start_date, :transition => :start)
     end
     if person_course.end_date_changed? and person_course.end_date_was == nil
       person_course.events.create(:event_date => person_course.end_date, :transition => :complete)
@@ -42,7 +45,8 @@ class PersonCourse < Eventable
   def title(tr)
     [course, case tr
       when :create   then "Application"
-      when :start    then "Enrolment"
+      when :to_start then "Enrolment"
+      when :start    then "Start"
       when :complete then "Complete" # TODO: distinguish between complete, w/d, incomplete etc
     end]
   end
