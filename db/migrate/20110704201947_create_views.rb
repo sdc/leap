@@ -15,7 +15,7 @@ class CreateViews < ActiveRecord::Migration
     all = View.create(
       :label       => "All",
       :name        => "all",
-      :transitions => ["create","start","overdue","complete","drop"],
+      :transitions => ["create","start","overdue","complete","drop","to_start"],
       :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification","SupportRequest","SupportHistory","InitialReview"],
       :icon_url    => "icons/events.png",
       :affiliations=> ["student","affiliate"],
@@ -26,7 +26,7 @@ class CreateViews < ActiveRecord::Migration
     View.create(
       :label       => "All",
       :name        => "all",
-      :transitions => ["create","start","overdue","complete","drop","hidden"],
+      :transitions => ["create","start","overdue","complete","drop","hidden","to_start"],
       :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification","SupportRequest","SupportHistory","InitialReview"],
       :icon_url    => "icons/events.png",
       :affiliations=> ["staff"],
