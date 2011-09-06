@@ -16,7 +16,7 @@
 
 class PersonCourse < Eventable
 
-  delegate :code, :to => :course, :dependent => :nullify
+  delegate :code, :to => :course
 
   belongs_to :course
   has_one :enrolment_event,   :as => :eventable, :class_name => "Event", :conditions => {:transition => :start}
@@ -53,6 +53,14 @@ class PersonCourse < Eventable
 
   def to_xml(options = {})
     super({:include => :course}.merge(options))
+  end
+
+  def status 
+    if self[:status] == "current"
+      start_date <= Date.today ? "current" : "not_started"
+    else
+      self[:status]
+    end
   end
 
 end

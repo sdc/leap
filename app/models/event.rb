@@ -38,9 +38,9 @@ class Event < ActiveRecord::Base
   belongs_to :person
   belongs_to :about_person, :class_name => "Person", :foreign_key => "about_person_id"
   belongs_to :eventable, :polymorphic => true
-  has_many :children, :class_name => "Event", :foreign_key => "parent_id"
+  has_many :children, :class_name => "Event", :foreign_key => "parent_id", :dependent => :nullify
   belongs_to :parent, :class_name => "Event", :foreign_key => "parent_id"
-  has_many :targets
+  has_many :targets, :dependent => :nullify
 
   symbolize :transition , :in => [:create,:to_start,:start,:overdue,:complete,:drop,:hidden], :methods => true, :scopes => true, :allow_nil => true
 

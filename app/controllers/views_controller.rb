@@ -26,6 +26,7 @@ class ViewsController < ApplicationController
         where(:transition => @view.transitions, :eventable_type => @view.events).
         order("event_date DESC").
         limit(20).
+        reject{|p| p.person.nil?}.
         partition {|e| e.event_date <= Time.now}
       @bottom_date = if @events.last
         @events.last.event_date
