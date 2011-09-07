@@ -14,19 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-class SupportRequest < Eventable
+class SupportStrategy < Eventable
 
-  serialize :sessions
-  serialize :difficulties
-
-  after_create {|req| req.events.create!(:event_date => created_at, :transition => :create)}
-
-  def extra_panes
-    if Person.affiliation == "staff"
-      [["Strategy","support_strategies/new"]]
-    else
-      nil
-    end
-  end
+  after_create {|req| req.events.create!(:event_date => created_at, :transition => :create, :parent_id => event_id)}
 
 end

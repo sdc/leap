@@ -48,10 +48,10 @@ class ApplicationController < ActionController::Base
   def set_user
     if Rails.env == "development"
       Person.user = @user = session[:user_id] ? Person.get(session[:user_id]) : nil
-      @affiliation = session[:user_affiliation]
+      Person.affiliation = @affiliation = session[:user_affiliation]
       redirect_to test_url unless @user && @affiliation
     else
-      @affiliation = request.env["affiliation"] ? request.env["affiliation"].split("@").first.downcase : nil
+      Person.affiliation = @affiliation = request.env["affiliation"] ? request.env["affiliation"].split("@").first.downcase : nil
       uname,domain = request.env["eppn"].downcase.split('@')
       uname = uname[1..-1] if @affiliation == "affiliate"
       Person.user = @user = Person.get(uname)

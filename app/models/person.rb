@@ -33,6 +33,7 @@ class Person < ActiveRecord::Base
   has_many :disciplinaries
   has_many :qualifications
   has_many :support_requests
+  has_many :support_strategies
   has_many :support_histories
   has_many :initial_reviews
   
@@ -64,6 +65,14 @@ class Person < ActiveRecord::Base
 
   def self.user=(user)
     Thread.current[:user] = user
+  end
+
+  def self.affiliation
+    Thread.current[:affiliation]
+  end
+
+  def self.affiliation=(affiliation)
+    Thread.current[:affiliation] = affiliation
   end
 
   def as_param
