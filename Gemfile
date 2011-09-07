@@ -10,6 +10,7 @@ gem 'supermodel'
 gem 'scoped_search'
 gem 'mysql2', "< 0.3"
 gem 'rails-settings', :require => 'settings'
+gem 'exception_notification'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

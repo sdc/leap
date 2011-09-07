@@ -18,6 +18,7 @@ namespace :deploy do
   task :after_deploy do
     #run "rm #{current_path}/config/database.yml"
     run "ln -s #{shared_path}/database.yml #{current_path}/config/database.yml"
+    run "ln -s #{shared_path}/error_mail.rb #{current_path}/config/initializers/error_mail.rb"
     run "ln -s /media/photos #{current_path}/public/photos"
   end
 end

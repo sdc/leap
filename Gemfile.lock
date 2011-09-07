@@ -39,6 +39,8 @@ GEM
       sass (~> 3.1)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    exception_notification (2.5.2)
+      actionmailer (>= 3.0.4)
     flay (1.4.2)
       ruby_parser (~> 2.0)
       sexp_processor (~> 3.0)
@@ -120,6 +122,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-oracle_enhanced-adapter
   compass (>= 0.10.6)
+  exception_notification
   haml
   haml-rails
   mysql2 (< 0.3)
