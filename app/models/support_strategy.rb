@@ -18,4 +18,8 @@ class SupportStrategy < Eventable
 
   after_create {|req| req.events.create!(:event_date => created_at, :transition => :create, :parent_id => event_id)}
 
+  def extra_panes
+    [["Details","support_strategies/details"]]
+  end
+
 end
