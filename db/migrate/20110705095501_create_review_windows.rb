@@ -6,11 +6,6 @@ class CreateReviewWindows < ActiveRecord::Migration
       t.string :name
       t.timestamps
     end
-    ReviewWindow.create(
-      :name => "Last two months testing Review",
-      :start_date => Date.today - 1.months,
-      :end_date => Date.today
-    )
   end
 
   def self.down
