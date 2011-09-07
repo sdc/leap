@@ -22,4 +22,12 @@ class SupportHistory < Eventable
     "<b>#{category}</b><br/>#{self[:body]}"
   end
 
+  def extra_panes
+    if Person.affiliation == "staff"
+      [["Strategy","support_strategies/new"]]
+    else
+      nil
+    end
+  end
+
 end
