@@ -57,7 +57,11 @@ class PersonCourse < Eventable
 
   def status 
     if self[:status] == "current"
-      start_date <= Date.today ? "current" : "not_started"
+      if start_date
+        start_date <= Date.today ? "current" : "not_started"
+      else
+        "unknown"
+      end
     else
       self[:status]
     end
