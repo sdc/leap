@@ -135,6 +135,7 @@ module MisPerson
           :att_week   => att.attendance_weekly
         )
       end
+    return self
   end
 
   def import_quals
@@ -149,6 +150,7 @@ module MisPerson
         :created_at => la.exp_end_date
       )
     end
+    return self
   end
 
   # Tese are an SDC-only imports for moving from eilp1 - I will probably delete
@@ -166,6 +168,7 @@ module MisPerson
         :created_by_id => Person.first.id
       )
     end
+    return self
   end
 
   def import_support_requests
@@ -179,6 +182,7 @@ module MisPerson
         :created_by_id => Person.get(r.created_by).id
       )
     end
+    return self
   end
 
   def import_targets
@@ -195,6 +199,7 @@ module MisPerson
       )
       nt.notify_complete if nt.complete_date
     end
+    return self
   end
 end
 
@@ -208,7 +213,7 @@ module MisCourse
 
   def import_people
     mis_course.people_units.each do |pu|
-      person = Person.get(pu.person_code)
+      person = Person.import(pu.person_code, {:courses => false})
       pc= PersonCourse.find_or_create_by_person_id_and_course_id(person.id,id)
       if pu.unit_type == "A" 
         pc.update_attributes(:status => :not_started,
@@ -216,10 +221,12 @@ module MisCourse
                             )
       elsif pu.unit_type == "R"
         pc.update_attributes(:enrolment_date => pu.created_date,
+                             :start_date     => pu.unit_instance_occurrence.qual_start_date,
                              :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
                              :end_date => pu.progress_date) unless pc.status == :not_started
       end
     end
+    return self
   end
 
   def timetable_events(options = {})
