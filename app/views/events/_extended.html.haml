@@ -8,7 +8,7 @@
     = tab dom_id(event), "Extra Info", "full_details"
 - if event.extra_panes    
   - event.extra_panes.each do |pane|
-    .tab{:class => pane.first.underscore}= render :partial => pane.last, :locals => {:event => event, event.eventable_type.downcase.to_sym => event.eventable}
+    .tab{:class => pane.first.underscore}= render :partial => pane.last, :locals => {:event => event, event.eventable_type.underscore.to_sym => event.eventable}
 .tab.target_set{:style => "display: #{event.extra_panes ? 'none' : 'block'}"}
   = render :partial => "targets/new", :locals => {:event => event}
 - if @affiliation == "staff"

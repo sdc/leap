@@ -14,17 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-class TargetsController < ApplicationController
+class SupportStrategiesController < ApplicationController
 
   def update
-    @target = @topic.targets.find(params[:id])
+    @ss = @topic.support_strategies.find(params[:id])
     @event = @topic.events.find(params[:event_id])
-    @events = @target.events
-    params[:drop_date] = params.delete(:complete_date) if params[:commit] == "Drop"
-    @target.update_attributes(params[:target])
-    if params[:commit] == "Complete"
-      @target.notify_complete
-    end
+    @ss.agreed_date    = Time.now if params[:agree]
+    @ss.declined_date  = Time.now if params[:decline]
+    @ss.completed_date = Time.now if params[:complete]
+    @ss.save
     render @event
   end
 

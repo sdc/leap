@@ -4,6 +4,7 @@ Ilp2::Application.routes.draw do
   resources :settings
   resources :notes
   resources :targets
+  resources :support_strategies
   resources :timetables
   resources :contact_logs
   resources :review_lines
@@ -17,6 +18,7 @@ Ilp2::Application.routes.draw do
     resources :targets
   end
   resources :people do
+    resources :support_strategies
     resources :events
     resources :timetables
     resources :views

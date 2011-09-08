@@ -18,8 +18,37 @@ class SupportStrategy < Eventable
 
   after_create {|req| req.events.create!(:event_date => created_at, :transition => :create, :parent_id => event_id)}
 
+  after_save do |ss|
+    if ss.agreed_date_changed? and ss.agreed_date_was == nil
+      ss.events.create(:event_date => ss.agreed_date, :transition => :start)
+    end
+    if ss.declined_date_changed? and ss.declined_date_was == nil
+      ss.events.create(:event_date => ss.declined_date, :transition => :incomplete)
+    end
+    if ss.completed_date_changed? and ss.completed_date_was == nil
+      ss.events.create(:event_date => ss.completed_date, :transition => :complete)
+    end
+  end
+
+
   def extra_panes
     [["Details","support_strategies/details"]]
+  end
+
+  def status
+    return "incomplete" if declined_date
+    return "complete"   if completed_date
+    return "current"    if agreed_date
+    return "not_started"
+  end
+
+  def title(tr)
+    case tr
+    when :complete : "Support Strategy Complete"
+    when :incomplete : "Support Strategy Declined"
+    when :start : "Support Strategy Agreed"
+    when :create : "Support Strategy Created"
+    end
   end
 
 end
