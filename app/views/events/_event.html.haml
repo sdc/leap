@@ -21,9 +21,9 @@
       .body= render :partial => "events/body/#{event.eventable_type.underscore}", :object => event.eventable, :locals => {:event => event}
     - rescue
       - if event.sanitize_options
-        .body= sanitize event.body, event.sanitize_options
+        .body= sanitize simple_format(event.body), event.sanitize_options
       - else
-        .body= raw event.body
+        .body= raw simple_format(event.body)
     .buttons
       = link_to image_tag("actions/event_open.png"), open_extended_event_url(event,:person_id => event.person.mis_id), :remote => true, :class => "extend_button", :observer => "false"
       = image_tag "actions/event_opened.png", :class => "close_extend_button", :style => "display:none", :observer => "false"
