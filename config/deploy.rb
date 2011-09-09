@@ -4,7 +4,6 @@ set :deploy_to, "/srv/#{application}"
 default_run_options[:pty] = true
 
 set :scm, :git
-set :branch, "sdc_stable"
 
 role :web, "172.20.1.42"                 
 role :app, "172.20.1.42"                  
