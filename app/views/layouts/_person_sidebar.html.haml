@@ -4,5 +4,7 @@
 %nav
   = icon_link @affiliation == "staff" ? "Person Home" : "Home", @topic, "home"
   = icon_link "Timetable", person_timetables_url(@topic)
+  - if @affiliation == "staff"
+    = icon_link "SparkE", Settings.ebs_person_base_url + @topic.mis_id.to_s, "sparke"
   %h3 Events
   = render @views
