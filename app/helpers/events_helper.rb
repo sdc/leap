@@ -63,4 +63,8 @@ module EventsHelper
     return date.strftime("%H.%M %P")
   end
 
+  def event_format(text)
+    auto_link(simple_format(strip_tags(text)))
+  end
+
 end

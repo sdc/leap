@@ -79,8 +79,4 @@ class Target < Eventable
     end
   end
 
-  def sanitize_options
-    {:tags => [:b,:i,:strong,:em]}
-  end  
-
 end

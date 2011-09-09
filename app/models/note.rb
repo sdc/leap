@@ -28,8 +28,4 @@ class Note < Eventable
 
   validates :body, :presence => true
 
-  def sanitize_options
-    {:tags => [:b,:i,:strong,:em]}
-  end
-
 end
