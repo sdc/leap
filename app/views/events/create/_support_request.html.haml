@@ -5,7 +5,7 @@
     .select
       %h4 Difficulties
       = select_tag "support_request[difficulties]", options_for_select(Settings.support_request_difficulties.split(/,/)), :multiple => true
-    .select
+    .select{:style => "width:300px"}
       %h4 Sessions
       = select_tag "support_request[sessions]", options_for_select(@topic.timetable_events(:from => (Date.today - 1.month), :to => (Date.today + 1.month)).map{|e| e.title}.uniq), :multiple => true
     = hidden_field_tag :eventable_type, "SupportRequest"
