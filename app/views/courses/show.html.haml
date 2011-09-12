@@ -23,7 +23,7 @@
       .details_right   
         - if @next_timetable_event
           #lesson_block
-            .timetable_event_link= link_to @next_timetable_event.title, person_timetables_url(@topic)          
+            .timetable_event_link= link_to @next_timetable_event.title, course_timetables_url(@topic)          
             .timetable_event_date
               .timetable_event_header= @next_timetable_event.start.strftime('%A')
               .small_text= @next_timetable_event.start.strftime('%H.%M%P')
