@@ -36,6 +36,7 @@ class Person < ActiveRecord::Base
   has_many :support_strategies
   has_many :support_histories
   has_many :initial_reviews
+  has_many :absences
   
   serialize :middle_names
   serialize :address

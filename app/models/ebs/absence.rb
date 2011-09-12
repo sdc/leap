@@ -14,30 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-class Attendance < Eventable
+class Ebs::Absence < Ebs::Model
 
-  default_scope :order => 'week_beginning'
+  set_table_name "sdc_ilp_absences"
 
-  after_create do |attendance|
-    attendance.events.create!(:event_date => week_beginning + 1.week, :transition => :complete)
-  end
-
-  def title
-    "Weekly Attendance"
-  end
-
-  def status
-    if att_year > 89
-      :complete
-    elsif att_year > 84
-      :start
-    else
-      :overdue
-    end
-  end
-
-  def subtitle
-    "#{att_year}%"
-  end
+  belongs_to :person
 
 end

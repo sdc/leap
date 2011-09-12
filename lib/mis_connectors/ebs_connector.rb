@@ -31,7 +31,7 @@ module MisPerson
     def import(mis_id, options = {})
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
       # NOTE: Need to change these defaults after launch
-      options.reverse_merge! :save => true, :courses => true, :attendances => true, 
+      options.reverse_merge! :save => true, :courses => true, :attendances => true, :absences => true,
                              :quals => true, :support_history => true, :support_requests => true, :targets => true
       logger.info "Importing user #{mis_id}"
       if (ep = (Ebs::Person.find_by_person_code(mis_id) or Ebs::Person.find_by_network_userid(mis_id)))
@@ -58,6 +58,7 @@ module MisPerson
         @person.import_targets if options[:targets]
         @person.import_support_history if options[:support_history]
         @person.import_support_requests if options[:support_requests]
+        @person.import_absences if options[:absences]
         return @person
       else
         return false
@@ -201,6 +202,21 @@ module MisPerson
     end
     return self
   end
+
+  def import_absences
+    Ebs::Absence.find_all_by_person_id(mis_id).each do |a|
+      next if absences.detect{|ab| a.created_at == ab.created_at}
+      na = absences.create(
+        :body => a.reason_extra,
+        :category => a.reason,
+        :usage_code => a.usage_code,
+        :created_at => a.created_at,
+        :lessons_missed => a.absence_slots_count,
+        :contact_category => a.contact
+      )
+    end
+  end
+
 end
 
 module MisCourse

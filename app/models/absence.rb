@@ -14,30 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-class Attendance < Eventable
+class Absence < Eventable
 
-  default_scope :order => 'week_beginning'
+  after_create {|ab| ab.events.create!(:event_date => created_at, :transition => :create)}
 
-  after_create do |attendance|
-    attendance.events.create!(:event_date => week_beginning + 1.week, :transition => :complete)
-  end
-
-  def title
-    "Weekly Attendance"
+  def subtitle
+    usage_code
   end
 
   def status
-    if att_year > 89
-      :complete
-    elsif att_year > 84
-      :start
-    else
-      :overdue
-    end
-  end
-
-  def subtitle
-    "#{att_year}%"
+    Ilp2::Application.config.mis_usage_codes[usage_code]
   end
 
 end

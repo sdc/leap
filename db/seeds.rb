@@ -2,7 +2,7 @@
       :label       => "All",
       :name        => "all",
       :transitions => ["create","start","overdue","complete","drop","to_start"],
-      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification","SupportRequest","SupportHistory","InitialReview","SupportStrategy"],
+      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification","SupportRequest","SupportHistory","InitialReview","SupportStrategy","Absence"],
       :icon_url    => "icons/events.png",
       :affiliations=> ["student","affiliate"],
       :controls    => nil,
@@ -13,7 +13,7 @@
       :label       => "All",
       :name        => "all",
       :transitions => ["create","start","overdue","complete","drop","hidden","to_start"],
-      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification","SupportRequest","SupportHistory","InitialReview","SupportStrategy"],
+      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification","SupportRequest","SupportHistory","InitialReview","SupportStrategy","Absence"],
       :icon_url    => "icons/events.png",
       :affiliations=> ["staff"],
       :controls    => nil,
@@ -111,8 +111,8 @@
     )
     View.create(
       :name        => "timetable",
-      :transitions => ['complete','start','overdue'],
-      :events      => ['Qualifications','attendance'],
+      :transitions => ['complete','start','overdue','create'],
+      :events      => ['Qualifications','Attendance', "Absence"],
       :affiliations=> ['staff','student','affiliate'],
       :in_list     => false
     )
