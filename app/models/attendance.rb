@@ -23,7 +23,7 @@ class Attendance < Eventable
   end
 
   def title
-    "Weekly Attendance"
+    "Attendance"
   end
 
   def status
