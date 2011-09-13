@@ -24,7 +24,7 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.html do
         @next_timetable_event = @topic.timetable_events(:next).first
-        @attendances = @topic.attendances
+        @attendances = @topic.attendances.last.siblings_same_year
         @targets = @topic.targets.limit(8).where("complete_date is null")
         begin
           mcourses = ActiveResource::Connection.new(Settings.moodle_host).
