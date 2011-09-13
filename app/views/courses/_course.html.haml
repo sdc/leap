@@ -1,6 +1,9 @@
 .course
   = link_to course, {:title => course.title} do
     .details
-      %h3= truncate(course.name, :length => 36).titleize
-      %h5.quiet= course.code
+      - if course.name
+        %h3= truncate(course.name, :length => 36).titleize
+        %h5.quiet= course.code
+      - else
+        %h3= course.code
       %h5.quiet= course.year
