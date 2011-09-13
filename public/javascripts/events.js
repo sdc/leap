@@ -33,8 +33,12 @@ function watch_events(e){
     })
   })
   if($('more_events')){
-    $('more_events').observe('ajax:complete', function(event){
+    $('more_events').observe('click', function(event){
       $('more_events_div').remove();
+      $('more_events_loading').show();
+    });
+    $('more_events').observe('ajax:complete', function(event){
+      $('more_events_loading').remove();
       $('events').insert(event.memo.responseText);
       watch_events("events");
     })
