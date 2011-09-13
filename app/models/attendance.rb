@@ -19,11 +19,15 @@ class Attendance < Eventable
   default_scope :order => 'week_beginning'
 
   after_create do |attendance|
-    attendance.events.create!(:event_date => week_beginning + 1.week, :transition => :complete)
+    attendance.events.create!(:event_date => week_beginning.end_of_week, :transition => :complete)
   end
 
   def title
-    "Attendance"
+    if (week_beginning.end_of_week).future?
+      "Attendance so far this week"
+    else
+      "Attendance"
+    end
   end
 
   def status
@@ -38,6 +42,16 @@ class Attendance < Eventable
 
   def subtitle
     "#{att_year}%"
+  end
+
+  def siblings_same_year
+    d,m = Settings.year_boundary_date.split("/").map{|x| x.to_i}
+    bty = week_beginning.change(:month => m, :day => d)
+    if bty > week_beginning
+      return Attendance.where(:person_id => person_id, :week_beginning => bty.change(:year => bty.year - 1)..bty)
+    else
+      return Attendance.where(:person_id => person_id, :week_beginning => bty..bty.change(:year => bty.year + 1))
+    end
   end
 
 end

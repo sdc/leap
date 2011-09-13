@@ -129,7 +129,8 @@ module MisPerson
     mis_person.attendances.
       where("start_week > ?",last_date).
       each do |att|
-        attendances.create(
+        na=Attendance.find_or_create_by_person_id_and_week_beginning(id,att.start_week)
+        na.update_attributes(
           :week_beginning => att.start_week,
           :att_year   => att.attendance,
           :att_3_week => att.attendance_last3wks,
