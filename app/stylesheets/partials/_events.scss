@@ -143,6 +143,12 @@
     }
   }
 
+  .initial_review .body{
+    table {
+      @include column(5);
+    }
+  }
+
   .attendance .body {
     img {
       @include column(6);
