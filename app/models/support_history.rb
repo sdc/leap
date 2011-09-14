@@ -18,10 +18,6 @@ class SupportHistory < Eventable
 
   after_create {|req| req.events.create!(:event_date => created_at, :transition => :create)}
 
-  def body
-    "<b>#{category}</b><br/>#{self[:body]}"
-  end
-
   def extra_panes
     if Person.affiliation == "staff"
       [["Strategy","support_strategies/new"]]
