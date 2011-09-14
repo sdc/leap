@@ -21,7 +21,7 @@
       = f.text_field :body
       = hidden_field_tag :eventable_type, "Note"
       = hidden_field_tag :person_id, @topic.mis_id
-      = hidden_field_tag :redirect_to, person_view_url(@topic, View.affiliation(@affiliation).where(:name => "all").first, :anchor => "current_time_break")
+      = hidden_field_tag :redirect_to, person_view_url(@topic, View.for_user.where(:name => "all").first, :anchor => "current_time_break")
       = submit_tag "Post", :class => "styled_button", :id => "thoughts_button"
   .details_home_container
     #next_lesson.block

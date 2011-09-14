@@ -25,8 +25,8 @@ class ApplicationController < ActionController::Base
   before_filter :set_topic
   before_filter :get_views
 
-  def get_date
-    if params[:date]
+  def set_date
+    @date = if params[:date]
       if params[:date]=="now"
         Time.now
       elsif params[:date].kind_of? Hash
@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_views
-    @views = View.order("position").in_list.affiliation(@affiliation)
+    @views = View.order("position").in_list.for_user
   end
 
   def admin_only
