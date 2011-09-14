@@ -17,7 +17,7 @@
 class ViewsController < ApplicationController
 
   before_filter :set_scope
-  before_filter :set_date
+  before_filter { |c| c.set_date(1.year) }
 
   def show
     if @view = View.for_user.find_by_name(params[:id])

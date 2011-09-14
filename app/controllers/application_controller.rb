@@ -25,17 +25,15 @@ class ApplicationController < ActionController::Base
   before_filter :set_topic
   before_filter :get_views
 
-  def set_date
+  def set_date(default_offset = 0)
     @date = if params[:date]
-      if params[:date]=="now"
-        Time.now
-      elsif params[:date].kind_of? Hash
+      if params[:date].kind_of? Hash
         Time.gm(*[:year,:month,:day].map{|x| params[:date][x].to_i})
       else
         Time.parse(params[:date])
       end
     else
-      Time.now.midnight + 2.years
+      Time.now + default_offset
     end
   end
 
