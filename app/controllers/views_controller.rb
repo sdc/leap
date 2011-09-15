@@ -16,6 +16,8 @@
 
 class ViewsController < ApplicationController
 
+  respond_to :html, :xml, :js
+
   before_filter :set_scope
   before_filter { |c| c.set_date(1.year) }
 
@@ -27,10 +29,8 @@ class ViewsController < ApplicationController
         limit(20)
       @events.detect{|e| e.past? }.first_in_past= true unless @events.first.past? if @events.first
       @bottom_date = @events.last.try(:event_date)
-      respond_to do |f|
-        f.html
-        f.xml { render :xml  => @events.to_xml (:include => :eventable)}
-        f.json{ render :json => @events.to_json(:include => :eventable)}
+      respond_with @events do |f|
+        f.js { render @events }
       end
     else
       redirect_to "/404.html"

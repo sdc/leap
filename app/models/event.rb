@@ -70,4 +70,8 @@ class Event < ActiveRecord::Base
 
   def first_in_past?; first_in_past; end
 
+  def to_xml(options = {}, &block)
+    super(options.reverse_merge(:include => :eventable))
+  end
+
 end
