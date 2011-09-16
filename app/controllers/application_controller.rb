@@ -55,16 +55,16 @@ class ApplicationController < ActionController::Base
       uname,domain = request.env["eppn"].downcase.split('@')
       uname = uname[1..-1] if @affiliation == "affiliate"
       Person.user = @user = Person.get(uname)
-      render :text => "Authentication Error! username: '#{@user}' and affiliation: '#{@affiliation}'" unless @user && @affiliation
+      raise "Authentication Error! username: '#{@user}' and affiliation: '#{@affiliation}'" unless @user && @affiliation
     end
   end
 
   def set_topic
     if @affiliation == "staff"
       if params[:person_id]
-        @topic = Person.get(params[:person_id],params[:refresh]) or raise "No such user mis_id:#{params[:person_id]}"
+        @topic = Person.get(params[:person_id],params[:refresh]) or redirect_to "/404.html"
       elsif params[:course_id]
-        @topic = Course.get(params[:course_id],params[:refresh]) or raise "No such course mis_id:#{params[:course_id]}"
+        @topic = Course.get(params[:course_id],params[:refresh]) or redirect_to "/404.html"
       else
         @topic = @user
       end
