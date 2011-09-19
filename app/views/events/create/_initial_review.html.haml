@@ -1,22 +1,22 @@
 = form_for @topic.initial_reviews.new, :url => "/events" do |f|
   %h3
-    Add a an initial review
+    Add an initial review
   .icon= image_tag "events/reviews.png"
   = f.text_area :body
   .review_scores
     %table
       %tr
-        %td Quality
+        %td Quality of Work
         %td= f.select :quality, 0..10
         %td Punctuality
         %td= f.select :punctuality, 0..10
       %tr
         %td Attitude
         %td= f.select :attitude, 0..10
-        %td Completion
+        %td Completion of Work
         %td= f.select :completion, 0..10
 
   = f.hidden_field :person_id
   = hidden_field_tag :eventable_type, "InitialReview"
   = hidden_field_tag :person_id, @topic.mis_id
-  .sumbit= submit_tag "Add"
+  .sumbit{:style => "clear:both;float:right"}= submit_tag "Add"
