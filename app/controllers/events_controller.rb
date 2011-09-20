@@ -44,4 +44,24 @@ class EventsController < ApplicationController
     end
   end
 
+  def update
+    @event = @topic.events.find(params[:id])
+    et = @event.eventable_type.tableize
+    if @affiliation == "staff" or Settings.students_create_events.split(",").include? et
+      if @event.eventable.update_attributes!(params[et.singularize])
+        flash[:notice] = "#{et.singularize.humanize.titleize} updated"
+      else
+        flash[:notice] = "#{et.singularize.humanize.titleize} could not be updated!"
+      end
+      respond_to do |f|
+        f.js   {render @event}
+        f.html {redirect_to :back}
+      end
+    else
+      redirect_to "/404.html"
+    end
+  end
+
+
+
 end
