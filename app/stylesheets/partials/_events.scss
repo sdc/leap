@@ -118,9 +118,6 @@
         width: 88px;
       }
     }
-    .review_scores {
-      @include column(6);
-    }
     textarea{
       @include column(8);
 
