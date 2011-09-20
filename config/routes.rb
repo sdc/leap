@@ -2,12 +2,7 @@ Ilp2::Application.routes.draw do
 
   resources :views
   resources :settings
-  resources :notes
-  resources :targets
-  resources :support_strategies
   resources :timetables
-  resources :contact_logs
-  resources :review_lines
   resources :events do
     collection do
       get :more
@@ -15,10 +10,8 @@ Ilp2::Application.routes.draw do
     member do
       get :open_extended
     end
-    resources :targets
   end
   resources :people do
-    resources :support_strategies
     resources :events
     resources :timetables
     resources :views
