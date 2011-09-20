@@ -1,4 +1,4 @@
-= form_for @topic.targets.new, :url => "/events", :remote => true do |f|
+= form_for @topic.targets.new, :url => "/events" do |f|
   = f.hidden_field :event_id, :value => event.id
   = hidden_field_tag :person_id, @topic.mis_id
   = hidden_field_tag :eventable_type, "Target"
