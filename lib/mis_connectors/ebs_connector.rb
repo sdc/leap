@@ -199,7 +199,6 @@ module MisPerson
         :created_by_id => t.person_id,
         :created_at    => t.created_at
       )
-      nt.notify_complete if nt.complete_date
     end
     return self
   end
