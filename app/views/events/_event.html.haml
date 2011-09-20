@@ -23,7 +23,11 @@
       .body= raw event_format(event.body)
     .buttons
       = link_to image_tag("actions/event_open.png"), open_extended_event_url(event,:person_id => event.person.mis_id), :remote => true, :class => "extend_button", :observer => "false"
-      = image_tag "actions/event_opened.png", :class => "close_extend_button", :style => "display:none", :observer => "false"
+      = image_tag "actions/event_opened.png", :class => "close_extend_button", :style => "display:none", :observer => "false"      
+    - begin
+      .long_body= render :partial => "events/long_body/#{event.eventable_type.underscore}", :object => event.eventable, :locals => {:event => event}
+    - rescue
+      -#long_body 
     .attachments
       .inner
         = render :partial => "events/mini", :collection => event.children.unique_eventable.order("event_date"), :as => :event

@@ -244,3 +244,8 @@
 .tab {
   clear: both
 }
+
+.long_body .content {
+  @include column(18, true);
+  @include prepend(1);
+}
