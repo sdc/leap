@@ -15,6 +15,8 @@ Ilp2::Application.routes.draw do
     resources :events
     resources :timetables
     resources :views
+    resources :support_strategies
+    resources :review_lines
     collection do
       get :search
     end
