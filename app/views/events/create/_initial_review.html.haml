@@ -4,7 +4,7 @@
   .icon= image_tag "events/reviews.png"
   = f.text_area :body
   .review_scores
-    %table
+    %table.reviews
       %tr
         %td Quality of Work
         %td= f.select :quality, 0..10
