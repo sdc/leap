@@ -143,6 +143,7 @@
   .initial_review .body{
     table {
       @include column(5);
+      width: auto;
     }
   }
 
