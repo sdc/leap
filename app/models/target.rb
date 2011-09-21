@@ -32,9 +32,22 @@ class Target < Eventable
     target.events.create!(:event_date => target_date, :transition => :overdue)
   end
 
+  after_save do |target|
+    if target.complete_date_changed? and target.complete_date_was.nil?
+      events.create!(:event_date => complete_date, :transition => :complete)
+    end
+    if target.drop_date_changed? and target.drop_date_was.nil?
+      events.create!(:event_date => drop_date, :transition => :drop)
+    end
+  end
+
   # Returns the target eventable icon url. Complete or not?
   def icon_url
-    status == :complete ? "events/target-complete.png" : "events/target.png"
+    case status
+    when :complete   : "events/target-complete.png"
+    when :incomplete : "events/target_dropped.png"
+    else "events/target.png"
+    end
   end
 
   # Returns the target eventable title.
@@ -42,6 +55,7 @@ class Target < Eventable
     case tr
     when :complete : "Target Complete"
     when :start    : "Target Set"
+    when :drop     : "Target Dropped"
     else "Target Due"
     end
   end
@@ -56,8 +70,10 @@ class Target < Eventable
   def status
     if complete_date
       :complete
-    elsif target_date < Time.now
+    elsif drop_date
       :incomplete
+    elsif target_date < Time.now
+      :overdue
     else
       :current
     end
@@ -65,18 +81,7 @@ class Target < Eventable
 
   # Returns the partial to render for the details pane
   def extra_panes
-    [["Complete","targets/details"]]
-  end
-
-  # Run this after an event is completed to create the completion event.
-  def notify_complete
-    if complete_date
-      events.create!(:event_date => complete_date, :transition => :complete)
-    elsif drop_date
-      events.create!(:event_date => drop_date, :transition => :incomplete)
-    else
-      raise "Trying to notify completion of an incomplete Target (id:#{id})"
-    end
+    [["Completion","targets/details"]]
   end
 
 end
