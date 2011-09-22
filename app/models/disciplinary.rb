@@ -27,7 +27,7 @@ class Disciplinary < Eventable
       when -1 
         "Amber Alert Disciplinary"
       when 0
-        "Amber Alert Pastorial"
+        "Amber Alert Pastoral"
       when 1
         "Positive Intervention Stage One"
       when 2
