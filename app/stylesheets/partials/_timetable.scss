@@ -107,6 +107,11 @@
     }    
   }
 }
+.timetable_event.short_lesson.extended {
+  height: 72px !important;
+  
+}
+
 .mark {
   @include column(1);
   font-size: 45px;

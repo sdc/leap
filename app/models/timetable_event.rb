@@ -27,7 +27,7 @@ class TimetableEvent < SuperModel::Base
   end
 
   def css_classes
-    ["mark_#{mark}","generic_mark_#{generic_mark}"]
+    ["mark_#{mark}","generic_mark_#{generic_mark}", timetable_height < 60 ? "short_lesson":nil]
   end
 
 end
