@@ -14,6 +14,8 @@
       = javascript_include_tag 'html5.js'
     = javascript_include_tag :defaults
     = csrf_meta_tag
+    - unless Settings.google_analytics_code.empty?
+      = render :partial => "layouts/ganalytics"
   %body
     #top_bar
       .inner

@@ -10,9 +10,9 @@ document.observe("dom:loaded", function(){
       })
     }
   }
-  $('person_photo').down('img').observe("load", function(event){
-    event.findElement('img').appear();
-  })
+  //$('person_photo').down('img').observe("load", function(event){
+  //  event.findElement('img').appear();
+  //})
   $('person_photo').down('img').observe("mouseover", function(event){
     event.findElement('img').shake({distance : 2});
   })

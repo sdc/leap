@@ -89,7 +89,10 @@
       @include column(8);
     }
     .review_scores {
-      @include column(6);
+      @include column(8);
+      table {
+        @include column(8);
+      }
       td {
         padding: 0 10px 0 0;
       }

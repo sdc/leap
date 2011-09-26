@@ -3,6 +3,7 @@
   background: #ddd;
   @include box-shadow;
   vertical-align: middle;
+  border-bottom: $border-color 1px solid;
   .inner {
     width: 950px;
     margin: 0 auto;
