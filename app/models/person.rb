@@ -41,6 +41,10 @@ class Person < ActiveRecord::Base
   serialize :middle_names
   serialize :address
 
+  def age
+    ((Date.today - date_of_birth.to_date)/365).to_i
+  end
+
   def to_param
     mis_id.to_s
   end
