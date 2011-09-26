@@ -26,14 +26,19 @@ class ApplicationController < ActionController::Base
   before_filter :get_views
 
   def set_date(default_offset = 0)
-    @date = if params[:date]
-      if params[:date].kind_of? Hash
-        Time.gm(*[:year,:month,:day].map{|x| params[:date][x].to_i})
+    begin
+      @date = if params[:date]
+        if params[:date].kind_of? Hash
+          Time.gm(*[:year,:month,:day].map{|x| params[:date][x].to_i})
+        else
+          Time.parse(params[:date])
+        end
       else
-        Time.parse(params[:date])
+        Time.now + default_offset
       end
-    else
-      Time.now + default_offset
+    rescue
+      flash.notice = "Incorrect date entered! Using today instead."
+      @date=Time.now
     end
   end
 
