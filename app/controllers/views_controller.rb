@@ -16,30 +16,18 @@
 
 class ViewsController < ApplicationController
 
-  before_filter :set_scope, :only => [:show]
+  respond_to :html, :xml, :js
+
+  before_filter :set_scope
+  before_filter { |c| c.set_date(1.year) }
 
   def show
-    if @view = View.affiliation(@affiliation).find_by_name(params[:id])
-      @date = get_date
-      @events, @future_events = 
+    if @view = View.for_user.find_by_name(params[:id])
+      @events =
         @scope.where("event_date < ?", @date).
         where(:transition => @view.transitions, :eventable_type => @view.events).
-        order("event_date DESC").
-        limit(20).
-        reject{|p| p.person.nil?}.
-        partition {|e| e.event_date <= Time.now}
-      @bottom_date = if @events.last
-        @events.last.event_date
-      elsif @future_events.last
-        @future_events.last.event_date
-      else
-        nil
-      end
-      respond_to do |f|
-        f.html
-        f.xml { render :xml  => @events.to_xml (:include => :eventable)}
-        f.json{ render :json => @events.to_json(:include => :eventable)}
-      end
+        limit(20)
+      @events.detect{|e| e.past? }.first_in_past= true unless @events.first.past? if @events.first
     else
       redirect_to "/404.html"
     end

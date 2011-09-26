@@ -21,7 +21,7 @@ class View < ActiveRecord::Base
   serialize :affiliations
   serialize :controls
 
-  scope :affiliation, lambda {|aff| {:conditions => ["affiliations like ?", "%#{aff}%"]}}
+  scope :for_user,    lambda { where('affiliations like ?', "%#{Person.affiliation}%")}
   scope :in_list, where(:in_list => true)
 
   def to_param

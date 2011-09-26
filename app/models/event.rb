@@ -46,10 +46,14 @@ class Event < ActiveRecord::Base
 
   scope :unique_eventable, group("eventable_id,eventable_type")
   scope :creation, where(:transition => :create)
+  default_scope order("event_date DESC")
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id) unless person_id}
 
-  delegate :body, :to => :eventable
+  delegate :body,  :to => :eventable
+  delegate :past?, :to => :event_date
+
+  attr_accessor :first_in_past
 
   [:title,:subtitle,:icon_url,:body,:extra_panes,:status].each do |method|
     define_method method do
@@ -62,6 +66,12 @@ class Event < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def first_in_past?; first_in_past; end
+
+  def to_xml(options = {}, &block)
+    super(options.reverse_merge(:include => :eventable))
   end
 
 end

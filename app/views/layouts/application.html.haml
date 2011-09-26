@@ -25,7 +25,7 @@
       #top_bar= render :partial => "layouts/top_bar"
     .container#main_container
       #side_pane
-        - if params[:all]
+        - if params[:all] and @affiliation == "staff"
           = render :partial => "layouts/all_sidebar"
         - else
           = render :partial => "layouts/#{@topic.class.name.underscore}_sidebar" if @topic

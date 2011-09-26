@@ -15,24 +15,14 @@
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 class TimetablesController < ApplicationController
+
+  before_filter :set_date
   
   def index
-    if params[:date]
-      if params[:date]["year"]
-        @date = Date.civil((params[:date]["year"]).to_i,(params[:date]["month"]).to_i,(params[:date]["day"]).to_i).at_beginning_of_week
-      else
-        @date = Date.parse(params[:date]).at_beginning_of_week
-      end
-      @end_date = @date.next_week
-    elsif params[:start_date] and params[:end_date]
-      @date = Date.parse(params[:start_date])
-      @end_date = Date.parse(params[:end_date]) + 1
-    else
-      @date = Date.today.at_beginning_of_week
-      @end_date = @date.next_week
-    end
+    @date = @date.to_date.at_beginning_of_week
+    @end_date = @date.next_week
     @registers = @topic.timetable_events(:from => @date, :to => @end_date)
-    view = View.affiliation(@affiliation).find_by_name("timetable")
+    view = View.for_user.find_by_name("timetable")
     @events = @topic.events.where(:event_date => (@date.to_time + 1.hour + 1.second)..@end_date, :transition => view.transitions, :eventable_type => view.events) if @topic.kind_of? Person
     respond_to do |format|
       format.html 

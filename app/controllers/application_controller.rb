@@ -25,17 +25,15 @@ class ApplicationController < ActionController::Base
   before_filter :set_topic
   before_filter :get_views
 
-  def get_date
-    if params[:date]
-      if params[:date]=="now"
-        Time.now
-      elsif params[:date].kind_of? Hash
+  def set_date(default_offset = 0)
+    @date = if params[:date]
+      if params[:date].kind_of? Hash
         Time.gm(*[:year,:month,:day].map{|x| params[:date][x].to_i})
       else
         Time.parse(params[:date])
       end
     else
-      Time.now.midnight + 2.years
+      Time.now + default_offset
     end
   end
 
@@ -54,6 +52,13 @@ class ApplicationController < ActionController::Base
       Person.affiliation = @affiliation = request.env["affiliation"] ? request.env["affiliation"].split("@").first.downcase : nil
       uname,domain = request.env["eppn"].downcase.split('@')
       uname = uname[1..-1] if @affiliation == "affiliate"
+      unless Settings.sdc.blank?
+        if @affiliation == "student" and uname.match(/^[sne]/) 
+          uname.gsub!(/^s/,"10")
+          uname.gsub!(/^n/,"20")
+          uname.gsub!(/^e/,"30")
+        end
+      end
       Person.user = @user = Person.get(uname)
       raise "Authentication Error! username: '#{@user}' and affiliation: '#{@affiliation}'" unless @user && @affiliation
     end
@@ -74,7 +79,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_views
-    @views = View.order("position").in_list.affiliation(@affiliation)
+    @views = View.order("position").in_list.for_user
   end
 
   def admin_only

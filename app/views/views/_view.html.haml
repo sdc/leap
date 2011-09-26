@@ -1,3 +1,4 @@
-= link_to((send("#{@topic.class.name.underscore}_view_url",@topic,view) + (params[:all] ? "?all=true" : "")), :class => ["sidebar_button", current_page?(person_view_url(@topic,view)) ? "current" : nil]) do
-  .icon= image_tag view.icon_url, :size => "30x30"
-  .label= view.label
+%div[view]
+  = link_to((send("#{@topic.class.name.underscore}_view_url",@topic,view) + (params[:all] ? "?all=true" : "")), :class => ["sidebar_button", current_page?(person_view_url(@topic,view)) ? "current" : nil]) do
+    .icon= image_tag view.icon_url, :size => "30x30"
+    .label= view.label
