@@ -54,6 +54,13 @@ class ApplicationController < ActionController::Base
       Person.affiliation = @affiliation = request.env["affiliation"] ? request.env["affiliation"].split("@").first.downcase : nil
       uname,domain = request.env["eppn"].downcase.split('@')
       uname = uname[1..-1] if @affiliation == "affiliate"
+      unless Settings.sdc.blank?
+        if @affiliation == "student" and uname.match(/^[sne]/) 
+          uname.gsub!(/^s/,"10")
+          uname.gsub!(/^n/,"20")
+          uname.gsub!(/^e/,"30")
+        end
+      end
       Person.user = @user = Person.get(uname)
       raise "Authentication Error! username: '#{@user}' and affiliation: '#{@affiliation}'" unless @user && @affiliation
     end
