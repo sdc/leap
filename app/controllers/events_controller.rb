@@ -47,7 +47,7 @@ class EventsController < ApplicationController
   def update
     @event = @topic.events.find(params[:id])
     et = @event.eventable_type.tableize
-    if @affiliation == "staff" or Settings.students_create_events.split(",").include? et
+    if @affiliation == "staff" or Settings.students_update_events.split(",").include? et
       if @event.eventable.update_attributes!(params[et.singularize])
         flash[:notice] = "#{et.singularize.humanize.titleize} updated"
       else

@@ -2,10 +2,10 @@
 - when "not_started"
   .target_body
     %h2 I have read and agreed to this support strategy.
-    = button_to "Agree",    person_support_strategy_url(@topic,support_strategy,:event_id => @event.id, :agree => true), :method => :put , :remote => true
+    = button_to "Agree", event_url(event,"support_strategy[agreed_date]" => Date.today), :method => :put, :remote => true
   .target_actions
     %h2 I have read and declined this support strategy.
-    = button_to "Decline",  person_support_strategy_url(@topic,support_strategy,:event_id => @event.id, :decline => true), :method => :put , :remote => true
+    = button_to "Decline", event_url(event,"support_strategy[declined_date]" => Date.today), :method => :put, :remote => true
 - when "current"
   .target_body
     %h2 
@@ -13,7 +13,7 @@
       = pretty_date support_strategy.agreed_date
   .target_actions
     %h2 Set this strategy as complete
-    = button_to "Complete", person_support_strategy_url(@topic,support_strategy,:event_id => @event.id, :complete => true), :method => :put , :remote => true
+    = button_to "Complete", event_url(event,"support_strategy[completed_date]" => Date.today), :method => :put, :remote => true
 - when "complete"
   %h2 
     Agreed
