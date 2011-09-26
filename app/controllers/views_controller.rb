@@ -28,10 +28,6 @@ class ViewsController < ApplicationController
         where(:transition => @view.transitions, :eventable_type => @view.events).
         limit(20)
       @events.detect{|e| e.past? }.first_in_past= true unless @events.first.past? if @events.first
-      @bottom_date = @events.last.try(:event_date)
-      respond_with @events do |f|
-        f.js { render @events }
-      end
     else
       redirect_to "/404.html"
     end
