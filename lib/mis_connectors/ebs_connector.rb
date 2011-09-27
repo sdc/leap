@@ -114,7 +114,7 @@ module MisPerson
         pc.update_attributes(:enrolment_date => pu.created_date,
                              :start_date     => pu.unit_instance_occurrence.qual_start_date,
                              :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
-                             :end_date => [:complete,:incomplete].include?(Ilp2::Application.config.mis_progress_codes[pu.progress_code]) ? pu.progress_date : nil) unless pc.status == :not_started
+                             :end_date => [:complete,:incomplete].include?(Ilp2::Application.config.mis_progress_codes[pu.progress_code]) ? pu.progress_date : nil)
       end
     end
     return self
@@ -293,5 +293,11 @@ end
 module MisQualification
   def self.included receiver
     receiver.belongs_to :mis, :class_name => "Ebs::LearnerAim", :foreign_key => :mis_id
+  end
+end
+
+module MisPersonCourse
+  def mis
+    Ebs::PeopleUnit.find_by_uio_id_and_person_code(course.mis_id,person.mis_id)
   end
 end
