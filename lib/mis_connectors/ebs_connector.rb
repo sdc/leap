@@ -127,7 +127,7 @@ module MisPerson
       Date.civil(1900,1,1)
     end
     mis_person.attendances.
-      where("start_week > ?",last_date).
+      #where("start_week > ?",last_date).
       each do |att|
         na=Attendance.find_or_create_by_person_id_and_week_beginning(id,att.start_week)
         na.update_attributes(
