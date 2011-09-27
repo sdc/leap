@@ -27,7 +27,7 @@ class ViewsController < ApplicationController
         @scope.where("event_date < ?", @date).
         where(:transition => @view.transitions, :eventable_type => @view.events).
         limit(20)
-      @events.detect{|e| e.past? }.first_in_past= true unless @events.first.past? if @events.first
+      @events.detect{|e| e.past? }.first_in_past= true unless @events.first.past? if @events.try(:first)
     else
       redirect_to "/404.html"
     end
