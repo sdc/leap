@@ -42,7 +42,7 @@ class Person < ActiveRecord::Base
   serialize :address
 
   def age
-    ((Date.today - date_of_birth.to_date)/365).to_i
+    ((Date.today - date_of_birth.to_date)/365.25).to_i
   end
 
   def to_param
