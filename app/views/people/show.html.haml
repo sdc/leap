@@ -12,6 +12,9 @@
       %dd= @topic.mobile_number or "-"
       %dt Next of Kin:
       %dd= @topic.next_of_kin or "-"
+      - if @topic.tutor
+        %dt Tutor
+        %dd= link_to_if @user.staff?, @topic.tutor.name, @topic.tutor
     - if @topic == @user      
       %p{:style => "margin:3px 0 0 0"}
         Are any of your personal details incorrect?
