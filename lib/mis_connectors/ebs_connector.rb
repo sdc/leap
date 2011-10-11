@@ -29,12 +29,14 @@ module MisPerson
     end
 
     def resync(yr)
-      count = 0
+      count = skipcount = 0
       Ebs::Person.find_each(:include => :people_units) do |ep|
         begin
+	  skipcount +=1
           next unless ep.people_units.detect{|pc| pc.calocc_code == yr}
-          puts "#{count}:\t#{import(ep).name}"
+          puts "#{count}:\tskip #{skipcount}\timport #{import(ep).name}"
           count += 1
+	  skipcount = 0
         rescue
           logger.error "Person #{ep.id} failed for some reason!"
         end
