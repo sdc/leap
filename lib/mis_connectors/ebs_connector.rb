@@ -30,7 +30,7 @@ module MisPerson
 
     def resync(yr)
       count = 0
-      Ebs::Person.find_each do |ep|
+      Ebs::Person.find_each(:include => :people_units) do |ep|
         begin
           next unless ep.people_units.detect{|pc| pc.calocc_code == yr}
           puts "#{count}:\t#{import(ep).name}"
