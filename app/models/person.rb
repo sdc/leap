@@ -18,6 +18,8 @@ class Person < ActiveRecord::Base
 
   include MisPerson
 
+  AFFILIATIONS = ["staff","student","affiliate"]
+
   scoped_search :on => [:forename, :surname, :mis_id]
 
   has_many :events
@@ -37,12 +39,14 @@ class Person < ActiveRecord::Base
   has_many :support_histories
   has_many :initial_reviews
   has_many :absences
+  belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
   serialize :middle_names
   serialize :address
+  serialize :my_courses
 
   def age
-    ((Date.today - date_of_birth.to_date)/365).to_i
+    ((Date.today - date_of_birth.to_date)/365.25).to_i
   end
 
   def to_param
@@ -83,5 +87,15 @@ class Person < ActiveRecord::Base
   def as_param
     {:person_id => mis_id.to_s}
   end
+
+  def method_missing(m, *args, &block)
+    m = m.to_s
+    if /^#{AFFILIATIONS.join"|"}\?$/.match m
+      return Person.affiliation == m.chop
+    else
+      super
+    end
+  end
+
 
 end

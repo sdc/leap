@@ -1,0 +1,21 @@
+#details.block.wide
+  %h3 Personal Details
+  #top_button &nbsp;
+  %dl
+    %dt Name:
+    %dd= @topic.name
+    %dt Birth Date:
+    %dd.last= @topic.date_of_birth.strftime("%d %B %Y") + " (Age #{@topic.age})"
+    %dt Address:
+    %dd= (@topic.address + [@topic.town,@topic.postcode]).reject{|x|x.blank?}.join(", ")
+    %dt Mobile:
+    %dd= @topic.mobile_number or "-"
+    %dt Next of Kin:
+    %dd= @topic.next_of_kin or "-"
+    - if @topic.tutor
+      %dt Tutor
+      %dd= link_to_if @user.staff?, @topic.tutor.name, @topic.tutor
+  - if @topic == @user      
+    %p{:style => "margin:3px 0 0 0;clear:both"}
+      Are any of your personal details incorrect?
+      = link_to "Notify us...", Settings.notify_details_change_url

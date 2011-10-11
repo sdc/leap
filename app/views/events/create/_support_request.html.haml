@@ -10,4 +10,9 @@
       = select_tag "support_request[sessions]", options_for_select(@topic.timetable_events(:from => (Date.today - 1.month), :to => (Date.today + 1.month)).map{|e| e.title}.uniq), :multiple => true
     = hidden_field_tag :eventable_type, "SupportRequest"
     = hidden_field_tag :person_id, @topic.mis_id
-    .sumbit= submit_tag "Request"
+    .sumbit
+      .ws 
+        = f.check_box "workshop"
+        Request workshop
+      %hr
+      = submit_tag "Request"

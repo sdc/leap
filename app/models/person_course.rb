@@ -16,9 +16,12 @@
 
 class PersonCourse < Eventable
 
+  include MisPersonCourse
+
   delegate :code, :to => :course
 
   belongs_to :course
+  belongs_to :person
   has_one :enrolment_event,   :as => :eventable, :class_name => "Event", :conditions => {:transition => :start}
   has_one :application_event, :as => :eventable, :class_name => "Event", :conditions => {:transition => :create}
   has_one :complete_event,    :as => :eventable, :class_name => "Event", :conditions => {:transition => :complete}
