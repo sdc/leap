@@ -1,6 +1,7 @@
 #course_home
   #details.block
     %h3 Course Details
+    #top_button= button_to "#{@user.my_courses.try("include?",@topic.id) ? "Remove from" : "Add to"} My Courses", add_course_url(@course)
     %dl
       %dt Course Title:
       %dd= @topic.title

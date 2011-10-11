@@ -23,6 +23,9 @@ Ilp2::Application.routes.draw do
   resources :courses do
     resources :views
     resources :timetables
+    member do
+      post :add
+    end
   end
 
   match 'test'       => 'test#index', :as => :test
