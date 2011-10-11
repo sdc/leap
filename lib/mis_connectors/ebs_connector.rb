@@ -28,6 +28,21 @@ module MisPerson
       "EBS connector"
     end
 
+    def resync(yr)
+      count = 0
+      Ebs::Person.find_each do |ep|
+        begin
+          next unless ep.people_units.detect{|pc| pc.calocc_code == yr}
+          puts "#{count}:\t#{import(ep).name}"
+          count += 1
+        rescue
+          logger.error "Person #{ep.id} failed for some reason!"
+        end
+      end
+      puts "Finished!"
+    end
+          
+
     def import(mis_id, options = {})
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
       # NOTE: Need to change these defaults after launch
