@@ -11,30 +11,35 @@
   @include border-radius;
   margin: 0 0 10px 0;
   padding: 10px;
+  h2 {
+    margin: 0;
+  }
   h4 {
     @include column(2);
     margin: 0;
     font-size: 1.4em;
     color: #666;
   }
-  .details_left {
-    @include column(2); 
-    img {
-    width: 60px;
-    }
-  }
-  .details_right {
-    @include column(7,true);  
-  }
   .scroll_list {
     @include column(7);
-    height: 80px;
+    height: 110px;
     overflow:auto;
   }
-}
-
-.details_home_container {
-  @include column(10);
+  .icon {
+    @include column(2);
+    img {
+      @include column(2,true);
+    }
+  }
+  &.left{
+    @include column(9.4);
+    height:110px;
+  }
+  &.right{
+    @include column(9.4,true);
+    height:110px;
+    float:right;
+  }
 }
 
 #details{
@@ -92,66 +97,6 @@
   }
   .timetable_event_location {
     @include column(3, true);
-  }
-}
-
-#my_courses {
-  margin-top:15px;
-  height:102px;
-}
-#attendance {
-  height: 102px;
-  h3,img {
-    @include column(6,true);
-  }
-  .graph {
-    @include column(6);
-    img {
-      width: 100%;
-    }
-  }
-  .percent {
-    @include prepend-top;
-    @include column(3,true);
-    * {
-      margin: 0;
-    }
-    h1 {
-      @include text-shadow;
-      @include column(3,true);
-      font-weight: bold;
-    }
-    h4 {
-      @include column(3,true);
-    }
-  }
-}
-.multiple_left_blocks {
-  @include column(10);  
-  #targets{
-    height: 89px;
-    img {
-      @include column(2);
-    }
-    #target_list {
-      .stu_target {
-        @include border-radius(7px);    
-        height: 20px;
-        .target_date {
-          @include column(2);
-          font-weight: bold;
-        }
-        .mini_event_body {
-          @include column(4, true);
-        }
-      }
-    }
-  }
-  #moodle_course {
-    height: 90px;   
-    img {
-      @include column(2);
-    }
   }
 }
 
