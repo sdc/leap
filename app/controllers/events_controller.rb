@@ -62,6 +62,16 @@ class EventsController < ApplicationController
     end
   end
 
-
-
+  def destroy
+    @event = @topic.events.find(params[:id])  
+    if Time.now - 1.hour < @event.eventable.created_at and @user == @event.eventable.created_by
+      flash[:notice] = "#{@event.eventable_type.singularize.humanize.titleize} deleted"
+      @event.eventable.destroy
+    else
+      flash[:notice] = "#{@event.eventable_type.singularize.humanize.titleize} could not be deleted"
+    end
+    respond_to do |f|
+      f.html {redirect_to :back}
+    end
+  end
 end
