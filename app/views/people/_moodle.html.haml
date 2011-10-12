@@ -1,0 +1,11 @@
+#moodle_course.block.left
+  .icon
+    %h4 Moodle Courses
+    = link_to image_tag("moodle.png"), "#{Settings.moodle_host}#{Settings.moodle_path}"
+  .content
+  - if @moodle_courses
+    .scroll_list
+      - @moodle_courses.each do |mdl|
+        .mdl_course{:style => "font-weight: #{mdl["canedit"] == "1" ? "bold" : "normal"}"}= link_to mdl["fullname"], "#{Settings.moodle_host}#{Settings.moodle_path}/course/view.php?id=#{mdl["id"]}"
+  - else
+    %p Moodle is currently unavailable.

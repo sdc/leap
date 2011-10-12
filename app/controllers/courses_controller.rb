@@ -37,6 +37,19 @@ class CoursesController < ApplicationController
       @moodle_courses = false
     end
   end
+
+  def add
+    @user.my_courses ||= []
+    if @user.my_courses.include? @topic.id
+      @user.my_courses.delete(@topic.id)
+    else
+      @user.my_courses << @topic.id
+    end
+    @user.save
+    redirect_to @topic
+  end
+
+
   
   private
   

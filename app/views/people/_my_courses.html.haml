@@ -1,0 +1,13 @@
+#my_courses.block.right
+  .icon
+    %h4 My Courses
+    = image_tag PersonCourse.first.icon_url
+  .content
+    - if @topic.my_courses and !@topic.my_courses.empty?
+      .scroll_list
+        %ul
+          - @topic.my_courses.map{|c| Course.find(c)}.each do |course|
+            %li= link_to course.name, course
+    - else
+      %p 
+        You haven't added any courses, yet. You can do so on a course page.

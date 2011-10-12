@@ -1,0 +1,18 @@
+#next_lesson.block.left
+  .icon
+    %h4 Next lesson
+    = link_to image_tag("timetable.png"), person_timetables_url(@topic)
+  .content
+    - if @next_timetable_event
+      .timetable_event_link= link_to @next_timetable_event.title, person_timetables_url(@topic)          
+      .timetable_event_date
+        .timetable_event_header= @next_timetable_event.start.strftime('%A')
+        .small_text= @next_timetable_event.start.strftime('%H.%M%P')
+        .small_text
+          Room:
+          = @next_timetable_event.rooms.join ", "
+      .timetable_event_location
+        .small_text= @next_timetable_event.start.strftime('%d/%m/%y')            
+        .small_text= @next_timetable_event.teachers.map{|t| t.name}.join ", "
+    - else 
+      %b You have no current timetable events.

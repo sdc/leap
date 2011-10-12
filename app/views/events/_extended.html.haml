@@ -32,8 +32,12 @@
             %td= attr.last
       - if event.eventable.respond_to? :mis
         %h1= event.eventable.mis.class.name
+
         %table
           - event.eventable.mis.attributes.each do |attr|
             %tr
               %th= attr.first
               %td= attr.last
+
+      - else
+        This record does not exist in the MIS

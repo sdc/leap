@@ -28,14 +28,32 @@ module MisPerson
       "EBS connector"
     end
 
+    def resync(yr)
+      count = skipcount = 0
+      Ebs::Person.find_each(:include => :people_units) do |ep|
+        begin
+	  skipcount +=1
+          next unless ep.people_units.detect{|pc| pc.calocc_code == yr}
+          puts "#{count}:\tskip #{skipcount}\timport #{import(ep).name}"
+          count += 1
+	  skipcount = 0
+        rescue
+          logger.error "Person #{ep.id} failed for some reason!"
+        end
+      end
+      puts "Finished!"
+    end
+          
+
     def import(mis_id, options = {})
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
       # NOTE: Need to change these defaults after launch
       options.reverse_merge! :save => true, :courses => true, :attendances => true, :absences => true,
-                             :quals => true, :support_history => true, :support_requests => true, :targets => true
+                             :quals => true, :support_history => false, :support_requests => false, :targets => false
       logger.info "Importing user #{mis_id}"
       if (ep = (Ebs::Person.find_by_person_code(mis_id) or Ebs::Person.find_by_network_userid(mis_id)))
         @person = Person.find_or_create_by_mis_id(ep.id)
+        @person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
         @person.update_attributes(
           :forename      => ep.forename,
           :surname       => ep.surname,
@@ -108,13 +126,14 @@ module MisPerson
       pc= PersonCourse.find_or_create_by_person_id_and_course_id(id,course.id)
       if pu.unit_type == "A" 
         pc.update_attributes(:status => :not_started,
+                             :start_date       => pu.unit_instance_occurrence.qual_start_date,
                              :application_date => pu.created_date
                             )
       elsif pu.unit_type == "R"
         pc.update_attributes(:enrolment_date => pu.created_date,
                              :start_date     => pu.unit_instance_occurrence.qual_start_date,
                              :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
-                             :end_date => [:complete,:incomplete].include?(Ilp2::Application.config.mis_progress_codes[pu.progress_code]) ? pu.progress_date : nil) unless pc.status == :not_started
+                             :end_date => [:complete,:incomplete].include?(Ilp2::Application.config.mis_progress_codes[pu.progress_code]) ? pu.progress_date : pu.unit_instance_occurrence.qual_end_date)
       end
     end
     return self
@@ -127,7 +146,7 @@ module MisPerson
       Date.civil(1900,1,1)
     end
     mis_person.attendances.
-      where("start_week > ?",last_date).
+      #where("start_week > ?",last_date).
       each do |att|
         na=Attendance.find_or_create_by_person_id_and_week_beginning(id,att.start_week)
         na.update_attributes(
@@ -293,5 +312,11 @@ end
 module MisQualification
   def self.included receiver
     receiver.belongs_to :mis, :class_name => "Ebs::LearnerAim", :foreign_key => :mis_id
+  end
+end
+
+module MisPersonCourse
+  def mis
+    Ebs::PeopleUnit.find_by_uio_id_and_person_code(course.mis_id,person.mis_id)
   end
 end
