@@ -20,3 +20,4 @@ Settings.defaults[:students_update_events]       = "targets,support_strategies"
 Settings.defaults[:year_boundary_date]           = "01/09"
 Settings.defaults[:sdc]                          = ""
 Settings.defaults[:test_logins]                  = []
+Settings.defaults[:delete_delay]                 = 1.hour
