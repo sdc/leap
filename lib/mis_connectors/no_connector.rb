@@ -61,3 +61,6 @@ end
 
 module MisQualification
 end
+
+module MisPersonCourse
+end
