@@ -3,8 +3,9 @@ source 'http://rubygems.org'
 gem 'haml'
 gem 'rails', "3.1.1"
 gem "sass-rails"
+gem "coffee-rails"
 gem "compass", "~> 0.12.alpha"
-gem 'prototype-rails'
+gem 'jquery-rails'
 gem 'ruby-oci8'
 gem 'activerecord-oracle_enhanced-adapter', :git => 'git://github.com/rsim/oracle-enhanced.git'
 gem 'symbolize'
