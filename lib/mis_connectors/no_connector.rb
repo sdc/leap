@@ -32,7 +32,7 @@ module MisPerson
   end
 
   def photo_path
-    return "/images/noone.png"
+    return "/assets/noone.png"
   end
 
   def import_courses

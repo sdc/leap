@@ -49,7 +49,7 @@ class PeopleController < ApplicationController
         if File.exists? "#{Rails.root}/public/photos/#{@topic.mis_id}.jpg"
           redirect_to "/photos/#{@topic.mis_id}.jpg"
         else
-          redirect_to "/images/noone.png"
+          redirect_to "/assets/noone.png"
         end
       end
     end
