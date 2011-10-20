@@ -30,4 +30,5 @@ $(document).ready(function(){
   $('#person_photo').mouseover(function(){
     $('#person_photo').effect('shake', { times:2,distance:3}, 100);
   })
+  $('#q').focus();
 })
