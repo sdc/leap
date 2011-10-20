@@ -15,3 +15,4 @@ $(document).ready ->
   $('#flash_notice').delay(4000).fadeOut()
   $('#q').focus();
   $('#search_extended').click( -> $('#search_form').submit())
+  $('.tabs').tabs()

@@ -16,11 +16,6 @@
 
 module EventsHelper
 
-  def tab(event_id,text,klass=nil)
-    klass ||= text.titleize.tr(" ","").underscore
-    link_to_function content_tag(:li, text), "$$('##{event_id} .tab').each(function(t){t.hide()});$$('##{event_id} .#{klass}').first().show()"
-  end
-
   def title_class(thing)
     thing.size < 4 ? "big" : nil
   end
