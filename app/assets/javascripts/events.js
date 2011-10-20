@@ -27,13 +27,13 @@ function watch_events(e){
     close_extended_event(article);
   })
 }
+
 function watch_more_events(){
   $('#more_events').click(function(event){
     $('#more_events').hide();
     $('#more_events_loading').show();
   });
   $('#more_events').live('ajax:complete',function(event,xhr){
-    //$('#more_events_loading').hide();
     $('#events').append(xhr.responseText);
     if (xhr.responseText==" "){
       $('#more_events_loading').fadeOut();
@@ -46,12 +46,3 @@ function watch_more_events(){
     }
   })
 }
-//// Submitting new target forms
-//function init_new_target_form(element){
-//  $(element).observe('ajax:complete', function(event){
-//    close_extended_event(event.findElement('.event'));   
-//    the_id = article.identify();
-//    event.findElement('.event').replace(event.memo.responseText);
-//    watch_events(the_id);
-//  })
-//}
