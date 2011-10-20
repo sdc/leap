@@ -5,6 +5,7 @@ $(document).ready ->
     e.find('.extended').slideDown()
     e.find('.close_extend_button').show()
     e.find('.extend_button').hide()
+    e.find('.tabs').tabs()
   $('.close_extend_button').live 'click', (event) ->
     e = $(event.target).closest('.event')
     e.find('.extended').slideUp()
