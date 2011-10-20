@@ -2,12 +2,7 @@ $(document).ready(function(){
   watch_events('#events');
   watch_more_events();
 })
-//function open_extended_event(ev){
-//  ev = $(ev);
-//  Effect.SlideDown(ev.down('.extended'), {queue: 'end'});
-//  ev.down('.close_extend_button').show();
-//  ev.down('.extend_button').hide();
-//}
+
 function open_extended_event(ev){
   ev = $(ev);
   ev.find('.extended').slideDown();
@@ -15,28 +10,19 @@ function open_extended_event(ev){
   ev.find('.extend_button').hide();
 }
 function close_extended_event(ev){
-  //TODO: This doesn't seem to work for newly loaded events atm
   ev = $(ev);
   ev.find('.extended').slideUp();
   ev.find('.close_extend_button').hide();
   ev.find('.extend_button').show();
 }
 
-//
-//function close_extended_event(ev){
-//  ev = $(ev);
-//  Effect.SlideUp(ev.down('.extended'), {queue: 'end'});
-//  ev.down('.extend_button').show();
-//  ev.down('.close_extend_button').hide();
-//}
-//
 function watch_events(e){
   $(e).find('.extend_button').live('ajax:complete',function(event,xhr){
     article=$(event.target).closest('.event')
     article.find('.extended .inner').replaceWith(xhr.responseText);
     open_extended_event(article);
   })
-  $(e).find('.close_extend_button').click(function(event){
+  $(e).find('.close_extend_button').live('click',function(event){
     article = $(event.target).closest('.event')
     close_extended_event(article);
   })
