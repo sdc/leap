@@ -10,6 +10,7 @@
 @import "partials/search";
 @import "partials/top_bar";
 @import "partials/colors";
+@import "partials/jquery-ui";
 
 body {
   @include blueprint-typography(true);

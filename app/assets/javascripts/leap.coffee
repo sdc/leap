@@ -16,3 +16,4 @@ $(document).ready ->
   $('#q').focus();
   $('#search_extended').click( -> $('#search_form').submit())
   $('.tabs').tabs()
+  $('#datepicker').datepicker({buttonImage:'/assets/timetable.png',dateFormat:'D dd M yy',altFormat:'yy-mm-dd',altField:'#real_datepicker'})
