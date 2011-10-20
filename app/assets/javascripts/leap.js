@@ -26,5 +26,8 @@
 //  })
 //})
 $(document).ready(function(){
-  $('#flash_notice').delay(4000).fadeOut()
+  $('#flash_notice').delay(4000).fadeOut();
+  $('#person_photo').mouseover(function(){
+    $('#person_photo').effect('shake', { times:2,distance:3}, 100);
+  })
 })
