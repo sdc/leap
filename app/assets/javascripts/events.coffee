@@ -1,4 +1,6 @@
 $(document).ready ->
+
+  # Events
   $('.extend_button').live 'ajax:complete', (event,data) ->
     e = $(event.target).closest('.event')
     e.find('.extended .inner').replaceWith data.responseText
@@ -20,3 +22,5 @@ $(document).ready ->
     url = $('#more_events').attr('href').replace(/&date=[^&]*/,"&date="+d)
     $('#more_events').attr('href',url).show()
     $('#more_events_loading').hide()
+
+  # Home screen
