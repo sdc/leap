@@ -22,7 +22,7 @@
       .body= render :partial => "events/body/#{event.eventable_type.underscore}", :object => event.eventable, :locals => {:event => event}
     - rescue
       .body= raw event_format(event.body)
-    - if Time.now - Settings.delete_delay < event.eventable.created_at and @user == event.eventable.created_by
+    - if Time.now - Settings.delete_delay.to_i < event.eventable.created_at and @user == event.eventable.created_by
       .buttons_delete
         .delete_target
           = link_to image_tag("events/delete_event.png"), person_event_url(@topic, event), :method => :delete, :confirm => "This will delete the entire #{event.eventable_type.singularize.humanize.titleize}.\nAre you sure?"
