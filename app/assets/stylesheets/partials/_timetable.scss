@@ -90,7 +90,7 @@
   &.extended {
     @include column(5);
     z-index: 1000;
-    @include box-shadow(#666666  7px  7px);
+    @include box-shadow(#666666  7px  7px 5px);
   }
   &.generic_mark_Y {
     background-color: #84E88B;
