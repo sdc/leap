@@ -23,7 +23,6 @@ class Person < ActiveRecord::Base
   scoped_search :on => [:forename, :surname, :mis_id]
 
   has_many :events
-  has_many :reviews
   has_many :review_lines
   has_many :person_courses
   has_many :courses, :through => :person_courses
