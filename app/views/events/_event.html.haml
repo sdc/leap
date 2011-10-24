@@ -1,5 +1,5 @@
 = render :partial => "time_ruler" if event.first_in_past?
-%div{:style => defined?(hidden) && 'none',:class => [event.status, @multi || event.about_person ? "multi" : "single"]}[event]
+%div{:class => [event.status, @multi || event.about_person ? "multi" : "single"]}[event]
   %div.inner[event.eventable]
     %header{:class => event.subtitle ? "subtitle" : nil}
       %h2.icon= image_tag(event.icon_url, :size => "48x48", :alt => event.eventable_type, :title => event.eventable_type)
