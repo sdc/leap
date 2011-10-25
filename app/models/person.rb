@@ -36,7 +36,7 @@ class Person < ActiveRecord::Base
   has_many :support_requests
   has_many :support_strategies
   has_many :support_histories
-  has_many :initial_reviews
+  has_many :reviews
   has_many :absences
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   

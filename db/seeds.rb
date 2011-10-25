@@ -79,11 +79,11 @@
       :label       => 'Reviews',
       :name        => 'reviews',
       :transitions => ['create','hidden','start'],
-      :events      => ['InitialReview'],
+      :events      => ['Review'],
       :icon_url    => 'icons/reviews.png',
       :affiliations => ['staff','student','affiliate'],
       :in_list     => true,
-      :controls    => 'events/create/initial_review',
+      :controls    => 'events/create/review',
       :position    => 7
     )
     View.create(

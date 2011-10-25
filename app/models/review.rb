@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-class InitialReview < Eventable
+class Review < Eventable
 
   after_create {|req| req.events.create!(:event_date => created_at, :transition => :create)}
 
