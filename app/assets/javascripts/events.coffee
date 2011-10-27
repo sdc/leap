@@ -18,6 +18,10 @@ $(document).ready ->
       e.find('.extended').slideUp()
       e.find('.extend_button').show()
       e.find('.close_extend_button').hide()
+    $('.delete_event_button').live 'click', (event) ->
+      e = $(event.target).closest('.event')
+      e.find('.delete_spinner').show()
+      e.find('.delete_event_button').hide()
     $('form.event_update_form').live 'ajax:complete', (event,data) ->
       e = $(event.target).closest('.event')
       e.replaceWith(data.responseText)

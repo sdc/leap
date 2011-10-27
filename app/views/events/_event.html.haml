@@ -25,7 +25,8 @@
     - if Time.now - Settings.delete_delay.to_i < event.eventable.created_at and @user == event.eventable.created_by
       .buttons_delete
         .delete_target
-          = link_to image_tag("events/delete_event.png"), person_event_url(@topic, event), :method => :delete, :confirm => "This will delete the entire #{event.eventable_type.singularize.humanize.titleize}.\nAre you sure?"
+          = link_to image_tag("events/delete_event.png"), person_event_url(@topic, event), :method => :delete, :confirm => "This will delete the entire #{event.eventable_type.singularize.humanize.titleize}.\nAre you sure?", :class => "delete_event_button"
+          = image_tag "ajax-loader.gif", :style => "display:none", :class => "delete_spinner", :size => "16x16"
     .buttons
       = link_to image_tag("actions/event_open.png"), open_extended_event_url(event,:person_id => event.person.mis_id), :remote => true, :class => "extend_button", :observer => "false"
       = image_tag "actions/event_opened.png", :class => "close_extend_button", :style => "display:none", :observer => "false"      
