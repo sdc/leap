@@ -1,0 +1,26 @@
+- unless Settings.review_windows.blank?
+  = form_for @topic.review_lines.new, :url => "/events" do |f|
+    %h3
+      Add a review 
+      = f.select :window, Settings.review_windows.split(/,/)
+      with unit
+      = f.select :unit, @topic.timetable_events(:from => (Date.today - 1.month), :to => (Date.today + 1.month)).map{|e| e.title}.uniq, :include_blank => "None"
+    .icon= image_tag "events/reviews.png"
+    = f.text_area :body
+    .review_scores
+      %table.reviews
+        %tr
+          %td Quality of Work
+          %td= f.select :quality, 0..10
+          %td Punctuality
+          %td= f.select :punctuality, 0..10
+        %tr
+          %td Attitude
+          %td= f.select :attitude, 0..10
+          %td Completion of Work
+          %td= f.select :completion, 0..10
+
+    = f.hidden_field :person_id
+    = hidden_field_tag :eventable_type, "ReviewLine"
+    = hidden_field_tag :person_id, @topic.mis_id
+    .sumbit{:style => "clear:both;float:right"}= submit_tag "Add"
