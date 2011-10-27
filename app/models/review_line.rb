@@ -14,18 +14,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-class Review < Eventable
+class ReviewLine < Eventable
 
-  after_create {|req| req.events.create!(:event_date => created_at, :transition => :create)}
+  belongs_to :review
+  belongs_to :person
+
+  after_create do |line|
+    review = Review.find_or_create_by_person_id_and_window(person_id, window)
+    save
+    line.events.create!(:event_date => created_at, :transition => :create, :parent_id => review.events.creation.first.id)
+  end
 
   def icon_url
     "events/reviews.png"
   end
-
-  def title
-    ["Review:",window]
-  end
-
-  def status; :current end
 
 end

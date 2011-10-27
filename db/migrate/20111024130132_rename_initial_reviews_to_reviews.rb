@@ -1,9 +1,9 @@
 class RenameInitialReviewsToReviews < ActiveRecord::Migration
   def up
-    rename_table 'initial_reviews','reviews'
+    rename_table 'initial_reviews','review_lines'
   end
 
   def down
-    rename_table 'reviews', 'initial_reviews'
+    rename_table 'review_lines', 'initial_reviews'
   end
 end
