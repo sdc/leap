@@ -25,7 +25,7 @@ class Review < Eventable
   end
 
   def title
-    ["Review:",window]
+    window
   end
 
   def status; :current end

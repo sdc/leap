@@ -29,4 +29,8 @@ class ReviewLine < Eventable
     "events/reviews.png"
   end
 
+  def title
+    window
+  end
+
 end

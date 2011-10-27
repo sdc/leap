@@ -1,4 +1,4 @@
-= link_to(@next_timetable_event || person_timetables_url(@topic), {:class => "unstyled_link"}) do
+= link_to(person_timetables_url(@topic, :date => @next_timetable_event), {:class => "unstyled_link"}) do
   #next_lesson.block.left
     .icon
       %h4 Next lesson
