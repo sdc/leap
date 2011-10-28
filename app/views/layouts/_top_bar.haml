@@ -25,6 +25,9 @@
     - else
       &nbsp;
   #notice= raw auto_link Settings.top_bar_notice
+  #help_button
+    - if content_for? :help
+      H
   #login_name
     = link_to person_url(@user) do
       .left

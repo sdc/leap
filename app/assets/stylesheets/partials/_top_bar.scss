@@ -55,11 +55,16 @@
     }
   }
   #notice {
-    @include column(8);
+    @include column(7);
     color: red;
     font-weight: bold;
     text-align: center;
   }
+
+  #help_button {
+    @include column(1);
+  }
+
   #login_name {
     &.search {
       @include prepend(19);
