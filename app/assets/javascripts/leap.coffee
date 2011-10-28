@@ -10,4 +10,6 @@ $(document).ready ->
   $('.timetable_event')
     .live('mouseover', -> $(this).addClass('extended'))
     .live('mouseout',  -> $(this).removeClass('extended'))
-  $('#help_button').click -> $('#help').toggle('slide', {direction:'up'})
+  $('.help_button').click -> 
+    $('#help').height($(window).height()) 
+    $('#help').toggle('scale', {origin:['top','right']})

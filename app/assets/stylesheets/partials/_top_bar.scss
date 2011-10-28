@@ -61,8 +61,12 @@
     text-align: center;
   }
 
-  #help_button {
+  .help_button {
     @include column(1);
+    position:fixed;
+    right:0;
+    top:0;
+    z-index: 1000;
   }
 
   #login_name {
