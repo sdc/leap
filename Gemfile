@@ -8,7 +8,7 @@ gem "compass", "~> 0.12.alpha"
 gem 'jquery-rails'
 gem 'ruby-oci8'
 gem 'activerecord-oracle_enhanced-adapter', :git => 'git://github.com/rsim/oracle-enhanced.git'
-gem 'symbolize'
+gem 'symbolize', :require => "symbolize/active_record"
 gem 'supermodel'
 gem 'scoped_search'
 gem 'mysql2'

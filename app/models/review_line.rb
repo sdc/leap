@@ -17,31 +17,20 @@
 class ReviewLine < Eventable
 
   belongs_to :review
+  belongs_to :person
 
-  serialize :teachers
-
-  after_create :notify_teachers
-
-  def notify_teachers
-    teachers.each do |t|
-      events.create!(:person_id => t,:event_date => created_at, :transition => :hidden, :parent_id => review.events.hidden.first.id, :about_person_id => person_id)
-    end
+  after_create do |line|
+    line.review = Review.find_or_create_by_person_id_and_window(person_id, window)
+    line.save
+    line.events.create!(:event_date => created_at, :transition => :create, :parent_id => review.events.creation.first.id)
   end
 
   def icon_url
     "events/reviews.png"
   end
 
-  def extra_panes
-    [["Edit","review_lines/edit"]]
-  end
-
-  def body
-    comments
-  end
-
   def title
-    self[:title]
+    window
   end
 
 end

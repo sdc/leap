@@ -23,7 +23,6 @@ class Person < ActiveRecord::Base
   scoped_search :on => [:forename, :surname, :mis_id]
 
   has_many :events
-  has_many :reviews
   has_many :review_lines
   has_many :person_courses
   has_many :courses, :through => :person_courses
@@ -37,7 +36,7 @@ class Person < ActiveRecord::Base
   has_many :support_requests
   has_many :support_strategies
   has_many :support_histories
-  has_many :initial_reviews
+  has_many :reviews
   has_many :absences
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   

@@ -3,4 +3,4 @@
   %h1= event.title
   - if event.subtitle
     %h2= [event.subtitle.first,pretty_date(event.subtitle.last)].join(" ")
-  .body= raw event.body
+  .body= event.body.truncate(80,:separator => " ")
