@@ -143,7 +143,7 @@
 
 #help {
   @include column(7,true);
-  @include opacity(0.8);
+  @include opacity(0.95);
   overflow: auto;
   position:fixed;
   right:0;
@@ -152,4 +152,5 @@
   @include prepend(1);
   @include append(1);
   z-index: 500;
+  border-left: 1px solid $border-color
 }

@@ -25,11 +25,6 @@
     - else
       &nbsp;
   #notice= raw auto_link Settings.top_bar_notice
-  .help_button{:title => "Help for this page"}
-    - if content_for? :help
-      = image_tag "actions/help.png"
-    - else
-      &nbsp;
   #login_name
     = link_to person_url(@user) do
       .left
@@ -38,3 +33,8 @@
         = @user.forename
         %br
         = @user.surname
+  #help_button{:title => "Help for this page"}
+    - if content_for? :help
+      = image_tag "actions/help.png"
+    - else
+      &nbsp;
