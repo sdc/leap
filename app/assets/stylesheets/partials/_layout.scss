@@ -141,4 +141,9 @@
   }
 }
 
-
+#help {
+  background: #ffd;
+  @include prepend(1);
+  @include append(1);
+  @include border_radius;
+  }
