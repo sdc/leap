@@ -5,7 +5,6 @@ db/schema.rb
 log/*.log
 tmp/**/*
 *.swp
-public/stylesheets
 doc/app
 config/database.yml
 public/photos

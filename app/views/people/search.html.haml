@@ -1,7 +1,7 @@
 .main_search
   .search_logo
     =link_to image_tag("leap-logo.png"), search_people_url
-  - form_tag search_people_url, :method => :get, :id=> "search_form" do
+  = form_tag search_people_url, :method => :get, :id=> "search_form" do
     = text_field_tag :q, params[:q]
     .search_fields
       = submit_tag "Search", :class => "styled_button", :id => "home_search"

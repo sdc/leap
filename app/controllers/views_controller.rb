@@ -28,7 +28,9 @@ class ViewsController < ApplicationController
         where(:transition => @view.transitions, :eventable_type => @view.events).
         limit(20)
       @events.detect{|e| e.past? }.try("first_in_past=",true) unless @events.first.past? if @events.try(:first)
-      respond_with @events
+      respond_with(@events) do |f|
+        f.js {render @events}
+      end
     else
       redirect_to "/404.html"
     end

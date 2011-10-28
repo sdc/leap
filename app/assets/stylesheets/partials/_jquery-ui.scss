@@ -1,0 +1,50 @@
+.ui-tabs {
+  margin: 5px 0;
+  @include column(18);
+  li {
+    @include column(3);
+    list-style:none;
+    background: lighten($border-color,33%);
+    text-align: center;
+    font-weight: bold;
+    padding: 4px 0 2px 0;
+    &.ui-state-hover {
+      background: lighten($border-color,45%);
+    }
+    &.ui-state-active {
+      background: lighten($border-color, 60%);
+    }
+    a {
+      color: inherit;
+      text-decoration:none;
+    }
+  }
+}
+
+.ui-tabs-hide {
+  display: none;
+}
+
+#ui-datepicker-div {
+  background: #fff;
+  padding:8px;
+  border: 1px solid $border-color;
+}
+
+.ui-datepicker-next {
+  float:right;
+  text-align:right;
+  width: 40px;
+}
+
+.ui-datepicker-prev {
+  float:left;
+  width: 40px;
+}
+
+.ui-datepicker-title {
+  float:left;
+  font-weight: bold;
+  text-align:center;
+  width: 133px;
+}

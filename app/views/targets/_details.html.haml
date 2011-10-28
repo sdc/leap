@@ -1,4 +1,4 @@
-= form_for target, :url => event, :method => :put do |f|
+= form_for(target, :url => event, :remote => true, :method => :put, :html => {:class => "event_update_form"}) do |f|
   .target_actions
     %h2 Actions
     = target.actions
@@ -21,4 +21,4 @@
       = pretty_date(target.complete_date || target.drop_date)
 
 - unless target.complete_date or target.drop_date
-  = button_to "Drop", event_url(event,"target[drop_date]" => Date.today), :method => :put, :remote => true
+  = button_to "Drop", event_url(event,"target[drop_date]" => Date.today), :method => :put, :remote => true, :form_class => "event_update_form"

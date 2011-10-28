@@ -1,16 +1,20 @@
 source 'http://rubygems.org'
 
 gem 'haml'
-gem 'rails'
-gem "compass", ">= 0.10.6"
+gem 'rails', "3.1.1"
+gem "sass-rails"
+gem "coffee-rails"
+gem "compass", "~> 0.12.alpha"
+gem 'jquery-rails'
 gem 'ruby-oci8'
-gem 'activerecord-oracle_enhanced-adapter'
-gem 'symbolize'
+gem 'activerecord-oracle_enhanced-adapter', :git => 'git://github.com/rsim/oracle-enhanced.git'
+gem 'symbolize', :require => "symbolize/active_record"
 gem 'supermodel'
 gem 'scoped_search'
-gem 'mysql2', "< 0.3"
+gem 'mysql2'
 gem 'rails-settings', :require => 'settings'
 gem 'exception_notification'
+gem 'rails_autolink'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

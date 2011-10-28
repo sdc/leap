@@ -1,43 +1,49 @@
-%ul.tabs
-  - if event.extra_panes
+.tabs
+  %ul
+    - if event.extra_panes
+      - event.extra_panes.each do |pane|
+        %li
+          %a{:href => "##{dom_id(event)}_#{pane.first.underscore}"}
+            = pane.first
+    - if event.extra_panes or @affiliation == "staff"
+      %li
+        %a{:href => "##{dom_id(event)}_target_set"} New Target
+    - if @affiliation == "staff"
+      %li
+        %a{:href => "##{dom_id(event)}_full_details"} Extra Details
+  - if event.extra_panes    
     - event.extra_panes.each do |pane|
-      = tab dom_id(event), pane.first, pane.first.underscore
-  - if event.extra_panes or @affiliation == "staff"
-    = tab dom_id(event), "New Target", "target_set"
+      .tab{:id => "#{dom_id(event)}_#{pane.first.underscore}"}
+        = render :partial => pane.last, :locals => {:event => event, event.eventable_type.underscore.to_sym => event.eventable}
+  .tab{:id => "#{dom_id(event)}_target_set"}
+    = render :partial => "targets/new", :locals => {:event => event}
   - if @affiliation == "staff"
-    = tab dom_id(event), "Extra Info", "full_details"
-- if event.extra_panes    
-  - event.extra_panes.each do |pane|
-    .tab{:class => pane.first.underscore}= render :partial => pane.last, :locals => {:event => event, event.eventable_type.underscore.to_sym => event.eventable}
-.tab.target_set{:style => "display: #{event.extra_panes ? 'none' : 'block'}"}
-  = render :partial => "targets/new", :locals => {:event => event}
-- if @affiliation == "staff"
-  .tab.full_details{:style => "display:none"}
-    %h1 Event Details
-    %table
-      %tr
-        %th Created by:
-        %td= event.eventable.created_by.try(:name) or "Import"
-    - if Settings.admin_users.split(/,/).include? @user.username    
+    .tab{:id => "#{dom_id(event)}_full_details"}
+      %h1 Event Details
       %table
-        - event.attributes.each do |attr|
-          %tr
-            %th= attr.first
-            %td= attr.last
-      %h1= event.eventable.class.name
-      %table
-        - event.eventable.attributes.each do |attr|
-          %tr
-            %th= attr.first
-            %td= attr.last
-      - if event.eventable.respond_to? :mis
-        %h1= event.eventable.mis.class.name
-
+        %tr
+          %th Created by:
+          %td= event.eventable.created_by.try(:name) or "Import"
+      - if Settings.admin_users.split(/,/).include? @user.username    
         %table
-          - event.eventable.mis.attributes.each do |attr|
+          - event.attributes.each do |attr|
             %tr
               %th= attr.first
               %td= attr.last
+        %h1= event.eventable.class.name
+        %table
+          - event.eventable.attributes.each do |attr|
+            %tr
+              %th= attr.first
+              %td= attr.last
+        - if event.eventable.respond_to? :mis
+          %h1= event.eventable.mis.class.name
 
-      - else
-        This record does not exist in the MIS
+          %table
+            - event.eventable.mis.attributes.each do |attr|
+              %tr
+                %th= attr.first
+                %td= attr.last
+
+        - else
+          This record does not exist in the MIS

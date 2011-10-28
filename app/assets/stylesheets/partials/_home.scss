@@ -80,12 +80,10 @@
   img {
     @include column(2);
   }
-  cursor: pointer;   
   timetable_event_link {
     @include column(6, true);
   }
   .timetable_event_link a {
-    @include unstyled-link;
     font-size: 16px;
     margin-bottom: 10px;    
   }

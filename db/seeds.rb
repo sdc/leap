@@ -79,23 +79,11 @@
       :label       => 'Reviews',
       :name        => 'reviews',
       :transitions => ['create','hidden','start'],
-      :events      => ['Review','ReviewLine','InitialReview'],
+      :events      => ['Review','ReviewLine'],
       :icon_url    => 'icons/reviews.png',
-      :affiliations => ['staff'],
-      #:controls    => {'Initial Review' => 'events/create/initial_review', "Review" => 'events/create/review'},
+      :affiliations => ['staff','student','affiliate'],
       :in_list     => true,
-      :controls    => {'Initial Review' => 'events/create/initial_review'},
-      :position    => 7
-    )
-    View.create(
-      :label       => "Reviews",
-      :name        => "reviews",
-      :transitions => ['complete'],
-      :events      => ['Review','ReviewLine','InitialReview'],
-      :icon_url    => 'icons/reviews.png',
-      :affiliations => ['student','affiliate'],
-      :controls    => nil,
-      :in_list     => true,
+      :controls    => 'events/create/review_line',
       :position    => 7
     )
     View.create(

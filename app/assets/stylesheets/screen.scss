@@ -1,7 +1,7 @@
 @import "blueprint/reset";
 @import "blueprint";
 @import "compass/css3";
-@import "compass/utilities/links";
+@import "compass/typography/links";
 @import "partials/defaults";
 @import "partials/layout";
 @import "partials/home";
@@ -10,12 +10,17 @@
 @import "partials/search";
 @import "partials/top_bar";
 @import "partials/colors";
+@import "partials/jquery-ui";
 
 body {
   @include blueprint-typography(true);
   @include blueprint-utilities;
   @include blueprint-interaction; 
 }
+
+a.unstyled_link{
+  @include unstyled-link;
+  }
 
 .container {
   @include container;

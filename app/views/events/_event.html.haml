@@ -1,5 +1,5 @@
 = render :partial => "time_ruler" if event.first_in_past?
-%div{:style => defined?(hidden) && 'none',:class => [event.status, @multi || event.about_person ? "multi" : "single"]}[event]
+%div{:class => [event.status, @multi || event.about_person ? "multi" : "single"]}[event]
   %div.inner[event.eventable]
     %header{:class => event.subtitle ? "subtitle" : nil}
       %h2.icon= image_tag(event.icon_url, :size => "48x48", :alt => event.eventable_type, :title => event.eventable_type)
@@ -20,18 +20,20 @@
         %h2= raw special_title event.subtitle
     - begin
       .body= render :partial => "events/body/#{event.eventable_type.underscore}", :object => event.eventable, :locals => {:event => event}
-    - rescue
+    - rescue ActionView::MissingTemplate
       .body= raw event_format(event.body)
-    - if Time.now - Settings.delete_delay < event.eventable.created_at and @user == event.eventable.created_by
+    - if Time.now - Settings.delete_delay.to_i < event.eventable.created_at and @user == event.eventable.created_by
       .buttons_delete
         .delete_target
-          = link_to image_tag("events/delete_event.png"), person_event_url(@topic, event), :method => :delete, :confirm => "This will delete the entire #{event.eventable_type.singularize.humanize.titleize}.\nAre you sure?"
+          = link_to image_tag("events/delete_event.png"), person_event_url(@topic, event), :method => :delete, :confirm => "This will delete the entire #{event.eventable_type.singularize.humanize.titleize}.\nAre you sure?", :class => "delete_event_button"
+          = image_tag "ajax-loader.gif", :style => "display:none", :class => "delete_spinner", :size => "16x16"
     .buttons
       = link_to image_tag("actions/event_open.png"), open_extended_event_url(event,:person_id => event.person.mis_id), :remote => true, :class => "extend_button", :observer => "false"
       = image_tag "actions/event_opened.png", :class => "close_extend_button", :style => "display:none", :observer => "false"      
+      = image_tag "ajax-loader.gif", :style => "display:none", :class => "extend_spinner", :size => "16x16"
     - begin
       .long_body= render :partial => "events/long_body/#{event.eventable_type.underscore}", :object => event.eventable, :locals => {:event => event}
-    - rescue
+    - rescue ActionView::MissingTemplate
       -#long_body 
     .attachments
       .inner

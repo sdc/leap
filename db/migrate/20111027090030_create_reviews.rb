@@ -1,16 +1,15 @@
 class CreateReviews < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :reviews do |t|
-      t.integer :review_window_id
       t.integer :person_id
-      t.string :status
-      t.text :body
       t.integer :created_by_id
+      t.string  :window
+      t.integer :attendance
+      t.integer :score
       t.timestamps
     end
   end
 
-  def self.down
-    drop_table :reviews
+  def down
   end
 end

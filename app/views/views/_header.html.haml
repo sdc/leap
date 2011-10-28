@@ -4,7 +4,9 @@
 - elsif @view.controls.kind_of? Hash
   #event_controls
     .tabs
+      %ul
+        - @view.controls.each do |k,v|
+          %li
+            %a{:href => "##{k.tr(" ","").underscore}"}= k
       - @view.controls.each do |k,v|
-        = tab "event_controls", k
-    - @view.controls.each do |k,v|
-      .tab{:class => k.titleize.tr(" ","").underscore, :style => "display: #{@view.controls.first.first == k ? "block" : "none"}"}= render v
+        .tab{:id => k.tr(" ","").underscore}= render v
