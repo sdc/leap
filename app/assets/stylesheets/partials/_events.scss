@@ -106,6 +106,12 @@
     .target_body,.target_actions,.target_reflection {
       @include column(7);
     }
+    .tabs {
+      .ui-tabs-nav {
+        height: 18px;
+        border-bottom: 1px solid lighten($border-color, 15%);
+      }
+    }
     .target_date {
       @include column(4,last);
       #target_target_date {
