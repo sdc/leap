@@ -22,29 +22,7 @@ class PeopleController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html do
-        @next_timetable_event = @topic.timetable_events(:next).first
-        if @topic.attendances.empty?
-          @attendances = []
-        else
-          @attendances = @topic.attendances.last.siblings_same_year
-        end
-        @targets = @topic.targets.limit(8).where("complete_date is null")
-        begin
-          mcourses = ActiveResource::Connection.new(Settings.moodle_host).
-                     get("#{Settings.moodle_path}/webservice/rest/server.php?" +
-                     "wstoken=#{Settings.moodle_token}&wsfunction=moodle_course_get_user_courses&username=" +
-                     @topic.username + Settings.moodle_user_postfix)["MULTIPLE"]["SINGLE"]
-          if mcourses.nil?
-            @moodle_courses = []
-          else
-            @moodle_courses = mcourses.map{|x| x.respond_to?(:last) ? x.last : x["KEY"]}.map{|a| a.map{|b| [b["name"],b["VALUE"]]}}.map{|x| Hash[x]}.select{|x| x["visible"] == "1"}
-          end
-        rescue
-          logger.error "Can't connect to Moodle: #{$!}"
-          @moodle_courses = false
-        end
-      end
+      format.html
       format.jpg do
         if File.exists? "#{Rails.root}/public/photos/#{@topic.mis_id}.jpg"
           redirect_to "/photos/#{@topic.mis_id}.jpg"
@@ -71,6 +49,43 @@ class PeopleController < ApplicationController
 
   def index
     redirect_to person_url(@user)
+  end
+
+  def next_lesson_block
+    @next_timetable_event = @topic.timetable_events(:next).first
+  end
+
+  def my_courses_block
+    @my_courses = @topic.my_courses
+  end
+
+  def targets_block
+    @targets = @topic.targets.limit(8).where("complete_date is null")
+  end
+
+  def moodle_courses_block
+    begin
+      mcourses = ActiveResource::Connection.new(Settings.moodle_host).
+                 get("#{Settings.moodle_path}/webservice/rest/server.php?" +
+                 "wstoken=#{Settings.moodle_token}&wsfunction=moodle_course_get_user_courses&username=" +
+                 @topic.username + Settings.moodle_user_postfix)["MULTIPLE"]["SINGLE"]
+      if mcourses.nil?
+        @moodle_courses = []
+      else
+        @moodle_courses = mcourses.map{|x| x.respond_to?(:last) ? x.last : x["KEY"]}.map{|a| a.map{|b| [b["name"],b["VALUE"]]}}.map{|x| Hash[x]}.select{|x| x["visible"] == "1"}
+      end
+    rescue
+      logger.error "Can't connect to Moodle: #{$!}"
+      @moodle_courses = false
+    end
+  end
+
+  def attendance_block
+    if @topic.attendances.empty?
+      @attendances = []
+    else
+      @attendances = @topic.attendances.last.siblings_same_year
+    end
   end
 
   private

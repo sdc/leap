@@ -16,3 +16,5 @@ $(document).ready ->
     $('#help_button').toggleClass('hover')
   $(window).resize ->
     $('#help').height($(window).height())
+  $('[load_block]').each (i,block) ->
+    $(block).load($(block).attr('load_block'))

@@ -19,6 +19,13 @@ Ilp2::Application.routes.draw do
     collection do
       get :search
     end
+    member do
+      get :next_lesson_block
+      get :my_courses_block
+      get :targets_block
+      get :moodle_block
+      get :attendance_block
+    end
   end
   resources :courses do
     resources :views
