@@ -17,7 +17,18 @@ $(document).ready ->
   $(window).resize ->
     $('#help').height($(window).height())
   $('[load_block]').each (i,block) ->
-    $(block).load($(block).attr('load_block'))
+    $(block).load $(block).attr('load_block'), ->
+      $('.tabs').tabs()
   $('#expand_students').live 'click', ->
     $('#students').children('.clearfix').css('height','auto')
     $('#expand_students').hide()
+  $('#person_header_selector').change ->
+    if ($('#person_header_selector option:selected').val())
+      $('#event_header_spinner').show()
+      $('#event_header').hide()
+      $('#event_header').load $('#person_header_selector option:selected').val(), ->
+        $('.tabs').tabs()
+        $('#event_header').show()
+        $('#event_header_spinner').hide()
+    else
+      $('#event_header').empty()

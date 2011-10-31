@@ -1,5 +1,12 @@
 - if @affiliation == "staff" and !@multi and @topic.kind_of?(Person)
   %header#event_header{:load_block => header_person_view_url(@topic,@view)}= image_tag "ajax-loader.gif"
+- elsif @topic.kind_of? Course
+  - if @view.controls
+    %h3#course_event_header
+      Select a student to add an event:
+      = select_tag "person_header_selector", options_for_select(@topic.people.map{|p| [p.name, header_person_view_url(p,@view)]}), :include_blank => true
+      #event_header_spinner{:style => "display:none"}= image_tag "ajax-loader.gif"
+    %header#event_header
 #events= render @events
 - if @events.empty?
   There are currently no #{@view.label.pluralize} for you at the moment
