@@ -99,18 +99,11 @@
     float: left;
     width: 25px;
   }
-
   .extended {
     @include column(18);
     margin: 3px 15px;
     .target_body,.target_actions,.target_reflection {
       @include column(7);
-    }
-    .tabs {
-      .ui-tabs-nav {
-        height: 18px;
-        border-bottom: 1px solid lighten($border-color, 15%);
-      }
     }
     .target_date {
       @include column(4,last);
@@ -145,14 +138,12 @@
       height: 54px;
     }
   }
-
   .initial_review .body{
     table {
       @include column(5);
       width: auto;
     }
   }
-
   .attendance .body {
     img {
       @include column(6);
@@ -167,7 +158,6 @@
   &.multi .attendance .body dl {
     display: none
   }
-
   .person_course {
     line-height: 1.4;
     h6 {
@@ -181,12 +171,10 @@
   &.multi .person_course h6 {
     @include column(6);
   }
-
   .attachments {
     @include column(18);
     margin: 3px 15px;
   }
-  
   .mini {
     @include column(19);
     .icon {
