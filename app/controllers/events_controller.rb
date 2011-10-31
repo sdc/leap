@@ -64,7 +64,7 @@ class EventsController < ApplicationController
 
   def destroy
     @event = @topic.events.find(params[:id])  
-    if Time.now - Settings.delete_delay < @event.eventable.created_at and @user == @event.eventable.created_by
+    if Time.now - Settings.delete_delay.to_i < @event.eventable.created_at and @user == @event.eventable.created_by
       flash[:notice] = "#{@event.eventable_type.singularize.humanize.titleize} deleted"
       @event.eventable.destroy
     else
