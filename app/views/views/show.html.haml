@@ -1,5 +1,5 @@
 - if @affiliation == "staff" and !@multi and @topic.kind_of?(Person)
-  %header#event_header= render :partial => "header"
+  %header#event_header{:load_block => header_person_view_url(@topic,@view)}= image_tag "ajax-loader.gif"
 #events= render @events
 - if @events.empty?
   There are currently no #{@view.label.pluralize} for you at the moment

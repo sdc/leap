@@ -14,7 +14,11 @@ Ilp2::Application.routes.draw do
   resources :people do
     resources :events
     resources :timetables
-    resources :views
+    resources :views do
+      member do
+        get :header
+      end
+    end
     resources :review_lines
     collection do
       get :search

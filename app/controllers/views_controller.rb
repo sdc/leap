@@ -35,6 +35,10 @@ class ViewsController < ApplicationController
       redirect_to "/404.html"
     end
   end
+  
+  def header
+    @view = View.for_user.find_by_name(params[:id])
+  end
 
   private
 
