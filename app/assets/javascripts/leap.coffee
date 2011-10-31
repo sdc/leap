@@ -2,7 +2,7 @@ $(document).ready ->
   $('#person_photo>img')
     .load(-> $(this).fadeIn())
     .mouseover(-> $(this).effect('shake', {times:2,distance:3},100))
-  $('#flash_notice').delay(4000).fadeOut()
+  $('#flash_notice').delay(4000).fadeOut('slow')
   $('#q').focus();
   $('#search_extended').click( -> $('#search_form').submit())
   $('.tabs').tabs()
@@ -25,10 +25,10 @@ $(document).ready ->
   $('#person_header_selector').change ->
     if ($('#person_header_selector option:selected').val())
       $('#event_header_spinner').show()
-      $('#event_header').hide()
+      $('#event_header').hide('fast')
       $('#event_header').load $('#person_header_selector option:selected').val(), ->
         $('.tabs').tabs()
-        $('#event_header').show()
         $('#event_header_spinner').hide()
+        $('#event_header').show('fast')
     else
-      $('#event_header').empty()
+      $('#event_header').hide('fast', -> $('#event_header').empty())
