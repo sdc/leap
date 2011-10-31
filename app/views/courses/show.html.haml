@@ -16,5 +16,5 @@
         = render :partial => "person", :object => pc.person, :locals => {:status => pc.status}
     - if @topic.person_courses.count > 12
       #expand_students=   link_to_function "See all students...", "$('students').down('.clearfix').setStyle({height:'auto'});$('expand_students').hide()"
-  = render :partial => "people/moodle"
-  = render :partial => "people/next_lesson"
+  -#= render :partial => "people/moodle"
+  -#= render :partial => "people/next_lesson"
