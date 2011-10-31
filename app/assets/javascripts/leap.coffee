@@ -18,3 +18,6 @@ $(document).ready ->
     $('#help').height($(window).height())
   $('[load_block]').each (i,block) ->
     $(block).load($(block).attr('load_block'))
+  $('#expand_students').live 'click', ->
+    $('#students').children('.clearfix').css('height','auto')
+    $('#expand_students').hide()

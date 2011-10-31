@@ -15,6 +15,9 @@
         - next unless pc.person
         = render :partial => "person", :object => pc.person, :locals => {:status => pc.status}
     - if @topic.person_courses.count > 12
-      #expand_students=   link_to_function "See all students...", "$('students').down('.clearfix').setStyle({height:'auto'});$('expand_students').hide()"
+      #expand_students{:style => "cursor:pointer"} See all students...
+  .block.left{:load_block => moodle_block_course_url(@topic)}= image_tag "ajax-loader.gif"
+  .block.right{:load_block => next_lesson_block_course_url(@topic)}= image_tag "ajax-loader.gif"
+
   -#= render :partial => "people/moodle"
   -#= render :partial => "people/next_lesson"

@@ -31,6 +31,8 @@ Ilp2::Application.routes.draw do
     resources :views
     resources :timetables
     member do
+      get :next_lesson_block
+      get :moodle_block
       post :add
     end
   end

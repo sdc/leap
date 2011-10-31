@@ -21,7 +21,14 @@ class CoursesController < ApplicationController
 
   def show
     redirect_to "/404.html" unless @topic.kind_of? Course
+  end
+
+  def next_lesson_block
     @next_timetable_event = @topic.timetable_events(:next).first
+    render "people/next_lesson_block"
+  end
+
+  def moodle_block
     begin
       mcourses = ActiveResource::Connection.new(Settings.moodle_host).
                  get("#{Settings.moodle_path}/webservice/rest/server.php?" +
@@ -36,6 +43,7 @@ class CoursesController < ApplicationController
       logger.error "Can't connect to Moodle: #{$!}"
       @moodle_courses = false
     end
+    render "people/moodle_block"
   end
 
   def add
