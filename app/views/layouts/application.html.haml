@@ -21,6 +21,7 @@
     - if @affiliation == "staff"
       #top_bar= render :partial => "layouts/top_bar"
     .container#main_container
+      #help{:style => "display:none"}= content_for :help
       #side_pane
         - if params[:all] and @affiliation == "staff"
           = render :partial => "layouts/all_sidebar"

@@ -9,3 +9,9 @@
   = hidden_field_tag :eventable_type, "ContactLog"
   = hidden_field_tag :person_id, @topic.mis_id
   .sumbit= submit_tag "Add Log"
+
+- content_for :help do
+  %h1 Contact Logs
+  %p 
+    Use these to record the brief details of contact you 
+    have had with a student.

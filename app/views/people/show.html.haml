@@ -1,11 +1,11 @@
 #person_home
   = render :partial => 'personal_details'
   = render :partial => 'thoughts'
-  = render :partial => 'next_lesson'
+  .block.left{:load_block => next_lesson_block_person_url(@topic)}= image_tag "ajax-loader.gif"
   - if @user.staff? and @user == @topic
-    = render :partial => 'my_courses'
+    .block.right{:load_block => my_courses_block_person_url(@topic)}= image_tag "ajax-loader.gif"
   - else
-    = render :partial => 'attenance'
-  = render :partial => 'targets'
+    .block.right{:load_block => attendance_block_person_url(@topic)}= image_tag "ajax-loader.gif"
+  .block.left{:load_block => targets_block_person_url(@topic)}= image_tag "ajax-loader.gif"
   #advert.block.right{:style => "height:254px"}= raw Settings.advert_box_html
-  = render :partial => 'moodle'
+  .block.left{:load_block => moodle_block_person_url(@topic)}= image_tag "ajax-loader.gif"

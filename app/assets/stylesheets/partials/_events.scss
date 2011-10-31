@@ -220,7 +220,7 @@
   clear: both
 }
 
-.long_body .content {
+.long_body {
   @include column(18, true);
   @include prepend(1);
 }

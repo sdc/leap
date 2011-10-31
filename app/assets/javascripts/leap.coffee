@@ -10,3 +10,11 @@ $(document).ready ->
   $('.timetable_event')
     .live('mouseover', -> $(this).addClass('extended'))
     .live('mouseout',  -> $(this).removeClass('extended'))
+  $('#help_button').click -> 
+    $('#help').height($(window).height()) 
+    $('#help').toggle('slide', {direction:'right'})
+    $('#help_button').toggleClass('hover')
+  $(window).resize ->
+    $('#help').height($(window).height())
+  $('[load_block]').each (i,block) ->
+    $(block).load($(block).attr('load_block'))

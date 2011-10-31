@@ -8,3 +8,9 @@
     = hidden_field_tag :eventable_type, "SupportHistory"
     = hidden_field_tag :person_id, @topic.mis_id
     .sumbit= submit_tag "Add"
+
+- content_for :help do
+  %h1 Support History
+  %p
+    %b Note:
+    Support History should usually only be added by learning support staff.

@@ -1,1 +1,5 @@
-.content= raw event_format review_line.body
+%b
+  = review_line.created_by.name
+  = raw "(<i>#{review_line.unit}</i>)" if review_line.unit
+%br
+= raw event_format review_line.body
