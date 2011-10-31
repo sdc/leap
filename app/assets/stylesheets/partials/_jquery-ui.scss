@@ -65,3 +65,11 @@
   text-align:center;
   width: 133px;
 }
+
+.tabs {
+  .ui-tabs-nav {
+    height: 18px;
+    border-bottom: 1px solid lighten($border-color, 15%);
+    line-height:1;
+  }
+}
