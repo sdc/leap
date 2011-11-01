@@ -1,11 +1,5 @@
-= form_for event.eventable, :remote => true do |f|
+= form_for(review_line, :url => event, :remote => true, :method => :put, :html => {:class => "event_update_form"}) do |f|
   = hidden_field_tag :event_id, event.id
-  .review_attendance
-    %h2 Attendance
-    - if event.person.attendances.empty?
-      .score ?
-    - else
-      .score= "#{event.person.attendances.last.att_year}%"
   .review_scores
     %table
       %tr
@@ -18,10 +12,11 @@
         %td= f.select :attitude, 0..10
         %td Completion
         %td= f.select :completion, 0..10
-  = f.text_area :comments
+  = f.text_area :body
   .review_controls
-    - if event.eventable.published_at?
-      Published
-    - else
-      Not Published
+    - if review_line.review
+      - if review_line.review.status == "complete"
+        Published
+      - else
+        Not Published
     = submit_tag "Save"

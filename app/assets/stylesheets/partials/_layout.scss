@@ -88,18 +88,19 @@
     textarea {
       @include column(8);
     }
-    .review_scores {
-      @include column(8);
-      table {
-        @include column(8);
-      }
-      td {
-        padding: 0 10px 0 0;
-      }
-    }
   }
   #support_request_sessions {
     width: 300px
+  }
+}
+
+.review_scores {
+  @include column(8);
+  table {
+    @include column(8);
+  }
+  td {
+    padding: 0 10px 0 0;
   }
 }
 

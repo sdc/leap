@@ -33,4 +33,8 @@ class ReviewLine < Eventable
     window
   end
 
+  def extra_panes
+    Person.user.staff? ? [["edit","review_lines/edit"]] : nil
+  end
+
 end
