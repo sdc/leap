@@ -1,4 +1,6 @@
 $(document).ready ->
+  if $('.online_help').length == 0
+    $('#help_button').hide()
   $('#person_photo>img')
     .load(-> $(this).fadeIn())
     .mouseover(-> $(this).effect('shake', {times:2,distance:3},100))
@@ -10,7 +12,9 @@ $(document).ready ->
   $('.timetable_event')
     .live('mouseover', -> $(this).addClass('extended'))
     .live('mouseout',  -> $(this).removeClass('extended'))
+  $('.online_help').appendTo($('#help'))
   $('#help_button').click -> 
+    $('.online_help').appendTo($('#help')).show()
     $('#help').height($(window).height()) 
     $('#help').toggle('slide', {direction:'right'})
     $('#help_button').toggleClass('hover')
@@ -19,6 +23,7 @@ $(document).ready ->
   $('[load_block]').each (i,block) ->
     $(block).load $(block).attr('load_block'), ->
       $('.tabs').tabs()
+      $('#help_button').show() unless $('.online_help').length == 0
   $('#expand_students').live 'click', ->
     $('#students').children('.clearfix').css('height','auto')
     $('#expand_students').hide()

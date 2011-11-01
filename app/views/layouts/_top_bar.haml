@@ -34,7 +34,4 @@
         %br
         = @user.surname
   #help_button{:title => "Help for this page"}
-    - if content_for? :help
-      = image_tag "actions/help.png"
-    - else
-      &nbsp;
+    = image_tag "actions/help.png"
