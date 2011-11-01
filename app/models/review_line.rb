@@ -37,4 +37,8 @@ class ReviewLine < Eventable
     Person.user.staff? ? [["edit","review_lines/edit"]] : nil
   end
 
+  def status
+    review ? review.status : :complete
+  end
+
 end
