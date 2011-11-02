@@ -3,7 +3,7 @@
     %h3
       Add a review 
       = f.select :window, Settings.review_windows.split(/,/)
-      with unit
+      for session
       = f.select :unit, @topic.timetable_events(:from => (Date.today - 1.month), :to => (Date.today + 1.month)).map{|e| e.title}.uniq, :include_blank => "None"
     .icon= image_tag "events/reviews.png"
     = f.text_area :body

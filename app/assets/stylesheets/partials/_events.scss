@@ -121,14 +121,6 @@
       @include column(8);
 
     }
-    .review_attendance {
-      margin-top: 1ex;
-      @include column(2);
-      text-align: center;
-      .score {
-        font-size: 18px;
-      }
-    }
     .review_controls {
       margin-top: 1ex;
       @include column(3,true);
@@ -188,7 +180,7 @@
       @include column(3);
     }
     .body {
-      @include column(12,true);
+      @include column(14,true);
       margin: 3px 0;
     }
   }
@@ -223,4 +215,5 @@
 .long_body {
   @include column(18, true);
   @include prepend(1);
+  line-height: 1.2;
 }
