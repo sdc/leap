@@ -18,7 +18,7 @@ class Review < Eventable
 
   has_many :review_lines, :dependent => :destroy
 
-  after_create {|req| req.events.create!(:event_date => created_at, :transition => :create)}
+  after_create {|req| req.events.create!(:event_date => created_at - 10, :transition => :create)}
   
   def icon_url
     "events/reviews.png"
