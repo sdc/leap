@@ -20,10 +20,6 @@ class Review < Eventable
 
   after_create {|req| req.events.create!(:event_date => created_at - 10, :transition => :create)}
   
-  def icon_url
-    "events/reviews.png"
-  end
-
   def title
     window
   end

@@ -25,10 +25,6 @@ class ReviewLine < Eventable
     line.events.create!(:event_date => created_at, :transition => :create, :parent_id => review.events.creation.first.id)
   end
 
-  def icon_url
-    "events/reviews.png"
-  end
-
   def title
     window
   end
