@@ -4,7 +4,7 @@
       Add a review 
       = f.select :window, Settings.review_windows.split(/,/)
       for session
-      = f.select :unit, @topic.timetable_events(:from => (Date.today - 1.month), :to => (Date.today + 1.month)).map{|e| e.title}.uniq, :include_blank => "None"
+      = f.text_field :unit
     .icon= image_tag "events/reviews.png"
     = f.text_area :body
     .review_scores
@@ -34,9 +34,19 @@
         Choose a review from the drop down box at the top 
         (there may only be one option).
       %li 
-        If you want, choose a unit from the second drop down box. 
+        If you may write a session title in the second box.
         The name of this unit will be stored and displayed with
-        the review.
+        the review it doesn't have to be an official
+        timetable unit.
       %li Write your comments in the text box.
       %li Use the drop down number boxes to score the learner.
       %li Press 'add' to save your review.
+  %h3 To publish a review
+  %p 
+    The tutor should write their overall comments on the review
+    event (which will be at the bottom of all review lines) and
+    click the publish button checkbox before saving.
+  %p
+    %i
+      Reviews will not be visible to students or parents until
+      the whole review is published.
