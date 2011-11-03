@@ -19,11 +19,21 @@ class Review < Eventable
   has_many :review_lines, :dependent => :destroy
 
   after_create {|req| req.events.create!(:event_date => created_at - 10, :transition => :create)}
+
+  after_save do |rev|
+    if rev.published_changed? and rev.published_was.nil?
+      events.create(:event_date => Time.now, :transition => :complete)
+    end
+  end
   
   def title
     window
   end
 
-  def status; :current end
+  def extra_panes
+    [["Comment","reviews/edit"]] if Person.user.staff? and status.to_s == "current"
+  end
+
+  def status; published ? :complete : :current end
 
 end

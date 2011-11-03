@@ -1,0 +1,8 @@
+= form_for(review, :url => event, :remote => true, :method => :put, :html => {:class => "event_update_form"}) do |f|
+  = hidden_field_tag :event_id, event.id
+  %h3 Overall Tutor's Comments:
+  = f.text_area :body
+  = f.check_box :published
+  Publish?
+  %hr{:style => "border-bottom: 1px solid #333"}
+  = submit_tag "Save"
