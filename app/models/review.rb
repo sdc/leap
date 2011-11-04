@@ -22,8 +22,8 @@ class Review < Eventable
 
   before_save do |rev|
     rev.attendance = person.attendances.last.try(:att_year)
-    if rev.published_changed? and rev.published_was.nil?
-      events.create(:event_date => Time.now, :transition => :complete)
+    if rev.published_changed? and !rev.published_was
+      events.create(:event_date => Time.now, :transition => :complete) if rev.published
     end
   end
   
