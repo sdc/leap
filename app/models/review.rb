@@ -20,7 +20,8 @@ class Review < Eventable
 
   after_create {|req| req.events.create!(:event_date => created_at - 10, :transition => :create)}
 
-  after_save do |rev|
+  before_save do |rev|
+    rev.attendance = person.attendances.last.try(:att_year)
     if rev.published_changed? and rev.published_was.nil?
       events.create(:event_date => Time.now, :transition => :complete)
     end

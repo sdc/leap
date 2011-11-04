@@ -1,5 +1,7 @@
 = form_for(review_line, :url => event, :remote => true, :method => :put, :html => {:class => "event_update_form"}) do |f|
   = hidden_field_tag :event_id, event.id
+  = hidden_field_tag :eventable_type, "ReviewLine"
+  = hidden_field_tag :person_id, @topic.mis_id
   .review_scores
     %table
       %tr
