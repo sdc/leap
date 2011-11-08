@@ -37,4 +37,8 @@ class ReviewLine < Eventable
     review ? review.status : :complete
   end
 
+  def staff_only?
+    review ? review.staff_only? : true
+  end
+
 end

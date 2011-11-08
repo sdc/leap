@@ -34,4 +34,8 @@ class Eventable < ActiveRecord::Base
     self.class.name.underscore.humanize.titleize
   end
 
+  def staff_only?
+    false
+  end
+
 end

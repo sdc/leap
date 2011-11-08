@@ -37,4 +37,8 @@ class Review < Eventable
 
   def status; published ? :complete : :current end
 
+  def staff_only?
+    !published
+  end
+
 end

@@ -28,6 +28,7 @@ class ViewsController < ApplicationController
         where(:transition => @view.transitions, :eventable_type => @view.events).
         limit(20)
       @events.detect{|e| e.past? }.try("first_in_past=",true) unless @events.first.past? if @events.try(:first)
+      @events.reject!{|e| e.staff_only?} unless @user.staff?
       respond_with(@events) do |f|
         f.js {render @events}
       end
