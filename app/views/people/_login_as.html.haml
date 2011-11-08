@@ -3,6 +3,6 @@
   .details
     %h3= truncate(login_as.name, :length => 17)
     %h5.quiet= login_as.mis_id
-    = link_to "Login as staff", person_url(login_as, :login_as => "staff")
-    = link_to "Login as student", person_url(login_as, :login_as => "student")
-    = link_to "Login as parent", person_url(login_as, :login_as => "affiliate")
+    - ["staff","student","affiliate","applicant"].each do |aff|
+      = link_to aff, person_url(login_as, :login_as => aff)
+      = "|"
