@@ -9,6 +9,16 @@
       :in_list     => true,
       :position    => 1
     )
+    View.create(   
+      :label       => "All",
+      :name        => "all",
+      :transitions => ["start","to_start"],
+      :events      => ["PersonCourse"],
+      :icon_url   => "icons/events.png",
+      :affiliations=> ["applicant"],
+      :in_list     => true,
+      :position    => 1
+    )
     View.create(
       :label       => "All",
       :name        => "all",
