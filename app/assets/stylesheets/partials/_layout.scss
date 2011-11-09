@@ -76,6 +76,9 @@
     }
     textarea,table {
       @include column(14);
+      &.reviews {
+        @include column(8);
+      }
     }
     input,textarea {
       margin-top:0;
