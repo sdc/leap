@@ -1,2 +1,2 @@
-= render @event
+= render :partial => @event, :locals => {:no_attachments => true}
 = render @event.children
