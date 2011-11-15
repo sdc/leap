@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
     else
       Person.affiliation = @affiliation = request.env["affiliation"] ? request.env["affiliation"].split("@").first.downcase : nil
       uname,domain = request.env["eppn"].downcase.split('@')
-      uname = uname[1..-1] if @affiliation[0] == "a"
+      uname = uname[1..-1] if @affiliation[0,1] == "a"
       unless Settings.sdc.blank?
         if @affiliation == "student" and uname.match(/^[sne]/) 
           uname.gsub!(/^s/,"10")
