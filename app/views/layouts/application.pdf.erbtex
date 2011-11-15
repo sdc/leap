@@ -1,0 +1,11 @@
+\documentclass[a4paper,10pt]{article}
+\newcommand{\gap}{\vspace{2mm}}
+\usepackage[margin=1cm,noheadfoot]{geometry}
+\usepackage{rotating}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+\begin{document}
+  <%= yield %>
+\end{document}

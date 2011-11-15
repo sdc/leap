@@ -1,0 +1,46 @@
+\subsection*{Personal Tutor Summary}
+<%= lesc event.body %>
+
+\subsection*{Review}
+\begin{longtable}{|p{40mm}|p{3mm}|p{3mm}|p{3mm}|p{3mm}|p{110mm}|}
+  \hline
+  &\centering\begin{sideways}Quality of Work\end{sideways}
+  &\centering\begin{sideways}Punctuality\end{sideways}
+  &\centering\begin{sideways}Attitude\end{sideways}
+  &\centering\begin{sideways}Completion of Work\end{sideways}
+  &Comments\\
+  \hline
+<% event.children.where(:eventable_type => "ReviewLine").map{|x| x.eventable}.each do |rl| %>
+  \begin{minipage}{40mm}
+    \medskip\\
+    <% if rl.unit %>
+      <%= rl.unit %>\\
+    <% end %>
+    <%= rl.created_by.name%>
+    \medskip\\
+  \end{minipage}
+  &<%= rl.quality %>&<%= rl.punctuality %>&<%= rl.attitude %>&<%= rl.completion %>
+  &<%= rl.body %>\\
+  \hline
+<% end %>
+\end{longtable}
+
+<%# if @topic.attendances.last.siblings_same_year %>
+  <%#= render @topic.attendances.last.siblings_same_year %>
+<%# end %>
+
+
+<% targets = (event.children + event.children.map{|x| x.children}).flatten.select{|x| x.eventable_type == "Target"}.map{|x| x.eventable} %>
+<% unless targets.empty? %>
+  \subsection*{Targets}
+  \begin{longtable}{|p{40mm}|p{55mm}|p{55mm}|p{22mm}|}
+    \hline
+    &\parbox{55mm}{\medskip\\Target\\}&\parbox{55mm}{\medskip\\Actions\\}&\parbox{22mm}{\medskip\\Due Date\\}\\
+    \hline
+  <% targets.each do |target| %>
+    \parbox{55mm}{\medskip\\<%if target.event.eventable.unit %><%= target.event.eventable.unit %>\\<% end %><%= target.event.eventable.created_by.name %>}
+    &<%= target.body %>&<%= target.actions %>&<%= pretty_date(target.target_date) %>\\
+    \hline
+  <% end %>
+  \end{longtable}
+<% end %>
