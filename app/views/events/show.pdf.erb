@@ -24,9 +24,8 @@
 \begin{minipage}{100mm}
   <%= (lesc "Parents/Guardians of") if @event.person.age < 18 %>
   <%= lesc @event.person.name %> \\
-  <%  @event.person.address.each do |line| %>
-    <%= lesc line %> \\
-  <% end %>
+  <%= [@event.person.address,@event.person.town,@event.person.postcode].flatten.
+      reject{|x| x.nil?}.map {|x| lesc(x) + "\\\\"} %>
 \end{minipage}
 \begin{minipage}{122mm}
   \begin{tabular}{l@{\hspace{3mm}}l}
