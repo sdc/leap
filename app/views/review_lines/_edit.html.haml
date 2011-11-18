@@ -17,9 +17,4 @@
         %td= f.select :completion, 0..10
   = f.text_area :body, :style => "height: 100px"
   .review_controls
-    - if review_line.review
-      - if review_line.review.status == "complete"
-        Published
-      - else
-        Not Published
     = submit_tag "Save"
