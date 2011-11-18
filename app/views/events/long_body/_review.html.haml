@@ -1,1 +1,3 @@
-%div= event_format review.body
+- if review.body
+  %b Tutor's Comments:
+  %div= event_format review.body
