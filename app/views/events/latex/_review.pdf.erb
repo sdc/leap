@@ -1,5 +1,7 @@
-\subsection*{Personal Tutor Summary}
-<%= lesc event.body %>
+<% if event.body %>
+  \subsection*{Personal Tutor Summary}
+  <%= lesc event.body %>
+<% end %>
 
 \subsection*{Review}
 \begin{longtable}{|p{40mm}|p{3mm}|p{3mm}|p{3mm}|p{3mm}|p{112mm}|}
