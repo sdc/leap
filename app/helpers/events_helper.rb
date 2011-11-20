@@ -62,4 +62,8 @@ module EventsHelper
     auto_link(simple_format(strip_tags(text)))
   end
 
+  def lesc(text)
+    LatexToPdf.escape_latex(text)
+  end
+
 end

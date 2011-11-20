@@ -1,6 +1,7 @@
+= link_to image_tag("actions/print.png"), person_event_url(@topic, event, :format => "pdf")
 - if review.attendance
   %h4 
     Attendance:
     = "#{review.attendance}%"
 %h4 
-  %b Personal Tutor Review Summary:
+  %b Review Summary:
