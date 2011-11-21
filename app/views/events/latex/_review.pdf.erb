@@ -16,13 +16,13 @@
   \begin{minipage}{40mm}
     \medskip\\
     <% if rl.unit %>
-      <%= rl.unit %>\\
+      <%= lesc rl.unit %>\\
     <% end %>
-    <%= rl.created_by.name%>
+    <%= lesc rl.created_by.name%>
     \medskip\\
   \end{minipage}
   &<%= rl.quality %>&<%= rl.punctuality %>&<%= rl.attitude %>&<%= rl.completion %>
-  &<%= rl.body %>\\
+  &<%= lesc rl.body %>\\
   \hline
 <% end %>
 \end{longtable}
@@ -40,8 +40,8 @@
     &\parbox{55mm}{\medskip\\Target\\}&\parbox{55mm}{\medskip\\Actions\\}&\parbox{22mm}{\medskip\\Due Date\\}\\
     \hline
   <% targets.each do |target| %>
-    \parbox{55mm}{\medskip\\<%if target.event.eventable.kind_of?(ReviewLine) and target.event.eventable.unit %><%= target.event.eventable.unit %>\\<% end %><%= target.event.eventable.created_by.name %>}
-    &<%= target.body %>&<%= target.actions %>&<%= pretty_date(target.target_date) %>\\
+    \parbox{55mm}{\medskip\\<%if target.event.eventable.kind_of?(ReviewLine) and target.event.eventable.unit %><%= lesc target.event.eventable.unit %>\\<% end %><%= target.event.eventable.created_by.name %>}
+    &<%= lesc target.body %>&<%= lesc target.actions %>&<%= pretty_date(target.target_date) %>\\
     \hline
   <% end %>
   \end{longtable}
