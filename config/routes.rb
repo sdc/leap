@@ -37,6 +37,7 @@ Ilp2::Application.routes.draw do
     member do
       get :next_lesson_block
       get :moodle_block
+      get :reviews_block
       post :add
     end
   end

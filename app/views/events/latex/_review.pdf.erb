@@ -1,3 +1,43 @@
+  \sffamily
+  \begin{minipage}{22mm}
+    \includegraphics[totalheight=20mm]{<%= Rails.root %>/app/assets/images/sdc_logo.png}
+  \end{minipage}
+  \begin{minipage}{100mm}
+    \Large
+    Individual Learning Plan\\
+    <%= lesc event.title %>\\
+    <%= lesc event.person.name %>
+  \end{minipage}
+  \begin{minipage}{22mm}
+    \includegraphics[totalheight=20mm]{<%= Rails.root %>/app/assets/images/leap-logo.png}
+  \end{minipage}
+
+  \bigskip
+
+  \hline\\
+
+  \bigskip
+  \bigskip
+  \bigskip
+
+\hspace{10mm}
+\begin{minipage}{100mm}
+  <%= (lesc "Parents/Guardians of") if event.person.age < 18 %>
+  <%= lesc event.person.name %> \\
+  <%= [event.person.address,event.person.town,event.person.postcode].flatten.
+      reject{|x| x.nil?}.map {|x| lesc(x) + "\\\\"} %>
+\end{minipage}
+\begin{minipage}{122mm}
+  \begin{tabular}{l@{\hspace{3mm}}l}
+    Date: & <%= Date.today.strftime("%d %B %Y") %> \\
+    Person Code:   & <%= event.person.mis_id %> \\
+  \end{tabular}
+\end{minipage}
+
+<% (7 - event.person.address.size).times do %>
+  \vspace{\baselineskip}
+<% end %>
+
 <% if event.body %>
   \subsection*{Personal Tutor Summary}
   <%= lesc event.body %>
@@ -40,7 +80,7 @@
     &\parbox{55mm}{\medskip\\Target\\}&\parbox{55mm}{\medskip\\Actions\\}&\parbox{22mm}{\medskip\\Due Date\\}\\
     \hline
   <% targets.each do |target| %>
-    \parbox{55mm}{\medskip\\<%if target.event.eventable.kind_of?(ReviewLine) and target.event.eventable.unit %><%= lesc target.event.eventable.unit %>\\<% end %><%= target.event.eventable.created_by.name %>}
+    \parbox{55mm}{\medskip\\<%if target.event.eventable.kind_of?(ReviewLine) and target.event.eventable.unit %><%= lesc target.event.eventable.unit %>\\<% end %><%= lesc target.event.eventable.created_by.name %>}
     &<%= lesc target.body %>&<%= lesc target.actions %>&<%= pretty_date(target.target_date) %>\\
     \hline
   <% end %>

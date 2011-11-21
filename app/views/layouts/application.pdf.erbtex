@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{sectsty}
 \allsectionsfont{\sffamily}
+\pagestyle{empty}
 \begin{document}
   <%= yield %>
 \end{document}

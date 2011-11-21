@@ -46,6 +46,11 @@ class CoursesController < ApplicationController
     render "people/moodle_block"
   end
 
+  def reviews_block
+    @pub =   Review.where(:person_id => @topic.people.map{|p| p.id}, :published => true,  :window => "Review One").count
+    @unpub = Review.where(:person_id => @topic.people.map{|p| p.id}, :window => "Review One").count - @pub
+  end
+
   def add
     @user.my_courses ||= []
     if @user.my_courses.include? @topic.id
