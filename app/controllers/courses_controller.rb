@@ -46,6 +46,10 @@ class CoursesController < ApplicationController
     render "people/moodle_block"
   end
 
+  def reviews_block
+    render :text => "Yo!"
+  end
+
   def add
     @user.my_courses ||= []
     if @user.my_courses.include? @topic.id

@@ -16,7 +16,7 @@
 
 class ViewsController < ApplicationController
 
-  respond_to :html, :xml, :js
+  respond_to :html, :xml, :js, :pdf
 
   before_filter :set_scope
   before_filter { |c| c.set_date(1.year) }
@@ -27,6 +27,8 @@ class ViewsController < ApplicationController
         @scope.where("event_date < ?", @date).
         where(:transition => @view.transitions, :eventable_type => @view.events).
         limit(20)
+      @events = @events.select{|e| e.status.to_s == params[:status]} if params[:status]
+      @events = @events.select{|e| e.title.to_s == params[:title]} if params[:title]
       @events.detect{|e| e.past? }.try("first_in_past=",true) unless @events.first.past? if @events.try(:first)
       @events.reject!{|e| e.staff_only?} unless @user.staff?
       respond_with(@events) do |f|

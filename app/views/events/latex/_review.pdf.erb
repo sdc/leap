@@ -1,3 +1,46 @@
+  \sffamily
+  \begin{minipage}{22mm}
+    \includegraphics[totalheight=20mm]{<%= Rails.root %>/app/assets/images/sdc_logo.png}
+  \end{minipage}
+  \begin{minipage}{100mm}
+    \Large
+    Individual Learning Plan\\
+    <%= lesc event.title %>\\
+    <%= lesc event.person.name %>
+  \end{minipage}
+  \begin{minipage}{22mm}
+    \includegraphics[totalheight=20mm]{<%= Rails.root %>/app/assets/images/leap-logo.png}
+  \end{minipage}
+
+  \bigskip
+
+  \hline\\
+
+  \bigskip
+  \bigskip
+  \bigskip
+
+\hspace{10mm}
+\begin{minipage}{100mm}
+  <%= (lesc "Parents/Guardians of") if event.person.age < 18 %>
+  <%= lesc event.person.name %> \\
+  <%= [event.person.address,event.person.town,event.person.postcode].flatten.
+      reject{|x| x.nil?}.map {|x| lesc(x) + "\\\\"} %>
+\end{minipage}
+\begin{minipage}{122mm}
+  \begin{tabular}{l@{\hspace{3mm}}l}
+    Date: & <%= Date.today.strftime("%d %B %Y") %> \\
+    Person Code:   & <%= event.person.mis_id %> \\
+    <% if event.person.tutor %>
+      Tutor's Email: & <%= l event.person.username %> \\
+    <% end %>
+  \end{tabular}
+\end{minipage}
+
+<% (7 - event.person.address.size).times do %>
+  \vspace{\baselineskip}
+<% end %>
+
 <% if event.body %>
   \subsection*{Personal Tutor Summary}
   <%= lesc event.body %>
