@@ -6,6 +6,6 @@
   - if @moodle_courses
     .scroll_list
       - @moodle_courses.each do |mdl|
-        .mdl_course{:style => "font-weight: #{mdl["canedit"] == "1" ? "bold" : "normal"}"}= link_to mdl["fullname"], "#{Settings.moodle_host}#{Settings.moodle_path}/course/view.php?id=#{mdl["id"]}"
+        .mdl_course{:style => "font-weight: #{mdl[2] == "1" ? "bold" : "normal"}"}= link_to mdl[1], "#{Settings.moodle_host}#{Settings.moodle_path}/course/view.php?id=#{mdl[0]}"
   - else
     %p Moodle is currently unavailable.

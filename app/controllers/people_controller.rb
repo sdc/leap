@@ -63,17 +63,13 @@ class PeopleController < ApplicationController
     @targets = @topic.targets.limit(8).where("complete_date is null")
   end
 
-  def moodle_courses_block
+  def moodle_block
     begin
       mcourses = ActiveResource::Connection.new(Settings.moodle_host).
                  get("#{Settings.moodle_path}/webservice/rest/server.php?" +
                  "wstoken=#{Settings.moodle_token}&wsfunction=moodle_course_get_user_courses&username=" +
-                 @topic.username + Settings.moodle_user_postfix)["MULTIPLE"]["SINGLE"]
-      if mcourses.nil?
-        @moodle_courses = []
-      else
-        @moodle_courses = mcourses.map{|x| x.respond_to?(:last) ? x.last : x["KEY"]}.map{|a| a.map{|b| [b["name"],b["VALUE"]]}}.map{|x| Hash[x]}.select{|x| x["visible"] == "1"}
-      end
+                 @topic.username + Settings.moodle_user_postfix).body
+      @moodle_courses =  (Hpricot(mcourses)/'multiple/single').map{|c| [c/"key[@name=id]",c/"key[@name=fullname]",c/"key[@name=canedit]"].map{|e| (e/"value").inner_html}}
     rescue
       logger.error "Can't connect to Moodle: #{$!}"
       @moodle_courses = false
