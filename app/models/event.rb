@@ -74,4 +74,8 @@ class Event < ActiveRecord::Base
     super(options.reverse_merge(:include => :eventable))
   end
 
+  def is_deletable?
+    (Time.now - Settings.delete_delay.to_i < eventable.created_at and Person.user == eventable.created_by) ||
+        Settings.admin_users.split(/,/).include?(Person.user.username)
+  end
 end
