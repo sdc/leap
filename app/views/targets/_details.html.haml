@@ -21,4 +21,4 @@
       = pretty_date(target.complete_date || target.drop_date)
 
 - unless target.complete_date or target.drop_date
-  = button_to "Drop", event_url(event,"target[drop_date]" => Date.today), :method => :put, :remote => true, :form_class => "event_update_form"
+  = button_to "Drop", person_event_url(@topic, event,"target[drop_date]" => Date.today), :method => :put, :remote => true, :form_class => "event_update_form"
