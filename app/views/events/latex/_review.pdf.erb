@@ -34,6 +34,7 @@
   \end{tabular}
 \end{minipage}
 
+
 <% (7 - event.person.address.size).times do %>
   \vspace{\baselineskip}
 <% end %>
@@ -41,6 +42,10 @@
 <% if event.body and !event.body.blank? %>
   \subsection*{Personal Tutor Summary}
   <%= lesc event.body %>
+<% end %>
+
+<%if event.eventable.attendance %>
+  \subsection*{Cumulative attendance: <%= event.eventable.attendance %> \%}
 <% end %>
 
 \subsection*{Review}
