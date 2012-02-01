@@ -29,7 +29,7 @@
 \end{minipage}
 \begin{minipage}{122mm}
   \begin{tabular}{l@{\hspace{3mm}}l}
-    Date: & <%= Date.today.strftime("%d %B %Y") %> \\
+    Date: & <%= (event.eventable.events.complete.first.try(:event_date) or Date.today).strftime("%d %B %Y") %> \\
     Person Code:   & <%= event.person.mis_id %> \\
   \end{tabular}
 \end{minipage}
