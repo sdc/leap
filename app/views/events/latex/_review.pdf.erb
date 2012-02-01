@@ -38,7 +38,7 @@
   \vspace{\baselineskip}
 <% end %>
 
-<% if event.body %>
+<% if event.body and !event.body.blank? %>
   \subsection*{Personal Tutor Summary}
   <%= lesc event.body %>
 <% end %>
@@ -66,6 +66,10 @@
   \hline
 <% end %>
 \end{longtable}
+
+\noindent Key: 10 = Excellent; 8 = Good; 6 = Satisfactory; 4 = Needs improvement; 2 = Poor 
+
+\noindent If you would like to discuss this review please contact the course tutor or telephone us on 08000 380123
 
 <%# if @topic.attendances.last.siblings_same_year %>
   <%#= render @topic.attendances.last.siblings_same_year %>
