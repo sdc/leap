@@ -22,3 +22,4 @@ Settings.defaults[:sdc]                          = ""
 Settings.defaults[:test_logins]                  = []
 Settings.defaults[:delete_delay]                 = 1.hour
 Settings.defaults[:review_windows]               = "test_review"
+Settings.defaults[:progression_reviews_reasons]  = "Not working at required level,Non-attendance,Changed mind about Career Aim/going onto a different course,Non-submission of work,Not achieving targets,Inappropriate behaviour"

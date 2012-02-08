@@ -1,0 +1,16 @@
+= form_for @topic.progression_reviews.new, :url => "/events" do |f|
+  %h3 
+    Learner approved to continue onto next level of course? 
+    = f.select :approved, {"No" => false, "Yes" => true}
+  #progression_reviews_reason_div
+    If no, please select appropriate reason:
+    = f.select :reason, Settings.progression_reviews_reasons.split(/,/), {}, {:activate_on => "progression_review_approved"}
+  .sumbit{:style => "clear:both;float:right"}= submit_tag "Add"
+  = f.hidden_field :person_id
+  = hidden_field_tag :eventable_type, "ProgressionReview"
+  = hidden_field_tag :person_id, @topic.mis_id
+
+
+.online_help
+  %h1 Continuing Learning Review
+  %p Do stuff.

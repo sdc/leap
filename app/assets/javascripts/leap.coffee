@@ -24,6 +24,11 @@ $(document).ready ->
     $(block).load $(block).attr('load_block'), ->
       $('.tabs').tabs()
       $('#help_button').show() unless $('.online_help').length == 0
+      $('#progression_review_approved').change ->
+        if($('#progression_review_approved').val() == "true")
+          $('#progression_reviews_reason_div').hide('slow')
+        else
+          $('#progression_reviews_reason_div').show('slow')
   $('#expand_students').live 'click', ->
     $('#students').children('.clearfix').css('height','auto')
     $('#expand_students').hide()

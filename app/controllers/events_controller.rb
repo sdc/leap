@@ -33,6 +33,7 @@ class EventsController < ApplicationController
         flash[:notice] = "New #{et.singularize.humanize.titleize} created"
       else
         flash[:notice] = "#{et.singularize.humanize.titleize} could not be created!"
+        logger.error pp @event.errors
       end
       if view = params[:redirect_to] 
         redirect_to params[:redirect_to]
