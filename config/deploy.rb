@@ -5,9 +5,16 @@ default_run_options[:pty] = true
 
 set :scm, :git
 
-role :web, "172.20.1.42"                 
-role :app, "172.20.1.42"                  
-role :db,  "172.20.1.42", :primary => true 
+if ENV['environment'] == "production"
+  role :web, "172.20.1.42"                 
+  role :app, "172.20.1.42"                  
+  role :db,  "172.20.1.42", :primary => true 
+else
+  set :branch, :beta
+  role :web, "172.20.11.41"                 
+  role :app, "172.20.11.41"                  
+  role :db,  "172.20.11.41", :primary => true
+end
 
 namespace :deploy do
   task :start do ; end
