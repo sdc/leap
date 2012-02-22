@@ -1,4 +1,4 @@
-= form_for @topic.progression_reviews.new, :url => "/events" do |f|
+= form_for @topic.progression_reviews.new(:approved => false), :url => "/events" do |f|
   %h3 
     Learner approved to continue onto next level of course? 
     = f.select :approved, {"No" => false, "Yes" => true}
