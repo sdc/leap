@@ -38,6 +38,7 @@ class Person < ActiveRecord::Base
   has_many :support_histories
   has_many :reviews
   has_many :absences
+  has_many :progression_reviews
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
   serialize :middle_names
