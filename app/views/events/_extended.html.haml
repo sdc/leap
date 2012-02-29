@@ -24,12 +24,20 @@
         %tr
           %th Created by:
           %td= event.eventable.created_by.try(:name) or "Import"
+      %table
+        - event.attributes.each do |attr|
+          %tr
+            %th= attr.first
+            %td= attr.last
       - if Settings.admin_users.split(/,/).include? @user.username    
-        %table
-          - event.attributes.each do |attr|
-            %tr
-              %th= attr.first
-              %td= attr.last
+        = form_for(event.eventable, :url => event, :remote => true, :method => :put, :html => {:class => "event_update_form"}) do |f|
+          %table
+            - event.eventable.attributes.each do |attr|
+              %tr
+                %th= attr.first
+                %td= f.text_field attr.first
+          = submit_tag
+      - else
         %h1= event.eventable.class.name
         %table
           - event.eventable.attributes.each do |attr|
