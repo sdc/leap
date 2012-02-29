@@ -24,6 +24,13 @@
 #
 class Target < Eventable
 
+  attr_accessible :body
+  attr_accessible :actions
+  attr_accessible :reflection
+  attr_accessible :target_date
+  attr_accessible :complete_date
+  attr_accessible :drop_date
+
   belongs_to :event
   belongs_to :set_by, :class_name => "Person", :foreign_key => "set_by_person_id"
 
