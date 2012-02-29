@@ -5,8 +5,8 @@ gem "sass-rails"
 gem "coffee-rails"
 gem "compass", "~> 0.12.alpha"
 gem 'jquery-rails'
-gem 'ruby-oci8'
-gem 'activerecord-oracle_enhanced-adapter', :git => 'git://github.com/rsim/oracle-enhanced.git'
+gem 'ruby-oci8', "2.1.0"
+gem 'activerecord-oracle_enhanced-adapter'#, :git => 'git://github.com/rsim/oracle-enhanced.git'
 gem 'symbolize', :require => "symbolize/active_record"
 gem 'supermodel'
 gem 'scoped_search'
