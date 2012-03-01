@@ -35,7 +35,7 @@
             - event.eventable.attributes.each do |attr|
               %tr
                 %th= attr.first
-                %td= f.text_field attr.first
+                %td= event.eventable.class.accessible_attributes.include?(attr.first) ? f.text_field(attr.first) : attr.last
           = submit_tag
       - else
         %h1= event.eventable.class.name
