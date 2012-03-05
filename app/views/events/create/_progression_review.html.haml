@@ -5,6 +5,8 @@
   #progression_reviews_reason_div
     If no, please select appropriate reason:
     = f.select :reason, Settings.progression_reviews_reasons.split(/,/), {}, {:activate_on => "progression_review_approved"}
+  #progression_reviews_conds_div{:style => "display:none"}
+    Conditional offer based on successful completion of learner's current course which should be informed by the Term 3 Review
   .sumbit{:style => "clear:both;float:right"}= submit_tag "Add"
   = f.hidden_field :person_id
   = hidden_field_tag :eventable_type, "ProgressionReview"
