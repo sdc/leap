@@ -2,6 +2,7 @@ set :application, "ilp2"
 set :repository,  "git@github.com:sdc/leap.git"
 set :deploy_to, "/srv/#{application}"
 default_run_options[:pty] = true
+load 'deploy/assets'
 
 set :scm, :git
 
