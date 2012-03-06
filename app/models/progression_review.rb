@@ -23,4 +23,6 @@ class ProgressionReview < Eventable
 
   def status; approved ? :complete : :incomplete end
 
+  def title; "Continuing Learning" end
+
 end
