@@ -5,12 +5,19 @@ set :deploy_to, "/srv/#{application}"
 set :repository,  "git://github.com/sdc/leap.git"
 set :scm, :git
 set :use_sudo, false
-set :branch, "beta"
 default_run_options[:pty] = true
 
-role :web, "172.20.11.41"
-role :app, "172.20.11.41"
-role :db,  "172.20.11.41"
+if ENV['environment'] == "production"
+  set :branch, "master"
+  role :web, "leap.southdevon.ac.uk"
+  role :app, "leap.southdevon.ac.uk"
+  role :db,  "leap.southdevon.ac.uk"
+else
+  set :branch, "beta"
+  role :web, "172.20.11.41"
+  role :app, "172.20.11.41"
+  role :db,  "172.20.11.41"
+end
 
 namespace :deploy do
   task :start do ; end
