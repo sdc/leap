@@ -17,7 +17,7 @@
 class ProgressionReview < Eventable
 
   before_create {|pr| pr.reason = nil if approved }
-  after_create  {|pr| pr.events.create!(:event_date => created_at, :transition => pr.approved ? :complete : :overdue)}
+  after_create  {|pr| pr.events.create!(:event_date => created_at, :transition => :create)}
 
   def subtitle; approved ? "Approved" : "Not approved" end
 
