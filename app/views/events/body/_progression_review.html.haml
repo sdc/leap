@@ -1,4 +1,6 @@
 - if progression_review.approved
   Conditional offer based on successful completion of learner's current course which should be informed by the Term 3 Review.
 - else
-  =raw progression_review.reason || "&nbsp;"
+  %ul
+    - progression_review.reason.each do |r|
+      %li= r

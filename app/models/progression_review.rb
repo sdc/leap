@@ -16,6 +16,8 @@
 
 class ProgressionReview < Eventable
 
+  serialize :reason
+
   before_create {|pr| pr.reason = nil if approved }
   after_create  {|pr| pr.events.create!(:event_date => created_at, :transition => :create)}
 
