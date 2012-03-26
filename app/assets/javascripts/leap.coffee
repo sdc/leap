@@ -27,7 +27,9 @@ $(document).ready ->
       $('#progression_review_approved').change ->
         if($('#progression_review_approved').val() == "true")
           $('#progression_reviews_reason_div').hide('slow')
+          $('#progression_reviews_conds_div').show('slow')
         else
+          $('#progression_reviews_conds_div').hide('slow')
           $('#progression_reviews_reason_div').show('slow')
   $('#expand_students').live 'click', ->
     $('#students').children('.clearfix').css('height','auto')

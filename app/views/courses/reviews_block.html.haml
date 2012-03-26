@@ -1,9 +1,8 @@
-%h3 Review One
+%h3= @window
 %div
-= link_to image_tag("actions/print.png"), course_view_url(@topic,View.find(17), :status => "complete", :title => "Review One", :format => "pdf")
+= link_to image_tag("actions/print.png"), course_view_url(@topic,View.for_user.find_by_name("reviews"), :status => "complete", :title => @window, :format => "pdf")
 = "#{@pub} published reviews"
-= link_to "(print)", course_view_url(@topic,View.find(17), :status => "complete", :title => "Review One", :format => "pdf")
+= link_to "(print)", course_view_url(@topic,View.for_user.find_by_name("reviews"), :status => "complete", :title => @window, :format => "pdf")
 %br
 = image_tag "icons/disciplinaries.png"
 = "#{@unpub} unpublished reviews"
-

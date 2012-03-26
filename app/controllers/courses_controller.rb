@@ -47,8 +47,9 @@ class CoursesController < ApplicationController
   end
 
   def reviews_block
-    @pub =   Review.where(:person_id => @topic.people.map{|p| p.id}, :published => true,  :window => "Review One").count
-    @unpub = Review.where(:person_id => @topic.people.map{|p| p.id}, :window => "Review One").count - @pub
+    @window = Settings.current_review_window
+    @pub =   Review.where(:person_id => @topic.people.map{|p| p.id}, :published => true, :window => @window).count
+    @unpub = Review.where(:person_id => @topic.people.map{|p| p.id}, :window => @window).count - @pub
   end
 
   def add

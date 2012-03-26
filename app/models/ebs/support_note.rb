@@ -12,25 +12,12 @@
 # GNU Affero General Public License for more details.
 
 # You should have received a copy of the GNU Affero General Public License
-# along with Leap.  If not, see <http://www.gnu.org/licenses/>.
+# along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-class ProgressionReview < Eventable
+class Ebs::SupportNote < Ebs::Model
 
-  serialize :reason
+  set_table_name "sdc_ilp_support_notes"
 
-  validates :reason, :presence => true
-
-  before_create {|pr| pr.reason = nil if approved }
-  
-  after_create  do |pr| 
-    ev = pr.events.create! :event_date => created_at, :transition => pr.approved ? :complete : :overdue
-    pr.person.targets.create! :event_id => ev.id, :body => "Speak to a member of Helpzone about alternative courses", :target_date => Date.parse("31-05-2012")
-  end
-
-  def subtitle; approved ? "Approved" : "Not approved" end
-
-  def status; approved ? :complete : :incomplete end
-
-  def title; "Continuing Learning" end
+  belongs_to :person
 
 end
