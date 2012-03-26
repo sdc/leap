@@ -16,6 +16,8 @@
 
 class Review < Eventable
 
+  attr_accessible :attendance, :published, :body, :window
+
   has_many :review_lines, :dependent => :destroy
 
   after_create {|req| req.events.create!(:event_date => created_at - 10, :transition => :create)}
