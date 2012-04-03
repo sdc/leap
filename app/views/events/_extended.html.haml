@@ -31,6 +31,7 @@
             %td= attr.last
       - if Settings.admin_users.split(/,/).include? @user.username    
         = form_for(event.eventable, :url => event, :remote => true, :method => :put, :html => {:class => "event_update_form"}) do |f|
+          = hidden_field_tag :person_id, @topic.mis_id
           %table
             - event.eventable.attributes.each do |attr|
               %tr
