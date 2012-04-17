@@ -69,7 +69,7 @@ class PeopleController < ApplicationController
                  get("#{Settings.moodle_path}/webservice/rest/server.php?" +
                  "wstoken=#{Settings.moodle_token}&wsfunction=moodle_course_get_user_courses&username=" +
                  @topic.username + Settings.moodle_user_postfix).body
-      @moodle_courses =  (Hpricot(mcourses)/'multiple/single').map{|c| [c/"key[@name=id]",c/"key[@name=fullname]",c/"key[@name=canedit]"].map{|e| (e/"value").inner_html}}
+      @moodle_courses = Nokogiri::XML(mcourses).xpath('//MULTIPLE/SINGLE').map{|x| [x.children[1].content,x.children[5].content]}
     rescue
       logger.error "Can't connect to Moodle: #{$!}"
       @moodle_courses = false

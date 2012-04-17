@@ -52,7 +52,6 @@ GEM
     fssm (0.2.7)
     haml (3.1.3)
     hike (1.2.1)
-    hpricot (0.8.4)
     i18n (0.6.0)
     jquery-rails (1.0.16)
       railties (~> 3.0)
@@ -65,6 +64,7 @@ GEM
     mime-types (1.16)
     multi_json (1.0.3)
     mysql2 (0.3.7)
+    nokogiri (1.5.2)
     polyglot (0.3.2)
     rack (1.3.5)
     rack-cache (1.1)
@@ -137,9 +137,9 @@ DEPENDENCIES
   compass (~> 0.12.alpha)
   exception_notification
   haml
-  hpricot
   jquery-rails
   mysql2
+  nokogiri
   rails (= 3.1.1)
   rails-latex
   rails-settings
