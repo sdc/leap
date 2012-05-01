@@ -18,7 +18,7 @@ class Admin::SettingsController < ApplicationController
 
   skip_before_filter :maintenance_mode
   before_filter :admin_only
-  layout "search"
+  layout "admin"
 
   def index
     @settings = Settings.defaults.keys.sort

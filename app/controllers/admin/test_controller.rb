@@ -17,6 +17,7 @@
 class Admin::TestController < ApplicationController
 
   skip_before_filter :set_user
+  layout "admin"
 
   def index
   end
