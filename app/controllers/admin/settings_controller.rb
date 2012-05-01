@@ -14,10 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-class SettingsController < ApplicationController
+class Admin::SettingsController < ApplicationController
 
   skip_before_filter :maintenance_mode
   before_filter :admin_only
+  layout "search"
 
   def index
     @settings = Settings.defaults.keys.sort
@@ -29,7 +30,7 @@ class SettingsController < ApplicationController
         Settings[k] = params[k]
       end
     end
-    redirect_to settings_url
+    redirect_to admin_settings_url
   end
 
 end

@@ -1,6 +1,12 @@
 Ilp2::Application.routes.draw do
 
-  resources :views, :settings
+  namespace :admin do
+    resources :settings
+    match 'test'       => 'test#index', :as => :test
+    match 'stats'      => 'test#stats'
+    match 'test/login' => 'test#login', :as => :test_login
+  end
+  resources :views
   resources :events do
     get "more", :on => :collection
     get "open_extended", :on => :member
@@ -25,9 +31,6 @@ Ilp2::Application.routes.draw do
     end
   end
 
-  match 'test'       => 'test#index', :as => :test
-  match 'stats'      => 'test#stats'
-  match 'test/login' => 'test#login', :as => :test_login
 
   root :to => "people#index"
 end
