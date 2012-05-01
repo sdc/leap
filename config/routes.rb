@@ -1,43 +1,26 @@
 Ilp2::Application.routes.draw do
 
-  resources :views
-  resources :settings
-  resources :timetables
+  resources :views, :settings
   resources :events do
-    collection do
-      get :more
-    end
-    member do
-      get :open_extended
-    end
+    get "more", :on => :collection
+    get "open_extended", :on => :member
   end
   resources :people do
-    resources :events
-    resources :timetables
+    resources :events, :timetables
     resources :views do
-      member do
-        get :header
-      end
+      get "header", :on => :member
     end
-    resources :review_lines
-    collection do
-      get :search
-    end
+    get :search, :on => :collection
     member do
-      get :next_lesson_block
-      get :my_courses_block
-      get :targets_block
-      get :moodle_block
-      get :attendance_block
+      get :next_lesson_block, :my_courses_block, :targets_block
+      get :moodle_block, :attendance_block
     end
   end
   resources :courses do
     resources :views
     resources :timetables
     member do
-      get :next_lesson_block
-      get :moodle_block
-      get :reviews_block
+      get :next_lesson_block, :moodle_block, :reviews_block
       post :add
     end
   end
