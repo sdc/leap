@@ -2,6 +2,7 @@ Ilp2::Application.routes.draw do
 
   namespace :admin do
     resources :settings
+    resources :views
     match 'test'       => 'test#index', :as => :test
     match 'stats'      => 'test#stats'
     match 'test/login' => 'test#login', :as => :test_login
@@ -13,7 +14,7 @@ Ilp2::Application.routes.draw do
   end
   resources :people do
     resources :events, :timetables
-    resources :views do
+    resources :views, :only => [:show] do
       get "header", :on => :member
     end
     get :search, :on => :collection
