@@ -16,8 +16,9 @@
 
 class ReviewLine < Eventable
 
+  attr_accessible :body, :quality, :attitude, :punctuality, :completion, :window, :unit, :review_id
+
   belongs_to :review
-  belongs_to :person
 
   after_create do |line|
     line.review = Review.find_or_create_by_person_id_and_window(person_id, window)
