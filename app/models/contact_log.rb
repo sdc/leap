@@ -12,14 +12,7 @@
 # GNU Affero General Public License for more details.
 
 # You should have received a copy of the GNU Affero General Public License
-# along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
-
-# = Note
-#
-# A note is a simple event consisting of a plain text body. It's intended to be used to capture learners' thoughts in order to
-# turn them into SMART targets in a sturctured manner later on.
-#
-# This model is eventable. It creates a single event when it is created.
+# along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class ContactLog < Eventable
 
