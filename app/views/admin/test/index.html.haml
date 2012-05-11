@@ -8,7 +8,7 @@
     - if Settings.test_logins and !Settings.test_logins.empty?
       = render :partial => "people/login_as", :collection => Settings.test_logins.split(/,/).map{|p|Person.get(p)}
     - else
-      = form_tag test_login_url do
+      = form_tag admin_test_login_url do
         %div
           %label Person Id
         %div= text_field_tag 'login'

@@ -12,24 +12,20 @@
 # GNU Affero General Public License for more details.
 
 # You should have received a copy of the GNU Affero General Public License
-# along with Leap.  If not, see <http://www.gnu.org/licenses/>.
+# along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-class SettingsController < ApplicationController
+class Admin::ViewsController < ApplicationController
 
-  skip_before_filter :maintenance_mode
   before_filter :admin_only
+  layout "admin"
 
   def index
-    @settings = Settings.defaults.keys.sort
+    @views = View.all
   end
 
-  def create
-    Settings.defaults.keys.each do |k|
-      if params[k] 
-        Settings[k] = params[k]
-      end
-    end
-    redirect_to settings_url
+  def edit
+    @event_types=Dir.glob(Rails.root + 'app/models/*.rb').map{|f| File.basename(f, ".rb").classify}
+    @view = View.find_by_name params[:id]
   end
 
 end

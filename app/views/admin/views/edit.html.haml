@@ -1,0 +1,29 @@
+%h1 
+  Editing details for view:
+  = @view.label
+
+= form_for @view do |f|
+  %table.span24
+    %tr
+      %th Label 
+      %td= f.text_field :label
+      %td The name of the view used on links
+    %tr
+      %td Name
+      %td= f.text_field :name
+      %td The text used in the URL for this view
+    %tr
+      %td Icon URL
+      %td= f.text_field :icon_url
+      %td URL of the icon used on links
+    %tr
+      %td Affiliations
+      %td= f.select :affiliations, ["staff","student","applicant","affiliate"], {}, {:multiple => true}
+      %td Which affiliations can see this view
+    %tr
+      %td Events
+      %td= f.select :events, @event_types, {}, {:multiple => true}
+      %td Which event types show in this view
+
+  = submit_tag
+

@@ -14,9 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class TestController < ApplicationController
+class Admin::TestController < ApplicationController
 
   skip_before_filter :set_user
+  layout "admin"
 
   def index
   end

@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
       end
       Person.user = @user = session[:user_id] ? Person.get(session[:user_id]) : nil
       Person.affiliation = @affiliation = session[:user_affiliation]
-      redirect_to test_url unless @user && @affiliation
+      redirect_to admin_test_url unless @user && @affiliation
     else
       Person.affiliation = @affiliation = request.env["affiliation"] ? request.env["affiliation"].split("@").first.downcase : nil
       uname,domain = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"].downcase.split('@')
