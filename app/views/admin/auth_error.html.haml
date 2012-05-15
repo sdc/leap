@@ -1,0 +1,14 @@
+%h2 Authentication Error
+
+%div
+  - if @user
+    Username: 
+    = @user.username
+  - else
+    Username (not in MIS): 
+    = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"]
+%div
+  - if @affiliation
+    Affiliation:
+    = @affiliation
+
