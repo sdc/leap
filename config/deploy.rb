@@ -1,23 +1,16 @@
 require 'bundler/capistrano'
 load 'deploy/assets'
-set :application, "ilp2"
+set :application, "leap"
 set :deploy_to, "/srv/#{application}"
 set :repository,  "git://github.com/sdc/leap.git"
+set :local_repository,  "https://kevtufc@github.com/sdc/leap.git"
 set :scm, :git
 set :use_sudo, false
 default_run_options[:pty] = true
 
-if ENV['environment'] == "production"
-  set :branch, "master"
-  role :web, "leap.southdevon.ac.uk"
-  role :app, "leap.southdevon.ac.uk"
-  role :db,  "leap.southdevon.ac.uk"
-else
-  set :branch, "beta"
-  role :web, "172.20.11.41"
-  role :app, "172.20.11.41"
-  role :db,  "172.20.11.41"
-end
+set :branch, "Swindon"
+role :app, "eilp.swindon-college.ac.uk"
+role :web, "eilp.swindon-college.ac.uk"
 
 namespace :deploy do
   task :start do ; end
