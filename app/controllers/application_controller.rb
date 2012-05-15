@@ -58,7 +58,10 @@ class ApplicationController < ActionController::Base
       Person.affiliation = @affiliation = session[:user_affiliation]
       redirect_to admin_test_url unless @user && @affiliation
     else
-      Person.affiliation = @affiliation = request.env["affiliation"] ? request.env["affiliation"].split("@").first.downcase : nil
+      if request.env["affiliation"]
+        affs = request.env["affiliation"].split(";").map{|a| a.split("@").first.downcase}
+        Person.affiliation = @affiliation = ["staff","student","applicant","affiliate"].find{|a| affs.include? a}
+      end
       uname,domain = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"].downcase.split('@')
       uname = uname[1..-1] if @affiliation[0,1] == "a" if env["eppn"]
       unless Settings.sdc.blank?
@@ -68,7 +71,6 @@ class ApplicationController < ActionController::Base
           uname.gsub!(/^e/,"30")
         end
       end
-      @affiliation = "staff" if @affiliation == "faculty"
       Person.user = @user = Person.get(uname)
       render "admin/auth_error" unless @user && @affiliation
     end
