@@ -7,7 +7,7 @@
     %dt Birth Date:
     %dd.last= @topic.date_of_birth.strftime("%d %B %Y") + " (Age #{@topic.age})"
     %dt Address:
-    %dd= ((@topic.address or ["Unknown"]) + [@topic.town,@topic.postcode]).reject{|x|x.blank?}.join(", ")
+    %dd= raw ((@topic.address or ["Unknown"]) + [@topic.town,@topic.postcode.gsub(/ /,"&nbsp;")]).reject{|x|x.blank?}.join(", ")
     %dt Mobile:
     %dd= @topic.mobile_number or "-"
     %dt Next of Kin:
