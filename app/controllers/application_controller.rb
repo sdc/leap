@@ -68,6 +68,7 @@ class ApplicationController < ActionController::Base
           uname.gsub!(/^e/,"30")
         end
       end
+      @affiliation = "staff" if @affiliation == "faculty"
       Person.user = @user = Person.get(uname)
       render "admin/auth_error" unless @user && @affiliation
     end
