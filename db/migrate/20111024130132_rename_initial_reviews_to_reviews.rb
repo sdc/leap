@@ -13,6 +13,7 @@ class RenameInitialReviewsToReviews < ActiveRecord::Migration
       v.controls = "events/create/review_line"
       v.save
     end
+    add_index :review_lines, :review_id
   end
 
   def down

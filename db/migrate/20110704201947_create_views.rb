@@ -12,6 +12,7 @@ class CreateViews < ActiveRecord::Migration
       t.boolean :in_list
       t.timestamps
     end
+    add_index :views, :name
   end
 
   def self.down

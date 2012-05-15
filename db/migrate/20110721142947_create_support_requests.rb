@@ -5,9 +5,9 @@ class CreateSupportRequests < ActiveRecord::Migration
       t.integer :created_by_id
       t.string :difficulties
       t.string :sessions
-
       t.timestamps
     end
+    add_index :support_requests, :person_id
   end
 
   def self.down

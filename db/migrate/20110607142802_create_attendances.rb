@@ -9,6 +9,8 @@ class CreateAttendances < ActiveRecord::Migration
       t.integer :created_by_id
       t.timestamps
     end
+    add_index :attendances, :person_id
+    add_index :attendances, :week_beginning
   end
 
   def self.down

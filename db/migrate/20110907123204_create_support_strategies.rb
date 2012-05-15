@@ -10,6 +10,8 @@ class CreateSupportStrategies < ActiveRecord::Migration
       t.datetime :declined_date
       t.timestamps
     end
+    add_index :support_strategies, :person_id
+    add_index :support_strategies, :event_id
   end
 
   def self.down

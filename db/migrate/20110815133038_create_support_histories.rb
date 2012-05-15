@@ -7,6 +7,7 @@ class CreateSupportHistories < ActiveRecord::Migration
       t.string :category
       t.timestamps
     end
+    add_index :support_histories, :person_id
   end
 
   def self.down

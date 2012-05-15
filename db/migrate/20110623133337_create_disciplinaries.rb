@@ -7,6 +7,7 @@ class CreateDisciplinaries < ActiveRecord::Migration
       t.integer :created_by_id
       t.timestamps
     end
+    add_index :disciplinaries, :person_id
   end
 
   def self.down

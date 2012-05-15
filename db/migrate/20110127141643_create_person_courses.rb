@@ -11,6 +11,8 @@ class CreatePersonCourses < ActiveRecord::Migration
       t.integer :created_by_id
       t.timestamps
     end
+    add_index :person_courses, :person_id
+    add_index :person_courses, :course_id
   end
 
   def self.down

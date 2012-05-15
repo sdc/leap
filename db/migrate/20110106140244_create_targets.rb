@@ -12,8 +12,8 @@ class CreateTargets < ActiveRecord::Migration
       t.integer :created_by_id
       t.timestamps
     end
-    #add_index :targets, :person_id
-    #add_index :targets, :event_id
+    add_index :targets, :person_id
+    add_index :targets, :event_id
   end
 
   def self.down

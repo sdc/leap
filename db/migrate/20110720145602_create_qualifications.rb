@@ -8,6 +8,7 @@ class CreateQualifications < ActiveRecord::Migration
       t.integer :created_by_id
       t.timestamps
     end
+    add_index :qualifications, :person_id
   end
 
   def self.down

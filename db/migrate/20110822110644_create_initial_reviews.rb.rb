@@ -10,6 +10,7 @@ class CreateInitialReviews < ActiveRecord::Migration
       t.integer :completion
       t.timestamps
     end
+    add_index :initial_reviews, :person_id
   end
 
   def self.down

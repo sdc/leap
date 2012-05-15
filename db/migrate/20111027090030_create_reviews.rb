@@ -8,6 +8,7 @@ class CreateReviews < ActiveRecord::Migration
       t.integer :score
       t.timestamps
     end
+    add_index :reviews, :person_id
   end
 
   def down

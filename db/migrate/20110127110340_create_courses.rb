@@ -7,6 +7,8 @@ class CreateCourses < ActiveRecord::Migration
       t.string :mis_id
       t.timestamps
     end
+    add_index :courses, :title
+    add_index :courses, :code
   end
 
   def self.down

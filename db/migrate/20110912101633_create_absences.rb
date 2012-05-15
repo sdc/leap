@@ -10,6 +10,7 @@ class CreateAbsences < ActiveRecord::Migration
       t.string  :contact_category
       t.timestamps
     end
+    add_index :absences, :person_id
   end
 
   def self.down
