@@ -51,7 +51,10 @@ module MisPerson
       options.reverse_merge! :save => true, :courses => true, :attendances => false, :absences => false,
                              :quals => true, :support_history => false, :support_requests => false, :targets => false
       logger.info "Importing user #{mis_id}"
-      if (ep = (Ebs::Person.find_by_person_code(mis_id) or Ebs::Person.find_by_network_userid(mis_id)))
+      if (ep = (Ebs::Person.find_by_person_code(mis_id) or 
+                Ebs::Person.find_by_college_login(mis_id) or 
+                Ebs::Person.find_by_network_userid(mis_id)
+          ))
         @person = Person.find_or_create_by_mis_id(ep.id)
         @person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
         @person.update_attributes(
