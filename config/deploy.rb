@@ -1,7 +1,7 @@
 require 'bundler/capistrano'
 load 'deploy/assets'
 set :application, "leap"
-set :deploy_to, "/srv/#{application}"
+set :deploy_to, "/var/www/#{application}"
 set :repository,  "git://github.com/sdc/leap.git"
 set :local_repository,  "https://kevtufc@github.com/sdc/leap.git"
 set :scm, :git
