@@ -1,4 +1,4 @@
-%h6= link_to_if @affiliation == "staff", person_course.course.title, (Settings.ebs_course_base_url + person_course.course.mis_id)
+%h6= link_to_if @user.staff? && !Settings.ebs_course_base_url.blank?, person_course.course.title, (Settings.ebs_course_base_url + person_course.course.mis_id)
 .status= person_course.status.humanize
 .details
   - if person_course.start_date

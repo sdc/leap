@@ -4,7 +4,7 @@
 %nav
   = icon_link @affiliation == "staff" ? "Person Home" : "Home", @topic, "home"
   = icon_link "Timetable", person_timetables_url(@topic)
-  - if @affiliation == "staff"
+  - if @affiliation == "staff" and !Settings.ebs_person_base_url.blank?
     = icon_link "SparkE", Settings.ebs_person_base_url + @topic.mis_id.to_s, "sparke"
   - if Settings.admin_users.split(/,/).include? @user.username
     = icon_link "Admin", admin_settings_url, "configure"
