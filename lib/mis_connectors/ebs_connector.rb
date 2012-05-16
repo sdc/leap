@@ -117,11 +117,6 @@ module MisPerson
     end
   end
 
-  def photo_path
-    return Ilp2::Application.config.mis_photo_path + "/" + mis_id.to_s + ".jpg"
-  end
-
-
   def import_courses
     mis_person.people_units.each do |pu|
       next unless pu.uio_id
