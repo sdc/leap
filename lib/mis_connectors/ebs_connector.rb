@@ -130,12 +130,14 @@ module MisPerson
       if pu.unit_type == "A" 
         pc.update_attributes(:status => :not_started,
                              :start_date       => pu.unit_instance_occurrence.qual_start_date,
-                             :application_date => pu.created_date
+                             :application_date => pu.created_date,
+                             :mis_status => pu.progress_code
                             )
       elsif pu.unit_type == "R"
         pc.update_attributes(:enrolment_date => pu.created_date,
                              :start_date     => pu.unit_instance_occurrence.qual_start_date,
                              :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
+                             :mis_status => pu.progress_code,
                              :end_date => [:complete,:incomplete].include?(Ilp2::Application.config.mis_progress_codes[pu.progress_code]) ? pu.progress_date : pu.unit_instance_occurrence.qual_end_date)
       end
     end
