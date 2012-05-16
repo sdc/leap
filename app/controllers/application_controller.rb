@@ -63,7 +63,6 @@ class ApplicationController < ActionController::Base
         Person.affiliation = @affiliation = ["staff","student","applicant","affiliate"].find{|a| affs.include? a}
       end
       uname,domain = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"].downcase.split('@')
-      uname = uname[1..-1] if @affiliation[0,1] == "a" if env["eppn"]
       unless Settings.sdc.blank?
         if @affiliation == "student" and uname.match(/^[sne]/) 
           uname.gsub!(/^s/,"10")
