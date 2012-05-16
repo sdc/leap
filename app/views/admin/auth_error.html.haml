@@ -6,7 +6,7 @@
     = @user.username
   - else
     Username (not in MIS): 
-    = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"]
+    = request.env[ request.env["eppn"] ? "eppn" : "REMOTE_USER"]
 %div
   - if @affiliation
     Affiliation:
