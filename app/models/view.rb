@@ -21,6 +21,11 @@ class View < ActiveRecord::Base
   serialize :affiliations
   serialize :controls
 
+  validates :transitions, :presence => true
+  validates :events, :presence => true
+  validates :affiliations, :presence => true
+  validates :name, :presence => true
+
   scope :for_user,    lambda { where('affiliations like ?', "%#{Person.affiliation}%")}
   scope :in_list, where(:in_list => true)
 
