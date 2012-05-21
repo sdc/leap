@@ -1,9 +1,0 @@
-= form_for @topic.events.new(:eventable_type => "Goal") do |f|
-  %h3
-    Add a goal 
-  .icon= image_tag "events/goals.png"
-  = f.text_area :body
-  = f.hidden_field :person_id
-  = f.hidden_field :eventable_type
-  = hidden_field_tag :person_id, @topic.mis_id
-  .sumbit= submit_tag "Add Goal"

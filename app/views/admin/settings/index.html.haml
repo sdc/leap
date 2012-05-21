@@ -1,8 +1,0 @@
-%h1 Settings
-= form_for :settings do
-  %table
-    - @settings.each do |setting|
-      %tr
-        %td= setting.humanize
-        %td= text_field_tag setting, Settings[setting]
-  = submit_tag

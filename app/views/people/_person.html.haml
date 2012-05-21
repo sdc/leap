@@ -1,8 +1,0 @@
-.person
-  = link_to person_url(person, :refresh => true), {:title => person.name} do
-    .person_photo= image_tag("#{url_for(person)}.jpg")
-    .details
-      %h3= truncate(person.name, :length => 17)
-      %h5.quiet= person.mis_id
-      - if person.date_of_birth and person.date_of_birth != Date.new(1901,1,1)
-        %h5.dob.quiet= person.date_of_birth.strftime("%d %b %Y")

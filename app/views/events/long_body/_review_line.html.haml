@@ -1,5 +1,0 @@
-%b
-  = review_line.created_by.name
-  = raw "(<i>#{review_line.unit}</i>)" if !review_line.unit.try("blank?")
-%br
-= raw event_format review_line.body

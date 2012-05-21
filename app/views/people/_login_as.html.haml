@@ -1,8 +1,0 @@
-.person{:style => "height:110px"}
-  .person_photo= image_tag("#{url_for(login_as)}.jpg")
-  .details
-    %h3= truncate(login_as.name, :length => 17)
-    %h5.quiet= login_as.mis_id
-    - ["staff","student","affiliate","applicant"].each do |aff|
-      = link_to aff, person_url(login_as, :login_as => aff)
-      = "|"

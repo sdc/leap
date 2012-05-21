@@ -1,7 +1,0 @@
-%div[slot]{:style => "top:#{slot.timetable_margin + 105}px;height:#{slot.timetable_height}px", :o_height => slot.timetable_height, :class => slot.css_classes}
-  .inner
-    .course_title= slot.title
-    %time= "#{slot.start.strftime('%H.%M')} - #{slot.end.strftime('%H.%M')}"
-    .rooms= slot.rooms.join ", "
-    .teachers= slot.teachers.map{|t| t.name}.join ", "
-    .mark= slot.mark

@@ -1,7 +1,0 @@
-<%= begin 
-     render :partial => "events/latex/#{event.eventable_type.underscore}", :object => event.eventable, :locals => {:event => event}
-   rescue ActionView::MissingTemplate
-     # Do nowt
-   end
-%>
-

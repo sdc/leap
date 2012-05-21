@@ -1,9 +1,0 @@
-#person_photo= image_tag("courses.png", :size => "130x130")
-%h1= @topic.name
-%h5.quiet= link_to @topic.code, Settings.ebs_course_base_url + @topic.mis_id.to_s
-%nav
-  = icon_link "Course Home", @topic, "home"
-  = icon_link "Timetable", course_timetables_url(@topic)
-  = icon_link "SparkE", Settings.ebs_course_base_url + @topic.mis_id.to_s, "sparke"
-  %h3 Events
-  = render @views

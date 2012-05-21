@@ -1,7 +1,0 @@
-.person{:class => [cycle("first",nil,nil,"last"),status]}
-  = link_to person_url(person, :refresh => true) do
-    .person_photo= image_tag("#{url_for(person)}.jpg")
-    .details
-      %h3= truncate(person.name, :length => 17)
-      %h5.quiet= person.mis_id      
-      .status{:class => "fg_#{status}"}= status.humanize
