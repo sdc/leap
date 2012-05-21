@@ -24,4 +24,4 @@ Settings.defaults[:delete_delay]                 = 1.hour
 Settings.defaults[:review_windows]               = "test_review"
 Settings.defaults[:current_review_window]        = "test_review"
 Settings.defaults[:progression_reviews_reasons]  = "Not working at required level,Non-attendance,Changed mind about Career Aim/going onto a different course,Non-submission of work,Not achieving targets,Inappropriate behaviour"
-Settings.defaults[:photo_path_code]              = '"#{@topic.mis_id}.jpg"'
+Settings.defaults[:photo_path_code]              = '"#{mis_id}.jpg"'
