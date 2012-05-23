@@ -29,6 +29,16 @@ Apologies for not posting for ages; I&#8217;ve been distracted by other projects
 <p>The eilp project is continuing apace, however, and I&#8217;ve got a new lump of functionality to show you: timetables. The timetables have always been a popular part of the current ilp and it comes with its own issues. The biggest of these is the sheer amount of information needed to be pulled from the <span class="caps">MIS</span>. I don&#8217;t really want to import this info like I do with the personal details and enrolment data, since it changes very quickly and a good feature of the current timetable has been its real-time nature; attendance marks are updated immediately. Checking for and importing changes every time would be far too slow. So I&#8217;ve opted for a compromise. The data is read in real time from the <span class="caps">MIS</span> and converted into in-memory models which are displayed on screen.</p>
 <p>It all seems to work quite well. It&#8217;s not completely finished though. Missing from this screenshot is a way to navigate to other weeks and the register maks themselves. Also, I will be adding the teachers&#8217; names.</p>
 <p>There is another issue. Everyone uses different register marks. <span class="caps">EBS</span> lets you arbitrarily make them up. There&#8217;s no way I can program in all the possible ways and nuances for each different type of absence, sickness, etc. Luckily, <span class="caps">EBS</span> helps us a bit here. It has a table to map between the college&#8217;s attendance marks and a generic present, absent or sick mark. That&#8217;s where the colour-coding comes from. This will work across any institution and will be what I use to calculate attendance percentages from. I just hope other <span class="caps">MIS</span> systems have a similar feature!</p>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'sdcgithub';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
 
       </div>
