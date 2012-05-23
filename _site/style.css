@@ -34,6 +34,8 @@ h1, h2 {
     color: inherit; }
 
 header nav {
+  font-family: sans-serif;
+  text-size: 18px;
   margin: 20px 0; }
 
 #posts, #post {
