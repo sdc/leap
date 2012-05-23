@@ -8,4 +8,4 @@ Once we've got some breathing space I'll post some more in depth information abo
 
 For now, though, I've bundled up a screenshot of the home page each person sees as a nice taster of how things are going.
 
-!/images/blog/leap_home.png!
+!/leap/images/blog/leap_home.png!

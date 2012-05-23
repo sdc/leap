@@ -3,16 +3,16 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>Extra Details and Functionality for Some Events</title>
-    <link rel="stylesheet" href="/style.css" type="text/css" />
+    <link rel="stylesheet" href="/leap/style.css" type="text/css" />
   </head>
   <body>
     <div id="container">
       <header>
-        <h1><a href="/"><img src="/images/leap-logo.png" alt="Leap" /></a></h1>
+        <h1><a href="/"><img src="/leap/images/leap-logo.png" alt="Leap" /></a></h1>
         <h2>Open Source Electronic Individual Learning Plans</h2>
         <nav>
-          <a href="/">Home</a>
-          <a href="/blog.html">Blog</a>
+          <a href="/leap/">Home</a>
+          <a href="/leap/blog.html">Blog</a>
           <a href="http://github.com/sdc/leap">Code</a>
         </nav>
       </header>
@@ -22,7 +22,7 @@
   <h1>Extra Details and Functionality for Some Events</h1>
   <p>Having all these different types of event looking the same and being treated the same is excellent for consistency of user interface and re-usability of code but some types of event need some extra functionality. A perfect example of this is targets. The abstracted functionality of events is OK for setting and displaying targets, reminding us when their due and noting their completion, but how does the user make a target completed? And how do they provide reflective comments on that completion?</p>
 <p>So, I&#8217;ve come up with a tabbed interface on the extended part of events which can display arbitrary info and controls from the type of event. This is the interface for targets:</p>
-<p><a href="/images/blog/target_event.png"><img src="/images/blog/target_event_thumb.png" alt="" /></a></p>
+<p><a href="/leap/images/blog/target_event.png"><img src="/leap/images/blog/target_event_thumb.png" alt="" /></a></p>
 <p>The idea is that an event can declare that it has some functionality for the extended pane and return a path to a partial template to display it. If there is one, a tabbed interface is used, showing both that an the &#8216;New Target&#8217; interface already designed. If there isn&#8217;t one, we just show the &#8216;New Target&#8217; bit as before, without any tabs. Simple to code and use.</p>
 <p>As it happens, I have now implemented much of the event functionality I&#8217;ve talked about here, and it&#8217;s working well. I&#8217;ll soon post some screenshots of the working system to go along with these mockups and, hopefully, I&#8217;ll soon have permission to open up the code repo on GitHub too!</p>
 </div>

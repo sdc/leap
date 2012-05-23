@@ -7,7 +7,7 @@ Having all these different types of event looking the same and being treated the
 
 So, I've come up with a tabbed interface on the extended part of events which can display arbitrary info and controls from the type of event. This is the interface for targets:
 
-"!/images/blog/target_event_thumb.png!":/images/blog/target_event.png
+"!/leap/images/blog/target_event_thumb.png!":/leap/images/blog/target_event.png
 
 The idea is that an event can declare that it has some functionality for the extended pane and return a path to a partial template to display it. If there is one, a tabbed interface is used, showing both that an the 'New Target' interface already designed. If there isn't one, we just show the 'New Target' bit as before, without any tabs. Simple to code and use.
 

@@ -7,25 +7,25 @@ This is going to be a little bit abstract, but it's quite important to how the g
 
 One of the aims of ilp2 (yes, I know it needs a proper name) is to simplify development and maintenance. One of the ways we're doing this is to represent everything in the system as an event. We have objects and database tables for all the object themselves (courses, targets, people, whatever) but each of them is associated with one or more events, and it's only ever the _event_ that is displayed on screen.
 
-!/images/blog/objects_and_events.png!
+!/leap/images/blog/objects_and_events.png!
 
 This dramatically reduces duplication of code (something which is rampant in the current ilp) and enables us to do things like enforce security in one place, rather than all over the place.
 
 But most of the information is stored in the object itself. When we display an event on the screen, it asks its associated object for the information to display. The object knows which information to return, because each event is a _transition_ and this state is passed to the object. Now the transition doesn't really mean anything, it's just a label (actuallly a ruby symbol) which is passed, but the object needs to have some idea of what that means. So I've come up with some standard transitions which map well to the sorts of events we're going to need:
 
-!/images/blog/event_status.png!
+!/leap/images/blog/event_status.png!
 
 That looks a little like a state machine doesn't it? It's not, though. It's just some labels; the arrows are to add meaning to them for us but aren't actually represented in the system. (I did look into using a state machine for this, but it seemed that it just added complexity for no real gain).
 
 So how about some examples of how these map to real objects like courses or targets?
 
-!/images/blog/eventsandtransitions.png!
+!/leap/images/blog/eventsandtransitions.png!
 
 A nice by-product of this is a simple way to produce pages showing certain types of information. The current ilp has links to pages for a specific learner with, for instance, their courses or their targets on it. We already have filtering events by type, and now I can do filtering by transition. With these two you can build any page you want. A list of enrolments? Just show the events where eventable_type is course and transition is start. Obviously we can't expect users to work this out for themselves, but convienience links can be built which will do this for you. These can be configurable and, because they're really only links to to the list of events with a few extra parameters, it all just works!
 
 That's how we're going to build the sidebar:
 
-!/images/blog/sidebar2.png!
+!/leap/images/blog/sidebar2.png!
 
 Except for the timetable and home links. They're special cases. As an aside, see the number below the name? That's the Unique Learner Number (actually it's mine!). We're using that everywhere instead of internal user ids to prevent problems in the future.
 

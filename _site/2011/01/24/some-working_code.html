@@ -3,16 +3,16 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>Some Working Code</title>
-    <link rel="stylesheet" href="/style.css" type="text/css" />
+    <link rel="stylesheet" href="/leap/style.css" type="text/css" />
   </head>
   <body>
     <div id="container">
       <header>
-        <h1><a href="/"><img src="/images/leap-logo.png" alt="Leap" /></a></h1>
+        <h1><a href="/"><img src="/leap/images/leap-logo.png" alt="Leap" /></a></h1>
         <h2>Open Source Electronic Individual Learning Plans</h2>
         <nav>
-          <a href="/">Home</a>
-          <a href="/blog.html">Blog</a>
+          <a href="/leap/">Home</a>
+          <a href="/leap/blog.html">Blog</a>
           <a href="http://github.com/sdc/leap">Code</a>
         </nav>
       </header>
@@ -23,13 +23,13 @@
   <p>It occurs to me that so far, on this blog, I&#8217;ve only shown mockups and discussed ideas without giving any clue to the fact that development is underway and moving forward quite briskly. Much of the work so far has been on data modelling end of the system, so there&#8217;s not a lot that I can really show but some of the event view has been written, so I thought I&#8217;d upload some screenshots of that.</p>
 <p>The screenshots are of a new &#8216;Mumble&#8217; type event, closed and open, and what happens when you attach a new target to that. Obviously this all sits within a layout, but I&#8217;m not showing that yet because it doesn&#8217;t look up to much.</p>
 <h2>Note Event<br />
-<img src="/images/blog/closed_note.png" alt="" /></h2>
+<img src="/leap/leap/images/blog/closed_note.png" alt="" /></h2>
 <h2>Settin a Target on the Note Event<br />
-<img src="/images/blog/open_note.png" alt="" /></h2>
+<img src="/leap/images/blog/open_note.png" alt="" /></h2>
 <h2>Target Now Set<br />
-<img src="/images/blog/set_target.png" alt="" /></h2>
+<img src="/leap/images/blog/set_target.png" alt="" /></h2>
 <h2>Target Feedback<br />
-<img src="/images/blog/open_target.png" alt="" /></h2>
+<img src="/leap/images/blog/open_target.png" alt="" /></h2>
 <p>This looks better in practice than on these screenshots, because you can&#8217;t see all the nice <span class="caps">AJAX</span> and Scriptaculous animation, but it&#8217;s something to look at. There&#8217;s quite a lot of work gone on behind these admittedly simple-looking blocks of <span class="caps">HTML</span>, which should mean that the perceived speed of development should increase quite rapidly as I move from this low-level code, to implementing new event types over the top.</p>
 <p>As far as the more data-oriented stuff goes, I&#8217;ve got learners&#8217; personal details imporing from our <span class="caps">MIS</span> and being cached in the ilp database, and I&#8217;ve put out some testing tools to login as users without having to go through Shibboleth (which is how I expect login to work on a production system). I&#8217;ve also got pretty good coverage with unit tests, which is something I always regretted not doing with the old eilp system.</p>
 </div>
