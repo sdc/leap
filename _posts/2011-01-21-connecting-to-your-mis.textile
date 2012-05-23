@@ -1,0 +1,26 @@
+---
+title: Connecting to your MIS
+layout: post
+---
+
+A huge advantage of our current eilp is the direct connection to Management Information Data. This means we get student and course data which we know is correct, in real time. A student can enrol on a course, walk round the corner, log into eilp and see that enrolment straight away. The timetable is updated with attendance data as soon as the register is taken. Also, no massive overnight batch jobs are needed to keep things in sync and noone has to work on the data... it just _works._
+
+We want to keep all these advantages in the new system, but a new requirement is MIS independence. We use EBS at South Devon College, but we want you to (theoretically) be able to use any MIS. So this is how we're doing it. We're going to model the MIS data we need for each MIS type in their own namespace. Now we can't talk to these models straight from the ILP models, since they may work completely seperately, so we have an _mis_connector_ for each MIS. Ilp classes talk to this, which get the right data and return it to the Ilp using standard ilp models:
+Mis_connectors_general
+
+!/images/blog/mis_connectors_general.png!
+
+How about an example? This UML-ish class diagram shows you the actual classes carrying out a request for a new Person object:
+
+"!/images/blog/person_connection_thumb.png!":/images/blog/person_connection.png
+
+The Person class has a get method which, in turn, loads the get_person object from the MisConnector. What happens next depends on which MisConnector you have loaded (which will be easily configurable). In this specific example, it invokes the Ebs::Person and Ebs::Address classes to get the data it needs from the MIS and then returns a fully formed standard ilp Person Model. This is cached on the ilp's database for speed - and so it all still works when the MIS goes down.
+
+To begin with, we're only working on a connector for EBS, because that's what we need to replace our current system. But this abstraction should let us talk to any MIS by Modelling the MIS data and writing an MisConnector to do the translation.
+Issues to think about.
+
+* How much should we read from the cached data, and how often should we refresh it from the MIS?
+* Should some time-critical information like timetables be read directly from the MIS without caching?
+* Should we do something similar for connections to VLE? Or just assume Moodle?
+
+

@@ -1,0 +1,15 @@
+---
+title: Source Code Available
+layout: post
+---
+
+Just a quick post to say that the source is now released for leap.
+
+Head on down to "http://github.com/sdc/leap":http://github.com/sdc/leap
+
+There is an issue, however. We've released the source, as we said we would and will continue to do, but it's not going to work at your institution... yet. The first goal of Leap was to replace the current system in use at South Devon College and, as such, we've made some assumptions which are not going to cause problems somewhere else.
+
+It's not all bad, though. The system has been designed to work elsewhere, and SDC-specific bits are quite small.
+
+If you are at an institution (we'd prefer one using EBS to start with) and you're interested, please get in contact and we can start work on getting the system fully portable.
+

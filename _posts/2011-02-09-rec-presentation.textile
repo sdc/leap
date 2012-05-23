@@ -1,0 +1,12 @@
+---
+title: JISC RSC Presentation
+layout: post
+---
+
+I presented about ilp2 at the JISC RSC SW VLE Forum today. Thanks to everyone for the interest demonstrated. It's relieving to see that everyone seemed to 'get' the project and there was more than a little interest.
+
+I'd like to extend the invitation to eveyone again, if you're in any way interested, to get involved in the project. The involvement can take any form from discussion, through testing and up to full involvement in development. We're determined to set this project free, you won't be involved in my project or South Devon College's project, but yours. If you want any more information, email me, comment on weblog posts, talk to me on twitter or any other way you can find to communicate :)
+
+Here's the presentation I gave today. The first few slides show functionality in the current (ilp1) system being used at South Devon College, most of which will be replicated, and hopefully improved, in the new version. The second half is an introduction to some of the ideas to go in ilp2.
+
+<iframe class="scribd_iframe_embed" src="http://www.scribd.com/embeds/94535730/content?start_page=1&view_mode=slideshow&access_key=key-dexnyutm78dkg11n6ca&secret_password=2cy8wktz4cb7ic2e7dzi" data-auto-height="false" data-aspect-ratio="1.33115468409586" scrolling="no" id="doc_45008" width="500" height="400" frameborder="0"></iframe>

@@ -1,0 +1,10 @@
+---
+title: Presenting at the JISC South West VLE Forum
+layout: post
+---
+
+I'm going to be at the next JISC South West RSC VLE Forum at Taunton School on 9th February 2011. I'll be doing a presentation about the ILP project. I haven't written the presentation yet, but there'll be something about why the project is happening, what ideas we've got for it, and how far we've got with them. Plus, of course, questions and (hopefully) answers. I'll be demonstrating our current ilp, where it's relevant, and some early work on the new system.
+
+If you have any interest in the project, please come along. I'm happy to talk about any aspect of it with anyone. And if there's anything anyone would like me to cover in the presentation, tell me and I'll try to fit it in.
+
+To sign up for the forum, go to the "South West RSC's event page.":http://www.rsc-south-west.ac.uk/index.php?p=14

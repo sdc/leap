@@ -1,0 +1,9 @@
+---
+title: Towards a New EILP
+layout: post
+---
+At "South Devon College":http://www.southdevon.ac.uk, we've been running our own, in house, eilp for a few years now. It's been hugely successful, improving access to individual student data for both the students themselves and the staff who work with them and contributing to the college's culture of outstanding teaching and learning.
+
+Over time, more and more functionality was added to the system, but development was not being done in the most structured matter. It had become bloated and had expanded in all directions. New development was being rushed and focus was being lost. Worst of all, much of the new development was concentrating on staff use, not the learner experience. Not that things are bad. Staff and students are still using it successfully every day, but it was decided that a major new revision would be developed with the learner at the centre. And we also made another decision: that the new developments would be open source. We would engage with the community and develop a top-quality system that everyone can use.
+
+At the moment, we're still in the design stage, but some decisions have been made, and some proof-of-concept code has been written. We've now set up this site to hopefully help encourage the growth of a community and as a place to log and discuss development. Hopefully you'll see exciting ideas evolve and come together to build a system which will be of benefit to all of us.

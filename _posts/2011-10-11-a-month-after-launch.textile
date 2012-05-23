@@ -1,0 +1,20 @@
+---
+title: A Month After Launch
+layout: post
+---
+
+So Leap has been in production use at South Devon College for just over a month now. It's seeing over a thousand logins a day (during the week) with over two thirds of those being from students. 
+
+As far as teething problems go, we've been pretty happy (touch wood). A few tweaks here and there and some problems caused by timetables (out of my control), but mostly Leap has sailed through with no outages or particularly bad problems.
+
+It's a learning process at the moment. It's actually being used pretty well by students and staff already but, once things have settled, we're going have to start helping people to really get the most out of the system.
+
+It's also still a development system. I'm rolling out features all the time, but come half term (in a couple of weeks) I'm going to call it 1.0 and we'll settle into a release cycle. To start with it's probably going to be half-termly to begin with, but we'll see how it goes.
+
+So students have been making notes, setting and meeting targets, checking timetables and whatnot. Staff have been enthusiastic in their take-up of features like contact logs and they'll soon be into writing the first proper reviews. By the way, reviews aren't in the repo yet, but will be by the end of half term.
+
+We now have a hastily thrown-together website for the project at http://leap-ilp.com which I'll hopefully make a bit better when time allows.
+
+We also have some features that haven't been mentioned on this blog: home pages for courses, a "my courses" block for staff, absence reporting (although this won't work outside of SDC yet) and, oh loads more. But there is an issue, which is that documentation is thin on the ground anyway. Now that the system is launched I hope to make some regular posts about the use of the system, instead of that technical stuff and then we could well tie that stuff together to make a user guide.
+
+Anyway, I'm off to create a presentation for the RSC SW VLE Forum on Thursday...

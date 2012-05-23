@@ -1,0 +1,18 @@
+---
+title: Target Setting
+layout: post
+---
+
+Target setting is central to any individual learning plan, and we intend to put it at the centre of the new eilp. One of the issues with our current system was that, although target setting was good as far as it went, it was somewhat isolated from everything else - actually this was a general design issue with the old system: everything was isolated from everything else.
+
+With the new system we want learners to be able to set targets when and where they make sense and the best way to achieve this is to attach it to the event system. Any event in the system can have a target attached to it, and that new target will automatically generate new events (which could, in turn, have more targets set against them!).
+
+One of the reasons the event system occurred to me was the issue of us wanting high-quality SMART targets from learners, but also want them to be able to log targets themselves. The mumble (bad name, might be changed) event type lets this happen. Learners can post a mumble (just some text, whatever they're thinking about) easily, possibly from the front screen - more on that later - and it pops up in the event system to be turned into a decent target when the time is right.
+
+Lets have a look at some possibilities for a target-setting interface:
+
+"!/images/blog/set_a_target_thumb.png!":/images/blog/set_a_target.png
+
+You open up an event (in this case a note broadcast to everyone to remind them of an upcoming theme week) and they can set a target against that. The event itself serves as a way to inspire thinking about certain types of target learners may want to set (you can easily imagine other targets being set against set assignments or attendance data) and the target stays with that even for ever - as well as generating its own events to remind the learner what he or she wants to work towards.
+
+The second example here shows how some events could specialise. This attendance target won't let you set unachievable attendance targets.

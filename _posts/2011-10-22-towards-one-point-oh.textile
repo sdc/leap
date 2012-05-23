@@ -1,0 +1,28 @@
+--- 
+title: Towards 1.0. Rails 3.1, Jquery, coffeescript and refactoring.
+layout: post
+---
+
+Before I start this post, I'd like to say thanks to all for the warm reception and genuine interest we received at the VLE forum. Hopefully we can make this a true collaborative project in the near future!
+
+I've already mentioned that we're making a release after half-term (next week) that we will call 1.0. This is by no means going to mean a pause in development but I'm going to talk about a few changes we'll see in 1.0
+
+h2. Rails 3.1
+
+We're making the jump to Rails 3.1, including use of lots of its goodness. All the images, javascript and stylesheets are using the asset pipeline. This should have a few positive effects on Leap, speed and such, but my favourite is that it's simplifying the codebase; the javascript libraries are now stored in gems on the server so they're removed from Leap's repositories (I wonder if Ohloh will recognise it as a ruby project instead of a JS one now!) and only the SCSS source of stylesheets instead of the compiled ones. A major goal of Leap development is to kep the code small and easily maintainable by a tiny development team.
+
+h2. Jquery
+
+Rails 3.1 has changed the default javascript framework from Prototype to Jquery, and we're doing the same with Leap. I did like Prototype, but learning Jquery has proved interesting and I've been able to remove a lot of complexity where AJAX is used to do things like open up the extended pulldown on events. I'm hoping (but am not able to check until Monday) that it's also going to clear up some issues I had with Internet Explorer compatibility.
+
+h2. Coffeescript
+
+Also related with the move to Rails 3.1 and the asset pipeline, I've rewritten all the JS as coffeescript. I found coffeescript lovely to start to learn and makes all that ugly JS much more expressive.
+
+h2. Reviews
+
+Reviews will finally be in, written to a spec we've come up with at South Devon College. We've had the stop-gap initial reviews for a while and, as it turns out, the full reviews will be much influenced by their sucess. This will be the subject of a full post to come.
+
+h2. And more!
+
+There's been a few smaller features: deleting events (for a configurable amount of time after they're created) is a good example, and there's been some more refactoring of eventable objects into pure event behaviour. After 1.0 release I'm going to have to do some serious documentation on how this stuff works...

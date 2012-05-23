@@ -1,0 +1,11 @@
+---
+title: Home Page Screenshot
+layout: post
+---
+As is traditional for weblogs about developing a software system, I will start off with an apology about the lack of updates. Happily, the cause of this isn't that development has slowed; rather it is continuing at a frantic pace to ready things for the the release of Leap into production at South Devon College.
+
+Once we've got some breathing space I'll post some more in depth information about things I haven't covered yet including some really interesting (well, to me) stuff about how the different views of events are built (one line the database!) for different types of users, and I hope to actually start talking about how the system can be used from a teaching perspective.
+
+For now, though, I've bundled up a screenshot of the home page each person sees as a nice taster of how things are going.
+
+!/images/blog/leap_home.png!

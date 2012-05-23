@@ -1,0 +1,53 @@
+@import url(http://fonts.googleapis.com/css?family=Kreon:400,700);
+@import url(http://fonts.googleapis.com/css?family=Doppio+One:400,700);
+
+body {
+  background: #fff;
+  font-family: 'Kreon';
+  color: #666;
+  font-size:14px;
+}
+
+#container {
+  width:600px;
+  margin: auto;
+}
+
+a        {text-decoration: none}
+a:hover  {text-decoration: underline}
+a,
+a:visited{color: #008}
+
+h1 {font-size: 25px}
+h2 {font-size: 17px}
+
+h1,h2 {
+  font-family: sans-serif;
+  margin:0;
+  letter-spacing: -1px;
+  a,a:visited {color: inherit}
+}
+
+header nav {
+  margin: 20px 0;
+}
+
+#posts,#post {
+  clear: both;
+  line-height:1.4;
+  time {
+    font-family: 'Doppio One',monospace;
+    font-size: 11px;
+    margin:0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+  }
+  h1,h2 {
+    margin:0;
+    color: #444;
+  }
+  .post {
+    margin-bottom:60px;
+  }
+}

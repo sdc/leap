@@ -1,0 +1,14 @@
+---
+title: Extra Details and Functionality for Some Events
+layout: post
+---
+
+Having all these different types of event looking the same and being treated the same is excellent for consistency of user interface and re-usability of code but some types of event need some extra functionality. A perfect example of this is targets. The abstracted functionality of events is OK for setting and displaying targets, reminding us when their due and noting their completion, but how does the user make a target completed? And how do they provide reflective comments on that completion?
+
+So, I've come up with a tabbed interface on the extended part of events which can display arbitrary info and controls from the type of event. This is the interface for targets:
+
+"!/images/blog/target_event_thumb.png!":/images/blog/target_event.png
+
+The idea is that an event can declare that it has some functionality for the extended pane and return a path to a partial template to display it. If there is one, a tabbed interface is used, showing both that an the 'New Target' interface already designed. If there isn't one, we just show the 'New Target' bit as before, without any tabs. Simple to code and use.
+
+As it happens, I have now implemented much of the event functionality I've talked about here, and it's working well. I'll soon post some screenshots of the working system to go along with these mockups and, hopefully, I'll soon have permission to open up the code repo on GitHub too!

@@ -1,0 +1,40 @@
+--- 
+title: Leap
+layout: post
+---
+
+!/images/blog/leap.png!
+
+So we're getting close to launch time for the new eilp at South Devon College - and we've got a new name and logo to go with it. The name is Leap and the logo you see above you. I'm not going to go into the name or logo much because names don't matter. If Leap does the job as a system then the name will be OK.
+
+I thought I'd list what's working so far. It's just a list, I'm not going to go too deeply into the functionality yet, but it'll give an idea of what Leap is capable of - and what's still to be done!
+
+So far this stuff works:
+
+* Authentication, handled by Shibboleth supporting Staff and Student affiliations.
+* Searching for people by name or id in Leap.
+* Searching for people by name or id in the MIS and automatically importing them.
+* Most of the home page for students including:
+** Personal Details
+** Posting notes to own event list
+** Next lesson from timetable (with location)
+** Attendance summary with graph
+** Targets to be met
+** Link to moodle courses (automatically built using Moodle's web services)
+* Events list including:
+** Enrolments - automatically pulled in from MIS
+** Targets which can be set by students or staff against any other event and automatically generate timely reminders
+** Contact Logs - showing the photo of the contact
+** Support Requests with sessions pulled from timetable.
+** Positive Intervention 
+** Qualification achieved - pulled in from MIS and can be added
+** Notes - can be added by students
+* Course views showing event information for all students on a course
+* All People view showing filtered events across the whole system.
+* Timetables with live attendance data
+* Probably a couple of other things I've temporarily forgotten.
+
+Next up:
+
+* Reviews. This partly works with a couple of issues. Should be sorted in the next week or so.
+

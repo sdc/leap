@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Events and Transitions</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" />
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        <h1><a href="/"><img src="/images/leap-logo.png" alt="Leap" /></a></h1>
+        <h2>Open Source Electronic Individual Learning Plans</h2>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/blog.html">Blog</a>
+          <a href="http://github.com/sdc/leap">Code</a>
+        </nav>
+      </header>
+      <div id="content">
+        <div id="post">
+  <time>24 Feb 2011</time>
+  <h1>Events and Transitions</h1>
+  <p>This is going to be a little bit abstract, but it&#8217;s quite important to how the guts of this system are going to work&#8230;</p>
+<p>One of the aims of ilp2 (yes, I know it needs a proper name) is to simplify development and maintenance. One of the ways we&#8217;re doing this is to represent everything in the system as an event. We have objects and database tables for all the object themselves (courses, targets, people, whatever) but each of them is associated with one or more events, and it&#8217;s only ever the <em>event</em> that is displayed on screen.</p>
+<p><img src="/images/blog/objects_and_events.png" alt="" /></p>
+<p>This dramatically reduces duplication of code (something which is rampant in the current ilp) and enables us to do things like enforce security in one place, rather than all over the place.</p>
+<p>But most of the information is stored in the object itself. When we display an event on the screen, it asks its associated object for the information to display. The object knows which information to return, because each event is a <em>transition</em> and this state is passed to the object. Now the transition doesn&#8217;t really mean anything, it&#8217;s just a label (actuallly a ruby symbol) which is passed, but the object needs to have some idea of what that means. So I&#8217;ve come up with some standard transitions which map well to the sorts of events we&#8217;re going to need:</p>
+<p><img src="/images/blog/event_status.png" alt="" /></p>
+<p>That looks a little like a state machine doesn&#8217;t it? It&#8217;s not, though. It&#8217;s just some labels; the arrows are to add meaning to them for us but aren&#8217;t actually represented in the system. (I did look into using a state machine for this, but it seemed that it just added complexity for no real gain).</p>
+<p>So how about some examples of how these map to real objects like courses or targets?</p>
+<p><img src="/images/blog/eventsandtransitions.png" alt="" /></p>
+<p>A nice by-product of this is a simple way to produce pages showing certain types of information. The current ilp has links to pages for a specific learner with, for instance, their courses or their targets on it. We already have filtering events by type, and now I can do filtering by transition. With these two you can build any page you want. A list of enrolments? Just show the events where eventable_type is course and transition is start. Obviously we can&#8217;t expect users to work this out for themselves, but convienience links can be built which will do this for you. These can be configurable and, because they&#8217;re really only links to to the list of events with a few extra parameters, it all just works!</p>
+<p>That&#8217;s how we&#8217;re going to build the sidebar:</p>
+<p><img src="/images/blog/sidebar2.png" alt="" /></p>
+<p>Except for the timetable and home links. They&#8217;re special cases. As an aside, see the number below the name? That&#8217;s the Unique Learner Number (actually it&#8217;s mine!). We&#8217;re using that everywhere instead of internal user ids to prevent problems in the future.</p>
+<p>I&#8217;ve used this stuff to build up to how we&#8217;re going to to learner reviews. That&#8217;ll be the subject of my next post.</p>
+<p>As always, please comment on any of this stuff. If you see a horrible problem up the road, I&#8217;d much rather hear about it now! Much of this design is extending three years&#8217; experience of eilp at South Devon College out to the wider world, and I&#8217;m very aware that there may be issues in translating this stuff to other institutions&#8230;</p>
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
+
