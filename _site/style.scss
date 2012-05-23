@@ -28,10 +28,15 @@ h1,h2 {
   a,a:visited {color: inherit}
 }
 
-header nav {
+header nav,#icons {
   font-family: sans-serif;
   text-size: 18px;
   margin: 20px 0;
+  float:left;
+}
+
+#icons {
+  float:right;
 }
 
 #posts,#post {

@@ -33,10 +33,14 @@ h1, h2 {
   h1 a, h1 a:visited, h2 a, h2 a:visited {
     color: inherit; }
 
-header nav {
+header nav, #icons {
   font-family: sans-serif;
   text-size: 18px;
-  margin: 20px 0; }
+  margin: 20px 0;
+  float: left; }
+
+#icons {
+  float: right; }
 
 #posts, #post {
   clear: both;
