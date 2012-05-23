@@ -34,6 +34,9 @@
 <p>Reviews will finally be in, written to a spec we&#8217;ve come up with at South Devon College. We&#8217;ve had the stop-gap initial reviews for a while and, as it turns out, the full reviews will be much influenced by their sucess. This will be the subject of a full post to come.</p>
 <h2>And more!</h2>
 <p>There&#8217;s been a few smaller features: deleting events (for a configurable amount of time after they&#8217;re created) is a good example, and there&#8217;s been some more refactoring of eventable objects into pure event behaviour. After 1.0 release I&#8217;m going to have to do some serious documentation on how this stuff works&#8230;</p>
+      <div class="comments">
+        <a href="/leap/2011/10/22/towards-one-point-oh.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -47,6 +50,9 @@
 <p>We now have a hastily thrown-together website for the project at http://leap-ilp.com which I&#8217;ll hopefully make a bit better when time allows.</p>
 <p>We also have some features that haven&#8217;t been mentioned on this blog: home pages for courses, a &#8220;my courses&#8221; block for staff, absence reporting (although this won&#8217;t work outside of <span class="caps">SDC</span> yet) and, oh loads more. But there is an issue, which is that documentation is thin on the ground anyway. Now that the system is launched I hope to make some regular posts about the use of the system, instead of that technical stuff and then we could well tie that stuff together to make a user guide.</p>
 <p>Anyway, I&#8217;m off to create a presentation for the <span class="caps">RSC</span> SW <span class="caps">VLE</span> Forum on Thursday&#8230;</p>
+      <div class="comments">
+        <a href="/leap/2011/10/11/a-month-after-launch.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -57,6 +63,9 @@
 <p>There is an issue, however. We&#8217;ve released the source, as we said we would and will continue to do, but it&#8217;s not going to work at your institution&#8230; yet. The first goal of Leap was to replace the current system in use at South Devon College and, as such, we&#8217;ve made some assumptions which are not going to cause problems somewhere else.</p>
 <p>It&#8217;s not all bad, though. The system has been designed to work elsewhere, and <span class="caps">SDC</span>-specific bits are quite small.</p>
 <p>If you are at an institution (we&#8217;d prefer one using <span class="caps">EBS</span> to start with) and you&#8217;re interested, please get in contact and we can start work on getting the system fully portable.</p>
+      <div class="comments">
+        <a href="/leap/2011/09/01/source-code-available.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -66,6 +75,9 @@
 <p>Once we&#8217;ve got some breathing space I&#8217;ll post some more in depth information about things I haven&#8217;t covered yet including some really interesting (well, to me) stuff about how the different views of events are built (one line the database!) for different types of users, and I hope to actually start talking about how the system can be used from a teaching perspective.</p>
 <p>For now, though, I&#8217;ve bundled up a screenshot of the home page each person sees as a nice taster of how things are going.</p>
 <p><img src="/leap/images/blog/leap_home.png" alt="" /></p>
+      <div class="comments">
+        <a href="/leap/2011/08/16/home-page-screenshot.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -107,6 +119,9 @@
 <ul>
 	<li>Reviews. This partly works with a couple of issues. Should be sorted in the next week or so.</li>
 </ul>
+      <div class="comments">
+        <a href="/leap/2011/07/24/leap.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -128,6 +143,9 @@
 <p>Not that I want to put anyone off! I&#8217;m excited to start trying to port the system to other institutions but I can&#8217;t spend any time on this until I&#8217;ve filled my obligations to the College for release in September.</p>
 <p>So the code is coming. If anyone out there is interested in getting involved <em>please</em> get in touch with me at <a href="mailto:khughes@southdevon.ac.uk">khughes@southdevon.ac.uk</a> . We&#8217;ve got a few interested parties already and the earlier you get involved the more influence you can have over design decisions.</p>
 <p>In other news, lots more work has been done on the system and I do apologise for not documenting it here yet. I&#8217;ll try to post again soon with some more details of how things are going :)</p>
+      <div class="comments">
+        <a href="/leap/2011/07/15/wheres-the-code.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -137,6 +155,9 @@
 <p>One of the important uses of the eilp at South Devon College is for monitoring attendance. In ilp2 we will drop an event into each student&#8217;s stream each week showing their current culminative attendance as a percentage. It also shows their attendance for the last week and last three weeks for extra information. Then there&#8217;s a little sparkline graph for picking out trends.</p>
 <p><img src="/leap/images/blog/attendance_event.png" alt="" /></p>
 <p>This is, of course, great for setting targets against. A future feature will enable targets to be set against attendances easily with calculations for what attendance can be acheived for a particular time period automatically calculated, as well as a more detailed graph in the expanded mode for the event.</p>
+      <div class="comments">
+        <a href="/leap/2011/06/06/attendance-monitoring.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -151,6 +172,9 @@ Apologies for not posting for ages; I&#8217;ve been distracted by other projects
 <p>The eilp project is continuing apace, however, and I&#8217;ve got a new lump of functionality to show you: timetables. The timetables have always been a popular part of the current ilp and it comes with its own issues. The biggest of these is the sheer amount of information needed to be pulled from the <span class="caps">MIS</span>. I don&#8217;t really want to import this info like I do with the personal details and enrolment data, since it changes very quickly and a good feature of the current timetable has been its real-time nature; attendance marks are updated immediately. Checking for and importing changes every time would be far too slow. So I&#8217;ve opted for a compromise. The data is read in real time from the <span class="caps">MIS</span> and converted into in-memory models which are displayed on screen.</p>
 <p>It all seems to work quite well. It&#8217;s not completely finished though. Missing from this screenshot is a way to navigate to other weeks and the register maks themselves. Also, I will be adding the teachers&#8217; names.</p>
 <p>There is another issue. Everyone uses different register marks. <span class="caps">EBS</span> lets you arbitrarily make them up. There&#8217;s no way I can program in all the possible ways and nuances for each different type of absence, sickness, etc. Luckily, <span class="caps">EBS</span> helps us a bit here. It has a table to map between the college&#8217;s attendance marks and a generic present, absent or sick mark. That&#8217;s where the colour-coding comes from. This will work across any institution and will be what I use to calculate attendance percentages from. I just hope other <span class="caps">MIS</span> systems have a similar feature!</p>
+      <div class="comments">
+        <a href="/leap/2011/05/20/timetable.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -171,6 +195,9 @@ Apologies for not posting for ages; I&#8217;ve been distracted by other projects
 <p>Except for the timetable and home links. They&#8217;re special cases. As an aside, see the number below the name? That&#8217;s the Unique Learner Number (actually it&#8217;s mine!). We&#8217;re using that everywhere instead of internal user ids to prevent problems in the future.</p>
 <p>I&#8217;ve used this stuff to build up to how we&#8217;re going to to learner reviews. That&#8217;ll be the subject of my next post.</p>
 <p>As always, please comment on any of this stuff. If you see a horrible problem up the road, I&#8217;d much rather hear about it now! Much of this design is extending three years&#8217; experience of eilp at South Devon College out to the wider world, and I&#8217;m very aware that there may be issues in translating this stuff to other institutions&#8230;</p>
+      <div class="comments">
+        <a href="/leap/2011/02/24/events-and-transitions.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -180,6 +207,9 @@ Apologies for not posting for ages; I&#8217;ve been distracted by other projects
 <p>I&#8217;d like to extend the invitation to eveyone again, if you&#8217;re in any way interested, to get involved in the project. The involvement can take any form from discussion, through testing and up to full involvement in development. We&#8217;re determined to set this project free, you won&#8217;t be involved in my project or South Devon College&#8217;s project, but yours. If you want any more information, email me, comment on weblog posts, talk to me on twitter or any other way you can find to communicate :)</p>
 <p>Here&#8217;s the presentation I gave today. The first few slides show functionality in the current (ilp1) system being used at South Devon College, most of which will be replicated, and hopefully improved, in the new version. The second half is an introduction to some of the ideas to go in ilp2.</p>
 <p><iframe class="scribd_iframe_embed" src="http://www.scribd.com/embeds/94535730/content?start_page=1&view_mode=slideshow&access_key=key-dexnyutm78dkg11n6ca&secret_password=2cy8wktz4cb7ic2e7dzi" data-auto-height="false" data-aspect-ratio="1.33115468409586" scrolling="no" id="doc_45008" width="500" height="400" frameborder="0"></iframe></p>
+      <div class="comments">
+        <a href="/leap/2011/02/09/rec-presentation.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -188,6 +218,9 @@ Apologies for not posting for ages; I&#8217;ve been distracted by other projects
       <p>I&#8217;m going to be at the next <span class="caps">JISC</span> South West <span class="caps">RSC</span> <span class="caps">VLE</span> Forum at Taunton School on 9th February 2011. I&#8217;ll be doing a presentation about the <span class="caps">ILP</span> project. I haven&#8217;t written the presentation yet, but there&#8217;ll be something about why the project is happening, what ideas we&#8217;ve got for it, and how far we&#8217;ve got with them. Plus, of course, questions and (hopefully) answers. I&#8217;ll be demonstrating our current ilp, where it&#8217;s relevant, and some early work on the new system.</p>
 <p>If you have any interest in the project, please come along. I&#8217;m happy to talk about any aspect of it with anyone. And if there&#8217;s anything anyone would like me to cover in the presentation, tell me and I&#8217;ll try to fit it in.</p>
 <p>To sign up for the forum, go to the <a href="http://www.rsc-south-west.ac.uk/index.php?p=14">South West RSC&#8217;s event page.</a></p>
+      <div class="comments">
+        <a href="/leap/2011/02/01/presenting-at-vle-forum.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -205,6 +238,9 @@ Apologies for not posting for ages; I&#8217;ve been distracted by other projects
 <img src="/leap/images/blog/open_target.png" alt="" /></h2>
 <p>This looks better in practice than on these screenshots, because you can&#8217;t see all the nice <span class="caps">AJAX</span> and Scriptaculous animation, but it&#8217;s something to look at. There&#8217;s quite a lot of work gone on behind these admittedly simple-looking blocks of <span class="caps">HTML</span>, which should mean that the perceived speed of development should increase quite rapidly as I move from this low-level code, to implementing new event types over the top.</p>
 <p>As far as the more data-oriented stuff goes, I&#8217;ve got learners&#8217; personal details imporing from our <span class="caps">MIS</span> and being cached in the ilp database, and I&#8217;ve put out some testing tools to login as users without having to go through Shibboleth (which is how I expect login to work on a production system). I&#8217;ve also got pretty good coverage with unit tests, which is something I always regretted not doing with the old eilp system.</p>
+      <div class="comments">
+        <a href="/leap/2011/01/24/some-working_code.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -224,6 +260,9 @@ Issues to think about.</p>
 	<li>Should some time-critical information like timetables be read directly from the <span class="caps">MIS</span> without caching?</li>
 	<li>Should we do something similar for connections to <span class="caps">VLE</span>? Or just assume Moodle?</li>
 </ul>
+      <div class="comments">
+        <a href="/leap/2011/01/21/connecting-to-your-mis.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -234,6 +273,9 @@ Issues to think about.</p>
 <p><a href="/leap/images/blog/target_event.png"><img src="/leap/images/blog/target_event_thumb.png" alt="" /></a></p>
 <p>The idea is that an event can declare that it has some functionality for the extended pane and return a path to a partial template to display it. If there is one, a tabbed interface is used, showing both that an the &#8216;New Target&#8217; interface already designed. If there isn&#8217;t one, we just show the &#8216;New Target&#8217; bit as before, without any tabs. Simple to code and use.</p>
 <p>As it happens, I have now implemented much of the event functionality I&#8217;ve talked about here, and it&#8217;s working well. I&#8217;ll soon post some screenshots of the working system to go along with these mockups and, hopefully, I&#8217;ll soon have permission to open up the code repo on GitHub too!</p>
+      <div class="comments">
+        <a href="/leap/2011/01/14/extra-details-and-functionality-for-some-events.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -246,6 +288,9 @@ Issues to think about.</p>
 <p><a href="/leap/images/blog/set_a_target.png"><img src="/leap/images/blog/set_a_target_thumb.png" alt="" /></a></p>
 <p>You open up an event (in this case a note broadcast to everyone to remind them of an upcoming theme week) and they can set a target against that. The event itself serves as a way to inspire thinking about certain types of target learners may want to set (you can easily imagine other targets being set against set assignments or attendance data) and the target stays with that even for ever &#8211; as well as generating its own events to remind the learner what he or she wants to work towards.</p>
 <p>The second example here shows how some events could specialise. This attendance target won&#8217;t let you set unachievable attendance targets.</p>
+      <div class="comments">
+        <a href="/leap/2011/01/07/target-setting.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -260,6 +305,9 @@ Issues to think about.</p>
 <p>I&#8217;ve done a bit of work on specifying standards for how the events should look:</p>
 <p><a href="/leap/images/blog/an_event_with_minis.png"><img src="/leap/images/blog/an_event_with_minis_thumb.png" alt="" /></a></p>
 <p>As with all the stuff on here at this point, none of this is set in stone. It&#8217;s all about mocking stuff up and thinking about how it could work.</p>
+      <div class="comments">
+        <a href="/leap/2011/01/06/event-system-mockup.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -273,6 +321,9 @@ It's important to realise that this is <strong>not</strong> a vision document of
 
 <iframe class="scribd_iframe_embed" src="http://www.scribd.com/embeds/94529010/content?start_page=1&view_mode=slideshow&access_key=key-2wxh510bkfyztrhqw24&secret_password=8iacn0y0xuatezse9w6" data-auto-height="false" data-aspect-ratio="1.33115468409586" scrolling="no" id="doc_96274" width="500" height="400" frameborder="0"></iframe>
 
+      <div class="comments">
+        <a href="/leap/2011/01/04/early-ideas.html#discus_thread">comments</a>
+      </div>
     </div>
   
     <div class="post">
@@ -281,9 +332,21 @@ It's important to realise that this is <strong>not</strong> a vision document of
       <p>At <a href="http://www.southdevon.ac.uk">South Devon College</a>, we&#8217;ve been running our own, in house, eilp for a few years now. It&#8217;s been hugely successful, improving access to individual student data for both the students themselves and the staff who work with them and contributing to the college&#8217;s culture of outstanding teaching and learning.</p>
 <p>Over time, more and more functionality was added to the system, but development was not being done in the most structured matter. It had become bloated and had expanded in all directions. New development was being rushed and focus was being lost. Worst of all, much of the new development was concentrating on staff use, not the learner experience. Not that things are bad. Staff and students are still using it successfully every day, but it was decided that a major new revision would be developed with the learner at the centre. And we also made another decision: that the new developments would be open source. We would engage with the community and develop a top-quality system that everyone can use.</p>
 <p>At the moment, we&#8217;re still in the design stage, but some decisions have been made, and some proof-of-concept code has been written. We&#8217;ve now set up this site to hopefully help encourage the growth of a community and as a place to log and discuss development. Hopefully you&#8217;ll see exciting ideas evolve and come together to build a system which will be of benefit to all of us.</p>
+      <div class="comments">
+        <a href="/leap/2011/01/04/a-new-eilp.html#discus_thread">comments</a>
+      </div>
     </div>
   
 </div>
+<script type="text/javascript">
+  var disqus_shortname = 'sdcgithub'; 
+  (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
 
       </div>
     </div>

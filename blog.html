@@ -9,6 +9,18 @@ title: leap
       <time>{{ post.date | date_to_string }}</time>
       <h1><a href="/leap{{ post.url }}">{{ post.title }}</a></h1>
       {{ post.content }}
+      <div class="comments">
+        <a href="/leap{{post.url}}#discus_thread">comments</a>
+      </div>
     </div>
   {% endfor %}
 </div>
+<script type="text/javascript">
+  var disqus_shortname = 'sdcgithub'; 
+  (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
