@@ -1,0 +1,28 @@
+---
+layout: outer
+title: leap
+---
+
+<div class="quarter">
+  <h1>Does stuff</h1>
+</div>
+
+<div class="quarter">
+  <h1>Does stuff</h1>
+</div>
+
+<div class="quarter">
+  <h1>Does stuff</h1>
+</div>
+
+<div class="quarter">
+  <h1>Does stuff</h1>
+</div>
+
+<div id="posts">
+  {% for post in site.posts %}
+    <div class="post">
+      <time>{{ post.date | date_to_string }}</time>
+      <h1><a href="/leap{{ post.url }}">{{ post.title }}</a></h1>
+  {% endfor %}
+</div>

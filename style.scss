@@ -39,7 +39,7 @@ header nav,#icons {
   float:right;
 }
 
-#posts,#post {
+#content {
   clear: both;
   line-height:1.4;
   time {
@@ -56,5 +56,11 @@ header nav,#icons {
   }
   .post {
     margin-bottom:60px;
+  }
+  .quarter {
+    float:left;
+    width:290px;
+    margin-right:10px;
+    box-shadow: 10px;
   }
 }

@@ -42,18 +42,23 @@ header nav, #icons {
 #icons {
   float: right; }
 
-#posts, #post {
+#content {
   clear: both;
   line-height: 1.4; }
-  #posts time, #post time {
+  #content time {
     font-family: 'Doppio One',monospace;
     font-size: 11px;
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: bold; }
-  #posts h1, #posts h2, #post h1, #post h2 {
+  #content h1, #content h2 {
     margin: 0;
     color: #444; }
-  #posts .post, #post .post {
+  #content .post {
     margin-bottom: 60px; }
+  #content .quarter {
+    float: left;
+    width: 290px;
+    margin-right: 10px;
+    box-shadow: 10px; }
