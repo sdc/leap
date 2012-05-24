@@ -3,31 +3,25 @@ layout: outer
 title: leap
 ---
 
-<div id="splash">
-  <img src="/leap/images/timeline.png" /></div>
-  <img src="/leap/images/timetable.png" /></div>
-  <img src="/leap/images/home.png" /></div>
-
-<div class="quarter">
-  <h1>Does stuff</h1>
+<div id="slideshow" class="slideshow">
+  <img src="/leap/images/timeline.png" />
 </div>
 
-<div class="quarter">
-  <h1>Does stuff</h1>
-</div>
+<br />
 
-<div class="quarter">
-  <h1>Does stuff</h1>
-</div>
+<h1>For more details, contact <a href="mailto:leap@southdevon.ac.uk">leap@southdevon.ac.uk</a></h1>
 
-<div class="quarter">
-  <h1>Does stuff</h1>
-</div>
-
-<div id="posts">
-  {% for post in site.posts %}
-    <div class="post">
-      <time>{{ post.date | date_to_string }}</time>
-      <h1><a href="/leap{{ post.url }}">{{ post.title }}</a></h1>
-  {% endfor %}
-</div>
+<script type="text/javascript">     
+//<![CDATA[
+  window.addEvent('domready', function(){
+    var data = {
+      'home.png': { caption: "The home page shows staff and learners what's important to them right now, and provides fast access to what they need." }, 
+      'timetable.png': { caption: 'Timetables are fed live from your MIS and calculate attendance data automatically.' }, 
+      'timeline.png': { caption: 'The timeline gives learners a simple overview of their learning journey and inspires them to plan for their future.' }
+    };
+    var myShow = new Slideshow('slideshow', data, { captions: true, controller: false, height: 350, hu: '/leap/images/', width: 800 });
+  });
+  //]]>
+</script>
+            
+              
