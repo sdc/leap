@@ -28,6 +28,8 @@ h1,h2 {
   a,a:visited {color: inherit}
 }
 
+.clear {clear:both;height:20px;}
+
 header nav,#icons {
   font-family: sans-serif;
   text-size: 18px;
@@ -62,5 +64,22 @@ header nav,#icons {
     width:290px;
     margin-right:10px;
     box-shadow: 10px;
+  }
+}
+
+.feature {
+  margin-bottom:20px;
+  width: 800px;
+  clear:both;
+  img,p {
+    float:left; 
+    width:350px;
+  }
+  p {
+    font-size: 16px;
+    margin: 0;
+    margin-bottom: 15px;
+    margin-left: 20px;
+    width:430px;
   }
 }
