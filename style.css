@@ -36,6 +36,10 @@ h1, h2 {
   h1 a, h1 a:visited, h2 a, h2 a:visited {
     color: inherit; }
 
+blockquote {
+  border-left: 4px #66a solid;
+  padding-left: 10px; }
+
 .clear {
   clear: both;
   height: 20px; }
@@ -69,6 +73,18 @@ header nav, #icons {
     width: 290px;
     margin-right: 10px;
     box-shadow: 10px; }
+  #content .front_box {
+    font-size: 13px;
+    width: 390px;
+    border: #666 2px solid;
+    padding: 0;
+    float: left; }
+    #content .front_box h1 {
+      background: #666;
+      color: #fff;
+      padding: 3px 10px; }
+    #content .front_box p, #content .front_box ul {
+      margin: 10px; }
 
 .feature {
   margin-bottom: 20px;

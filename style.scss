@@ -29,6 +29,11 @@ h1,h2 {
   a,a:visited {color: inherit}
 }
 
+blockquote {
+        border-left: 4px #66a solid;
+        padding-left: 10px;
+}
+
 .clear {clear:both;height:20px;}
 
 header nav,#icons {
@@ -66,6 +71,21 @@ header nav,#icons {
     margin-right:10px;
     box-shadow: 10px;
   }
+  .front_box {
+    font-size: 13px;
+    width: 390px;
+    border: #666 2px solid;
+    padding: 0;
+    float:left;
+    h1 {
+      background: #666;
+      color: #fff;
+      padding: 3px 10px;
+    }
+    p,ul {
+      margin: 10px
+    }
+}
 }
 
 .feature {
@@ -84,3 +104,4 @@ header nav,#icons {
     width:430px;
   }
 }
+
