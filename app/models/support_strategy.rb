@@ -44,10 +44,10 @@ class SupportStrategy < Eventable
 
   def title(tr)
     case tr
-    when :complete : "Support Strategy Complete"
-    when :incomplete : "Support Strategy Declined"
-    when :start : "Support Strategy Agreed"
-    when :create : "Support Strategy Created"
+    when :complete then "Support Strategy Complete"
+    when :incomplete then "Support Strategy Declined"
+    when :start then "Support Strategy Agreed"
+    when :create then "Support Strategy Created"
     end
   end
 
