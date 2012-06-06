@@ -46,8 +46,8 @@ class Target < Eventable
   # Returns the target eventable icon url. Complete or not?
   def icon_url
     case status
-    when :complete   : "events/target-complete.png"
-    when :incomplete : "events/target_dropped.png"
+    when :complete   then "events/target-complete.png"
+    when :incomplete then "events/target_dropped.png"
     else "events/target.png"
     end
   end
@@ -55,9 +55,9 @@ class Target < Eventable
   # Returns the target eventable title.
   def title(tr)
     case tr
-    when :complete : "Target Complete"
-    when :start    : "Target Set"
-    when :drop     : "Target Dropped"
+    when :complete then "Target Complete"
+    when :start    then "Target Set"
+    when :drop     then "Target Dropped"
     else "Target Due"
     end
   end
