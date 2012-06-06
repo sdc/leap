@@ -65,7 +65,7 @@ class Person < ActiveRecord::Base
   end
 
   def Person.get(mis_id,fresh=false)
-    (fresh ? import(mis_id) : find_by_mis_id(mis_id)) or import(mis_id)
+    (fresh ? import(mis_id) : find_by_mis_id(mis_id) or find_by_username(mis_id)) or import(mis_id)
   end
 
   def self.user
