@@ -9,7 +9,7 @@ The eilp project is continuing apace, however, and I've got a new lump of functi
 
 It all seems to work quite well. It's not completely finished though. Missing from this screenshot is a way to navigate to other weeks and the register maks themselves. Also, I will be adding the teachers' names.
 
-"!/leap/images/blog/timetable_thumb.png!":/leap/images/blog/timetable.png
+"!/images/blog/timetable_thumb.png!":/images/blog/timetable.png
 
 There is another issue. Everyone uses different register marks. EBS lets you arbitrarily make them up. There's no way I can program in all the possible ways and nuances for each different type of absence, sickness, etc. Luckily, EBS helps us a bit here. It has a table to map between the college's attendance marks and a generic present, absent or sick mark. That's where the colour-coding comes from. This will work across any institution and will be what I use to calculate attendance percentages from. I just hope other MIS systems have a similar feature!
 Apologies for not posting for ages; I've been distracted by other projects. We're also in the middle of a project to roll out an upgrade to Moodle 2 for September and the normal maintenance and issues have been cropping up.

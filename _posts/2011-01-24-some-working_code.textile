@@ -8,16 +8,16 @@ It occurs to me that so far, on this blog, I've only shown mockups and discussed
 The screenshots are of a new 'Mumble' type event, closed and open, and what happens when you attach a new target to that. Obviously this all sits within a layout, but I'm not showing that yet because it doesn't look up to much.
 
 h2. Note Event
-!/leap/leap/images/blog/closed_note.png!
+!/images/blog/closed_note.png!
 
-h2. Settin a Target on the Note Event
-!/leap/images/blog/open_note.png!
+h2. Setting a Target on the Note Event
+!/images/blog/open_note.png!
 
 h2. Target Now Set
-!/leap/images/blog/set_target.png!
+!/images/blog/set_target.png!
 
 h2. Target Feedback
-!/leap/images/blog/open_target.png!
+!/images/blog/open_target.png!
 
 This looks better in practice than on these screenshots, because you can't see all the nice AJAX and Scriptaculous animation, but it's something to look at. There's quite a lot of work gone on behind these admittedly simple-looking blocks of HTML, which should mean that the perceived speed of development should increase quite rapidly as I move from this low-level code, to implementing new event types over the top. 
 

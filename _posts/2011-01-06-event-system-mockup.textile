@@ -5,18 +5,18 @@ layout: post
 
 At the heart of the new ilp system will be a new event system. Building on the ideas about ilp being mostly about timestamped personal data, I put together a mockup of how this could work (ignore the links on the left, they're imported from the current ilp).
 
-"!/leap/images/blog/events_mockup_thumb.png!":/leap/images/blog/events_mockup.png
+"!/images/blog/events_mockup_thumb.png!":/images/blog/events_mockup.png
 
 The idea is that a learner can look at this page and easily see what's going on at any point. The great thing is how much we can fit into this design: assessments, targets, grades, announcements and loads more. And lots of this can be automatically generated: Moodle or the MIS can add things to the system. Reminders of due assignments, for example, don't have to be added to the ilp, Moodle will add them itself when the assignment is set. When it's graded, Moodle will post that into the ilp too!
 
 Here's some examples of possible events we could have:
 
-"!/leap/images/blog/event_types_thumb.png!":/leap/images/blog/event_types.png
+"!/images/blog/event_types_thumb.png!":/images/blog/event_types.png
 
 And because they're all similar, we can treat them the same and display them anywhere; within the ilp system we can move them around as if they were all the same type of object. This will make extending the system simple: all you have to do is write the code for the special bits, where this type of event does something different to others, and everything else should just work.
 
 I've done a bit of work on specifying standards for how the events should look:
 
-"!/leap/images/blog/an_event_with_minis_thumb.png!":/leap/images/blog/an_event_with_minis.png
+"!/images/blog/an_event_with_minis_thumb.png!":/images/blog/an_event_with_minis.png
 
 As with all the stuff on here at this point, none of this is set in stone. It's all about mocking stuff up and thinking about how it could work.

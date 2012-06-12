@@ -3,9 +3,9 @@ layout: outer
 title: leap
 ---
 
-<a href="/leap/features.html">
+<a href="/features.html">
 <div id="slideshow" class="slideshow">
-  <img src="/leap/images/timeline.png" />
+  <img src="/images/timeline.png" />
 </div>
 </a>
 
@@ -22,7 +22,7 @@ title: leap
   <h1>Press</h1>
   {% for post in site.categories.press %}
     <ul>
-      <li><a href="/leap/{{post.url}}">{{post.title}}</a></li>
+      <li><a href="/{{post.url}}">{{post.title}}</a></li>
     </ul>
   {% endfor %}
   <ul><li>More to come soon!</li></ul>
@@ -40,7 +40,7 @@ title: leap
     'timetable.png': { caption: '<b>Timetables</b> are fed live from your MIS and calculate attendance data automatically.' }, 
     'timeline.png': { caption: 'The <b>timeline</b> gives learners a simple overview of their learning journey and inspires them to plan for their future.' }
     };
-    var myShow = new Slideshow('slideshow', data, { captions: true, controller: false, height: 350, hu: '/leap/images/', width: 800 });
+    var myShow = new Slideshow('slideshow', data, { captions: true, controller: false, height: 350, hu: '/images/', width: 800 });
   });
   //]]>
 </script>

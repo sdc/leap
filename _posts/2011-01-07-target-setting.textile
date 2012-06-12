@@ -11,7 +11,7 @@ One of the reasons the event system occurred to me was the issue of us wanting h
 
 Lets have a look at some possibilities for a target-setting interface:
 
-"!/leap/images/blog/set_a_target_thumb.png!":/leap/images/blog/set_a_target.png
+"!/images/blog/set_a_target_thumb.png!":/images/blog/set_a_target.png
 
 You open up an event (in this case a note broadcast to everyone to remind them of an upcoming theme week) and they can set a target against that. The event itself serves as a way to inspire thinking about certain types of target learners may want to set (you can easily imagine other targets being set against set assignments or attendance data) and the target stays with that even for ever - as well as generating its own events to remind the learner what he or she wants to work towards.
 

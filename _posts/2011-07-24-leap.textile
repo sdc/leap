@@ -3,7 +3,7 @@ title: Leap
 layout: post
 ---
 
-!/leap/images/blog/leap.png!
+!/images/blog/leap.png!
 
 So we're getting close to launch time for the new eilp at South Devon College - and we've got a new name and logo to go with it. The name is Leap and the logo you see above you. I'm not going to go into the name or logo much because names don't matter. If Leap does the job as a system then the name will be OK.
 
