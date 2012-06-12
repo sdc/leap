@@ -65,7 +65,7 @@ header nav, #icons {
     font-weight: bold; }
   #content h1, #content h2 {
     margin: 0;
-    color: #444; }
+    color: #004078; }
   #content .post {
     margin-bottom: 60px; }
   #content .quarter {
@@ -86,16 +86,17 @@ header nav, #icons {
     #content .front_box p, #content .front_box ul {
       margin: 10px; }
 
-.feature {
-  margin-bottom: 20px;
-  width: 800px;
-  clear: both; }
-  .feature img, .feature p {
-    float: left;
-    width: 350px; }
-  .feature p {
+.col {
+  width: 350px;
+  float: left; }
+  .col p {
     font-size: 16px;
-    margin: 0;
-    margin-bottom: 15px;
-    margin-left: 20px;
-    width: 430px; }
+    margin-top: 0px; }
+    .col p.first {
+      font-size: 120%;
+      font-weight: bold; }
+  .col img {
+    margin-bottom: 10px; }
+
+.l {
+  margin-right: 20px; }

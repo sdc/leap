@@ -30,7 +30,7 @@ Dependencies:
 			classes: [/*'slideshow', 'first', 'prev', 'play', 'pause', 'next', 'last', 'images', 'captions', 'controller', 'thumbnails', 'hidden', 'visible', 'inactive', 'active', 'loader'*/],
 			controller: true,
 			data: null,
-			delay: 2000,
+			delay: 4000,
 			duration: 1000,
 			fast: false,
 			height: false,
