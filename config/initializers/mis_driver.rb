@@ -18,15 +18,14 @@ Ilp2::Application.config.mis_progress_codes = {
   "WDRNCC"     => :incomplete, #  Withdrwn-Class Closed after Census Point
   "DNSCC"      => :incomplete, #  DNS - Class closed B4 census Point
   "DNSPD"      => :incomplete, #  DNS - Learner Portal Duplicate
-  "DNSDATA"    => :incomplete  # DNS - Enrolled but never attended (CIS)
+  "DNSDATA"    => :incomplete,  # DNS - Enrolled but never attended (CIS)
+  "CA"   => :complete,
+  "CNA"  => :incomplete,
+  "X"    => :incomplete,
+  "W"    => :incomplete,
+  "T"    => :incomplete,
+  "A"    => :current
 }
-#  "CA"   => :complete,
-#  "CNA"  => :incomplete,
-#  "X"    => :incomplete,
-#  "W"    => :incomplete,
-#  "T"    => :incomplete,
-#  "A"    => :current
-#}
 Ilp2::Application.config.mis_progress_codes.default = :unknown
 Ilp2::Application.config.mis_usage_codes = {
   "A" => :complete,
