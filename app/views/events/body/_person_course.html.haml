@@ -1,5 +1,8 @@
 %h6= link_to_if @user.staff? && !Settings.ebs_course_base_url.blank?, person_course.course.title, (Settings.ebs_course_base_url + person_course.course.mis_id)
-.status= person_course.status.humanize
+.status
+  = person_course.status.humanize
+  - if person_course.mis_status
+    = "(#{person_course.mis_status})"
 .details
   - if person_course.start_date
     %b Start Date:
