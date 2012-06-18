@@ -3,14 +3,12 @@ load 'deploy/assets'
 set :application, "leap"
 set :deploy_to, "/var/www/#{application}"
 set :repository,  "git://github.com/sdc/leap.git"
-set :local_repository,  "https://kevtufc@github.com/sdc/leap.git"
 set :scm, :git
 set :use_sudo, false
 default_run_options[:pty] = true
 
-set :branch, "Swindon"
-role :app, "eilp.swindon-college.ac.uk"
-role :web, "eilp.swindon-college.ac.uk"
+role :app, "eilp.swindon-college.ac.uk", "leap.southdevon.ac.uk"
+role :web, "eilp.swindon-college.ac.uk", "leap.southdevon.ac.uk"
 
 namespace :deploy do
   task :start do ; end
