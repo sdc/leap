@@ -1,0 +1,8 @@
+---
+title: New Leap Leaflet (Leaplet :)
+layout: post
+---
+
+We've put together a leaflet for leap. It's one of those tri-fold deals which comes out in the wrong order on the PDF but looks great if you print it out and fold it! 
+
+"!/images/blog/leaplet.png!":/leaplet.pdf
