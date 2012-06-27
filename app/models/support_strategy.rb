@@ -16,6 +16,8 @@
 
 class SupportStrategy < Eventable
 
+  attr_accessible :body, :agreed_date, :completed_date, :declined_date
+
   after_create {|req| req.events.create!(:event_date => created_at, :transition => :create, :parent_id => event_id)}
 
   after_save do |ss|

@@ -23,6 +23,7 @@
 
 class Note < Eventable
 
+  attr_accessible :body
 
   after_create {|note| note.events.create!(:event_date => created_at, :transition => :create)}
 

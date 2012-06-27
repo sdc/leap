@@ -16,6 +16,8 @@
 
 class ProgressionReview < Eventable
 
+  attr_accessible :approved, :reason
+
   serialize :reason
 
   validates :reason, :presence => true, :unless => :approved?

@@ -16,6 +16,8 @@
 
 class SupportRequest < Eventable
 
+  attr_accessible :difficulties, :sessions, :workshop
+
   serialize :sessions
   serialize :difficulties
 

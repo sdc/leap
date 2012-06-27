@@ -16,6 +16,8 @@
 
 class Absence < Eventable
 
+  attr_accessible :lessons_missed, :category, :body, :usage_code, :contact_category
+
   after_create {|ab| ab.events.create!(:event_date => created_at, :transition => :create)}
 
   def subtitle
