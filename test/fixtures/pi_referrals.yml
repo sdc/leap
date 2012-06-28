@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  person_id: 1
+  body: MyText
+  created_by_id: 1
+  pi_type: MyString
+  referral_category: MyString
+  incident_date: 2012-06-28
+
+two:
+  person_id: 1
+  body: MyText
+  created_by_id: 1
+  pi_type: MyString
+  referral_category: MyString
+  incident_date: 2012-06-28
