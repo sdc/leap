@@ -75,7 +75,7 @@
       height: 48px;
     }
     textarea,table {
-      @include column(14);
+      @include column(11);
       &.reviews {
         @include column(8);
       }

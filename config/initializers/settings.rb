@@ -25,3 +25,9 @@ Settings.defaults[:review_windows]               = "test_review"
 Settings.defaults[:current_review_window]        = "test_review"
 Settings.defaults[:progression_reviews_reasons]  = "Not working at required level,Non-attendance,Changed mind about Career Aim/going onto a different course,Non-submission of work,Not achieving targets,Inappropriate behaviour"
 Settings.defaults[:photo_path_code]              = '"#{mis_id}.jpg"'
+Settings.defaults[:disciplinary_levels]          = {-1 => "Amber Alert Disciplinary",
+                                                     0 => "Amber Alert Pastoral",
+                                                     1 => "Positive Intervention Stage One",
+                                                     2 => "Positive Intervention Stage Two",
+                                                     3 => "Positive Intervention Stage Three"
+                                                   }
