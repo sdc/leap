@@ -84,18 +84,16 @@ class Person < ActiveRecord::Base
     Thread.current[:affiliation] = affiliation
   end
 
+  def current_user?
+     self == Person.user
+  end
+
   def as_param
     {:person_id => mis_id.to_s}
   end
 
-  def method_missing(m, *args, &block)
-    m = m.to_s
-    if /^#{AFFILIATIONS.join"|"}\?$/.match m
-      return Person.affiliation == m.chop
-    else
-      super
-    end
+  def staff?
+    current_user? ? (Person.affiliation == "staff") : self[:staff]
   end
-
 
 end

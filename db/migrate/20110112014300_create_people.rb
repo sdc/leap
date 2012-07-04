@@ -15,7 +15,6 @@ class CreatePeople < ActiveRecord::Migration
       t.string   :username
       t.timestamps
     end
-    add_index :people, :person_id
     add_index :people, :mis_id
     add_index :people, :forename
     add_index :people, :surname
