@@ -23,7 +23,7 @@ class Ebs::RegisterEventDetailsSlot < Ebs::Model
 
   def the_object
     case object_type 
-    when "R" then Ebs::Room.find(object_id)
+    when "R" then Ebs::Room.find_by_id(object_id)
     when "T" then Ebs::Person.find(object_id)
     when "L" then Ebs::Person.find(object_id)
     else throw "Not a known object"
