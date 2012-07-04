@@ -7,5 +7,5 @@
     = hidden_field_tag :eventable_type, "Disciplinary"
     = hidden_field_tag :person_id, @topic.mis_id
     .sumbit
-      = f.select "level", options_for_select(Settings.disciplinary_levels.invert)
+      = f.select "level", options_for_select(Hash[*Settings.disciplinary_levels.split(",")].invert)
       = submit_tag "Add Log"

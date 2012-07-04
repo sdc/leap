@@ -24,7 +24,7 @@ class Disciplinary < Eventable
   after_create {|disciplinary| disciplinary.events.create!(:event_date => created_at, :transition => :create)}
 
   def title
-    Settings.disciplinary_levels[level]
+    Hash[*Settings.disciplinary_levels.split(",")][level.to_s]
   end
 
 end

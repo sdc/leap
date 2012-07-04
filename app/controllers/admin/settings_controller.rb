@@ -27,13 +27,7 @@ class Admin::SettingsController < ApplicationController
   def create
     Settings.defaults.keys.each do |k|
       if params[k] 
-        # TODO: I know this is rubbish, but it's the best way, for now, of getting hashes done in
-        # the rough and ready admin settings I have. I need a better way of doing this stuff.
-        if k == "disciplinary_levels"
-          Settings[k] = eval params[k]
-        else
-          Settings[k] = params[k]
-        end
+        Settings[k] = params[k]
       end
     end
     redirect_to admin_settings_url
