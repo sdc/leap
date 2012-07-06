@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
         affs = request.env["affiliation"].split(";").map{|a| a.split("@").first.downcase}
         Person.affiliation = @affiliation = ["staff","student","applicant","affiliate"].find{|a| affs.include? a}
       end
-      uname,domain = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"].downcase.split('@')
+      uname,domain = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"].try(:downcase).try(:split,'@')
       unless Settings.sdc.blank?
         if @affiliation == "student" and uname.match(/^[sne]/) 
           uname.gsub!(/^s/,"10")

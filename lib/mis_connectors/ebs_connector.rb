@@ -70,6 +70,7 @@ module MisPerson
           :date_of_birth => ep.date_of_birth,
           :uln           => ep.unique_learn_no,
           :mis_id        => ep.person_code,
+          :staff         => ep.fes_staff_code?,
           :username      => (ep.network_userid or mis_id)
         )
         @person.save if options[:save] 
