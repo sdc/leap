@@ -1,37 +1,22 @@
-.inner
-  #nav_logo
-    =link_to image_tag("icons/leap-logo.png"), search_people_url
-  = form_tag search_people_url, :method => :get, :id=> "search_form" do
-    /*=link_to image_tag("icons/search.png", :class => "icon"), search_people_url*/
-    = text_field_tag :q, params[:q]
-    = submit_tag "Search", :class => "styled_button", :id => "top_nav_search"
-  #multi-view
-    - if controller.controller_name == "views"
-      = link_to :all => true, :date => @date do
-        .block_border
-          .block
-            .left
-              = image_tag "icons/multi.png"
-            .right
-              Everyone
-    - elsif controller.controller_name == "courses"
-      = link_to :refresh => true do
-        .block_border
-          .block
-            .left
-              = image_tag "icons/refresh.png"
-            .right
-              Refresh
-    - else
-      &nbsp;
-  #notice= raw auto_link Settings.top_bar_notice
-  #login_name
-    = link_to person_url(@user) do
-      .left
-        = image_tag("#{url_for(@user)}.jpg")
-      .right
-        = @user.forename
-        %br
-        = @user.surname
-  #help_button{:title => "Help for this page"}
-    = image_tag "actions/help.png"
+.navbar.navbar-fixed-top
+  .navbar-inner
+    .container
+      = link_to image_tag("icons/leap-logo.png"), search_people_url, :class => "brand"
+      = form_tag search_people_url, :method => :get, :class => "navbar-search pull-left" do
+        = text_field_tag :q, params[:q], :class => "search-query", :placeholder => "Search..."
+      %ul.nav.pull-left
+        - if controller.controller_name == "views"
+          %li= link_to "Everyone", {:all => true, :date => @date}
+        - if @topic
+          %li= link_to "Refresh", :refresh => true
+      %ul.nav.pull-right
+        %li.dropdown
+          %a{:href => "#", :class => "dropdown-toggle", "data-toggle" => "dropdown"} 
+            Admin
+            %b.caret 
+          %ul.dropdown-menu
+            %li= link_to "Settings", admin_settings_url
+        %li.divider-vertical
+        %li= link_to @user.name, @user
+    -#help_button{:title => "Help for this page"}
+      = image_tag "actions/help.png"

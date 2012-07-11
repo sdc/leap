@@ -93,8 +93,9 @@ class ApplicationController < ActionController::Base
     @views = View.order("position").in_list.for_user
   end
 
-  def admin_only
+  def admin_page
     Settings.admin_users.split(/,/).include? @user.username or redirect_to "/404.html"
+    @topic = nil
   end
 
   def staff_only

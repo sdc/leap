@@ -1,0 +1,95 @@
+body {
+  padding-top:50px;
+}
+
+.online-help {
+  display:none;
+}
+
+#ui-datepicker-div {
+  background: #fff;
+  padding:8px;
+  border: 1px solid @borderColour;
+}
+
+
+span.label.complete {
+  .label-success;
+}
+
+.border-right {
+  padding-right: 7px;
+  border-right: 2px lighten(@borderColour,35%) solid;
+  margin-right: 7px;
+}
+
+h1 {
+  font-size: 20px;
+}
+h2 {
+  font-size: 16px;
+}
+
+#side-pane {
+  li {
+    list-style-type: none;
+    margin-bottom: 5px;
+    img {
+      margin-right: 8px;
+    }
+  }
+}
+
+.event {
+  padding: 9px;
+  border: 2px @borderColour solid;
+  .border-radius(@borderRadius);
+  margin-bottom: 10px;
+  ul.header {
+    .clearfix();
+    margin:0;
+    list-style-type: none;
+    li {
+      .pull-left;
+      .border-right;
+      &.icon   {
+        text-align:center;
+        .size(48px,65px);
+      }
+      &.event-date {
+        font-weight: bold;
+        .size(48px,65px);
+      }
+      &.title {
+        font-weight: bold;
+        .size(48px,115px);
+      }
+      &.body {
+        width: 435px;
+        border: none;
+      }
+      &.controls {
+        .size(48px,20px);
+        border: none;
+      }
+    }
+  }
+  .extended {
+    margin-top: 10px;
+    .nav-tabs {
+      border-bottom: 1px solid @borderColour;
+      li a, li a.active {
+        padding: 5px;
+        border: 1px @borderColour solid;
+      }
+    }
+    .db-attrs {
+      label {
+        font-weight: bold;
+      }
+    }
+    textarea {
+      height: 55px;
+    }
+  }
+}

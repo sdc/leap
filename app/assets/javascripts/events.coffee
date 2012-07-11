@@ -9,37 +9,33 @@ $(document).ready ->
   unless $('#events') == []
 
     # Load and open the extended pane of an event
-    $('.extend_button')
+    $('.extend-button')
       .live 'ajax:complete', (event,data) ->
         e = $(event.target).closest('.event')
-        e.find('.extend_spinner').show()
-        e.find('.extended .inner').replaceWith data.responseText
-        e.find('.tabs').tabs()
+        e.find('.event-spinner').show()
+        e.find('.extended').html data.responseText
         e.find('.extended').slideDown()
-        e.find('.close_extend_button').show()
-        e.find('.extend_spinner').hide()
-      .live 'click', (event) -> 
+        e.find('.close-extend-button').show()
+        e.find('.event-spinner').hide()
+        e.find('.nav-tabs a:first').tab('show')
+        e.find('.datepicker').datepicker({buttonImage:'/assets/timetable.png',dateFormat:'D dd M yy'})#,altFormat:'yy-mm-dd',altField:'#real_datepicker'})
+      .live 'click', (event) ->
         e = $(event.target).closest('.event')
-        e.find('.extend_spinner').show()
-        e.find('.extend_button').hide()
+        e.find('.event-spinner').show()
+        e.find('.extend-button').hide()
     
     # Close the extended pane of an event
-    $('.close_extend_button').live 'click', (event) ->
+    $('.close-extend-button').live 'click', (event) ->
       e = $(event.target).closest('.event')
       e.find('.extended').slideUp()
-      e.find('.extend_button').show()
-      e.find('.close_extend_button').hide()
+      e.find('.extend-button').show()
+      e.find('.close-extend-button').hide()
     
     # Spinner for deleting an event
-    $('.delete_event_button').live 'click', (event) ->
+    $('.delete-event-button').live 'click', (event) ->
       e = $(event.target).closest('.event')
-      e.find('.delete_spinner').show()
-      e.find('.delete_event_button').hide()
-
-    # Update an event over AJAX if you change its details in the "Extra Details" tab
-    $('form.event_update_form').live 'ajax:complete', (event,data) ->
-      e = $(event.target).closest('.event')
-      e.replaceWith(data.responseText)
+      e.find('.event-spinner').show()
+      e.find('.delete-event-button').hide()
 
     # Load more events into the bottom of the timeline if you click "more events"
     $('#more_events')

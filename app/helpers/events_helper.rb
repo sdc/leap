@@ -20,6 +20,12 @@ module EventsHelper
     thing.size < 4 ? "big" : nil
   end
 
+  def event_date(event)
+    content_tag(:div, pretty_date(event.event_date), :class => "date") +
+    content_tag(:div, pretty_time(event.event_date), :class => "time")
+  end
+
+
   def special_title(thing)
     text = case thing.class.name
     when "String" then thing
@@ -32,20 +38,40 @@ module EventsHelper
     (text and (text.size < 3  or text.last == "%")) ? content_tag(:span,text,:class => "big") : text
   end
     
-
-  def classes_for(event)
-    [event.eventable_type.downcase,
-     event.subtitle ? "subtitle" : nil,
-     event.status
-    ]
+  def event_classes(event)
+    classes =  ["event",event.status,dom_id(event),dom_id(event.eventable),dom_class(event.eventable)]
+    classes << "with_person" if @multi
+    classes << "with_subtitle" if event.subtitle
+    return classes
   end
 
-  def pretty_date(date, words = true)
-    if words
-      return "Today" if date.midnight == Date.today
-      return "Yesterday" if date.midnight == Date.today - 1
-      return "Tomorrow" if date.midnight == Date.today + 1
-    end
+  def extend_event_button(event)
+    link_to(image_tag("actions/event_open.png"), 
+            open_extended_event_url(event,:person_id => event.person.mis_id), :remote => true, :class => "extend-button"
+           ) +
+    image_tag("actions/event_opened.png", :class => "close-extend-button", :style => "display:none") +
+    image_tag("ajax-loader.gif", :style => "display:none", :class => "event-spinner", :size => "16x16")
+  end
+
+  def delete_event_button(event)
+    link_to image_tag("events/delete_event.png"), person_event_url(event.person, event), 
+    :method => :delete, 
+    :class => "delete-event-button",
+    :confirm => "This will delete the entire #{event.eventable_type.singularize.humanize.titleize}.\nAre you sure?"
+  end
+
+     
+  #def classes_for(event)
+  #  [event.eventable_type.downcase,
+  #   event.subtitle ? "subtitle" : nil,
+  #   event.status
+  #  ]
+  #end
+
+  def pretty_date(date)
+    return "Today" if date.midnight.to_date == Date.today
+    return "Yesterday" if date.midnight.to_date == Date.today - 1
+    return "Tomorrow" if date.midnight.to_date == Date.today + 1
     if date.year == Date.today.year
       return date.strftime("%d %b")
     else

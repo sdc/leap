@@ -96,4 +96,8 @@ class Person < ActiveRecord::Base
     current_user? ? (Person.affiliation == "staff") : self[:staff]
   end
 
+  def admin?
+    Settings.admin_users.split(/,/).include? username
+  end
+
 end

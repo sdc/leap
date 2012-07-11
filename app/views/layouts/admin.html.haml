@@ -1,38 +1,8 @@
-!!!
-%html
-  %head
-    %title 
-      Leap Administration
-    = stylesheet_link_tag 'screen', :media => 'screen, projection'
-    = stylesheet_link_tag 'print', :media => 'print'
-    /[if lt IE 8]
-      = stylesheet_link_tag 'ie', :media => 'screen, projection'
-    /[if lt IE 9]
-      = stylesheet_link_tag 'ie8', :media => 'screen, projection'
-      = javascript_include_tag 'html5'
-    = javascript_include_tag "application"
-    = csrf_meta_tag
-    - unless Settings.google_analytics_code.empty?
-      = render :partial => "layouts/ganalytics"
-  %body
-    #top_bar
-      .inner
-        - if @user
-          #login_name.search
-            = link_to person_url(@user) do
-              .left
-                = image_tag("#{url_for(@user)}.jpg")
-              .right
-                = @user.forename
-                %br
-                = @user.surname
-    .container#main_container
-      #side_pane
-        %h1 Admin Menu
-        %br
-        %ul
-          %li= link_to_unless_current "Settings", admin_settings_url
-          %li= link_to_unless_current "Views", admin_views_url
-          %li= link_to_unless_current "Test Login", admin_test_login_url
-      #main_pane= yield
-      #footer= render :partial => "layouts/footer"
+    %h1 Admin Menu
+    %br
+    %ul
+      %li= link_to_unless_current "Settings", admin_settings_url
+      %li= link_to_unless_current "Views", admin_views_url
+      %li= link_to_unless_current "Test Login", admin_test_login_url
+  #main_pane= yield
+  #footer= render :partial => "layouts/footer"

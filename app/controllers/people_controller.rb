@@ -45,7 +45,6 @@ class PeopleController < ApplicationController
     end
     @people  ||= []
     @courses ||= []
-    render :layout => "search"
   end
 
   def index

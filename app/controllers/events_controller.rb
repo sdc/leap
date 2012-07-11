@@ -30,10 +30,9 @@ class EventsController < ApplicationController
     if @affiliation == "staff" or Settings.students_create_events.split(",").include? et
       @event = @topic.send(et).build(params[et.singularize])
       if @event.save
-        flash[:notice] = "New #{et.singularize.humanize.titleize} created"
+        flash[:success] = "New #{et.singularize.humanize.titleize} created"
       else
-        flash[:notice] = "#{et.singularize.humanize.titleize} could not be created!"
-        logger.error pp @event.errors
+        flash[:error] = "#{et.singularize.humanize.titleize} could not be created!"
       end
       if view = params[:redirect_to] 
         redirect_to params[:redirect_to]
@@ -49,10 +48,10 @@ class EventsController < ApplicationController
     @event = @topic.events.find(params[:id])
     et = @event.eventable_type.tableize
     if @affiliation == "staff" or Settings.students_update_events.split(",").include? et
-      if @event.eventable.update_attributes!(params[et.singularize])
-        flash[:notice] = "#{et.singularize.humanize.titleize} updated"
+      if @event.eventable.update_attributes(params[et.singularize])
+        flash[:success] = "#{et.singularize.humanize.titleize} updated"
       else
-        flash[:notice] = "#{et.singularize.humanize.titleize} could not be updated!"
+        flash[:error] = "#{et.singularize.humanize.titleize} could not be updated!"
       end
       respond_to do |f|
         f.js   {render @event}
@@ -66,10 +65,10 @@ class EventsController < ApplicationController
   def destroy
     @event = @topic.events.find(params[:id])  
     if @event.is_deletable?
-      flash[:notice] = "#{@event.eventable_type.singularize.humanize.titleize} deleted"
+      flash[:success] = "#{@event.eventable_type.singularize.humanize.titleize} deleted"
       @event.eventable.destroy
     else
-      flash[:notice] = "#{@event.eventable_type.singularize.humanize.titleize} could not be deleted"
+      flash[:error] = "#{@event.eventable_type.singularize.humanize.titleize} could not be deleted"
     end
     respond_to do |f|
       f.html {redirect_to :back}

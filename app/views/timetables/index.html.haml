@@ -4,7 +4,7 @@
   #calendar
     = form_tag send("#{@topic.class.name.underscore}_timetables_url"), :method => :get do
       -#= select_date(@date, :order => [:day, :month, :year]) 
-      = text_field_tag(:pretty_date, @date.strftime("%a %d %b %Y"), :id => "datepicker")
+      = text_field_tag(:pretty_date, @date.strftime("%a %d %b %Y"), :class => "timetable-datepicker")
       = hidden_field_tag(:date, @date, :id => "real_datepicker")
       = submit_tag "go"
   #next_week

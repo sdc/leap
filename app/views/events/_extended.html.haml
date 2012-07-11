@@ -1,5 +1,43 @@
-.tabs
-  %ul
+%ul.nav.nav-tabs
+  - if event.extra_panes
+    - event.extra_panes.each do |pane|
+      %li
+        %a{:href => "##{dom_id event}-#{pane.first.underscore}", "data-toggle" => "tab"}= pane.first
+  %li
+    %a{:href => "##{dom_id event}-new-target", "data-toggle" => "tab"} New Target
+  - if @user.admin?
+    %li
+      %a{:href => "##{dom_id event}-db-attrs", "data-toggle" => "tab"} Admin Details
+
+.tab-content
+  - if event.extra_panes
+    - event.extra_panes.each do |pane|
+      .tab-pane{:id => "#{dom_id event}-#{pane.first.underscore}"} Hello!
+  .tab-pane{:id => "#{dom_id event}-new-target"}
+    .row 
+      = render :partial => "targets/new", :locals => {:event => event}
+  .tab-pane{:id => "#{dom_id event}-db-attrs"}
+    .row
+      .span5
+        %h1 Leap DB Attributes
+        = form_for event.eventable, :url => event, :method => :put, :html => {:class => "form-horizontal db-attrs"} do |f|
+          = hidden_field_tag :person_id, @topic.mis_id
+          - event.eventable.attributes.keys.sort.each do |key|
+            .control-group
+              = f.label key, :class => "control-label"
+              .controls
+                = f.text_field key, :disabled => !event.eventable.class.accessible_attributes.include?(key)
+          .row        
+            .pull-right= submit_tag "Save", :class => "btn btn-primary"
+      .span5
+        %h1 Leap Event Attributes
+        %table.table
+          - event.attributes.keys.sort.each do |key|
+            %tr
+              %th= key
+              %td= event[key]
+-#
+  %tab
     - if event.extra_panes
       - event.extra_panes.each do |pane|
         %li

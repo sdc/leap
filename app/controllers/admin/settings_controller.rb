@@ -17,8 +17,7 @@
 class Admin::SettingsController < ApplicationController
 
   skip_before_filter :maintenance_mode
-  before_filter :admin_only
-  layout "admin"
+  before_filter :admin_page
 
   def index
     @settings = Settings.defaults.keys.sort
@@ -30,6 +29,7 @@ class Admin::SettingsController < ApplicationController
         Settings[k] = params[k]
       end
     end
+    flash[:success] = "Admin settings successfully updated!"
     redirect_to admin_settings_url
   end
 

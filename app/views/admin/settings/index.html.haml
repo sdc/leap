@@ -1,8 +1,7 @@
 %h1 Settings
-= form_for :settings do
-  %table
-    - @settings.each do |setting|
-      %tr
-        %td= setting.humanize
-        %td= text_field_tag setting, Settings[setting]
-  = submit_tag
+= form_for :settings, :html => {:class => "form-horizontal"} do
+  - @settings.each do |setting|
+    .control-group
+      %label.control-label{:for => setting}= setting.humanize
+      .controls= text_field_tag setting, Settings[setting], :class => "input-xlarge"
+  = submit_tag "Save", :class => "pull-right btn btn-primary"

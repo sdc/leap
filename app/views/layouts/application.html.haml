@@ -6,31 +6,29 @@
     - else
       %title Leap
     = favicon_link_tag
-    = favicon_link_tag "mobile_icon.png", :rel => "apple-touch-icon", :type => "image/png"
-    = stylesheet_link_tag 'screen', :media => 'screen, projection'
-    = stylesheet_link_tag 'print', :media => 'print'
-    /[if lt IE 8]
-      = stylesheet_link_tag 'ie', :media => 'screen, projection'
-    /[if lt IE 9]
-      = stylesheet_link_tag 'ie8', :media => 'screen, projection'
+    = stylesheet_link_tag 'application', :media => 'screen, projection'
     = javascript_include_tag "application"
     = csrf_meta_tag
-    - unless Settings.google_analytics_code.empty?
-      = render :partial => "layouts/ganalytics"
+    = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty?
   %body
-    - if @affiliation == "staff"
-      #top_bar= render :partial => "layouts/top_bar"
-    .container#main_container
-      #help{:style => "display:none"}
-      #side_pane
-        - if params[:all] and @affiliation == "staff"
-          = render :partial => "layouts/all_sidebar"
-        - else
-          = render :partial => "layouts/#{@topic.class.name.underscore}_sidebar" if @topic
-      #main_pane
-        = yield
-      #footer= render :partial => "layouts/footer"
-      - if flash[:notice]
-        %h2#flash_notice= flash[:notice]
-      - if @affiliation == "affiliate"
-        .hovery= image_tag "parent_mode.png"
+    = render :partial => "layouts/top_bar" if @user.try(:staff?)
+    #main-container.container
+      .row
+        #side-pane.span2
+          - if params[:all] and @user.staff?
+            = render :partial => "layouts/all_sidebar"
+          - elsif @topic.kind_of? Person
+            = render :partial => "layouts/#{@topic.class.name.underscore}_sidebar" if @topic
+          - else
+            &nbsp;
+        #main-pane.span10
+          - [:success,:error].each do |n|
+            - if flash[n]
+              .row.alert.fade.in{:class => "alert-#{n}"}
+                %button{:class => "close", "data-dismiss" => "alert"}×
+                = flash[n]
+          = yield
+    #footer= render :partial => "layouts/footer"
+    - if @affiliation == "affiliate"
+      .hovery= image_tag "parent_mode.png"
+    #help{:style => "display:none"}
