@@ -38,11 +38,17 @@ $(document).ready ->
       e = $(event.target).closest('.event')
       close_event(e)
     
-    # Spinner for deleting an event
-    $('.delete-event-button').live 'click', (event) ->
-      e = $(event.target).closest('.event')
-      e.find('.event-spinner').show()
-      e.find('.delete-event-button').hide()
+    # Deleting Events
+    $('.delete-event-button')
+      .live 'click', (event) ->
+        e = $(event.target).closest('.event')
+        e.find('.event-spinner').show()
+        e.find('.delete-event-button').hide()
+      .live 'ajax:complete', (event) ->
+        e = $(event.target).closest('.event')
+        e.after "<div class='row alert alert-success'><button class='close' data-dismiss='alert'>×</button><b>Event Deleted!</b></div>"
+        e.hide('slow')
+        $('#main-pane > .alert').delay(4000).hide('slow')
 
     # Remote update of events if you edit them
     $('.edit-event-form')
@@ -52,8 +58,7 @@ $(document).ready ->
       .live 'ajax:complete', (event,data) ->
         e = $(event.target).closest('.event')
         e.replaceWith innerShiv data.responseText
-        #$('#main-pane').prepend($(data.responseText).find('.alert').show('slow'))
-        $('.alert').delay(4000).hide('slow')
+        $('#main-pane > .alert').delay(4000).hide('slow')
 
     # Load more events into the bottom of the timeline if you click "more events"
     $('#more_events')

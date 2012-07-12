@@ -14,7 +14,7 @@ $(document).ready ->
   )
 
   # Fade out alerts after a while
-  $('.alert').delay(4000).hide('slow')
+  $('#main-pane > .alert').delay(4000).hide('slow')
 
   # Focus on any input field with id 'q'. Usually used to focus the search box
   $('#q').focus()

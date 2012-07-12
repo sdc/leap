@@ -72,6 +72,7 @@ class EventsController < ApplicationController
     end
     respond_to do |f|
       f.html {redirect_to :back}
+      f.js
     end
   end
 end
