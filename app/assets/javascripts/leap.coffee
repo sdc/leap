@@ -13,8 +13,8 @@ $(document).ready ->
     delay : 500
   )
 
-  # Fade out notices after a while
-  #$('#flash_notice').delay(4000).fadeOut('slow')
+  # Fade out alerts after a while
+  $('.alert').delay(4000).hide('slow')
 
   # Focus on any input field with id 'q'. Usually used to focus the search box
   $('#q').focus()

@@ -1,7 +1,7 @@
 .navbar.navbar-fixed-top
   .navbar-inner
     .container
-      = link_to image_tag("icons/leap-logo.png"), search_people_url, :class => "brand"
+      .brand= image_tag "icons/leap-logo.png"
       = form_tag search_people_url, :method => :get, :class => "navbar-search pull-left" do
         = text_field_tag :q, params[:q], :class => "search-query has-popover", :placeholder => "Search...", "data-title" => "Searching.", "data-placement" => "bottom", "data-content" => "Search by all or part of a learner's name, person code, course title or course code"
       %ul.nav.pull-left

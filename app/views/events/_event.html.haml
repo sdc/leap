@@ -34,3 +34,9 @@
           = render :partial => "events/mini", :collection => event.children.unique_eventable.order("event_date"), :as => :event
   .row
     .extended.span10{:style => "display:none"}
+
+- if request.xhr?
+  .row.alert.alert-success
+    %b
+      = event.eventable_type.humanize
+      updated

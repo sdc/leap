@@ -52,6 +52,8 @@ $(document).ready ->
       .live 'ajax:complete', (event,data) ->
         e = $(event.target).closest('.event')
         e.replaceWith innerShiv data.responseText
+        #$('#main-pane').prepend($(data.responseText).find('.alert').show('slow'))
+        $('.alert').delay(4000).hide('slow')
 
     # Load more events into the bottom of the timeline if you click "more events"
     $('#more_events')

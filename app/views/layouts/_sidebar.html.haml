@@ -2,7 +2,7 @@
 %h1= @topic.name
 %h6= link_to_if @affiliation == "staff", @topic.mis_code, Settings.ebs_person_base_url + @topic.mis_id.to_s
 %ul
-  = icon_link @user.staff? ? "Person Home" : "Home", @topic, "home"
+  = icon_link @user.staff? ? "#{@topic.class.name.humanize} Home" : "Home", @topic, "home"
   = icon_link "Timetable", person_timetables_url(@topic)
   - if @affiliation == "staff" and !Settings.ebs_person_base_url.blank?
     = icon_link "SparkE", Settings.ebs_person_base_url + @topic.mis_id.to_s, "sparke"

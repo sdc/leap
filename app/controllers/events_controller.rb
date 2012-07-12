@@ -49,12 +49,12 @@ class EventsController < ApplicationController
     et = @event.eventable_type.tableize
     if @affiliation == "staff" or Settings.students_update_events.split(",").include? et
       if @event.eventable.update_attributes(params[et.singularize])
-        flash[:success] = "#{et.singularize.humanize.titleize} updated"
+        flash[:success] = "#{@event.eventable_type.humanize} updated"
       else
-        flash[:error] = "#{et.singularize.humanize.titleize} could not be updated!"
+        flash[:error] = "#{@event.eventable_type.humanize} could not be updated!"
       end
       respond_to do |f|
-        f.js   {render @event}
+        f.js   {flash.clear; render @event}
         f.html {redirect_to :back}
       end
     else
