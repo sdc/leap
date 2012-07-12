@@ -10,8 +10,8 @@
     //      = event.person.name
     %li.title= raw special_title event.title
     - if event.subtitle
-      .span1= raw special_title event.subtitle
-    %li.body
+      %li.subtitle= raw special_title event.subtitle
+    %li.body{:class => event.subtitle && "after-subtitle"}
       - begin
         = render :partial => "events/body/#{event.eventable_type.underscore}", :object => event.eventable, :locals => {:event => event}
       - rescue ActionView::MissingTemplate

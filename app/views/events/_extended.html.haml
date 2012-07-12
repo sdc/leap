@@ -12,15 +12,15 @@
 .tab-content
   - if event.extra_panes
     - event.extra_panes.each do |pane|
-      .tab-pane{:id => "#{dom_id event}-#{pane.first.underscore}"} Hello!
+      .tab-pane{:id => "#{dom_id event}-#{pane.first.underscore}"}
+        .row= render :partial => pane.last, :locals => {:event => event, event.eventable_type.underscore.to_sym => event.eventable}
   .tab-pane{:id => "#{dom_id event}-new-target"}
-    .row 
-      = render :partial => "targets/new", :locals => {:event => event}
+    .row= render :partial => "targets/new", :locals => {:event => event}
   .tab-pane{:id => "#{dom_id event}-db-attrs"}
     .row
       .span5
         %h1 Leap DB Attributes
-        = form_for event.eventable, :url => event, :method => :put, :html => {:class => "form-horizontal db-attrs"} do |f|
+        = form_for event.eventable, :url => event, :method => :put, :remote => true, :html => {:class => "form-horizontal db-attrs edit-event-form"} do |f|
           = hidden_field_tag :person_id, @topic.mis_id
           - event.eventable.attributes.keys.sort.each do |key|
             .control-group

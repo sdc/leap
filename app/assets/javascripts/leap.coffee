@@ -4,9 +4,12 @@ The general js needed for leap stuff
 ###
 $(document).ready ->
   # Fade in the person photo once it's loaded  
-  $('#person_photo>img')
+  $('.person-photo>img')
     .load(-> $(this).fadeIn())
     .mouseover(-> $(this).effect('shake', {times:2,distance:3},100))
+
+  #Init Popovers
+  $(".has-popover").popover()
 
   # Fade out notices after a while
   #$('#flash_notice').delay(4000).fadeOut('slow')

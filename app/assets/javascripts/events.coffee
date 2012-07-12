@@ -18,24 +18,40 @@ $(document).ready ->
         e.find('.close-extend-button').show()
         e.find('.event-spinner').hide()
         e.find('.nav-tabs a:first').tab('show')
-        e.find('.datepicker').datepicker({buttonImage:'/assets/timetable.png',dateFormat:'D dd M yy'})#,altFormat:'yy-mm-dd',altField:'#real_datepicker'})
+        e.find('.datepicker').datepicker(
+          dateFormat:'D dd M yy'
+          prevText: "<i class='icon-arrow-left'/>"
+          nextText: "<i class='icon-arrow-right'/>"
+        )
       .live 'click', (event) ->
         e = $(event.target).closest('.event')
         e.find('.event-spinner').show()
         e.find('.extend-button').hide()
     
     # Close the extended pane of an event
-    $('.close-extend-button').live 'click', (event) ->
-      e = $(event.target).closest('.event')
+    close_event = (e) ->
       e.find('.extended').slideUp()
       e.find('.extend-button').show()
       e.find('.close-extend-button').hide()
+
+    $('.close-extend-button').live 'click', (event) ->
+      e = $(event.target).closest('.event')
+      close_event(e)
     
     # Spinner for deleting an event
     $('.delete-event-button').live 'click', (event) ->
       e = $(event.target).closest('.event')
       e.find('.event-spinner').show()
       e.find('.delete-event-button').hide()
+
+    # Remote update of events if you edit them
+    $('.edit-event-form')
+      .live 'ajax:before', (event) ->
+        e = $(event.target).closest('.event')
+        close_event(e)
+      .live 'ajax:complete', (event,data) ->
+        e = $(event.target).closest('.event')
+        e.replaceWith innerShiv data.responseText
 
     # Load more events into the bottom of the timeline if you click "more events"
     $('#more_events')
