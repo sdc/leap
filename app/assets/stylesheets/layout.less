@@ -46,15 +46,24 @@ span.label.complete {
 h1 {
   font-size: 20px;
 }
+
 h2 {
   font-size: 16px;
 }
 
 #side-pane {
+  h1 {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  h6 {
+    margin-bottom: 20px;
+  }
   .person-photo {
     .square(130px);
     .box-shadow(0px 10px 5px -5px @borderColour);
     .border-radius(@borderRadius);
+    margin-bottom: 10px;
     border: 1px solid @borderColour;
     img {
       .border-radius(@borderRadius);

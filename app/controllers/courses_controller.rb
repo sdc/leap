@@ -20,7 +20,10 @@ class CoursesController < ApplicationController
   before_filter       :course_set_topic
 
   def show
-    redirect_to "/404.html" unless @topic.kind_of? Course
+    respond_to do |format|
+      format.html
+      format.jpg { redirect_to "/assets/courses.png" }
+    end
   end
 
   def next_lesson_block

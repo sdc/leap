@@ -9,7 +9,9 @@ $(document).ready ->
     .mouseover(-> $(this).effect('shake', {times:2,distance:3},100))
 
   #Init Popovers
-  $(".has-popover").popover()
+  $(".has-popover").popover(
+    delay : 500
+  )
 
   # Fade out notices after a while
   #$('#flash_notice').delay(4000).fadeOut('slow')

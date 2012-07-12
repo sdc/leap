@@ -100,4 +100,8 @@ class Person < ActiveRecord::Base
     Settings.admin_users.split(/,/).include? username
   end
 
+  def mis_code
+    mis_id
+  end
+
 end

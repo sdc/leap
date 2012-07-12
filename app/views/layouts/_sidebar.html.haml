@@ -1,6 +1,6 @@
 .person-photo= image_tag("#{url_for(@topic)}.jpg", :size => "130x130", :style => "display:none")
 %h1= @topic.name
-%h6= link_to_if @affiliation == "staff", @topic.mis_id, Settings.ebs_person_base_url + @topic.mis_id.to_s
+%h6= link_to_if @affiliation == "staff", @topic.mis_code, Settings.ebs_person_base_url + @topic.mis_id.to_s
 %ul
   = icon_link @user.staff? ? "Person Home" : "Home", @topic, "home"
   = icon_link "Timetable", person_timetables_url(@topic)

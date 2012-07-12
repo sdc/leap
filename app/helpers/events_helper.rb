@@ -16,10 +16,6 @@
 
 module EventsHelper
 
-  def title_class(thing)
-    thing.size < 4 ? "big" : nil
-  end
-
   def event_date(event)
     content_tag(:div, pretty_date(event.event_date), :class => "date") +
     content_tag(:div, pretty_time(event.event_date), :class => "time")
@@ -29,7 +25,7 @@ module EventsHelper
   def special_title(thing)
     text = case thing.class.name
     when "String" then thing
-    when "Array"  then thing.map{|t| content_tag(:div, special_title(t), :class => "double_title")}.join
+    when "Array"  then thing.map{|t| content_tag(:div, special_title(t))}.join
     when "Date"   then pretty_date thing
     when "Time"   then pretty_date thing
     when "Course" then link_to_if @affiliation == "staff", thing.code, thing
@@ -59,14 +55,6 @@ module EventsHelper
     :class => "delete-event-button",
     :confirm => "This will delete the entire #{event.eventable_type.singularize.humanize.titleize}.\nAre you sure?"
   end
-
-     
-  #def classes_for(event)
-  #  [event.eventable_type.downcase,
-  #   event.subtitle ? "subtitle" : nil,
-  #   event.status
-  #  ]
-  #end
 
   def pretty_date(date)
     return "Today" if date.midnight.to_date == Date.today

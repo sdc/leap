@@ -17,8 +17,8 @@
         #side-pane.span2
           - if params[:all] and @user.staff?
             = render :partial => "layouts/all_sidebar"
-          - elsif @topic.kind_of? Person
-            = render :partial => "layouts/#{@topic.class.name.underscore}_sidebar" if @topic
+          - elsif @topic
+            = render :partial => "layouts/sidebar"
           - else
             &nbsp;
         #main-pane.span10

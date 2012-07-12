@@ -16,6 +16,11 @@
         = render :partial => "events/body/#{event.eventable_type.underscore}", :object => event.eventable, :locals => {:event => event}
       - rescue ActionView::MissingTemplate
         = raw event_format(event.body)
+      - rescue 
+        .alert.alert-error
+          %b An error occurred.
+          = $!
+          
     %li.controls
       = extend_event_button event
       = delete_event_button event if event.is_deletable?

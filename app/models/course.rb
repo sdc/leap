@@ -39,4 +39,8 @@ class Course < ActiveRecord::Base
     {:course_id => mis_id.to_s}
   end
 
+  def mis_code
+    code
+  end
+
 end
