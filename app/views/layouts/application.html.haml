@@ -6,7 +6,7 @@
     - else
       %title Leap
     = favicon_link_tag
-    = stylesheet_link_tag 'application', :media => 'screen, projection'
+    = stylesheet_link_tag 'application'
     = javascript_include_tag "application"
     = csrf_meta_tag
     = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty?
