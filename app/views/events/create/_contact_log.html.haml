@@ -1,14 +1,13 @@
 = form_for @topic.contact_logs.new, :url => "/events" do |f|
+  = hidden_field_tag :eventable_type, "ContactLog"
   %h3
     Log a contact as 
     = @user.name
   - if @user == @topic
     %h4.quiet Are you sure you want to create a contact log with yourself?
-  .icon= image_tag("#{url_for(Person.user)}.jpg", :size => "48x48")
-  = f.text_area :body
-  = hidden_field_tag :eventable_type, "ContactLog"
-  = hidden_field_tag :person_id, @topic.mis_id
-  .sumbit= submit_tag "Add Log"
+  .span1= image_tag("#{url_for(Person.user)}.jpg", :size => "48x48")
+  .span8= f.text_area :body
+  = add_event_button
 
 .online-help
   %h1 Contact Logs

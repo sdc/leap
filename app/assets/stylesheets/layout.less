@@ -78,6 +78,26 @@ h2 {
   }
 }
 
+.event-header {
+  padding: 9px;
+  border: 2px @borderColour solid;
+  .border-radius(@borderRadius);
+  margin-bottom: 10px;
+  .clearfix;
+  textarea {
+    height: 55px;
+    width: 100%
+  }
+  table {
+    td {
+      vertical-align: top;
+    }
+  }
+  form {
+    margin: 0px;
+  }
+}
+
 .event {
   padding: 9px;
   border: 2px @borderColour solid;
@@ -132,9 +152,6 @@ h2 {
       label {
         font-weight: bold;
       }
-    }
-    textarea {
-      height: 55px;
     }
   }
 }

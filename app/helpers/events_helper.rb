@@ -80,4 +80,10 @@ module EventsHelper
     LatexToPdf.escape_latex(text)
   end
 
+  def add_event_button(text = "Add")
+    content_tag :div, :width => "59px" do
+      submit_tag text, :class => "btn btn-primary pull-right"
+    end
+  end
+
 end

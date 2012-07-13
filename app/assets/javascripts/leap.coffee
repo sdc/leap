@@ -2,16 +2,17 @@
 leap.coffee
 The general js needed for leap stuff
 ###
+
 $(document).ready ->
+
   # Fade in the person photo once it's loaded  
   $('.person-photo>img')
     .load(-> $(this).fadeIn())
     .mouseover(-> $(this).effect('shake', {times:2,distance:3},100))
 
   #Init Popovers
-  $(".has-popover").popover(
+  $(".has-popover").popover
     delay : 500
-  )
 
   # Fade out alerts after a while
   $('#main-pane > .alert').delay(4000).hide('slow')
@@ -23,7 +24,11 @@ $(document).ready ->
   $('#search_extended').click( -> $('#search_form').submit())
 
   # Set up a date picker for timetables
-  $('.timetable-datepicker').datepicker({buttonImage:'/assets/timetable.png',dateFormat:'D dd M yy',altFormat:'yy-mm-dd',altField:'#real_datepicker'})
+  $('.timetable-datepicker').datepicker
+    buttonImage:'/assets/timetable.png'
+    dateFormat:'D dd M yy'
+    altFormat:'yy-mm-dd'
+    altField:'#real_datepicker'
 
   # Show extended info on timetable events on mouseover
   $('.timetable_event')
@@ -48,10 +53,11 @@ $(document).ready ->
   $(window).resize ->
     $('#help').height($(window).height())
 
-  # Load the blocks on home pages
+  # Load Delayed Blocks
   $('[load_block]').each (i,block) ->
     $(block).load $(block).attr('load_block'), ->
       $('#help_button').show() unless $('.online-help').length == 0
+      $('.nav-pills a:first').tab('show')
       # TODO: This needs to be moved into a seperate file to keep events seperate if I can hook it into 
       #       the loading of the create form
       $('#progression_review_approved').change ->

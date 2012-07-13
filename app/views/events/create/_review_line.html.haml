@@ -1,29 +1,34 @@
-- unless Settings.review_windows.blank?
+- if Settings.review_windows.blank?
+  .alert 
+    %b There are currently no open review windows.
+- else
   = form_for @topic.review_lines.new, :url => "/events" do |f|
-    %h3
-      Add a review 
-      = f.select :window, Settings.review_windows.split(/,/)
-      for session
-      = f.text_field :unit
-    .icon= image_tag "events/reviews.png"
-    = f.text_area :body
-    .review_scores
-      %table.reviews
-        %tr
-          %td Quality of Work
-          %td= f.select :quality, 0..10
-          %td Punctuality
-          %td= f.select :punctuality, 0..10
-        %tr
-          %td Attitude
-          %td= f.select :attitude, 0..10
-          %td Completion of Work
-          %td= f.select :completion, 0..10
-
-    = f.hidden_field :person_id
     = hidden_field_tag :eventable_type, "ReviewLine"
-    = hidden_field_tag :person_id, @topic.mis_id
-    .sumbit{:style => "clear:both;float:right"}= submit_tag "Add"
+    %h3 Add a review 
+    .row
+      .span1 Review:
+      .span4= f.select :window, Settings.review_windows.split(/,/)
+      .span1 Session:
+      .span2= f.text_field :unit
+    .row
+      .span1= image_tag "events/reviews.png"
+      .span4= f.text_area :body
+      .span4
+        %table
+          %tr
+            %td Quality of Work
+            %td= f.select :quality, 0..10, {}, {:class => "input-mini"}
+            %td &nbsp;
+            %td Punctuality
+            %td= f.select :punctuality, 0..10, {}, {:class => "input-mini"}
+          %tr
+            %td Attitude
+            %td= f.select :attitude, 0..10, {}, {:class => "input-mini"}
+            %td &nbsp;
+            %td Completion of Work
+            %td= f.select :completion, 0..10, {}, {:class => "input-mini"}
+
+      = add_event_button
 
 .online-help
   %h1 Reviews
