@@ -6,10 +6,11 @@
     = hidden_field_tag :eventable_type, "ReviewLine"
     %h3 Add a review 
     .row
-      .span1 Review:
-      .span4= f.select :window, Settings.review_windows.split(/,/)
+      .span1
       .span1 Session:
-      .span2= f.text_field :unit
+      .span4= f.text_field :unit
+      .span1 Review:
+      .span2= f.select :window, Settings.review_windows.split(/,/)
     .row
       .span1= image_tag "events/reviews.png"
       .span4= f.text_area :body

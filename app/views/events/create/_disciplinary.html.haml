@@ -3,6 +3,7 @@
   %h3
     Log a positive intervention
   .span1= image_tag "events/disciplinaries.png"
-  .span3= f.select "level", options_for_select(Hash[*Settings.disciplinary_levels.split(",")].invert)
   .span5= f.text_area :body
-  = add_event_button
+  .span3
+    = f.select "level", options_for_select(Hash[*Settings.disciplinary_levels.split(",")].invert)
+    = submit_tag "Add", :class => "btn btn-primary pull-right"

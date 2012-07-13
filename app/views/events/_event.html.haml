@@ -25,7 +25,8 @@
       = extend_event_button event
       = delete_event_button event if event.is_deletable?
     - begin
-      .long_body= render :partial => "events/long_body/#{event.eventable_type.underscore}", :object => event.eventable, :locals => {:event => event}
+      .row
+        .long-body.span10= render :partial => "events/long_body/#{event.eventable_type.underscore}", :object => event.eventable, :locals => {:event => event}
     - rescue ActionView::MissingTemplate
       -#long_body 
     -# unless defined?(no_attachments)
