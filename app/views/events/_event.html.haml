@@ -29,10 +29,9 @@
         .long-body.span10= render :partial => "events/long_body/#{event.eventable_type.underscore}", :object => event.eventable, :locals => {:event => event}
     - rescue ActionView::MissingTemplate
       -#long_body 
-    -# unless defined?(no_attachments)
-      .attachments
-        .inner
-          = render :partial => "events/mini", :collection => event.children.unique_eventable.order("event_date"), :as => :event
+  - event.children.each do |child|
+    .row
+      .span10= render :partial => "events/mini", :object => child, :as => "event"
   .row
     .extended.span10{:style => "display:none"}
 

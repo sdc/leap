@@ -34,8 +34,8 @@ module EventsHelper
     (text and (text.size < 3  or text.last == "%")) ? content_tag(:span,text,:class => "big") : text
   end
     
-  def event_classes(event)
-    classes =  ["event",event.status,dom_id(event),dom_id(event.eventable),dom_class(event.eventable)]
+  def event_classes(event, mini = false)
+    classes =  [mini ? "child-event" : "event",event.status,dom_id(event),dom_id(event.eventable),dom_class(event.eventable)]
     classes << "with_person" if @multi
     classes << "with_subtitle" if event.subtitle
     return classes

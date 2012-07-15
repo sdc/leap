@@ -170,4 +170,23 @@ table {
       }
     }
   }
+  .child-event {
+    .clearfix();
+    .border-radius(@borderRadius);
+    margin-top: 10px;
+    ul {
+      list-style-type: none;
+      margin: 0;
+      li {
+        .pull-left;
+        &.icon {
+          .size(28px,32px);
+        }
+        &.title {
+          font-weight: bold;
+          .size(28px, 130px);
+        }
+      }
+    }
+  }
 }
