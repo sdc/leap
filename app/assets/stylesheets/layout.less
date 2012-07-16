@@ -195,3 +195,17 @@ table {
     }
   }
 }
+
+.home-page-block {
+  border: 2px @borderColour solid;
+  .border-radius(@borderRadius);
+  background: #f0f0ff;
+  margin-right: -4px;
+  margin-bottom: 10px;
+  h2 {
+    .border-radius(@borderRadius, 0, 0, @borderRadius);
+    background: #eee;
+    border-bottom:1px #ccc solid;
+    padding-left: 20px;
+  }
+}

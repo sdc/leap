@@ -1,11 +1,10 @@
-#person_home
-  = render :partial => 'personal_details'
-  = render :partial => 'thoughts'
-  .block.left{:load_block => next_lesson_block_person_url(@topic)}= image_tag "ajax-loader.gif"
-  - if @user.staff? and @user == @topic
-    .block.right{:load_block => my_courses_block_person_url(@topic)}= image_tag "ajax-loader.gif"
-  - else
-    .block.right{:load_block => attendance_block_person_url(@topic)}= image_tag "ajax-loader.gif"
-  .block.left{:load_block => targets_block_person_url(@topic)}= image_tag "ajax-loader.gif"
-  #advert.block.right{:style => "height:254px"}= raw Settings.advert_box_html
-  .block.left{:load_block => moodle_block_person_url(@topic)}= image_tag "ajax-loader.gif"
+.row.home-page-block= render 'personal_details'
+.row.home-page-block= render 'thoughts'
+//.home-page-block.pull-left{:load_block => next_lesson_block_person_url(@topic)}= image_tag "ajax-loader.gif"
+//- if @user.staff? and @user == @topic
+//  .home-page-block.pull-right{:load_block => my_courses_block_person_url(@topic)}= image_tag "ajax-loader.gif"
+//- else
+//  .home-page-block.pull-right{:load_block => attendance_block_person_url(@topic)}= image_tag "ajax-loader.gif"
+//  .home-page-block.pull-left{:load_block => targets_block_person_url(@topic)}= image_tag "ajax-loader.gif"
+//  .home-page-block.pull-right{:style => "height:254px"}= raw Settings.advert_box_html
+//  .home-page-block.pull-left{:load_block => moodle_block_person_url(@topic)}= image_tag "ajax-loader.gif"

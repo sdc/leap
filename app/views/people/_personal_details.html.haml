@@ -1,25 +1,23 @@
-#details.block.wide
-  %h3 Personal Details
-  #top_button &nbsp;
-  %dl
-    %dt Name:
-    %dd= @topic.name
-    - if @topic.current_user? or !@topic.staff?
-      %dt Birth Date:
-      - if @topic.date_of_birth
-        %dd.last= @topic.date_of_birth.strftime("%d %B %Y") + " (Age #{@topic.age})"
-      - else
-        &nbsp;
-      %dt Address:
-      %dd= raw ((@topic.address or ["Unknown"]) + [@topic.town,@topic.postcode]).reject{|x|x.blank?}.join(", ")
-      %dt Mobile:
-      %dd= @topic.mobile_number or "-"
-      %dt Next of Kin:
-      %dd= @topic.next_of_kin or "-"
-      - if @topic.tutor
-        %dt Tutor
-        %dd= link_to_if @user.staff?, @topic.tutor.name, @topic.tutor
-  - if @topic.current_user?
-    %p{:style => "margin:3px 0 0 0;clear:both"}
-      Are any of your personal details incorrect?
-      = link_to "Notify us...", Settings.notify_details_change_url
+%h2 Personal Details
+%dl.span5.dl-horizontal
+  %dt Name
+  %dd= @topic.name :middle_names => true
+  %dt Address
+  %dd
+    - if @topic.address
+      = [@topic.address, @topic.town, @topic.postcode].reject(&:nil?).join ", "
+%dl.span5.dl-horizontal
+  %dt Birth Date
+  %dd 
+    - if @topic.date_of_birth
+      = @topic.date_of_birth.strftime("%d %B %Y") + " (Age #{@topic.age})"
+    - else
+      &nbsp;
+  %dt Mobile
+  %dd= @topic.mobile_number or "None recorded"
+  %dt Next of Kin
+  %dd= @topic.next_of_kin or "None recorded"
+- if @topic == @user
+  %p{:style => "margin:10px 20px;"}
+    Are any of your personal details incorrect?
+    = link_to "Notify us...", Settings.notify_details_change_url
