@@ -2,11 +2,12 @@
 .row.home-page-block.full= render 'thoughts'
 .row
   .span5
-    .row.home-page-block{:load_block => next_lesson_block_person_url(@topic)}= image_tag "ajax-loader.gif"
-//- if @user.staff? and @user == @topic
-//  .home-page-block.pull-right{:load_block => my_courses_block_person_url(@topic)}= image_tag "ajax-loader.gif"
-//- else
-//  .home-page-block.pull-right{:load_block => attendance_block_person_url(@topic)}= image_tag "ajax-loader.gif"
+    .row.home-page-block.left{:load_block => next_lesson_block_person_url(@topic)}= image_tag "ajax-loader.gif"
+  .span5
+    - if @user.staff? and @user == @topic
+      .row.home-page-block.right{:load_block => my_courses_block_person_url(@topic)}= image_tag "ajax-loader.gif"
+    - else
+      .row.home-page-block.right{:load_block => attendance_block_person_url(@topic)}= image_tag "ajax-loader.gif"
 //  .home-page-block.pull-left{:load_block => targets_block_person_url(@topic)}= image_tag "ajax-loader.gif"
 //  .home-page-block.pull-right{:style => "height:254px"}= raw Settings.advert_box_html
 //  .home-page-block.pull-left{:load_block => moodle_block_person_url(@topic)}= image_tag "ajax-loader.gif"

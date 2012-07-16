@@ -50,6 +50,9 @@ h1 {
 h2 {
   font-size: 16px;
 }
+h3 {
+  font-size: 16px;
+}
 
 textarea {
   height: 55px;
@@ -202,27 +205,40 @@ table {
   background: #f0f0ff;
   margin-right: -4px;
   margin-bottom: 10px;
+  &.right{
+    margin-left: -10px;
+    height:120px;
+  }
+  &.left {
+    height: 120px;
+  }
   h2 {
     .border-radius(@borderRadius, 0, 0, @borderRadius);
     background: #eee;
     border-bottom:1px #ccc solid;
-    padding-left: 20px;
+    padding-left: 10px;
   }
   h3 {
     .makeColumn(1);
     margin-left: 0px;
-    padding-left: 20px;
+    padding-left: 10px;
     padding-right: 10px;
     .border-radius(0,0,@borderRadius, @borderRadius);
     background: #eee;
     border-right:1px #ccc solid;
+    height:100%;
   }
   h3+.span4 {
     margin-left: 10px;
     width: 285px;
+    padding-top: 10px;
   }
   h4 {
     margin-top: 5px;
+  }
+  .scroll-list {
+    overflow: auto;
+    height: 100px;
   }
 }
 

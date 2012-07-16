@@ -1,5 +1,5 @@
 = link_to person_timetables_url(@topic, :date => @next_timetable_event), style: "color:inherit" do
-  %h3 
+  %h3
     Next lesson
     = image_tag("timetable.png")
   .span4
@@ -11,5 +11,4 @@
         = @next_timetable_event.rooms.join ", "
         .small_text= @next_timetable_event.teachers.map{|t| t.name}.join ", "
     - else 
-      %br
       .alert You have no current timetable events.
