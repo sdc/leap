@@ -208,4 +208,24 @@ table {
     border-bottom:1px #ccc solid;
     padding-left: 20px;
   }
+  h3 {
+    .makeColumn(1);
+    margin-left: 0px;
+    padding-left: 20px;
+    padding-right: 10px;
+    .border-radius(0,0,@borderRadius, @borderRadius);
+    background: #eee;
+    border-right:1px #ccc solid;
+  }
+  h3+.span4 {
+    margin-left: 10px;
+    width: 285px;
+  }
+  h4 {
+    margin-top: 5px;
+  }
+}
+
+.span5 .home-page-block {
+  margin-right: -2px;
 }

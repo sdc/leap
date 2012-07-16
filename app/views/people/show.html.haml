@@ -1,6 +1,8 @@
-.row.home-page-block= render 'personal_details'
-.row.home-page-block= render 'thoughts'
-//.home-page-block.pull-left{:load_block => next_lesson_block_person_url(@topic)}= image_tag "ajax-loader.gif"
+.row.home-page-block.full= render 'personal_details'
+.row.home-page-block.full= render 'thoughts'
+.row
+  .span5
+    .row.home-page-block{:load_block => next_lesson_block_person_url(@topic)}= image_tag "ajax-loader.gif"
 //- if @user.staff? and @user == @topic
 //  .home-page-block.pull-right{:load_block => my_courses_block_person_url(@topic)}= image_tag "ajax-loader.gif"
 //- else

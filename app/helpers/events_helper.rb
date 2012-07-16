@@ -56,14 +56,14 @@ module EventsHelper
     :confirm => "This will delete the entire #{event.eventable_type.singularize.humanize.titleize}.\nAre you sure?"
   end
 
-  def pretty_date(date)
+  def pretty_date(date, options = {})
     return "Today" if date.midnight.to_date == Date.today
     return "Yesterday" if date.midnight.to_date == Date.today - 1
     return "Tomorrow" if date.midnight.to_date == Date.today + 1
     if date.year == Date.today.year
-      return date.strftime("%d %b")
+      return date.strftime("#{'%A ' if options[:day]}%d %b")
     else
-      return date.strftime("%d %b %y")
+      return date.strftime("#{'%A ' if options[:day]}%d %b %y")
     end
   end
 

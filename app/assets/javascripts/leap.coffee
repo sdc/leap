@@ -43,9 +43,9 @@ $(document).ready ->
   $('.online-help').appendTo($('#help'))
 
   # Open the help panel when you click the help button - make it full window height
-  $('#help_button').click -> 
+  $('#help_button').click ->
     $('.online-help').appendTo($('#help')).show()
-    $('#help').height($(window).height()) 
+    $('#help').height($(window).height())
     $('#help').toggle('slide', {direction:'right'})
     $('#help_button').toggleClass('hover')
 
