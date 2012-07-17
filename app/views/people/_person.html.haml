@@ -1,8 +1,9 @@
-.person
-  = link_to person_url(person, :refresh => true), {:title => person.name} do
-    .person_photo= image_tag("#{url_for(person)}.jpg")
-    .details
-      %h3= truncate(person.name, :length => 17)
-      %h5.quiet= person.mis_id
-      - if person.date_of_birth and person.date_of_birth != Date.new(1901,1,1)
-        %h5.dob.quiet= person.date_of_birth.strftime("%d %b %Y")
+.search-list-person
+  .row
+    = link_to person_url(person, :refresh => true) do
+      .span1= image_tag("#{url_for(person)}.jpg")
+      .span2
+        %h5= truncate(person.name, :length => 20)
+        %h6= person.mis_id      
+        - unless person.staff?
+          %h6= person.date_of_birth.try(:strftime, "%d %b %Y")
