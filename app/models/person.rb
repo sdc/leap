@@ -55,7 +55,7 @@ class Person < ActiveRecord::Base
 
   def name(options = {})
     names = [forename]
-    names += middle_names if options[:middle_names]
+    names += middle_names if options[:middle_names] and middle_names
     if options[:surname_first]
       names.unshift "#{surname},"
     else
