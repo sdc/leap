@@ -87,7 +87,7 @@ module EventsHelper
   end
 
   def create_event_form(klass,&block)
-    form_for @topic.send(klass.name.tableize).new, :url => "/events" do |f|
+    form_for @topic.send(klass.name.tableize).new, :url => "/events", :html => {:class => "form form-inline"} do |f|
       concat(hidden_field_tag(:person_id, @topic.mis_id))
       concat(hidden_field_tag(:eventable_type, klass))
       block.call(f)
