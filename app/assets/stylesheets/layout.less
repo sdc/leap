@@ -32,11 +32,6 @@ body {
   }
 }
 
-
-span.label.complete {
-  .label-success;
-}
-
 .border-right {
   padding-right: 7px;
   border-right: 2px lighten(@borderColour,35%) solid;
@@ -63,6 +58,10 @@ table {
     vertical-align: top;
     text-align: left;
   }
+}
+
+dl {
+  margin-top: 0;
 }
 
 .navbar {
@@ -232,6 +231,7 @@ table {
     background: #eee;
     border-bottom:1px #ccc solid;
     padding-left: 10px;
+    margin-bottom: 10px;
   }
   h3 {
     .makeColumn(1);
@@ -259,4 +259,12 @@ table {
 
 .span5 .home-page-block {
   margin-right: -2px;
+}
+
+.class-list-person {
+  margin-bottom: 10px;
+  .makeColumn(3);
+  .clearfix();
+  border: 1px solid @borderColour;
+  padding: 5px 5px 10px 5px;
 }

@@ -3,7 +3,7 @@
 @complete    : #beb;
 @overdue     : #fdd;
 @incomplete  : #faa;
-@unknown     : #ccc;
+@unknown     : #ddd;
 @not_started : #cce;
 
 @fg_darken : 60%;
@@ -32,3 +32,10 @@ h3.not_started,.not_started{background-color: @not_started}
 .status-bd.incomplete  {border-color: darken(@incomplete,  @bd_darken)}
 .status-bd.unknown     {border-color: darken(@unknown,     @bd_darken)}
 .status-bd.not_started {border-color: darken(@not_started, @bd_darken)}
+
+span.label.unknown    {.label-inverse;}
+span.label.current    {.label-warning;}
+span.label.start      {.label-info;   }
+span.label.complete   {.label-success;}
+span.label.overdue    {.label-important;}
+span.label.incomplete {.label-important;}
