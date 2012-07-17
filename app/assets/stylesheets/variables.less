@@ -11,33 +11,6 @@
 // Tables
 @tableBorder: @borderColour;
 
-
-// Colours
-@current     : #fe9;
-@start       : #ed9;
-@complete    : #ada;
-@overdue     : #ebb;
-@incomplete  : #faa;
-@unknown     : #ccc;
-@not_started : #cce;
-
-@fg_darken : 50%;
-
-.current        {background-color: @current    }
-.start          {background-color: @start      }
-.complete       {background-color: @complete   }
-.overdue        {background-color: @overdue    }
-.incomplete     {background-color: @incomplete }
-.unknown        {background-color: @unknown    }
-.not_started    {background-color: @not_started}
-.fg_current     {color: darken(@current,     @fg_darken)}
-.fg_start       {color: darken(@start,       @fg_darken)}
-.fg_complete    {color: darken(@complete,    @fg_darken)}
-.fg_overdue     {color: darken(@overdue,     @fg_darken)}
-.fg_incomplete  {color: darken(@incomplete,  @fg_darken)}
-.fg_unknown     {color: darken(@unknown,     @fg_darken)}
-.fg_not_started {color: darken(@not_started, @fg_darken)}
-
 // Invididual borders
 .border-radius(@topright: 0, @bottomright: 0, @bottomleft: 0, @topleft: 0) {
   -webkit-border-top-right-radius: @topright;
