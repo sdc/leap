@@ -82,8 +82,17 @@ module EventsHelper
 
   def add_event_button(text = "Add")
     content_tag :div, :width => "59px" do
-      submit_tag text, :class => "btn btn-primary pull-right"
+      submit_tag text, :class => "btn btn-primary pull-right", :style => "margin-right:10px"
     end
   end
+
+  def create_event_form(klass,&block)
+    form_for @topic.send(klass.name.tableize).new, :url => "/events" do |f|
+      concat(hidden_field_tag(:person_id, @topic.mis_id))
+      concat(hidden_field_tag(:eventable_type, klass))
+      block.call(f)
+    end
+  end
+    
 
 end

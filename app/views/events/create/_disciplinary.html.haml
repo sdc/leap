@@ -1,6 +1,6 @@
 = form_for @topic.disciplinaries.new, :url => "/events" do |f|
   = hidden_field_tag :eventable_type, "Disciplinary"
-  %h3
+  %h2
     Log a positive intervention
   .span1= image_tag "events/disciplinaries.png"
   .span5= f.text_area :body

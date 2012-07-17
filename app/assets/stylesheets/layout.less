@@ -105,13 +105,20 @@ table {
 }
 
 .event-header {
-  padding: 9px;
   background: #eee;
   border: 2px @borderColour solid;
   .border-radius(@borderRadius);
   margin-bottom: 10px;
+  background: #f0f0ff;
   .clearfix;
-  h3 {
+  h2 {
+    .border-radius(@borderRadius, 0, 0, @borderRadius);
+    background: #eee;
+    border-bottom:1px #ccc solid;
+    padding-left: 10px;
+    margin-bottom:10px;
+  }
+  h3,h4,h5 {
     margin-bottom: 10px;
   }
   form {
