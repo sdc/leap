@@ -8,6 +8,8 @@
       .row.home-page-block.right{:load_block => my_courses_block_person_url(@topic)}= image_tag "ajax-loader.gif"
     - else
       .row.home-page-block.right{:load_block => attendance_block_person_url(@topic)}= image_tag "ajax-loader.gif"
-//  .home-page-block.pull-left{:load_block => targets_block_person_url(@topic)}= image_tag "ajax-loader.gif"
+.row
+  .span5
+    .row.home-page-block.left{:load_block => targets_block_person_url(@topic)}= image_tag "ajax-loader.gif"
 //  .home-page-block.pull-right{:style => "height:254px"}= raw Settings.advert_box_html
 //  .home-page-block.pull-left{:load_block => moodle_block_person_url(@topic)}= image_tag "ajax-loader.gif"
