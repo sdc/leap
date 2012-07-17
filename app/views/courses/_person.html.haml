@@ -1,4 +1,4 @@
-.class-list-person{class: pc.status}
+.class-list-person{class: [pc.status, "mis_#{pc.mis_status}"]}
   .row
     = link_to person_url(pc.person, :refresh => true) do
       .span1= image_tag("#{url_for(pc.person)}.jpg")

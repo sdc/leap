@@ -21,7 +21,9 @@ class CoursesController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html
+      format.html do
+        @statuses = @topic.person_courses.select(:mis_status).map(&:mis_status).uniq
+      end
       format.jpg { redirect_to "/assets/courses.png" }
     end
   end

@@ -83,3 +83,14 @@ $(document).ready ->
         $('#event_header').show('fast')
     else
       $('#event_header').hide('fast', -> $('#event_header').empty())
+
+  # Filter Course Lists by mis_status
+  filterCourseList = (status) ->
+    if status == "show-all"
+      $(".class-list-person").show('fast')
+    else
+      $(".class-list-person:not(.mis_#{status})").hide('fast')
+      $(".class-list-person.mis_#{status}").show('fast')
+
+  $('[data-course-person-filter]').click ->
+    filterCourseList $(this).attr('data-course-person-filter')

@@ -21,6 +21,10 @@
 
 .row.home-page-block.full
   %h2 Class List
+  .span9.btn-group{"data-toggle" => "buttons-radio", :style => "margin-bottom:10px;"}
+    %a.btn.btn-primary.active{"data-course-person-filter" => "show-all"} All
+    - @statuses.each do |s|
+      %a.btn{"data-course-person-filter" => s}= s
   = render :partial => "person", :collection => @topic.person_courses, :as => "pc"
   //- if @topic.person_courses.count > 12
   //  #expand_students{:style => "cursor:pointer"} See all students...
