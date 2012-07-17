@@ -1,6 +1,15 @@
 .row.home-page-block.full
-  %h2 Course Details
-  //#top_button= button_to "#{@user.my_courses.try("include?",@topic.id) ? "Remove from" : "Add to"} My Courses", add_course_url(@course)
+  %h2 
+    Course Details
+    .pull-right{style: "margin-right:20px"}
+      = link_to add_course_url(@course), :method => :post do
+        .btn.btn-info
+          - if @user.my_courses.try("include?",@topic.id)
+            %i.icon-white.icon-remove-sign
+            Remove from My Courses
+          - else
+            %i.icon-white.icon-plus-sign
+            Add to My Courses
   %dl.span5.dl-horizontal
     %dt Course Title:
     %dd= @topic.title
