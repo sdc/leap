@@ -28,8 +28,12 @@
           %ul.dropdown-menu
             %li
               = link_to admin_settings_url do
-                %i.icon-cog
+                %i.icon-wrench
                 Settings
+            %li
+              = link_to admin_stats_url do
+                %i.icon-signal
+                Stats
         %li.divider-vertical
         %li.has-popover{"data-title" => "Home.",
                         "data-content" => "Go to your own home page.",

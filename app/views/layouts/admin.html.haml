@@ -1,8 +1,0 @@
-    %h1 Admin Menu
-    %br
-    %ul
-      %li= link_to_unless_current "Settings", admin_settings_url
-      %li= link_to_unless_current "Views", admin_views_url
-      %li= link_to_unless_current "Test Login", admin_test_login_url
-  #main_pane= yield
-  #footer= render :partial => "layouts/footer"
