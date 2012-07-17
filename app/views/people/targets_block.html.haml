@@ -4,7 +4,7 @@
 .span4
   .scroll-list
     - if @targets.empty?
-      %b You have no targets, yet.
+      .alert You have no targets, yet.
     - else
       %table.table.table-condensed
         - @targets.each do |target|
