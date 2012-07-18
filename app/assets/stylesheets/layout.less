@@ -142,8 +142,10 @@ dl {
         .size(48px,65px);
       }
       &.event-date {
-        font-weight: bold;
         .size(48px,65px);
+        .date {
+          font-weight: bold;
+        }
       }
       &.title {
         font-weight: bold;
@@ -274,4 +276,21 @@ dl {
     .box-shadow(1px 1px 1px 1px @borderColour);
   }
     
+}
+
+.timetable {
+  .day{
+    .makeColumn(1);
+    width:90px;
+    h3{
+      margin-bottom: 20px;
+    }
+    h4{
+      .border-radius(4px, 0, 0, 4px);
+      background: #eee;
+      border-bottom:1px #ccc solid;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  }
 }
