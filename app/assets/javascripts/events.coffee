@@ -17,8 +17,8 @@ $(document).ready ->
       e.find('.nav-tabs a:first').tab('show')
       e.find('.datepicker').datepicker(
         dateFormat:'D dd M yy'
-        prevText: "<i class='icon-arrow-left'/>"
-        nextText: "<i class='icon-arrow-right'/>"
+        prevText: "<i class='icon-arrow-left icon-white'/>"
+        nextText: "<i class='icon-arrow-right icon-white'/>"
       )
     .live 'click', (event) ->
       e = $(event.target).closest('.event')
