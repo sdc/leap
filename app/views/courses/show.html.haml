@@ -22,7 +22,9 @@
 .row.home-page-block.full
   %h2 Class List
   .span9.btn-group{"data-toggle" => "buttons-radio", :style => "margin-bottom:10px;"}
-    %a.btn.btn-primary.active{"data-course-person-filter" => "show-all"} All
+    %a.btn.btn-primary.active{"data-course-person-filter" => "show-all"} 
+      %i.icon-white.icon-filter
+      All
     - @statuses.each do |s|
       - next if s.blank?
       %a.btn{"data-course-person-filter" => s}= s
