@@ -31,4 +31,9 @@ class SupportRequest < Eventable
     end
   end
 
+  def all_sessions
+    s = sessions.blank? ? [] : sessions
+    s << "workshop" if workshop
+  end
+
 end

@@ -1,13 +1,8 @@
-Support requested by
+Requested by
 = support_request.created_by.name
-%br
-%dl
-  %dt Difficulties:
-  %dl= support_request.difficulties.blank? ? "--" : support_request.difficulties.join(", ")
-%br
-%dl
-  %dt Sessions:
-  %dl
-    - if support_request.workshop
-      %b Workshop, 
-    = support_request.sessions.blank? ? "--" : support_request.sessions.join(", ") 
+%div
+  %b Difficulties:
+  = support_request.difficulties.blank? ? "none" : support_request.difficulties.join(", ")
+%div
+  %b Sessions:
+  = support_request.sessions.try(:join, ", ") or "None"
