@@ -5,6 +5,12 @@ The general js needed for leap stuff
 
 $(document).ready ->
 
+ setupDatePickers =  (e) ->
+    e.find('.datepicker').datepicker
+      dateFormat:'D dd M yy'
+      prevText: "<i class='icon-arrow-left icon-white'/>"
+      nextText: "<i class='icon-arrow-right icon-white'/>"
+
   # Fade in the person photo once it's loaded  
   $('.person-photo>img')
     .load(-> $(this).fadeIn())
@@ -61,6 +67,7 @@ $(document).ready ->
     $(block).load $(block).attr('load_block'), ->
       $('#help_button').show() unless $('.online-help').length == 0
       $('.nav-pills a:first').tab('show')
+      setupDatePickers $(block)
       # TODO: This needs to be moved into a seperate file to keep events seperate if I can hook it into 
       #       the loading of the create form
       $('#progression_review_approved').change ->

@@ -1,0 +1,10 @@
+- case event.transition
+- when :create
+  %h5
+    = intervention.pi_type
+    &mdash;
+    = intervention.referral_category
+  %p
+    - if intervention.incident_date
+      %b= pretty_date(intervention.incident_date) + ":"
+    = intervention.referral_text

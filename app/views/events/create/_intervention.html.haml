@@ -1,0 +1,19 @@
+= create_event_form Intervention do |f|
+  %h2 Refer a learner for intervention
+  .span9
+    .row
+      .span1= image_tag "events/intervention_referral.png"
+      .span3
+        %h4 Intervention Type
+        = f.select :pi_type, Intervention.intervention_types.keys
+      .span3
+        %h4 Category
+        = f.select :referral_category, Intervention.intervention_types["Pastoral"]
+      .span2
+        %h4 Incident Date
+        = f.text_field :incident_date, :class => "datepicker span2"
+    .row
+      .span9
+        %h4 &nbsp;
+        = f.text_area :referral_text, :placeholder => "Supporting Information"
+  = add_event_button

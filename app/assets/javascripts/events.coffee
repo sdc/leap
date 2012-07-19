@@ -5,6 +5,12 @@ All the stuff needed for the timeline to work properly
 
 $(document).ready ->
 
+  setupDatePickers =  (e) ->
+    e.find('.datepicker').datepicker
+      dateFormat:'D dd M yy'
+      prevText: "<i class='icon-arrow-left icon-white'/>"
+      nextText: "<i class='icon-arrow-right icon-white'/>"
+
   # Load and open the extended pane of an event
   $('.extend-button')
     .live 'ajax:complete', (event,data) ->
@@ -15,11 +21,7 @@ $(document).ready ->
       e.find('.close-extend-button').show()
       e.find('.event-spinner').hide()
       e.find('.nav-tabs a:first').tab('show')
-      e.find('.datepicker').datepicker(
-        dateFormat:'D dd M yy'
-        prevText: "<i class='icon-arrow-left icon-white'/>"
-        nextText: "<i class='icon-arrow-right icon-white'/>"
-      )
+      setupDatePickers e
     .live 'click', (event) ->
       e = $(event.target).closest('.event')
       e.find('.event-spinner').show()

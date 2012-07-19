@@ -1,8 +1,9 @@
-class CreatePiReferrals < ActiveRecord::Migration
+class Intervention < ActiveRecord::Migration
   def change
-    create_table :pi_referrals do |t|
+    create_table :interventions do |t|
       t.integer :person_id
-      t.text :body
+      t.text :referral_text
+      t.text :disc_text
       t.integer :created_by_id
       t.string :pi_type
       t.string :referral_category
