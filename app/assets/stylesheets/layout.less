@@ -100,6 +100,9 @@ dl {
 
 #main-pane {
   .makeColumn(10);
+  &.no-sidebar {
+    .makeColumn(12);
+  }
 }
 
 .event-header {
@@ -275,7 +278,9 @@ dl {
   &:hover {
     .box-shadow(1px 1px 1px 1px @borderColour);
   }
-    
+}
+.search-list-person {
+  margin-left: 8px;
 }
 
 .timetable {

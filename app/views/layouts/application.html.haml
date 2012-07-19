@@ -14,14 +14,13 @@
     = render :partial => "layouts/top_bar" if @user.try(:staff?)
     #main-container.container
       .row
-        #side-pane
-          - if params[:all] and @user.staff?
-            = render :partial => "layouts/all_sidebar"
-          - elsif @topic
-            = render :partial => "layouts/sidebar"
-          - else
-            &nbsp;
-        #main-pane
+        - if @topic
+          #side-pane
+            - if params[:all] and @user.staff?
+              = render :partial => "layouts/all_sidebar"
+            - else
+              = render :partial => "layouts/sidebar"
+        #main-pane{:class => @topic ? nil : "no-sidebar"}
           - [:success,:error].each do |n|
             - if flash[n]
               .row.alert.fade.in{:class => "alert-#{n}"}

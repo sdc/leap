@@ -1,29 +1,16 @@
-.main_search
-  .search_logo
-    =link_to image_tag("leap-logo.png"), search_people_url
-  = form_tag search_people_url, :method => :get, :id=> "search_form" do
-    = text_field_tag :q, params[:q]
-    .search_fields
-      = submit_tag "Search", :class => "styled_button", :id => "home_search"
-    #results  
-      - unless @courses.empty?
-        %h2 People
-      .results_people
-        = render @people
-        - if params[:commit] == "Search"
-          #search_extended.person
-            .person_photo
-              =image_tag("not_found.png")
-            .details
-              Click here to extend your search
-      - unless @courses.empty?
-        %h2 Courses
-        .results_courses= render @courses
-      - unless params[:q]
-        .results_notice
-          %b You are about to access an area containing personal data.
-          %br 
-          %br 
-          %p 
-            Information in this area must be treated in accordance with the requirements of the Data Protection Act 
-            1998 and should not be divulged to anyone other than the student or the student’s tutor. 
+.row
+  .span12
+    %h1 Search Results:
+    - unless @courses.empty?
+      %h2 People
+.row= render @people
+- if params[:commit] == "Search"
+  #search_extended.person
+    .person_photo
+      =image_tag("not_found.png")
+    .details
+      Click here to extend your search
+- unless @courses.empty?
+  .row
+    %h2 Courses
+    .results_courses= render @courses
