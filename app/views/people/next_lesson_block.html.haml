@@ -11,4 +11,6 @@
         = @next_timetable_event.rooms.join ", "
         .small_text= @next_timetable_event.teachers.map{|t| t.name}.join ", "
     - else 
-      .alert You have no current timetable events.
+      .alert
+        = @topic.kind_of?(Person) ? "You have" : "This course has"
+        no current timetable events.

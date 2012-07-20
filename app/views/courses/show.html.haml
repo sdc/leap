@@ -31,7 +31,10 @@
   = render :partial => "person", :collection => @topic.person_courses, :as => "pc"
   //- if @topic.person_courses.count > 12
   //  #expand_students{:style => "cursor:pointer"} See all students...
-//.block.left{:load_block => moodle_block_course_url(@topic)}= image_tag "ajax-loader.gif"
-//.block.right{:load_block => next_lesson_block_course_url(@topic)}= image_tag "ajax-loader.gif"
+.row
+  .span5
+    .row.home-page-block.left{:load_block => moodle_block_course_url(@topic)}= image_tag "ajax-loader.gif"
+  .span5
+    .row.home-page-block.right{:load_block => next_lesson_block_course_url(@topic)}= image_tag "ajax-loader.gif"
 //- if @user.staff?
 //.block.left{:load_block => reviews_block_course_url(@topic)}= image_tag "ajax-loader.gif"
