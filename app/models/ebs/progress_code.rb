@@ -14,15 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class Ebs::PeopleUnit < Ebs::Model
+class Ebs::ProgressCode < Ebs::Model
 
-  belongs_to :person, :foreign_key => "person_code"
-  belongs_to :unit_instance_occurrence , :foreign_key => "uio_id"
-  has_one    :people_unit_special, :foreign_key => "people_units_id"
-  belongs_to :code, :foreign_key => "progress_code", :class_name => "ProgressCode"
-
-  def status
-    code.try(:fes_short_description)
-  end
+  set_primary_key "type_name"
 
 end
