@@ -20,6 +20,7 @@ class CoursesController < ApplicationController
   before_filter       :course_set_topic
 
   def show
+    @person_courses = @topic.person_courses.sort_by{|pc| pc.person.name(:surname_first => true)}
     respond_to do |format|
       format.html do
         @statuses = @topic.person_courses.select(:mis_status).map(&:mis_status).uniq
