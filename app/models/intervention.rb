@@ -32,7 +32,7 @@ class Intervention < Eventable
     if tr == :complete
       {"Referral Details" => "events/tabs/pi_refer_details"}
     elsif disc_text.nil?
-      {"Disciplinary Outcome" => "events/tabs/disciplinary_outcome"}
+      {"Outcome" => "events/tabs/disciplinary_outcome"}
     end
   end
 
