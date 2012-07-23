@@ -1,22 +1,40 @@
-#course_home
-  #details.block.wide
-    %h3 Course Details
-    #top_button= button_to "#{@user.my_courses.try("include?",@topic.id) ? "Remove from" : "Add to"} My Courses", add_course_url(@course)
-    %dl
-      %dt Course Title:
-      %dd= @topic.title
-      %dt Course Code:
-      %dd.last= @topic.code
-      %dt Course Date:
-      %dd.last= @topic.year
-  #students.block.wide
-    .clearfix{:style => "height:#{[[255,((@topic.person_courses.count / 4)+1) * 85].min,85].max}px;padding-top:1ex"}
-      - @topic.person_courses.each do |pc|
-        - next unless pc.person
-        = render :partial => "person", :object => pc.person, :locals => {:status => pc.status}
-    - if @topic.person_courses.count > 12
-      #expand_students{:style => "cursor:pointer"} See all students...
-  .block.left{:load_block => moodle_block_course_url(@topic)}= image_tag "ajax-loader.gif"
-  .block.right{:load_block => next_lesson_block_course_url(@topic)}= image_tag "ajax-loader.gif"
-  - if @user.staff?
-    .block.left{:load_block => reviews_block_course_url(@topic)}= image_tag "ajax-loader.gif"
+.row.home-page-block.full
+  %h2 
+    Course Details
+    .pull-right{style: "margin-right:20px"}
+      = link_to add_course_url(@course), :method => :post do
+        .btn.btn-info
+          - if @user.my_courses.try("include?",@topic.id)
+            %i.icon-white.icon-remove-sign
+            Remove from My Courses
+          - else
+            %i.icon-white.icon-plus-sign
+            Add to My Courses
+  %dl.span5.dl-horizontal
+    %dt Course Title:
+    %dd= @topic.title
+    %dt Course Date:
+    %dd.last= @topic.year
+  %dl.span5.dl-horizontal
+    %dt Course Code:
+    %dd.last= @topic.code
+
+.row.home-page-block.full
+  %h2 Class List
+  .span9.btn-group{"data-toggle" => "buttons-radio", :style => "margin-bottom:10px;"}
+    %a.btn.btn-primary.active{"data-course-person-filter" => "show-all"} 
+      %i.icon-white.icon-filter
+      All
+    - @statuses.each do |s|
+      - next if s.blank?
+      %a.btn{"data-course-person-filter" => s}= s
+  = render :partial => "person", :collection => @person_courses, :as => "pc"
+  //- if @topic.person_courses.count > 12
+  //  #expand_students{:style => "cursor:pointer"} See all students...
+.row
+  .span5
+    .row.home-page-block.left{:load_block => moodle_block_course_url(@topic)}= image_tag "ajax-loader.gif"
+  .span5
+    .row.home-page-block.right{:load_block => next_lesson_block_course_url(@topic)}= image_tag "ajax-loader.gif"
+//- if @user.staff?
+//.block.left{:load_block => reviews_block_course_url(@topic)}= image_tag "ajax-loader.gif"

@@ -1,24 +1,25 @@
-= form_for(target, :url => event, :remote => true, :method => :put, :html => {:class => "event_update_form"}) do |f|
-  .target_actions
+= form_for(target, :url => event, :remote => true, :method => :put, :html => {:class => "edit-event-form"}) do |f|
+  = hidden_field_tag :person_id, @topic.mis_id
+  .span3
     %h2 Actions
     = target.actions
-  .target_reflection
+  .span3
     %h2 Reflection
     - unless target.complete_date or target.drop_date
       = f.text_area :reflection
     - else
       = target.reflection
-  .target_date
+  .span3
     - if target.drop_date
       %h2 Drop Date
     - else
       %h2 Complete Date
     - unless target.complete_date or target.drop_date
-      = f.date_select :complete_date, :order => [:day,:month,:year], :use_short_month => true
-      = hidden_field_tag :person_id, @topic.mis_id
-      = submit_tag "Complete", :value => "Complete"
+      = f.text_field :complete_date, :value => Date.today, :class => "datepicker"
+      = submit_tag "Complete", :value => "Complete", :class => "btn btn-primary pull-right"
     - else
       = pretty_date(target.complete_date || target.drop_date)
 
-- unless target.complete_date or target.drop_date
-  = button_to "Drop", person_event_url(@topic, event,"target[drop_date]" => Date.today), :method => :put, :remote => true, :form_class => "event_update_form"
+.span1{:style => "padding-top:55px"}
+  - unless target.complete_date or target.drop_date
+    = button_to "Drop", person_event_url(@topic, event,"target[drop_date]" => Date.today), :method => :put, :remote => true, :form_class => "edit-event-form", :class => "btn btn-danger"

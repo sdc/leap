@@ -38,4 +38,8 @@ class Eventable < ActiveRecord::Base
     false
   end
 
+  def status
+    return :unknown
+  end
+
 end

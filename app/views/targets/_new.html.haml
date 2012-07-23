@@ -1,14 +1,14 @@
-= form_for @topic.targets.new, :url => "/events" do |f|
+= form_for @topic.targets.new(:body => event.body), :url => "/events" do |f|
   = f.hidden_field :event_id, :value => event.id
   = hidden_field_tag :person_id, @topic.mis_id
   = hidden_field_tag :eventable_type, "Target"
-  .target_body
-    %h2 Target:
+  .span3
+    %h2 Target
     = f.text_area :body
-  .target_actions
-    %h2 Actions:
+  .span3
+    %h2 Actions
     = f.text_area :actions
-  .target_date
-    %h2 Target Date:
-    = f.date_select :target_date, :use_short_month => true, :order => [:day, :month, :year], :start_year => Time.now.year, :default => Time.now + Settings.target_default_length.to_i
-    = submit_tag "Set"
+  .span3
+    %h2 Target Date
+    = f.text_field :target_date, :class => "datepicker", :value => (Time.now + Settings.target_default_length.to_i).to_date
+    = submit_tag "Set", :class => "pull-right btn btn-primary"

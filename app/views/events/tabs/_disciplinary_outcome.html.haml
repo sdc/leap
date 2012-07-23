@@ -1,0 +1,10 @@
+= form_for(intervention, :url => event, :remote => true, :method => :put, :html => {:class => "edit-event-form"}) do |f|
+  = hidden_field_tag :person_id, @topic.mis_id
+  .span3
+    %h4 Level
+    = f.select :pi_type, Intervention.intervention_types.keys
+  .span6
+    %h4 Outcome
+    = f.text_area :disc_text
+  = add_event_button
+          

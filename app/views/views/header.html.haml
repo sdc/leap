@@ -1,12 +1,18 @@
 - if @view.controls.kind_of? String
-  #event_controls
-    = render @view.controls
+  - begin
+    .row
+      .event-header= render @view.controls
+  - rescue ActionView::MissingTemplate
+    .row.alert.alert-error
+      %b Error:
+      There is a missing form here. Contact your administrator.
 - elsif @view.controls.kind_of? Hash
-  #event_controls
-    .tabs
-      %ul
-        - @view.controls.each do |k,v|
-          %li
-            %a{:href => "##{k.tr(" ","").underscore}"}= k
+  .row
+    %ul.nav.nav-pills{:style => "margin-bottom:10px;"}
       - @view.controls.each do |k,v|
-        .tab{:id => k.tr(" ","").underscore}= render v
+        %li
+          %a{:href => "##{k.tr(" ","").underscore}", "data-toggle" => "tab"}= k
+  .tab-content.row
+    - @view.controls.each do |k,v|
+      .tab-pane{:id => k.tr(" ","").underscore}
+        .event-header= render v

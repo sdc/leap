@@ -17,11 +17,10 @@
 module ApplicationHelper
 
   def icon_link(text,link="#",icon=false)
-    link_to link, :remote => false, :class => "sidebar_button" do
-      content_tag(:div, :class => "icon") do
-        image_tag("icons/#{icon or text.downcase.tr(' ','_')}.png", :size => "30x30")
-      end +
-      content_tag(:div, text, :class => "label")
+    content_tag(:li, :class => "row") do
+      link_to link do
+        image_tag("icons/#{icon or text.downcase.tr(' ','_')}.png", :size => "30x30") + text
+      end
     end
   end
 

@@ -16,14 +16,16 @@
 
 module EventsHelper
 
-  def title_class(thing)
-    thing.size < 4 ? "big" : nil
+  def event_date(event)
+    content_tag(:div, pretty_date(event.event_date), :class => "date") +
+    content_tag(:div, pretty_time(event.event_date), :class => "time")
   end
+
 
   def special_title(thing)
     text = case thing.class.name
     when "String" then thing
-    when "Array"  then thing.map{|t| content_tag(:div, special_title(t), :class => "double_title")}.join
+    when "Array"  then thing.map{|t| content_tag(:div, special_title(t))}.join
     when "Date"   then pretty_date thing
     when "Time"   then pretty_date thing
     when "Course" then link_to_if @affiliation == "staff", thing.code, thing
@@ -32,24 +34,36 @@ module EventsHelper
     (text and (text.size < 3  or text.last == "%")) ? content_tag(:span,text,:class => "big") : text
   end
     
-
-  def classes_for(event)
-    [event.eventable_type.downcase,
-     event.subtitle ? "subtitle" : nil,
-     event.status
-    ]
+  def event_classes(event, mini = false)
+    classes =  [mini ? "child-event" : "event",event.status,dom_id(event),dom_id(event.eventable),dom_class(event.eventable)]
+    classes << "with_person" if @multi
+    classes << "with_subtitle" if event.subtitle
+    return classes
   end
 
-  def pretty_date(date, words = true)
-    if words
-      return "Today" if date.midnight == Date.today
-      return "Yesterday" if date.midnight == Date.today - 1
-      return "Tomorrow" if date.midnight == Date.today + 1
-    end
+  def extend_event_button(event)
+    link_to(image_tag("actions/event_open.png"), 
+            open_extended_event_url(event,:person_id => event.person.mis_id), :remote => true, :class => "extend-button"
+           ) +
+    image_tag("actions/event_opened.png", :class => "close-extend-button", :style => "display:none") +
+    image_tag("ajax-loader.gif", :style => "display:none", :class => "event-spinner", :size => "16x16")
+  end
+
+  def delete_event_button(event)
+    link_to image_tag("events/delete_event.png"), person_event_url(event.person, event), 
+    :method => :delete, :remote => true,
+    :class => "delete-event-button",
+    :confirm => "This will delete the entire #{event.eventable_type.singularize.humanize.titleize}.\nAre you sure?"
+  end
+
+  def pretty_date(date, options = {})
+    return "Today" if date.midnight.to_date == Date.today
+    return "Yesterday" if date.midnight.to_date == Date.today - 1
+    return "Tomorrow" if date.midnight.to_date == Date.today + 1
     if date.year == Date.today.year
-      return date.strftime("%d %b")
+      return date.strftime("#{'%A ' if options[:day]}%d %b")
     else
-      return date.strftime("%d %b %y")
+      return date.strftime("#{'%A ' if options[:day]}%d %b %y")
     end
   end
 
@@ -65,5 +79,20 @@ module EventsHelper
   def lesc(text)
     LatexToPdf.escape_latex(text)
   end
+
+  def add_event_button(text = "Add")
+    content_tag :div, :width => "59px" do
+      submit_tag text, :class => "btn btn-primary pull-right", :style => "margin-right:10px"
+    end
+  end
+
+  def create_event_form(klass,&block)
+    form_for @topic.send(klass.name.tableize).new, :url => "/events", :html => {:class => "form form-inline"} do |f|
+      concat(hidden_field_tag(:person_id, @topic.mis_id))
+      concat(hidden_field_tag(:eventable_type, klass))
+      block.call(f)
+    end
+  end
+    
 
 end

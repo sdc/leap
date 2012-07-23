@@ -20,7 +20,13 @@ class CoursesController < ApplicationController
   before_filter       :course_set_topic
 
   def show
-    redirect_to "/404.html" unless @topic.kind_of? Course
+    @person_courses = @topic.person_courses.sort_by{|pc| pc.person.name(:surname_first => true)}
+    respond_to do |format|
+      format.html do
+        @statuses = @topic.person_courses.select(:mis_status).map(&:mis_status).uniq
+      end
+      format.jpg { redirect_to "/assets/courses.png" }
+    end
   end
 
   def next_lesson_block

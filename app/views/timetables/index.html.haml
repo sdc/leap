@@ -1,26 +1,29 @@
-#timetable_date
-  #previous_week
-    =link_to "< previous week", send("#{@topic.class.name.underscore}_timetables_url",@topic,:date => @date - 1.week)
-  #calendar
-    = form_tag send("#{@topic.class.name.underscore}_timetables_url"), :method => :get do
-      -#= select_date(@date, :order => [:day, :month, :year]) 
-      = text_field_tag(:pretty_date, @date.strftime("%a %d %b %Y"), :id => "datepicker")
+.row
+  .span2
+    = link_to send("#{@topic.class.name.underscore}_timetables_url", @topic,:date => @date - 1.week), :class => "btn btn-info" do
+      %i.icon-white.icon-arrow-left
+      Previous Week
+  .span4.offset1
+    = form_tag send("#{@topic.class.name.underscore}_timetables_url"), :method => :get, :class => "form-inline" do
       = hidden_field_tag(:date, @date, :id => "real_datepicker")
-      = submit_tag "go"
-  #next_week
-    =link_to "next week >", send("#{@topic.class.name.underscore}_timetables_url",@topic,:date => @date + 1.week)
-#timetable
-  #hours
-    - 8.upto(20) do |h|
-      .hour
-        %h2= "#{h}.00"
+      .input-append<
+        = text_field_tag(:pretty_date, @date.strftime("%a %d %b %Y"), :class => "timetable-datepicker")
+        = submit_tag "go", :class => "btn btn-info"
+  .span2.offset1
+    =link_to send("#{@topic.class.name.underscore}_timetables_url",@topic,:date => @date + 1.week), :class => "btn btn-info pull-right" do
+      Next Week
+      %i.icon-white.icon-arrow-right
+.row.timetable
+  .day{:style => "margin-top:20px;"}
+    - (8..20).to_a.each do |t|
+      %h3= "#{t.to_s}.00"
   - @date.upto(@date.end_of_week - 1.day) do |day|
     = render :partial => "day", :object => day, :locals => {:slots => @registers.select {|r| r.start > day and r.start < day.tomorrow.midnight }}
 
 - if @events
   #events= render @events
 
-.online_help
+.online_help{:style => "display:none"}
   %h1 Timetables
   %p
     Weekly timetables are taken live from the MIS system and should always be

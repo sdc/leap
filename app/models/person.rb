@@ -39,6 +39,7 @@ class Person < ActiveRecord::Base
   has_many :reviews
   has_many :absences
   has_many :progression_reviews
+  has_many :interventions
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
   serialize :middle_names
@@ -55,7 +56,7 @@ class Person < ActiveRecord::Base
 
   def name(options = {})
     names = [forename]
-    names += middle_names if options[:middle_names]
+    names += middle_names if options[:middle_names] and middle_names
     if options[:surname_first]
       names.unshift "#{surname},"
     else
@@ -94,6 +95,14 @@ class Person < ActiveRecord::Base
 
   def staff?
     current_user? ? (Person.affiliation == "staff") : self[:staff]
+  end
+
+  def admin?
+    Settings.admin_users.split(/,/).include? username
+  end
+
+  def mis_code
+    mis_id
   end
 
 end

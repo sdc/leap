@@ -2,7 +2,7 @@
       :label       => "All",
       :name        => "all",
       :transitions => ["create","start","overdue","complete","drop","to_start"],
-      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification","SupportRequest","SupportHistory","InitialReview","SupportStrategy","Absence"],
+      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification","SupportRequest","SupportHistory","InitialReview","SupportStrategy","Absence","Intervention"],
       :icon_url    => "icons/events.png",
       :affiliations=> ["student","affiliate"],
       :controls    => nil,
@@ -23,7 +23,7 @@
       :label       => "All",
       :name        => "all",
       :transitions => ["create","start","overdue","complete","drop","hidden","to_start"],
-      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification","SupportRequest","SupportHistory","InitialReview","SupportStrategy","Absence"],
+      :events      => ["Attendance","ContactLog","PersonCourse","Disciplinary","Goal","Note","Target","Review","ReviewLine","Qualification","SupportRequest","SupportHistory","InitialReview","SupportStrategy","Absence","Intervention"],
       :icon_url    => "icons/events.png",
       :affiliations=> ["staff"],
       :controls    => nil,
@@ -64,13 +64,13 @@
       :position    => 4
     )
     View.create(
-      :label       => 'Positive Intervention',
+      :label       => 'Intervention',
       :name        => 'intevention',
-      :transitions => ['create'],
-      :events      => ['Disciplinary'],
+      :transitions => ['create','complete'],
+      :events      => ['Disciplinary','Intervention'],
       :icon_url    => 'icons/disciplinaries.png',
       :affiliations => ['staff','student','affiliate'],
-      :controls    => 'events/create/disciplinary',
+      :controls    => {"Intervention" => "events/create/intervention", "Disciplinary" => "events/create/disciplinary"},
       :in_list     => true,
       :position    => 5
     )
