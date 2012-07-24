@@ -13,7 +13,7 @@
   %dl.span5.dl-horizontal
     %dt Course Title:
     %dd= @topic.title
-    %dt Course Date:
+    %dt Course Year:
     %dd.last= @topic.year
   %dl.span5.dl-horizontal
     %dt Course Code:
@@ -27,7 +27,7 @@
       All
     - @statuses.each do |s|
       - next if s.blank?
-      %a.btn{"data-course-person-filter" => s}= s
+      %a.btn{"data-course-person-filter" => s.parameterize}= s
   = render :partial => "person", :collection => @person_courses, :as => "pc"
   //- if @topic.person_courses.count > 12
   //  #expand_students{:style => "cursor:pointer"} See all students...

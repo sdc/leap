@@ -88,7 +88,7 @@ module MisPerson
     end
 
   def mis_search_for(query)
-    Ebs::Person.search_for(query).order("surname,forename").limit(50).map{|p| import(p,:save => false, :courses => false)}
+    Ebs::Person.search_for(query).order("surname,forename").limit(50).map{|p| import(p,:save => false, :people=> false)}
   end 
   end
 
@@ -111,7 +111,7 @@ module MisPerson
         :start        => s.actual_start_date || s.planned_start_date,
         :end          => s.actual_end_date   || s.planned_end_date,
         :mark         => s.usage_code,
-        :generic_mark => s.generic_mark,
+        :status       => s.status,
         :rooms        => s.rooms.map{|r| r.room_code},
         :teachers     => s.teachers.map{|t| Person.get(t)}
       )
@@ -285,7 +285,7 @@ module MisCourse
         :start        => s.actual_start_date || s.planned_start_date,
         :end          => s.actual_end_date   || s.planned_end_date,
         :mark         => s.usage_code,
-        :generic_mark => s.generic_mark,
+        :status       => s.status,
         :rooms        => s.rooms.map{|r| r.room_code},
         :teachers     => s.teachers.map{|t| Person.get(t)}
       )
@@ -293,6 +293,11 @@ module MisCourse
   end
 
   module ClassMethods
+
+    def mis_search_for(query)
+      Ebs::UnitInstanceOccurrence.search_for(query).limit(50).map{|p| import(p,:save => false, :courses => false)}
+    end 
+
     def import(mis_id, options = {})
       options.reverse_merge! :save => true, :people => false
       if (ec = Ebs::UnitInstanceOccurrence.find_by_uio_id(mis_id))

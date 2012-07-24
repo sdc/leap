@@ -39,11 +39,6 @@ $(document).ready ->
     nextText: "<i class='icon-arrow-right icon-white'/>"
 
 
-  # Show extended info on timetable events on mouseover
-  $('.timetable_event')
-    .live('mouseover', -> $(this).addClass('extended'))
-    .live('mouseout',  -> $(this).removeClass('extended'))
-
   # Don't show the help button if there is no help on this page.
   if $('.online-help').length == 0
     $('#help_button').hide()
