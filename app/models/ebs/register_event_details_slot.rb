@@ -38,6 +38,7 @@ class Ebs::RegisterEventDetailsSlot < Ebs::Model
     return "unknown" unless usage
     case usage.positive_for_ema
     when "Y" then "complete"
+    when "S" then "current"
     when "N" then "incomplete"
     else "unknown"
     end
