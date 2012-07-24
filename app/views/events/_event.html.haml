@@ -3,15 +3,15 @@
   %ul.span10.header
     %li.icon= image_tag(event.icon_url, :size => "48x48")
     %li.event-date= event_date event
-    //- if @multi
-    //  %h1.event_person
-    //    = link_to event.person do
-    //      = image_tag("#{url_for(event.person)}.jpg", :size => "48x48")
-    //      = event.person.name
+    - if @multi
+      %li.event-person
+        = link_to event.person do
+          .pull-left= image_tag("#{url_for(event.person)}.jpg", :size => "48x48")
+          .event-person-name= event.person.name
     %li.title= raw special_title event.title
     - if event.subtitle
       %li.subtitle= raw special_title event.subtitle
-    %li.body{:class => event.subtitle && "after-subtitle"}
+    %li.body{:class => [event.subtitle && "after-subtitle", @multi && "after-person"]}
       - begin
         = render :partial => "events/body/#{event.eventable_type.underscore}", :object => event.eventable, :locals => {:event => event}
       - rescue ActionView::MissingTemplate
