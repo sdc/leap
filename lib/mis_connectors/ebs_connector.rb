@@ -111,7 +111,7 @@ module MisPerson
         :start        => s.actual_start_date || s.planned_start_date,
         :end          => s.actual_end_date   || s.planned_end_date,
         :mark         => s.usage_code,
-        :generic_mark => s.generic_mark,
+        :status       => s.status,
         :rooms        => s.rooms.map{|r| r.room_code},
         :teachers     => s.teachers.map{|t| Person.get(t)}
       )

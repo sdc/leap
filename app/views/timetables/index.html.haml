@@ -14,7 +14,8 @@
       Next Week
       %i.icon-white.icon-arrow-right
 .row.timetable
-  .day{:style => "margin-top:20px;"}
+  .day{:style => "text-align:right"}
+    .div{:style => "height:33px"}
     - (8..20).to_a.each do |t|
       %h3= "#{t.to_s}.00"
   - @date.upto(@date.end_of_week - 1.day) do |day|

@@ -34,8 +34,13 @@ class Ebs::RegisterEventDetailsSlot < Ebs::Model
     Ebs::Usage.find_by_usage_code_and_object_type(usage_code,object_type)
   end
 
-  def generic_mark
-    usage ? usage.positive_for_ema : "-"
+  def status
+    return "unknown" unless usage
+    case usage.positive_for_ema
+    when "Y" then "complete"
+    when "N" then "incomplete"
+    else "unknown"
+    end
   end
 
 end
