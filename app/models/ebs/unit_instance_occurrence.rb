@@ -20,4 +20,6 @@ class Ebs::UnitInstanceOccurrence < Ebs::Model
   
   has_many :people_units, :foreign_key => "uio_id"
 
+  scoped_search :on => [:fes_uins_instance_code, :long_description]
+
 end
