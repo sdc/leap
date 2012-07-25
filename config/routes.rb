@@ -24,7 +24,9 @@ Ilp2::Application.routes.draw do
     end
   end
   resources :courses do
-    resources :views
+    resources :views do
+      get "header", :on => :member
+    end 
     resources :timetables
     member do
       get :next_lesson_block, :moodle_block, :reviews_block

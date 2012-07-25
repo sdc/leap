@@ -81,14 +81,21 @@ module EventsHelper
   end
 
   def add_event_button(text = "Add")
-    content_tag :div, :width => "59px" do
-      submit_tag text, :class => "btn btn-primary pull-right", :style => "margin-right:10px"
+    content_tag :div, :width     => "59px" do
+      submit_tag text, :class    => "btn btn-primary pull-right", 
+                       :style    => "margin-right:10px", 
+                       :disabled => !@topic.kind_of?(Person),
+                       "data-enable-on" => "#person_id"
     end
   end
 
   def create_event_form(klass,&block)
-    form_for @topic.send(klass.name.tableize).new, :url => "/events", :html => {:class => "form form-inline"} do |f|
-      concat(hidden_field_tag(:person_id, @topic.mis_id))
+    form_for @topic.kind_of?(Person) ? @topic.send(klass.name.tableize).new : klass.new, :url => "/events", :html => {:class => "form form-inline"} do |f|
+      if @topic.kind_of? Person
+        concat(hidden_field_tag(:person_id, @topic.mis_id))
+      else
+        concat(select_tag :person_id, options_for_select(@topic.people.map{|p| [p.name, p.mis_id]}), :prompt => "Select a Person")
+      end
       concat(hidden_field_tag(:eventable_type, klass))
       block.call(f)
     end

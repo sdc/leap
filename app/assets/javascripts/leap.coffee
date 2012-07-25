@@ -11,6 +11,16 @@ $(document).ready ->
       prevText: "<i class='icon-arrow-left icon-white'/>"
       nextText: "<i class='icon-arrow-right icon-white'/>"
 
+  # Enable / Disable buttons on a dropdown being selected
+  buttonAutoEnable = ->
+    $('[data-enable-on]').each (i,button) ->
+      alert $(this).attr("data-enable-on")
+      $($(this).attr('data-enable-on')).change ->
+        if $(this).val()
+          $(button).removeAttr("disabled")
+        else
+          $(button).attr("disabled", "disable")
+
   # Fade in the person photo once it's loaded  
   $('.person-photo>img')
     .load(-> $(this).fadeIn())
@@ -63,6 +73,7 @@ $(document).ready ->
       $('#help_button').show() unless $('.online-help').length == 0
       $('.nav-pills a:first').tab('show')
       setupDatePickers $(block)
+      buttonAutoEnable()
       # TODO: This needs to be moved into a seperate file to keep events seperate if I can hook it into 
       #       the loading of the create form
       $('#progression_review_approved').change ->
@@ -72,22 +83,6 @@ $(document).ready ->
         else
           $('#progression_reviews_conds_div').hide('slow')
           $('#progression_reviews_reason_div').show('slow')
-
-  # Expand the class list on class pages
-  $('#expand_students').live 'click', ->
-    $('#students').children('.clearfix').css('height','auto')
-    $('#expand_students').hide()
-
-  # Drop down list to select the student on course-level event creation
-  $('#person_header_selector').change ->
-    if ($('#person_header_selector option:selected').val())
-      $('#event_header_spinner').show()
-      $('#event_header').hide('fast')
-      $('#event_header').load $('#person_header_selector option:selected').val(), ->
-        $('#event_header_spinner').hide()
-        $('#event_header').show('fast')
-    else
-      $('#event_header').hide('fast', -> $('#event_header').empty())
 
   # Filter Course Lists by mis_status
   filterCourseList = (status) ->
