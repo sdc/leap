@@ -1,7 +1,7 @@
 .row.home-page-block.full
   %h2 
     Course Details
-    .pull-right{style: "margin-right:20px"}
+    .pull-right{:style => "margin-right:20px"}
       = link_to add_course_url(@course), :method => :post do
         .btn.btn-info
           - if @user.my_courses.try("include?",@topic.id)
