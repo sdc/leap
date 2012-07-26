@@ -14,7 +14,6 @@ $(document).ready ->
   # Enable / Disable buttons on a dropdown being selected
   buttonAutoEnable = ->
     $('[data-enable-on]').each (i,button) ->
-      alert $(this).attr("data-enable-on")
       $($(this).attr('data-enable-on')).change ->
         if $(this).val()
           $(button).removeAttr("disabled")
