@@ -113,6 +113,7 @@ dl {
 }
 
 .event-header {
+  position:relative;
   background: #eee;
   border: 2px @borderColour solid;
   .border-radius(@borderRadius);
@@ -132,6 +133,11 @@ dl {
   }
   form {
     margin: 0px;
+  }
+  select#person_id {
+    position:absolute;
+    right:10px;
+    top: 3px;
   }
 }
 

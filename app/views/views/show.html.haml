@@ -1,11 +1,4 @@
-- if @user.staff? and !@multi and @topic.kind_of?(Person)
-  %div{:load_block => header_person_view_url(@topic,@view)}= image_tag "ajax-loader.gif"
--# elsif @topic.kind_of? Course
-  - if @view.controls
-    %h3
-      Select a student to add an event:
-      = select_tag "person_header_selector", options_for_select(@topic.people.map{|p| [p.name, header_person_view_url(p,@view)]}), :include_blank => true
-      #event_header_spinner{:style => "display:none"}= image_tag "ajax-loader.gif"
+%div{:load_block => send("header_#{@topic.class.name.underscore}_view_url",@topic,@view)}= image_tag "ajax-loader.gif"
 = render @events
 - if @events.empty?
   .alert.row.alert-block.no-fade
