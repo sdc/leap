@@ -1,4 +1,4 @@
-%h3.status-bd.status-fg{class: @attendances.last.try(:status)}
+%h3.status-bd.status-fg{:class => @attendances.last.try(:status)}
   Attend
   = @attendances.last.try(:att_year)
   = "%"
