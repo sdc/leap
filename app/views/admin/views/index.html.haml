@@ -16,7 +16,9 @@
     %th Events
     %th Transitions
     %th In List
-    %th Edit
+    %th{:style => "width:65px"}
+      %i.icon-edit
+      Edit
   - @views.each do |view|
     %tr
       %td= image_tag view.icon_url
@@ -28,5 +30,7 @@
       %td 
         %i{:class => view.in_list && "icon-eye-open"}
       %td
-        = link_to edit_admin_view_url(view) do
-          %i.icon-edit
+        = link_to edit_admin_view_url(view), :class => "btn btn-warning" do
+          %i.icon-edit.icon-white
+          Edit
+
