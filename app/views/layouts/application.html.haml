@@ -29,5 +29,5 @@
           = yield
     #footer= render :partial => "layouts/footer"
     - if @affiliation == "affiliate"
-      .hovery= image_tag "parent_mode.png"
+      = image_tag "parent_mode.png", :style => "position:fixed;right:0;bottom:0;font-size:0"
     #help{:style => "display:none"}
