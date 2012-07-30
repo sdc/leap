@@ -16,8 +16,7 @@
 
 class Admin::ViewsController < ApplicationController
 
-  before_filter :admin_only
-  layout "admin"
+  before_filter :admin_page
 
   def index
     @views = View.all
@@ -26,6 +25,14 @@ class Admin::ViewsController < ApplicationController
   def edit
     @event_types=Dir.glob(Rails.root + 'app/models/*.rb').map{|f| File.basename(f, ".rb").classify}
     @view = View.find_by_name params[:id]
+  end
+
+  def update
+    @view = View.find_by_name params[:id]
+    if @view.update_attributes params[:view]
+      flash[:success] = "Updated view #{@view.name} for #{@view.affiliations.sort.join(", ")}!"
+    end
+    redirect_to edit_admin_view_path(@view)
   end
 
 end

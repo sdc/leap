@@ -1,7 +1,13 @@
+%ul.breadcrumb
+  %li
+    = render "layouts/admin_menu"
+    %span.divider /
+  %li Settings
 %h1 Settings
 = form_for :settings, :html => {:class => "form-horizontal"} do
   - @settings.each do |setting|
     .control-group
       %label.control-label{:for => setting}= setting.humanize
       .controls= text_field_tag setting, Settings[setting], :class => "input-xlarge"
-  = submit_tag "Save", :class => "pull-right btn btn-primary"
+  .form-actions
+    = submit_tag "Save Changes", :class => "btn btn-primary"

@@ -1,29 +1,48 @@
+%ul.breadcrumb
+  %li
+    = render "layouts/admin_menu"
+    %span.divider /
+  %li
+    = link_to "Views", admin_views_path
+    %span.divider /
+  %li= @view.label
+
 %h1 
-  Editing details for view:
+  Editing view:
   = @view.label
+  = "(#{@view.affiliations.join(", ")})"
 
-= form_for @view do |f|
-  %table.span24
-    %tr
-      %th Label 
-      %td= f.text_field :label
-      %td The name of the view used on links
-    %tr
-      %td Name
-      %td= f.text_field :name
-      %td The text used in the URL for this view
-    %tr
-      %td Icon URL
-      %td= f.text_field :icon_url
-      %td URL of the icon used on links
-    %tr
-      %td Affiliations
-      %td= f.select :affiliations, ["staff","student","applicant","affiliate"], {}, {:multiple => true}
-      %td Which affiliations can see this view
-    %tr
-      %td Events
-      %td= f.select :events, @event_types, {}, {:multiple => true}
-      %td Which event types show in this view
-
-  = submit_tag
-
+= form_for @view, :url => admin_view_path, :html => {:class => "form-horizontal"} do |f|
+  .control-group
+    %label.control-label Label 
+    .controls
+      = f.text_field :label
+      .help-block The name of the view used on links
+  .control-group
+    %label.control-label Name
+    .controls
+      = f.text_field :name
+      .help-block The text used in the URL for this view
+  .control-group
+    %label.control-label Icon URL
+    .controls
+      = f.text_field :icon_url
+      .help-block URL of the icon used on links
+  .control-group
+    %label.control-label Affiliations
+    .controls
+      = f.select :affiliations, ["staff","student","applicant","affiliate"], {}, {:multiple => true}
+      .help-block Which user types can see this view
+  .control-group
+    %label.control-label Events
+    .controls
+      = f.select :events, @event_types, {}, {:multiple => true}
+      .help-block Which event types show in this view
+  .control-group
+    %label.control-label Transitions
+    .controls
+      = f.select :transitions, Event::TRANSITIONS, {}, {:multiple => true}
+      .help-block Which transition types show in this view
+  .form-actions
+    = submit_tag "Save Changes", :class => "btn btn-primary"
+    = link_to "Cancel", admin_views_path, :class => "btn"

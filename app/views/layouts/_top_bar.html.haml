@@ -20,20 +20,7 @@
               %i.icon-refresh
               Refresh
       %ul.nav.pull-right
-        %li.dropdown
-          %a{:href => "#", :class => "dropdown-toggle", "data-toggle" => "dropdown"} 
-            %i.icon-cog
-            Admin
-            %i.icon-chevron-down
-          %ul.dropdown-menu
-            %li
-              = link_to admin_settings_url do
-                %i.icon-wrench
-                Settings
-            %li
-              = link_to admin_stats_url do
-                %i.icon-signal
-                Stats
+        = render "layouts/admin_menu"
         %li.divider-vertical
         %li.has-popover{"data-title" => "Home.",
                         "data-content" => "Go to your own home page.",
