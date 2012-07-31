@@ -43,6 +43,11 @@
     .controls
       = f.select :transitions, Event::TRANSITIONS, {}, {:multiple => true}
       .help-block Which transition types show in this view
+  .control-group
+    %label.control-label Show In List
+    .controls
+      = f.check_box :in_list
+      .help-block Check to show a link to the view in the sidebar list
   .form-actions
     = submit_tag "Save Changes", :class => "btn btn-primary"
     = link_to "Cancel", admin_views_path, :class => "btn"
