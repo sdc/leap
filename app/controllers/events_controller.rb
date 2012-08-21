@@ -54,7 +54,7 @@ class EventsController < ApplicationController
         flash[:error] = "#{@event.eventable_type.humanize} could not be updated!"
       end
       respond_to do |f|
-        f.js   {flash.clear; render @event}
+        f.js   {render @event}
         f.html {redirect_to :back}
       end
     else

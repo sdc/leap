@@ -66,8 +66,8 @@ $(document).ready ->
       $('#more_events_loading').show()
     .live 'ajax:complete', (event,data) ->
       unless data.responseText.length == 1
-        $('#events').append innerShiv data.responseText
-        d = $('#events').children('.event').last().find('time').attr('datetime')
+        $('#main-pane').append innerShiv data.responseText
+        d = $('#main-pane').children('.event').last().find('.event-date').attr('data-datetime')
         url = $('#more_events').attr('href').replace(/([&\?])date=[^&]*/,"$1date="+d)
         $('#more_events').attr('href',url).show()
       $('#more_events_loading').hide()

@@ -1,0 +1,6 @@
+- [:success,:error].each do |n|
+  - if flash[n]
+    .row.alert.fade.in{:class => "alert-#{n}"}
+      %button{:class => "close", "data-dismiss" => "alert"}×
+      %b= flash[n]
+- flash.clear

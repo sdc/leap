@@ -21,11 +21,7 @@
             - else
               = render :partial => "layouts/sidebar"
         #main-pane{:class => @topic ? nil : "no-sidebar"}
-          - [:success,:error].each do |n|
-            - if flash[n]
-              .row.alert.fade.in{:class => "alert-#{n}"}
-                %button{:class => "close", "data-dismiss" => "alert"}×
-                %b= flash[n]
+          = render :partial => "layouts/alerts"
           = yield
       #footer
         = link_to_if @affiliation == "staff", raw("leap &mdash; electronic individual learning plans &mdash; &copy; 2011 - 2012"), "http://leap-ilp.com"
