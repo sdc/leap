@@ -1,18 +1,18 @@
 .row
   .span2
-    = link_to send("#{@topic.class.name.underscore}_timetables_url", @topic,:date => @date - 1.week), :class => "btn btn-info" do
-      %i.icon-white.icon-arrow-left
+    = link_to send("#{@topic.class.name.underscore}_timetables_url", @topic,:date => @date - 1.week), :class => "btn" do
+      %i.icon-arrow-left
       Previous Week
   .span4.offset1
     = form_tag send("#{@topic.class.name.underscore}_timetables_url"), :method => :get, :class => "form-inline" do
       = hidden_field_tag(:date, @date, :id => "real_datepicker")
       .input-append<
         = text_field_tag(:pretty_date, @date.strftime("%a %d %b %Y"), :class => "timetable-datepicker")
-        = submit_tag "go", :class => "btn btn-info"
+        = submit_tag "go", :class => "btn btn-primary"
   .span2.offset1
-    =link_to send("#{@topic.class.name.underscore}_timetables_url",@topic,:date => @date + 1.week), :class => "btn btn-info pull-right" do
+    =link_to send("#{@topic.class.name.underscore}_timetables_url",@topic,:date => @date + 1.week), :class => "btn pull-right" do
       Next Week
-      %i.icon-white.icon-arrow-right
+      %i.icon-arrow-right
 .row.timetable
   .day{:style => "text-align:right"}
     .div{:style => "height:33px"}
