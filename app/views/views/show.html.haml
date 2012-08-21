@@ -4,5 +4,9 @@
   .alert.row.alert-block.no-fade
     There are currently no #{@view.label.pluralize} to view.
 - else
-  #more_events_div= link_to raw("&darr; Load more events &darr;"), view_url(@view,{:all => params[:all], :date => @events.last.event_date}.merge(@topic.as_param)), :remote => true, :id => "more_events"
+  #more_events_div{:style => "text-align:center"}
+    = link_to view_url(@view,{:all => params[:all], :date => @events.last.event_date}.merge(@topic.as_param)), :remote => true, :id => "more_events", :class => "btn" do
+      %i.icon-arrow-down
+      Load more events
+      %i.icon-arrow-down
 #more_events_loading{:style => "display:none"}= image_tag "ajax-loader.gif" 
