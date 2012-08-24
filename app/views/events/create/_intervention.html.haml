@@ -5,11 +5,11 @@
       .span1= image_tag "events/intervention_referral.png"
       .span2
         %h4 Intervention Type
-        = f.select :pi_type, Intervention.intervention_types.keys.map{|k| [k,k.tr(" ","_")]}, {}, :class => "span2"
+        = f.select :pi_type, Intervention.intervention_types.keys.map{|k| [k,k.gsub(/\W+/,"_")]}, {}, :class => "span2"
       .span3
         %h4 Category
         - Intervention.intervention_types.each do |cat|
-          = f.select :referral_category, cat.last, {}, :id => "intervention_referral_category_#{cat.first.tr(" ","_")}", :style => "display:none"
+          = f.select :referral_category, cat.last, {}, :id => "intervention_referral_category_#{cat.first.gsub(/\W+/,"_")}", :style => "display:none"
       .span2
         %h4 Incident Date
         = f.text_field :incident_date, :class => "datepicker span2"
