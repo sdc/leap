@@ -9,6 +9,7 @@ class Intervention < ActiveRecord::Migration
       t.string :referral_category
       t.date :incident_date
       t.boolean :referral
+      t.integer :workshops
       t.timestamps
     end
   end

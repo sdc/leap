@@ -15,15 +15,19 @@
         = f.text_field :incident_date, :class => "datepicker span2"
       .span1
         %h4 Refer
-        = f.select :referral, {"Yes" => true, "No" => true}, {}, :class => "span1"
+        = f.select :referral, {"No" => false, "Yes" => true}, {}, :class => "span1"
     .row{:style => "margin-top:1ex"}
       .span9
         - Intervention.intervention_types.keys.each do |k|
-          .intervention_note{:id => "alert_#{k}", :style => "display:none"}
-            .alert= Intervention.intervention_note(k)
+          - unless Intervention.intervention_note(k).blank?
+            .intervention_note{:id => "alert_#{k}", :style => "display:none"}
+              .alert= Intervention.intervention_note(k)
     .row
-      .span9
+      .span8
         = f.text_area :referral_text, :placeholder => "Supporting Information"
+      .span1
+        %h4 Workshops
+        = f.select :workshops, 0..6, {}, :class => "span1"
   = add_event_button
 
 :coffeescript
