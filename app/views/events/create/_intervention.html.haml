@@ -20,7 +20,7 @@
       .span9
         - Intervention.intervention_types.keys.each do |k|
           - unless Intervention.intervention_note(k).blank?
-            .intervention_note{:id => "alert_#{k}", :style => "display:none"}
+            .intervention_note{:id => "alert_#{k.gsub(/\W+/,"_")}", :style => "display:none"}
               .alert= Intervention.intervention_note(k)
     .row
       .span8
