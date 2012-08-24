@@ -8,7 +8,7 @@ class Intervention < ActiveRecord::Migration
       t.string :pi_type
       t.string :referral_category
       t.date :incident_date
-
+      t.boolean :referral
       t.timestamps
     end
   end
