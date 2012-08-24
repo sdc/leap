@@ -3,7 +3,7 @@ gem 'rails', "3.1.1"
 gem 'coffee-rails'
 gem 'haml'
 gem 'therubyracer'
-gem 'less-rails-bootstrap'
+gem 'less-rails-bootstrap', "2.0.13"
 gem 'jquery-rails'
 gem 'ruby-oci8', "2.1.0"
 gem 'activerecord-oracle_enhanced-adapter'
