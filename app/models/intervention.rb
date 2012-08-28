@@ -30,7 +30,7 @@ class Intervention < Eventable
   def title(tr)
     case tr
     when :create   then "Intervention Referral"
-    when :complete then "Disciplinary"
+    when :complete then "Disciplinary Outcome"
     end
   end
 
