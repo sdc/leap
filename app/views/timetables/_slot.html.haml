@@ -1,7 +1,7 @@
 .timetable-event{:style => "top:#{slot.timetable_margin + 133}px;height:#{slot.timetable_height}px", 
                  :class => slot.status}
   %h5= slot.title
-  %div= "#{slot.start.strftime('%H.%M')} - #{slot.end.strftime('%H.%M')}"
+  %div= "#{slot.start.getutc.strftime('%H.%M')} - #{slot.end.getutc.strftime('%H.%M')}"
   %div= slot.rooms.join ", "
   .teachers= slot.teachers.map{|t| t.name}.join ", "
   .mark.status-fgp{:class => slot.status, :style => "background:transparent"}= slot.mark
