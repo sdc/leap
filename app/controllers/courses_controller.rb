@@ -38,8 +38,8 @@ class CoursesController < ApplicationController
     begin
       mcourses = ActiveResource::Connection.new(Settings.moodle_host).
                  get("#{Settings.moodle_path}/webservice/rest/server.php?" +
-                 "wstoken=#{Settings.moodle_token}&wsfunction=moodle_course_get_courses_by_idnumber&idnumber=" +
-                  @topic.code)["MULTIPLE"]["SINGLE"]
+                 "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_courses_by_idnumber&idnumber=" +
+                  @topic.code)["MULTIPLE"].try(["SINGLE"])
       if mcourses.nil?
         @moodle_courses = []
       else
