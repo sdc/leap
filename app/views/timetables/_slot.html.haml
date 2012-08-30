@@ -1,4 +1,4 @@
-.timetable-event{:style => "top:#{slot.timetable_margin + 133}px;height:#{slot.timetable_height}px", 
+.timetable-event{:style => "top:#{slot.timetable_margin + 93 + (@user.staff? ? 40 : 0)}px;height:#{slot.timetable_height}px", 
                  :class => slot.status}
   %h5= slot.title
   %div= "#{slot.start.getutc.strftime('%H.%M')} - #{slot.end.getutc.strftime('%H.%M')}"

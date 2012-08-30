@@ -10,7 +10,7 @@
     = javascript_include_tag "application"
     = csrf_meta_tag
     = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty?
-  %body
+  %body{:class => Person.affiliation}
     = render :partial => "layouts/top_bar" if @user.try(:staff?)
     #main-container.container
       .row
