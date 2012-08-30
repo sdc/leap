@@ -21,13 +21,11 @@
         - Intervention.intervention_types.keys.each do |k|
           - unless Intervention.intervention_note(k).blank?
             .intervention_note{:id => "alert_#{k.gsub(/\W+/,"_")}", :style => "display:none"}
-              .alert= Intervention.intervention_note(k)
+              .alert
+                %b= Intervention.intervention_note(k)
     .row
-      .span8
+      .span9
         = f.text_area :referral_text, :placeholder => "Supporting Information"
-      .span1
-        %h4 Workshops
-        = f.select :workshops, 0..6, {}, :class => "span1"
   = add_event_button
 
 :coffeescript
