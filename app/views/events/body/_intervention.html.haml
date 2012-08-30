@@ -1,8 +1,9 @@
-%span.label.pull-right{:class => intervention.referral && "label-warning"}
-  = "Referral" if intervention.referral
-  - if intervention.workshops.try(">", 0)
-    = " - " if intervention.referral
-    = pluralize(intervention.workshops, "workshop")
+- if intervention.workshops.try(">", 0) or intervention.referral
+  %span.label.pull-right{:class => intervention.referral && "label-warning"}
+    = "Referral" if intervention.referral
+    - if intervention.workshops.try(">", 0)
+      = " - " if intervention.referral
+      = pluralize(intervention.workshops, "workshop")
 %h5
   = intervention.pi_type
   &mdash;
