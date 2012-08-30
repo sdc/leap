@@ -1,4 +1,5 @@
-%div{:load_block => send("header_#{@topic.class.name.underscore}_view_url",@topic,@view)}= image_tag "ajax-loader.gif"
+- if @user.staff?
+  %div{:load_block => send("header_#{@topic.class.name.underscore}_view_url",@topic,@view)}= image_tag "ajax-loader.gif"
 = render @events
 - if @events.empty?
   .alert.row.alert-block.no-fade
