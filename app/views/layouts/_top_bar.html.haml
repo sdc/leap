@@ -20,8 +20,9 @@
               %i.icon-refresh
               Refresh
       %ul.nav.pull-right
-        = render "layouts/admin_menu"
-        %li.divider-vertical
+        - if Person.user.admin?
+          = render "layouts/admin_menu"
+          %li.divider-vertical
         %li.has-popover{"data-title" => "Home.",
                         "data-content" => "Go to your own home page.",
                         "data-placement" => "bottom"}
