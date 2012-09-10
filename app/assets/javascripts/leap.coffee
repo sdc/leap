@@ -29,6 +29,10 @@ $(document).ready ->
   $(".has-popover").popover
     delay : 500
 
+  # Init Tooltips
+  $(".has-tooltip").tooltip
+    delay : 500
+
   # Fade out alerts after a while
   $('#main-pane > .alert:not(.no-fade)').delay(4000).hide('slow')
 

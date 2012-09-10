@@ -2,7 +2,8 @@
 .row.status-bd{:class => event_classes(event)}
   %ul.span10.header
     %li.icon= image_tag(event.icon_url, :size => "48x48")
-    %li.event-date{"data-datetime" => event.event_date}= event_date event
+    %li.event-date.has-tooltip{"data-datetime" => event.event_date, 
+                               :title => Person.user.staff? && "Created by #{event.eventable.person.name}"}= event_date event
     - if @multi
       %li.event-person
         = link_to event.person do
