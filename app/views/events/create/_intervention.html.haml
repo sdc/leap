@@ -29,10 +29,9 @@
   = add_event_button
 
 :coffeescript
-  $('select[name="intervention[referral_category]"]').first().removeAttr("disabled").show()
-  $('.intervention_note').first().show()
   $('#intervention_pi_type').change (e) ->
     $('select[name="intervention[referral_category]"]').attr("disabled","disabled").hide()
     $('.intervention_note').hide()
     $('#alert_'  + $('#intervention_pi_type').val()).show()
     $("#intervention_referral_category_" + $('#intervention_pi_type').val()).removeAttr("disabled").show()
+  $('#intervention_pi_type').change()

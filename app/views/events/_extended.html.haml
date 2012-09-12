@@ -27,6 +27,10 @@
         %h1 Leap DB Attributes
         = form_for event.eventable, :url => event, :method => :put, :remote => true, :html => {:class => "form-horizontal db-attrs edit-event-form"} do |f|
           = hidden_field_tag :person_id, @topic.mis_id
+          .control-group 
+            %label.control-label{:for => "cbn"} Created By
+            .controls
+              %input{:disabled => "disabled", :value => event.eventable.created_by.name, :name => "cbn", :type => "text"}
           - event.eventable.attributes.keys.sort.each do |key|
             .control-group
               = f.label key, :class => "control-label"
