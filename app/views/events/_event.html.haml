@@ -3,7 +3,7 @@
   %ul.span10.header
     %li.icon= image_tag(event.icon_url, :size => "48x48")
     %li.event-date.has-tooltip{"data-datetime" => event.event_date, 
-                               :title => Person.user.staff? && "Created by #{event.eventable.created_by.name}"}= event_date event
+                               :title => Person.user.staff? && "Created by #{event.eventable.created_by.try(:name) || "No created by"}"}= event_date event
     - if @multi
       %li.event-person
         = link_to event.person do
