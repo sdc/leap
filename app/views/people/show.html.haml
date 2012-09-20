@@ -1,4 +1,7 @@
-.row.home-page-block.full= render 'personal_details'
+-if Settings.hide_staff_personal_details=="1" and @topic.try("staff?")
+  .row.home-page-block.full= render 'personal_details_staff'
+- else
+  .row.home-page-block.full= render 'personal_details'
 .row.home-page-block.full= render 'thoughts'
 .row
   .span5

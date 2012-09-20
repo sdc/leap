@@ -43,4 +43,8 @@ class Course < ActiveRecord::Base
     code
   end
 
+  def staff?
+    false
+  end
+
 end
