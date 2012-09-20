@@ -30,7 +30,7 @@
           .control-group 
             %label.control-label{:for => "cbn"} Created By
             .controls
-              %input{:disabled => "disabled", :value => event.eventable.created_by.name, :name => "cbn", :type => "text"}
+              %input{:disabled => "disabled", :value => event.eventable.created_by.try(:name), :name => "cbn", :type => "text"}
           - event.eventable.attributes.keys.sort.each do |key|
             .control-group
               = f.label key, :class => "control-label"

@@ -1,2 +1,20 @@
-See the Quals on Entry for this student 
-= link_to "here", "https://eilp.southdevon.ac.uk/people/#{@topic.mis_id}/qualifications"
+%h2 Quals on Entry
+
+%table.table.table-condensed
+  %thead
+    %tr
+      %th Qual
+      %th Subject
+      %th Awarding Body
+      %th Year
+      %th Grade
+      %th Seen?
+  %tbody
+    - Ebs::SdcIlpQualification.where("person_id" => @topic.mis_id).each do |qual|
+      %tr
+        %td= qual.qual_type
+        %td= qual.subject
+        %td= qual.awarding_body
+        %td= qual.year
+        %td= qual.grade
+        %td= qual.seen ? "Yes" : "No"

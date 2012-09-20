@@ -1,22 +1,22 @@
 require 'bundler/capistrano'
 load 'deploy/assets'
 set :application, "leap"
-set :deploy_to, "/var/www/#{application}"
+set :deploy_to, "/srv/#{application}"
 set :repository,  "git://github.com/sdc/leap.git"
 set :scm, :git
-set :branch, :beta
+set :branch, "sdc1.1"
 set :use_sudo, false
 default_run_options[:pty] = true
 
-role :app, "leapbeta.southdevon.ac.uk"
-role :web, "leapbeta.southdevon.ac.uk"
+role :app, "leap.southdevon.ac.uk"
+role :web, "leap.southdevon.ac.uk"
 
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-    run "ln -s /media/photos/Images #{current_path}/public/photos"
+    run "ln -s /media/photos #{current_path}/public/photos"
   end
 end
 
