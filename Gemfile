@@ -18,5 +18,3 @@ gem 'uglifier'
 gem 'rails-latex'
 gem 'nokogiri'
 gem 'coffee-filter'
-gem 'newrelic_rpm'
-
