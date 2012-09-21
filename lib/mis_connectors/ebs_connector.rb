@@ -119,7 +119,7 @@ module MisPerson
   end
 
   def import_courses
-    mis_person.people_units.each do |pu|
+    mis_person.people_units.order("progress_date").each do |pu|
       next unless pu.uio_id
       course = Course.import(pu.uio_id,{:people => false})
       pc= PersonCourse.find_or_create_by_person_id_and_course_id(id,course.id)
