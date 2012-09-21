@@ -248,7 +248,7 @@ module MisCourse
   end
 
   def import_people
-    mis_course.people_units.each do |pu|
+    mis_course.people_units.order("progress_date").each do |pu|
       person = Person.import(pu.person_code, {:courses => false})
       pc= PersonCourse.find_or_create_by_person_id_and_course_id(person.id,id)
       if pu.unit_type == "A" 
