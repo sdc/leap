@@ -48,8 +48,7 @@ module MisPerson
     def import(mis_id, options = {})
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
       # NOTE: Need to change these defaults after launch
-      options.reverse_merge! :save => true, :courses => true, :attendances => false, :absences => false,
-                             :quals => true, :support_history => false, :support_requests => false, :targets => false
+      options.reverse_merge! Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}]
       logger.info "Importing user #{mis_id}"
       if (ep = (Ebs::Person.find_by_person_code(mis_id.to_s.tr('^0-9','')) or       # Strip chars out of id if looking at person-code
                 Ebs::Person.find_by_college_login(mis_id) or 
@@ -77,9 +76,6 @@ module MisPerson
         @person.import_courses if options[:courses]
         @person.import_attendances if options[:attendances]
         @person.import_quals if options[:quals]
-        @person.import_targets if options[:targets]
-        @person.import_support_history if options[:support_history]
-        @person.import_support_requests if options[:support_requests]
         @person.import_absences if options[:absences]
         return @person
       else
@@ -147,7 +143,7 @@ module MisPerson
       Date.civil(1900,1,1)
     end
     mis_person.attendances.
-      #where("start_week > ?",last_date).
+      where("start_week > ?",last_date).
       each do |att|
         na=Attendance.find_or_create_by_person_id_and_week_beginning(id,att.start_week)
         na.update_attributes(
@@ -170,54 +166,6 @@ module MisPerson
         :grade      => la.grade,
         :person_id  => id,
         :created_at => la.exp_end_date
-      )
-    end
-    return self
-  end
-
-  # Tese are an SDC-only imports for moving from eilp1 - I will probably delete
-  # them once we've launched
-
-  def import_support_history
-    Ebs::SupportNote.find_all_by_person_id(mis_id).each do |n|
-      next unless n.tick
-      next if n.notes.blank?
-      next if support_histories.detect{|h| h.category == n.support_note_title}
-      support_histories.create(
-        :category      => n.support_note_title,
-        :body          => n.notes,
-        :created_at    => n.created_at,
-        :created_by_id => Person.first.id
-      )
-    end
-    return self
-  end
-
-  def import_support_requests
-    Ebs::SupportRequest.find_all_by_person_id(mis_id).each do |r|
-      next if r.difficulty.nil? or r.difficulty.empty?
-      next if support_requests.detect{|s| s.created_at == r.created_at}
-      support_requests.create(
-        :sessions => r.res,
-        :difficulties  => r.difficulty,
-        :created_at    => r.created_at,
-        :created_by_id => Person.get(r.created_by).id
-      )
-    end
-    return self
-  end
-
-  def import_targets
-    Ebs::Target.find_all_by_person_id(mis_id).each do |t|
-      next if t.target.blank?
-      next if targets.detect{|nt| t.created_at == nt.created_at}
-      nt = targets.create(
-        :body => t.target,
-        :actions => t.action,
-        :target_date => t.target_date,
-        :complete_date => t.completed_at,
-        :created_by_id => t.person_id,
-        :created_at    => t.created_at
       )
     end
     return self

@@ -28,3 +28,4 @@ Settings.defaults[:photo_path_code]              = '"#{mis_id}.jpg"'
 Settings.defaults[:disciplinary_levels]          = "-1,Amber Alert Disciplinary,0,Amber Alert Pastoral,1,Positive Intervention Stage One,2,Positive Intervention Stage Two,3,Positive Intervention Stage Three"
 Settings.defaults[:intervention_types]           = "Pre-enrolment:Personal Issues,Social Isolation/Shyness,Cheese Fetish;Pastoral:Sheep,Cows,Eggs,Ducks"
 Settings.defaults[:hide_staff_personal_details]  = 0
+Settings.defaults[:ebs_import_options]           = "save,courses,quals"
