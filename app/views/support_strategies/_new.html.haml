@@ -1,8 +1,6 @@
-= form_for @topic.support_strategies.new, :url => "/events" do |f|
+= create_event_form SupportStrategy do |f|
   = f.hidden_field :event_id, :value => event.id
-  = hidden_field_tag :person_id, @topic.mis_id
-  = hidden_field_tag :eventable_type, "SupportStrategy"
-  .strategy_body
+  .span8
     %h2 Add a support strategy
     = f.text_area :body
-    = submit_tag "Set"
+  = add_event_button
