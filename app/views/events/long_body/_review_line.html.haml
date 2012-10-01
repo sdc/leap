@@ -1,4 +1,4 @@
 %h4
   = review_line.created_by.name
-  = raw "(<i>#{review_line.unit}</i>)" if !review_line.unit.try("blank?")
+  = raw "(<i>#{review_line.unit}</i>)" unless review_line.unit.blank?
 %p= raw event_format review_line.body

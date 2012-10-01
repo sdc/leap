@@ -31,7 +31,7 @@ class ReviewLine < Eventable
   end
 
   def extra_panes
-    [["Edit","review_lines/edit"]] if Person.user.staff? and status.to_s == "current" and window
+    [["Edit","review_lines/edit"]] if Person.user.staff? and status.to_s == "current"
   end
 
   def status
