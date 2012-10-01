@@ -7,14 +7,14 @@
     %table
       %tr
         %td Quality
-        %td= f.select :quality, 0..10
+        %td= f.select :quality, Settings.review_grades.split(",")
         %td Punctuality
-        %td= f.select :punctuality, 0..10
+        %td= f.select :punctuality, Settings.review_grades.split(",")
       %tr
         %td Attitude
-        %td= f.select :attitude, 0..10
+        %td= f.select :attitude, Settings.review_grades.split(",")
         %td Completion
-        %td= f.select :completion, 0..10
+        %td= f.select :completion, Settings.review_grades.split(",")
   = f.text_area :body, :style => "height: 100px"
   .review_controls
     = submit_tag "Save"

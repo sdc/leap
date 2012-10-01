@@ -21,13 +21,13 @@ class ReviewLine < Eventable
   belongs_to :review
 
   after_create do |line|
-    line.review = Review.find_or_create_by_person_id_and_window(person_id, window)
+    line.review = Review.find_or_create_by_person_id_and_window(person_id, window) unless window.blank?
     line.save
-    line.events.create!(:event_date => created_at, :transition => :create, :parent_id => review.events.creation.first.id)
+    line.events.create!(:event_date => created_at, :transition => :create, :parent_id => review && review.events.creation.first.id)
   end
 
   def title
-    window
+    window or "Initial Review"
   end
 
   def extra_panes

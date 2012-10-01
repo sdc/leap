@@ -2,18 +2,19 @@
   .alert 
     %b There are currently no open review windows.
 - else
+  - grades  = Settings.review_grades.split(",")
+  - options = [grades,(0..(grades.count - 1)).to_a].transpose
   = create_event_form ReviewLine do |f|
     %h2 Add a review 
     .span9
       .row
-        .span1
-        .span1 Session:
-        .span4= f.text_field :unit
-        .span1 Review:
-        .span2= f.select :window, Settings.review_windows.split(/,/)
+        %label.span1 Session:
+        .span4= f.text_field :unit, :class => "span3"
+        %label.span1 Review:
+        .span4= f.select :window, Settings.review_windows.split(/,/), :class => "span3"
       .row
         .span1= image_tag "events/reviews.png"
-        .span4= f.text_area :body
+        .span3= f.text_area :body
         .span4
           %table
             %tr

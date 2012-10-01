@@ -29,3 +29,4 @@ Settings.defaults[:disciplinary_levels]          = "-1,Amber Alert Disciplinary,
 Settings.defaults[:intervention_types]           = "Pre-enrolment:Personal Issues,Social Isolation/Shyness,Cheese Fetish;Pastoral:Sheep,Cows,Eggs,Ducks"
 Settings.defaults[:hide_staff_personal_details]  = 0
 Settings.defaults[:ebs_import_options]           = "save,courses,quals"
+Settings.defaults[:review_grades]                = "0,1,2,3,4,5,6,7,8,9,10"
