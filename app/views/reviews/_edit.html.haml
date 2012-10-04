@@ -1,10 +1,17 @@
-= form_for(review, :url => event, :remote => true, :method => :put, :html => {:class => "event_update_form"}) do |f|
+= form_for(review, :url => event, :remote => true, :method => :put, :html => {:class => "edit-event-form"}) do |f|
   = hidden_field_tag :event_id, event.id
-  %h3 Overall Tutor's Comments:
   = hidden_field_tag :eventable_type, "ReviewLine"
   = hidden_field_tag :person_id, @topic.mis_id
-  = f.text_area :body
-  = f.check_box :published
-  Publish?
-  %hr{:style => "border-bottom: 1px solid #333"}
-  = submit_tag "Save"
+  = f.hidden_field :published
+  .span8
+    %h3 Overall Tutor's Comments:
+  .span8
+    = f.text_area :body
+  .span2
+    = submit_tag "Save", :class => "btn btn-primary"
+    = link_to "Publish", "#", :id => "publish_#{review.id}", :class => "btn btn-warning"
+
+:coffeescript
+  $("#publish_#{review.id}").click ->
+    $(this).closest("form").find('input[name="review[published]"]').val(1)
+    $(this).closest("form").submit()
