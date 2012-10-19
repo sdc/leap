@@ -32,11 +32,15 @@ If all these fail, Leap throws an error.
 
 h3. 4. Set the User in the Leap Session
 
-Leap finds the associated user in LEAP.PEOPLE (or creates one if there isn't one yet) and stores this in the Person.user variable. It also
-stores an affiliation in Person.affiliation. It uses the first affiliation it finds out of this list (Shibboleth can be configured to pass multiple but
-Leap only uses one).
+Leap finds the associated user in LEAP.PEOPLE (or creates one if there isn't one yet) and stores this in the Person.user variable. It also stores an affiliation in Person.affiliation. It uses the first affiliation it finds out of this list (Shibboleth can be configured to pass multiple but Leap only uses one).
 
 * staff
 * student
 * application
 * affiliate (which Leap uses for parents, until parent is added to the standard)
+
+Again, if none of these is found, Leap throws an error.
+
+h3. Bonus Info: Development Mode
+
+In development mode you need to be able to log in as different people to test stuff. You can just go to /admin/test and type in any username/affiliation combination. The user must still exist in the MIS but it doesn't need to check if an actual account exists. In addition, you can add a comma-delimited list of usernames to the *test_logins* setting and the development mode will just offer this list for you to log in as with a single click.
