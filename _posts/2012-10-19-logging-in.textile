@@ -1,0 +1,42 @@
+---
+title: Logging In
+layout: post
+---
+
+Leap tries to just do the right thing with a minimum of education. There are various ways in which Leap can work out who you are when you log in but this can sometimes cause issues is there's a bit of wonky data in your MIS (and who doesn't have some of that?). Hopefully this description of the login process can help to debug some of these issues...
+
+So this is Leap login process (at least for EBS-connected Leap install) is as follows:
+
+h3. 1. The User Logs into Shibboleth
+
+Leap uses Shibboleth for authentication. This is for many reasons but the main one being that leveraging Shibboleth means that we can worry (a little) less about security. In order to gain access to a Leap system you have to get past Shibboleth first and how that happens is up to the institution.
+
+h3. 2. Shibboleth Passes the User's Info to Leap
+
+Leap wants to know two things from Shibboleth. Who they are and what type of user they are. In order to make things work in as standard way as possible we use two attributes from the eduPerson spec.  The "UK Access Management Federation":http://www.ukfederation.org.uk/ uses these already so, if you're an institution in the UK, you've almost certainly already set this up. Leap wants to see these attributes from Shibboleth:
+
+* eduPersonScopedAffiliation
+* eduPersonPrincipalName
+
+h3. 3. Leap finds the user in your MIS
+
+bq. This following section is how this works from EBS. Potentially it could be different for MIS systems but Leap doesn't support other ones _yet!_
+
+Leap tries the following methods in order and returns the first MIS user found:
+
+# Strips non-numberic chars from the username and uses the resulting number as an EBS person code
+# Matches the username against PEOPLE.COLLEGE_LOGIN in EBS
+# Matches the username against PEOPLE.NETWORK_USERID in EBS
+
+If all these fail, Leap throws an error.
+
+h3. 4. Set the User in the Leap Session
+
+Leap finds the associated user in LEAP.PEOPLE (or creates one if there isn't one yet) and stores this in the Person.user variable. It also
+stores an affiliation in Person.affiliation. It uses the first affiliation it finds out of this list (Shibboleth can be configured to pass multiple but
+Leap only uses one).
+
+* staff
+* student
+* application
+* affiliate (which Leap uses for parents, until parent is added to the standard)

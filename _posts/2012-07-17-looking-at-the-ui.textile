@@ -1,0 +1,10 @@
+---
+title: Looking at the User Interface
+layout: post
+---
+
+Leap's user interface was the subject of much thought and design before a single line of code had been written. Mockups were created, lines and colours were discussed and simplicity and consistency were sought.
+
+Of course, once the working system was being created compromises happen. Things don't quite fit, unanticipated uses need workarounds and compromises are reached. Over the early history of Leap the simplistic design has been stretched and, on occasion, broken.
+
+So in the next release, coming soon, we've had a quiet refresh of things. I say quiet, meaning that there shouldn't be any changes which should disturb users. Everything should pretty much be where it was before. Functionality-wise you shouldn't notice much difference. Under the bonnet though, things are very different. The biggest change is a switch from Blueprint and Compass to Twitter's Bootstrap. Every single line of CSS (SCSS, actually) has been rewritten in LESS and we're using Bootstrap's nice UI features wherever it's appropriate. And we're pleased with the outcome so far. Lines are cleaner, elements like titles are more defined and consistent, and the splashes of colour from Bootstap's components add to the experience.
