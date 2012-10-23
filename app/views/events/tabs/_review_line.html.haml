@@ -1,0 +1,24 @@
+- grades  = Settings.review_grades.split(",")
+- options = [grades,(0..(grades.count - 1)).to_a].transpose
+= form_for(review_line, :url => event, :remote => true, :method => :put, :html => {:class => "form edit-event-form"}) do |f|
+  .span9
+    .row
+      .span1= image_tag "events/reviews.png"
+      .span8
+        .row
+          .span4{:placeholder => "Session Name"}= f.text_field :unit, :class => "span4"
+          .span1 Review:
+          = f.select :window, Settings.review_windows.split(/,/), {}, :class => "span3"
+        .row{:style => "margin-top:1ex"}
+          .span4= f.text_area :body, :class => "span4", :style => "height:100px"
+          .span4
+            .row
+              .span2 Quality of Work
+              = f.select :quality, options, {}, {:class => "span2"}
+              .span2 Punctuality
+              = f.select :punctuality, options, {}, {:class => "span2"}
+              .span2 Attitude
+              = f.select :attitude, options, {}, {:class => "span2"}
+              .span2 Completion of Work
+              = f.select :completion, options, {}, {:class => "span2"}
+  .pull-right= submit_tag "Save", :class => "btn btn-primary"
