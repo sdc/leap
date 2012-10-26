@@ -1,6 +1,6 @@
   \sffamily
   \begin{minipage}{22mm}
-    \includegraphics[totalheight=20mm]{<%= Rails.root %>/app/assets/images/sdc_logo.png}
+    %\includegraphics[totalheight=20mm]{<%= Rails.root %>/app/assets/images/sdc_logo.png}
   \end{minipage}
   \begin{minipage}{100mm}
     \Large
@@ -14,7 +14,7 @@
 
   \bigskip
 
-  \hline\\
+  \hrule
 
   \bigskip
   \bigskip
@@ -24,8 +24,11 @@
 \begin{minipage}{100mm}
   <%= (lesc "Parents/Guardians of") if event.person.age < 18 %>
   <%= lesc event.person.name %> \\
-  <%= [event.person.address,event.person.town,event.person.postcode].flatten.
-      reject{|x| x.nil?}.map {|x| lesc(x) + "\\\\"} %>
+  <% [event.person.address,event.person.town,event.person.postcode].flatten.each do |x|
+       next if x.blank? %>
+    <%= lesc x %>\newline
+  <% end %>
+
 \end{minipage}
 \begin{minipage}{122mm}
   \begin{tabular}{l@{\hspace{3mm}}l}
@@ -59,22 +62,21 @@
   \hline
 <% event.children.where(:eventable_type => "ReviewLine").map{|x| x.eventable}.each do |rl| %>
   \begin{minipage}{40mm}
-    \medskip\\
+    \medskip
     <% if rl.unit %>
-      <%= lesc rl.unit %>\\
+      <%= lesc rl.unit %>\newline
     <% end %>
     <%= lesc rl.created_by.name%>
-    \medskip\\
+    \medskip
   \end{minipage}
   &<%= rl.quality %>&<%= rl.punctuality %>&<%= rl.attitude %>&<%= rl.completion %>
-  &<%= lesc rl.body %>\\
+  &<%= lesc rl.body %>\tabularnewline
   \hline
 <% end %>
 \end{longtable}
 
 \noindent Key: 10 = Excellent; 8 = Good; 6 = Satisfactory; 4 = Needs improvement; 2 = Poor 
 
-\noindent If you would like to discuss this review please contact the course tutor or telephone us on 08000 380123
 
 <%# if @topic.attendances.last.siblings_same_year %>
   <%#= render @topic.attendances.last.siblings_same_year %>
@@ -86,10 +88,10 @@
   \subsection*{Targets}
   \begin{longtable}{|p{40mm}|p{55mm}|p{55mm}|p{22mm}|}
     \hline
-    &\parbox{55mm}{\medskip\\Target\\}&\parbox{55mm}{\medskip\\Actions\\}&\parbox{22mm}{\medskip\\Due Date\\}\\
+    &\parbox{55mm}{\medskip Target}&\parbox{55mm}{\medskip Actions}&\parbox{22mm}{\medskip Due Date}\\
     \hline
   <% targets.each do |target| %>
-    \parbox{55mm}{\medskip\\<%if target.event.eventable.kind_of?(ReviewLine) and target.event.eventable.unit %><%= lesc target.event.eventable.unit %>\\<% end %><%= lesc target.event.eventable.created_by.name %>}
+    \parbox{55mm}{\medskip <%if target.event.eventable.kind_of?(ReviewLine) and target.event.eventable.unit %><%= lesc target.event.eventable.unit %>\\<% end %><%= lesc target.event.eventable.created_by.name %>}
     &<%= lesc target.body %>&<%= lesc target.actions %>&<%= pretty_date(target.target_date) %>\\
     \hline
   <% end %>
