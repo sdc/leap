@@ -1,6 +1,7 @@
 - grades  = Settings.review_grades.split(",")
 - options = [grades,(0..(grades.count - 1)).to_a].transpose
 = form_for(review_line, :url => event, :remote => true, :method => :put, :html => {:class => "form edit-event-form"}) do |f|
+  = hidden_field_tag :person_id, @topic.mis_id
   .span9
     .row
       .span1= image_tag "events/reviews.png"
