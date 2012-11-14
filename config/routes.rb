@@ -17,7 +17,9 @@ Ilp2::Application.routes.draw do
     resources :views, :only => [:show] do
       get "header", :on => :member
     end
-    get :search, :on => :collection
+    collection do
+      get :search, :select
+    end
     member do
       get :next_lesson_block, :my_courses_block, :targets_block
       get :moodle_block, :attendance_block

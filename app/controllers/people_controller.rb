@@ -18,7 +18,7 @@ class PeopleController < ApplicationController
 
   skip_before_filter :set_topic
   before_filter      :person_set_topic, :except => [:search]
-  before_filter      :staff_only, :only => [:search]
+  before_filter      :staff_only, :only => [:search,:select]
 
   def show
     respond_to do |format|
@@ -46,6 +46,13 @@ class PeopleController < ApplicationController
     end
     @people  ||= []
     @courses ||= []
+  end
+
+  def select
+    if params[:q]
+      @people = Person.search_for(params[:q]).order("surname,forename").limit(20)
+      render :json => @people.map{|p| {:id => p.id,:name => p.name, :readonly => p==@user}}.to_json
+    end
   end
 
   def index
