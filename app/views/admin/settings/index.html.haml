@@ -13,7 +13,6 @@
     %label.control-label Admin Users
     .controls
       = text_field_tag "admin_users", Settings.admin_users
-      %span.block-help List of users with admin access.  Don't remove yourself!
   :coffeescript
     $("#admin_users").tokenInput "/people/select", 
       prePopulate : #{Settings.admin_users.map{|p| Person.find(p)}.map{|p| {:id => p.id, :name => p.name, :readonly => (p == @user)}}.to_json}
