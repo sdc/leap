@@ -26,7 +26,12 @@ class Admin::SettingsController < ApplicationController
   def create
     Settings.defaults.keys.each do |k|
       if params[k] 
-        Settings[k] = params[k]
+        logger.info "KEY: #{k}"
+        logger.info "CLASS: #{Settings[k].class}"
+        case Settings[k].class.name
+          when "Array" then Settings[k] = params[k].split(",")
+          else Settings[k] = params[k]
+        end
       end
     end
     flash[:success] = "Admin settings successfully updated!"

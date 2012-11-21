@@ -4,10 +4,32 @@
     %span.divider /
   %li Settings
 %h1 Settings
-= form_for :settings, :html => {:class => "form-horizontal"} do
-  - @settings.each do |setting|
+
+= form_for :settings, :html => {:class => "form-horizontal", :id => "admin-settings-form"} do
+
+  %h2 Administration
+
+  .control-group
+    %label.control-label Admin Users
+    .controls
+      = text_field_tag "admin_users", Settings.admin_users
+  :coffeescript
+    $("#admin_users").tokenInput "/people/select", 
+      prePopulate : #{Settings.admin_users.map{|p| Person.find(p)}.map{|p| {:id => p.id, :name => p.name, :readonly => (p == @user)}}.to_json}
+
+  .control-group
+    %label.control-label Home Page Advert Box
+    .controls
+      = text_area_tag "advert_box_html", Settings.advert_box_html
+ 
+    
+
+  %h1 Old Settings!
+
+  - @settings2 = @settings - ["admin_users","advert_box_html"]
+  - @settings2.each do |setting|
     .control-group
       %label.control-label{:for => setting}= setting.humanize
-      .controls= text_field_tag setting, Settings[setting], :class => "input-xlarge"
+      .controls= text_field_tag setting, Settings[setting]
   .form-actions
     = submit_tag "Save Changes", :class => "btn btn-primary"

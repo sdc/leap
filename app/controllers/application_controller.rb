@@ -94,7 +94,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_page
-    Settings.admin_users.split(/,/).include? @user.username or redirect_to "/404.html"
+    @user.admin? or redirect_to "/404.html"
     @topic = nil
   end
 
