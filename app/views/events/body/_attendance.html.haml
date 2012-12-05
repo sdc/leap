@@ -1,7 +1,8 @@
-%img{:src => "https://chart.googleapis.com/chart?chs=200x48&cht=ls&chco=0077CC&chf=bg,s,00000000&chd=t:" + attendance.siblings_same_year.map{|a| a.att_year}.join(',')}
-%dl
-  %dt This week:
-  %dd= "#{attendance.att_week}%"
-  %dt Last three weeks:
-  %dd= "#{attendance.att_3_week}%"
+%img.span2{:src => "https://chart.googleapis.com/chart?chs=200x48&cht=ls&chco=0077CC&chf=bg,s,00000000&chd=t:" + attendance.siblings_same_year.map{|a| a.att_year}.join(',')}
+.span2
+  %b This week:
+  = "#{attendance.att_week}%"
+  %br
+  %b Last 3 weeks:
+  = "#{attendance.att_3_week}%"
 
