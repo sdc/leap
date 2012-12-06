@@ -10,7 +10,7 @@ Settings.defaults[:target_default_length]        = 2.weeks
 Settings.defaults[:support_request_difficulties] = "Reading,Comprehension,Spelling,Writing,Proof-reading,Planning work,
                                                     Organising work,Concentration,Study Skills,Numeracy"
 Settings.defaults[:support_history_categories]   = "Identified specific learning difficulty,Difficulties with literacy,Difficulties with numeracy,Difficulties with english as a foreign language,Visual and/or hearing impairment,Physical disability,Medical condition/mental health,Support at school,Support at college,Statement at school,Extra time in exams,Reader in exams,Scribe in exams"
-Settings.defaults[:admin_users]                  = "khughes,briancrocker,paulvaughan,hughek"
+Settings.defaults[:admin_users]                  = [1]
 Settings.defaults[:top_bar_notice]               = "This is beta software. Changes you make will be temporary!" 
 Settings.defaults[:google_analytics_code]        = ""
 Settings.defaults[:advert_box_html]              = "<p>Blank Space!</p>"
@@ -30,4 +30,4 @@ Settings.defaults[:intervention_types]           = "Pre-enrolment:Personal Issue
 Settings.defaults[:hide_staff_personal_details]  = 0
 Settings.defaults[:ebs_import_options]           = "save,courses,quals"
 Settings.defaults[:review_grades]                = "0,1,2,3,4,5,6,7,8,9,10"
-Settings.profile_questions                       = "My favourite subject at school and why;My work experience;My long term ambitions;My hobbies and interests;My course feedback;My Night feedback;Welcome Day feedback"
+Settings.defaults[:profile_questions]            = "My favourite subject at school and why;My work experience;My long term ambitions;My hobbies and interests;My course feedback;My Night feedback;Welcome Day feedback"

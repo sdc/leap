@@ -1,0 +1,290 @@
+views:
+  - id: 1
+    transitions:
+    - create
+    - start
+    - overdue
+    - complete
+    - drop
+    - to_start
+    events:
+    - Attendance
+    - ContactLog
+    - PersonCourse
+    - Disciplinary
+    - Goal
+    - Note
+    - Target
+    - Review
+    - ReviewLine
+    - Qualification
+    - SupportRequest
+    - SupportHistory
+    - InitialReview
+    - SupportStrategy
+    - Absence
+    - Intervention
+    icon_url: icons/events.png
+    affiliations:
+    - student
+    - affiliate
+    name: all
+    label: All
+    controls: 
+    position: 1
+    in_list: true
+  - id: 2
+    transitions:
+    - start
+    - to_start
+    events:
+    - PersonCourse
+    icon_url: icons/events.png
+    affiliations:
+    - applicant
+    name: all
+    label: All
+    controls: 
+    position: 1
+    in_list: true
+  - id: 3
+    transitions:
+    - create
+    - start
+    - overdue
+    - complete
+    - drop
+    - hidden
+    - to_start
+    events:
+    - Attendance
+    - ContactLog
+    - PersonCourse
+    - Disciplinary
+    - Goal
+    - Note
+    - Target
+    - Review
+    - ReviewLine
+    - Qualification
+    - SupportRequest
+    - SupportHistory
+    - InitialReview
+    - SupportStrategy
+    - Absence
+    - Intervention
+    icon_url: icons/events.png
+    affiliations:
+    - staff
+    name: all
+    label: All
+    controls: 
+    position: 1
+    in_list: true
+  - id: 4
+    transitions:
+    - start
+    events:
+    - PersonCourse
+    icon_url: icons/courses.png
+    affiliations:
+    - staff
+    - student
+    - affiliate
+    name: courses
+    label: Courses
+    controls: 
+    position: 2
+    in_list: true
+  - id: 5
+    transitions:
+    - overdue
+    events:
+    - Target
+    icon_url: icons/targets.png
+    affiliations:
+    - staff
+    - student
+    - affiliate
+    name: targets
+    label: Targets
+    controls: 
+    position: 3
+    in_list: true
+  - id: 6
+    transitions:
+    - create
+    events:
+    - ContactLog
+    icon_url: icons/contact_logs.png
+    affiliations:
+    - staff
+    name: contact_logs
+    label: Contact Logs
+    controls: events/create/contact_log
+    position: 4
+    in_list: true
+  - id: 7
+    transitions:
+    - create
+    - complete
+    events:
+    - Disciplinary
+    - Intervention
+    icon_url: icons/disciplinaries.png
+    affiliations:
+    - staff
+    name: intevention
+    label: Intervention
+    controls:
+      Intervention: events/create/intervention
+      Disciplinary: events/create/disciplinary
+    position: 5
+    in_list: true
+  - id: 8
+    transitions:
+    - create
+    events:
+    - Qualification
+    icon_url: icons/qualifications.png
+    affiliations:
+    - staff
+    - student
+    - affiliate
+    name: qualifications
+    label: Qualifications
+    controls: 
+    position: 6
+    in_list: true
+  - id: 9
+    transitions:
+    - create
+    - hidden
+    - start
+    events:
+    - Review
+    - ReviewLine
+    icon_url: icons/reviews.png
+    affiliations:
+    - staff
+    name: reviews
+    label: Reviews
+    controls: events/create/review_line
+    position: 7
+    in_list: true
+  - id: 10
+    transitions:
+    - create
+    events:
+    - SupportRequest
+    - SupportHistory
+    - SupportStrategy
+    icon_url: icons/support_requests.png
+    affiliations:
+    - staff
+    name: support
+    label: Support
+    controls:
+      Support Request: events/create/support_request
+      Support History: events/create/support_history
+    position: 8
+    in_list: true
+  - id: 11
+    transitions:
+    - complete
+    - start
+    - overdue
+    - create
+    events:
+    - Qualifications
+    - Attendance
+    - Absence
+    icon_url: 
+    affiliations:
+    - staff
+    - student
+    - affiliate
+    name: timetable
+    label: 
+    controls: 
+    position: 
+    in_list: false
+  - id: 12
+    transitions:
+    - create
+    events:
+    - ContactLog
+    icon_url: icons/contact_logs.png
+    affiliations:
+    - student
+    - affiliate
+    name: contact_logs
+    label: Contact Logs
+    controls: 
+    position: 4
+    in_list: true
+  - id: 13
+    transitions:
+    - create
+    - complete
+    events:
+    - Disciplinary
+    - Intervention
+    icon_url: icons/disciplinaries.png
+    affiliations:
+    - student
+    - affiliate
+    name: intevention
+    label: Intervention
+    controls: 
+    position: 5
+    in_list: true
+  - id: 14
+    transitions:
+    - create
+    - hidden
+    - start
+    events:
+    - Review
+    - ReviewLine
+    icon_url: icons/reviews.png
+    affiliations:
+    - student
+    - affiliate
+    name: reviews
+    label: Reviews
+    controls: 
+    position: 7
+    in_list: true
+  - id: 15
+    transitions:
+    - create
+    events:
+    - SupportRequest
+    - SupportHistory
+    - SupportStrategy
+    icon_url: icons/support_requests.png
+    affiliations:
+    - student
+    - affiliate
+    name: support
+    label: Support
+    controls: 
+    position: 8
+    in_list: true
+  - id: 16
+    transitions:
+    - create
+    events:
+    - ProfileQuestion
+    icon_url: events/profile_questions.png
+    affiliations:
+    - staff
+    - student
+    - applicant
+    - affiliate
+    name: profile
+    label: Profile
+    controls: events/create/profile_question
+    position: 10
+    in_list: true
