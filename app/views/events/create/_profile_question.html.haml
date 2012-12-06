@@ -1,0 +1,7 @@
+= create_event_form ProfileQuestion do |f|
+  %h2 My Profile
+  .span1= image_tag "events/profile_questions.png"
+  .span8
+    = f.select :question, Settings.profile_questions.split(";"), {}, {:style => "width:100%"}
+    = f.text_area :answer
+  = add_event_button

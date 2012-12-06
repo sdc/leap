@@ -30,3 +30,4 @@ Settings.defaults[:intervention_types]           = "Pre-enrolment:Personal Issue
 Settings.defaults[:hide_staff_personal_details]  = 0
 Settings.defaults[:ebs_import_options]           = "save,courses,quals"
 Settings.defaults[:review_grades]                = "0,1,2,3,4,5,6,7,8,9,10"
+Settings.profile_questions                       = "My favourite subject at school and why;My work experience;My long term ambitions;My hobbies and interests;My course feedback;My Night feedback;Welcome Day feedback"
