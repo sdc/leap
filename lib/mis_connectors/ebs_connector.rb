@@ -165,7 +165,8 @@ module MisPerson
         :title      => la.unit_instance_occurrence.long_description,
         :grade      => la.grade,
         :person_id  => id,
-        :created_at => la.exp_end_date
+        :created_at => la.exp_end_date,
+        :predicted  => false
       )
     end
     return self

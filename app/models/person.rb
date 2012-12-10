@@ -97,7 +97,7 @@ class Person < ActiveRecord::Base
   end
 
   def admin?
-    Settings.admin_users.include? id
+    Settings.admin_users.map{|x| x.to_i}.include? id
   end
 
   def mis_code

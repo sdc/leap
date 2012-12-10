@@ -1,0 +1,21 @@
+= create_event_form Qualification do |f|
+  - if Person.user.staff?
+    %h2 Add a Qualifications
+  - else
+    %h2 Add a Predicted Grade
+  .span1= image_tag "events/qualifications.png"
+  .span2
+    %h4 Qualification
+    = f.text_field :qual_type, :class => "span2", :placeholder => "e.g. GCSE"
+  .span3
+    %h4 Subject
+    = f.text_field :title, :class => "span3", :placeholder => "e.g. Maths"
+  .span2
+    %h4 Grade
+    = f.text_field :grade, :class => "span2"
+  - if Person.user.staff?
+    .span1
+      %h4 Predicted?
+      = f.check_box :predicted
+  .span2
+  = add_event_button

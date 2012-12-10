@@ -144,6 +144,7 @@ views:
   - id: 8
     transitions:
     - create
+    - complete
     events:
     - Qualification
     icon_url: icons/qualifications.png
@@ -277,6 +278,7 @@ views:
     - create
     events:
     - ProfileQuestion
+    - Qualification
     icon_url: events/profile_questions.png
     affiliations:
     - staff
@@ -284,7 +286,9 @@ views:
     - applicant
     - affiliate
     name: profile
-    label: Profile
-    controls: events/create/profile_question
+    label: Application Profile
+    controls: 
+      Profile Questions: events/create/profile_question
+      Predicted Grades: events/create/qualification
     position: 10
     in_list: true

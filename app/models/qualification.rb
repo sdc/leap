@@ -18,7 +18,13 @@ class Qualification < Eventable
 
   include MisQualification
 
-  after_create {|qual| qual.events.create!(:event_date => created_at, :transition => :create)}
+  after_create {|qual| qual.events.create!(:event_date => created_at, :transition => qual.predicted? ? :create : :complete)}
+
+  before_save  {|q| q.predicted=true if (Person.user and !Person.user.staff?)}
+
+  validates :title, :presence => true 
+
+  validates :title, :length => {:minimum => 2}
 
   def body
     self[:title]
@@ -26,6 +32,14 @@ class Qualification < Eventable
 
   def subtitle
     grade
+  end
+
+  def status
+    predicted ? :current : :complete
+  end
+
+  def title
+    predicted ? ["Predicted","Grade"] : "Qualification"
   end
 
 end
