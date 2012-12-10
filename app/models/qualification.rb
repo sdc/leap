@@ -22,9 +22,7 @@ class Qualification < Eventable
 
   before_save  {|q| q.predicted=true if (Person.user and !Person.user.staff?)}
 
-  validates :title, :presence => true 
-
-  validates :title, :length => {:minimum => 2}
+  validates :title, :qual_type, :presence => true 
 
   def body
     self[:title]

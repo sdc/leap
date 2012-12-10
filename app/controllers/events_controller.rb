@@ -32,7 +32,12 @@ class EventsController < ApplicationController
       if @event.save
         flash[:success] = "New #{et.singularize.humanize.titleize} created"
       else
+        logger.error "*" * 1000
+        @event.errors.each do |c,e|
+          logger.error c.to_s + " -- " + e
+        end
         flash[:error] = "#{et.singularize.humanize.titleize} could not be created!"
+        flash[:details] = @event.errors.map{|c,e| "<b>#{c}:</b> #{e}"}.join "<br />"
       end
       if view = params[:redirect_to] 
         redirect_to params[:redirect_to]

@@ -26,7 +26,7 @@ class Target < Eventable
 
   attr_accessible :body, :actions, :reflection, :target_date, :complete_date, :drop_date, :event, :event_id
 
-  validates :target_date, :presence => true
+  validates :target_date, :body, :presence => true
 
   belongs_to :set_by, :class_name => "Person", :foreign_key => "set_by_person_id"
   belongs_to :event
