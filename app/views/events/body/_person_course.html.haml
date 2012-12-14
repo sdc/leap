@@ -1,11 +1,13 @@
-= link_to_if @user.staff? && !Settings.ebs_course_base_url.blank?, person_course.course.title, (Settings.ebs_course_base_url + person_course.course.mis_id)
+- if event.transition == :create and person_course.vague_title
+  = person_course.vague_title
+- else
+  = link_to_if @user.staff? && !Settings.ebs_course_base_url.blank?, person_course.course.title, (Settings.ebs_course_base_url + person_course.course.mis_id)
 
 - if person_course.mis_status
   %span.label.pull-right{:class => person_course.status}
     = person_course.mis_status
 %div
-  - if person_course.start_date
-    = person_course.start_date.strftime("%d %B %Y")
-  = "-"
-  - if person_course.end_date
-    = person_course.end_date.strftime("%d %B %Y")
+  - if person_course.start_date and person_course.end_date
+    = raw "#{person_course.start_date.strftime("%d %B %Y")} &ndash; #{person_course.end_date.strftime("%d %B %Y")}"
+  - elsif person_course.start_date
+    = "Starts: #{person_course.start_date.strftime("%d %B %Y")}"

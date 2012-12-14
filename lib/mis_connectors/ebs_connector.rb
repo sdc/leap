@@ -257,6 +257,7 @@ module MisCourse
           :year   => ec.calocc_occurrence_code,
           :mis_id => ec.id
         )
+        @course.update_attribute("vague_title",ec.send(Settings.application_title_field)) unless Settings.application_title_field.blank?
         @course.save if options[:save]
         @course.import_people if options[:people]
         return @course

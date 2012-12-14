@@ -31,3 +31,5 @@ Settings.defaults[:hide_staff_personal_details]  = 0
 Settings.defaults[:ebs_import_options]           = "save,courses,quals"
 Settings.defaults[:review_grades]                = "0,1,2,3,4,5,6,7,8,9,10"
 Settings.defaults[:profile_questions]            = "My favourite subject at school and why;My work experience;My long term ambitions;My hobbies and interests;My course feedback;My Night feedback;Welcome Day feedback"
+Settings.defaults[:application_offer_text] = "You have a guaranteed offer of a place on a course at college (in accordance with the college's admissions policy)."
+Settings.defaults[:application_title_field] = ""

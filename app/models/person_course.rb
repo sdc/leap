@@ -19,6 +19,7 @@ class PersonCourse < Eventable
   include MisPersonCourse
 
   delegate :code, :to => :course
+  delegate :vague_title, :to => :course
 
   belongs_to :course
   belongs_to :person
@@ -68,6 +69,10 @@ class PersonCourse < Eventable
     else
       self[:status]
     end
+  end
+
+  def extra_panes(tr)
+    {"Offer" => "events/tabs/application_offer"} if tr == :create
   end
 
 end
