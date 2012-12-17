@@ -1,0 +1,9 @@
+= create_event_form Achievement do |f|
+  %h2 Add an Achievement
+  .span1= image_tag "events/achievements.png"
+  .span7
+    = f.text_area :body
+  .span1
+    %h4 Year
+    = f.date_select :year, {:start_year => Date.today.year, :end_year => Date.today.year - 10, :order => [:year]}, {:class => "span1"}
+  = add_event_button

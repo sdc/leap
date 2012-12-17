@@ -4,7 +4,7 @@ class CreateProfileQuestions < ActiveRecord::Migration
       t.integer :person_id 
       t.integer :created_by_id 
       t.string :question
-      t.string :answer
+      t.text :answer
       t.timestamps
     end
   end

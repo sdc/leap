@@ -279,6 +279,8 @@ views:
     events:
     - ProfileQuestion
     - Qualification
+    - PersonCourse
+    - Achievement
     icon_url: events/profile_questions.png
     affiliations:
     - staff
@@ -289,6 +291,7 @@ views:
     label: Application Profile
     controls: 
       Profile Questions: events/create/profile_question
+      Achievements: events/create/achievement
       Predicted Grades: events/create/qualification
     position: 10
     in_list: true
