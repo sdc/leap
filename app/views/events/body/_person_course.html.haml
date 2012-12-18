@@ -1,5 +1,7 @@
 - if event.transition == :create and person_course.vague_title
   = person_course.vague_title
+  = "(aiming for #{person_course.offer_code})" unless  person_course.offer_code.blank?
+    
 - else
   = link_to_if @user.staff? && !Settings.ebs_course_base_url.blank?, person_course.course.title, (Settings.ebs_course_base_url + person_course.course.mis_id)
 

@@ -27,6 +27,8 @@ class PersonCourse < Eventable
   has_one :application_event, :as => :eventable, :class_name => "Event", :conditions => {:transition => :create}
   has_one :complete_event,    :as => :eventable, :class_name => "Event", :conditions => {:transition => :complete}
 
+  attr_accessible :offer_code, :status, :start_date, :application_date, :mis_status
+
   after_save do |person_course|
     if person_course.application_date_changed? and person_course.application_date_was == nil
       person_course.events.create(:event_date => person_course.application_date, :transition => :create)
@@ -72,7 +74,9 @@ class PersonCourse < Eventable
   end
 
   def extra_panes(tr)
-    {"Offer" => "events/tabs/application_offer"} if tr == :create
+    if tr == :create and !Settings.application_title_field.blank? and Person.user.staff?
+      {"Offer" => "events/tabs/application_offer"} if tr == :create
+    end
   end
 
 end
