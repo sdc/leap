@@ -1,0 +1,30 @@
+.deck-container .slide .two_column_list li {
+  float: left;
+  width: 50%; }
+.deck-container .slide .no_fade {
+  opacity: 1 !important; }
+.deck-container .slide .box {
+  overflow: hidden;
+  border: 1px solid #000;
+  background: #fff;
+  box-shadow: 5px 5px 5px #888;
+  border-radius: 10px;
+  height: 120px;
+  margin: 20px 0;
+  padding: 5px;
+  padding-left: 150px;
+  background-repeat: no-repeat; }
+  .deck-container .slide .box h3 {
+    margin-bottom: -10px; }
+.deck-container .slide .teacher {
+  background-image: url(images/teacher.png); }
+.deck-container .slide .geek {
+  background-image: url(images/frink.png); }
+.deck-container .slide .learner {
+  background-image: url(images/wiggum.png); }
+.deck-container .slide .manager {
+  background-image: url(images/mrburns.png); }
+
+@media print {
+  .theme-menu {
+    display: none !important; } }
