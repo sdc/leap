@@ -69,14 +69,15 @@
     <%= lesc rl.created_by.name%>
     \medskip
   \end{minipage}
-  &<%= rl.quality %>&<%= rl.punctuality %>&<%= rl.attitude %>&<%= rl.completion %>
+  <% grades  = Settings.review_grades.split(",") %>
+  &\centering\begin{sideways}<%= grades[rl.quality] %>\end{sideways}
+  &\centering\begin{sideways}<%= grades[rl.punctuality] %>\end{sideways}
+  &\centering\begin{sideways}<%= grades[rl.attitude] %>\end{sideways}
+  &\centering\begin{sideways}<%= grades[rl.completion] %>\end{sideways}
   &<%= lesc rl.body %>\tabularnewline
   \hline
 <% end %>
 \end{longtable}
-
-\noindent Key: 10 = Excellent; 8 = Good; 6 = Satisfactory; 4 = Needs improvement; 2 = Poor 
-
 
 <%# if @topic.attendances.last.siblings_same_year %>
   <%#= render @topic.attendances.last.siblings_same_year %>
