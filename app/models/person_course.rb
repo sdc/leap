@@ -75,7 +75,7 @@ class PersonCourse < Eventable
 
   def extra_panes(tr)
     if tr == :create and !Settings.application_title_field.blank? and Person.user.staff?
-      {"Offer" => "events/tabs/application_offer"} if tr == :create
+      {"Meeting outcome" => "events/tabs/application_offer"} if tr == :create
     end
   end
 
