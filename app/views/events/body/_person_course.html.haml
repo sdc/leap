@@ -8,8 +8,9 @@
 - if person_course.mis_status
   %span.label.pull-right{:class => person_course.status}
     = person_course.mis_status
-%div
-  - if person_course.start_date and person_course.end_date
-    = raw "#{person_course.start_date.strftime("%d %B %Y")} &ndash; #{person_course.end_date.strftime("%d %B %Y")}"
-  - elsif person_course.start_date
-    = "Starts: #{person_course.start_date.strftime("%d %B %Y")}"
+- unless event.transition == :create
+  %div
+    - if person_course.start_date and person_course.end_date
+      = raw "#{person_course.start_date.strftime("%d %B %Y")} &ndash; #{person_course.end_date.strftime("%d %B %Y")}"
+    - elsif person_course.start_date
+      = "Starts: #{person_course.start_date.strftime("%d %B %Y")}"
