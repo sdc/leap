@@ -37,7 +37,7 @@ h1, h2 {
     color: inherit; }
 
 blockquote {
-  border-left: 4px #66a solid;
+  border-left: 4px #6666aa solid;
   padding-left: 10px; }
 
 .clear {
@@ -68,6 +68,8 @@ header nav, #icons {
     color: #004078; }
   #content .post {
     margin-bottom: 60px; }
+    #content .post p {
+      line-height: 1.7; }
   #content .quarter {
     float: left;
     width: 290px;
@@ -76,7 +78,7 @@ header nav, #icons {
   #content .front_box {
     font-size: 13px;
     width: 390px;
-    border: #666 2px solid;
+    border: #666666 2px solid;
     padding: 0;
     float: left; }
     #content .front_box h1 {
