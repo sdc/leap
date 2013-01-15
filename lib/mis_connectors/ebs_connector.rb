@@ -120,17 +120,20 @@ module MisPerson
       course = Course.import(pu.uio_id,{:people => false})
       pc= PersonCourse.find_or_create_by_person_id_and_course_id(id,course.id)
       if pu.unit_type == "A" 
-        pc.update_attributes(:status => :not_started,
-                             :start_date       => pu.unit_instance_occurrence.qual_start_date,
-                             :application_date => pu.created_date,
-                             :mis_status => pu.status
+        pc.update_attributes({:status => :not_started,
+                              :start_date       => pu.unit_instance_occurrence.qual_start_date,
+                              :application_date => pu.created_date,
+                              :mis_status => pu.status},
+                             {:without_protection => true}
                             )
       elsif pu.unit_type == "R"
-        pc.update_attributes(:enrolment_date => pu.created_date,
-                             :start_date     => pu.unit_instance_occurrence.qual_start_date,
-                             :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
-                             :mis_status => pu.status,
-                             :end_date => [:complete,:incomplete].include?(Ilp2::Application.config.mis_progress_codes[pu.progress_code]) ? pu.progress_date : pu.unit_instance_occurrence.qual_end_date)
+        pc.update_attributes({:enrolment_date => pu.created_date,
+                              :start_date     => pu.unit_instance_occurrence.qual_start_date,
+                              :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
+                              :mis_status => pu.status,
+                              :end_date => [:complete,:incomplete].include?(Ilp2::Application.config.mis_progress_codes[pu.progress_code]) ? pu.progress_date : pu.unit_instance_occurrence.qual_end_date},
+                             {:without_protection => true}
+                            )
       end
     end
     return self
@@ -201,17 +204,20 @@ module MisCourse
       person = Person.import(pu.person_code, {:courses => false})
       pc= PersonCourse.find_or_create_by_person_id_and_course_id(person.id,id)
       if pu.unit_type == "A" 
-        pc.update_attributes(:status => :not_started,
-                             :start_date       => pu.unit_instance_occurrence.qual_start_date,
-                             :application_date => pu.created_date,
-                             :mis_status => pu.status
+        pc.update_attributes({:status => :not_started,
+                              :start_date       => pu.unit_instance_occurrence.qual_start_date,
+                              :application_date => pu.created_date,
+                              :mis_status => pu.status},
+                             {:without_protection => true}
                             )
       elsif pu.unit_type == "R"
-        pc.update_attributes(:enrolment_date => pu.created_date,
-                             :start_date     => pu.unit_instance_occurrence.qual_start_date,
-                             :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
-                             :end_date => pu.progress_date,
-                             :mis_status => pu.status) unless pc.status == :not_started
+        pc.update_attributes({:enrolment_date => pu.created_date,
+                              :start_date     => pu.unit_instance_occurrence.qual_start_date,
+                              :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
+                              :end_date => pu.progress_date,
+                              :mis_status => pu.status},
+                             {:without_protection => true}
+                            ) unless pc.status == :not_started
       end
     end
     return self
