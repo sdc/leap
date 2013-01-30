@@ -3,11 +3,17 @@ layout: outer
 title: leap
 ---
 
-<div id="slideshow" class="slideshow">
-<a href="/features.html">
-  <img src="/images/timeline.png" />
+<div class="slider-wrapper">
+  <div id="slider" class="nivoSlider">
+    <a href="/features.html#homepage">
+      <img src='images/home.png' title="The <b>home page</b> shows staff and learners what's important to them right now, and provides fast access to what they need." />
+    </a><a href="/features.html#timetable">
+      <img src='images/timetable.png' title='<b>Timetables</b> are fed live from your MIS and calculate attendance data automatically.' />
+    </a><a href="/features.html#timeline">
+      <img src='images/timeline.png' title='The <b>timeline</b> gives learners a simple overview of their learning journey and inspires them to plan for their future.' />
+    </a>
+  </div>
 </div>
-</a>
 
 <br />
 
@@ -32,17 +38,12 @@ title: leap
 
 <h1>For more details, contact <a href="mailto:leap@southdevon.ac.uk">leap@southdevon.ac.uk</a></h1>
 
-<script type="text/javascript">     
-//<![CDATA[
-  window.addEvent('domready', function(){
-    var data = {
-    'home.png': { caption: "The <b>home page</b> shows staff and learners what's important to them right now, and provides fast access to what they need." }, 
-    'timetable.png': { caption: '<b>Timetables</b> are fed live from your MIS and calculate attendance data automatically.' }, 
-    'timeline.png': { caption: 'The <b>timeline</b> gives learners a simple overview of their learning journey and inspires them to plan for their future.' }
-    };
-    var myShow = new Slideshow('slideshow', data, { captions: true, controller: false, height: 350, hu: '/images/', width: 800 });
-  });
-  //]]>
+<script type="text/javascript">
+$(window).load(function() {
+    $('#slider').nivoSlider({
+      effect: 'sliceUpRight',
+      directionNav: false,
+      controlNav: false
+    });
+});
 </script>
-            
-              
