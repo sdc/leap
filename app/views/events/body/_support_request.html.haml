@@ -5,4 +5,4 @@ Requested by
   = support_request.difficulties.blank? ? "none" : support_request.difficulties.join(", ")
 %div
   %b Sessions:
-  = support_request.sessions.try(:join, ", ") or "None"
+  = support_request.all_sessions.try(:join, ", ") or "None"
