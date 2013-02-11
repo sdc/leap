@@ -97,3 +97,7 @@ $(document).ready ->
 
   $('[data-course-person-filter]').click ->
     filterCourseList $(this).attr('data-course-person-filter')
+
+  $('#person_note_button').click ->
+    $('#person_note_text').show("blind","slow")
+    $('#person_note_button div').addClass("disabled")

@@ -70,7 +70,8 @@ module MisPerson
           :uln           => ep.unique_learn_no,
           :mis_id        => ep.person_code,
           :staff         => ep.fes_staff_code?,
-          :username      => (ep.network_userid or mis_id)
+          :username      => (ep.network_userid or mis_id),
+          :note          => ep.note ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by} on #{ep.note.updated_date}") : nil
         )
         @person.save if options[:save] 
         @person.import_courses if options[:courses]

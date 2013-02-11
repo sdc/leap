@@ -1,4 +1,18 @@
-%h2 Personal Details
+%h2
+  Personal Details
+  - if Person.user.staff? and !@topic.note.blank?
+    .pull-right{:style => "margin-right:20px"}
+      = link_to "#", :id => "person_note_button" do
+        .btn.btn-warning
+          %i.icon-exclamation-sign.icon-white
+          Read Me
+- if Person.user.staff? and !@topic.note.blank?
+  .alert.span9#person_note_text{:style => "display:none"}
+    %h4 This user has a note on the student records system
+    - if Person.user.admin?
+      = event_format @topic.note
+    - else
+      Contact your student records department for more information
 %dl.span5.dl-horizontal
   %dt Name
   %dd= @topic.name :middle_names => true
