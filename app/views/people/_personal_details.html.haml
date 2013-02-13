@@ -20,6 +20,12 @@
   %dd
     - if @topic.address
       = [@topic.address, @topic.town, @topic.postcode].reject(&:nil?).join ", "
+  - unless @topic.home_phone.blank?
+    %dt Home Phone
+    %dd= @topic.home_phone
+  - unless @topic.personal_email.blank?
+    %dt Personal Email
+    %dd= mail_to @topic.personal_email
 %dl.span5.dl-horizontal
   %dt Birth Date
   %dd 
