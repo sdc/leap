@@ -36,6 +36,7 @@ class Ebs::Person < Ebs::Model
   has_many :attendances,
            :foreign_key => "person_code"
   belongs_to :tutor, :class_name => "Person", :foreign_key => "student_staff_tutor"
+  has_many :blobs, :foreign_key => "owner_ref"
 
   def name
     [forename,surname].join(" ")

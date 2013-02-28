@@ -24,9 +24,8 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.html
       format.jpg do
-        path = "#{@topic.instance_eval Settings.photo_path_code}"
-        if File.exists? "#{Rails.root}/public/photos/#{path}"
-          redirect_to "/photos/#{path}"
+        if @topic.photo
+          send_data @topic.photo, :disposition => 'inline', :type => "image/jpg"
         else
           redirect_to "/assets/noone.png"
         end
