@@ -63,7 +63,7 @@
 <% event.children.where(:eventable_type => "ReviewLine").map{|x| x.eventable}.each do |rl| %>
   \begin{minipage}{40mm}
     \medskip
-    <% if rl.unit %>
+    <% unless rl.unit.blank? %>
       <%= lesc rl.unit %>\newline
     <% end %>
     <%= lesc rl.created_by.name%>
