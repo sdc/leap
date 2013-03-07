@@ -73,7 +73,7 @@ module MisPerson
           :username      => (ep.network_userid or mis_id),
           :personal_email=> ep.personal_email,
           :home_phone    => ep.address && ep.address.telephone,
-          :note          => ep.note ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by} on #{ep.note.updated_date}") : nil
+          :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by} on #{ep.note.updated_date}") : nil
         )
         @person.save if options[:save] 
         @person.import_courses if options[:courses]
