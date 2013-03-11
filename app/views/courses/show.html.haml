@@ -36,5 +36,5 @@
     .row.home-page-block.left{:load_block => moodle_block_course_url(@topic)}= image_tag "ajax-loader.gif"
   .span5
     .row.home-page-block.right{:load_block => next_lesson_block_course_url(@topic)}= image_tag "ajax-loader.gif"
-//- if @user.staff?
-//.block.left{:load_block => reviews_block_course_url(@topic)}= image_tag "ajax-loader.gif"
+- if @user.staff?
+  .block.left{:load_block => reviews_block_course_url(@topic)}= image_tag "ajax-loader.gif"
