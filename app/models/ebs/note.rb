@@ -16,6 +16,8 @@
 
 class Ebs::Note < Ebs::Model
 
+  default_scope where("updated_date > ?", Date.new(2011,1,9))
+
   has_one :person, :foreign_key => "notes"
 
 end
