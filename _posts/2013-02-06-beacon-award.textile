@@ -4,10 +4,10 @@ layout: post
 category: press
 ---
 
-South Devon College are winners of the AoC Beacon award for Efficiency through Effective Use of Technology in FE and Skills (sponsored by LSIS) for their college wide tutorial system that uses LEAP to support individual student progress.
+South Devon College are winners of the AoC Beacon award for Efficiency through Effective Use of Technology in FE and Skills (sponsored by LSIS) for their college wide tutorial system that uses *Leap* to support individual student progress.
 
 LSIS said:
 
-bq. South Devon College won the award Outstanding Leadership for its implementation of a college-wide tutorial system, known as LEAP (Learner Engagement And Progression), which has allowed staff to access information about every learner and maintain regular updates of how they’re doing so they can be properly supported throughout their time at college
+bq. South Devon College won the award Outstanding Leadership for its implementation of a college-wide tutorial system, known as *Leap* (Learner Engagement And Progression), which has allowed staff to access information about every learner and maintain regular updates of how they’re doing so they can be properly supported throughout their time at college
 
 See the full story on the "LSIS website":http://www.lsis.org.uk/news/lsis-sponsors-fe-oscars and the "South Devon College website":http://southdevon.ac.uk/adult-news/2222-college-wins-two-oscars
