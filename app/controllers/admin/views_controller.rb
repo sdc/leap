@@ -38,4 +38,11 @@ class Admin::ViewsController < ApplicationController
     redirect_to edit_admin_view_path(@view.id)
   end
 
+  def destroy
+    @view = View.find params[:id]
+    @view.destroy
+    flash[:success] = "Deleted view #{@view.name}"
+    redirect_to admin_views_path(@view.id)
+  end
+
 end

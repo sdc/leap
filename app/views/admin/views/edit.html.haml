@@ -49,5 +49,10 @@
       = f.check_box :in_list
       .help-block Check to show a link to the view in the sidebar list
   .form-actions
-    = submit_tag "Save Changes", :class => "btn btn-primary"
     = link_to "Cancel", admin_views_path, :class => "btn"
+    = link_to_submit :class => "btn btn-primary" do
+      %i.icon-hdd.icon-white
+      Save Changes
+    = link_to admin_view_path, :method => :delete, :class => "btn btn-danger pull-right", :confirm => "Sure?" do 
+      %i.icon-trash.icon-white
+      Delete View
