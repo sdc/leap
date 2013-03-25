@@ -18,3 +18,4 @@ gem 'uglifier', "1.0.3"
 gem 'rails-latex'
 gem 'nokogiri'
 gem 'coffee-filter'
+gem 'yui-compressor'
