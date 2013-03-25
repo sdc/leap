@@ -35,7 +35,5 @@ Ilp2::Application.routes.draw do
       post :add
     end
   end
-
-
   root :to => "people#index"
 end

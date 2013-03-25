@@ -24,15 +24,18 @@ class Admin::ViewsController < ApplicationController
 
   def edit
     @event_types=Dir.glob(Rails.root + 'app/models/*.rb').map{|f| File.basename(f, ".rb").classify}
-    @view = View.find_by_name params[:id]
+    @view = View.find params[:id]
   end
 
   def update
-    @view = View.find_by_name params[:id]
+    @view = View.find params[:id]
+    params[:view][:affiliations].delete("")
+    params[:view][:events].delete("")
+    params[:view][:transitions].delete("")
     if @view.update_attributes params[:view]
       flash[:success] = "Updated view #{@view.name} for #{@view.affiliations.sort.join(", ")}!"
     end
-    redirect_to edit_admin_view_path(@view)
+    redirect_to edit_admin_view_path(@view.id)
   end
 
 end
