@@ -50,5 +50,5 @@ Ilp2::Application.configure do
   # Compress both stylesheets and JavaScripts
   config.assets.compress = true
   config.assets.js_compressor  = :uglifier
-  config.assets.css_compressor = :yui
+  #config.assets.css_compressor = :yui
 end
