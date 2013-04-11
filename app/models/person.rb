@@ -20,6 +20,8 @@ class Person < ActiveRecord::Base
 
   scoped_search :on => [:forename, :surname, :mis_id]
 
+  AFFILIATIONS = ["staff","student","applicant","affiliate"]
+
   has_many :events
   has_many :review_lines
   has_many :person_courses

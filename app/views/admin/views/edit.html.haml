@@ -31,7 +31,7 @@
   .control-group
     %label.control-label Affiliations
     .controls
-      = f.select :affiliations, ["staff","student","applicant","affiliate"], {}, {:multiple => true}
+      = f.select :affiliations, Person::AFFILIATIONS, {}, {:multiple => true}
       .help-block Which user types can see this view
   .control-group
     %label.control-label Events
@@ -56,3 +56,14 @@
     = link_to admin_view_path, :method => :delete, :class => "btn btn-danger pull-right", :confirm => "Sure?" do 
       %i.icon-trash.icon-white
       Delete View
+
+:coffeescript
+  $('#view_affiliations').multiSelect
+    selectableHeader: "<h4>Don't see view</h4>"
+    selectionHeader: "<h4>Do see view</h4>"
+  $('#view_events').multiSelect
+    selectableHeader: "<h4>Included in view</h4>"
+    selectionHeader: "<h4>Not included in view</h4>"
+  $('#view_transitions').multiSelect
+    selectableHeader: "<h4>Included in view</h4>"
+    selectionHeader: "<h4>Not included in view</h4>"
