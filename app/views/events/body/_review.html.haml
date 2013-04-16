@@ -1,8 +1,11 @@
-- if review.published
-  = link_to image_tag("actions/print.png"), person_event_url(@topic, event, :format => "pdf")
+= link_to person_event_url(@topic, event, :format => "pdf"), {"class" => "btn", "#{review.published ? "data-hacky" : "disabled"}" => "disabled"} do
+  %i.icon-print
+  print
+= link_to person_event_url(@topic, review.events.creation.first), :class => "btn" do
+  %i.icon-th-list
+  Show entire review
+
 - if review.attendance
   %h4 
     Attendance:
     = "#{review.attendance}%"
-%h4 
-  %b Review Summary:
