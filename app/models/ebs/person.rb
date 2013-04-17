@@ -22,6 +22,7 @@ class Ebs::Person < Ebs::Model
 
   scoped_search :on => [:forename, :surname, :person_code]
 
+  belongs_to :note, :foreign_key => "notes"
   has_many :targets
   has_many :learner_aims,
            :foreign_key => "person_code"

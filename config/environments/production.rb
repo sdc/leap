@@ -48,6 +48,7 @@ Ilp2::Application.configure do
   config.active_support.deprecation = :notify
 
   # Compress both stylesheets and JavaScripts
+  config.assets.compress = true
   config.assets.js_compressor  = :uglifier
-  config.assets.css_compressor = :scss
+  #config.assets.css_compressor = :yui
 end

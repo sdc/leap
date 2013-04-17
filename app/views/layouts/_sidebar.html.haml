@@ -1,4 +1,4 @@
-.person-photo= image_tag("#{url_for(@topic)}.jpg", :size => "130x130", :style => "display:none")
+.person-photo= image_tag("#{url_for(@topic)}.jpg", :size => "130x130")
 %h1= @topic.name
 %h6= link_to_if @affiliation == "staff", @topic.mis_code, Settings.ebs_person_base_url + @topic.mis_id.to_s
 %ul.sidebar

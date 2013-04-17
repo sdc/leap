@@ -14,26 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class SupportRequest < Eventable
+class Ebs::Note < Ebs::Model
 
-  attr_accessible :difficulties, :sessions, :workshop
+  default_scope where("updated_date > ?", Date.new(2011,1,9))
 
-  serialize :sessions
-  serialize :difficulties
-
-  after_create {|req| req.events.create!(:event_date => created_at, :transition => :create)}
-
-  def extra_panes
-    if Person.affiliation == "staff"
-      [["Strategy","support_strategies/new"]]
-    else
-      nil
-    end
-  end
-
-  def all_sessions
-    s = sessions.blank? ? [] : sessions
-    s << "Workshop" if workshop
-  end
+  has_one :person, :foreign_key => "notes"
 
 end

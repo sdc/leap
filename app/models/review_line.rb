@@ -39,6 +39,7 @@ class ReviewLine < Eventable
   end
 
   def staff_only?
+    return true unless window
     review ? review.staff_only? : true
   end
 

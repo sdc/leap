@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-gem 'rails', "3.2.9"
+gem 'rails', "3.2.11"
 gem 'coffee-rails', "3.2.1"
 gem 'haml'
 gem 'therubyracer', "0.10"
@@ -18,3 +18,4 @@ gem 'uglifier', "1.0.3"
 gem 'rails-latex'
 gem 'nokogiri'
 gem 'coffee-filter'
+gem 'yui-compressor'

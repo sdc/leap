@@ -4,7 +4,7 @@ set :application, "leap"
 set :deploy_to, "/srv/#{application}"
 set :repository,  "git://github.com/sdc/leap.git"
 set :scm, :git
-set :branch, "sdc1.1"
+set :branch, "1.2"
 set :use_sudo, false
 default_run_options[:pty] = true
 

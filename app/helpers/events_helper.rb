@@ -83,9 +83,7 @@ module EventsHelper
   def add_event_button(text = "Add")
     content_tag :div, :width     => "59px" do
       submit_tag text, :class    => "btn btn-primary pull-right", 
-                       :style    => "margin-right:10px", 
-                       :disabled => !@topic.kind_of?(Person),
-                       "data-enable-on" => "#person_id"
+                       :style    => "margin-right:10px"
     end
   end
 
