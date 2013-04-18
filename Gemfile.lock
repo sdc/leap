@@ -112,7 +112,7 @@ GEM
     rake (10.0.3)
     rdoc (3.12)
       json (~> 1.4)
-    ruby-oci8 (2.1.0)
+    ruby-oci8 (2.1.5)
     scoped_search (2.4.0)
       activerecord (>= 2.1.0)
     sprockets (2.2.2)
