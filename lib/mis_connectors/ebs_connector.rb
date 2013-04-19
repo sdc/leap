@@ -186,7 +186,7 @@ module MisPerson
         :body => a.reason_extra,
         :category => a.reason,
         :usage_code => a.usage_code,
-        :created_at => a.created_at,
+        :created_at => a.notified_at,
         :lessons_missed => a.absence_slots_count,
         :contact_category => a.contact
       )
