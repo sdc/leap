@@ -66,7 +66,11 @@ class Target < Eventable
 
   # Returns the target eventable subtitle. This is the target due date unless the event is the completion of the target, when it is +nil+.
   def subtitle(tr)
-    ["Due", target_date] if tr == :start
+    if tr == :start
+      ["Due", target_date] 
+    else 
+      ["Set", created_at]
+    end
   end
 
   # Returns the status for this event, it is +:current+ unless it is a completion event, when it is +:complete+.
