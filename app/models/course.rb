@@ -47,4 +47,8 @@ class Course < ActiveRecord::Base
     false
   end
 
+  def photo_uri
+    "courses.png"
+  end
+
 end

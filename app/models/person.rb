@@ -56,6 +56,11 @@ class Person < ActiveRecord::Base
     mis_id.to_s
   end
 
+  def Person.get(mis_id,fresh=false)
+    (fresh ? import(mis_id) : find_by_mis_id(mis_id) or find_by_username(mis_id)) or import(mis_id)
+  end
+
+
   def name(options = {})
     names = [forename]
     names += middle_names if options[:middle_names] and middle_names
@@ -67,9 +72,6 @@ class Person < ActiveRecord::Base
     names.join " "
   end
 
-  def Person.get(mis_id,fresh=false)
-    (fresh ? import(mis_id) : find_by_mis_id(mis_id) or find_by_username(mis_id)) or import(mis_id)
-  end
 
   def self.user
     Thread.current[:user]
@@ -105,6 +107,14 @@ class Person < ActiveRecord::Base
 
   def mis_code
     mis_id
+  end
+
+  def photo_uri
+    if photo
+      "data:image/jpeg;base64," + ActiveSupport::Base64.encode64(photo)
+    else
+      "noone.png"
+    end
   end
 
 end
