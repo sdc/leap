@@ -45,7 +45,7 @@
             %tr
               %th= key
               %td= event[key]
-    - if event.eventable.respond_to? :mis
+    - if event.eventable.respond_to? :mis and event.eventable.mis
       .row{:style => "border-top: 1px solid"}
         .span10{:style => "padding-top:10px"}= button_to_function "Show MIS attributes", "$(this).hide();$('.mis_attribs').show()", :class => "btn btn-info"
         .span10.mis_attribs{:style => "display:none"}
