@@ -41,5 +41,15 @@ class Eventable < ActiveRecord::Base
   def status
     return :unknown
   end
+  
+  def created_by_text
+    if respond_to? :mis and mis
+      "Imported from MIS"
+    elsif created_by
+      "Created by #{created_by.name}"
+    else
+      "Auto-generated"
+    end
+  end
 
 end
