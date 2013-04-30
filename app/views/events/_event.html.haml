@@ -30,10 +30,11 @@
         .long-body.span10= render :partial => "events/long_body/#{event.eventable_type.underscore}", :object => event.eventable, :locals => {:event => event}
     - rescue ActionView::MissingTemplate
       -#long_body 
-  - event.children.each do |child|
+  - unless defined? no_attachments
+    - event.children.each do |child|
+      .row
+        .span10= render :partial => "events/mini", :object => child, :as => "event"
     .row
-      .span10= render :partial => "events/mini", :object => child, :as => "event"
-  .row
-    .extended.span10{:style => "display:none"}
+      .extended.span10{:style => "display:none"}
 
 = render :partial => "layouts/alerts" if request.xhr?
