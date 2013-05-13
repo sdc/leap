@@ -29,8 +29,8 @@
       - next if s.blank?
       %a.btn{"data-course-person-filter" => s.parameterize}= s
   = render :partial => "person", :collection => @person_courses, :as => "pc"
-  //- if @topic.person_courses.count > 12
-  //  #expand_students{:style => "cursor:pointer"} See all students...
+  -#- if @topic.person_courses.count > 12
+  -#  #expand_students{:style => "cursor:pointer"} See all students...
 .row
   .span5
     .row.home-page-block.left{:load_block => moodle_block_course_url(@topic)}= image_tag "ajax-loader.gif"
