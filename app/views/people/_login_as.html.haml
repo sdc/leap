@@ -1,5 +1,5 @@
-.person{:style => "height:110px"}
-  .person_photo= image_tag("#{url_for(login_as)}.jpg")
+.search-list-person{:style => "height:auto"}
+  .person-photo= image_tag(login_as.photo_uri, :size => "130x130")
   .details
     %h3= truncate(login_as.name, :length => 17)
     %h5.quiet= login_as.mis_id
