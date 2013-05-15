@@ -12,5 +12,9 @@
         .small_text= @next_timetable_event.teachers.map{|t| t.name}.join ", "
     - else 
       .alert
-        = @topic.kind_of?(Person) ? "You have" : "This course has"
-        no current timetable events.
+        - unless Rails.env == "development"
+          = @topic.kind_of?(Person) ? "You have" : "This course has"
+          no current timetable events.
+        - else
+          %i.icon-ban-circle
+          Timetables do not currently work in testing mode. 
