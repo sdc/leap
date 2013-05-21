@@ -58,6 +58,10 @@ class CoursesController < ApplicationController
     @unpub = Review.where(:person_id => @topic.people.map{|p| p.id}, :window => @window).count - @pub
   end
 
+  def entry_reqs_block
+    @entry_reqs = @topic.entry_reqs
+  end
+
   def add
     @user.my_courses ||= []
     if @user.my_courses.include? @topic.id
@@ -68,8 +72,6 @@ class CoursesController < ApplicationController
     @user.save
     redirect_to @topic
   end
-
-
   
   private
   

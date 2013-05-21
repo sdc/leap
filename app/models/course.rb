@@ -20,6 +20,7 @@ class Course < ActiveRecord::Base
 
   has_many :person_courses, :conditions => "enrolment_date is not null"
   has_many :people, :through => :person_courses
+  has_many :entry_reqs
 
   scoped_search :on => [:title,:code]
 

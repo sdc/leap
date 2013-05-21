@@ -1,0 +1,13 @@
+%h3 
+  Entry Reqs
+  = link_to image_tag("target_home.png"), person_view_url(@topic,View.find_by_name("targets"))
+.span4{:style =>"padding-top:5px"}
+  .scroll-list
+    - if @entry_reqs.empty?
+      .alert No entry requirements are set for this course.
+    - else
+      %table.table.table-condensed{:style => "margin-bottom:0px"}
+        - @entry_reqs.each do |er|
+          %tr.has_tooltip{:title => er.body}
+            %td= truncate(er.category, :length => 10)
+            %td= truncate(er.body, :length => 30)
