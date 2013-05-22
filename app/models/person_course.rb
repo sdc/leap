@@ -18,8 +18,8 @@ class PersonCourse < Eventable
 
   include MisPersonCourse
 
-  delegate :code, :to => :course
-  delegate :vague_title, :to => :course
+  delegate :code, :vague_title, :app_siblings, :to => :course
+  has_many :entry_reqs, :through => :course
 
   belongs_to :course
   belongs_to :person
@@ -74,9 +74,16 @@ class PersonCourse < Eventable
   end
 
   def extra_panes(tr)
-    if tr == :create and !Settings.application_title_field.blank? and Person.user.staff?
-      {"Meeting outcome" => "events/tabs/application_offer"} if tr == :create
+    panes = {}
+    if tr == :create 
+      unless entry_reqs.empty?
+        panes["Entry Requirements"] = "events/tabs/entry_reqs"
+      end
+      if !Settings.application_title_field.blank? and Person.user.staff?
+        panes["Meeting outcome"]  = "events/tabs/application_offer"
+      end
     end
+    return panes
   end
 
 end

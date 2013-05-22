@@ -1,0 +1,18 @@
+- person_course.app_siblings.each do |app|
+  .span10
+    %h4= "#{app.title} (#{app.code})"
+    - if app.entry_reqs
+      %table.table
+        - app.entry_reqs.each do |er|
+          %tr
+            %td= er.category
+            %td= er.body
+            - if @user.staff?
+              %td.right
+                .pull-right
+                  = link_to "#", :remote => true, :class => "btn btn-success btn-mini" do
+                    %i.icon-ok.icon-white
+                    Yes
+                  = link_to "#", :remote => true, :class => "btn btn-warning btn-mini" do
+                    %i.icon-ok-circle.icon-white
+                    No, but...
