@@ -10,9 +10,12 @@
             - if @user.staff?
               %td.right
                 .pull-right
-                  = link_to "#", :remote => true, :class => "btn btn-success btn-mini" do
-                    %i.icon-ok.icon-white
-                    Yes
-                  = link_to "#", :remote => true, :class => "btn btn-warning btn-mini" do
-                    %i.icon-ok-circle.icon-white
-                    No, but...
+                  = create_event_form EntryReqMet do |f|
+                    = f.hidden_field :met
+                    = link_to "#", :class => "btn btn-success btn-mini", :id => "entry_req_met" do
+                      %i.icon-ok.icon-white
+                      Yes
+                  = create_event_form EntryReqMet do |f|
+                    = link_to "#", :class => "btn btn-warning btn-mini", :id => "entry_req_not_met" do
+                      %i.icon-ok-circle.icon-white
+                      No, but...
