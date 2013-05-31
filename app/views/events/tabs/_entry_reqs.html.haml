@@ -3,19 +3,25 @@
     %h4= "#{app.title} (#{app.code})"
     - if app.entry_reqs
       %table.table
-        - app.entry_reqs.each do |er|
-          %tr
-            %td= er.category
-            %td= er.body
-            - if @user.staff?
-              %td.right
-                .pull-right
-                  = create_event_form EntryReqMet do |f|
-                    = f.hidden_field :met
-                    = link_to "#", :class => "btn btn-success btn-mini", :id => "entry_req_met" do
-                      %i.icon-ok.icon-white
-                      Yes
-                  = create_event_form EntryReqMet do |f|
-                    = link_to "#", :class => "btn btn-warning btn-mini", :id => "entry_req_not_met" do
-                      %i.icon-ok-circle.icon-white
-                      No, but...
+        = render app.entry_reqs
+
+:coffeescript
+  $('.er-met').on 'click', (e) ->
+    f = $(e.target).closest('tr').next().find('form')
+    f.find('#entry_req_met_met').attr('checked',true)
+    f.submit()
+    e.preventDefault()
+  $('.er-not-met').on 'click', (e) ->
+    f = $(e.target).closest('tr').next().find('form')
+    f.find('#entry_req_met_met').attr('checked',false)
+    f.submit()
+    e.preventDefault()
+  $('.er-nobut').on 'click', (e) ->
+    tr = $(e.target).closest('tr')
+    tr.next().show('fast').find('form').find('#entry_req_met_met').attr('checked',true)
+    e.preventDefault()
+  $('.entry_req_form_met').on 'ajax:complete', (event,data) ->
+    tr = $(event.target).closest('tr')
+    tr.prev().replaceWith data.responseText
+    tr.hide('fast')
+    

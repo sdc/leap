@@ -1,0 +1,33 @@
+- erm = EntryReqMet.find_by_person_id_and_entry_req_id(@topic.id,entry_req.id)
+%tr{:class => erm ? erm.status : "none"}
+  %td.span2= entry_req.category
+  %td.span4= entry_req.body
+  - if Person.user.staff? and !erm
+    %td.span5.status-fg
+      = link_to "#", :class => "btn btn-success btn-mini er-met" do
+        %i.icon-ok.icon-white
+        Yes
+      = link_to "#", :class => "btn btn-warning btn-mini er-nobut" do
+        %i.icon-ok-circle.icon-white
+        No, but...
+      = link_to "#", :class => "btn btn-danger btn-mini er-not-met" do
+        %i.icon-remove.icon-white
+        No
+  - else
+    - if erm
+      %td.span5.status-fg{:class => erm.status}
+        = case erm.status
+          - when :complete then "Met"
+          - when :current then erm.no_but
+          - when :incomplete then "Not Met"
+    - else
+      %td
+         
+- if Person.user.staff? and !erm
+  %tr.hide
+    %td{:colspan => 3, :style => "border-top:none"}
+      = create_event_form EntryReqMet, {:class => "entry_req_form_met", :style => "display:inline"}, true do |f|
+        = hidden_field_tag "entry_req_met[entry_req_id]", entry_req.id
+        .hide= f.check_box :met
+        .span9= f.text_area :no_but, :placeholder => "Requirement not met but still checked off because..."
+        = submit_tag "Save", :class => "btn btn-primary er-submit-button"
