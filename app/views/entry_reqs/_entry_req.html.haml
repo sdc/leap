@@ -3,7 +3,7 @@
   %td.span2= entry_req.category
   %td.span4= entry_req.body
   - if Person.user.staff? and !erm
-    %td.span5.status-fg
+    %td.span5.status-fg{:colspan => 2}
       = link_to "#", :class => "btn btn-success btn-mini er-met" do
         %i.icon-ok.icon-white
         Yes
@@ -15,11 +15,15 @@
         No
   - else
     - if erm
-      %td.span5.status-fg{:class => erm.status}
+      %td.span4.status-fg{:class => erm.status}
         = case erm.status
           - when :complete then "Met"
           - when :current then erm.no_but
           - when :incomplete then "Not Met"
+      %td.span1
+        - if erm.events.first.is_deletable?
+          = link_to person_event_url(erm.person, erm.events.first), :method => :delete do
+            %i.icon-trash
     - else
       %td
          

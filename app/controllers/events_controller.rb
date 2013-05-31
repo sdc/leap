@@ -42,7 +42,11 @@ class EventsController < ApplicationController
       if view = params[:redirect_to] 
         redirect_to params[:redirect_to]
       else
-        render @event or redirect_to :back
+        begin
+          render @event 
+        rescue
+          redirect_to :back
+        end
       end
     else
       redirect_to "/404.html"
