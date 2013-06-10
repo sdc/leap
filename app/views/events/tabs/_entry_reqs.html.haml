@@ -18,7 +18,11 @@
     e.preventDefault()
   $('.er-nobut').on 'click', (e) ->
     tr = $(e.target).closest('tr')
-    tr.next().show('fast').find('form').find('#entry_req_met_met').attr('checked',true)
+    tr.next().toggle('fast').find('form').find('#entry_req_met_met').attr('checked',true)
+    e.preventDefault()
+  $('.er-nobut-cancel').on 'click', (e) ->
+    tr = $(e.target).closest('tr')
+    tr.toggle('fast')
     e.preventDefault()
   $('.entry_req_form_met').on 'ajax:complete', (event,data) ->
     tr = $(event.target).closest('tr')
