@@ -2,7 +2,7 @@ class EntryReqMet < Eventable
 
   attr_accessible :met, :entry_req_id, :no_but
 
-  belongs_to  :entry_req
+  belongs_to  :entry_req, :dependent => :destroy
 
   after_save do |erm|
     if erm.met?

@@ -10,8 +10,9 @@ class EntryReq < ActiveRecord::Base
       logger.info "A Row"
       if course=Course.find_by_year_and_code("13/14",row[0])
         logger.info "Found course #{course.id}"
-        ["Numeracy","Literacy","General","Specialist"].each_with_index do |r,i|
-          course.entry_reqs.create(:category => r,:body => row[i+1])
+        ["Numeracy","Literacy","General","Specialist","Additional"].each_with_index do |r,i|
+          next if row[i+1].blank?
+          course.entry_reqs.create(:category => r,:body => row[i+1]) unless row[i+1] == "Please select"
         end
       end
     end
