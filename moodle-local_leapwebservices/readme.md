@@ -31,3 +31,8 @@ Before installation, please check you have the following files and structure:
 * Ensure the folder is named *leapwebservices* (removing any other text which may have appeared as part of the cloning or un-Zipping process)
 * Log in to your Moodle site as an Administrator and visit the Notifications page
 * The plugin should install without error. If you receive an error, please report it [here](https://github.com/sdc/moodle-local_leapwebservices/issues)
+
+## History
+
+* 2013-05-24, v0.3: Minor update as the mdl_course table has had some columns re/moved elsewhere in Moodle 2.5.
+* 2012-11-20, v0.2: Initial release of the plugin.
