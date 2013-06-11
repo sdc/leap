@@ -16,4 +16,7 @@
     .row.home-page-block.left{:load_block => targets_block_person_url(@topic)}= image_tag "ajax-loader.gif"
     .row.home-page-block.left{:load_block => moodle_block_person_url(@topic)}= image_tag "ajax-loader.gif"
   .span5
-    .row.home-page-block.right{:style => "height:255px"}= raw Settings.advert_box_html
+    - if @poll and @user == @topic
+      .row.home-page-block.right.home-poll-block{:style => "height:255px", :load_block => poll_block_person_url(@topic)}= image_tag "ajax-loader.gif"
+    - else
+      .row.home-page-block.right{:style => "height:255px"}= raw Settings.advert_box_html

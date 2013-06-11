@@ -21,6 +21,7 @@ class PeopleController < ApplicationController
   before_filter      :staff_only, :only => [:search,:select]
 
   def show
+    @poll = SimplePoll.where(:id => Settings.current_simple_poll).first unless Settings.current_simple_poll.blank?
     respond_to do |format|
       format.html
       format.jpg do
@@ -90,6 +91,12 @@ class PeopleController < ApplicationController
       @attendances = @topic.attendances.last.siblings_same_year
     end
   end
+
+  def poll_block
+    @poll = SimplePoll.where(:id => Settings.current_simple_poll).first unless Settings.current_simple_poll.blank?
+  end
+
+
 
   private
 

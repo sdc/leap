@@ -1,0 +1,8 @@
+%h2= "What would you like to do when you leave college?"#@poll.question
+= create_event_form SimplePollAnswer, {:class => "form-horizontal"} do |f|
+  - @poll.answers.each do |ans|
+    .control-group
+      %label.control-label= ans
+      .controls
+        = f.radio_button :answer, ans
+  = add_event_button

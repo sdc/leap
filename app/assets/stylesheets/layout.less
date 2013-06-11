@@ -266,8 +266,9 @@ dl {
     .border-radius(@borderRadius, 0, 0, @borderRadius);
     background: #eee;
     border-bottom:1px #ccc solid;
-    padding-left: 10px;
+    padding: 5px 10px 5px 10px;
     margin-bottom: 10px;
+    line-height:24px;
   }
   h3 {
     .makeColumn(1);
@@ -290,6 +291,13 @@ dl {
   .scroll-list {
     overflow: auto;
     height: 110px;
+  }
+  &.home-poll-block {
+    form {
+      .control-group {
+        margin-bottom:5px;
+      }
+    }
   }
 }
 
