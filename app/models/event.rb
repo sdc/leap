@@ -51,6 +51,7 @@ class Event < ActiveRecord::Base
   default_scope order("event_date DESC")
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id) unless person_id}
+  before_create     {|event| event.event_date = event.eventable.created_at unless event_date}
 
   delegate :body,  :to => :eventable
   delegate :past?, :to => :event_date

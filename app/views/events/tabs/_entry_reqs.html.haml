@@ -1,0 +1,31 @@
+- person_course.app_siblings.each do |app|
+  .span10
+    %h4= "#{app.title} (#{app.code})"
+    - if app.entry_reqs
+      %table.table
+        = render app.entry_reqs
+
+:coffeescript
+  $('.er-met').on 'click', (e) ->
+    f = $(e.target).closest('tr').next().find('form')
+    f.find('#entry_req_met_met').attr('checked',true)
+    f.submit()
+    e.preventDefault()
+  $('.er-not-met').on 'click', (e) ->
+    f = $(e.target).closest('tr').next().find('form')
+    f.find('#entry_req_met_met').attr('checked',false)
+    f.submit()
+    e.preventDefault()
+  $('.er-nobut').on 'click', (e) ->
+    tr = $(e.target).closest('tr')
+    tr.next().toggle('fast').find('form').find('#entry_req_met_met').attr('checked',true)
+    e.preventDefault()
+  $('.er-nobut-cancel').on 'click', (e) ->
+    tr = $(e.target).closest('tr')
+    tr.toggle('fast')
+    e.preventDefault()
+  $('.entry_req_form_met').on 'ajax:complete', (event,data) ->
+    tr = $(event.target).closest('tr')
+    tr.prev().replaceWith data.responseText
+    tr.hide('fast')
+    

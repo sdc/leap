@@ -87,8 +87,10 @@ module EventsHelper
     end
   end
 
-  def create_event_form(klass,&block)
-    form_for @topic.kind_of?(Person) ? @topic.send(klass.name.tableize).new : klass.new, :url => "/events", :html => {:class => "form form-inline"} do |f|
+  def create_event_form(klass,html_options = {},remote = false,&block)
+    form_for(@topic.kind_of?(Person) ? @topic.send(klass.name.tableize).new : klass.new, :remote => remote,
+      :url => "/events", :html => html_options.reverse_merge(:class => "form form-inline")
+    ) do |f|
       if @topic.kind_of? Person
         concat(hidden_field_tag(:person_id, @topic.mis_id))
       else

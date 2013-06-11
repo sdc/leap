@@ -20,11 +20,18 @@ class Course < ActiveRecord::Base
 
   has_many :person_courses, :conditions => "enrolment_date is not null"
   has_many :people, :through => :person_courses
+  has_many :entry_reqs
+  has_many :app_siblings, :class_name => "Course", :conditions => proc { "vague_title = #{self.vague_title}" }
+  scope :app_siblings_for, lambda { |at| where(:vague_title => at).order(:title) }
 
   scoped_search :on => [:title,:code]
 
   def Course.get(mis_id,fresh=false)
     (fresh ? import(mis_id, :people => true) : find_by_mis_id(mis_id)) or import(mis_id, :people => true)
+  end
+
+  def app_siblings 
+    Course.app_siblings_for(vague_title) if vague_title
   end
 
   def name
