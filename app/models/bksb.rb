@@ -8,7 +8,7 @@ class BKSB < ActiveResource::Base
 # then everything will be fine :)
 
   self.format = :xml
-  self.site = Settings.bksb_url
+  self.site = "http://#{Settings.bksb_url}"
   self.user = Settings.bksb_iis_username
   self.password = Settings.bksb_iis_pwd
 

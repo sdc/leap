@@ -31,11 +31,13 @@
   .control-group
     %label.control-label BKSB URL
     .controls
-      = text_field_tag "bksb_url", Settings.bksb_url
+      .input-prepend<
+        %span.add-on http://
+        = text_field_tag "bksb_url", Settings.bksb_url
   .control-group
     %label.control-label BKSB API Password
     .controls
-      = text_field_tag "bksb_pwd", Settings.bksb_pwd
+      = password_field_tag "bksb_pwd", Settings.bksb_pwd
   .control-group
     %label.control-label BKSB IIS Username
     .controls
@@ -47,11 +49,11 @@
     
 
   %h1 Old Settings!
-
-  - @settings2 = @settings - ["admin_users","advert_box_html","bksb_pwd","bksb_url","bksb_iis_username","bksb_iis_pwd"]
-  - @settings2.each do |setting|
-    .control-group
-      %label.control-label{:for => setting}= setting.humanize
-      .controls= text_field_tag setting, Settings[setting]
-  .form-actions
-    = submit_tag "Save Changes", :class => "btn btn-primary"
+  .old-settings
+    - @settings2 = @settings - ["admin_users","advert_box_html","bksb_pwd","bksb_url","bksb_iis_username","bksb_iis_pwd"]
+    - @settings2.each do |setting|
+      .control-group
+        %label.control-label{:for => setting}= setting.humanize
+        .controls= text_field_tag setting, Settings[setting]
+    .form-actions
+      = submit_tag "Save Changes", :class => "btn btn-primary"
