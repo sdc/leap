@@ -25,7 +25,8 @@
     
 
   %h1 Old Settings!
-
+  .alert
+    I'll be working to move these into sections and to generally be easier to use over time :)
   - @settings2 = @settings - ["admin_users","advert_box_html"]
   - @settings2.each do |setting|
     .control-group
