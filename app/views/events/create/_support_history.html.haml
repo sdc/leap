@@ -1,5 +1,5 @@
+%h2 Add support history information
 = create_event_form SupportHistory do |f|
-  %h2 Add support history information
   .span1= image_tag "events/support_histories.png"
   .span5= f.text_area :body
   .span3= select_tag "support_history[category]", options_for_select(Settings.support_history_categories.split(/,/))

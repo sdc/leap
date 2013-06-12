@@ -4,8 +4,8 @@
 - else
   - grades  = Settings.review_grades.split(",")
   - options = [grades,(0..(grades.count - 1)).to_a].transpose
+  %h2 Add a review 
   = create_event_form ReviewLine do |f|
-    %h2 Add a review 
     .span9
       .row
         .span1= image_tag "events/reviews.png"

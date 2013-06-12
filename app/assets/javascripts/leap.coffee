@@ -20,10 +20,9 @@ $(document).ready ->
         else
           $(button).attr("disabled", "disable")
 
-  # Fade in the person photo once it's loaded  
-  #$('.person-photo>img')
-  #  .load(-> $(this).fadeIn())
-  #  .mouseover(-> $(this).effect('shake', {times:2,distance:3},100))
+  # Photo wibble
+  $('.person-photo>img')
+    .mouseover(-> $(this).effect('shake', {times:2,distance:3},100))
 
   #Init Popovers
   $(".has-popover").popover
@@ -76,6 +75,7 @@ $(document).ready ->
       $('#help_button').show() unless $('.online-help').length == 0
       $('.nav-pills a:first').tab('show')
       setupDatePickers $(block)
+      $('.event-header>h2').append('<span class="pull-right span1"><i class="icon icon-eye-open"/></span>')
       buttonAutoEnable()
       # TODO: This needs to be moved into a seperate file to keep events seperate if I can hook it into 
       #       the loading of the create form
@@ -101,3 +101,8 @@ $(document).ready ->
   $('#person_note_button').click ->
     $('#person_note_text').show("blind","slow")
     $('#person_note_button div').addClass("disabled")
+
+  $('.event-header>h2').live 'click', ->
+    $(this).next().toggle('fast')
+    $(this).find('.icon-eye-open').removeClass("icon-eye-open").addClass("icon-eye-close")
+    $(this).find('.icon-eye-close').removeClass("icon-eye-close").addClass("icon-eye-open")
