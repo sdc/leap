@@ -93,9 +93,7 @@ class PeopleController < ApplicationController
 
   def poll_block
     @poll = SimplePoll.where(:id => Settings.current_simple_poll).first unless Settings.current_simple_poll.blank?
-    if @myans = @topic.simple_poll_answers.where(:simple_poll_id => @poll.id).first
-      @spoll_answers = @poll.simple_poll_answers.group("answer").count.sort{|a,b| b.last <=> a.last}
-    end
+    @myans = @topic.simple_poll_answers.where(:simple_poll_id => @poll.id).first
   end
 
 

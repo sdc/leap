@@ -1,7 +1,7 @@
 %h2= @poll.question
 - if @myans
   %table.table
-    - @spoll_answers.each do |ans|
+    - @poll.results.each do |ans|
       %tr{:class => @myans.answer == ans.first ? "current" : nil}
         %td= ans.first
         %td= ans.last
@@ -14,4 +14,4 @@
         %label.control-label= ans
         .controls
           = f.radio_button :answer, ans
-    = add_event_button
+    = add_event_button "Vote!"
