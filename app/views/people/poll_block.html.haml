@@ -1,8 +1,17 @@
-%h2= "What would you like to do when you leave college?"#@poll.question
-= create_event_form SimplePollAnswer, {:class => "form-horizontal"} do |f|
-  - @poll.answers.each do |ans|
-    .control-group
-      %label.control-label= ans
-      .controls
-        = f.radio_button :answer, ans
-  = add_event_button
+%h2= @poll.question
+- if @myans
+  %table.table
+    - @spoll_answers.each do |ans|
+      %tr{:class => @myans.answer == ans.first ? "current" : nil}
+        %td= ans.first
+        %td= ans.last
+        
+- else
+  = create_event_form SimplePollAnswer, {:class => "form-horizontal"} do |f|
+    = hidden_field_tag "simple_poll_answer[simple_poll_id]", @poll.id
+    - @poll.answers.each do |ans|
+      .control-group
+        %label.control-label= ans
+        .controls
+          = f.radio_button :answer, ans
+    = add_event_button
