@@ -22,14 +22,22 @@ class BKSB < ActiveResource::Base
     x.Subject.each do |s|
       subject = s.subjectName
       s.Section.find{|x| x.sectionName == "Assessments"}.AssessmentType.each do |a|
-        (atype,result,date) = if a.AssessmentType == "IA"
+        (atype,result,date,bksbid) = if a.AssessmentType == "IA"
             next unless a.respond_to? :IA_Result
-            ["Initial Assessment","Level #{a.IA_Result.result.last}",DateTime.parse(a.IA_Result.DateCompleted)]
+            ["Initial Assessment",
+             "Level #{a.IA_Result.result.last}",
+             DateTime.parse(a.IA_Result.DateCompleted),
+             a.IA_Result.session_id
+            ]
           else
             next unless a.respond_to? :Diag_Result
-            ["Diagnostic","#{a.Diag_Result.totalScore} out of #{a.Diag_Result.totalOutOf} (#{a.Diag_Result.percentScore}%)",DateTime.parse(a.Diag_Result.dateTaken)]
+            ["Diagnostic",
+             "#{a.Diag_Result.totalScore} out of #{a.Diag_Result.totalOutOf} (#{a.Diag_Result.percentScore}%)",
+             DateTime.parse(a.Diag_Result.dateTaken),
+             a.Diag_Result.session_id
+            ]
         end
-        person.qualifications.find_or_create_by_title_and_grade_and_created_at("#{atype}: #{subject}",result,date)
+        person.qualifications.find_or_create_by_title_and_grade_and_created_at_and_mis_id_and_awarding_body("#{atype}: #{subject}",result,date,bksbid,"BKSB")
       end
     end
     return person
