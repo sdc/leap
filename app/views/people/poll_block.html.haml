@@ -1,4 +1,6 @@
-%h2= @poll.question
+%h2
+  Poll:
+  = @poll.question
 - if @myans
   %table.table
     - @poll.results.each do |ans|
