@@ -20,3 +20,4 @@
     :coffeescript
       $('#new_simple_poll_answer').live 'ajax:complete', ->
         $('#home-poll-block').load "#{poll_block_person_url(@topic)}"
+        $('#home-poll-block').effect("highlight", {}, 1500);
