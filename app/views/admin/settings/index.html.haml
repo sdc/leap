@@ -21,15 +21,41 @@
     %label.control-label Home Page Advert Box
     .controls
       = text_area_tag "advert_box_html", Settings.advert_box_html
- 
+
+  %h2 BKSB
+  .alert.alert-info
+    If you enter correct BKSB settings here, then BKSB results can be automatically imported for users. Leave these
+    blank to disable this.
+  .alert.alert-warning
+    You may need to restart Leap for these settings to take effect.
+  .control-group
+    %label.control-label BKSB URL
+    .controls
+      .input-prepend<
+        %span.add-on http://
+        = text_field_tag "bksb_url", Settings.bksb_url
+  .control-group
+    %label.control-label BKSB API Password
+    .controls
+      = password_field_tag "bksb_pwd", Settings.bksb_pwd
+  .control-group
+    %label.control-label BKSB IIS Username
+    .controls
+      = text_field_tag "bksb_iis_username", Settings.bksb_iis_username
+  .control-group
+    %label.control-label BKSB IIS Password
+    .controls
+      = password_field_tag "bksb_iis_pwd", Settings.bksb_iis_pwd
     
 
   %h1 Old Settings!
-
-  - @settings2 = @settings - ["admin_users","advert_box_html"]
-  - @settings2.each do |setting|
-    .control-group
-      %label.control-label{:for => setting}= setting.humanize
-      .controls= text_field_tag setting, Settings[setting]
-  .form-actions
-    = submit_tag "Save Changes", :class => "btn btn-primary"
+  .old-settings
+    .alert
+      I'll be working to move these into sections and to generally be easier to use over time :)
+    - @settings2 = @settings - ["admin_users","advert_box_html","bksb_pwd","bksb_url","bksb_iis_username","bksb_iis_pwd"]
+    - @settings2.each do |setting|
+      .control-group
+        %label.control-label{:for => setting}= setting.humanize
+        .controls= text_field_tag setting, Settings[setting]
+    .form-actions
+      = submit_tag "Save Changes", :class => "btn btn-primary"

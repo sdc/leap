@@ -10,8 +10,7 @@ Settings.defaults[:target_default_length]        = 2.weeks
 Settings.defaults[:support_request_difficulties] = "Reading,Comprehension,Spelling,Writing,Proof-reading,Planning work,
                                                     Organising work,Concentration,Study Skills,Numeracy"
 Settings.defaults[:support_history_categories]   = "Identified specific learning difficulty,Difficulties with literacy,Difficulties with numeracy,Difficulties with english as a foreign language,Visual and/or hearing impairment,Physical disability,Medical condition/mental health,Support at school,Support at college,Statement at school,Extra time in exams,Reader in exams,Scribe in exams"
-Settings.defaults[:admin_users]                  = [1688]
-Settings.defaults[:top_bar_notice]               = "This is beta software. Changes you make will be temporary!" 
+Settings.defaults[:admin_users]                  = [1]
 Settings.defaults[:google_analytics_code]        = ""
 Settings.defaults[:advert_box_html]              = "<p>Blank Space!</p>"
 Settings.defaults[:maintenance_mode]             = ""
@@ -33,3 +32,7 @@ Settings.defaults[:profile_questions]            = "My favourite subject at scho
 Settings.defaults[:application_offer_text] = "You have a guaranteed offer of a place on a course at college (in accordance with the college's admissions policy). To guarantee your place on your course of choice you will need to meet the entry requirements as per the prospectus."
 Settings.defaults[:application_title_field] = ""
 Settings.defaults[:current_simple_poll] = ""
+Settings.defaults[:bksb_url] = ""
+Settings.defaults[:bksb_pwd] = ""
+Settings.defaults[:bksb_iis_username] = ""
+Settings.defaults[:bksb_iis_pwd] = ""
