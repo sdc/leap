@@ -22,22 +22,25 @@ class BKSB < ActiveResource::Base
     x.Subject.each do |s|
       subject = s.subjectName
       s.Section.find{|x| x.sectionName == "Assessments"}.AssessmentType.each do |a|
-        (atype,result,date,bksbid) = if a.AssessmentType == "IA"
+        if a.AssessmentType == "IA"
             next unless a.respond_to? :IA_Result
-            ["Initial Assessment",
-             "Level #{a.IA_Result.result.last}",
-             DateTime.parse(a.IA_Result.DateCompleted),
-             a.IA_Result.session_id
-            ]
+            (a.IA_Result.kind_of?(Array) ? a.IA_Result : [a.IA_Result]).each do |a|
+              n = person.qualifications.find_or_initialize_by_mis_id_and_awarding_body(a.session_id,"BKSB")
+              n.title = "Initial Assessment: #{subject}"
+              n.grade = "Level #{a.result.last}"
+              n.created_at = DateTime.parse(a.DateCompleted)
+              n.save
+            end
           else
             next unless a.respond_to? :Diag_Result
-            ["Diagnostic",
-             "#{a.Diag_Result.totalScore} out of #{a.Diag_Result.totalOutOf} (#{a.Diag_Result.percentScore}%)",
-             DateTime.parse(a.Diag_Result.dateTaken),
-             a.Diag_Result.session_id
-            ]
+            (a.Diag_Result.kind_of?(Array) ? a.Diag_Result : [a.Diag_Result]).each do |a|
+              n = person.qualifications.find_or_initialize_by_mis_id_and_awarding_body(a.session_id,"BKSB")
+              n.title = "Diagnostic Assessment: #{subject}"
+              n.grade = "#{a.totalScore} out of #{a.totalOutOf} (#{a.percentScore}%)"
+              n.created_at = DateTime.parse(a.dateTaken)
+              n.save
+            end
         end
-        person.qualifications.find_or_create_by_title_and_grade_and_created_at_and_mis_id_and_awarding_body("#{atype}: #{subject}",result,date,bksbid,"BKSB")
       end
     end
     return person
