@@ -1,5 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Kreon:400,700);
 @import url(http://fonts.googleapis.com/css?family=Doppio+One:400,700);
+@import url(http://fonts.googleapis.com/css?family=Cardo:400italic);
 
 body {
   background: #fff;
@@ -20,7 +21,7 @@ a:visited{color: #008}
 a img {border:none}
 
 h1 {font-size: 25px}
-h2 {font-size: 17px}
+h2 {font-size: 18px}
 
 h1,h2 {
   font-family: sans-serif;
@@ -28,6 +29,15 @@ h1,h2 {
   letter-spacing: -1px;
   a,a:visited {color: inherit}
 }
+
+h2.tagline {
+   font-family: 'Cardo', serif;
+   color: #005a9c;
+   font-style: italic;
+   letter-spacing: 0px;
+   font-size: 20px;
+}
+
 
 blockquote {
         border-left: 4px #66a solid;
