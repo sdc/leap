@@ -1,0 +1,41 @@
+= create_event_form Qualification do |f|
+  %h2 Add a Qualification
+  .span1= image_tag "events/qualifications.png"
+  .span2.qqoe_quick_buttons
+    %h4 Qualification
+    = f.text_field :qual_type, :class => "span2", :placeholder => "e.g. GCSE"
+    - Settings.qqoe_qual_type.split(",").each do |btn|
+      = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
+  .span2.qqoe_quick_buttons
+    %h4 Awarding Body
+    = f.text_field :awarding_body, :class => "span2", :placeholder => "e.g. AQA"
+    - Settings.qqoe_awarding_body.split(",").each do |btn|
+      = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
+  .span2.qqoe_quick_buttons
+    %h4 Subject
+    = f.text_field :title, :class => "span2", :placeholder => "e.g. Maths"
+    - Settings.qqoe_subject.split(",").each do |btn|
+      = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
+  .span1.qqoe_quick_buttons
+    %h4 Grade
+    = f.text_field :grade, :class => "span1"
+    - Settings.qqoe_grade.split(",").each do |btn|
+      = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
+  .span1
+    %h4 Year
+    = f.date_select :created_at, 
+                    {:order => [:year], 
+                     :default => {:month => Settings.year_boundary_date.split("/").last.to_i,
+                                 :day   => Settings.year_boundary_date.split("/").first.to_i}},
+                    {:class => "span1"}
+  = add_event_button
+
+:coffeescript
+  $('.qqoe_quick_buttons a').live 'click', (e) ->
+    $(this).prevAll('input').val($(this).html())
+    $(this).siblings('a').removeClass('btn-success')
+    $(this).addClass('btn-success')
+  $('.qqoe_quick_buttons input').live 'keyup', (e) ->
+    $(this).siblings("a:contains(" + $(this).val() + ")").addClass("btn-success")
+    $(this).siblings("a:not(:contains(" + $(this).val() + "))").removeClass("btn-success")
+    false
