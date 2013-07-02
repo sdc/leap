@@ -23,11 +23,11 @@
       = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
   .span1
     %h4 Year
-    = f.date_select :created_at, 
-                    {:order => [:year], 
-                     :default => {:month => Settings.year_boundary_date.split("/").last.to_i,
-                                 :day   => Settings.year_boundary_date.split("/").first.to_i}},
-                    {:class => "span1"}
+    = f.date_select :created_at, {:order => [:year], :default => {:month => 6,:day => 1}}, {:class => "span1"}
+    - {"12/13" => "2013","11/12" => "2012","10/11" => "2011"}.each do |k,v|
+      = link_to_function k, "$(qualification_created_at_1i).val('#{v}');$(this).siblings('a').removeClass('btn-success');$(this).addClass('btn-success')", 
+                            :class => "btn btn-small", :style => "margin-top:3px;display:block"
+      
   = add_event_button
 
 :coffeescript
