@@ -48,6 +48,10 @@
     .controls
       = f.check_box :in_list
       .help-block Check to show a link to the view in the sidebar list
+  .control-group
+    %label.control-label Controls
+    .controls
+      = text_area_tag :controls, @view.controls.map{|c| c.first + ':' + c.last}.join(";")
   .form-actions
     = link_to "Cancel", admin_views_path, :class => "btn"
     = link_to_submit :class => "btn btn-primary" do
@@ -67,3 +71,6 @@
   $('#view_transitions').multiSelect
     selectableHeader: "<h4>Not included in view</h4>"
     selectionHeader: "<h4>Included in view</h4>"
+  $('#view_controls').multiSelect
+    selectableHeader: "<h4>Don't show control box</h4>"
+    selectionHeader: "<h4>Show at top of view</h4>"

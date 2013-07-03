@@ -29,6 +29,7 @@ class Admin::ViewsController < ApplicationController
 
   def update
     @view = View.find params[:id]
+    params[:view][:controls] = Hash[*params[:controls].split(";").map{|x| x.split(":")}.flatten]
     params[:view][:affiliations].delete("")
     params[:view][:events].delete("")
     params[:view][:transitions].delete("")
