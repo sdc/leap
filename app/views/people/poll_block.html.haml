@@ -1,0 +1,23 @@
+%h2
+  Poll:
+  = @poll.question
+- if @myans
+  %table.table
+    - @poll.results.each do |ans|
+      %tr{:class => @myans.answer == ans.first ? "current" : nil}
+        %td= ans.first
+        %td= ans.last
+        
+- else
+  = create_event_form SimplePollAnswer, {:class => "form-horizontal"}, true do |f|
+    = hidden_field_tag "simple_poll_answer[simple_poll_id]", @poll.id
+    - @poll.answers.each do |ans|
+      .control-group
+        %label.control-label= ans
+        .controls
+          = f.radio_button :answer, ans
+    = add_event_button "Vote!"
+    :coffeescript
+      $('#new_simple_poll_answer').live 'ajax:complete', ->
+        $('#home-poll-block').load "#{poll_block_person_url(@topic)}"
+        $('#home-poll-block').effect("highlight", {}, 1500);

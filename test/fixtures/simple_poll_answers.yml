@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  person_id: 1
+  created_by: 1
+  simple_poll_id: 1
+  answer: MyString
+
+two:
+  person_id: 1
+  created_by: 1
+  simple_poll_id: 1
+  answer: MyString

@@ -1,0 +1,8 @@
+.span10
+  %h3= simple_poll_answer.question
+  %table.table
+    - simple_poll_answer.results.each do |ans|
+      %tr{:class => simple_poll_answer.answer == ans.first ? "current" : nil}
+        %td= ans.first
+        %td= ans.last
+

@@ -91,6 +91,13 @@ class PeopleController < ApplicationController
     end
   end
 
+  def poll_block
+    @poll = SimplePoll.where(:id => Settings.current_simple_poll).first unless Settings.current_simple_poll.blank?
+    @myans = @topic.simple_poll_answers.where(:simple_poll_id => @poll.id).first
+  end
+
+
+
   private
 
   def person_set_topic
