@@ -47,6 +47,12 @@
     .controls
       = password_field_tag "bksb_iis_pwd", Settings.bksb_iis_pwd
 
+  %h2 Pathways
+  .control-group
+    %label.control-label Pathway choices
+    .controls
+      = text_field_tag "pathways", Settings.pathways
+
   %h2 Quick Quals on Entry Input
   .well
     These are comma separated lists for each of the fields in the Quick Quals on Entry input control. They become buttons
@@ -75,7 +81,7 @@
     .alert
       I'll be working to move these into sections and to generally be easier to use over time :)
     - @settings2 = @settings - ["admin_users","advert_box_html","bksb_pwd","bksb_url","bksb_iis_username","bksb_iis_pwd",
-                                 "qqoe_qual_type","qqoe_awarding_body","qqoe_subject","qqoe_grade"]
+                                 "qqoe_qual_type","qqoe_awarding_body","qqoe_subject","qqoe_grade","pathways"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

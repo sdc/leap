@@ -43,6 +43,7 @@ class Person < ActiveRecord::Base
   has_many :profile_questions
   has_many :achievements
   has_many :entry_req_mets
+  has_many :pathways
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
   serialize :middle_names

@@ -1,0 +1,20 @@
+- pathways = Hash[Settings.pathways.split(";").map{|x| x.split(":")}.map{|x| [x.first,x.last.split(",")]}]
+= create_event_form Pathway do |f|
+  %h2 Log an English or Maths Pathway
+  .span1= image_tag("#{url_for(Person.user)}.jpg", :size => "48x48")
+  .span3= f.select :subject, pathways.keys, {}, :class => "span3"
+  - first = true
+  - pathways.each do |k,v|
+    .span4{:class => [k,"pathway_select_div"]}
+      - first = false
+      = f.select :pathway, pathways[k], {}, {:class => "span4"}
+    
+  = add_event_button
+
+:coffeescript
+  $('.pathway_select_div').hide().find("select").attr("disabled",true)
+  $('.pathway_select_div').first().show().find("select").removeAttr("disabled")
+
+  $('#pathway_subject').change ->
+    $('.pathway_select_div').hide().find("select").attr("disabled",true)
+    $('.pathway_select_div.' + $(this).val()).show().find("select").removeAttr("disabled")

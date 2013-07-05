@@ -43,3 +43,6 @@ Settings.defaults[:qqoe_qual_type] = "A,B,C"
 Settings.defaults[:qqoe_awarding_body] = "D,E,F"
 Settings.defaults[:qqoe_subject] = "Dormouse,G,H,I"
 Settings.defaults[:qqoe_grade] = "A*,A,B,C,D,E,F,G,Pass"
+
+# Pathways setup
+Settings.defaults[:pathways] = "English:Entry Level 3 Functional Skills,Level 1 Functional Skills,Level 2 Functional Skills,GCSE,Stretch & Challenge;Maths:Entry Level 3 Functional Skills,Level 1 Functional Skills,Level 2 Functional Skills,GCSE,Stretch & Challenge"
