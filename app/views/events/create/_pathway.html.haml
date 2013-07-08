@@ -1,7 +1,7 @@
 - pathways = Hash[Settings.pathways.split(";").map{|x| x.split(":")}.map{|x| [x.first,x.last.split(",")]}]
 = create_event_form Pathway do |f|
   %h2 Log an English or Maths Pathway
-  .span1= image_tag("#{url_for(Person.user)}.jpg", :size => "48x48")
+  .span1= image_tag "events/pathways.png"
   .span3= f.select :subject, pathways.keys, {}, :class => "span3"
   - first = true
   - pathways.each do |k,v|
