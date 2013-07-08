@@ -1,13 +1,14 @@
+- if person_course.mis_status
+  %span.label.pull-right{:class => person_course.status}
+    = person_course.mis_status
+- if event.transition == :create and !person_course.entry_reqs.blank?
+  .pull-right.icon.icon-tasks{:title => "This course has entry requirements", :style => "margin-right:7px"}
 - if event.transition == :create and person_course.vague_title
   = person_course.vague_title
   = "(aiming for #{person_course.offer_code})" unless  person_course.offer_code.blank?
     
 - else
   = link_to_if @user.staff? && !Settings.ebs_course_base_url.blank?, person_course.course.title, (Settings.ebs_course_base_url + person_course.course.mis_id)
-
-- if person_course.mis_status
-  %span.label.pull-right{:class => person_course.status}
-    = person_course.mis_status
 - unless event.transition == :create
   %div
     - if person_course.start_date and person_course.end_date

@@ -7,10 +7,12 @@ class BKSB < ActiveResource::Base
 # events properly and we NEVER USE THIS EXPECTING IT TO BE A PROPER ACTIVERESOURCE
 # then everything will be fine :)
 
-  self.format = :xml
-  self.site = "http://#{Settings.bksb_url}"
-  self.user = Settings.bksb_iis_username
-  self.password = Settings.bksb_iis_pwd
+  unless Settings.bksb_url.blank?
+    self.format = :xml
+    self.site = "http://#{Settings.bksb_url}"
+    self.user = Settings.bksb_iis_username
+    self.password = Settings.bksb_iis_pwd
+  end
 
   def BKSB.element_path(id, prefix_options = {}, query_options = nil)
     "/bksb_reporting/API/Results.aspx#{query_string(:p => Settings.bksb_pwd, :u => id)}"
