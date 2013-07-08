@@ -1,7 +1,7 @@
 - person_course.app_siblings.each do |app|
   .span10
-    %h4= "#{app.title} (#{app.code})"
-    - if app.entry_reqs
+    - unless app.entry_reqs.empty?
+      %h4= "#{app.title} (#{app.code})"
       %table.table
         = render app.entry_reqs
 
