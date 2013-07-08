@@ -31,9 +31,13 @@ class Eventable < ActiveRecord::Base
   def icon_url
     "events/#{self.class.name.tableize}.png"
   end
+  
+  def humanize
+    self.class.name.underscore.humanize.titleize
+  end
 
   def title
-    self.class.name.underscore.humanize.titleize
+    humanize
   end
 
   def staff_only?
@@ -48,7 +52,7 @@ class Eventable < ActiveRecord::Base
     if respond_to? :mis and mis
       "Imported from MIS"
     elsif created_by
-      "#{self.class.name} created by #{created_by.name}"
+      "#{self.humanize} created by #{created_by.name}"
     else
       "Auto-generated"
     end
