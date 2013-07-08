@@ -74,7 +74,7 @@ class PersonCourse < Eventable
   end
 
   def extra_panes(tr)
-    panes = {}
+    panes = ActiveSupport::OrderedHash.new
     if tr == :create 
       unless entry_reqs.empty?
         panes["Entry Requirements"] = "events/tabs/entry_reqs"
