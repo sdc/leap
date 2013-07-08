@@ -36,6 +36,7 @@ class Event < ActiveRecord::Base
   validates :eventable_type, :presence => true
 
   belongs_to :person
+  belongs_to :created_by, :class_name => "Person", :foreign_key => "created_by_id"
   belongs_to :about_person, :class_name => "Person", :foreign_key => "about_person_id"
   belongs_to :eventable, :polymorphic => true
   has_many :children, :class_name => "Event", :foreign_key => "parent_id", :dependent => :nullify
@@ -51,7 +52,10 @@ class Event < ActiveRecord::Base
   default_scope order("event_date DESC")
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id) unless person_id}
-  before_create     {|event| event.event_date = event.eventable.created_at unless event_date}
+  before_create do |event| 
+    event.event_date = event.eventable.created_at unless event_date
+    event.created_by_id = Person.user ? Person.user.id : nil unless event.created_by_id
+  end
 
   delegate :body,  :to => :eventable
   delegate :past?, :to => :event_date
@@ -80,4 +84,10 @@ class Event < ActiveRecord::Base
   def is_deletable?
     Person.user.admin? or (Time.now - Settings.delete_delay.to_i < eventable.created_at and Person.user == eventable.created_by)
   end
+
+  def created_by_text
+    ret = created_by ? "Event created by #{created_by.name}<br />" : ""
+    ret += eventable.created_by_text
+  end
+
 end
