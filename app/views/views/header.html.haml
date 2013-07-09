@@ -7,6 +7,9 @@
       %b Error:
       There is a missing form here. Contact your administrator.
 - elsif @view.controls.kind_of? Hash
+  - if @view.controls.count == 1
+    .row
+      .event-header= render @view.controls.values.first
   .row
     %ul.nav.nav-pills{:style => "margin-bottom:10px;"}
       - @view.controls.each do |k,v|
