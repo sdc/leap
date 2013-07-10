@@ -25,23 +25,32 @@ class BKSB < ActiveResource::Base
       subject = s.subjectName
       s.Section.find{|x| x.sectionName == "Assessments"}.AssessmentType.each do |a|
         if a.AssessmentType == "IA"
-            next unless a.respond_to? :IA_Result
-            (a.IA_Result.kind_of?(Array) ? a.IA_Result : [a.IA_Result]).each do |a|
+          next unless a.respond_to? :IA_Result
+          (a.IA_Result.kind_of?(Array) ? a.IA_Result : [a.IA_Result]).each do |a|
+            begin
               n = person.qualifications.find_or_initialize_by_mis_id_and_awarding_body(a.session_id,"BKSB")
               n.title = "Initial Assessment: #{subject}"
               n.grade = "Level #{a.result.last}"
               n.created_at = DateTime.parse(a.DateCompleted)
               n.save
+            rescue
+              # Just in case something breaky happens
             end
-          else
-            next unless a.respond_to? :Diag_Result
-            (a.Diag_Result.kind_of?(Array) ? a.Diag_Result : [a.Diag_Result]).each do |a|
+          end
+        else
+          next unless a.respond_to? :Diag_Result
+          (a.Diag_Result.kind_of?(Array) ? a.Diag_Result : [a.Diag_Result]).each do |a|
+            begin
               n = person.qualifications.find_or_initialize_by_mis_id_and_awarding_body(a.session_id,"BKSB")
               n.title = "Diagnostic Assessment: #{subject}"
               n.grade = "#{a.totalScore} out of #{a.totalOutOf} (#{a.percentScore}%)"
               n.created_at = DateTime.parse(a.dateTaken)
               n.save
+              logger.error "Error importing BKSB for #{person_code}. #{$!}"
+            rescue
+              # Just in case something breaky happens
             end
+          end
         end
       end
     end
