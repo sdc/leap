@@ -6,18 +6,18 @@ class EntryReqMet < Eventable
 
   after_save do |erm|
     if erm.met?
-      erm.events.create(:transition => :complete)# if erm.events.creation.empty?
+      erm.events.find_or_create_by_transition(:complete) 
     else
-      erm.events.create(:transition => :drop)# if erm.events.drop.empty?
+      erm.events.find_or_create_by_transition(:drop) 
     end
   end
 
   def status
-    if met?
-      no_but.blank? ? :complete : :current
-    else
-      :incomplete
-    end
+    met? ? :complete : :incomplete
+  end
+
+  def title
+    ["Entry Req.", met ? "Met" : "Not Met"]
   end
 
 end
