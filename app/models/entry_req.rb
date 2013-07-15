@@ -7,11 +7,10 @@ class EntryReq < ActiveRecord::Base
 
   def self.import(file)
     CSV.foreach(file) do |row|
-      logger.info "A Row"
       if course=Course.find_by_year_and_code("13/14",row[0])
-        logger.info "Found course #{course.id}"
         ["Numeracy","Literacy","General","Specialist","Additional"].each_with_index do |r,i|
           next if row[i+1].blank?
+          next if course.entry_reqs.where(:category => r).first
           course.entry_reqs.create(:category => r,:body => row[i+1]) unless row[i+1] == "Please select"
         end
       end
