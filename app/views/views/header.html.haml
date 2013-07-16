@@ -10,12 +10,13 @@
   - if @view.controls.count == 1
     .row
       .event-header= render @view.controls.values.first
-  .row
-    %ul.nav.nav-pills{:style => "margin-bottom:10px;"}
+  - else
+    .row
+      %ul.nav.nav-pills{:style => "margin-bottom:10px;"}
+        - @view.controls.each do |k,v|
+          %li
+            %a{:href => "##{k.tr(" ","").underscore}", "data-toggle" => "tab"}= k
+    .tab-content.row
       - @view.controls.each do |k,v|
-        %li
-          %a{:href => "##{k.tr(" ","").underscore}", "data-toggle" => "tab"}= k
-  .tab-content.row
-    - @view.controls.each do |k,v|
-      .tab-pane{:id => k.tr(" ","").underscore}
-        .event-header= render v
+        .tab-pane{:id => k.tr(" ","").underscore}
+          .event-header= render v
