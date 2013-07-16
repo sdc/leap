@@ -86,13 +86,22 @@
     .controls
       =select_tag "current_simple_poll", options_from_collection_for_select(SimplePoll.all,:id,:question,Settings.current_simple_poll), :include_blank => "** NO POLL **"
 
+  %h2 Unusual
+  .control-group
+    %label.control-label Anonymised pictures
+    .controls
+      = select_tag "lorem_pictures", options_for_select(["abstract","animals","business","cats","city","food","nightlife",
+                                                         "fashion","people","nature","sports","technics","transport"],
+                                                        Settings.lorem_pictures), 
+                    :include_blank => "Normal pictures"
+
   %h1 Old Settings!
   .old-settings
     .alert
       I'll be working to move these into sections and to generally be easier to use over time :)
     - @settings2 = @settings - ["admin_users","advert_box_html","bksb_pwd","bksb_url","bksb_iis_username","bksb_iis_pwd",
                                  "qqoe_qual_type","qqoe_awarding_body","qqoe_subject","qqoe_grade","pathways",
-                                 "qqoe_select_type","current_simple_poll"]
+                                 "qqoe_select_type","current_simple_poll","lorem_pictures"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

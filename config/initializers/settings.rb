@@ -48,3 +48,6 @@ Settings.defaults[:qqoe_select_type] = "Select"
 
 # Pathways setup
 Settings.defaults[:pathways] = "English:Entry Level 3 Functional Skills,Level 1 Functional Skills,Level 2 Functional Skills,GCSE,Stretch & Challenge;Maths:Entry Level 3 Functional Skills,Level 1 Functional Skills,Level 2 Functional Skills,GCSE,Stretch & Challenge"
+
+# Silly Pictures 
+Settings.defaults[:lorem_pictures] = ""
