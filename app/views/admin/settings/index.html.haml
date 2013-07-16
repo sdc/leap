@@ -60,6 +60,10 @@
     in every time if you have to input loads of QOEs
 
   .control-group
+    %label.control-label Selection Type
+    .controls
+      = select_tag "qqoe_select_type", options_for_select(["Select","Button","None"], Settings.qqoe_select_type)
+  .control-group
     %label.control-label Qualification Types
     .controls
       = text_area_tag "qqoe_qual_type", Settings.qqoe_qual_type
@@ -81,7 +85,8 @@
     .alert
       I'll be working to move these into sections and to generally be easier to use over time :)
     - @settings2 = @settings - ["admin_users","advert_box_html","bksb_pwd","bksb_url","bksb_iis_username","bksb_iis_pwd",
-                                 "qqoe_qual_type","qqoe_awarding_body","qqoe_subject","qqoe_grade","pathways"]
+                                 "qqoe_qual_type","qqoe_awarding_body","qqoe_subject","qqoe_grade","pathways",
+                                 "qqoe_select_type"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

@@ -25,7 +25,7 @@ class Qualification < Eventable
   validates :title, :presence => true 
 
   def body
-    self[:title]
+    [self[:qual_type],self[:title]].reject{|x| x.blank?}.join ": "
   end
 
   def subtitle

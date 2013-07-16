@@ -1,41 +1,75 @@
+- qual_types = Settings.qqoe_qual_type.split ","
+- awarding_bodies = Settings.qqoe_awarding_body.split ","
+- subjects = Settings.qqoe_subject.split ","
+- grades = Settings.qqoe_grade.split ","
+- select = Settings.qqoe_select_type == "Select"
+- buttons = Settings.qqoe_select_type == "Button"
+
 %h2 Add a Qualification
 = create_event_form Qualification do |f|
-  .span1= image_tag "events/qualifications.png"
-  .span2.qqoe_quick_buttons
-    %h4 Qualification
-    = f.text_field :qual_type, :class => "span2", :placeholder => "e.g. GCSE"
-    - Settings.qqoe_qual_type.split(",").each do |btn|
-      = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
-  .span2.qqoe_quick_buttons
-    %h4 Awarding Body
-    = f.text_field :awarding_body, :class => "span2", :placeholder => "e.g. AQA"
-    - Settings.qqoe_awarding_body.split(",").each do |btn|
-      = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
-  .span2.qqoe_quick_buttons
-    %h4 Subject
-    = f.text_field :title, :class => "span2", :placeholder => "e.g. Maths"
-    - Settings.qqoe_subject.split(",").each do |btn|
-      = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
-  .span1.qqoe_quick_buttons
-    %h4 Grade
-    = f.text_field :grade, :class => "span1"
-    - Settings.qqoe_grade.split(",").each do |btn|
-      = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
-  .span1
-    %h4 Year
-    = f.date_select :created_at, {:order => [:year], :default => {:month => 6,:day => 1}}, {:class => "span1"}
-    - {"12/13" => "2013","11/12" => "2012","10/11" => "2011"}.each do |k,v|
-      = link_to_function k, "$(qualification_created_at_1i).val('#{v}');$(this).siblings('a').removeClass('btn-success');$(this).addClass('btn-success')", 
-                            :class => "btn btn-small", :style => "margin-top:3px;display:block"
-      
-  = add_event_button
+  .span10
+    .row
+    .span1= image_tag "events/qualifications.png"
+    .span2.qqoe_quick_buttons
+      %h4 Qualification
+      - if select
+        = f.select :qual_type, qual_types, {}, {:class => "span2"}
+      - else
+        = f.text_field :qual_type, :class => "span2", :placeholder => "e.g. GCSE"
+      - if buttons
+        - qual_types.each do |btn|
+          = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
+    .span2.qqoe_quick_buttons
+      %h4 Awarding Body
+      - if select
+        = f.select :awarding_body, awarding_bodies, {}, {:class => "span2"}
+      - else
+        = f.text_field :awarding_body, :class => "span2", :placeholder => "e.g. AQA"
+      - if buttons
+        - awarding_bodies.each do |btn|
+          = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
+    .span2.qqoe_quick_buttons
+      %h4 Subject
+      - if select
+        = f.select :title, subjects, {}, {:class => "span2"}
+      - else
+        = f.text_field :title, :class => "span2", :placeholder => "e.g. Maths"
+      - if buttons
+        - subjects.each do |btn|
+          = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
+    .span1.qqoe_quick_buttons
+      %h4 Grade
+      - if select
+        = f.select :grade, grades, {}, {:class => "span1"}
+      - else 
+        = f.text_field :grade, :class => "span1"
+      - if buttons
+        - grades.each do |btn|
+          = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
+    .span1
+      %h4 Year
+      = f.date_select :created_at, {:order => [:year], :default => {:month => 6,:day => 1}}, {:class => "span1"}
+      - if buttons
+        - {"12/13" => "2013","11/12" => "2012","10/11" => "2011"}.each do |k,v|
+          = link_to_function k, "$(qualification_created_at_1i).val('#{v}');$(this).siblings('a').removeClass('btn-success');$(this).addClass('btn-success')", 
+                                :class => "btn btn-small", :style => "margin-top:3px;display:block"
+      = f.hidden_field :predicted
+    .row
+      - if Person.user.staff?
+        .span2.offset6{:style => "margin-top:10px"}
+          = button_to_function "Add Predicted Grade", "$('#qualification_predicted').val(1);$('form#new_qualification').submit()", :class => "btn btn-warning"
+        .span2{:style => "margin-top:10px"}
+          = button_to_function "Add Result", "$('#qualification_predicted').val(0);$('form#new_qualification').submit()", :class => "btn btn-primary"
+      - else
+        = add_event_button
 
-:coffeescript
-  $('.qqoe_quick_buttons a').live 'click', (e) ->
-    $(this).prevAll('input').val($(this).html())
-    $(this).siblings('a').removeClass('btn-success')
-    $(this).addClass('btn-success')
-  $('.qqoe_quick_buttons input').live 'keyup', (e) ->
-    $(this).siblings("a:contains(" + $(this).val() + ")").addClass("btn-success")
-    $(this).siblings("a:not(:contains(" + $(this).val() + "))").removeClass("btn-success")
-    false
+- if buttons
+  :coffeescript
+    $('.qqoe_quick_buttons a').live 'click', (e) ->
+      $(this).prevAll('input').val($(this).html())
+      $(this).siblings('a').removeClass('btn-success')
+      $(this).addClass('btn-success')
+    $('.qqoe_quick_buttons input').live 'keyup', (e) ->
+      $(this).siblings("a:contains(" + $(this).val() + ")").addClass("btn-success")
+      $(this).siblings("a:not(:contains(" + $(this).val() + "))").removeClass("btn-success")
+      false

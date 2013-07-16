@@ -1,4 +1,5 @@
 %h4= qualification.body
+.ab= qualification.awarding_body
 - if qualification.awarding_body == "BKSB" and qualification.mis_id
   - result_page = /Diagnostic/.match(qualification.body) ? "DiagReport" : "IAReport"
   = link_to "http://#{Settings.bksb_url}/bksb_portal/Reports/#{result_page}.aspx?session=#{qualification.mis_id}", :class => "btn btn-info btn-mini", :target => "_blank" do
