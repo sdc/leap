@@ -80,13 +80,19 @@
     .controls
       = text_area_tag "qqoe_grade", Settings.qqoe_grade
 
+  %h2 Simple Poll
+  .control-group
+    %label.control-label Current Simple Poll
+    .controls
+      =select_tag "current_simple_poll", options_from_collection_for_select(SimplePoll.all,:id,:question,Settings.current_simple_poll), :include_blank => "** NO POLL **"
+
   %h1 Old Settings!
   .old-settings
     .alert
       I'll be working to move these into sections and to generally be easier to use over time :)
     - @settings2 = @settings - ["admin_users","advert_box_html","bksb_pwd","bksb_url","bksb_iis_username","bksb_iis_pwd",
                                  "qqoe_qual_type","qqoe_awarding_body","qqoe_subject","qqoe_grade","pathways",
-                                 "qqoe_select_type"]
+                                 "qqoe_select_type","current_simple_poll"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize
