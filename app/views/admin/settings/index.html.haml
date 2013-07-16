@@ -3,7 +3,6 @@
     = render "layouts/admin_menu"
     %span.divider /
   %li Settings
-%h1 Settings
 
 = form_for :settings, :html => {:class => "form-horizontal", :id => "admin-settings-form"} do
 
@@ -37,27 +36,46 @@
   .control-group
     %label.control-label BKSB API Password
     .controls
-      = password_field_tag "bksb_pwd", Settings.bksb_pwd
+      .input-prepend<
+        %span.add-on
+          %i.icon-lock
+        = password_field_tag "bksb_pwd", Settings.bksb_pwd
   .control-group
     %label.control-label BKSB IIS Username
     .controls
-      = text_field_tag "bksb_iis_username", Settings.bksb_iis_username
+      .input-prepend<
+        %span.add-on
+          %i.icon-user
+        = text_field_tag "bksb_iis_username", Settings.bksb_iis_username
   .control-group
     %label.control-label BKSB IIS Password
     .controls
-      = password_field_tag "bksb_iis_pwd", Settings.bksb_iis_pwd
+      .input-prepend<
+        %span.add-on
+          %i.icon-lock
+        = password_field_tag "bksb_iis_pwd", Settings.bksb_iis_pwd
 
   %h2 Pathways
   .control-group
     %label.control-label Pathway choices
     .controls
-      = text_field_tag "pathways", Settings.pathways
+      = text_area_tag "pathways", Settings.pathways
 
   %h2 Quick Quals on Entry Input
   .well
-    These are comma separated lists for each of the fields in the Quick Quals on Entry input control. They become buttons
-    below each field which, when pressed, will load that text into the input box. This is quicker than typing it all
-    in every time if you have to input loads of QOEs
+    %p
+      These are comma separated lists for each of the fields in the Quick Quals on Entry input control. There's three ways of using it, you
+      can choose which with the "Selection Type" setting.
+      %dl
+        %dt Buttons
+        %dd 
+          The lists become a column of buttons below each field which, when pressed, will load that text into the input box. 
+          This is quick for bulk input and also still allows arbitrary entries.
+        %dt Select
+        %dd Standard drop-down selections. Does not allow arbitrary input.
+        %dt None
+        %dd Ignores the lists and just shows text boxes.
+      
 
   .control-group
     %label.control-label Selection Type
@@ -81,12 +99,17 @@
       = text_area_tag "qqoe_grade", Settings.qqoe_grade
 
   %h2 Simple Poll
+  .well
+    Select the poll to be displayed on users' home pages. If blank, the HTML from the "Home Page Advert Box" setting will be displayed.
   .control-group
     %label.control-label Current Simple Poll
     .controls
-      =select_tag "current_simple_poll", options_from_collection_for_select(SimplePoll.all,:id,:question,Settings.current_simple_poll), :include_blank => "** NO POLL **"
+      = select_tag "current_simple_poll", options_from_collection_for_select(SimplePoll.all,:id,:question,Settings.current_simple_poll), 
+                   :include_blank => "** NO POLL **"
 
   %h2 Unusual
+  .well
+    Some options you may not want to use. Some of them do have uses other than my own amusement. These uses may not be obvious.
   .control-group
     %label.control-label Anonymised pictures
     .controls
@@ -94,6 +117,8 @@
                                                          "fashion","people","nature","sports","technics","transport"],
                                                         Settings.lorem_pictures), 
                     :include_blank => "Normal pictures"
+      .help-text
+        Leave blank to show users' photos or select a category to show random pictures from that category. I suggest "cats."
 
   %h1 Old Settings!
   .old-settings
