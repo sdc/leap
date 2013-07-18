@@ -51,28 +51,9 @@ $(document).ready ->
     nextText: "<i class='icon-arrow-right icon-white'/>"
 
 
-  # Don't show the help button if there is no help on this page.
-  if $('.online-help').length == 0
-    $('#help_button').hide()
-
-  # Build the online help by concatinating any info wrapped in a div with class "online-help"
-  $('.online-help').appendTo($('#help'))
-
-  # Open the help panel when you click the help button - make it full window height
-  $('#help_button').click ->
-    $('.online-help').appendTo($('#help')).show()
-    $('#help').height($(window).height())
-    $('#help').toggle('slide', {direction:'right'})
-    $('#help_button').toggleClass('hover')
-
-  # Keep help panel at full window height on window resize
-  $(window).resize ->
-    $('#help').height($(window).height())
-
   # Load Delayed Blocks
   $('[load_block]').each (i,block) ->
     $(block).load $(block).attr('load_block'), ->
-      $('#help_button').show() unless $('.online-help').length == 0
       $('.nav-pills a:first').tab('show')
       setupDatePickers $(block)
       $('.event-header>h2').append('<span class="pull-right span1"><i class="icon icon-eye-open"/></span>')

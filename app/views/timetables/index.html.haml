@@ -23,28 +23,3 @@
 
 - if @events
   #events= render @events
-
-.online_help{:style => "display:none"}
-  %h1 Timetables
-  %p
-    Weekly timetables are taken live from the MIS system and should always be
-    up-to-date.
-    %b
-      If this data seems incorrect contact your LIS department. It is not 
-      under the control of Leap.
-  %p   
-    The register marks are shown as the big characters in the bottom-right
-    of each session. The colours of sessions are set by how the MIS system
-    considers the marks from EMA purposes and have the following meaning:
-    %dl
-      %dt Green
-      %dd Present (for EMA from EBS)
-      %dt Amber
-      %dd Authorised Sickness (for EMA from EBS)
-      %dt Red
-      %dd Absent (for EMA from EBS)
-      %dt Blue
-      %dd Unmarked (or completed)
-  %p
-    Any attendance percentages or absence reasons collected during this week 
-    will be displayed below the timetable.

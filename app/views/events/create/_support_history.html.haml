@@ -4,9 +4,3 @@
   .span5= f.text_area :body
   .span3= select_tag "support_history[category]", options_for_select(Settings.support_history_categories.split(/,/))
   = add_event_button
-
-.online-help
-  %h1 Support History
-  %p
-    %b Note:
-    Support History should usually only be added by learning support staff.
