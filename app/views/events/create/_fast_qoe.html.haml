@@ -14,8 +14,7 @@
       %h4 Qualification
       - if select
         = f.select :qual_type, qual_types, {}, {:class => "span2"}
-      - else
-        = f.text_field :qual_type, :class => "span2", :placeholder => "e.g. GCSE"
+      = f.text_field :qual_type, :class => "span2", :placeholder => "e.g. GCSE"#, :style => "display:#{select ? "none" : "block"}"
       - if buttons
         - qual_types.each do |btn|
           = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
@@ -23,8 +22,7 @@
       %h4 Awarding Body
       - if select
         = f.select :awarding_body, awarding_bodies, {}, {:class => "span2"}
-      - else
-        = f.text_field :awarding_body, :class => "span2", :placeholder => "e.g. AQA"
+      = f.text_field :awarding_body, :class => "span2", :placeholder => "e.g. AQA"
       - if buttons
         - awarding_bodies.each do |btn|
           = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
@@ -32,8 +30,7 @@
       %h4 Subject
       - if select
         = f.select :title, subjects, {}, {:class => "span2"}
-      - else
-        = f.text_field :title, :class => "span2", :placeholder => "e.g. Maths"
+      = f.text_field :title, :class => "span2", :placeholder => "e.g. Maths"
       - if buttons
         - subjects.each do |btn|
           = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
@@ -41,8 +38,7 @@
       %h4 Grade
       - if select
         = f.select :grade, grades, {}, {:class => "span1"}
-      - else 
-        = f.text_field :grade, :class => "span1"
+      = f.text_field :grade, :class => "span1"
       - if buttons
         - grades.each do |btn|
           = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
@@ -73,3 +69,11 @@
       $(this).siblings("a:contains(" + $(this).val() + ")").addClass("btn-success")
       $(this).siblings("a:not(:contains(" + $(this).val() + "))").removeClass("btn-success")
       false
+- if select
+  :coffeescript
+    $('.qqoe_quick_buttons input').attr("disabled","disabled").hide()
+    $('.qqoe_quick_buttons select').on "change", (e) ->
+      if $(this).val() == "OTHER"
+        $(this).next('input').show().removeAttr('disabled') 
+        $(this).hide().attr("disabled","disabled")
+        
