@@ -23,6 +23,8 @@ class Qualification < Eventable
   before_save  {|q| q.predicted=true if (Person.user and !Person.user.staff?)}
 
   validates :title, :presence => true 
+  
+  attr_accessible :awarding_body, :grade, :predicted, :qual_type, :seen, :title
 
   def body
     [self[:qual_type],self[:title]].reject{|x| x.blank?}.join ": "
@@ -33,11 +35,15 @@ class Qualification < Eventable
   end
 
   def status
-    predicted ? :current : :complete
+    predicted ? :not_started: (seen ? :complete : :current)
   end
 
   def title
-    predicted ? ["Predicted","Grade"] : "Qualification"
+    predicted ? ["Predicted","Grade"] : (seen ? "Qualification" : ["Qualification","(not seen)"])
+  end
+
+  def seen
+    self[:seen] or mis_id
   end
 
 end
