@@ -25,7 +25,7 @@ class ContactLog < Eventable
   def title; "Contact Log: #{created_by.name}" end
 
   def icon_url
-    "/people/#{created_by.mis_id}.jpg"
+    created_by.photo_uri
   end
 
 end
