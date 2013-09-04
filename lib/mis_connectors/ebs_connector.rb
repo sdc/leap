@@ -35,7 +35,7 @@ module MisPerson
       Ebs::Person.find_each(:include => :people_units) do |ep|
         begin
 	  skipcount +=1
-          next unless ep.people_units.detect{|pc| pc.calocc_code == yr}
+          next unless ep.people_units.detect{|pc| pc.calocc_code == yr} if yr
           puts "#{count}:\tskip #{skipcount}\timport #{import(ep).name}"
           count += 1
 	  skipcount = 0
