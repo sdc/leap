@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'csv'
+
 module MisPerson
 
   def self.included receiver
@@ -90,6 +92,44 @@ module MisPerson
   def mis_search_for(query)
     Ebs::Person.search_for(query).order("surname,forename").limit(50).map{|p| import(p,:save => false, :people=> false)}
   end 
+
+  def csv_import(files)
+    old_logger_level, logger.level = logger.level, Logger::ERROR if logger
+    files = [files] if files.kind_of? String
+    files.each do |file|
+      tname = File.basename(file, ".csv").downcase
+      model = case tname
+	      when "student_address" then "Address"
+	      else tname.classify
+              end
+      model = "Ebs::#{model}".constantize
+      print "#{tname}: "
+      unless File.file? file
+        print "File not found! Skipping ...\n"
+	next
+      end
+      if Ebs::Model.connection.table_exists? tname
+        print "Table exists\n"
+      else 
+	print "Creating table\n"
+	csv = CSV.open file
+        cols = csv.shift.map{|col| col.downcase}
+	Ebs::Model.connection.create_table tname, {:id => false} do |t|
+          cols.each {|h| t.send(h == "id" ? "integer" : "string",h)}
+        end
+	csv.each do |row|
+          hsh = Hash[cols.zip row]
+          a = model.new(hsh)
+          a.id = hsh[model.primary_key]
+	  a.save
+	  puts "Added #{a.class.name} ##{a.id}"
+        end
+      end
+    end
+  ensure
+    logger.level = old_logger_level if logger
+  end
+
   end
 
   # Instance methods
