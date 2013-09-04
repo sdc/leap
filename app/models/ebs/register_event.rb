@@ -16,6 +16,7 @@
 
 class Ebs::RegisterEvent < Ebs::Model
 
+  set_primary_key :id
   has_many :register_event_details_slots
 
 end

@@ -66,14 +66,14 @@ module MisPerson
                              ep.address.address_line_3,ep.address.address_line_4].reject{|a| a.blank?} : [],
           :town          => ep.address ? ep.address.town : "",
           :postcode      => ep.address ? [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" ") : "",
-          :photo         => ep.blobs.photos.first.try(:binary_object),
+          :photo         => Ebs::Blob.table_exists? && ep.blobs.photos.first.try(:binary_object),
           :mobile_number => ep.mobile_phone_number,
           :next_of_kin   => [ep.fes_next_of_kin, ep.fes_nok_contact_no].join(" "),
           :date_of_birth => ep.date_of_birth,
           :uln           => ep.unique_learn_no,
           :mis_id        => ep.person_code,
           :staff         => ep.fes_staff_code?,
-          :username      => (ep.network_userid or mis_id),
+          :username      => (ep.network_userid or ep.college_login or ep.id),
           :personal_email=> ep.personal_email,
           :home_phone    => ep.address && ep.address.telephone,
           :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil
@@ -99,7 +99,7 @@ module MisPerson
     files.each do |file|
       tname = File.basename(file, ".csv").downcase
       model = case tname
-	      when "student_address" then "Address"
+	      when "student_addresses" then "Address"
 	      else tname.classify
               end
       model = "Ebs::#{model}".constantize
@@ -112,13 +112,13 @@ module MisPerson
         print "Table exists\n"
       else 
 	print "Creating table\n"
-	csv = CSV.open file
-        cols = csv.shift.map{|col| col.downcase}
+	csv = CSV.open file, :encoding => "ISO-8859-1"
+        cols = csv.shift.map{|col| col.try(:downcase)}
 	Ebs::Model.connection.create_table tname, {:id => false} do |t|
-          cols.each {|h| t.send(h == "id" ? "integer" : "string",h)}
+          cols.each {|h| t.send(h == "id" ? "integer" : "string",h, {:limit => 65535})}
         end
 	csv.each do |row|
-          hsh = Hash[cols.zip row]
+          hsh = Hash[cols.zip row.map{|x| x.try(:encode)}]
           a = model.new(hsh)
           a.id = hsh[model.primary_key]
 	  a.save

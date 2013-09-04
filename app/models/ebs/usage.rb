@@ -16,4 +16,6 @@
 
 class Ebs::Usage < Ebs::Model
 
+  set_primary_key :id
+
 end

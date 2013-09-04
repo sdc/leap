@@ -16,6 +16,8 @@
 
 class Ebs::Absence < Ebs::Model
 
+  set_primary_key :id
+
   set_table_name "sdc_ilp_absences"
 
   belongs_to :person

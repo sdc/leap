@@ -16,6 +16,7 @@
 
 class Ebs::Room < Ebs::Model
 
+  set_primary_key :id
   has_many "register_event_details",
            :conditions  => "object_type = 'R'",
            :foreign_key => "object_id"

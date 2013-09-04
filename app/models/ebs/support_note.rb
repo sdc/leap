@@ -17,6 +17,7 @@
 class Ebs::SupportNote < Ebs::Model
 
   set_table_name "sdc_ilp_support_notes"
+  set_primary_key :id
 
   belongs_to :person
 

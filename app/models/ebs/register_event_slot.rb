@@ -17,6 +17,7 @@
 class Ebs::RegisterEventSlot < Ebs::Model
 
   set_table_name "register_event_slots"
+  set_primary_key :id
 
   belongs_to :register_event
   has_many   :register_event_details_slots

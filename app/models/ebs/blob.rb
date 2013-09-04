@@ -16,6 +16,8 @@
 
 class Ebs::Blob < Ebs::Model
 
+  set_primary_key :id
+
   belongs_to :person
 
   scope :photos, where(:blob_name => "PERSON_PICTURE")
