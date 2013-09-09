@@ -27,7 +27,7 @@ class ReviewLine < Eventable
   end
 
   def title
-    window or "Initial Review"
+    window or "Individual Review"
   end
 
   def extra_panes
