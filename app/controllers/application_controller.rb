@@ -90,7 +90,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_views
-    @views = View.order("position").in_list.for_user
+    @views = View.top_level.order("position").in_list.for_user
   end
 
   def admin_page

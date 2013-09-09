@@ -1,3 +1,7 @@
 %li.row[view]
   = link_to((send("#{@topic.class.name.underscore}_view_url",@topic,view) + (params[:all] ? "?all=true" : "")), :class => ["sidebar_button", current_page?(person_view_url(@topic,view)) ? "current" : nil]) do
     = image_tag(view.icon_url, :size => "30x30", :class=>"pull-left") + view.label
+  - if @subviews and [@view,@view.parent].include? view
+    %ul.subviews
+      - @subviews.each do |subview|
+        %li= link_to(subview.label,(send("#{@topic.class.name.underscore}_view_url",@topic,subview) + (params[:all] ? "?all=true" : "")), :class => ["sidebar_sub_button", subview == @view ? "current" : nil])
