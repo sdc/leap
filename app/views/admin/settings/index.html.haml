@@ -100,6 +100,49 @@
     .controls
       = text_area_tag "qqoe_grade", Settings.qqoe_grade
 
+  %h2 Reviews
+
+  %h3 Score Titles
+  .well Select the labels used for the four scoring categories on Reviews
+  .control-group
+    %label.control-label Quality
+    .controls
+      = text_field_tag "review_cat_quality", Settings.review_cat_quality
+  .control-group
+    %label.control-label Punctuality
+    .controls
+      = text_field_tag "review_cat_punctuality", Settings.review_cat_punctuality
+  .control-group
+    %label.control-label Attitude
+    .controls
+      = text_field_tag "review_cat_attitude", Settings.review_cat_attitude
+  .control-group
+    %label.control-label Completion
+    .controls
+      = text_field_tag "review_cat_completion", Settings.review_cat_completion
+
+  %h4 Grades
+  .control-group
+    %label.control-label Review Grades
+    .controls
+      = text_field_tag "review_grades", Settings.review_grades
+      .help-text Comma separated list of the selection of grades you can choose for reviews. May break old grades horrifically.
+
+  %h3 Windows
+  .control-group
+    %label.control-label Open Review Windows
+    .controls
+      = text_field_tag "review_windows", Settings.review_windows
+      .help-text Comma-seperated list of windows allowed to be selected from the dropdown when creating reviews
+  .control-group
+    %label.control-label Current Review Window
+    .controls
+      = select_tag "current_review_window", options_for_select(Settings.review_windows.split(","),Settings.current_review_window), :include_blank => "No current window"
+      .help-text 
+        Which of the review-windows to show on the group print on course pages. You'll have to save changes to the
+        list of windows before you can select one here.
+
+
   %h2 Simple Poll
   .well
     Select the poll to be displayed on users' home pages. If blank, the HTML from the "Home Page Advert Box" setting will be displayed.
@@ -128,7 +171,9 @@
       I'll be working to move these into sections and to generally be easier to use over time :)
     - @settings2 = @settings - ["admin_users","advert_box_html","bksb_pwd","bksb_url","bksb_iis_username","bksb_iis_pwd",
                                  "qqoe_qual_type","qqoe_awarding_body","qqoe_subject","qqoe_grade","pathways",
-                                 "qqoe_select_type","current_simple_poll","lorem_pictures"]
+                                 "qqoe_select_type","current_simple_poll","lorem_pictures","review_cat_quality",
+                                 "review_cat_punctuality","review_cat_attitude","review_cat_completion","review_windows",
+                                 "current_review_window","review_grades"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

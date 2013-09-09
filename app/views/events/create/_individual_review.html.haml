@@ -1,0 +1,18 @@
+- grades  = Settings.review_grades.split(",")
+- options = [grades,(0..(grades.count - 1)).to_a].transpose
+%h2 Add an Individual Reivew
+= create_event_form ReviewLine do |f|
+  .span9
+    .row
+      .span1= image_tag "events/reviews.png"
+      .span4= f.text_area :body, :style => "height:100px"
+      .span4
+        .span2= Settings.review_cat_quality
+        = f.select :quality, options, {}, {:class => "span2"}
+        .span2= Settings.review_cat_punctuality
+        = f.select :punctuality, options, {}, {:class => "span2"}
+        .span2= Settings.review_cat_attitude
+        = f.select :attitude, options, {}, {:class => "span2"}
+        .span2= Settings.review_cat_completion
+        = f.select :completion, options, {}, {:class => "span2"}
+  = add_event_button
