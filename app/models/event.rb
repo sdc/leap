@@ -94,16 +94,12 @@ class Event < ActiveRecord::Base
     event_date
   end
 
-  def timetable_end
-    event_date + 1.hour
-  end
-
   def timetable_margin
    ((timetable_start.getutc - timetable_start.getutc.change(:hour => 8,:minute => 0, :sec => 0, :usec => 0)) / 50).floor
   end
 
   def timetable_height
-    ((timetable_end - timetable_start) /56).floor
+    100
   end
 
 end
