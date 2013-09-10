@@ -19,7 +19,7 @@
     - (8..20).to_a.each do |t|
       %h3= "#{t.to_s}.00"
   - @date.upto(@date.end_of_week - 1.day) do |day|
-    = render :partial => "day", :object => day, :locals => {:slots => @registers.select {|r| r.start > day and r.start < day.tomorrow.midnight }}
+    = render :partial => "day", :object => day, :locals => {:slots => (@registers + @events).select {|r| r.timetable_start > day and r.timetable_start < day.tomorrow.midnight }}
 
-- if @events
+-# if @events
   #events= render @events

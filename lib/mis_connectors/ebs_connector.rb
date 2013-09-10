@@ -146,14 +146,14 @@ module MisPerson
     end
     reds.map do |s| 
       TimetableEvent.create(
-        :mis_id       => s.register_event_id,
-        :title        => s.description.split(/\[/).first,
-        :start        => s.actual_start_date || s.planned_start_date,
-        :end          => s.actual_end_date   || s.planned_end_date,
-        :mark         => s.usage_code,
-        :status       => s.status,
-        :rooms        => s.rooms.map{|r| r.room_code},
-        :teachers     => s.teachers.map{|t| Person.get(t)}
+        :mis_id          => s.register_event_id,
+        :title           => s.description.split(/\[/).first,
+        :timetable_start => s.actual_start_date || s.planned_start_date,
+        :timetable_end   => s.actual_end_date   || s.planned_end_date,
+        :mark            => s.usage_code,
+        :status          => s.status,
+        :rooms           => s.rooms.map{|r| r.room_code},
+        :teachers        => s.teachers.map{|t| Person.get(t)}
       )
     end
   end
