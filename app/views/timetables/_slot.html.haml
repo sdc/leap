@@ -1,7 +1,13 @@
 .timetable-event{:style => "top:#{slot.timetable_margin + 93 + (@user.staff? ? 40 : 0)}px;height:#{slot.timetable_height}px", 
                  :class => slot.status}
   %h5= slot.title
-  %div= "#{slot.start.getutc.strftime('%H.%M')} - #{slot.end.getutc.strftime('%H.%M')}"
-  %div= slot.rooms.join ", "
-  .teachers= slot.teachers.map{|t| t.name}.join ", "
-  .mark.status-fgp{:class => slot.status, :style => "background:transparent"}= slot.mark
+  %div
+    = slot.timetable_start.getutc.strftime('%H.%M')
+    - if slot.respond_to? :timetable_end 
+      = "- #{slot.timetable_end.getutc.strftime('%H.%M')}"
+  - if slot.kind_of? TimetableEvent
+    %div= slot.rooms.join ", "
+    .teachers= slot.teachers.map{|t| t.name}.join ", "
+    .mark.status-fgp{:class => slot.status, :style => "background:transparent"}= slot.mark
+  - elsif slot.kind_of? Event
+    .body= slot.body

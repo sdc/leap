@@ -90,4 +90,16 @@ class Event < ActiveRecord::Base
     ret += eventable.created_by_text
   end
 
+  def timetable_start
+    event_date
+  end
+
+  def timetable_margin
+   ((timetable_start.getutc - timetable_start.getutc.change(:hour => 8,:minute => 0, :sec => 0, :usec => 0)) / 50).floor
+  end
+
+  def timetable_height
+    100
+  end
+
 end

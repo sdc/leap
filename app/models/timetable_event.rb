@@ -16,14 +16,14 @@
 
 class TimetableEvent < SuperModel::Base
 
-  attributes :title, :start, :end, :rooms, :teachers, :mark, :status
+  attributes :title, :timetable_start, :timetable_end, :rooms, :teachers, :mark, :status
 
   def timetable_margin
-   ((start.getutc - start.getutc.change(:hour => 8,:minute => 0, :sec => 0, :usec => 0)) / 50).floor
+   ((timetable_start.getutc - timetable_start.getutc.change(:hour => 8,:minute => 0, :sec => 0, :usec => 0)) / 50).floor
   end
 
   def timetable_height
-    ((self.end - start) /56).floor
+    ((timetable_end - timetable_start) /56).floor
   end
 
 end
