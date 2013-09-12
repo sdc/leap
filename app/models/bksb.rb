@@ -30,7 +30,7 @@ class BKSB < ActiveResource::Base
             begin
               n = person.qualifications.find_or_initialize_by_mis_id_and_awarding_body(a.session_id,"BKSB")
               n.title = "Initial Assessment: #{subject}"
-              n.grade = "Level #{a.result.last}"
+              n.grade = "#{"Entry " if a.result.match(/Entry/)}Level #{a.result.last}"
               n.created_at = DateTime.parse(a.DateCompleted)
               n.save
             rescue

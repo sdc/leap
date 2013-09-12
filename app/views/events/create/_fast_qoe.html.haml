@@ -35,11 +35,11 @@
         - if buttons
           - awarding_bodies.each do |btn|
             = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
-      .span1.qqoe_quick_buttons
+      .span2.qqoe_quick_buttons
         %h4 Grade
         - if select
-          = f.select :grade, grades, {}, {:class => "span1"}
-        = f.text_field :grade, :class => "span1"
+          = f.select :grade, grades, {}, {:class => "span2"}
+        = f.text_field :grade, :class => "span2"
         - if buttons
           - grades.each do |btn|
             = link_to btn, "#", :class => "btn btn-small", :style => "display: block; margin-top:3px"
