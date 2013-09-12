@@ -2,7 +2,7 @@
   %h2 
     Course Details
     .pull-right{:style => "margin-right:20px"}
-      -#= link_to add_course_url(@course), :method => :post do
+      = link_to add_course_url(@topic), :method => :post do
         .btn.btn-info
           - if @user.my_courses.try("include?",@topic.id)
             %i.icon-white.icon-remove-sign

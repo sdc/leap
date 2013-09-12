@@ -33,6 +33,10 @@ GEM
       activesupport (= 3.2.11)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
+    activerecord-mysql-adapter (0.0.1)
+      activerecord (>= 3.2.9)
+      activesupport (>= 3.2.9)
+      mysql (>= 2.9.0)
     activerecord-oracle_enhanced-adapter (1.4.1)
     activeresource (3.2.11)
       activemodel (= 3.2.11)
@@ -78,6 +82,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.19)
     multi_json (1.5.0)
+    mysql (2.9.1)
     mysql2 (0.3.11)
     nokogiri (1.5.5)
     open4 (1.3.0)
@@ -112,7 +117,7 @@ GEM
     rake (10.0.3)
     rdoc (3.12)
       json (~> 1.4)
-    ruby-oci8 (2.1.5)
+    ruby-oci8 (2.1.0)
     scoped_search (2.4.0)
       activerecord (>= 2.1.0)
     sprockets (2.2.2)
@@ -140,6 +145,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-mysql-adapter
   activerecord-oracle_enhanced-adapter
   coffee-filter
   coffee-rails (= 3.2.1)

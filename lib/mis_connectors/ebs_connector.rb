@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'csv'
+
 module MisPerson
 
   def self.included receiver
@@ -33,7 +35,7 @@ module MisPerson
       Ebs::Person.find_each(:include => :people_units) do |ep|
         begin
 	  skipcount +=1
-          next unless ep.people_units.detect{|pc| pc.calocc_code == yr}
+          next unless ep.people_units.detect{|pc| pc.calocc_code == yr} if yr
           puts "#{count}:\tskip #{skipcount}\timport #{import(ep).name}"
           count += 1
 	  skipcount = 0
@@ -64,14 +66,14 @@ module MisPerson
                              ep.address.address_line_3,ep.address.address_line_4].reject{|a| a.blank?} : [],
           :town          => ep.address ? ep.address.town : "",
           :postcode      => ep.address ? [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" ") : "",
-          :photo         => ep.blobs.photos.first.try(:binary_object),
+          :photo         => Ebs::Blob.table_exists? && ep.blobs.photos.first.try(:binary_object),
           :mobile_number => ep.mobile_phone_number,
           :next_of_kin   => [ep.fes_next_of_kin, ep.fes_nok_contact_no].join(" "),
           :date_of_birth => ep.date_of_birth,
           :uln           => ep.unique_learn_no,
           :mis_id        => ep.person_code,
           :staff         => ep.fes_staff_code?,
-          :username      => (ep.network_userid or mis_id),
+          :username      => (ep.network_userid or ep.college_login or ep.id),
           :personal_email=> ep.personal_email,
           :home_phone    => ep.address && ep.address.telephone,
           :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil
@@ -90,6 +92,44 @@ module MisPerson
   def mis_search_for(query)
     Ebs::Person.search_for(query).order("surname,forename").limit(50).map{|p| import(p,:save => false, :people=> false)}
   end 
+
+  def csv_import(files)
+    old_logger_level, logger.level = logger.level, Logger::ERROR if logger
+    files = [files] if files.kind_of? String
+    files.each do |file|
+      tname = File.basename(file, ".csv").downcase
+      model = case tname
+	      when "student_addresses" then "Address"
+	      else tname.classify
+              end
+      model = "Ebs::#{model}".constantize
+      print "#{tname}: "
+      unless File.file? file
+        print "File not found! Skipping ...\n"
+	next
+      end
+      if Ebs::Model.connection.table_exists? tname
+        print "Table exists\n"
+      else 
+	print "Creating table\n"
+	csv = CSV.open file, :encoding => "ISO-8859-1"
+        cols = csv.shift.map{|col| col.try(:downcase)}
+	Ebs::Model.connection.create_table tname, {:id => false} do |t|
+          cols.each {|h| t.send(h == "id" ? "integer" : "string",h, {:limit => 65535})}
+        end
+	csv.each do |row|
+          hsh = Hash[cols.zip row.map{|x| x.try(:encode)}]
+          a = model.new(hsh)
+          a.id = hsh[model.primary_key]
+	  a.save
+	  puts "Added #{a.class.name} ##{a.id}"
+        end
+      end
+    end
+  ensure
+    logger.level = old_logger_level if logger
+  end
+
   end
 
   # Instance methods

@@ -17,6 +17,7 @@
 class Ebs::SupportRequest < Ebs::Model
 
   set_table_name "sdc_ilp_support_requests"
+  set_primary_key :id
 
   belongs_to :person
   serialize :register_events

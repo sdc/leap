@@ -121,7 +121,7 @@ class Person < ActiveRecord::Base
         "noone.png"
       end
     else
-      "http://lorempixel.com/130/130/#{Settings.lorem_pictures}"
+      "http://lorempixel.com/130/130/#{Settings.lorem_pictures}/#{id.to_s.last}"
     end
   end
 

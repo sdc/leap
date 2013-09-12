@@ -23,6 +23,7 @@ class ViewsController < ApplicationController
 
   def show
     if @view = View.for_user.find_by_name(params[:id])
+      @subviews = @view.parent_id ? @view.parent.try(:children) : @view.children
       @events =
         @scope.where("event_date < ?", @date).
         where(:transition => @view.transitions, :eventable_type => @view.events).

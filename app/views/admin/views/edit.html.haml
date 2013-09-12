@@ -49,6 +49,11 @@
       = f.check_box :in_list
       .help-block Check to show a link to the view in the sidebar list
   .control-group
+    %label.control-label Show as sub-view
+    .controls
+      = f.select :parent_id, View.where(:parent_id => nil).map{|v| [v.long_name,v.id]}, :include_blank => true
+      .help-block Select a view to show this link as a subview. Leave blank to show it on the top level list.
+  .control-group
     %label.control-label Controls
     .controls
       = text_area_tag :controls, @view.controls.try(:map) {|c| c.first + ':' + c.last}.try(:join,";")

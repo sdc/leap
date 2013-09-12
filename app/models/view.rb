@@ -26,11 +26,19 @@ class View < ActiveRecord::Base
   validates :affiliations, :presence => true
   validates :name, :presence => true
 
+  belongs_to :parent, :class_name => "View"
+  has_many   :children, :class_name => "View", :foreign_key => "parent_id"
+
   scope :for_user,    lambda { where('affiliations like ?', "%#{Person.affiliation}%")}
   scope :in_list, where(:in_list => true)
+  scope :top_level, where("parent_id is null")
 
   def to_param
     name
+  end
+
+  def long_name
+    "#{label}: #{affiliations.join ", "}"
   end
 
 end
