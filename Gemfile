@@ -8,6 +8,8 @@ gem 'jquery-rails'
 gem 'ruby-oci8', "2.1.0"
 gem 'activerecord-oracle_enhanced-adapter'
 gem 'activerecord-mysql-adapter'
+gem 'tiny_tds', "0.5.1"
+gem 'activerecord-sqlserver-adapter'
 gem 'symbolize', :require => "symbolize/active_record"
 gem 'supermodel', :git => "git://github.com/felafelwaffle/supermodel.git"
 gem 'scoped_search'
