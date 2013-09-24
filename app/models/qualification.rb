@@ -24,7 +24,16 @@ class Qualification < Eventable
 
   validates :title, :presence => true 
   
-  attr_accessible :awarding_body, :grade, :predicted, :qual_type, :seen, :title
+  attr_accessible :awarding_body, :grade, :predicted, :qual_type, :seen, :title, :created_at
+
+  belongs_to :person
+
+  QOE_LAT = {"GNVQ"          => {"WEIGHT"=>4, "DISTINCTION"=>220, "MERIT"=>184, "PASS"=>160}, 
+	     "GCSE"          => {"A"=>52, "B"=>46, "C"=>40, "D"=>34, "WEIGHT"=>1, "E"=>28, "F"=>22, "G"=>16, "A*"=>58, "U"=>0}, 
+	     "FIRST DIPLOMA" => {"WEIGHT"=>2, "DISTINCTION"=>136, "MERIT"=>112, "PASS"=>76}, 
+	     "DOUBLE GCSE"   => {"A*A*"=>106, "AA"=>104, "BB"=>92, "CC"=>80, "DD"=>68, "EE"=>56, "FF"=>44, "GG"=>32, "NN"=>0, "UU"=>0, "WEIGHT"=>2}, 
+	     "SHORT GCSE"    => {"A"=>26, "B"=>23, "C"=>20, "D"=>17, "WEIGHT"=>0.5, "E"=>14, "F"=>11, "G"=>8, "A*"=>29, "U"=>0}
+            }
 
   def body
     [self[:qual_type],self[:title]].reject{|x| x.blank?}.join ": "
@@ -44,6 +53,31 @@ class Qualification < Eventable
 
   def seen
     self[:seen] or mis_id
+  end
+
+  def lat_score
+    begin
+      # Only calc lat scores for quals with grades
+      return "No Grade" if grade.blank?
+      # Only calc lat_scores for quals on entry
+      return "Imported Qual" if mis_id 
+      # Don't include predicted grades
+      return "Predicted Grade" if predicted?
+      # Only quals acheived between 16 & 18 years count towards LAT
+      years = case person.age_on(Date.civil(2013,9,1))
+      when 16 then 1
+      when 17 then 2
+      when 18 then 3
+      else 0
+      end
+      return "Ineligible Date" unless created_at.between?(Date.civil(2013,8,1) - years.years,Date.today)#civil(2013,9,1))
+      # Only return LAT scores if we can work them out from the info we have
+      return "No scores for qual type" unless QOE_LAT[qual_type.strip.upcase] 
+      return "No scores for this grade" unless QOE_LAT[qual_type.strip.upcase][grade.strip.upcase]
+      QOE_LAT[qual_type.strip.upcase][grade.strip.upcase]
+    rescue
+      return "Unexpected error!"
+    end
   end
 
 end

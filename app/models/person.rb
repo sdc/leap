@@ -52,7 +52,11 @@ class Person < ActiveRecord::Base
   serialize :my_courses
 
   def age
-    ((Date.today - date_of_birth.to_date)/365.25).to_i
+    age_on(Date.today)
+  end
+
+  def age_on(date)
+    ((date.to_date - date_of_birth.to_date)/365).to_i
   end
 
   def to_param
@@ -123,6 +127,12 @@ class Person < ActiveRecord::Base
     else
       "http://lorempixel.com/130/130/#{Settings.lorem_pictures}/#{id.to_s.last}"
     end
+  end
+
+  def lat_score
+    return false unless qualifications.detect{|q| q.lat_score.kind_of? Fixnum}
+    (qualifications.select{|q| q.lat_score.kind_of? Fixnum}.sum{|q| q.lat_score} / 
+     qualifications.select{|q| q.lat_score.kind_of? Fixnum}.count.to_f).round(2)
   end
 
 end

@@ -1,0 +1,57 @@
+%h2 Prior Attainment Score
+
+%h3.span10
+  Prior Attainment Score:
+  = @topic.lat_score
+
+- if @topic.qualifications.detect{|x| x.lat_score == "No scores for qual type"}
+  .span9.alert.alert-danger
+    This user has qualifications which are not automatically included in the calculation; it is advised to click the "See calculation" button
+    and check the result.
+
+.span10= link_to_function "See calculation.","$('.lat-calc').show('slow');$(this).hide()", :class => "btn"
+
+
+.lat-calc.hide
+
+  .span4
+    %b Age:
+    = @topic.age
+  .span4
+    %b Age on Sep 1st:
+    = @topic.age_on(Date.civil(2013,9,1))
+
+  %p &nbsp;
+
+  %table.table.table-condensed
+    %tr
+      %th Qual
+      %th Grade
+      %th Date
+      %th Age at
+      %th QCA
+    - @topic.qualifications.each do |q|
+      %tr{:class => [q.lat_score.kind_of?(Fixnum) ? "current" : "",q.lat_score == "No scores for qual type" ? "incomplete" : ""]}
+        %td= q.qual_type
+        %td= q.grade
+        %td= q.created_at.to_date
+        %td= @topic.age_on(q.created_at)
+        %td= q.lat_score or "-"
+    %tr
+      %td
+      %td
+      %td
+      %th Total:
+      %th= @topic.qualifications.select{|q| q.lat_score.kind_of? Fixnum}.sum{|q| q.lat_score}
+    %tr
+      %td
+      %td
+      %td
+      %th Eligible Quals:
+      %th= @topic.qualifications.select{|q| q.lat_score.kind_of? Fixnum}.count
+    %tr.complete
+      %td
+      %td
+      %td
+      %th Score:
+      %th= @topic.lat_score
