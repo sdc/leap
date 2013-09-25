@@ -6,7 +6,7 @@
 
 - if @topic.qualifications.detect{|x| x.lat_score == "No scores for qual type"}
   .span9.alert.alert-danger
-    This user has qualifications which are not automatically included in the calculation; it is advised to click the "See calculation" button
+    There are qualifications which are not automatically included in this calculation; it is advised to click the "See calculation" button
     and check the result.
 
 .span10= link_to_function "See calculation.","$('.lat-calc').show('slow');$(this).hide()", :class => "btn"
