@@ -153,7 +153,7 @@ module MisPerson
         :mark         => s.usage_code,
         :status       => s.status,
         :rooms        => s.rooms.map{|r| r.room_code},
-        :teachers     => s.teachers.map{|t| Person.get(t)}
+        :teachers     => s.teachers.map{|t| t.try(:name)}
       )
     end
   end

@@ -9,7 +9,7 @@
       .small_text
         Room:
         = @next_timetable_event.rooms.join ", "
-        .small_text= @next_timetable_event.teachers.map{|t| t.name}.join ", "
+        .small_text= @next_timetable_event.teachers.join ", "
     - else 
       .alert
         - unless Rails.env == "development"

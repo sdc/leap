@@ -3,5 +3,5 @@
   %h5= slot.title
   %div= "#{slot.start.getutc.strftime('%H.%M')} - #{slot.end.getutc.strftime('%H.%M')}"
   %div= slot.rooms.join ", "
-  .teachers= slot.teachers.map{|t| t.name}.join ", "
+  .teachers= slot.teachers.join ", "
   .mark.status-fgp{:class => slot.status, :style => "background:transparent"}= slot.mark
