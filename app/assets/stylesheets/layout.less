@@ -341,9 +341,14 @@ dl {
     width:104px;
     margin-left:10px;
     font-size: 10px;
-    background-image: url(/assets/timetable-grid.png);
-    background-image-repeat:repeat-both;
     height:936px;
+    &.plain {
+      background-image: url(/assets/timetable-grid.png);
+      background-image-repeat:repeat-both;
+    }
+    &.with-times {
+      background-image: url(/assets/timetable-grid-with-times.png);
+    }
     h3{
       margin-bottom: 45px;
     }
@@ -358,7 +363,7 @@ dl {
       .border-radius(6px);
       .box-shadow(1px 1px 1px 1px @borderColour);
       padding: 4px;
-      position:absolute;
+      position:relative;
       width:94px;
       overflow:hidden;
       h5 {

@@ -1,0 +1,20 @@
+%h2 Add a Timetable Activity
+= create_event_form TtActivity do |f|
+  .span1= image_tag "events/timetable.png"
+  .span2
+    %h4 Date
+    = f.text_field :start_date, :class => "datepicker span2", :value => Time.now.to_date
+  .span2
+    %h4 Repeat
+    = f.select :repeat_type, options_for_select(TtActivity::REPEAT_TYPES), {}, :class => "span2"
+  .span2
+    %h4 No of repeats
+    = f.select :repeat_number, options_for_select((1..10).map{|n|[pluralize(n,"time"),n]}), {}, :class => "span2"
+  .span1
+    %h4 &nbsp;
+    = add_event_button "Add"
+  .row
+    .span8
+      %p
+      .span7.offset1
+        = f.text_area :body

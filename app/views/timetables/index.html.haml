@@ -1,3 +1,5 @@
+- if @view.controls? and params[:all].nil?
+  %div{:load_block => send("header_#{@topic.class.name.underscore}_view_url",@topic,@view)}= image_tag "ajax-loader.gif"
 .row
   .span2
     = link_to send("#{@topic.class.name.underscore}_timetables_url", @topic,:date => @date - 1.week), :class => "btn" do
@@ -14,12 +16,5 @@
       Next Week
       %i.icon-arrow-right
 .row.timetable
-  .day{:style => "text-align:right"}
-    .div{:style => "height:33px"}
-    - (8..20).to_a.each do |t|
-      %h3= "#{t.to_s}.00"
-  - @date.upto(@date.end_of_week - 1.day) do |day|
-    = render :partial => "day", :object => day, :locals => {:slots => (@registers + @events).select {|r| r.timetable_start > day and r.timetable_start < day.tomorrow.midnight }}
-
--# if @events
-  #events= render @events
+  - @date.upto(@date.end_of_week) do |day|
+    = render :partial => "day", :object => day, :locals => {:slots => (@registers + @events).select {|r| r.timetable_start > day and r.timetable_start < day.tomorrow.midnight }, :times => day == day.monday}

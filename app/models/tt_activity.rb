@@ -14,20 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class TimetablesController < ApplicationController
+class TtActivity < Eventable
 
-  before_filter :set_date
-  
-  def index
-    @date = @date.to_date.at_beginning_of_week
-    @end_date = @date.next_week
-    @registers = @topic.timetable_events(:from => @date, :to => @end_date)
-    @view = View.for_user.find_by_name("timetable")
-    @events = @topic.events.where(:event_date => (@date.to_time + 1.hour + 1.second)..@end_date, :transition => @view.transitions, :eventable_type => @view.events) if @topic.kind_of? Person
-    respond_to do |format|
-      format.html 
-      format.xml { render :xml => @topic }
-    end
-  end
+  REPEAT_TYPES = ["No repeat","Weekly","Monthly"]
+
+  attr_accessible :body, :timetable_start, :timetable_end, :category, :start_date, :repeat_type, :repeat_number
+
+  after_create {|act| act.events.create!(:event_date => created_at, :transition => :create)}
 
 end
