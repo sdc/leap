@@ -2,8 +2,12 @@
   .alert 
     %b There are currently no open review windows.
 - else
-  - grades  = Settings.review_grades.split(",")
-  - options = [grades,(0..(grades.count - 1)).to_a].transpose
+  - if Settings.reverse_scores == "Reverse"
+    - grades  = Settings.review_grades.split(",").reverse
+    - options = [grades,(0..(grades.count - 1)).to_a.reverse].transpose
+  - else 
+    - grades  = Settings.review_grades.split(",")
+    - options = [grades,(0..(grades.count - 1)).to_a].transpose
   %h2 Add a review 
   = create_event_form ReviewLine do |f|
     .span9

@@ -127,6 +127,12 @@
     .controls
       = text_field_tag "review_grades", Settings.review_grades
       .help-text Comma separated list of the selection of grades you can choose for reviews. May break old grades horrifically.
+  .control-group
+    %label.control-label Grade order
+    .controls
+      = select_tag "reverse_scores", options_for_select(["Forward","Reverse"],Settings.reverse_scores)
+      .help-text Show review grades in forward or reverse order
+
 
   %h3 Windows
   .control-group
@@ -173,7 +179,7 @@
                                  "qqoe_qual_type","qqoe_awarding_body","qqoe_subject","qqoe_grade","pathways",
                                  "qqoe_select_type","current_simple_poll","lorem_pictures","review_cat_quality",
                                  "review_cat_punctuality","review_cat_attitude","review_cat_completion","review_windows",
-                                 "current_review_window","review_grades"]
+                                 "current_review_window","review_grades","reverse_scores"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize
