@@ -16,10 +16,39 @@
 
 class TtActivity < Eventable
 
+
   REPEAT_TYPES = ["No repeat","Weekly","Monthly"]
 
-  attr_accessible :body, :timetable_start, :timetable_end, :category, :start_date, :repeat_type, :repeat_number
+  TIME_SELECT = (0..600).step(15).map{|x| ["#{x.divmod(60).join(" hours ")} mins",x*60]}.drop 1
 
-  after_create {|act| act.events.create!(:event_date => created_at, :transition => :create)}
+  attr_accessible :body, :start_time, :category, :repeat_type, :repeat_number, :timetable_length, :tmp_time, :tmp_date
+
+  before_save :fix_start_time
+
+  after_create do |act| 
+    act.repeat_number = 1 if act.repeat_type == "No repeat"
+    this_start = act.start_time
+    1.upto(act.repeat_number) do |i|
+      act.events.create!(:event_date => this_start, :transition => :start)
+      this_start = case act.repeat_type.downcase
+      when "weekly" then this_start + 1.week
+      when "monthly" then this_start + 1.month
+      else this_start
+      end
+    end
+  end
+
+  def fix_start_time
+    self.start_time = Time.new(self.tmp_date.year, tmp_date.month, tmp_date.day,
+	                      self.tmp_time.hour, self.tmp_time.min)
+  end
+
+  def status
+    return "start"
+  end
+
+  def timetable_length
+    self[:timetable_length]
+  end
 
 end

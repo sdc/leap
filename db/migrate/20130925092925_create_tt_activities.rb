@@ -3,13 +3,14 @@ class CreateTtActivities < ActiveRecord::Migration
     create_table :tt_activities do |t|
       t.integer :person_id
       t.text :body
-      t.time :timetable_start
-      t.time :timetable_end
       t.string :category
-      t.date :start_date
+      t.datetime :start_time
+      t.integer :timetable_length
       t.string :repeat_type
       t.integer :repeat_number
-
+      t.integer :created_by_id
+      t.date :tmp_date
+      t.datetime :tmp_time
       t.timestamps
     end
   end

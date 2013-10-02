@@ -1,10 +1,10 @@
-.timetable-event{:style => "top:#{slot.timetable_margin - 32 + (@user.staff? ? 40 : 0)}px;height:#{slot.timetable_height}px", 
-                 :class => slot.status}
+.timetable-event{:style => "top:#{slot.timetable_margin + 37}px;height:#{slot.timetable_height}px", 
+  :class => slot.status}
   %h5= slot.title
   %div
-    = slot.timetable_start.getutc.strftime('%H.%M')
-    - if slot.respond_to? :timetable_end 
-      = "- #{slot.timetable_end.getutc.strftime('%H.%M')}"
+    = slot.timetable_start.strftime('%H.%M')
+    - if slot.timetable_end 
+      = "- #{slot.timetable_end.strftime('%H.%M')}"
   - if slot.kind_of? TimetableEvent
     %div= slot.rooms.join ", "
     .teachers= slot.teachers.map{|t| t.try :name}.join ", "

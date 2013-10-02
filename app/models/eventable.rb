@@ -58,4 +58,8 @@ class Eventable < ActiveRecord::Base
     end
   end
 
+  def timetable_length
+    3600
+  end
+
 end
