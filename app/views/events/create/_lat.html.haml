@@ -2,7 +2,7 @@
 
 %h3.span10
   Prior Attainment Score:
-  = @topic.lat_score
+  = @topic.lat_score or "n/a"
 
 - if @topic.qualifications.detect{|x| x.lat_score == "No scores for qual type"}
   .span9.alert.alert-danger
@@ -16,10 +16,10 @@
 
   .span4
     %b Age:
-    = @topic.age
+    = @topic.try(:staff) ? "##" : @topic.age
   .span4
     %b Age on Sep 1st:
-    = @topic.age_on(Date.civil(2013,9,1))
+    = @topic.try(:staff) ? "##" : @topic.age_on(Date.civil(2013,9,1))
 
   %p &nbsp;
 
