@@ -19,9 +19,13 @@
       .span2
         %h4 No of repeats
         = f.select :repeat_number, options_for_select((1..10).map{|n|[pluralize(n,"time"),n]}), {}, :class => "span2"
-      .span2
+      .span3
+        %h4 Category
+        = f.select :category, Settings.tt_activity_categories.split(","), {:class => "span3"}
+    .row{:style => "margin-top:10px"}
+      .span6
         %h4 Text
-        = f.text_field :body, :class => "span2"
+        = f.text_field :body, :class => "span6"
       .span1
         %h4 &nbsp;
-        = add_event_button "Add"
+        = submit_tag "Add", :class => "btn btn-primary span1"

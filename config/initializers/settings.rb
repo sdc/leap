@@ -57,3 +57,6 @@ Settings.defaults[:review_cat_quality] = "Quality of Work"
 Settings.defaults[:review_cat_punctuality] = "Punctuality"
 Settings.defaults[:review_cat_attitude] = "Attitude"
 Settings.defaults[:review_cat_completion] = "Completion of Work"
+
+# TtActivity categories
+Settings.defaults[:tt_activity_categories] = "One,Two,Three"

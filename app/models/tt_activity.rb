@@ -38,6 +38,8 @@ class TtActivity < Eventable
     end
   end
 
+  def title; category end
+
   def fix_start_time
     self.start_time = Time.new(self.tmp_date.year, tmp_date.month, tmp_date.day,
 	                      self.tmp_time.hour, self.tmp_time.min)
