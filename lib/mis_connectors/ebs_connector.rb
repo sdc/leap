@@ -207,14 +207,14 @@ module MisPerson
     mis_person.learner_aims.each do |la|
       next unless la.unit_instance_occurrence && la.grade
       next unless Qualification.where(:mis_id => la.id).empty?
-      Qualification.create(
-        :mis_id     => la.id,
+      nq=qualifications.create(
         :title      => la.unit_instance_occurrence.long_description,
         :grade      => la.grade,
         :person_id  => id,
         :created_at => la.exp_end_date,
         :predicted  => false
       )
+      nq.update_attribute("mis_id",la.id)
     end
     return self
   end
