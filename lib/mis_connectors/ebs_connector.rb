@@ -52,7 +52,7 @@ module MisPerson
       # NOTE: Need to change these defaults after launch
       options.reverse_merge! Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}]
       logger.info "Importing user #{mis_id}"
-      if (ep = (Ebs::Person.find_by_person_code(mis_id.to_s.tr('^0-9','')) or       # Strip chars out of id if looking at person-code
+      if (ep = (Ebs::Person.find_by_person_code((mis_id.to_s.tr('^0-9','') if mis_id.to_s.match(/\d{6}/))) or 
                 Ebs::Person.find_by_college_login(mis_id) or 
                 Ebs::Person.find_by_network_userid(mis_id)
           ))
