@@ -16,13 +16,13 @@ namespace :deploy do
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-    run "ln -s /media/photos #{current_path}/public/photos"
   end
 end
 
 namespace :db do
   task :db_config, :except => { :no_release => true }, :role => :app do
     run "cp -f #{shared_path}/database.yml #{release_path}/config/database.yml"
+    run "cp -f #{shared_path}/airbrake.rb #{release_path}/config/airbrake.yml"
   end
 end
 
