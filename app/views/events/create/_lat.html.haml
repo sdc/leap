@@ -35,7 +35,7 @@
         %td= q.qual_type
         %td= q.grade
         %td= q.created_at.to_date
-        %td= @topic.age_on(q.created_at)
+        %td= @topic.try(:staff) ? "##" : @topic.age_on(q.created_at)
         %td= q.lat_score or "-"
     %tr
       %td
