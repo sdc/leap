@@ -3,7 +3,6 @@ gem 'rails', "3.2.11"
 gem 'coffee-rails', "3.2.1"
 gem 'haml'
 gem "less-rails"
-#gem "twitter-bootstrap-rails", "2.1.4"
 gem 'less-rails-bootstrap', "2.0.13"
 gem 'jquery-rails'
 gem 'symbolize', :require => "symbolize/active_record"
