@@ -168,10 +168,7 @@ DEPENDENCIES
   haml
   jdbc-mysql
   jquery-rails
-<<<<<<< HEAD
   less-rails
-=======
->>>>>>> parent of 4dda150... Trying stuff for merthyr deploy
   less-rails-bootstrap (= 2.0.13)
   mysql2
   nokogiri
