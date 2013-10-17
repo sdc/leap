@@ -2,8 +2,10 @@ source 'http://rubygems.org'
 gem 'rails', "3.2.11"
 gem 'coffee-rails', "3.2.1"
 gem 'haml'
-gem 'therubyracer', "0.10"
-gem 'less-rails-bootstrap', "2.0.13"
+gem "less-rails"
+gem "twitter-bootstrap-rails", "2.1.4"
+gem 'therubyracer', :platform => "ruby"
+#gem 'less-rails-bootstrap', "2.0.13"
 gem 'jquery-rails'
 gem 'ruby-oci8', "2.1.0"
 gem 'activerecord-oracle_enhanced-adapter'
