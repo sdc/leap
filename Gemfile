@@ -29,8 +29,8 @@ end
   
 
 platforms :jruby do
-  gem 'activerecord-jdbc-adapter'
-  gem 'jdbc-mysql'
+  gem 'activerecord-jdbcmysql-adapter'
+  gem 'activerecord-jdbcmssql-adapter', :git => "https://github.com/kevtufc/activerecord-jdbc-adapter.git"
   gem 'therubyrhino'
   gem 'trinidad'
 end
