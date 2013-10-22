@@ -32,4 +32,5 @@ platforms :jruby do
   gem 'activerecord-jdbc-adapter'
   gem 'jdbc-mysql'
   gem 'therubyrhino'
+  gem 'trinidad'
 end
