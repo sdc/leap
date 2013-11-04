@@ -71,6 +71,8 @@ class ApplicationController < ActionController::Base
         end
       end
       Person.user = @user = Person.get(uname)
+      # HORRIBLE HACK
+      @affiliation = @user.mis.fes_staff_code ? "staff" : "student"
       render "admin/auth_error" unless @user && @affiliation
     end
   end
