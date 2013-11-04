@@ -1,1 +1,6 @@
+environment: 'production'
+port: 3000
 jruby_max_runtimes: 1
+ajp:
+  port: 8099
+  tomcatAuthentication: false
