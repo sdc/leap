@@ -24,7 +24,7 @@ class Qualification < Eventable
 
   validates :title, :presence => true 
   
-  attr_accessible :awarding_body, :grade, :predicted, :qual_type, :seen, :title
+  attr_accessible :awarding_body, :grade, :predicted, :qual_type, :seen, :title, :created_at
 
   def body
     [self[:qual_type],self[:title]].reject{|x| x.blank?}.join ": "

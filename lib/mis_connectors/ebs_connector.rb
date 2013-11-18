@@ -216,7 +216,6 @@ module MisPerson
         :predicted  => false
       )
     end
-    return self
   end
 
   def import_absences
