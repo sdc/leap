@@ -20,6 +20,7 @@
   %dd
     - if @topic.address
       = [@topic.address, @topic.town, @topic.postcode].reject(&:nil?).join ", "
+    &nbsp;
   - unless @topic.home_phone.blank?
     %dt Home Phone
     %dd= @topic.home_phone
