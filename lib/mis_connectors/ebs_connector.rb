@@ -73,7 +73,7 @@ module MisPerson
           #:uln           => ep.unique_learn_no,
           :mis_id        => ep.person_code,
           :staff         => ep.fes_staff_code?,
-          :username      => (ep.network_userid or ep.college_login or ep.id),
+          :username      => (ep.college_login or ep.id),
           :personal_email=> ep.personal_email,
           #:home_phone    => ep.address && ep.address.telephone,
           :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil
@@ -137,11 +137,11 @@ module MisPerson
   def timetable_events(options = {})
     reds = if options == :next
       Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T']).
-        where("planned_start_date > ?", Time.now).
+        where("planned_start_date > ?", Date.today.strftime("%Y-%d-%m %H:%M:%S")).#'2013-20-11 00:00:00'"). 
         order(:planned_start_date).limit(1)
     else
-      from = options[:from] || Date.today.beginning_of_week
-      to   = options[:to  ] || from.end_of_week
+      from = (options[:from] || Date.today.beginning_of_week).strftime("%Y-%d-%m %H:%M:%S")
+      to   = (options[:to  ] || from.end_of_week).strftime("%Y-%d-%m %H:%M:%S")
       Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T'], :planned_start_date => from..to)
     end
     reds.map do |s| 
