@@ -34,7 +34,7 @@ class Course < ActiveRecord::Base
   end
 
   def name
-    title
+    title or code
   end
 
   def to_param
