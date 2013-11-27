@@ -2,24 +2,24 @@
 
 %h3.span10
   Prior Attainment Score:
-  = @topic.lat_score
+  = @topic.lat_score or "n/a"
 
 - if @topic.qualifications.detect{|x| x.lat_score == "No scores for qual type"}
   .span9.alert.alert-danger
-    This user has qualifications which are not automatically included in the calculation; it is advised to click the "See calculation" button
+    There are qualifications which are not automatically included in this calculation; it is advised to click the "See calculation" button
     and check the result.
 
 .span10= link_to_function "See calculation.","$('.lat-calc').show('slow');$(this).hide()", :class => "btn"
 
 
-.lat-calc.hide
+.lat-calc.hide.span9
 
   .span4
     %b Age:
-    = @topic.age
+    = @topic.try(:staff) ? "##" : @topic.age
   .span4
     %b Age on Sep 1st:
-    = @topic.age_on(Date.civil(2013,9,1))
+    = @topic.try(:staff) ? "##" : @topic.age_on(Date.civil(2013,9,1))
 
   %p &nbsp;
 
@@ -35,7 +35,7 @@
         %td= q.qual_type
         %td= q.grade
         %td= q.created_at.to_date
-        %td= @topic.age_on(q.created_at)
+        %td= @topic.try(:staff) ? "##" : @topic.age_on(q.created_at)
         %td= q.lat_score or "-"
     %tr
       %td

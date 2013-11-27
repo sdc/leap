@@ -44,15 +44,17 @@ class Qualification < Eventable
   end
 
   def status
-    predicted ? :not_started: (seen ? :complete : :current)
+    return :complete if seen?
+    return :complete if !mis_id.blank?
+    return :not_started if predicted?
+    return :current
   end
 
   def title
-    predicted ? ["Predicted","Grade"] : (seen ? "Qualification" : ["Qualification","(not seen)"])
-  end
-
-  def seen
-    self[:seen] or mis_id
+    return "Qualification" if seen?
+    return "Qualification" if !mis_id.blank?
+    return ["Predicted","Grade"] if predicted?
+    return ["Qualification","(not_seen)"] 
   end
 
   def lat_score

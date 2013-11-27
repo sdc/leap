@@ -52,7 +52,7 @@ module MisPerson
       # NOTE: Need to change these defaults after launch
       options.reverse_merge! Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}]
       logger.info "Importing user #{mis_id}"
-      if (ep = (Ebs::Person.find_by_person_code(mis_id.to_s.tr('^0-9','')) or       # Strip chars out of id if looking at person-code
+      if (ep = (Ebs::Person.find_by_person_code((mis_id.to_s.match(/\d{6}/) ? mis_id.to_s.tr('^0-9','') : mis_id)) or 
                 Ebs::Person.find_by_college_login(mis_id) or 
                 Ebs::Person.find_by_network_userid(mis_id)
           ))
@@ -207,14 +207,14 @@ module MisPerson
     mis_person.learner_aims.each do |la|
       next unless la.unit_instance_occurrence && la.grade
       next unless Qualification.where(:mis_id => la.id).empty?
-      Qualification.create(
-        :mis_id     => la.id,
+      nq=qualifications.create(
         :title      => la.unit_instance_occurrence.long_description,
         :grade      => la.grade,
         :person_id  => id,
         :created_at => la.exp_end_date,
         :predicted  => false
       )
+      nq.update_attribute("mis_id",la.id)
     end
     return self
   end
@@ -286,7 +286,7 @@ module MisCourse
         :mark         => s.usage_code,
         :status       => s.status,
         :rooms        => s.rooms.map{|r| r.room_code},
-        :teachers     => s.teachers.map{|t| Person.get(t)}
+        :teachers     => s.teachers.map{|t| t.try(:name)}
       )
     end
   end

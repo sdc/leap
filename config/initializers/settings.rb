@@ -51,3 +51,11 @@ Settings.defaults[:pathways] = "English:Entry Level 3 Functional Skills,Level 1 
 
 # Silly Pictures 
 Settings.defaults[:lorem_pictures] = ""
+
+# Review score categories
+Settings.defaults[:review_cat_quality] = "Quality of Work"
+Settings.defaults[:review_cat_punctuality] = "Punctuality"
+Settings.defaults[:review_cat_attitude] = "Attitude"
+Settings.defaults[:review_cat_completion] = "Completion of Work"
+Settings.defaults[:reverse_scores] = "Forward"
+

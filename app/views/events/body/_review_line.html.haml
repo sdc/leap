@@ -1,12 +1,12 @@
 - grades  = Settings.review_grades.split(",")
 %table
   %tr 
-    %th.span2 Quality of Work
+    %th.span2= Settings.review_cat_quality
     %td.span2= grades[review_line.quality]
-    %th.span2 Punctuality
+    %th.span2= Settings.review_cat_punctuality
     %td.span2= grades[review_line.punctuality]
   %tr 
-    %th.span2 Attitude
+    %th.span2= Settings.review_cat_attitude
     %td.span2= grades[review_line.attitude]
-    %th.span2 Completion of Work
+    %th.span2= Settings.review_cat_completion
     %td.span2= grades[review_line.completion]
