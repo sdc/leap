@@ -25,7 +25,11 @@ Ilp2::Application.config.mis_progress_codes = {
   "X"    => :incomplete,
   "W"    => :incomplete,
   "T"    => :incomplete,
-  "A"    => :current
+  "A"    => :current,              
+  "S"    => :current,        #Here starts Merthyr
+  "P"    => :incomplete,     # They use A,T & W like us
+  "E"    => :current,
+  "C"    => :complete
 }
 Ilp2::Application.config.mis_progress_codes.default = :unknown
 Ilp2::Application.config.mis_usage_codes = {
