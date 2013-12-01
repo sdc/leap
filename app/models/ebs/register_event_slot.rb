@@ -23,15 +23,15 @@ class Ebs::RegisterEventSlot < Ebs::Model
   has_many   :register_event_details_slots
 
   def rooms
-    register_event_details_slots.where(:object_type => "R").map{|d| d.the_object}
+    register_event_details_slots.where(:object_type => "R").map{|d| d.the_object}.reject{|x| x.nil?}
   end
 
   def teachers
-    register_event_details_slots.where(:object_type => "T").map{|d| d.the_object}
+    register_event_details_slots.where(:object_type => "T").map{|d| d.the_object}.reject{|x| x.nil?}
   end
 
   def learners
-    register_event_details_slots.where(:object_type => "L").map{|d| d.the_object}
+    register_event_details_slots.where(:object_type => "L").map{|d| d.the_object}.reject{|x| x.nil?}
   end
 
 end
