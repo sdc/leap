@@ -2,10 +2,14 @@
   - begin
     .row
       .event-header= render @view.controls
-  - rescue ActionView::MissingTemplate
+  - rescue Exception => e
     .row.alert.alert-error
-      %b Error:
-      There is a missing form here. Contact your administrator.
+      - if @user.admin?
+        %h3= e.message
+        %code= e.backtrace.inspect
+      - else
+        %b Error:
+        There is a missing form here. Contact your administrator.
 - elsif @view.controls.kind_of? Hash
   - if @view.controls.count == 1
     .row
