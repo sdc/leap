@@ -38,7 +38,7 @@
 \end{minipage}
 
 
-<% (7 - event.person.address.size).times do %>
+<% (7 - (event.person.address.try(:size) || 0)).times do %>
   \vspace{\baselineskip}
 <% end %>
 
