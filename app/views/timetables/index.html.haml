@@ -1,20 +1,21 @@
-- if @view.controls? and params[:all].nil?
-  %div{:load_block => send("header_#{@topic.class.name.underscore}_view_url",@topic,@view)}= image_tag "ajax-loader.gif"
 .row
-  .span2
+  = form_tag send("#{@topic.class.name.underscore}_timetables_url"), :method => :get, :class => "form-inline" do
+    = hidden_field_tag(:date, @date, :id => "real_datepicker")
     = link_to send("#{@topic.class.name.underscore}_timetables_url", @topic,:date => @date - 1.week), :class => "btn" do
       %i.icon-arrow-left
       Previous Week
-  .span4.offset1
-    = form_tag send("#{@topic.class.name.underscore}_timetables_url"), :method => :get, :class => "form-inline" do
-      = hidden_field_tag(:date, @date, :id => "real_datepicker")
-      .input-append<
-        = text_field_tag(:pretty_date, @date.strftime("%a %d %b %Y"), :class => "timetable-datepicker")
-        = submit_tag "go", :class => "btn btn-primary"
-  .span2.offset1
-    =link_to send("#{@topic.class.name.underscore}_timetables_url",@topic,:date => @date + 1.week), :class => "btn pull-right" do
+    .input-append<
+      = text_field_tag(:pretty_date, @date.strftime("%a %d %b %Y"), :class => "timetable-datepicker")
+      = submit_tag "go", :class => "btn btn-primary"
+    = link_to send("#{@topic.class.name.underscore}_timetables_url",@topic,:date => @date + 1.week), :class => "btn" do
       Next Week
       %i.icon-arrow-right
+    - if @view.controls? and params[:all].nil?
+      = link_to "#", :class => "pull-right btn btn-info", :id => "show-timetable-controls-button" do
+        Add event
+        %i.icon-plus.icon-white
+- if @view.controls? and params[:all].nil?
+  %div#timetable-header{:load_block => send("header_#{@topic.class.name.underscore}_view_url",@topic,@view)}= image_tag "ajax-loader.gif"
 .row.timetable
   - @date.upto(@date.end_of_week) do |day|
     = render :partial => "day", :object => day, :locals => {:slots => (@registers + @events).select {|r| r.timetable_start > day and r.timetable_start < day.tomorrow.midnight }, :times => day == day.monday}
