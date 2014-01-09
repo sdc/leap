@@ -55,6 +55,25 @@
           %i.icon-lock
         = password_field_tag "bksb_iis_pwd", Settings.bksb_iis_pwd
 
+  %h2 Event Notes
+  .well
+    %p
+      Event notes are notes which can be added to any event. They can be seen by anyone who can see the parent event attached to the
+      events as children with a datestamp instead of a title.  This setting affects who can add the notes:
+      %dl
+        %dt Off
+        %dd No-one can add notes; the feature is disabled
+        %dt Staff
+        %dd Only staff users can add notes
+        %dt Students
+        %dd 
+          Staff <em>and</em> students can add notes. Remember to add <tt>event_notes</tt> to the <strong>student_create_events</strong>
+          option or the create will fail.
+  .control-group
+    %label.control-label Who can add event notes
+    .controls
+      = select_tag "event_notes", options_for_select(["off","staff","students"], Settings.event_notes)
+
   %h2 Pathways
   .control-group
     %label.control-label Pathway choices
@@ -179,7 +198,7 @@
                                  "qqoe_qual_type","qqoe_awarding_body","qqoe_subject","qqoe_grade","pathways",
                                  "qqoe_select_type","current_simple_poll","lorem_pictures","review_cat_quality",
                                  "review_cat_punctuality","review_cat_attitude","review_cat_completion","review_windows",
-                                 "current_review_window","review_grades","reverse_scores"]
+                                 "current_review_window","review_grades","reverse_scores","event_notes"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

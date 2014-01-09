@@ -45,6 +45,7 @@ class Person < ActiveRecord::Base
   has_many :entry_req_mets
   has_many :pathways
   has_many :simple_poll_answers
+  has_many :event_notes
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
   serialize :middle_names
