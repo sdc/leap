@@ -28,10 +28,13 @@
     .tab-pane{:id => "#{dom_id event}-new-event-note"}
       .row
         %h3.span9 Add a note
+        %h5.span9 
+          Please remember notes are 
+          %i visible to learners.
         = create_event_form EventNote do |f|
           .span9
             = f.hidden_field :parent_event_id, :value => event.id
-            = f.text_area :body
+            = f.text_area :body, :maxlength => 500
           .span1
             = add_event_button
   .tab-pane{:id => "#{dom_id event}-db-attrs"}

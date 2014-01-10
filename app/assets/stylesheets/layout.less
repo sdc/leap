@@ -42,6 +42,10 @@ body {
   overflow: hidden;
 }
 
+.clicky {
+  cursor: pointer;
+}
+
 h1 {
   font-size: 20px;
 }
@@ -228,7 +232,8 @@ dl {
     margin-top: 10px;
     ul {
       list-style-type: none;
-      margin: 0;
+      .makeColumn(10);
+      margin-left: 0;
       li {
         .pull-left;
         &.icon {
@@ -237,6 +242,9 @@ dl {
         &.title {
           font-weight: bold;
           .size(28px, 130px);
+        }
+        &.body{
+          width: 580px;
         }
       }
     }

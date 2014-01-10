@@ -38,8 +38,14 @@
           .span10= render :partial => "events/mini", :object => child, :as => "event"
       .row
         .extended.span10{:style => "display:none"}
-- rescue
+- rescue Exception => e
   .donthide
-    .row.alert.alert-error= "There is an error with event #{event.id}. Please contact your administrator."
+    .row
+      %br
+      .span9.alert.alert-error= "There is an error with event #{event.id}. Please contact your administrator."
+      - if @user.admin?
+        %pre.span9.alert.alert-info
+          %h3= raw e.message
+          %p= raw e.backtrace.join "<br />"
 
 = render :partial => "layouts/alerts" if request.xhr?
