@@ -216,7 +216,6 @@ module MisPerson
       )
       nq.update_attribute("mis_id",la.id)
     end
-    return self
   end
 
   def import_absences

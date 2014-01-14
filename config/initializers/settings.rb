@@ -61,3 +61,6 @@ Settings.defaults[:reverse_scores] = "Forward"
 
 # Event Notes
 Settings.defaults[:event_notes] = "staff"
+
+# TtActivity categories
+Settings.defaults[:tt_activity_categories] = "One,Two,Three"

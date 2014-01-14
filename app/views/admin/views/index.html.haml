@@ -26,17 +26,22 @@
       %i.icon-edit
       Edit
   - @views.each do |view|
-    %tr
-      %td= image_tag view.icon_url
-      %td= view.affiliations.sort.join(", ")
-      %td= view.name
-      %td= view.label
-      %td= view.events.sort.join(", ")
-      %td= view.transitions.sort.join(", ")
-      %td 
-        %i{:class => view.in_list && "icon-eye-open"}
-      %td
-        = link_to edit_admin_view_url(view.id), :class => "btn btn-warning" do
-          %i.icon-edit.icon-white
-          Edit
-
+    - begin
+      %tr[view]
+        %td= view.icon_url.blank? ? "n/a" : image_tag(view.icon_url)
+        %td= view.affiliations.sort.join(", ")
+        %td= view.name
+        %td= view.label
+        %td= view.events.sort.join(", ")
+        %td= view.transitions.sort.join(", ")
+        %td 
+          %i{:class => view.in_list && "icon-eye-open"}
+        %td
+          = link_to edit_admin_view_url(view.id), :class => "btn btn-warning" do
+            %i.icon-edit.icon-white
+            Edit
+    - rescue Exception => e
+      %tr.alert-error[view]
+        %td{:colspan => 8}
+          Error processing view #{view.id}.
+          %pre.alert-info= e.message

@@ -87,3 +87,6 @@ $(document).ready ->
     $(this).next().toggle('fast')
     $(this).find('.icon-eye-open').removeClass("icon-eye-open").addClass("icon-eye-close")
     $(this).find('.icon-eye-close').removeClass("icon-eye-close").addClass("icon-eye-open")
+
+  $('#show-timetable-controls-button').live 'click', ->
+    $('#timetable-header').toggle('fast')
