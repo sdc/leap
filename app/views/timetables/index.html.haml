@@ -19,3 +19,4 @@
 .row.timetable
   - @date.upto(@date.end_of_week) do |day|
     = render :partial => "day", :object => day, :locals => {:slots => (@registers + @events).select {|r| r.timetable_start > day and r.timetable_start < day.tomorrow.midnight }, :times => day == day.monday}
+    =# @registers.map{|e| "#{e.id}:#{e.timetable_start}"}.join ", "

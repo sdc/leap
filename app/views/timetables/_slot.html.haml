@@ -7,7 +7,7 @@
       = "- #{slot.timetable_end.strftime('%H.%M')}"
   - if slot.kind_of? TimetableEvent
     %div= slot.rooms.join ", "
-    .teachers= slot.teachers.map{|t| t.try :name}.join ", "
+    .teachers= slot.teachers.join ", "
     .mark.status-fgp{:class => slot.status, :style => "background:transparent"}= slot.mark
   - elsif slot.kind_of? Event
     .body= slot.body
