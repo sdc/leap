@@ -1,4 +1,4 @@
-= link_to person_timetables_url(@topic, :date => @next_timetable_event.timetable_start)), :style => "color:inherit" do
+= link_to person_timetables_url(@topic, :date => @next_timetable_event.try(:timetable_start)), :style => "color:inherit" do
   %h3
     Next lesson
     = image_tag("timetable.png")
