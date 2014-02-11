@@ -11,7 +11,7 @@ gem 'activerecord-mysql-adapter'
 gem 'tiny_tds', "0.5.1"
 gem 'activerecord-sqlserver-adapter'
 gem 'symbolize', :require => "symbolize/active_record"
-gem 'supermodel', :git => "git://github.com/felafelwaffle/supermodel.git"
+gem 'supermodel', :git => "http://github.com/felafelwaffle/supermodel.git"
 gem 'scoped_search'
 gem 'mysql2'
 gem 'rails-settings', :require => 'settings'

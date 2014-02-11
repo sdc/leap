@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/felafelwaffle/supermodel.git
+  remote: http://github.com/felafelwaffle/supermodel.git
   revision: 9e35a026efd55e890717bcda0a6bf7d81d2c38ba
   specs:
     supermodel (0.1.7)
