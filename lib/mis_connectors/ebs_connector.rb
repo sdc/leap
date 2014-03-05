@@ -208,7 +208,7 @@ module MisPerson
       next unless la.unit_instance_occurrence && la.grade
       next unless Qualification.where(:mis_id => la.id).empty?
       nq=qualifications.create(
-        :title      => la.unit_instance_occurrence.long_description,
+        :title      => la.unit_instance_occurrence.title,
         :grade      => la.grade,
         :person_id  => id,
         :created_at => la.exp_end_date,
@@ -301,7 +301,7 @@ module MisCourse
       if (ec = Ebs::UnitInstanceOccurrence.find_by_uio_id(mis_id))
         @course = Course.find_or_create_by_mis_id(mis_id)
         @course.update_attributes(
-          :title  => ec.long_description,
+          :title  => ec.title,
           :code   => ec.fes_uins_instance_code,
           :year   => ec.calocc_occurrence_code,
           :mis_id => ec.id

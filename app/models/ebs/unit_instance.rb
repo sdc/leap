@@ -14,19 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class Ebs::UnitInstanceOccurrence < Ebs::Model
+class Ebs::UnitInstance < Ebs::Model
 
-  set_primary_key :uio_id
+  self.primary_key = "fes_unit_instance_code"
   
-  has_many :people_units, :foreign_key => "uio_id"
-  belongs_to :unit_instance, :foreign_key => :fes_uins_instance_code
-
-  delegate :fes_long_description, :to => :unit_instance
-
-  scoped_search :on => [:fes_uins_instance_code, :long_description]
-
-  def title
-    long_description or fes_long_description
-  end
+  has_many :unit_instance_occurrences, :foreign_key => :fes_uins_instance_code
 
 end
