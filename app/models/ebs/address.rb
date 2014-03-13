@@ -16,10 +16,9 @@
 
 class Ebs::Address < Ebs::Model
 
-  set_primary_key "per_person_code"  
-  set_table_name "student_addresses"
+  set_table_name "addresses"
 
-  belongs_to :person,  :foreign_key => "per_person_code"
+  default_scope where(:owner_type => "P")
 
   def postcode
     (uk_post_code_pt1 || "") + " " + (uk_post_code_pt2 || "")
