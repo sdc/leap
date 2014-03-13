@@ -62,10 +62,10 @@ module MisPerson
           :forename      => ep.forename,
           :surname       => ep.surname,
           :middle_names  => ep.middle_names && ep.middle_names.split,
-          #:address       => ep.address ? [ep.address.address_line_1,ep.address.address_line_2,
-          #                   ep.address.address_line_3,ep.address.address_line_4].reject{|a| a.blank?} : [],
-          #:town          => ep.address ? ep.address.town : "",
-          #:postcode      => ep.address ? [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" ") : "",
+          :address       => ep.address ? [ep.address.address_line_1,ep.address.address_line_2,
+                             ep.address.address_line_3,ep.address.address_line_4].reject{|a| a.blank?} : [],
+          :town          => ep.address ? ep.address.town : "",
+          :postcode      => ep.address ? [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" ") : "",
           :photo         => Ebs::Blob.table_exists? && ep.blobs.photos.first.try(:binary_object),
           :mobile_number => ep.mobile_phone_number,
           :next_of_kin   => [ep.fes_next_of_kin, ep.fes_nok_contact_no].join(" "),
@@ -75,7 +75,7 @@ module MisPerson
           :staff         => ep.fes_staff_code?,
           :username      => (ep.network_userid or ep.college_login or ep.id),
           :personal_email=> ep.personal_email,
-          #:home_phone    => ep.address && ep.address.telephone,
+          :home_phone    => ep.address && ep.address.telephone,
           :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil
         )
         @person.save if options[:save] 
