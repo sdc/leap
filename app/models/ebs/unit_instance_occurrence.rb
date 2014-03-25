@@ -19,7 +19,14 @@ class Ebs::UnitInstanceOccurrence < Ebs::Model
   set_primary_key :uio_id
   
   has_many :people_units, :foreign_key => "uio_id"
+  belongs_to :unit_instance, :foreign_key => :fes_uins_instance_code
+
+  delegate :fes_long_description, :to => :unit_instance
 
   scoped_search :on => [:fes_uins_instance_code, :long_description]
+
+  def title
+    long_description or fes_long_description
+  end
 
 end

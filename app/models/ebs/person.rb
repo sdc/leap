@@ -26,9 +26,6 @@ class Ebs::Person < Ebs::Model
   has_many :targets
   has_many :learner_aims,
            :foreign_key => "person_code"
-  has_one  :address, 
-           :foreign_key => "per_person_code",
-           :conditions  => ["end_date IS NULL"]
   has_many :people_units,
            :foreign_key => "person_code"
   has_many :unit_instance_occurrences, 
@@ -40,6 +37,10 @@ class Ebs::Person < Ebs::Model
 
   def name
     [forename,surname].join(" ")
+  end
+
+  def address
+    Ebs::Address.where(:owner_ref => "#{id}").where("end_date IS NULL").last
   end
 
 end
