@@ -11,7 +11,7 @@ gem 'activerecord-mysql-adapter'
 gem 'tiny_tds', "0.5.1"
 gem 'activerecord-sqlserver-adapter'
 gem 'symbolize', :require => "symbolize/active_record"
-gem 'supermodel', :git => "http://github.com/felafelwaffle/supermodel.git"
+gem 'supermodel'
 gem 'scoped_search'
 gem 'mysql2'
 gem 'rails-settings', :require => 'settings'
@@ -23,3 +23,4 @@ gem 'nokogiri'
 gem 'coffee-filter'
 gem 'yui-compressor'
 gem 'capistrano'
+gem 'capistrano-rails'

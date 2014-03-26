@@ -10,3 +10,4 @@ config/database.yml
 public/photos
 config/initializers/error_mail.rb
 config/deploy.rb
+config/deploy/*
