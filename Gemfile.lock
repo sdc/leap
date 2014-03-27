@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/maccman/supermodel.git
+  revision: 6d8a92783f4b7398125c5f49d689f1b7303fd075
+  specs:
+    supermodel (0.1.7)
+      activemodel (>= 3.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -138,8 +145,6 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh
       term-ansicolor
-    supermodel (0.1.4)
-      activemodel (>= 3.0.0.beta)
     symbolize (4.2.0)
     term-ansicolor (1.3.0)
       tins (~> 1.0)
@@ -182,7 +187,7 @@ DEPENDENCIES
   ruby-oci8 (= 2.1.0)
   scoped_search
   sqlite3
-  supermodel
+  supermodel!
   symbolize
   therubyracer (= 0.10)
   tiny_tds (= 0.5.1)
