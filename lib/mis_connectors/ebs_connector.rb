@@ -57,7 +57,7 @@ module MisPerson
                 Ebs::Person.find_by_network_userid(mis_id).to_s
           ))
         @person = Person.find_or_create_by_mis_id(ep.id)
-        @person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
+        #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
         @person.update_attributes(
           :forename      => ep.forename,
           :surname       => ep.surname,
