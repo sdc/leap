@@ -59,7 +59,7 @@ module MisPerson
         @person = Person.find_or_create_by_mis_id(ep.id)
         #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
         @person.update_attributes(
-          :forename      => ep.forename,
+          :forename      => ep.known_as.blank? ? ep.forename : ep.known_as,
           :surname       => ep.surname,
           :middle_names  => ep.middle_names && ep.middle_names.split,
           :address       => ep.address ? [ep.address.address_line_1,ep.address.address_line_2,
