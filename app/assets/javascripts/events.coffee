@@ -76,3 +76,10 @@ $(document).ready ->
   $(window).scroll ->
     if ($(window).scrollTop() == $(document).height() - $(window).height())
       $('#more_events').click() unless $('#more_events').first().css('display') == "none"
+
+  $('#expand-mini').live 'click',  -> 
+    ul = $(this).closest("ul")
+    ul.find('.body.short').hide()
+    ul.find('.body.long').show()
+    ul.find('.icon-chevron-right').hide()
+    ul.find('a.delete-mini').show()

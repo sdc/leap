@@ -1,0 +1,31 @@
+%h2 Add a Timetable Activity
+= create_event_form TtActivity do |f|
+  .span1= image_tag "events/tt_activities.png"
+  .span7
+    .row
+      .span2
+        %h4 Date
+        = f.text_field :tmp_date, :class => "datepicker span2", :value => Time.now.to_date
+      .span2
+        %h4 Time
+        = f.time_select :tmp_time, {:minute_step => 10}, :class => "span1"
+      .span2
+        %h4 Length
+        = f.select :timetable_length, TtActivity::TIME_SELECT, :class => "span2"
+    .row{:style => "margin-top:10px"}
+      .span2
+        %h4 Repeat
+        = f.select :repeat_type, options_for_select(TtActivity::REPEAT_TYPES), {}, :class => "span2"
+      .span2
+        %h4 No of repeats
+        = f.select :repeat_number, options_for_select((1..10).map{|n|[pluralize(n,"time"),n]}), {}, :class => "span2"
+      .span3
+        %h4 Category
+        = f.select :category, Settings.tt_activity_categories.split(","), {:class => "span3"}
+    .row{:style => "margin-top:10px"}
+      .span6
+        %h4 Text
+        = f.text_field :body, :class => "span6"
+      .span1
+        %h4 &nbsp;
+        = submit_tag "Add", :class => "btn btn-primary span1"

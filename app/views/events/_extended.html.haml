@@ -5,6 +5,9 @@
         %a{:href => "##{dom_id event}-#{pane.first.tr(" ","-")}", "data-toggle" => "tab"}= pane.first
   %li
     %a{:href => "##{dom_id event}-new-target", "data-toggle" => "tab"} New Target
+  - if Settings.event_notes == "students" or (Settings.event_notes == "staff" and @user.staff?)
+    %li
+      %a{:href => "##{dom_id event}-new-event-note", "data-toggle" => "tab"} Add Note
   - if @user.admin?
     %li
       %a{:href => "##{dom_id event}-db-attrs", "data-toggle" => "tab"} Admin Details
@@ -21,6 +24,19 @@
             Please notify your administrator...
   .tab-pane{:id => "#{dom_id event}-new-target"}
     .row= render :partial => "targets/new", :locals => {:event => event}
+  - if Settings.event_notes == "students" or (Settings.event_notes == "staff" and @user.staff?)
+    .tab-pane{:id => "#{dom_id event}-new-event-note"}
+      .row
+        %h3.span9 Add a note
+        %h5.span9 
+          Please remember notes are 
+          %i visible to learners.
+        = create_event_form EventNote do |f|
+          .span9
+            = f.hidden_field :parent_event_id, :value => event.id
+            = f.text_area :body, :maxlength => 500
+          .span1
+            = add_event_button
   .tab-pane{:id => "#{dom_id event}-db-attrs"}
     .row
       .span5

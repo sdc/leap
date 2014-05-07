@@ -1,0 +1,28 @@
+- case support_strategy.status
+- when "not_started"
+  .span10
+    %h2 I have read and agreed to this support strategy.
+    = button_to "Agree", event_url(event,"support_strategy[agreed_date]" => Date.today), :method => :put, :remote => true, :form_class => "edit-event-form", :class => "btn btn-success"
+
+  .span10
+    %h2 I have read and declined this support strategy.
+    = button_to "Decline", event_url(event,"support_strategy[declined_date]" => Date.today), :method => :put, :remote => true, :form_class => "edit-event-form", :class => "btn btn-danger"
+- when "current"
+  .span10
+    %h2 
+      Learner agreed to this support strategy
+      = pretty_date support_strategy.agreed_date
+  .span10
+    %h2 Set this strategy as complete
+    = button_to "Complete", event_url(event,"support_strategy[completed_date]" => Date.today), :method => :put, :remote => true, :form_class => "edit-event-form", :class => "btn btn-success"
+- when "complete"
+  %h2 
+    Agreed
+    = pretty_date support_strategy.agreed_date
+  %h2
+    Completed 
+    = pretty_date support_strategy.completed_date
+- when "incomplete"
+  %h2
+    Support declined
+    = pretty_date support_strategy.declined_date

@@ -53,13 +53,13 @@ module MisPerson
       options.reverse_merge! Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}]
       logger.info "Importing user #{mis_id}"
       if (ep = (Ebs::Person.find_by_person_code((mis_id.to_s.match(/\d{6}/) ? mis_id.to_s.tr('^0-9','') : mis_id)) or 
-                Ebs::Person.find_by_college_login(mis_id) or 
-                Ebs::Person.find_by_network_userid(mis_id)
+                Ebs::Person.find_by_college_login(mis_id.to_s) or 
+                Ebs::Person.find_by_network_userid(mis_id.to_s)
           ))
         @person = Person.find_or_create_by_mis_id(ep.id)
-        @person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
+        #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
         @person.update_attributes(
-          :forename      => ep.forename,
+          :forename      => ep.known_as.blank? ? ep.forename : ep.known_as,
           :surname       => ep.surname,
           :middle_names  => ep.middle_names && ep.middle_names.split,
           #:address       => ep.address ? [ep.address.address_line_1,ep.address.address_line_2,
@@ -146,14 +146,14 @@ module MisPerson
     end
     reds.map do |s| 
       TimetableEvent.create(
-        :mis_id       => s.register_event_id,
-        :title        => s.description.split(/\[/).first,
-        :start        => s.actual_start_date || s.planned_start_date,
-        :end          => s.actual_end_date   || s.planned_end_date,
-        :mark         => s.usage_code,
-        :status       => s.status,
-        :rooms        => s.rooms.map{|r| r.room_code},
-        :teachers     => s.teachers.map{|t| t.try(:name)}
+        :mis_id          => s.register_event_id,
+        :title           => s.description.split(/\[/).first,
+        :timetable_start => s.actual_start_date || s.planned_start_date,
+        :timetable_end   => s.actual_end_date   || s.planned_end_date,
+        :mark            => s.usage_code,
+        :status          => s.status,
+        :rooms           => s.rooms.map{|r| r.room_code},
+        :teachers        => s.teachers.map{|t| t.try(:name)}
       )
     end
   end
@@ -208,7 +208,7 @@ module MisPerson
       next unless la.unit_instance_occurrence && la.grade
       next unless Qualification.where(:mis_id => la.id).empty?
       nq=qualifications.create(
-        :title      => la.unit_instance_occurrence.long_description,
+        :title      => la.unit_instance_occurrence.title,
         :grade      => la.grade,
         :person_id  => id,
         :created_at => la.exp_end_date,
@@ -216,7 +216,6 @@ module MisPerson
       )
       nq.update_attribute("mis_id",la.id)
     end
-    return self
   end
 
   def import_absences
@@ -279,14 +278,14 @@ module MisCourse
     end
     reds.map do |s| 
       TimetableEvent.create(
-        :mis_id       => s.register_event_id,
-        :title        => s.description.split(/\[/).first,
-        :start        => s.actual_start_date || s.planned_start_date,
-        :end          => s.actual_end_date   || s.planned_end_date,
-        :mark         => s.usage_code,
-        :status       => s.status,
-        :rooms        => s.rooms.map{|r| r.room_code},
-        :teachers     => s.teachers.map{|t| t.try(:name)}
+        :mis_id          => s.register_event_id,
+        :title           => s.description.split(/\[/).first,
+        :timetable_start => s.actual_start_date || s.planned_start_date,
+        :timetable_end   => s.actual_end_date   || s.planned_end_date,
+        :mark            => s.usage_code,
+        :status          => s.status,
+        :rooms           => s.rooms.map{|r| r.room_code},
+        :teachers        => s.teachers.map{|t| t.try(:name)}
       )
     end
   end
@@ -302,7 +301,7 @@ module MisCourse
       if (ec = Ebs::UnitInstanceOccurrence.find_by_uio_id(mis_id))
         @course = Course.find_or_create_by_mis_id(mis_id)
         @course.update_attributes(
-          :title  => ec.long_description,
+          :title  => ec.title,
           :code   => ec.fes_uins_instance_code,
           :year   => ec.calocc_occurrence_code,
           :mis_id => ec.id

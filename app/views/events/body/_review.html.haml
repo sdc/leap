@@ -1,7 +1,7 @@
-= link_to person_event_url(@topic, event, :format => "pdf"), {"class" => "btn", "#{review.published ? "data-hacky" : "disabled"}" => "disabled"} do
+= link_to person_event_url(review.person, event, :format => "pdf"), {"class" => "btn", "#{review.published ? "data-hacky" : "disabled"}" => "disabled"} do
   %i.icon-print
   print
-= link_to person_event_url(@topic, review.events.creation.first), :class => "btn" do
+= link_to person_event_url(review.person, review.events.creation.first), :class => "btn" do
   %i.icon-th-list
   Show entire review
 

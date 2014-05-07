@@ -1,11 +1,11 @@
-= link_to person_timetables_url(@topic, :date => @next_timetable_event.try(:start)), :style => "color:inherit" do
+= link_to person_timetables_url(@topic, :date => @next_timetable_event.try(:timetable_start)), :style => "color:inherit" do
   %h3
     Next lesson
     = image_tag("timetable.png")
   .span4
     - if @next_timetable_event
       %h4= @next_timetable_event.title
-      %h5= pretty_date @next_timetable_event.start, :day => true
+      %h5= pretty_date @next_timetable_event.timetable_start, :day => true
       .small_text
         Room:
         = @next_timetable_event.rooms.join ", "

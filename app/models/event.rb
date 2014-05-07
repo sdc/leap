@@ -62,10 +62,11 @@ class Event < ActiveRecord::Base
 
   attr_accessor :first_in_past
 
-  [:title,:subtitle,:icon_url,:body,:extra_panes,:status,:staff_only?].each do |method|
+  [:title,:subtitle,:icon_url,:body,:extra_panes,:status,:staff_only?,:timetable_length].each do |method|
     define_method method do
       if eventable.respond_to?(method) 
         m = eventable.method(method)
+	logger.warn "Calling #{method} on #{eventable}"
         if m.arity == 1
           m.call(transition)
         else
@@ -85,9 +86,26 @@ class Event < ActiveRecord::Base
     Person.user.admin? or (Time.now - Settings.delete_delay.to_i < eventable.created_at and Person.user == eventable.created_by)
   end
 
-  def created_by_text
-    ret = created_by ? "Event created by #{created_by.name}<br />" : ""
-    ret += eventable.created_by_text
+  def created_by_text(options = {})
+    options.reverse_merge!(:event => true, :eventable => true)
+    ret = (created_by and options[:event]) ? "Event created by #{created_by.name}<br />" : ""
+    ret += eventable.created_by_text if options[:eventable]
+  end
+
+  def timetable_start
+    event_date
+  end
+
+  def timetable_margin
+   ((timetable_start - timetable_start.change(:hour => 8,:minute => 0, :sec => 0, :usec => 0)) / 50).floor
+  end
+
+  def timetable_height
+    (timetable_length / 56).floor
+  end
+
+  def timetable_end
+    event_date + timetable_length
   end
 
 end

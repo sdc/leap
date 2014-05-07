@@ -14,14 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class Ebs::Address < Ebs::Model
+class EventNote < Eventable
 
-  set_table_name "addresses"
+  attr_accessible :body, :parent_event_id
 
-  default_scope where(:owner_type => "P")
+  after_create {|note| note.events.create!(:event_date => created_at, :transition => :create, :parent_id => parent_event_id)}
 
-  def postcode
-    (uk_post_code_pt1 || "") + " " + (uk_post_code_pt2 || "")
+  validates :body, :presence => true, :length => {:in => 5..500}
+
+  def title
+    created_at.strftime("%d %b %y")
   end
 
 end

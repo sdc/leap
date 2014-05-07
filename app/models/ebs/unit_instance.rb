@@ -14,14 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class Ebs::Address < Ebs::Model
+class Ebs::UnitInstance < Ebs::Model
 
-  set_table_name "addresses"
-
-  default_scope where(:owner_type => "P")
-
-  def postcode
-    (uk_post_code_pt1 || "") + " " + (uk_post_code_pt2 || "")
-  end
+  self.primary_key = "fes_unit_instance_code"
+  
+  has_many :unit_instance_occurrences, :foreign_key => :fes_uins_instance_code
 
 end
