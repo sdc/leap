@@ -58,8 +58,9 @@ class ApplicationController < ActionController::Base
       Person.affiliation = @affiliation = session[:user_affiliation]
       redirect_to admin_test_url unless @user && @affiliation
     else
-      if request.env["affiliation"]
-        affs = request.env["affiliation"].split(";").map{|a| a.split("@").first.downcase}
+      aff_var = request.env["affiliation"] || request.env["HTTP_AJP_AFFILIATION"]
+      if aff_var
+        affs = aff_var.split(";").map{|a| a.split("@").first.downcase}
         Person.affiliation = @affiliation = ["staff","student","applicant","affiliate"].find{|a| affs.include? a}
       end
       uname,domain = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"].try(:downcase).try(:split,'@')
@@ -71,8 +72,6 @@ class ApplicationController < ActionController::Base
         end
       end
       Person.user = @user = Person.get(uname)
-      # HORRIBLE HACK
-      @affiliation = Person.affiliation = @user.mis.fes_staff_code? ? "staff" : "student"
       render "admin/auth_error" unless @user && @affiliation
     end
   end
