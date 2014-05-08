@@ -72,5 +72,6 @@ Settings.defaults[:moodle_link_target]           = "_self"
 Settings.defaults[:attendance_table]             = ""
 Settings.defaults[:attendance_culm_column]       = ""
 Settings.defaults[:attendance_week_column]       = ""
+Settings.defaults[:attendance_date_column]       = ""
 Settings.defaults[:attendance_low_score]         = 85
 Settings.defaults[:attendance_high_score]        = 90

@@ -184,7 +184,7 @@ module MisPerson
   end
 
   def import_attendances
-    if [Settings.attendance_table,Settings.attendance_week_column,Settings.attendance_culm_column].detect{|x| x.blank?}
+    if [Settings.attendance_table,Settings.attendance_week_column,Settings.attendance_culm_column,Settings.attendance_date_column].detect{|x| x.blank?}
       logger.error "Attendance table not configured"
       return false
     end
@@ -194,11 +194,11 @@ module MisPerson
       Date.civil(1900,1,1)
     end
     mis_person.attendances.
-      where("start_week > ?",last_date - 2.weeks).
+      where("#{Settings.attendance_date_column} > ?",last_date - 2.weeks).
       each do |att|
-        na=Attendance.find_or_create_by_person_id_and_week_beginning(id,att.start_week)
+        na=Attendance.find_or_create_by_person_id_and_week_beginning(id,att.send(Settings.attendance_date_column))
         na.update_attributes(
-          :week_beginning => att.start_week,
+          :week_beginning => att.send(Settings.attendance_date_column),
           :att_year   => att.send(Settings.attendance_culm_column),
           :att_week   => att.send(Settings.attendance_week_column)
         )

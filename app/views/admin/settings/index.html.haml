@@ -35,6 +35,10 @@
     .controls
       =text_field_tag "attendance_week_column", Settings.attendance_week_column
   .control-group
+    %label.control-label Week date column
+    .controls
+      =text_field_tag "attendance_date_column", Settings.attendance_date_column
+  .control-group
     %label Bad - OK - Good attendance percentages
     .controls
       %span.add-on
@@ -256,7 +260,8 @@
                                  "review_cat_punctuality","review_cat_attitude","review_cat_completion","review_windows",
                                  "current_review_window","review_grades","reverse_scores","event_notes","moodle_user_postfix",
                                  "moodle_host","moodle_path","moodle_token","moodle_link_target","attendance_table",
-                                 "attendance_culm_column","attendance_week_column","attendance_low_score","attendance_high_score"]
+                                 "attendance_culm_column","attendance_week_column","attendance_low_score","attendance_high_score",
+                                 "attendance_date_column"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize
