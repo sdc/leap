@@ -31,12 +31,12 @@ class Attendance < Eventable
   end
 
   def status
-    if att_year > 89
-      :complete
-    elsif att_year > 84
+    if att_year < Settings.attendance_low_score.to_i
+      :overdue
+    elsif att_year < Settings.attendance_high_score.to_i
       :start
     else
-      :overdue
+      :complete
     end
   end
 
