@@ -184,6 +184,10 @@ module MisPerson
   end
 
   def import_attendances
+    if [Settings.attendance_table,Settings.attendance_week_column,Settings.attendance_culm_column].detect{|x| x.blank?}
+      logger.error "Attendance table not configured"
+      return false
+    end
     last_date = unless attendances.empty?
       attendances.last.week_beginning
     else
@@ -195,9 +199,8 @@ module MisPerson
         na=Attendance.find_or_create_by_person_id_and_week_beginning(id,att.start_week)
         na.update_attributes(
           :week_beginning => att.start_week,
-          :att_year   => att.attendance,
-          :att_3_week => att.attendance_last3wks,
-          :att_week   => att.attendance_weekly
+          :att_year   => att.send(Settings.attendance_culm_column),
+          :att_week   => att.send(Settings.attendance_week_column)
         )
       end
     return self

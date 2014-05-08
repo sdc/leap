@@ -21,6 +21,31 @@
     .controls
       = text_area_tag "advert_box_html", Settings.advert_box_html
 
+  %h2 Attendance Import
+  .control-group
+    %label.control-label Table name
+    .controls
+      = text_field_tag "attendance_table", Settings.attendance_table
+  .control-group
+    %label.control-label Culmulative attendance column 
+    .controls
+      = text_field_tag "attendance_culm_column", Settings.attendance_culm_column
+  .control-group
+    %label.control-label Weekly attendance column
+    .controls
+      =text_field_tag "attendance_week_column", Settings.attendance_week_column
+  .control-group
+    %label Bad - OK - Good attendance percentages
+    .controls
+      %span.add-on
+        = "Bad < "
+      = number_field_tag "attendance_low_score", Settings.attendance_low_score, :in => 1..99, :class => "span1 inline"
+      %span.add-on
+        = "< OK <"
+      = number_field_tag "attendance_high_score", Settings.attendance_high_score, :in => 1..99, :class => "span1 inline"
+      %span.add-on
+        = "< Good"
+
   %h2 BKSB
   .well
     If you enter correct BKSB settings here, then BKSB results can be automatically imported for users. Leave these
@@ -230,7 +255,8 @@
                                  "qqoe_select_type","current_simple_poll","lorem_pictures","review_cat_quality",
                                  "review_cat_punctuality","review_cat_attitude","review_cat_completion","review_windows",
                                  "current_review_window","review_grades","reverse_scores","event_notes","moodle_user_postfix",
-                                 "moodle_host","moodle_path","moodle_token","moodle_link_target"]
+                                 "moodle_host","moodle_path","moodle_token","moodle_link_target","attendance_table",
+                                 "attendance_culm_column","attendance_week_column","attendance_low_score","attendance_high_score"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize
