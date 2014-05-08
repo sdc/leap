@@ -60,13 +60,14 @@ class local_leapwebservices_external extends external_api {
         }
 
         $courses = $DB->get_records_sql("SELECT DISTINCT c.id AS id, c.fullname, c.shortname, c.idnumber, c.visible
-            FROM mdl_role_assignments ra, mdl_user u, mdl_course c, mdl_context cxt, mdl_role r
+            FROM ".$CFG->prefix."role_assignments ra, ".$CFG->prefix."user u,
+                ".$CFG->prefix."course c, ".$CFG->prefix."context cxt, ".$CFG->prefix."role r
             WHERE ra.userid = u.id
             AND ra.contextid = cxt.id
             AND cxt.contextlevel = 50
             AND cxt.instanceid = c.id
             AND ra.roleid = r.id
-            AND u.username =  '".$params['username']."'
+            AND u.username =  \"".$params['username']."\"
             ORDER BY fullname ASC;");
 
         $coursesinfo = array();
@@ -146,7 +147,7 @@ class local_leapwebservices_external extends external_api {
             header($_SERVER["SERVER_PROTOCOL"].' 422 Unprocessable Entity ($params[\'idnumber\'] empty.)', true, 422);
         }
 
-        $courses = $DB->get_records_select('course', 'idnumber LIKE "%|'.$idnumber.'|%"', null, 'id', '*', null, null);
+        $courses = $DB->get_records_select('course', 'idnumber LIKE "%'.$idnumber.'%"', null, 'id', '*', null, null);
 
         $coursesinfo = array();
         foreach ($courses as $course) {
@@ -189,7 +190,6 @@ class local_leapwebservices_external extends external_api {
                 $courseinfo['timemodified']             = $course->timemodified;
                 $courseinfo['forcetheme']               = $course->theme;
                 $courseinfo['enablecompletion']         = $course->enablecompletion;
-                $courseinfo['completionstartonenrol']   = $course->completionstartonenrol;
                 $courseinfo['completionnotify']         = $course->completionnotify;
             }
 
@@ -227,15 +227,12 @@ class local_leapwebservices_external extends external_api {
                         'number of recent items appearing on the course page', VALUE_OPTIONAL),
                     'startdate' => new external_value(PARAM_INT,
                         'timestamp when the course start'),
-                    'numsections' => new external_value(PARAM_INT, 'number of weeks/topics'),
                     'maxbytes' => new external_value(PARAM_INT,
                         'largest size of file that can be uploaded into the course', VALUE_OPTIONAL),
                     'showreports' => new external_value(PARAM_INT,
                         'are activity report shown (yes = 1, no =0)', VALUE_OPTIONAL),
                     'visible' => new external_value(PARAM_INT,
                         '1: available to student, 0:not available', VALUE_OPTIONAL),
-                    'hiddensections' => new external_value(PARAM_INT,
-                        'How the hidden sections in the course are displayed to students', VALUE_OPTIONAL),
                     'groupmode' => new external_value(PARAM_INT, 'no group, separate, visible', VALUE_OPTIONAL),
                     'groupmodeforce' => new external_value(PARAM_INT, '1: yes, 0: no', VALUE_OPTIONAL),
                     'defaultgroupingid' => new external_value(PARAM_INT, 'default grouping id', VALUE_OPTIONAL),
@@ -246,9 +243,6 @@ class local_leapwebservices_external extends external_api {
                     'enablecompletion' => new external_value(PARAM_INT,
                         'Enabled, control via completion and activity settings. Disbaled,
                         not shown in activity settings.', VALUE_OPTIONAL),
-                    'completionstartonenrol' => new external_value(PARAM_INT,
-                        '1: begin tracking a student\'s progress in course completion
-                        after course enrolment. 0: does not', VALUE_OPTIONAL),
                     'completionnotify' => new external_value(PARAM_INT,
                         '1: yes 0: no', VALUE_OPTIONAL),
                     'lang' => new external_value(PARAM_ALPHANUMEXT,
@@ -282,43 +276,50 @@ class local_leapwebservices_external extends external_api {
         global $CFG;
         require_once($CFG->dirroot . "/user/lib.php");
         require_once($CFG->dirroot . "/user/profile/lib.php");
+        require_once($CFG->dirroot . "/user/externallib.php");
 
         $params = self::validate_parameters(self::get_users_by_username_parameters(),
-            array('usernames'=>$usernames));
+            array('usernames' => $usernames));
 
-        $users = user_get_users_by_username($params['usernames']);
+        if (empty($params)) {
+            header($_SERVER["SERVER_PROTOCOL"].' 422 Unprocessable Entity ($params[\'usernames\'] empty.)', true, 422);
+        }
+
+        // Changing out deprecated core function for new one.
+        // get_users_by_field ONLY EXISTS IN MOODLE 2.5 AND ONWARDS!
+        // TODO: Check if this is going to work, and fail gracefully if not.
+        $users = core_user_external::get_users_by_field('username', $params['usernames']);
+        
         $result = array();
         foreach ($users as $user) {
 
-            $context = get_context_instance(CONTEXT_USER, $user->id);
+            $context = get_context_instance(CONTEXT_USER, $user['id']);
+            try {
+                self::validate_context($context);
+            } catch (Exception $e) {
+                $exceptionparam             = new stdClass();
+                $exceptionparam->message    = $e->getMessage();
+                $exceptionparam->userid     = $user['id'];
+                throw new moodle_exception(
+                    get_string('errorusercontextnotvalid', 'local_leapwebservices', $exceptionparam));
+            }
             require_capability('moodle/user:viewalldetails', $context);
-            self::validate_context($context);
 
             if (empty($user->deleted)) {
 
                 $userarray = array();
-                $userarray['id']                = $user->id;
-                $userarray['username']          = $user->username;
-                $userarray['firstname']         = $user->firstname;
-                $userarray['lastname']          = $user->lastname;
-                $userarray['email']             = $user->email;
-                $userarray['auth']              = $user->auth;
-                $userarray['confirmed']         = $user->confirmed;
-                $userarray['idnumber']          = $user->idnumber;
-                $userarray['lang']              = $user->lang;
-                $userarray['theme']             = $user->theme;
-                $userarray['timezone']          = $user->timezone;
-                $userarray['mailformat']        = $user->mailformat;
-                $userarray['description']       = $user->description;
-                $userarray['descriptionformat'] = $user->descriptionformat;
-                $userarray['city']              = $user->city;
-                $userarray['country']           = $user->country;
-                $userarray['customfields']      = array();
-                $customfields                   = profile_user_record($user->id);
-                $customfields                   = (array) $customfields;
-                foreach ($customfields as $key => $value) {
-                    $userarray['customfields'][] = array('type' => $key, 'value' => $value);
-                }
+                $userarray['id']                    = $user['id'];
+                $userarray['username']              = $user['username'];
+                $userarray['firstname']             = $user['firstname'];
+                $userarray['lastname']              = $user['lastname'];
+                $userarray['email']                 = $user['email'];
+
+                //$userarray['customfields']      = array();
+                //$customfields                   = profile_user_record($user->id);
+                //$customfields                   = (array) $customfields;
+                //foreach ($customfields as $key => $value) {
+                //    $userarray['customfields'][] = array('type' => $key, 'value' => $value);
+                //}
 
                 $result[] = $userarray;
             }
@@ -340,27 +341,16 @@ class local_leapwebservices_external extends external_api {
                     'firstname'         => new external_value(PARAM_NOTAGS, 'The first name(s) of the user'),
                     'lastname'          => new external_value(PARAM_NOTAGS, 'The family name of the user'),
                     'email'             => new external_value(PARAM_TEXT, 'An email address - allow email as root@localhost'),
-                    'auth'              => new external_value(PARAM_SAFEDIR, 'Auth plugins include manual, ldap, imap, etc'),
-                    'confirmed'         => new external_value(PARAM_NUMBER, 'Active user: 1 if confirmed, 0 otherwise'),
-                    'idnumber'          => new external_value(PARAM_RAW, 'An arbitrary ID code number perhaps from the institution'),
-                    'lang'              => new external_value(PARAM_SAFEDIR, 'Language code such as "en", must exist on server'),
-                    'theme'             => new external_value(PARAM_SAFEDIR, 'Theme name such as "standard", must exist on server'),
-                    'timezone'          => new external_value(PARAM_ALPHANUMEXT, 'Timezone code such as Australia/Perth, or 99 for default'),
-                    'mailformat'        => new external_value(PARAM_INTEGER, 'Mail format code is 0 for plain text, 1 for HTML etc'),
-                    'description'       => new external_value(PARAM_RAW, 'User profile description'),
-                    'descriptionformat' => new external_value(PARAM_INT, 'User profile description format'),
-                    'city'              => new external_value(PARAM_NOTAGS, 'Home city of the user'),
-                    'country'           => new external_value(PARAM_ALPHA, 'Home country code of the user, such as AU or CZ'),
-                    'customfields'      => new external_multiple_structure(
-                        new external_single_structure(
-                            array(
-                                'type'  => new external_value(PARAM_ALPHANUMEXT, 'The name of the custom field'),
-                                'value' => new external_value(PARAM_RAW, 'The value of the custom field')
-                            )
-                        ),
-                    'User custom fields (also known as user profile fields)',
-                    VALUE_OPTIONAL
-                    )
+                    //'customfields'      => new external_multiple_structure(
+                    //    new external_single_structure(
+                    //        array(
+                    //            'type'  => new external_value(PARAM_ALPHANUMEXT, 'The name of the custom field'),
+                    //            'value' => new external_value(PARAM_RAW, 'The value of the custom field')
+                    //        )
+                    //    ),
+                    //'User custom fields (also known as user profile fields)',
+                    //VALUE_OPTIONAL
+                    //)
                 )
             )
         );
@@ -396,32 +386,32 @@ class local_leapwebservices_external extends external_api {
 
         $user = $DB->get_record('user', array('username' => $params['username']));
         $courses = enrol_get_users_courses($user->id, false, '*');
-        if (!empty($courses)) {
+        if (!empty($courses)) {   
 
             $contents = array();
             foreach ($courses as $course) {
-                $contents[] = $DB->get_records('assignment', array('course' => $course->id), 'timedue ASC', 'id, name, intro, timeavailable, timedue, course');
+                $contents[] = $DB->get_records('assign', array('course' => $course->id), 'duedate ASC', 'id, name, intro, allowsubmissionsfromdate, duedate, course');
             }
 
             $result = array();
             foreach ($contents as $morecontents) {
                 foreach ($morecontents as $content) {
                     $assarray = array();
-                    $assarray['id']                 = $content->id;
-                    $assarray['name']               = $content->name;
-                    $assarray['intro']              = $content->intro;
-                    $assarray['timeavailable']      = $content->timeavailable;
-                    $assarray['timeavailable-kev']  = date('c', $content->timeavailable);
-                    $assarray['timedue']            = $content->timedue;
-                    $assarray['timedue-kev']        = date('c', $content->timedue);
-                    $assarray['course']             = $content->course;
+                    $assarray['id']                             = $content->id;
+                    $assarray['name']                           = $content->name;
+                    $assarray['intro']                          = strip_tags($content->intro);
+                    $assarray['allowsubmissionsfromdate']       = $content->allowsubmissionsfromdate;
+                    $assarray['allowsubmissionsfromdate-kev']   = date('c', $content->allowsubmissionsfromdate);
+                    $assarray['duedate']                        = $content->duedate;
+                    $assarray['duedate-kev']                    = date('c', $content->duedate);
+                    $assarray['course']                         = $content->course;
 
                     $sql = "SELECT cm.id AS id
-                        FROM ".$CFG->prefix."assignment AS a, ".$CFG->prefix."course_modules AS cm, ".$CFG->prefix."modules AS m
+                        FROM ".$CFG->prefix."assign AS a, ".$CFG->prefix."course_modules AS cm, ".$CFG->prefix."modules AS m
                         WHERE a.course = ".$content->course."
                         AND a.course = cm.course
                         AND cm.module = m.id
-                        AND m.name = 'assignment'
+                        AND m.name = 'assign'
                         AND cm.instance = a.id
                         AND a.id = ".$content->id.";";
                     $instance_res = $DB->get_record_sql($sql);
@@ -443,15 +433,15 @@ class local_leapwebservices_external extends external_api {
         return new external_multiple_structure(
             new external_single_structure(
                 array(
-                    'id'                => new external_value(PARAM_INTEGER, 'ID of the assignment'),
-                    'name'              => new external_value(PARAM_TEXT, 'Assignment name'),
-                    'intro'             => new external_value(PARAM_TEXT, 'Assignment introduction, may contain HTML'),
-                    'timeavailable'     => new external_value(PARAM_INTEGER, 'Date available from (set date)'),
-                    'timeavailable-kev' => new external_value(PARAM_RAW, 'Date available from (set date) in Kev format'),
-                    'timedue'           => new external_value(PARAM_INTEGER, 'Date available to (due date)'),
-                    'timedue-kev'       => new external_value(PARAM_RAW, 'Date available to (due date) in Kev format'),
-                    'course'            => new external_value(PARAM_INTEGER, 'ID of the course the assignment is set against'),
-                    'instance'          => new external_value(PARAM_INTEGER, 'Module instance'),
+                    'id'                            => new external_value(PARAM_INTEGER, 'ID of the assignment'),
+                    'name'                          => new external_value(PARAM_TEXT, 'Assignment name'),
+                    'intro'                         => new external_value(PARAM_TEXT, 'Assignment introduction, may contain HTML'),
+                    'allowsubmissionsfromdate'      => new external_value(PARAM_INTEGER, 'Date available from (set date)'),
+                    'allowsubmissionsfromdate-kev'  => new external_value(PARAM_RAW, 'Date available from (set date) in Kev format'),
+                    'duedate'                       => new external_value(PARAM_INTEGER, 'Date available to (due date)'),
+                    'duedate-kev'                   => new external_value(PARAM_RAW, 'Date available to (due date) in Kev format'),
+                    'course'                        => new external_value(PARAM_INTEGER, 'ID of the course the assignment is set against'),
+                    'instance'                      => new external_value(PARAM_INTEGER, 'Module instance'),
                 )
             )
         );

@@ -22,4 +22,6 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Leap Web Services';
+$string['pluginname']               = 'Leap Web Services';
+$string['notinthisversion']         = 'Required function \'get_users_by_field()\' is not available in this version of Moodle ({$a->userid}).';
+$string['errorusercontextnotvalid'] = 'You cannot execute functions in the user context (user id:{$a->userid}). The context error message was: {$a->message}';
