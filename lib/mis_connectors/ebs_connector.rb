@@ -137,7 +137,7 @@ module MisPerson
   def timetable_events(options = {})
     reds = if options == :next
       Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T']).
-        where("planned_start_date > ?",Time.now)
+        where("planned_start_date > ?",Time.now).
         order(:planned_start_date).limit(1)
     else
       from = (options[:from] || Date.today.beginning_of_week)
