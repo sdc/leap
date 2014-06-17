@@ -32,7 +32,7 @@
 \end{minipage}
 \begin{minipage}{122mm}
   \begin{tabular}{l@{\hspace{3mm}}l}
-    Date: & <%= (event.eventable.events.complete.first.try(:event_date) or Date.today).strftime("%d %B %Y") %> \\
+    Date: & <%= (event.eventable.events.where(:transition => :complete).first.try(:event_date) or Date.today).strftime("%d %B %Y") %> \\
     Person Code:   & <%= event.person.mis_id %> \\
   \end{tabular}
 \end{minipage}
@@ -54,10 +54,11 @@
 \subsection*{Review}
 \begin{longtable}{|p{40mm}|p{3mm}|p{3mm}|p{3mm}|p{3mm}|p{112mm}|}
   \hline
-  &\centering\begin{sideways}Quality of Work\end{sideways}
-  &\centering\begin{sideways}Punctuality\end{sideways}
-  &\centering\begin{sideways}Attitude\end{sideways}
-  &\centering\begin{sideways}Completion of Work\end{sideways}
+  
+  &\centering\begin{sideways}<%= Settings.review_cat_quality %>\end{sideways}
+  &\centering\begin{sideways}<%= Settings.review_cat_punctuality %>\end{sideways}
+  &\centering\begin{sideways}<%= Settings.review_cat_attitude %>\end{sideways}
+  &\centering\begin{sideways}<%= Settings.review_cat_completion %>\end{sideways}
   &Comments\\
   \hline
 <% event.children.where(:eventable_type => "ReviewLine").map{|x| x.eventable}.each do |rl| %>
