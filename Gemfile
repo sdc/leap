@@ -12,7 +12,7 @@ gem 'rails-settings', :require => 'settings'
 gem 'rails_autolink'
 gem 'uglifier', "1.0.3"
 gem 'rails-latex'
-gem 'nokogiri'
+gem 'nokogiri', "1.5.10"
 gem 'coffee-filter'
 gem 'yui-compressor'
 
