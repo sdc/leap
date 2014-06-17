@@ -13,7 +13,7 @@ $(document).ready ->
 
   # Load and open the extended pane of an event
   $('.extend-button')
-    .live 'ajax:complete', (event,data) ->
+    .on 'ajax:complete', (event,data) ->
       e = $(event.target).closest('.event')
       e.find('.event-spinner').show()
       e.find('.extended').html data.responseText
@@ -22,7 +22,7 @@ $(document).ready ->
       e.find('.event-spinner').hide()
       e.find('.nav-tabs a:first').tab('show')
       setupDatePickers e
-    .live 'click', (event) ->
+    .on 'click', (event) ->
       e = $(event.target).closest('.event')
       e.find('.event-spinner').show()
       e.find('.extend-button').hide()
@@ -33,17 +33,17 @@ $(document).ready ->
     e.find('.extend-button').show()
     e.find('.close-extend-button').hide()
 
-  $('.close-extend-button').live 'click', (event) ->
+  $('.close-extend-button').on 'click', (event) ->
     e = $(event.target).closest('.event')
     close_event(e)
   
   # Deleting Events
   $('.delete-event-button')
-    .live 'click', (event) ->
+    .on 'click', (event) ->
       e = $(event.target).closest('.event')
       e.find('.event-spinner').show()
       e.find('.delete-event-button').hide()
-    .live 'ajax:complete', (event) ->
+    .on 'ajax:complete', (event) ->
       e = $(event.target).closest('.event')
       e.after "<div class='row alert alert-success'><button class='close' data-dismiss='alert'>×</button><b>Event Deleted!</b></div>"
       e.hide('slow')
@@ -51,10 +51,10 @@ $(document).ready ->
 
   # Remote update of events if you edit them
   $('.edit-event-form')
-    .live 'ajax:before', (event) ->
+    .on 'ajax:before', (event) ->
       e = $(event.target).closest('.event')
       close_event(e)
-    .live 'ajax:complete', (event,data) ->
+    .on 'ajax:complete', (event,data) ->
       e = $(event.target).closest('.event')
       e.replaceWith innerShiv data.responseText
       $('#main-pane > .alert').delay(4000).hide('slow')
@@ -64,7 +64,7 @@ $(document).ready ->
     .click ->
       $('#more_events').hide()
       $('#more_events_loading').show()
-    .live 'ajax:complete', (event,data) ->
+    .on 'ajax:complete', (event,data) ->
       unless data.responseText.length == 1
         $('#more_events_div').before innerShiv data.responseText
         d = $('#main-pane').children('.event').last().find('.event-date').attr('data-datetime')
@@ -77,7 +77,7 @@ $(document).ready ->
     if ($(window).scrollTop() == $(document).height() - $(window).height())
       $('#more_events').click() unless $('#more_events').first().css('display') == "none"
 
-  $('#expand-mini').live 'click',  -> 
+  $('#expand-mini').on 'click',  -> 
     ul = $(this).closest("ul")
     ul.find('.body.short').hide()
     ul.find('.body.long').show()

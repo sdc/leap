@@ -83,10 +83,10 @@ $(document).ready ->
     $('#person_note_text').show("blind","slow")
     $('#person_note_button div').addClass("disabled")
 
-  $('.event-header>h2').live 'click', ->
+  $('.event-header>h2').on 'click', ->
     $(this).next().toggle('fast')
     $(this).find('.icon-eye-open').removeClass("icon-eye-open").addClass("icon-eye-close")
     $(this).find('.icon-eye-close').removeClass("icon-eye-close").addClass("icon-eye-open")
 
-  $('#show-timetable-controls-button').live 'click', ->
+  $('#show-timetable-controls-button').on 'click', ->
     $('#timetable-header').toggle('fast')
