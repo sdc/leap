@@ -23,7 +23,11 @@ class TimetablesController < ApplicationController
     @end_date = @date.next_week
     @registers = @topic.timetable_events(:from => @date, :to => @end_date)
     @view = View.for_user.find_by_name("timetable")
-    @events = @topic.events.where(:event_date => (@date.to_time + 1.hour + 1.second)..@end_date, :transition => @view.transitions, :eventable_type => @view.events) if @topic.kind_of? Person
+    @events = if @topic.kind_of? Person
+      @topic.events.where(:event_date => (@date.to_time + 1.hour + 1.second)..@end_date, :transition => @view.transitions, :eventable_type => @view.events) 
+    else
+      []
+    end
     respond_to do |format|
       format.html 
       format.xml { render :xml => @topic }
