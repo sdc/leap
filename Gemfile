@@ -4,7 +4,7 @@ gem 'coffee-rails', "3.2.2"
 gem 'haml'
 gem "less-rails"
 gem 'less-rails-bootstrap', "2.0.13"
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 2.3.0'
 gem 'symbolize'
 gem 'supermodel', :git => "https://github.com/maccman/supermodel.git"
 gem 'scoped_search'
