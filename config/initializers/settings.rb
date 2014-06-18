@@ -75,3 +75,7 @@ Settings.defaults[:attendance_week_column]       = ""
 Settings.defaults[:attendance_date_column]       = ""
 Settings.defaults[:attendance_low_score]         = 85
 Settings.defaults[:attendance_high_score]        = 90
+
+# Stylesheets
+# This is pretty hacky but just dumps some arbitrary css into a style tag in the layout
+Settings.defaults[:custom_css] = ""

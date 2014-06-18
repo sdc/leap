@@ -7,6 +7,10 @@
       %title Leap
     = favicon_link_tag
     = stylesheet_link_tag 'application'
+    - unless Settings.custom_css.blank?
+      :css
+        /* Here begins the custom CSS ======================================== */
+        #{Settings.custom_css}
     = javascript_include_tag "application"
     = csrf_meta_tag
     = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty?
