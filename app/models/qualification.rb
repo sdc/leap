@@ -43,6 +43,12 @@ class Qualification < Eventable
     grade
   end
 
+  def extra_panes
+    if Person.user.staff?
+      [["Edit","events/tabs/edit_qual"]]
+    end
+  end
+
   def status
     return :complete if seen?
     return :complete if !mis_id.blank?
