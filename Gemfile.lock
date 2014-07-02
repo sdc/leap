@@ -122,8 +122,8 @@ GEM
     rails-latex (1.0.12)
       rails (>= 3.0.0)
     rails-settings (1.0.0)
-    rails_autolink (1.1.5)
-      rails (> 3.1)
+    rails_autolink (1.0.9)
+      rails (~> 3.1)
     railties (3.2.17)
       actionpack (= 3.2.17)
       activesupport (= 3.2.17)
@@ -198,7 +198,7 @@ DEPENDENCIES
   rails (= 3.2.17)
   rails-latex
   rails-settings
-  rails_autolink
+  rails_autolink (= 1.0.9)
   ruby-oci8 (= 2.1.0)
   scoped_search
   sqlite3

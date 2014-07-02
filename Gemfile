@@ -9,7 +9,7 @@ gem 'symbolize'
 gem 'supermodel', :git => "https://github.com/maccman/supermodel.git"
 gem 'scoped_search'
 gem 'rails-settings', :require => 'settings'
-gem 'rails_autolink'
+gem 'rails_autolink', '1.0.9'
 gem 'uglifier', "1.0.3"
 gem 'rails-latex'
 gem 'nokogiri', "1.5.10"
