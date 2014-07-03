@@ -1,4 +1,4 @@
-= form_for(qualification, :url => event, :remote => true, :method => :put, :html => {:class => "form edit-event-form"}) do |f|
+= form_for(qualification, :url => event, :method => :put, :html => {:class => "form edit-event-form"}) do |f|
   = hidden_field_tag :person_id, @topic.mis_id
   .span2
     %h4 Qualification
