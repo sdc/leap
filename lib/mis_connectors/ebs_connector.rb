@@ -73,7 +73,7 @@ module MisPerson
           #:uln           => ep.unique_learn_no,
           :mis_id        => ep.person_code,
           :staff         => ep.fes_staff_code?,
-          :username      => (ep.college_login or ep.id),
+          :username      => (ep.college_login or ep.network_userid or ep.id),
           :personal_email=> ep.personal_email,
           :home_phone    => ep.address && ep.address.telephone,
           :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil
