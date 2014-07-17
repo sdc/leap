@@ -92,4 +92,8 @@ class Target < Eventable
     [["Completion","targets/details"]]
   end
 
+  def tile_icon
+    "fa-bullseye"
+  end
+
 end

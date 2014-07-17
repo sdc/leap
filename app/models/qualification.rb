@@ -88,4 +88,9 @@ class Qualification < Eventable
     end
   end
 
+
+  def tile_icon
+    "fa-certificate"
+  end
+
 end

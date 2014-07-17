@@ -86,4 +86,8 @@ class PersonCourse < Eventable
     return panes
   end
 
+  def tile_icon
+    "fa-graduation-cap"
+  end
+
 end

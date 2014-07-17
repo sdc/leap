@@ -43,4 +43,8 @@ class Review < Eventable
     !published
   end
 
+  def tile_icon
+    "fa-file-text"
+  end
+
 end
