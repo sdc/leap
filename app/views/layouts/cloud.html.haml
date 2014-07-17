@@ -1,0 +1,14 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %title= @topic ? "#{@topic.name} : Leap"  : "Leap"
+    = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+    = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+    = stylesheet_link_tag 'cloud'
+    = javascript_include_tag '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
+    = javascript_include_tag 'cloud'
+    = csrf_meta_tag
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"}
+    = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty?
+  %body#cleap{:class => ([Person.affiliation] + @courses || [])}
+    .container-fluid= yield

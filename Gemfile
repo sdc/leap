@@ -22,7 +22,7 @@ platforms :ruby do
   gem 'activerecord-sqlserver-adapter'
   gem 'activerecord-oracle_enhanced-adapter', '~> 1.4.0'
   gem 'activerecord-mysql-adapter'
-  gem 'ruby-oci8', "2.1.0"
+  gem 'ruby-oci8'#, "2.1.0"
   gem 'tiny_tds', "0.5.1"
   gem 'sqlite3'
 end

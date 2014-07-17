@@ -1,0 +1,15 @@
+.col-xs-12.col-sm-4.col-lg-2[event]{:style => "background:##{event.tile_bg}"}
+  %header.row
+    .col-xs-9= raw special_title event.title
+    .col-xs-2
+      %i.fa.fa-bars.front-event-menu{"data-toggle" => "dropdown"}
+      %ul.dropdown-menu
+        - if event.is_deletable?
+          %li
+            = link_to person_event_url(event.person, event), :remote => true, :class => "delete-event" do
+              %i.fa.fa-trash-o
+              Delete
+  .row 
+    .col-xs-12
+      = raw special_title event.subtitle
+      %p= event.body

@@ -135,7 +135,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
-    ruby-oci8 (2.1.0)
+    ruby-oci8 (2.1.7)
     scoped_search (2.7.1)
       activerecord (>= 2.1.0)
     sprockets (2.2.2)
@@ -199,7 +199,7 @@ DEPENDENCIES
   rails-latex
   rails-settings
   rails_autolink (= 1.0.9)
-  ruby-oci8 (= 2.1.0)
+  ruby-oci8
   scoped_search
   sqlite3
   supermodel!

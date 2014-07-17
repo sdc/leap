@@ -19,6 +19,11 @@ class PeopleController < ApplicationController
   skip_before_filter :set_topic
   before_filter      :person_set_topic, :except => [:search]
   before_filter      :staff_only, :only => [:search,:select]
+  layout :set_layout
+
+  def home
+    @events = @topic.events.limit(10)
+  end
 
   def show
     respond_to do |format|
@@ -103,6 +108,14 @@ class PeopleController < ApplicationController
   def person_set_topic
     params[:person_id] = params[:id]
     set_topic
+  end
+
+  def set_layout
+    case action_name
+    when /\_block$/ then false
+    when "home" then "cloud"
+    else "application"
+    end
   end
 
 end

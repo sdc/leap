@@ -1,0 +1,51 @@
+#require 'mis_connectors/no_connector'
+require 'mis_connectors/ebs_connector'
+ActiveRecord::ConnectionAdapters::SQLServerAdapter.lowercase_schema_reflection = true if defined?(ActiveRecord::ConnectionAdapters::SQLServerAdapter)
+Ilp2::Application.config.mis_progress_codes = {
+  "ACTREG"     => :current,    #  Active on Course
+  "TRANSREG"   => :incomplete, #  Transfer to another Learner Aim
+  "DNSREG"     => :incomplete, #  DNS - Left before 1st Census
+  "FINREG"     => :complete,   #  Finished Course
+  "WDRCH"      => :incomlete,  #  Withdrawn - Change of Circumstances
+  "WDRSD"      => :incomplete, #  Withdrawn - Student Dissatisfaction
+  "WDRDATA"    => :incomplete, #  Withdrawn by Data Team
+  "FINREGNV"   => :complete,   #  Finished Non Voc Course only
+  "WDRLA"      => :incomplete, #  Withdrawn Learn Agree/Census/ Sign Off
+  "LEARNERENR" => :current,    #  Learner enrolment
+  "DNSENR"     => :incomplete, #  DNS - Enrolled but never attended
+  "DNSLP"      => :incomplete, #  DNS - enrolled via LP and did not pay
+  "DECLINED"   => :incomplete, #  Declined Payment by Netbanx
+  "DNSXFR"     => :incomplete, #  DNS on this course but still at College.
+  "WDRNCC"     => :incomplete, #  Withdrwn-Class Closed after Census Point
+  "DNSCC"      => :incomplete, #  DNS - Class closed B4 census Point
+  "DNSPD"      => :incomplete, #  DNS - Learner Portal Duplicate
+  "DNSDATA"    => :incomplete, # DNS - Enrolled but never attended (CIS)
+  'C'          => :complete,   #Completed,
+  'CP'         => :not_started, #Condition. Awaiting Condition, Paid,
+  'H'          => :not_started, #Holding. Awaiting Condition,
+  'N'          => :incomplete,  #Non-Starter,
+  'NT'         => :incomplete,  #Non Starter Transferred to another cours,
+  'S'          => :incomplete,  #Suspended before re enrolment on 2nd Yr,
+  'T'          => :incomplete,  #Transferred,
+  'U'          => :incomplete,  #Unconditional Holding. Not Enrolled.,
+  'UP'         => :incomplete,  #Unconditional Holding. Not Enrolled.Paid,
+  'W'          => :incomplete,  #Withdrawn,
+  'WE'         => :incomplete,  #Withdrawn Early,
+  "CA"   => :complete,
+  "CNA"  => :incomplete,
+  "X"    => :incomplete,
+  "W"    => :incomplete,
+  "T"    => :incomplete,
+  "A"    => :current
+}
+Ilp2::Application.config.mis_progress_codes.default = :unknown
+Ilp2::Application.config.mis_usage_codes = {
+  "A" => :complete,
+  "L" => :current,
+  "E" => :current,
+  "0" => :incomplete,
+  "O" => :incomplete,
+  "K" => :complete,
+  "C" => :complete
+}
+Ilp2::Application.config.mis_usage_codes.default = :unknown

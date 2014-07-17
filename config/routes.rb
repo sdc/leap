@@ -22,7 +22,7 @@ Ilp2::Application.routes.draw do
     end
     member do
       get :next_lesson_block, :my_courses_block, :targets_block
-      get :moodle_block, :attendance_block, :poll_block
+      get :moodle_block, :attendance_block, :poll_block, :home
     end
   end
   resources :courses do

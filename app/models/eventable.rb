@@ -62,4 +62,14 @@ class Eventable < ActiveRecord::Base
     3600
   end
 
+  # For new front page
+
+  def tile_bg
+    (rand * 999999).floor.to_s.ljust(6,"0")
+  end
+
+  def tile_icon
+    "events/#{self.class.name.tableize}.png"
+  end
+
 end
