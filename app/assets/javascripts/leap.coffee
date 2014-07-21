@@ -47,8 +47,8 @@ $(document).ready ->
     dateFormat:'D dd M yy'
     altFormat:'yy-mm-dd'
     altField:'#real_datepicker'
-    prevText: "<i class='icon-arrow-left icon-white'/>"
-    nextText: "<i class='icon-arrow-right icon-white'/>"
+    prevText: "<- prev"
+    nextText: "&nbsp;next ->"
 
 
   # Load Delayed Blocks
