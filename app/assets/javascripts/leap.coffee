@@ -8,8 +8,8 @@ $(document).ready ->
  setupDatePickers =  (e) ->
     e.find('.datepicker').datepicker
       dateFormat:'D dd M yy'
-      prevText: "<i class='icon-arrow-left icon-white'/>"
-      nextText: "<i class='icon-arrow-right icon-white'/>"
+      prevText: "<- prev"
+      nextText: "&nbsp;next ->"
 
   # Enable / Disable buttons on a dropdown being selected
   buttonAutoEnable = ->
