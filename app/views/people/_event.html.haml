@@ -1,17 +1,18 @@
 .col-xs-12.col-sm-4.col-md-3.col-lg-2[event]{:style => "background:##{event.tile_bg}"}
   .background-icon
     %i.fa{:class => event.tile_icon}
-  %header.row
-    .col-xs-9= raw special_title event.title
-    .col-xs-2
-      %i.fa.fa-bars.front-event-menu{"data-toggle" => "dropdown"}
-      %ul.dropdown-menu
-        - if event.is_deletable?
-          %li
-            = link_to person_event_url(event.person, event), :method => :delete, :remote => true, :class => "delete-event" do
-              %i.fa.fa-trash-o
-              Delete
-  .row 
-    .col-xs-12
-      = raw special_title event.subtitle
-      %p= event.body
+  %header
+    .row
+      .col-xs-9= raw special_title event.title
+      .col-xs-2
+        %i.fa.fa-bars.front-event-menu{"data-toggle" => "dropdown"}
+        %ul.dropdown-menu.dropdown-menu-right
+          - if event.is_deletable?
+            %li
+              = link_to person_event_url(event.person, event), :method => :delete, :remote => true, :class => "delete-event" do
+                %i.fa.fa-trash-o
+                Delete
+    .row 
+      .col-xs-12
+        = raw special_title event.subtitle
+  %p= event.body

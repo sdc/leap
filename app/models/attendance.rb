@@ -54,4 +54,8 @@ class Attendance < Eventable
     end
   end
 
+  def tile_icon
+    "fa-check-circle"
+  end
+
 end

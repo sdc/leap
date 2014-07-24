@@ -22,7 +22,7 @@ class PeopleController < ApplicationController
   layout :set_layout
 
   def home
-    @events = @topic.events.limit(12)
+    @events = @topic.events.limit(24)
   end
 
   def show

@@ -38,7 +38,7 @@ class ProgressionReview < Eventable
   def title; "Continuing Learning" end
  
   def tile_icon
-    "fa-fast-forward"
+    "#{approved ? 'fa-ban' : 'fa-check'} on fa-fast-forward"
   end
 
 end
