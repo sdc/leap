@@ -137,4 +137,6 @@ class Person < ActiveRecord::Base
      qualifications.select{|q| q.lat_score.kind_of? Fixnum}.count.to_f).round(2)
   end
 
+  def l3va; lat_score end
+
 end

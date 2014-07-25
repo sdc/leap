@@ -26,4 +26,20 @@ class TimetableEvent < SuperModel::Base
     ((timetable_end - timetable_start) /56).floor
   end
 
+  def tile_bg
+    "990000"
+  end
+ 
+  def tile_icon
+    "fa-calendar"
+  end
+
+  def tile_title
+    "Next Lesson"
+  end
+
+  def subtitle; nil end
+  def body; nil end
+  def is_deletable?; false end
+
 end

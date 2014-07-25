@@ -22,10 +22,10 @@ module EventsHelper
   end
 
 
-  def special_title(thing)
+  def special_title(thing,wrap = :div)
     text = case thing.class.name
     when "String" then thing
-    when "Array"  then thing.map{|t| content_tag(:div, special_title(t))}.join
+    when "Array"  then thing.map{|t| content_tag(wrap, special_title(t))}.join " "
     when "Date"   then pretty_date thing
     when "Time"   then pretty_date thing
     when "Course" then link_to_if @affiliation == "staff", thing.code, thing

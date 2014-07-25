@@ -62,7 +62,8 @@ class Event < ActiveRecord::Base
 
   attr_accessor :first_in_past
 
-  [:title,:subtitle,:icon_url,:body,:extra_panes,:status,:staff_only?,:timetable_length,:tile_bg,:tile_icon].each do |method|
+  [:title,:subtitle,:icon_url,:body,:extra_panes,:status,:staff_only?,
+   :timetable_length,:tile_bg,:tile_icon,:tile_title].each do |method|
     define_method method do
       if eventable.respond_to?(method) 
         m = eventable.method(method)

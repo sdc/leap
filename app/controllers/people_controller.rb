@@ -22,12 +22,16 @@ class PeopleController < ApplicationController
   layout :set_layout
 
   def home
-    @events = @topic.events.limit(24)
+    @events = @topic.events.limit(23)
+    @events << @topic.timetable_events(:next).first if @topic.timetable_events(:next).any?
   end
 
   def show
     respond_to do |format|
       format.html
+      format.json do 
+        render :json => @topic.to_json(:methods => [:l3va], :except => [:photo])
+      end
       format.jpg do
         if @topic.photo
           send_data @topic.photo, :disposition => 'inline', :type => "image/jpg"
