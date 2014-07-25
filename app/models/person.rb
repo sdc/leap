@@ -66,10 +66,15 @@ class Person < ActiveRecord::Base
   end
 
   def Person.get(mis_id,fresh=false)
-    person = (fresh ? import(mis_id) : find_by_mis_id(mis_id.to_s.match(/\d{6}/) ? mis_id.to_s.tr('^0-9','') : mis_id) or find_by_username(mis_id)) or import(mis_id)
-    BKSB.import_for(mis_id) if fresh && !Settings.bksb_url.blank?
-    return person
+    mis_id = mis_id.to_s.tr('^0-9','') if mis_id.to_s.match(/\d{6}/)
+    return import(mis_id) if fresh
+    return find_by_username(mis_id) || import(mis_id)
   end
+   
+    #person = (fresh ? import(mis_id) : find_by_mis_id(mis_id.to_s.match(/\d{6}/) ? mis_id.to_s.tr('^0-9','') : mis_id) or find_by_username(mis_id)) or import(mis_id)
+    #BKSB.import_for(mis_id) if fresh && !Settings.bksb_url.blank?
+    #return person
+  #end
 
   def name(options = {})
     names = [forename]
