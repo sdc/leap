@@ -21,4 +21,4 @@
     .row 
       .col-xs-12
         .subtitle= raw special_title(tile.subtitle, :span)
-  %p= tile.body
+  %p= simple_format(tile.body)
