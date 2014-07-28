@@ -2,14 +2,10 @@ class Tile
 
   include ActiveModel::Conversion
 
-  attr_accessor :id, :title, :tile_bg, :tile_icon, :is_deletable, :subtitle, :body, :person_id, :event_id
+  attr_accessor :id, :title, :bg, :icon, :is_deletable, :subtitle, :body, :person_id, :event_id
 
   def initialize(attrs)
-    begin
-      attrs.each {|a| send "#{a.first}=", a.last}
-    rescue NoMethodError
-      raise ActiveModel::MissingAttributeError "Missing attribute"
-    end
+    attrs.each {|a| send("#{a.first}=", a.last) if respond_to?("#{a.first}=")}
   end
 
   def person

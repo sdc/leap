@@ -89,8 +89,8 @@ class Qualification < Eventable
   end
 
 
-  def tile_icon
-    "fa-certificate"
+  def to_tile
+    {:icon => "fa-certificate"}
   end
 
 end

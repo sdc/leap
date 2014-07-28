@@ -67,7 +67,6 @@ class Event < ActiveRecord::Base
     define_method method do
       if eventable.respond_to?(method) 
         m = eventable.method(method)
-	logger.warn "Calling #{method} on #{eventable}"
         if m.arity == 1
           m.call(transition)
         else
@@ -110,15 +109,24 @@ class Event < ActiveRecord::Base
   end
 
   def to_tile
-    Tile.new({:title        => tile_title || title,
-              :tile_bg      => tile_bg,
-              :tile_icon    => tile_icon,
-              :is_deletable => is_deletable?,
-              :subtitle     => subtitle,
-              :body         => body,
-              :person_id    => person_id,
-              :event_id     => id
-            })
+    attrs = {
+      :title        => tile_title || title,
+      :bg           => tile_bg,
+      :icon          => tile_icon,
+      :is_deletable => is_deletable?,
+      :subtitle     => subtitle,
+      :body         => body,
+      :person_id    => person_id,
+      :event_id     => id
+    }
+    if eventable.respond_to? :to_tile 
+      if eventable.method(:to_tile).arity == 1
+        attrs.merge!(eventable.to_tile(transition))
+      else
+        attrs.merge!(eventable.to_tile)
+      end
+    end
+    return Tile.new attrs
   end
 
 end
