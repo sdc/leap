@@ -26,23 +26,16 @@ class TimetableEvent
     ((timetable_end - timetable_start) /56).floor
   end
 
-  def tile_bg
-    "990000"
-  end
- 
-  def tile_icon
-    "fa-calendar"
-  end
-
-  def tile_title
-    "Next Lesson"
-  end
-
   def subtitle; nil end
   def body; nil end
   def is_deletable?; false end
 
   def to_tile
+    Tile.new({:title        => "Next Lesson",
+              :tile_bg      => "990000",
+              :tile_icon    => "fa-calendar",
+              :subtitle     => title
+            })
   end
 
 end

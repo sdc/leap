@@ -109,4 +109,16 @@ class Event < ActiveRecord::Base
     event_date + timetable_length
   end
 
+  def to_tile
+    Tile.new({:title        => tile_title || title,
+              :tile_bg      => tile_bg,
+              :tile_icon    => tile_icon,
+              :is_deletable => is_deletable?,
+              :subtitle     => subtitle,
+              :body         => body,
+              :person_id    => person_id,
+              :event_id     => id
+            })
+  end
+
 end
