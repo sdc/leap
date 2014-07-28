@@ -6,7 +6,6 @@ gem "less-rails"
 gem 'less-rails-bootstrap', "2.0.13"
 gem 'jquery-rails', '~> 2.3.0'
 gem 'symbolize'
-gem 'supermodel', :git => "https://github.com/maccman/supermodel.git"
 gem 'scoped_search'
 gem 'rails-settings', :require => 'settings'
 gem 'rails_autolink', '1.0.9'

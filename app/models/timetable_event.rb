@@ -14,9 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class TimetableEvent < SuperModel::Base
-
-  attributes :title, :timetable_start, :timetable_end, :rooms, :teachers, :mark, :status
+class TimetableEvent
+  
+  attr_accessor :title, :timetable_start, :timetable_end, :rooms, :teachers, :mark, :status, :mis_id
 
   def timetable_margin
    ((timetable_start.getutc - timetable_start.getutc.change(:hour => 8,:minute => 0, :sec => 0, :usec => 0)) / 50).floor
@@ -41,5 +41,8 @@ class TimetableEvent < SuperModel::Base
   def subtitle; nil end
   def body; nil end
   def is_deletable?; false end
+
+  def to_tile
+  end
 
 end
