@@ -12,4 +12,54 @@
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"}
     = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty? or Rails.env == "development"
   %body#cleap{:class => ([Person.affiliation] + @courses || [])}
-    .container-fluid= yield
+    .container
+      .row 
+        #clidebar.col-lg-3.col-md-4.visible-lg.visible-md
+          .row
+            .col-lg-6.col-md-5
+              = image_tag @topic.photo_uri, :class => "img-responsive img-circle"
+            .name.text-left.col-lg-6.col-md-7
+              %h2= @topic.name
+              = @topic.mis_id
+          %hr
+          #sidebar-accordion.panel-group
+            .panel.panel-default
+              .panel-heading
+                %h4.panel-title
+                  %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#personal-details"}
+                    %i.fa.fa-user.fa-fw
+                    Personal Details
+              #personal-details.panel-collapse.collapse.in
+                .panel-body
+                  %dl
+                    %dt Address
+                    %dd= @topic.address_text
+                    - unless @topic.home_phone.blank?
+                      %dt Home Phone
+                      %dd= @topic.home_phone
+                    - unless @topic.mobile_number.blank?
+                      %dt Mobile Phone
+                      %dd= @topic.mobile_number
+                    - unless @topic.personal_email.blank?
+                      %dt Personal Email
+                      %dd= mail_to(@topic.personal_email)
+                    - if @topic.date_of_birth
+                      %dt Date of Birth
+                      %dd= @topic.date_of_birth.to_s
+                    - unless @topic.next_of_kin.blank?
+                      %dt Next of Kin
+                      %dd= @topic.next_of_kin
+                  - if @topic.current_user?
+                    .text-right
+                      Are your details incorrect?
+                      = link_to "Notify Us", Settings.notify_details_change_url, :class => "btn btn-info"
+            .panel.panel-default
+              .panel-heading
+                %h4.panel-title
+                  %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#timeline"}
+                    %i.fa.fa-clock-o.fa-fw
+                    Timeline
+              #timeline.panel-collapse.collapse
+                .panel-body
+                  %ul=render @views
+        .col-xs-12.col-lg-9.col-md-8= yield

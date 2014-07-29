@@ -139,4 +139,8 @@ class Person < ActiveRecord::Base
 
   def l3va; lat_score end
 
+  def address_text
+    address.blank? ? nil : [address, town, postcode].reject(&:nil?).join(", ")
+  end
+
 end
