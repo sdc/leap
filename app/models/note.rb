@@ -29,4 +29,9 @@ class Note < Eventable
 
   validates :body, :presence => true
 
+  def to_tile
+    {:icon => "fa-pencil-square-o",
+     :body => "\"#{body}\""}
+  end
+
 end
