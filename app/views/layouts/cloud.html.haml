@@ -21,6 +21,23 @@
             .name.text-left.col-lg-6.col-md-7
               %h2= @topic.name
               = @topic.mis_id
+              - if @user.staff? and !@topic.note.blank?
+                = link_to "#note-modal", {"data-toggle" => "modal", :title => "Note on student records system"} do
+                  %h4
+                    %i.text-warning.fa.fa.fa-flag
+          -#%hr
+            .btn-group.btn-group-justified
+              = link_to person_url(@topic), :class => "btn btn-default", :title => "Learner's home page" do
+                %i.fa.fa-home
+                Home
+              = link_to person_timetables_url(@topic), :class => "btn btn-default", :title => "Learner's timetable" do
+                %i.fa.fa-calendar
+                Timetable
+            .btn-group.btn-group-justified
+              - if @user.staff? and !Settings.ebs_person_base_url.blank?
+                = link_to Settings.ebs_person_base_url + @topic.mis_id.to_s, :class => "btn btn-default" do
+                  %i.fa.fa-briefcase
+                  SparkE
           %hr
           #sidebar-accordion.panel-group
             .panel.panel-default
@@ -29,7 +46,7 @@
                   %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#personal-details"}
                     %i.fa.fa-user.fa-fw
                     Personal Details
-              #personal-details.panel-collapse.collapse.in
+              #personal-details.panel-collapse.collapse
                 .panel-body
                   %dl
                     %dt Address
@@ -45,7 +62,7 @@
                       %dd= mail_to(@topic.personal_email)
                     - if @topic.date_of_birth
                       %dt Date of Birth
-                      %dd= @topic.date_of_birth.to_s
+                      %dd= @topic.date_of_birth.to_date.to_s
                     - unless @topic.next_of_kin.blank?
                       %dt Next of Kin
                       %dd= @topic.next_of_kin
@@ -72,5 +89,39 @@
                 .panel-body
                   %i.fa.fa-circle-o-notch.fa-spin
                   loading...
+            - if @user.admin?
+              .panel.panel-default
+                .panel-heading
+                  %h4.panel-title
+                    %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#admin-panel"}
+                      %i.fa.fa-cog.fa-fw
+                      Admin
+                #admin-panel.panel-collapse.collapse
+                  %ul.panel-body
+                    %li
+                      = link_to admin_settings_url do
+                        %i.fa.fa-cog.fa.fw 
+                        Edit Settings
+                    %li
+                      = link_to admin_views_url do
+                        %i.fa.fa-th-list.fa.fw 
+                        Setup Views
+                    %li
+                      = link_to admin_stats_url do
+                        %i.fa.fa-bar-chart-o.fa.fw 
+                        Statistics
+                  
         .col-xs-12.col-lg-9.col-md-8= yield
         = javascript_tag "$('#moodle-courses .panel-body').load('#{moodle_block_person_url(@topic)}')"
+        #note-modal.modal.fade
+          .modal-dialog
+            .modal-content
+              .modal-header
+                %h4.modal-title Learner has a note on student records system.
+              .modal-body
+                - if Person.user.admin?
+                  = simple_format @user.note
+                - else
+                  %p Contact your student records department or Leap admin for more information
+              .modal-footer
+                %button.btn.btn-default{"data-dismiss" => "modal"}Close
