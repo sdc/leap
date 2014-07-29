@@ -62,4 +62,15 @@
               #timeline.panel-collapse.collapse
                 .panel-body
                   %ul=render @views
+            .panel.panel-default
+              .panel-heading
+                %h4.panel-title
+                  %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#moodle-courses"}
+                    %i.fa.fa-graduation-cap.fa-fw
+                    My Moodle Courses
+              #moodle-courses.panel-collapse.collapse
+                .panel-body
+                  %i.fa.fa-circle-o-notch.fa-spin
+                  loading...
         .col-xs-12.col-lg-9.col-md-8= yield
+        = javascript_tag "$('#moodle-courses .panel-body').load('#{moodle_block_person_url(@topic)}')"
