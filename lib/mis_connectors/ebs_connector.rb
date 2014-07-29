@@ -78,6 +78,8 @@ module MisPerson
           :home_phone    => ep.address && ep.address.telephone,
           :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil
         )
+       
+        @person.update_attribute("contact_allowed", Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
         @person.save if options[:save] 
         @person.import_courses if options[:courses]
         @person.import_attendances if options[:attendances]

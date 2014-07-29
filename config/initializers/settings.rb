@@ -80,3 +80,5 @@ Settings.defaults[:attendance_high_score]        = 90
 # Stylesheets
 # This is pretty hacky but just dumps some arbitrary css into a style tag in the layout
 Settings.defaults[:custom_css] = ""
+
+Settings.defaults[:ebs_no_contact] = nil
