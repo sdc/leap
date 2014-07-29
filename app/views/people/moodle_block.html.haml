@@ -5,9 +5,11 @@
   - if @moodle_courses
     .scroll-list
       - @moodle_courses.each do |mdl|
-        .mdl_course{:style => "font-weight: #{mdl[2] == "1" ? "bold" : "normal"}"}
-          = link_to(mdl[1], "#{Settings.moodle_host}#{Settings.moodle_path}/course/view.php?id=#{mdl[0]}",
-                    {:target => Settings.moodle_link_target})
+        .mdl_course{:style => "font-weight: #{mdl[:canedit] ? "bold" : "normal"}"}
+          = link_to("#{Settings.moodle_host}#{Settings.moodle_path}/course/view.php?id=#{mdl[:id]}",
+                      {:target => Settings.moodle_link_target})  do
+            %i.fa.fa-mortar-board.fa-fw
+            = mdl[:name]
   - else
     - if Rails.env == "development"
       .alert.alert-warning
