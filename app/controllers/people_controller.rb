@@ -22,8 +22,8 @@ class PeopleController < ApplicationController
   layout :set_layout
 
   def home
-    @tiles = @topic.events.limit(23).map{|e| e.to_tile}
-    @tiles << @topic.timetable_events(:next).first.to_tile if @topic.timetable_events(:next).any?
+    @tiles = @topic.events.limit(203).map{|e| e.to_tile}
+    @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
   end
 
   def show
