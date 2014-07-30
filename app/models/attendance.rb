@@ -54,8 +54,11 @@ class Attendance < Eventable
     end
   end
 
-  def tile_icon
-    "fa-check-circle"
+  def to_tile
+    {:icon         => "fa-check-circle",
+     :partial_path => "tiles/attendance",
+     :subtitle     => nil
+    }
   end
 
 end

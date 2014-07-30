@@ -1,4 +1,4 @@
-.col-xs-6.col-sm-4.col-md-4.col-lg-3.tile[tile]{:style => "background:##{tile.bg}"}
+.col-xs-6.col-sm-4.col-md-4.col-lg-3.tile[tile.event]{:style => "background:##{tile.bg}"}
   .background-icon
     %i.fa{:class => tile.icon}
   %header
@@ -18,7 +18,10 @@
               %a
                 %i.fa.fa-trash-o
                 Delete
-    .row 
-      .col-xs-12
-        .subtitle= raw special_title(tile.subtitle, :span)
-  %p= simple_format(tile.body)
+  .row 
+    .col-xs-12
+      .subtitle= raw special_title(tile.subtitle, :span)
+      - if tile.partial
+        .row= render :partial => tile.partial, :object => tile
+      - else
+        %p= simple_format(tile.body)
