@@ -20,10 +20,11 @@
           = link_to root_url, :class => "navbar-brand" do
             = image_tag "icons/leap-logo.png"
         #navbar-collapse.collapse.navbar-collapse
-          = form_tag search_people_url, :method => :get, :class => "navbar-form navbar-right" do
-            .form-group
+          = form_tag search_people_url, :method => :get, :class => "navbar-form navbar-left" do
+            .input-group
               = text_field_tag :q, params[:q], :class => "form-control", :placeholder => "Search..."
-              = submit_tag "Go", :class => "btn btn-default"
+              %span.input-group-btn
+                = submit_tag "Go", :class => "btn btn-default "
     .container
       .row 
         #clidebar.col-lg-3.col-md-4.visible-lg.visible-md
@@ -134,7 +135,7 @@
                 %h4.modal-title Learner has a note on student records system.
               .modal-body
                 - if Person.user.admin?
-                  = simple_format @user.note
+                  = simple_format @topic.note
                 - else
                   %p Contact your student records department or Leap admin for more information
               .modal-footer
