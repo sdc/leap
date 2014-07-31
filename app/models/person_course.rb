@@ -86,7 +86,7 @@ class PersonCourse < Eventable
     return panes
   end
 
-  def to_tile
+  def tile_attrs
     {:icon => "fa-graduation-cap"}
   end
 

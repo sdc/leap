@@ -119,11 +119,11 @@ class Event < ActiveRecord::Base
       :person_id    => person_id,
       :event_id     => id
     }
-    if eventable.respond_to? :to_tile 
-      if eventable.method(:to_tile).arity == 1
-        attrs.merge!(eventable.to_tile(transition))
+    if eventable.respond_to? :tile_attrs
+      if eventable.method(:tile_attrs).arity == 1
+        attrs.merge!(eventable.tile_attrs(transition))
       else
-        attrs.merge!(eventable.to_tile)
+        attrs.merge!(eventable.tile_attrs)
       end
     end
     return Tile.new attrs

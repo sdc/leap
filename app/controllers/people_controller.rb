@@ -22,8 +22,10 @@ class PeopleController < ApplicationController
   layout :set_layout
 
   def home
-    @tiles = @topic.events.limit(203).map{|e| e.to_tile}
+    @tiles = []
     @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
+    #@tiles.unshift(@topic.events.where(:eventable_type => "Attendance").first.to_tile)
+    @tiles.unshift(@topic.attendances.last.to_tile)
   end
 
   def show

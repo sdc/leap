@@ -73,4 +73,8 @@ class Eventable < ActiveRecord::Base
     "fa-circle-thin"
   end
 
+ def to_tile
+   events.last.to_tile
+ end
+
 end
