@@ -7,7 +7,8 @@
     = stylesheet_link_tag 'cloud'
     = javascript_include_tag "//code.jquery.com/jquery-1.11.0.min.js"
     = javascript_include_tag '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
-    = javascript_include_tag 'cloud'
+    = javascript_include_tag 'jquery.peity.min'
+    = javascript_include_tag 'cloud_events'
     = csrf_meta_tag
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"}
     = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty? or Rails.env == "development"
@@ -17,21 +18,25 @@
         .navbar-header
           %button.navbar-toggle{"data-toggle" => "collapse", "data-target" => "#navbar-collapse"}
             %i.fa.fa-bars
-          = link_to root_url, :class => "navbar-brand" do
-            = image_tag "icons/leap-logo.png"
+          = link_to root_url do
+            = image_tag "icons/leap-logo.png", :class => "navbar-brand"
         #navbar-collapse.collapse.navbar-collapse
           = form_tag search_people_url, :method => :get, :class => "navbar-form navbar-left" do
             .input-group
               = text_field_tag :q, params[:q], :class => "form-control", :placeholder => "Search..."
               %span.input-group-btn
                 = submit_tag "Go", :class => "btn btn-default "
+          %button.navbar-btn.btn.btn-default.navbar-right.visible-sm#show-clidebar{:style => "margin-left:10px"}
+            %i.fa.fa-bars
+          %p.navbar-text.navbar-right
+            = @user.name
     .container
       .row 
-        #clidebar.col-lg-3.col-md-4.visible-lg.visible-md
+        #clidebar.col-xs-12.col-lg-3.col-md-4.visible-lg.visible-md
           .row
-            .col-lg-6.col-md-5
-              = image_tag @topic.photo_uri, :class => "img-responsive img-circle"
-            .name.text-left.col-lg-6.col-md-7
+            .col-lg-6.col-md-5.col-sm-3.col-xs-6
+              = image_tag @topic.photo_uri, :id => "person-photo", :class => "img-responsive img-circle"
+            .name.text-left.col-lg-6.col-md-7.col-sm-9.col-xs-6
               %h2= @topic.name
               = @topic.mis_id
               %h4.flags
@@ -40,19 +45,6 @@
                     %i.text-warning.fa.fa.fa-flag
                 - if @user.staff? and !@topic.contact_allowed
                   %i.text-danger.fa.fa-exclamation-triangle{:title => "Do not contact this user!"}
-          -#%hr
-            .btn-group.btn-group-justified
-              = link_to person_url(@topic), :class => "btn btn-default", :title => "Learner's home page" do
-                %i.fa.fa-home
-                Home
-              = link_to person_timetables_url(@topic), :class => "btn btn-default", :title => "Learner's timetable" do
-                %i.fa.fa-calendar
-                Timetable
-            .btn-group.btn-group-justified
-              - if @user.staff? and !Settings.ebs_person_base_url.blank?
-                = link_to Settings.ebs_person_base_url + @topic.mis_id.to_s, :class => "btn btn-default" do
-                  %i.fa.fa-briefcase
-                  SparkE
           %hr
           #sidebar-accordion.panel-group
             .panel.panel-default

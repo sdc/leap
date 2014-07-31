@@ -1,8 +1,8 @@
 %li.row[view]
   = link_to((send("#{@topic.class.name.underscore}_view_url",@topic,view) + (params[:all] ? "?all=true" : "")), :class => "sidebar_button") do
-    .col-md-2
+    .col-xs-2
       = image_tag(view.icon_url, :size => "30x30", :class=>"pull-left") 
-    .col-md-10
+    .col-xs-10
       = view.label
   - if @subviews and [@view,@view.parent].include? view
     %ul.subviews
