@@ -32,7 +32,7 @@ class TimetableEvent
 
   def to_tile
     Tile.new({:title    => "Next Lesson",
-              :bg       => "990000",
+              :bg       => "9aa",
               :icon     => "fa-calendar",
               :subtitle => timetable_start,
               :body     => [timetable_start.to_s(:time) + " &ndash; " + timetable_end.to_s(:time),

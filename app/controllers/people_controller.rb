@@ -24,8 +24,7 @@ class PeopleController < ApplicationController
   def home
     @tiles = []
     @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
-    #@tiles.unshift(@topic.events.where(:eventable_type => "Attendance").first.to_tile)
-    @tiles.unshift(@topic.attendances.last.to_tile)
+    @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
   end
 
   def show
