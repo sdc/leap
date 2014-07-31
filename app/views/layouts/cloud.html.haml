@@ -125,7 +125,7 @@
                         %i.fa.fa-bar-chart-o.fa.fw 
                         Statistics
                   
-        .col-xs-12.col-lg-9.col-md-8= yield
+        #main-content.col-xs-12.col-lg-9.col-md-8= yield
         = javascript_tag "$('#moodle-courses .panel-body').load('#{moodle_block_person_url(@topic)}')"
         #note-modal.modal.fade
           .modal-dialog
