@@ -12,6 +12,18 @@
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"}
     = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty? or Rails.env == "development"
   %body#cleap{:class => ([Person.affiliation] + @courses || [])}
+    .container.nrp
+      %nav.navbar.navbar-default
+        .navbar-header
+          %button.navbar-toggle{"data-toggle" => "collapse", "data-target" => "#navbar-collapse"}
+            %i.fa.fa-bars
+          = link_to root_url, :class => "navbar-brand" do
+            = image_tag "icons/leap-logo.png"
+        #navbar-collapse.collapse.navbar-collapse
+          = form_tag search_people_url, :method => :get, :class => "navbar-form navbar-right" do
+            .form-group
+              = text_field_tag :q, params[:q], :class => "form-control", :placeholder => "Search..."
+              = submit_tag "Go", :class => "btn btn-default"
     .container
       .row 
         #clidebar.col-lg-3.col-md-4.visible-lg.visible-md

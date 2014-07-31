@@ -1,10 +1,21 @@
 body {
     background: #eee;
-    margin-top: 10px;
   .container {
-    border: 10px #fff solid;
-    border-left: none;
-    background: #fff;
+    background: #f8f8f8;
+    border-right: 10px #f8f8f8 solid;
+    &.nrp {
+      padding-right:0;
+    }
+  }
+  .navbar-collapse,.navbar {
+    padding-right:1px;
+    border:none;
+  }
+  .navbar {
+    margin-bottom:10px;
+  }
+  .navbar-brand {
+    padding-left:0
   }
 }
 #clidebar {
