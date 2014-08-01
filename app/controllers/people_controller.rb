@@ -19,6 +19,7 @@ class PeopleController < ApplicationController
   skip_before_filter :set_topic
   before_filter      :person_set_topic, :except => [:search]
   before_filter      :staff_only, :only => [:search,:select]
+  before_filter      :parse_sidebar_links, :only => [:home]
   layout :set_layout
 
   def home
@@ -126,6 +127,12 @@ class PeopleController < ApplicationController
     when "home" then "cloud"
     else "application"
     end
+  end
+
+  def parse_sidebar_links
+    @sidebar_links = Settings.clidebar_links.split(/^\|/).drop(1)
+                     .map{|menu| menu.split("\n").map(&:chomp)}
+                     .map{|menu| menu.first.split("|") + [menu.drop(1).map{|item| item.split("|")}]}
   end
 
 end

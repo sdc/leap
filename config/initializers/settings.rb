@@ -81,4 +81,8 @@ Settings.defaults[:attendance_high_score]        = 90
 # This is pretty hacky but just dumps some arbitrary css into a style tag in the layout
 Settings.defaults[:custom_css] = ""
 
+# Links
+# The links on the clidebar
+Settings.defaults[:clidebar_links] = ""
+
 Settings.defaults[:ebs_no_contact] = nil
