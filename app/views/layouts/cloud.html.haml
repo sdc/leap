@@ -26,6 +26,24 @@
               = text_field_tag :q, params[:q], :class => "form-control", :placeholder => "Search..."
               %span.input-group-btn
                 = submit_tag "Go", :class => "btn btn-default "
+          - if @user.admin?
+            .btn-group
+              %button.btn.navbar-btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
+                Admin
+                %i.fa.fa-caret-down
+              %ul.dropdown-menu
+                %li
+                  = link_to admin_settings_url do
+                    %i.fa.fa-cog.fa.fw 
+                    Edit Settings
+                %li
+                  = link_to admin_views_url do
+                    %i.fa.fa-th-list.fa.fw 
+                    Setup Views
+                %li
+                  = link_to admin_stats_url do
+                    %i.fa.fa-bar-chart-o.fa.fw 
+                    Statistics
           %button.navbar-btn.btn.btn-default.navbar-right.visible-sm#show-clidebar{:style => "margin-left:10px"}
             %i.fa.fa-bars
           %p.navbar-text.navbar-right
@@ -103,28 +121,6 @@
                 .panel-body
                   %i.fa.fa-circle-o-notch.fa-spin
                   loading...
-            - if @user.admin?
-              .panel.panel-default
-                .panel-heading
-                  %h4.panel-title
-                    %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#admin-panel"}
-                      %i.fa.fa-cog.fa-fw
-                      Admin
-                #admin-panel.panel-collapse.collapse
-                  %ul.panel-body
-                    %li
-                      = link_to admin_settings_url do
-                        %i.fa.fa-cog.fa.fw 
-                        Edit Settings
-                    %li
-                      = link_to admin_views_url do
-                        %i.fa.fa-th-list.fa.fw 
-                        Setup Views
-                    %li
-                      = link_to admin_stats_url do
-                        %i.fa.fa-bar-chart-o.fa.fw 
-                        Statistics
-                  
         #main-content.col-xs-12.col-lg-9.col-md-8= yield
         = javascript_tag "$('#moodle-courses .panel-body').load('#{moodle_block_person_url(@topic)}')"
         #note-modal.modal.fade
