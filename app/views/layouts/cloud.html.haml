@@ -136,7 +136,7 @@
                         - menu[2].each do |item|
                           %li
                             = link_to item[1] do
-                              %i.fa.fa-fw{:class => item[2]}
+                              %i.fa.fa-fw{:class => item[2] || "fa-link"}
                               = item[0]
                 - tmpid.next!
         #main-content.col-xs-12.col-lg-9.col-md-8= yield
