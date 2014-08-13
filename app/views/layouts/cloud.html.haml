@@ -58,20 +58,21 @@
             %small= @topic.mis_id
       .row 
         #clidebar.col-xs-12.col-lg-3.col-md-4.visible-lg.visible-md
-          .row
-            .col-md-5.col-sm-2.col-xs-6
-              = image_tag @topic.photo_uri, :id => "person-photo", :class => "img-responsive img-circle"
-            .name.text-left.col-md-7.col-sm-10.col-xs-6
-              %h3= @topic.name
-              %h3
-                %small= @topic.mis_id
-              %h4.flags
-                - if @user.staff? and !@topic.note.blank?
-                  = link_to "#note-modal", {"data-toggle" => "modal", :title => "Note on student records system"} do
-                    %i.text-warning.fa.fa.fa-flag
-                - if @user.staff? and !@topic.contact_allowed
-                  %i.text-danger.fa.fa-exclamation-triangle{:title => "Do not contact this user!"}
-          %hr
+          .panel.panel-default
+            .panel-body
+              .row
+                .col-md-6.col-sm-2.col-xs-6
+                  = image_tag @topic.photo_uri, :id => "person-photo", :class => "img-responsive img-circle"
+                .name.text-left.col-md-6.col-sm-10.col-xs-6
+                  %h4= @topic.name
+                  %h4
+                    %small= @topic.mis_id
+                  %h5.flags
+                    - if @user.staff? and !@topic.note.blank?
+                      = link_to "#note-modal", {"data-toggle" => "modal", :title => "Note on student records system"} do
+                        %i.text-warning.fa.fa.fa-flag
+                    - if @user.staff? and !@topic.contact_allowed
+                      %i.text-danger.fa.fa-exclamation-triangle{:title => "Do not contact this user!"}
           #sidebar-accordion.panel-group
             - if @topic.staff?
               .panel.panel-warning
