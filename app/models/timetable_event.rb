@@ -36,7 +36,7 @@ class TimetableEvent
               :icon     => "fa-calendar",
               :subtitle => timetable_start,
               :body     => [timetable_start.to_s(:time) + " &ndash; " + timetable_end.to_s(:time),
-                           "<b>#{title}</b>",rooms.join,"<i>#{teachers.join(", ")}</i>"].reject{|x| x.empty?}.join("\n")
+                           "<strong>#{title}</strong>",rooms.join,"<em>#{teachers.join(", ")}</em>"].reject{|x| x.empty?}.join("\n")
             })
   end
 
