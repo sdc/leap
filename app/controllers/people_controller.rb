@@ -26,6 +26,7 @@ class PeopleController < ApplicationController
     @tiles = @topic.events.limit(20).map(&:to_tile)
     @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
     @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
+    @tiles.uniq!(&:event_id)
   end
 
   def show
