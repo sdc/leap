@@ -20,7 +20,7 @@
             %i.fa.fa-bars
           = link_to "#leap-about-modal", {"data-toggle" => "modal"} do
             = image_tag "icons/leap-logo.png", :class => "navbar-brand"
-          %p.navbar-text.pull-right.visible-xs= @user.name
+          %p.navbar-text.pull-right.visible-xs= link_to @user.name, @user, :class => "navbar-link"
         #navbar-collapse.collapse.navbar-collapse
           = form_tag search_people_url, :method => :get, :class => "navbar-form navbar-left" do
             .input-group
@@ -48,7 +48,8 @@
           %button.navbar-btn.btn.btn-default.navbar-right.visible-sm#show-clidebar
             %i.fa.fa-bars
           %p.navbar-text.navbar-right.hidden-xs
-            = @user.name
+            Logged in as
+            = link_to @user.name, @user, :class => "navbar-link"
     .container
       .row.visible-xs.visible-sm
         .col-xs-12.hidden-clidebar
