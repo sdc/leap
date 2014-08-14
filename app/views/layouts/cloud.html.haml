@@ -114,10 +114,10 @@
             .panel.panel-default
               .panel-heading
                 %h4.panel-title
-                  %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#timeline"}
+                  %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#timeline-links"}
                     %i.fa.fa-clock-o.fa-fw
                     Timeline
-              #timeline.panel-collapse.collapse.in
+              #timeline-links.panel-collapse.collapse.in
                 .panel-body
                   %ul=render @views
             .panel.panel-default
@@ -141,11 +141,11 @@
                         = menu[0]
                   .panel-collapse.collapse{:id => tmpid}
                     .panel-body
-                      %ul
+                      %ul.fa-ul
                         - menu[2].each do |item|
                           %li
                             = link_to item[1] do
-                              %i.fa.fa-fw{:class => item[2] || "fa-link"}
+                              %i.fa.fa-li{:class => item[2] || "fa-link"}
                               = item[0]
                 - tmpid.next!
         #main-content.col-xs-12.col-lg-9.col-md-8= yield

@@ -1,42 +1,38 @@
 body {
     background: #eee;
-  .container {
-    background: #f8f8f8;
-     border-right:1px #fff solid;
-    &.nrp {
-      padding-right: 0;
-      padding-left: 0;
-    }
-  }
 }
-.navbar {
-  border:none;
-  .navbar-toggle,#show-clidebar {
-    margin-left:10px;
-  }
+
+.container.nrp {
+  padding-right: 0;
 }
+
+.navbar-toggle,#show-clidebar {
+  margin-left:10px;
+}
+
 #clidebar {
+  .panel {
+    margin-bottom: 5px;
+  }
   h2,h3,h4 {
     margin:0;
   }
   .flags i{
     cursor: help;
   }
-  ul {
+  #timeline-links ul {
     list-style: none;
-    padding-left:12px;
+    padding-left:8px;
   }
-  #moodle-courses {
-    h3 {
-      display:none;
-    }
+  #moodle-courses h3 {
+    display:none;
   }
 }
 #home {
   overflow: hidden;
   .tile {
-    border-left:1px #fff solid;
-    border-bottom:1px #fff solid;
+    border-left:1px #eee solid;
+    border-bottom:1px #eee solid;
     height: 200px;
     color: #eee;
     header{
