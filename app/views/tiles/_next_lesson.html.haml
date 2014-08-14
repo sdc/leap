@@ -1,5 +1,6 @@
 .col-xs-12
-  %h2
+  %h2= next_lesson.title
+  %h4
     %i.fa.fa-fw.fa-calendar
     = pretty_date(next_lesson.timetable_start, day: true)
   %h4

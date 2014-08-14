@@ -182,10 +182,12 @@
                   .col-xs-10.col-xs-offset-1.text-center
                     .btn-group.btn-group-lg
                       = link_to "https://github.com/sdc/leap", :target => "_BLANK", :class => "btn btn-default", :title => "Leap on Github" do
-                        %i.fa.fa-github
+                        %i.fa.fa-fw.fa-github
                       = link_to "https://twitter.com/leapilp", :target => "_BLANK", :class => "btn btn-default", :title => "Leap on Twitter"  do
-                        %i.fa.fa-twitter
+                        %i.fa.fa-fw.fa-twitter
                       = link_to "https://plus.google.com/+leap-ilp", :target => "_BLANK", :class => "btn btn-default", :title => "Leap on Google+" do
-                        %i.fa.fa-google-plus
+                        %i.fa.fa-fw.fa-google-plus
+                      = link_to "mailto:leap@southdevon.ac.uk", :target => "_BLANK", :class => "btn btn-default", :title => "Email us" do
+                        %i.fa.fa-fw.fa-envelope
               .modal-footer
                 %button.btn.btn-default{"data-dismiss" => "modal"}Close
