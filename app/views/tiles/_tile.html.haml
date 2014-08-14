@@ -3,7 +3,7 @@
     %i.fa{:class => tile.icon}
   %header
     .row
-      .col-xs-9= raw special_title tile.title
+      %h1.col-xs-9= raw special_title tile.title
       .col-xs-2
         %i.fa.fa-bars.front-tile-menu{"data-toggle" => "dropdown"}
         %ul.dropdown-menu.dropdown-menu-right
@@ -18,10 +18,10 @@
               %a
                 %i.fa.fa-trash-o
                 Delete
-  .row 
-    .col-xs-12
-      .subtitle= raw special_title(tile.subtitle, :span)
-      - if tile.partial
-        .row= render :partial => tile.partial, :object => tile
-      - else
-        %p= simple_format(tile.body)
+    .row 
+      .col-xs-12
+        .subtitle= raw special_title(tile.subtitle, :span)
+  - if tile.partial
+    .row= render :partial => tile.partial, :object => tile
+  - else
+    %p= simple_format(tile.body)
