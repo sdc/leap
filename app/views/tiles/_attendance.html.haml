@@ -1,10 +1,10 @@
 .col-xs-12
   %h1.col-xs-12{:style => "position:absolute;top:30px;left:0;text-align:center;z-index:100;opacity:0.8"}= "#{attendance.eventable.att_year}%"
-  %div{:style => "background:#fff;opacity:0.6;border:1px solid #000;margin:8px 0;"}
+  %div.panel{:style => "opacity:0.6;border:1px solid #000;"}
     %div{:style => "border-left:1px solid #000;border-bottom:1px solid #000;margin:8px;padding-left:5px;"}
       %span[attendance.eventable]
         = attendance.eventable.siblings_same_year.map(&:att_year).join(",")
-  = "#{attendance.eventable.att_week}% attendance this week"
+  %h5= "#{attendance.eventable.att_week}% attendance this week"
 :coffeescript
   $('##{dom_id attendance.eventable}').peity 'bar',
     width: "100%"
