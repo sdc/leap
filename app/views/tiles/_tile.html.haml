@@ -18,10 +18,11 @@
               %a
                 %i.fa.fa-trash-o
                 Delete
-    .row 
-      .col-xs-12
-        .subtitle= raw special_title(tile.subtitle, :span)
+    - if tile.subtitle
+      .row 
+        .col-xs-12
+          %h2= raw special_title(tile.subtitle, :span)
   - if tile.partial
-    .row= render :partial => tile.partial, :object => tile
+    .row= render :partial => tile.partial, :object => tile.object || tile
   - else
     %p= simple_format(tile.body)

@@ -34,10 +34,8 @@ class TimetableEvent
     Tile.new({:title    => "Next Lesson",
               :bg       => "9aa",
               :icon     => "fa-calendar",
-              :subtitle => timetable_start,
-              :body     => [timetable_start.to_s(:time) + " &ndash; " + timetable_end.to_s(:time),
-                           "<strong>#{title}</strong>",rooms.join,"<em>#{teachers.join(", ")}</em>"].reject{|x| x.empty?}.join("\n")
-            })
+              :partial_path => "tiles/next_lesson",
+              :object   => self})
   end
 
 end
