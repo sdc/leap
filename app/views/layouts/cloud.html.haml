@@ -22,11 +22,12 @@
             = image_tag "icons/leap-logo.png", :class => "navbar-brand"
           %p.navbar-text.pull-right.visible-xs= link_to @user.name, @user, :class => "navbar-link"
         #navbar-collapse.collapse.navbar-collapse
-          = form_tag search_people_url, :method => :get, :class => "navbar-form navbar-left" do
-            .input-group
-              = text_field_tag :q, params[:q], :class => "form-control", :placeholder => "Search..."
-              %span.input-group-btn
-                = submit_tag "Go", :class => "btn btn-default "
+          - if @user.staff?
+            = form_tag search_people_url, :method => :get, :class => "navbar-form navbar-left" do
+              .input-group
+                = text_field_tag :q, params[:q], :class => "form-control", :placeholder => "Search..."
+                %span.input-group-btn
+                  = submit_tag "Go", :class => "btn btn-default "
           - if @user.admin?
             .btn-group.hidden-xs
               %button.btn.navbar-btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
@@ -35,21 +36,24 @@
               %ul.dropdown-menu
                 %li
                   = link_to admin_settings_url do
-                    %i.fa.fa-cog.fa.fw 
+                    %i.fa.fa-cog.fa-fw 
                     Edit Settings
                 %li
                   = link_to admin_views_url do
-                    %i.fa.fa-th-list.fa.fw 
+                    %i.fa.fa-th-list.fa-fw 
                     Setup Views
                 %li
                   = link_to admin_stats_url do
-                    %i.fa.fa-bar-chart-o.fa.fw 
+                    %i.fa.fa-bar-chart-o.fa-fw 
                     Statistics
           %button.navbar-btn.btn.btn-default.navbar-right.visible-sm#show-clidebar
             %i.fa.fa-bars
           %p.navbar-text.navbar-right.hidden-xs
             Logged in as
             = link_to @user.name, @user, :class => "navbar-link"
+            - if Rails.env == "development"
+              = link_to admin_test_login_url, :title => "Click to change user" do
+                %i.fa.fa-refresh
     .container
       .row.visible-xs.visible-sm
         .col-xs-12.hidden-clidebar
