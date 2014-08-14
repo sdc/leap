@@ -1,27 +1,26 @@
 .col-xs-6.col-sm-4.col-md-4.col-lg-3.tile[tile.event]{:style => "background:##{tile.bg}"}
   .background-icon
     %i.fa{:class => tile.icon}
-  %header
-    .row
-      %h1.col-xs-9= raw special_title tile.title
-      .col-xs-2
-        %i.fa.fa-bars.front-tile-menu{"data-toggle" => "dropdown"}
-        %ul.dropdown-menu.dropdown-menu-right
-          %li.dropdown-header Actions
-          - if tile.is_deletable?
-            %li
-              = link_to person_event_url(tile.person, tile.event), :method => :delete, :remote => true, :class => "delete-event" do
-                %i.fa.fa-trash-o
-                Delete
-          - else
-            %li.disabled
-              %a
-                %i.fa.fa-trash-o
-                Delete
-    - if tile.subtitle
-      .row 
-        .col-xs-12
-          %h2= raw special_title(tile.subtitle, :span)
+  .row
+    %h1.col-xs-10= raw special_title tile.title
+    %h1.col-xs-2{:style => "padding-left:0"}
+      %i.fa.fa-bars.front-tile-menu{"data-toggle" => "dropdown"}
+      %ul.dropdown-menu.dropdown-menu-right
+        %li.dropdown-header Actions
+        - if tile.is_deletable?
+          %li
+            = link_to person_event_url(tile.person, tile.event), :method => :delete, :remote => true, :class => "delete-event" do
+              %i.fa.fa-trash-o
+              Delete
+        - else
+          %li.disabled
+            %a
+              %i.fa.fa-trash-o
+              Delete
+  - if tile.subtitle
+    .row 
+      .col-xs-12
+        %h2= raw special_title(tile.subtitle, :span)
   - if tile.partial
     .row= render :partial => tile.partial, :object => tile.object || tile
   - else

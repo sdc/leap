@@ -3,7 +3,10 @@ body {
 }
 
 .container.nrp {
-  padding-right: 0;
+    padding-right: 0;
+  @media (max-width: 1024px) {
+    padding-left: 0;
+  }
 }
 
 .navbar-toggle,#show-clidebar {
@@ -35,19 +38,21 @@ body {
     border-bottom:1px #eee solid;
     height: 200px;
     color: #eee;
-    header,h1{
-      font-size: 26px;
-      margin:4px 0;
-      .front-tile-menu {
-        cursor: pointer;
-        &:hover {
-          color: #fff;
-        }
+    h1 {
+      font-size: 24px;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      margin:4px 0 8px 0;
+    }
+    .front-tile-menu {
+      cursor: pointer;
+      &:hover {
+        color: #fff;
       }
     }
     h2{
       color: #eea;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: bold;
       margin:0;
     }
