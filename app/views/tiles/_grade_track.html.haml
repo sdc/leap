@@ -1,0 +1,44 @@
+.row
+  .col-xs-12.text-center
+    %canvas{:height => 150, :width=>150, :style => "opacity:0.8"} 
+
+:coffeescript
+  canvas = $('##{dom_id(grade_track)} canvas')[0]
+  c = canvas.getContext("2d")
+  c.strokeStyle = "#333"
+  c.fillStyle = "#fff"
+  c.fillRect(0,40,150,110)
+  c.strokeRect(0.5,40.5,149,109)
+  c.fillRect(40.5,0.5,70,30)
+  c.strokeRect(40.5,0.5,70,30)
+  c.beginPath()
+  c.lineWidth = 1
+  c.moveTo(20,130)
+  c.lineTo(130,60)
+  c.stroke()
+  c.closePath()
+  c.beginPath()
+  c.lineWidth = 4
+  c.moveTo(74.5,30)
+  c.lineTo(74.5,75)
+  c.stroke()
+  c.closePath()
+  c.beginPath()
+  c.lineWidth = 1
+  c.fillStyle = "#333"
+  c.moveTo(74.5,77)
+  c.lineTo(64.5,65)
+  c.lineTo(84.5,65)
+  c.lineTo(74.5,77)
+  c.fill()
+  c.closePath()
+  c.font = "24px sans-serif"
+  c.textBaseline = "middle"
+  c.textAlign = "center"
+  c.fillText("Pass", 75.5, 17)
+  c.textAlign = "left"
+  c.textBaseline = "bottom"
+  c.fillText("D", 5, 130)
+  c.textAlign = "right"
+  c.textBaseline = "top"
+  c.fillText("B", 145, 80)
