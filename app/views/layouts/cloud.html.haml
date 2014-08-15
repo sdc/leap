@@ -76,15 +76,19 @@
                       = link_to "#note-modal", {"data-toggle" => "modal", :title => "Note on student records system"} do
                         %i.text-warning.fa.fa.fa-flag
                     - if @user.staff? and !@topic.contact_allowed
-                      %i.text-danger.fa.fa-exclamation-triangle{:title => "Do not contact this user!"}
+                      %i.text-danger.fa.fa-exclamation-triangle{:title => "Do not contact this person!"}
+                    - if @topic.staff?
+                      %i.text-success.fa.fa-mortar-board{:title => "Staff Member"}
+          .btn-group.btn-group-justified.panel
+            = link_to(person_timetables_url(@topic), :class => "btn btn-default") do
+              %i.fa.fa-fw.fa-calendar
+              Timetable
+            - if @user.staff?
+              = link_to(Settings.ebs_person_base_url + @topic.mis_id.to_s, :class => "btn btn-default") do
+                %i.fa.fa-fw.fa-bolt
+                SparkE
           #sidebar-accordion.panel-group
-            - if @topic.staff?
-              .panel.panel-warning
-                .panel-heading
-                  %h4.panel-title
-                    %i.fa.fa-user.fa-fw
-                    %i Staff Member
-            - else
+            - unless @topic.staff?
               .panel.panel-default
                 .panel-heading
                   %h4.panel-title
