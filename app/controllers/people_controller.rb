@@ -19,20 +19,19 @@ class PeopleController < ApplicationController
   skip_before_filter :set_topic
   before_filter      :person_set_topic, :except => [:search]
   before_filter      :staff_only, :only => [:search,:select]
-  before_filter      :parse_sidebar_links, :only => [:home]
+  before_filter      :parse_sidebar_links, :only => [:show]
   layout :set_layout
-
-  def home
-    @tiles = @topic.events.limit(20).map(&:to_tile)
-    @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
-    @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
-    @tiles.unshift(Tile.new(:title => "GCSE English", :icon => "fa-bar-chart-o", :partial_path => "tiles/grade_track", :bg => "aacccc", :object => MdlGradeTrack.new))
-    @tiles.uniq!(&:event_id)
-  end
 
   def show
     respond_to do |format|
-      format.html
+      format.html do
+        @tiles = @topic.events.limit(20).map(&:to_tile)
+        @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
+        @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
+        @tiles.unshift(Tile.new(:title => "GCSE English", :icon => "fa-bar-chart-o", :partial_path => "tiles/grade_track", :bg => "aacccc", :object => MdlGradeTrack.new))
+        @tiles.uniq!(&:event_id)
+        render :action => "home"
+      end
       format.json do 
         render :json => @topic.to_json(:methods => [:l3va], :except => [:photo])
       end
@@ -126,7 +125,7 @@ class PeopleController < ApplicationController
   def set_layout
     case action_name
     when /\_block$/ then false
-    when "home" then "cloud"
+    when "show" then "cloud"
     else "application"
     end
   end
