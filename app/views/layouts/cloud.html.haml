@@ -27,7 +27,9 @@
               .input-group
                 = text_field_tag :q, params[:q], :class => "form-control", :placeholder => "Search..."
                 %span.input-group-btn
-                  = submit_tag "Go", :class => "btn btn-default "
+                  %btn{:class => "btn btn-default"}
+                    %i.fa.fa-search
+                    Go
           - if @user.admin?
             .btn-group.hidden-xs
               %button.btn.navbar-btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
@@ -87,6 +89,17 @@
               = link_to(Settings.ebs_person_base_url + @topic.mis_id.to_s, :class => "btn btn-default") do
                 %i.fa.fa-fw.fa-bolt
                 SparkE
+          .panel.panel-default
+            .panel-heading
+              %h4.panel-title= Settings.front_page_note_prompt
+            .panel-body
+              = create_event_form Note do |f|
+                = hidden_field_tag :redirect_to, person_view_url(@topic, View.for_user.where(:name => "all").first, :anchor => "current_time_break")
+                .input-group
+                  = f.text_field :body, :class => "form-control", :placeholder => "Write a note..."
+                  %span.input-group-btn
+                    %button{:type => "submit", :class => "btn btn-primary"}
+                      %i.fa.fa-edit
           #sidebar-accordion.panel-group
             - unless @topic.staff?
               .panel.panel-default
@@ -125,7 +138,7 @@
                   %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#timeline-links"}
                     %i.fa.fa-clock-o.fa-fw
                     Timeline
-              #timeline-links.panel-collapse.collapse.in
+              #timeline-links.panel-collapse.collapse
                 .panel-body
                   %ul=render @views
             .panel.panel-default
