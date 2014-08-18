@@ -88,4 +88,8 @@ class Qualification < Eventable
     end
   end
 
+  def is_deletable? 
+    Person.user.admin? or (Time.now - Settings.delete_delay.to_i < eventable.updated_at and Person.user == eventable.updated_by)
+  end
+
 end
