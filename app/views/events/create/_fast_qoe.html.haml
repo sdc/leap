@@ -48,7 +48,7 @@
         = f.date_select :created_at, {:order => [:year], :start_year => 1970, :end_year => Date.today.year + 1, 
                                       :default => {:month => 8,:day => 1}}, {:class => "span1"}
         - if buttons
-          - {"12/13" => "2013","11/12" => "2012","10/11" => "2011"}.each do |k,v|
+          - {"13/14" => 2014, "12/13" => "2013","11/12" => "2012","10/11" => "2011"}.each do |k,v|
             = link_to_function k, 
               "$(qualification_created_at_1i).val('#{v}');$(this).siblings('a').removeClass('btn-success');$(this).addClass('btn-success')", 
               :class => "btn btn-small", :style => "margin-top:3px;display:block"
