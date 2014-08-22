@@ -157,8 +157,14 @@
                     Moodle Courses
               #moodle-courses.panel-collapse.collapse
                 .panel-body
-                  %i.fa.fa-circle-o-notch.fa-spin
-                  loading...
+                  = link_to("#{Settings.moodle_host}#{Settings.moodle_path}",
+                              {:target => Settings.moodle_link_target})  do
+                    %h4
+                      %i.fa.fa-home
+                      Moodle Home
+                  #moodle-courses-links
+                    %i.fa.fa-circle-o-notch.fa-spin
+                    loading...
             - if @sidebar_links
               - tmpid = "custom_links_1"
               - @sidebar_links.each do |menu|
@@ -178,7 +184,7 @@
                               = item[0]
                 - tmpid.next!
         #main-content.col-xs-12.col-lg-9.col-md-8= yield
-        = javascript_tag "$('#moodle-courses .panel-body').load('#{moodle_block_person_url(@topic)}')"
+        = javascript_tag "$('#moodle-courses-links').load('#{moodle_block_person_url(@topic)}')"
         #note-modal.modal.fade
           .modal-dialog
             .modal-content
