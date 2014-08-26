@@ -47,6 +47,7 @@ class Person < ActiveRecord::Base
   has_many :tt_activities
   has_many :simple_poll_answers
   has_many :event_notes
+  has_many :mdl_grade_tracks
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
   serialize :middle_names
