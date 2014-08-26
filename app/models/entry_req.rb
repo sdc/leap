@@ -8,7 +8,7 @@ class EntryReq < ActiveRecord::Base
   def self.import(file)
     old_logger_level, logger.level = logger.level, Logger::ERROR if logger
     CSV.foreach(file) do |row|
-      if course=Course.find_by_year_and_code("13/14",row[0])
+      if course=Course.find_by_year_and_code("14/15",row[0])
         ["Numeracy","Literacy","General","Specialist","Additional"].each_with_index do |r,i|
           next if row[i+1].blank?
           next if course.entry_reqs.where(:category => r).first
