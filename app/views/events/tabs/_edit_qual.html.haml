@@ -16,5 +16,9 @@
     %h4 Seen?
     = f.check_box :seen
   .span1
+    %h4 Year
+    = f.date_select :created_at, {:order => [:year], :start_year => 1970, :end_year => Date.today.year + 1,
+                                 :default => {:month => 8,:day => 1}}, {:class => "span1"}
+  .span1
     %h4 &nbsp;
     = f.submit "save", :class => "btn btn-primary"
