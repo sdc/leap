@@ -83,6 +83,7 @@ class Event < ActiveRecord::Base
   end
 
   def is_deletable?
+    return true if Person.user.staff? && eventable_type == "Qualification"
     Person.user.admin? or (Time.now - Settings.delete_delay.to_i < eventable.created_at and Person.user == eventable.created_by)
   end
 

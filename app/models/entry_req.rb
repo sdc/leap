@@ -15,6 +15,9 @@ class EntryReq < ActiveRecord::Base
           course.entry_reqs.create(:category => r,:body => row[i+1]) unless row[i+1] == "Please select"
 	  puts "Added #{r} to #{course.name}"
         end
+      else 
+        puts "*" * 40
+        puts row[0] + " - not found!"
       end
     end
   ensure

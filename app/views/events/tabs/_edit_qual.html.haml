@@ -1,20 +1,30 @@
 = form_for(qualification, :url => event, :method => :put, :html => {:class => "form edit-event-form"}) do |f|
   = hidden_field_tag :person_id, @topic.mis_id
-  .span2
-    %h4 Qualification
-    = f.text_field :qual_type, :class => "span2", :placeholder => "e.g. GCSE"
-  .span3
-    %h4 Subject
-    = f.text_field :title, :class => "span3", :placeholder => "e.g. Maths"
-  .span1
-    %h4 Grade
-    = f.text_field :grade, :class => "span1"
-  .span1
-    %h4 Predicted?
-    = f.check_box :predicted
-  .span1
-    %h4 Seen?
-    = f.check_box :seen
-  .span1
-    %h4 &nbsp;
-    = f.submit "save", :class => "btn btn-primary"
+  .span10
+    .row
+      .span3
+        %h4 Qualification
+        = f.text_field :qual_type, :class => "span3", :placeholder => "e.g. GCSE"
+      .span3
+        %h4 Subject
+        = f.text_field :title, :class => "span3", :placeholder => "e.g. Maths"
+      .span2
+        %h4 Grade
+        = f.text_field :grade, :class => "span2"
+    .row
+      .span3 
+        %h4 Awarding Body
+        = f.text_field :awarding_body, :class => "span3", :placeholder => "e.g. AQA"
+      .span3
+        %h4 Date
+        = f.date_select :created_at, {:order => [:day,:month,:year], :start_year => 1970, :end_year => Date.today.year + 1,
+                                 :default => {:month => 8,:day => 1}}, {:class => "span1"}
+      .span1
+        %h4 Predicted?
+        = f.check_box :predicted
+      .span1
+        %h4 Seen?
+        = f.check_box :seen
+      .span1
+        %h4 &nbsp;
+        = f.submit "save", :class => "btn btn-primary"

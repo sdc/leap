@@ -20,7 +20,10 @@ class Qualification < Eventable
 
   after_create {|qual| qual.events.create!(:event_date => created_at, :transition => qual.predicted? ? :create : :complete)}
 
-  before_save  {|q| q.predicted=true if (Person.user and !Person.user.staff?)}
+  before_save  do |q| 
+                 q.predicted=true if (Person.user and !Person.user.staff?) 
+                 q.events.first.update_attribute("event_date", q.created_at)
+               end
 
   validates :title, :presence => true 
   
@@ -72,13 +75,13 @@ class Qualification < Eventable
       # Don't include predicted grades
       return "Predicted Grade" if predicted?
       # Only quals acheived between 16 & 18 years count towards LAT
-      #years = case person.age_on(Date.civil(2013,9,1))
+      #years = case person.age_on(Date.civil(2014,9,1))
       #when 16 then 1
       #when 17 then 2
       #when 18 then 3
       #else 0
       #end
-      #return "Ineligible Date" unless created_at.between?(Date.civil(2013,8,1) - years.years,Date.today)#civil(2013,9,1))
+      #return "Ineligible Date" unless created_at.between?(Date.civil(2014,8,1) - years.years,Date.today)#civil(2014,9,1))
       # Only return LAT scores if we can work them out from the info we have
       return "No scores for qual type" unless QOE_LAT[qual_type.strip.upcase] 
       return "No scores for this grade" unless QOE_LAT[qual_type.strip.upcase][grade.strip.upcase]
@@ -88,9 +91,12 @@ class Qualification < Eventable
     end
   end
 
-
   def tile_attrs
     {:icon => "fa-certificate"}
+  end 
+
+  def is_deletable? 
+    Person.user.admin? or (Time.now - Settings.delete_delay.to_i < eventable.updated_at and Person.user == eventable.updated_by)
   end
 
 end
