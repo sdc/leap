@@ -2,21 +2,7 @@
   .background-icon
     %i.fa{:class => tile.icon}
   .row
-    %h1.col-xs-10{:title => tile.title}= raw special_title tile.title
-    %h1.col-xs-2.tile-menu-icon
-      %i.fa.fa-bars.front-tile-menu{"data-toggle" => "dropdown"}
-      %ul.dropdown-menu.dropdown-menu-right
-        %li.dropdown-header Actions
-        - if tile.is_deletable?
-          %li
-            = link_to person_event_url(tile.person, tile.event), :method => :delete, :remote => true, :class => "delete-event" do
-              %i.fa.fa-trash-o
-              Delete
-        - else
-          %li.disabled
-            %a
-              %i.fa.fa-trash-o
-              Delete
+    %h1.col-xs-12{:title => tile.title}= raw special_title tile.title
   - if tile.subtitle
     .row 
       .col-xs-12
