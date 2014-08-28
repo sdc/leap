@@ -2,7 +2,7 @@ class Tile
 
   include ActiveModel::Conversion
 
-  attr_accessor :id, :title, :bg, :icon, :is_deletable, :subtitle, :body, :person_id, :event_id, :partial_path, :object
+  attr_accessor :id, :title, :bg, :icon, :is_deletable, :subtitle, :body, :person_id, :event_id, :partial_path, :object, :link
 
   def initialize(attrs)
     attrs.each {|a| send("#{a.first}=", a.last) if respond_to?("#{a.first}=")}
