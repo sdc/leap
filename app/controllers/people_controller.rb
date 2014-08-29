@@ -29,7 +29,7 @@ class PeopleController < ApplicationController
         @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
         @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
         @tiles.unshift(@topic.mdl_grade_tracks.map(&:to_tile)) if @topic.mdl_grade_tracks.any?
-        @tiles.flatten! #.uniq!(&:event_id)
+        @tiles = @tiles.flatten.uniq{|t| t.object}
         render :action => "home"
       end
       format.json do 

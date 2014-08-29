@@ -2,7 +2,7 @@ class Tile
 
   include ActiveModel::Conversion
 
-  attr_accessor :id, :title, :bg, :icon, :is_deletable, :subtitle, :body, :person_id, :event_id, :partial_path, :object, :link
+  attr_accessor :id, :title, :bg, :icon, :is_deletable, :subtitle, :body, :person_id, :partial_path, :object, :link
 
   def initialize(attrs)
     attrs.each {|a| send("#{a.first}=", a.last) if respond_to?("#{a.first}=")}
@@ -18,10 +18,6 @@ class Tile
 
   def person
     Person.find person_id
-  end
-
-  def event
-    Event.find_by_id event_id
   end
 
   def is_deletable?; is_deletable end

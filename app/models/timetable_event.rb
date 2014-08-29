@@ -29,6 +29,7 @@ class TimetableEvent
   def subtitle; nil end
   def body; nil end
   def is_deletable?; false end
+  def id; mis_id end
 
   def to_tile
     Tile.new({:title    => "Next Lesson",
@@ -37,5 +38,6 @@ class TimetableEvent
               :partial_path => "tiles/next_lesson",
               :object   => self})
   end
+
 
 end
