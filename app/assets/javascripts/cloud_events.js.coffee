@@ -13,5 +13,7 @@ $ ->
   $('#navbar-collapse').on 'hide.bs.collapse', -> hide_clidebar()
   $('#show-clidebar').click ->
     if $('#clidebar').hasClass('visible-lg') then show_clidebar() else hide_clidebar()
+  $('.tile [data-link]').each (i,e) ->
+    $(e).closest('.tile').attr('data-link',$(e).attr('data-link'))
   $('.tile[data-link]').click ->
     document.location = $(this).attr('data-link')
