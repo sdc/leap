@@ -1,5 +1,7 @@
-.col-xs-12.text-justify
+.col-xs-12.text-justify{"data-link" => person_view_url(@topic,View.for_user.where(:name => "targets").first)}
   %p
     %i.fa.fa-quote-left
     = target.eventable.body
+    by
+    = pretty_date target.eventable.target_date
     %i.fa.fa-quote-right
