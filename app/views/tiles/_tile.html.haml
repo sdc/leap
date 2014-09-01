@@ -1,7 +1,7 @@
 .col-xs-6.col-sm-4.col-md-4.col-lg-3.tile[tile.object]{:style => "background:##{tile.bg}", "data-link" => tile.link}
   .background-icon
     %i.fa{:class => tile.icon}
-  .row
+  .row.foreground
     %h1.col-xs-12{:title => tile.title}= raw special_title tile.title
   - if tile.subtitle
     .row 

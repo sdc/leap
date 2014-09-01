@@ -92,8 +92,10 @@ class Target < Eventable
     [["Completion","targets/details"]]
   end
 
-  def tile_icon
-    "fa-bullseye"
+  def tile_attrs
+    {:icon => "fa-bullseye",
+     :subtitle => nil,
+     :partial_path => "tiles/target"}
   end
 
 end

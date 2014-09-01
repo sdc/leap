@@ -41,8 +41,13 @@ body {
     border-bottom:1px #eee solid;
     height: 200px;
     color: #eee;
+    font-size: 18px;
+    z-index: 0;
+    .foreground {
+      z-index: 10;
+    }
     h1 {
-      font-size: 22px;
+      font-size: 24px;
       overflow:hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -50,16 +55,17 @@ body {
     }
     h2{
       color: #eea;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
       margin:0;
     }
     h3 {
-      font-size: 18px;
+      font-size: 10px;
     }
     .background-icon {
       overflow: hidden;
       i {
+        z-index: -10;
         position: absolute;
         font-size: 125px;
         bottom:0px;
