@@ -85,4 +85,7 @@ Settings.defaults[:custom_css] = ""
 # The links on the clidebar
 Settings.defaults[:clidebar_links] = ""
 
+# Which home page
+Settings.defaults[:home_page] = "old"
+
 Settings.defaults[:ebs_no_contact] = nil

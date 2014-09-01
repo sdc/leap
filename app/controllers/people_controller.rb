@@ -25,12 +25,14 @@ class PeopleController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        @tiles = @topic.events.where(:eventable_type => ["Target","Note"]).limit(20).map(&:to_tile)
-        @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
-        @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
-        @tiles.unshift(@topic.mdl_grade_tracks.map(&:to_tile)) if @topic.mdl_grade_tracks.any?
-        @tiles = @tiles.flatten.uniq{|t| t.object}
-        render :action => "home"
+        if Settings.home_page == "new"
+          @tiles = @topic.events.where(:eventable_type => ["Target","Note"]).limit(20).map(&:to_tile)
+          @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
+          @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
+          @tiles.unshift(@topic.mdl_grade_tracks.map(&:to_tile)) if @topic.mdl_grade_tracks.any?
+          @tiles = @tiles.flatten.uniq{|t| t.object}
+          render :action => "home"
+        end
       end
       format.json do 
         render :json => @topic.to_json(:methods => [:l3va], :except => [:photo])
@@ -125,7 +127,7 @@ class PeopleController < ApplicationController
   def set_layout
     case action_name
     when /\_block$/ then false
-    when "show" then "cloud"
+    when "show" then Settings.home_page == "new" ? "cloud" : "application"
     else "application"
     end
   end
