@@ -25,7 +25,7 @@ class PeopleController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        @tiles = @topic.events.limit(20).map(&:to_tile)
+        @tiles = @topic.events.where(:eventable_type => ["Target","Note"]).limit(20).map(&:to_tile)
         @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
         @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
         @tiles.unshift(@topic.mdl_grade_tracks.map(&:to_tile)) if @topic.mdl_grade_tracks.any?
