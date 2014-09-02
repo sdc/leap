@@ -22,7 +22,7 @@ class MdlGradeTrack < ActiveRecord::Base
   end
 
   def to_tile
-    Tile.new({:title        => name || course_type.humanize,
+    Tile.new({:title        => name || "#{course_type.humanize} Tracker",
               :bg           => "aacccc",
               :icon         => "fa-bar-chart-o",
               :partial_path => "tiles/grade_track",
