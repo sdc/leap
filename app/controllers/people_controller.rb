@@ -33,6 +33,7 @@ class PeopleController < ApplicationController
             @topic.mdl_grade_tracks.where(:course_type => ct).last.try(:to_tile) or
             MdlGradeTrack.new(:course_type => ct).to_tile
           end)
+          @tiles.unshift(SimplePoll.where(:id => Settings.current_simple_poll).first.to_tile) unless Settings.current_simple_poll.blank?
           @tiles = @tiles.flatten.uniq{|t| t.object}
           render :action => "home"
         end
