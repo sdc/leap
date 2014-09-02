@@ -18,12 +18,11 @@ class Qualification < Eventable
 
   include MisQualification
 
-  after_create {|qual| qual.events.create!(:event_date => created_at, :transition => qual.predicted? ? :create : :complete)}
+  after_create  {|qual| qual.events.create!(:event_date => created_at, :transition => qual.predicted? ? :create : :complete)}
 
-  before_save  do |q| 
-                 q.predicted=true if (Person.user and !Person.user.staff?) 
-                 q.events.first.update_attribute("event_date", q.created_at)
-               end
+  before_save   {|q| q.predicted=true if (Person.user and !Person.user.staff?) }
+               
+  before_update {|q| q.events.first.update_attribute("event_date", q.created_at) }
 
   validates :title, :presence => true 
   
