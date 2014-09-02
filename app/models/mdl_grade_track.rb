@@ -22,11 +22,11 @@ class MdlGradeTrack < ActiveRecord::Base
   end
 
   def to_tile
-    Tile.new({:title        => name,
+    Tile.new({:title        => name || course_type.humanize,
               :bg           => "aacccc",
               :icon         => "fa-bar-chart-o",
               :partial_path => "tiles/grade_track",
-              :link         => Settings.moodle_host + Settings.moodle_path + "/grade/report/user/index.php?id=" + mdl_id.to_s,
+              :link         => name ? Settings.moodle_host + Settings.moodle_path + "/grade/report/user/index.php?id=" + mdl_id.to_s : nil,
               :object       => self})
   end
 

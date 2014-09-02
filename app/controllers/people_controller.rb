@@ -30,8 +30,9 @@ class PeopleController < ApplicationController
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
           @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
           @tiles.unshift(["english","maths","core"].map do |ct|
-            @topic.mdl_grade_tracks.where(:course_type => ct).last.try(:to_tile)
-          end.reject{|x| x.nil?})
+            @topic.mdl_grade_tracks.where(:course_type => ct).last.try(:to_tile) or
+            MdlGradeTrack.new(:course_type => ct).to_tile
+          end)
           @tiles = @tiles.flatten.uniq{|t| t.object}
           render :action => "home"
         end

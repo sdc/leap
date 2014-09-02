@@ -1,6 +1,11 @@
 .row
   .col-xs-12.text-center
-    %canvas{:height => 150, :width=>160, :style => "opacity:0.8"} 
+    - unless grade_track.name.blank?
+      %canvas{:height => 150, :width=>160, :style => "opacity:0.8"} 
+    - else
+      %h2 Coming Soon!
+      %br
+      .fa.fa-question-circle{:style => "font-size: 100px;color:#333"}
 
 :coffeescript
   canvas = $('##{dom_id(grade_track)} canvas')[0]
