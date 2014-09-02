@@ -36,5 +36,9 @@ class ProgressionReview < Eventable
   def status; approved ? :complete : :incomplete end
 
   def title; "Continuing Learning" end
+ 
+  def tile_icon
+    "#{approved ? 'fa-ban' : 'fa-check'} on fa-fast-forward"
+  end
 
 end

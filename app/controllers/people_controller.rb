@@ -19,10 +19,26 @@ class PeopleController < ApplicationController
   skip_before_filter :set_topic
   before_filter      :person_set_topic, :except => [:search]
   before_filter      :staff_only, :only => [:search,:select]
+  before_filter      :parse_sidebar_links, :only => [:show]
+  layout :set_layout
 
   def show
     respond_to do |format|
-      format.html
+      format.html do
+        if Settings.home_page == "new"
+          @tiles = @topic.events.where(:eventable_type => ["Target","Note"]).limit(20).map(&:to_tile)
+          @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
+          @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
+          @tiles.unshift(["english","maths","core"].map do |ct|
+            @topic.mdl_grade_tracks.where(:course_type => ct).last.try(:to_tile)
+          end.reject{|x| x.nil?})
+          @tiles = @tiles.flatten.uniq{|t| t.object}
+          render :action => "home"
+        end
+      end
+      format.json do 
+        render :json => @topic.to_json(:methods => [:l3va], :except => [:photo])
+      end
       format.jpg do
         if @topic.photo
           send_data @topic.photo, :disposition => 'inline', :type => "image/jpg"
@@ -76,7 +92,12 @@ class PeopleController < ApplicationController
                  get("#{Settings.moodle_path}/webservice/rest/server.php?" +
                  "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_user_courses&username=" +
                  @topic.username + Settings.moodle_user_postfix).body
-      @moodle_courses = Nokogiri::XML(mcourses).xpath('//MULTIPLE/SINGLE').map{|x| [x.children[1].content,x.children[5].content]}
+      @moodle_courses = Nokogiri::XML(mcourses).xpath('//MULTIPLE/SINGLE').map do |course|
+        Hash[:id,      course.xpath("KEY[@name='id']/VALUE").first.content,
+             :name,    course.xpath("KEY[@name='fullname']/VALUE").first.content,
+             :canedit, course.xpath("KEY[@name='canedit']/VALUE").first.content == "1"
+            ]
+      end
     rescue
       logger.error "Can't connect to Moodle: #{$!}"
       @moodle_courses = false
@@ -103,6 +124,20 @@ class PeopleController < ApplicationController
   def person_set_topic
     params[:person_id] = params[:id]
     set_topic
+  end
+
+  def set_layout
+    case action_name
+    when /\_block$/ then false
+    when "show" then Settings.home_page == "new" ? "cloud" : "application"
+    else "application"
+    end
+  end
+
+  def parse_sidebar_links
+    @sidebar_links = Settings.clidebar_links.split(/^\|/).drop(1)
+                     .map{|menu| menu.split("\n").reject(&:blank?).map(&:chomp)}
+                     .map{|menu| menu.first.split("|") + [menu.drop(1).map{|item| item.split("|")}]}
   end
 
 end

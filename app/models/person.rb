@@ -47,6 +47,7 @@ class Person < ActiveRecord::Base
   has_many :tt_activities
   has_many :simple_poll_answers
   has_many :event_notes
+  has_many :mdl_grade_tracks
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
   serialize :middle_names
@@ -140,6 +141,12 @@ class Person < ActiveRecord::Base
     return false unless qualifications.detect{|q| q.lat_score.kind_of? Fixnum}
     (qualifications.select{|q| q.lat_score.kind_of? Fixnum}.sum{|q| q.lat_score} / 
      qualifications.select{|q| q.lat_score.kind_of? Fixnum}.count.to_f).round(2)
+  end
+
+  def l3va; lat_score end
+
+  def address_text
+    address.blank? ? nil : [address, town, postcode].reject(&:nil?).join(", ")
   end
 
 end

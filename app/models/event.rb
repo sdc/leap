@@ -62,11 +62,11 @@ class Event < ActiveRecord::Base
 
   attr_accessor :first_in_past
 
-  [:title,:subtitle,:icon_url,:body,:extra_panes,:status,:staff_only?,:timetable_length].each do |method|
+  [:title,:subtitle,:icon_url,:body,:extra_panes,:status,:staff_only?,
+   :timetable_length,:tile_bg,:tile_icon,:tile_title].each do |method|
     define_method method do
       if eventable.respond_to?(method) 
         m = eventable.method(method)
-	logger.warn "Calling #{method} on #{eventable}"
         if m.arity == 1
           m.call(transition)
         else
@@ -107,6 +107,27 @@ class Event < ActiveRecord::Base
 
   def timetable_end
     event_date + timetable_length
+  end
+
+  def to_tile
+    attrs = {
+      :title        => tile_title || title,
+      :bg           => tile_bg,
+      :icon          => tile_icon,
+      :is_deletable => is_deletable?,
+      :subtitle     => subtitle,
+      :body         => body,
+      :person_id    => person_id,
+      :object       => self,
+    }
+    if eventable.respond_to? :tile_attrs
+      if eventable.method(:tile_attrs).arity == 1
+        attrs.merge!(eventable.tile_attrs(transition))
+      else
+        attrs.merge!(eventable.tile_attrs)
+      end
+    end
+    return Tile.new attrs
   end
 
 end

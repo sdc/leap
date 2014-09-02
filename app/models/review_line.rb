@@ -43,4 +43,8 @@ class ReviewLine < Eventable
     review ? review.staff_only? : true
   end
 
+  def tile_icon
+    "fa-file-text"
+  end
+
 end

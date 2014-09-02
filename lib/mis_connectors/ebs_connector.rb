@@ -78,6 +78,8 @@ module MisPerson
           :home_phone    => ep.address && ep.address.telephone,
           :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil
         )
+       
+        @person.update_attribute("contact_allowed", Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
         @person.save if options[:save] 
         @person.import_courses if options[:courses]
         @person.import_attendances if options[:attendances]
@@ -145,16 +147,16 @@ module MisPerson
       Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T'], :planned_start_date => from..to)
     end
     reds.map do |s| 
-      TimetableEvent.create(
-        :mis_id          => s.register_event_id,
-        :title           => s.description.split(/\[/).first,
-        :timetable_start => s.actual_start_date || s.planned_start_date,
-        :timetable_end   => s.actual_end_date   || s.planned_end_date,
-        :mark            => s.usage_code,
-        :status          => s.status,
-        :rooms           => s.rooms.map{|r| r.room_code},
-        :teachers        => s.teachers.map{|t| t.try(:name)}
-      )
+      t = TimetableEvent.new
+      t.mis_id          = s.register_event_id
+      t.title           = s.description.split(/\[/).first
+      t.timetable_start = s.actual_start_date || s.planned_start_date
+      t.timetable_end   = s.actual_end_date   || s.planned_end_date
+      t.mark            = s.usage_code
+      t.status          = s.status
+      t.rooms           = s.rooms.map{|r| r.room_code}
+      t.teachers        = s.teachers.map{|t| t.try(:name)}
+      t
     end
   end
 

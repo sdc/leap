@@ -1,0 +1,92 @@
+body {
+    background: #eee;
+}
+
+.container.nrp {
+    padding-right: 0;
+    .navbar {
+      margin-bottom: 10px;
+    }
+  @media (max-width: 992px) {
+    padding-left: 0;
+  }
+}
+
+.navbar-toggle,#show-clidebar {
+  margin-left:10px;
+}
+
+#clidebar {
+  .panel {
+    margin-bottom: 5px;
+  }
+  h2,h3,h4 {
+    margin:0;
+  }
+  .flags i{
+    cursor: help;
+  }
+  #timeline-links ul {
+    list-style: none;
+    padding-left:8px;
+  }
+  #moodle-courses h3 {
+    display:none;
+  }
+}
+#home {
+  overflow: hidden;
+  .tile {
+    border-left:1px #eee solid;
+    border-bottom:1px #eee solid;
+    height: 200px;
+    color: #eee;
+    font-size: 18px;
+    z-index: 0;
+    .foreground {
+      z-index: 10;
+    }
+    h1 {
+      font-size: 23px;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin:4px 0 8px 0;
+      font-family: 'Patua One', cursive;
+    }
+    h2{
+      color: #eea;
+      font-size: 20px;
+      font-weight: bold;
+      margin:0;
+    }
+    h3 {
+      font-size: 10px;
+    }
+    .background-icon {
+      overflow: hidden;
+      i {
+        z-index: -10;
+        position: absolute;
+        font-size: 125px;
+        bottom:0px;
+        right:8px;
+        color: #666666;
+        opacity: 0.4;
+      }
+    }
+    &[data-link]{
+      cursor:pointer
+    }
+    &[data-link]:hover .background-icon i {
+      color:#fff;
+    }
+  }
+}
+
+img#person-photo {
+  transition: all 2s ease-in-out;
+  &:hover { 
+    transform: rotate(360deg); 
+  }
+}

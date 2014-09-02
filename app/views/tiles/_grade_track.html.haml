@@ -1,0 +1,50 @@
+.row
+  .col-xs-12.text-center
+    %canvas{:height => 150, :width=>160, :style => "opacity:0.8"} 
+
+:coffeescript
+  canvas = $('##{dom_id(grade_track)} canvas')[0]
+  c = canvas.getContext("2d")
+  c.strokeStyle = "#888"
+  c.fillStyle = "#fff"
+  c.fillRect(0,40,160,110)
+  c.strokeRect(0.5,40.5,159,109)
+  #c.fillRect(25.5,0.5,90,30)
+  #c.strokeRect(25.5,0.5,90,30)
+  c.beginPath()
+  c.strokeStyle = "#111"
+  c.fillStyle = "#fff"
+  c.lineWidth = 1
+  c.moveTo(30,130)
+  c.lineTo(140,60)
+  c.moveTo(7.5,50)
+  c.lineTo(7.5,140.5)
+  c.lineTo(150,140.5)
+  c.stroke()
+  c.closePath()
+  c.beginPath()
+  c.lineWidth = 4
+  c.moveTo(79.5,30)
+  c.lineTo(79.5,80)
+  c.stroke()
+  c.closePath()
+  c.beginPath()
+  c.lineWidth = 1
+  c.fillStyle = "#333"
+  c.moveTo(79.5,82)
+  c.lineTo(69.5,70)
+  c.lineTo(89.5,70)
+  c.lineTo(79.5,82)
+  c.fill()
+  c.closePath()
+  c.font = "22px sans-serif"
+  c.textBaseline = "middle"
+  c.textAlign = "center"
+  c.fillText("#{grade_track.total}", 80.5, 17)
+  c.font = "18px sans-serif"
+  c.textAlign = "left"
+  c.textBaseline = "bottom"
+  c.fillText("#{grade_track.mag}", 15, 130)
+  c.textAlign = "right"
+  c.textBaseline = "top"
+  c.fillText("#{grade_track.tag}", 155, 80)

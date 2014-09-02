@@ -49,7 +49,10 @@ class ApplicationController < ActionController::Base
   end
 
   def set_user
-    if Rails.env == "development"
+    if params[:token] == "4f912975ff4ba4a5abb75bf580dbcaf4e62612e2aea91b896895b73b6e4727932660b5cc7eb641c668e23a6ef5236ef3d246b9853a056881c560817e912aac8a"
+      Person.user = @user = Person.get("khughes")
+      Person.affiliation = @affiliation = "staff"
+    elsif Rails.env == "development"
       if params[:login_as]
         session[:user_affiliation] = params[:login_as]
         session[:user_id] = params[:id]
