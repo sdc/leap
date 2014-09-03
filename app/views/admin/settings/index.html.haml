@@ -295,6 +295,20 @@
       .help-text
         Leave blank to show users' photos or select a category to show random pictures from that category. I suggest "cats."
 
+  %h2 Web Services
+  .well
+    Turning this off will mean that passing the token specified as a url parameter called "token" will automatically log
+    you in as the user specified. How this gets past your Shibboleth authentication in the first place is left as an excercise for
+    the user ;)
+  .control-group
+    %label.control-label Web Services User
+    .controls
+      = text_field_tag "ws_user", Settings.ws_user
+  .control-group
+    %label.control-label Web Services Token
+    .controls
+      = text_field_tag "ws_token", Settings.ws_token
+
   %h1 Old Settings!
   .old-settings
     .alert
@@ -306,7 +320,7 @@
                                  "current_review_window","review_grades","reverse_scores","event_notes","moodle_user_postfix",
                                  "moodle_host","moodle_path","moodle_token","moodle_link_target","attendance_table",
                                  "attendance_culm_column","attendance_week_column","attendance_low_score","attendance_high_score",
-                                 "attendance_date_column","custom_css","quals_editing","clidebar_links","home_page"]
+                                 "attendance_date_column","custom_css","quals_editing","clidebar_links","home_page","ws_user","ws_token"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize
