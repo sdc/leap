@@ -26,7 +26,10 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.html do
         if Settings.home_page == "new"
-          @tiles = @topic.events.where(:eventable_type => ["Target","Note"]).limit(20).map(&:to_tile)
+          @tiles = @topic.events.where(:eventable_type => "Target",:transition => :overdue).
+                   where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)
+          @tiles += @topic.events.where(:eventable_type => "Note").limit(8)
+          @tiles = @tiles.sort_by(&:event_date).map(&:to_tile)
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
           @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
           @tiles.unshift(["english","maths","core"].map do |ct|
