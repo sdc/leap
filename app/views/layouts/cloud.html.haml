@@ -13,7 +13,7 @@
     = csrf_meta_tag
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"}
     = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty? or Rails.env == "development"
-  %body#cleap{:class => ([Person.affiliation] + @courses || [])}
+  %body#cleap{:class => ([Person.affiliation] + (@courses || []))}
     .container.nrp
       %nav.navbar.navbar-default
         .navbar-header
