@@ -7,16 +7,14 @@ class MdlGradeTrack < ActiveRecord::Base
                  get("#{Settings.moodle_path}/webservice/rest/server.php?" +
                  "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_targets_by_username&username=" +
                  person.username + Settings.moodle_user_postfix).body
-    tracks = Nokogiri::XML(tracks).xpath('//MULTIPLE/SINGLE').each do |course|
-      coursetype = course.xpath("KEY[@name='leapcore']/VALUE").first.content
-      next unless ["test","maths","english","core"].include? coursetype
+    tracks = Nokogiri::XML(tracks).xpath('//MULTIPLE/SINGLE').map do |course|
       person.mdl_grade_tracks.create do |t|
         t.name   = course.xpath("KEY[@name='course_fullname']/VALUE").first.content
         t.mdl_id = course.xpath("KEY[@name='course_id']/VALUE").first.content
         t.tag    = course.xpath("KEY[@name='tag_display']/VALUE").first.content
         t.mag    = course.xpath("KEY[@name='mag_display']/VALUE").first.content
         t.total  = course.xpath("KEY[@name='course_total_display']/VALUE").first.content
-        t.course_type = coursetype
+        t.course_type = course.xpath("KEY[@name='leapcore']/VALUE").first.content
       end
     end
   end

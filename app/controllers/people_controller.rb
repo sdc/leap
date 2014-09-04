@@ -30,13 +30,15 @@ class PeopleController < ApplicationController
                    where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)
           @tiles += @topic.events.where(:eventable_type => "Note").limit(8)
           @tiles = @tiles.sort_by(&:event_date).map(&:to_tile)
-          @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
-          @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
-          @tiles.unshift(["english","maths","core"].map do |ct|
+          @tiles.unshift(SimplePoll.where(:id => Settings.current_simple_poll).first.to_tile) unless Settings.current_simple_poll.blank?
+          tracks = @topic.mdl_grade_tracks.group(:course_type).order(:created_at).flatten
+          @tiles.unshift(["english","maths","core"].reject{|ct| tracks.detect{|t| t.course_type == ct}}.first(3 - tracks.count).map do |ct|
             @topic.mdl_grade_tracks.where(:course_type => ct).last.try(:to_tile) or
             MdlGradeTrack.new(:course_type => ct).to_tile
           end)
-          @tiles.unshift(SimplePoll.where(:id => Settings.current_simple_poll).first.to_tile) unless Settings.current_simple_poll.blank?
+          @tiles.unshift(tracks.map{|x| x.to_tile})
+          @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
+          @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
           @tiles = @tiles.flatten.uniq{|t| t.object}
           render :action => "home"
         end
