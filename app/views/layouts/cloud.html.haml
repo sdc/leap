@@ -133,9 +133,9 @@
                       - unless @topic.personal_email.blank?
                         %dt Personal Email
                         %dd= mail_to(@topic.personal_email)
-                      - if @topic.date_of_birth
+                      - if @topic.date_of_birth 
                         %dt Date of Birth
-                        %dd= @topic.date_of_birth.to_date.to_s
+                        %dd= "#{@topic.date_of_birth.to_date.to_s} (Age: #{@topic.age})"
                       - unless @topic.next_of_kin.blank?
                         %dt Next of Kin
                         %dd= @topic.next_of_kin
