@@ -24,7 +24,7 @@ class MdlGradeTrack < ActiveRecord::Base
               :bg           => "aacccc",
               :icon         => "fa-bar-chart-o",
               :partial_path => "tiles/grade_track",
-              :link         => name ? Settings.moodle_host + Settings.moodle_path + "/grade/report/user/index.php?id=" + mdl_id.to_s : nil,
+              :link         => name ? Settings.moodle_host + Settings.moodle_path + "/grade/report/#{Person.user.staff? ? 'grader' : 'user'}/index.php?id=" + mdl_id.to_s : nil,
               :object       => self})
   end
 
