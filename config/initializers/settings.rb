@@ -93,3 +93,5 @@ Settings.defaults[:ebs_no_contact] = nil
 #Web services
 Settings.defaults[:ws_user] = ""
 Settings.defaults[:ws_token] = ""
+
+Settings.defaults[:ebs_username_field] = "network_userid"

@@ -47,8 +47,10 @@ class PeopleController < ApplicationController
         render :json => @topic.to_json(:methods => [:l3va], :except => [:photo])
       end
       format.jpg do
-        if @topic.photo
-          send_data @topic.photo, :disposition => 'inline', :type => "image/jpg"
+        #if @topic.photo
+          #send_data @topic.photo, :disposition => 'inline', :type => "image/jpg"
+        if File.exists?("\\ebsappsvr\photo#{@topic.id}.jpg")
+	   send_file("\\ebsappsvr\photo#{@topic.id}.jpg")   
         else
           redirect_to "/assets/noone.png"
         end
