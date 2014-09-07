@@ -24,8 +24,10 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.html
       format.jpg do
-        if @topic.photo
-          send_data @topic.photo, :disposition => 'inline', :type => "image/jpg"
+        #if @topic.photo
+          #send_data @topic.photo, :disposition => 'inline', :type => "image/jpg"
+        if File.exists?("\\ebsappsvr\photo#{@topic.id}.jpg")
+	   send_file("\\ebsappsvr\photo#{@topic.id}.jpg")   
         else
           redirect_to "/assets/noone.png"
         end

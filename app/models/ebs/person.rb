@@ -27,7 +27,7 @@ class Ebs::Person < Ebs::Model
   has_many :learner_aims,
            :foreign_key => "person_code"
   has_one  :address, 
-           :foreign_key => "per_person_code",
+           :foreign_key => "owner_ref",
            :conditions  => ["end_date IS NULL"]
   has_many :people_units,
            :foreign_key => "person_code"

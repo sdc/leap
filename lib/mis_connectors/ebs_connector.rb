@@ -52,9 +52,8 @@ module MisPerson
       # NOTE: Need to change these defaults after launch
       options.reverse_merge! Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}]
       logger.info "Importing user #{mis_id}"
-      if (ep = (Ebs::Person.find_by_person_code((mis_id.to_s.match(/\d{6}/) ? mis_id.to_s.tr('^0-9','') : mis_id)) or 
-                Ebs::Person.find_by_college_login(mis_id) or 
-                Ebs::Person.find_by_network_userid(mis_id)
+      if (ep = (Ebs::Person.find_by_person_code((mis_id.to_s.match(/\d{3}/) ? mis_id.to_s.tr('^0-9','') : mis_id)) or 
+                Ebs::Person.find_by_fes_staff_code(mis_id.to_s)
           ))
         @person = Person.find_or_create_by_mis_id(ep.id)
         @person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
@@ -62,10 +61,10 @@ module MisPerson
           :forename      => ep.forename,
           :surname       => ep.surname,
           :middle_names  => ep.middle_names && ep.middle_names.split,
-          #:address       => ep.address ? [ep.address.address_line_1,ep.address.address_line_2,
-          #                   ep.address.address_line_3,ep.address.address_line_4].reject{|a| a.blank?} : [],
-          #:town          => ep.address ? ep.address.town : "",
-          #:postcode      => ep.address ? [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" ") : "",
+          :address       => ep.address ? [ep.address.address_line_1,ep.address.address_line_2,
+                             ep.address.address_line_3,ep.address.address_line_4].reject{|a| a.blank?} : [],
+          :town          => ep.address ? ep.address.town : "",
+          :postcode      => ep.address ? [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" ") : "",
           :photo         => Ebs::Blob.table_exists? && ep.blobs.photos.first.try(:binary_object),
           :mobile_number => ep.mobile_phone_number,
           :next_of_kin   => [ep.fes_next_of_kin, ep.fes_nok_contact_no].join(" "),
@@ -73,9 +72,9 @@ module MisPerson
           #:uln           => ep.unique_learn_no,
           :mis_id        => ep.person_code,
           :staff         => ep.fes_staff_code?,
-          :username      => (ep.college_login or ep.id),
+          :username      => (ep.fes_staff_code or ep.id.to_s),
           :personal_email=> ep.personal_email,
-          #:home_phone    => ep.address && ep.address.telephone,
+          :home_phone    => ep.address && ep.address.telephone,
           :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil
         )
         @person.save if options[:save] 
@@ -162,6 +161,7 @@ module MisPerson
     mis_person.people_units.order("progress_date").each do |pu|
       next unless pu.uio_id
       course = Course.import(pu.uio_id,{:people => false})
+      next unless course
       pc= PersonCourse.find_or_create_by_person_id_and_course_id(id,course.id)
       if pu.unit_type == "A" 
         pc.update_attributes({:status => :not_started,
@@ -190,14 +190,13 @@ module MisPerson
       Date.civil(1900,1,1)
     end
     mis_person.attendances.
-      where("start_week > ?",last_date - 2.weeks).
+      where("week_beginning > ?",(last_date - 2.weeks).strftime("%Y-%d-%m %H:%M:%S")).
       each do |att|
-        na=Attendance.find_or_create_by_person_id_and_week_beginning(id,att.start_week)
+        na=Attendance.find_or_create_by_person_id_and_week_beginning(id,att.week_beginning)
         na.update_attributes(
-          :week_beginning => att.start_week,
-          :att_year   => att.attendance,
-          :att_3_week => att.attendance_last3wks,
-          :att_week   => att.attendance_weekly
+          :week_beginning => att.week_beginning,
+          :att_year   => att.yearly,
+          :att_week   => att.weekly
         )
       end
     return self
