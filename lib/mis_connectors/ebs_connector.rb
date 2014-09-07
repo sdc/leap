@@ -141,8 +141,8 @@ module MisPerson
         where("planned_start_date > ?",Time.now).
         order(:planned_start_date).limit(1)
     else
-      from = (options[:from] || Date.today.beginning_of_week)
-      to   = (options[:to  ] || from.end_of_week)
+      from = (options[:from] || Date.today.beginning_of_week).strftime("%Y-%d-%m %H:%M:%S")
+      to   = (options[:to  ] || from.end_of_week).strftime("%Y-%d-%m %H:%M:%S")
       Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T'], :planned_start_date => from..to)
     end
     reds.map do |s| 
@@ -277,21 +277,20 @@ module MisCourse
         where("planned_start_date > ?", Time.now).
         order(:planned_start_date).limit(1)
     else
-      from = options[:from] || Date.today.beginning_of_week
-      to   = options[:to  ] || from.end_of_week
+      from = (options[:from] || Date.today.beginning_of_week).strftime("%Y-%d-%m %H:%M:%S")
+      to   = (options[:to  ] || from.end_of_week).strftime("%Y-%d-%m %H:%M:%S")
       Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => 'U', :planned_start_date => from..to)
     end
     reds.map do |s| 
-      TimetableEvent.create(
-        :mis_id          => s.register_event_id,
-        :title           => s.description.split(/\[/).first,
-        :timetable_start => s.actual_start_date || s.planned_start_date,
-        :timetable_end   => s.actual_end_date   || s.planned_end_date,
-        :mark            => s.usage_code,
-        :status          => s.status,
-        :rooms           => s.rooms.map{|r| r.room_code},
-        :teachers        => s.teachers.map{|t| t.try(:name)}
-      )
+      t = TimetableEvent.new 
+      t.mis_id          = s.register_event_id,
+      t.title           = s.description.split(/\[/).first,
+      t.timetable_start = s.actual_start_date || s.planned_start_date,
+      t.timetable_end   = s.actual_end_date   || s.planned_end_date,
+      t.mark            = s.usage_code,
+      t.status          = s.status,
+      t.rooms           = s.rooms.map{|r| r.room_code},
+      t.teachers        = s.teachers.map{|t| t.try(:name)}
     end
   end
 
