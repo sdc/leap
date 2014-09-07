@@ -53,7 +53,7 @@ module MisPerson
       options.reverse_merge! Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}]
       logger.info "Importing user #{mis_id}"
       if (ep = (Ebs::Person.find_by_person_code((mis_id.to_s.match(/\d{3}/) ? mis_id.to_s.tr('^0-9','') : mis_id)) or 
-                Ebs::Person.where(Setting.ebs_username_field => mis_id.to_s).first
+                Ebs::Person.where(Settings.ebs_username_field => mis_id.to_s).first
           ))
         @person = Person.find_or_create_by_mis_id(ep.id)
         #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
@@ -72,7 +72,7 @@ module MisPerson
           #:uln           => ep.unique_learn_no,
           :mis_id        => ep.person_code,
           :staff         => ep.fes_staff_code?,
-          :username      => (send(Settings.ebs_username_field) or ep.id.to_s),
+          :username      => (ep.send(Settings.ebs_username_field) or ep.id.to_s),
           :personal_email=> ep.personal_email,
           :home_phone    => ep.address && ep.address.telephone,
           :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil
@@ -196,7 +196,7 @@ module MisPerson
       Date.civil(1900,1,1)
     end
     mis_person.attendances.
-      where("#{Settings.attendance_date_column} > ?",last_date - 2.weeks).strftime("%Y-%d-%m %H:%M:%S")).
+      where("#{Settings.attendance_date_column} > ?",(last_date - 2.weeks).strftime("%Y-%d-%m %H:%M:%S")).
       each do |att|
         na=Attendance.find_or_create_by_person_id_and_week_beginning(id,att.send(Settings.attendance_date_column))
         na.update_attributes(
