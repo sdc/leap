@@ -108,8 +108,8 @@
               Timetable
             - if @user.staff?
               = link_to(Settings.ebs_person_base_url + @topic.mis_id.to_s, :class => "btn btn-default") do
-                %i.fa.fa-fw.fa-bolt
-                SparkE
+                %i.fa.fa-fw{:class => Settings.ebs_link_icon}
+                = Settings.ebs_link_name
           = render :partial => "new_note"
           #sidebar-accordion.panel-group
             - unless @topic.staff?

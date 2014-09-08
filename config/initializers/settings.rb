@@ -84,6 +84,8 @@ Settings.defaults[:custom_css] = ""
 # Links
 # The links on the clidebar
 Settings.defaults[:clidebar_links] = ""
+Settings.defaults[:ebs_link_name] = "EBS"
+Settings.defaults[:ebs_link_icon] = "fa-bolt"
 
 # Which home page
 Settings.defaults[:home_page] = "old"
