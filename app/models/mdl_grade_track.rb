@@ -13,7 +13,7 @@ class MdlGradeTrack < ActiveRecord::Base
       return nil
     end
     tracks = Nokogiri::XML(tracks).xpath('//MULTIPLE/SINGLE').each do |course|
-      next if course.xpath("KEY[@name='course_total_display']/VALUE").first.content.blank?
+      next if course.xpath("KEY[@name='l3va']/VALUE").first.content.blank?
       next if person.mdl_grade_tracks.where(:created_at  => Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i),
                                             :course_type => course.xpath("KEY[@name='leapcore']/VALUE").first.content).any?
       person.mdl_grade_tracks.create do |t|

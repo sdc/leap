@@ -32,7 +32,7 @@ class PeopleController < ApplicationController
           @tiles = @tiles.sort_by(&:event_date).map(&:to_tile)
           @tiles.unshift(SimplePoll.where(:id => Settings.current_simple_poll).first.to_tile) unless Settings.current_simple_poll.blank?
           tracks = @topic.mdl_grade_tracks.group(:course_type).order(:created_at).flatten
-          @tiles.unshift(["english","maths","core"].reject{|ct| tracks.detect{|t| t.course_type == ct}}.first(3 - tracks.count).map do |ct|
+          @tiles.unshift(["english","maths","core"].reject{|ct| tracks.detect{|t| t.course_type == ct}}.first([3 - tracks.count,0].max).map do |ct|
             @topic.mdl_grade_tracks.where(:course_type => ct).last.try(:to_tile) or
             MdlGradeTrack.new(:course_type => ct).to_tile
           end)
