@@ -37,6 +37,7 @@ module MisPerson
 	  skipcount +=1
           next unless ep.people_units.detect{|pc| pc.calocc_code == yr} if yr
           puts "#{count}:\tskip #{skipcount}\timport #{import(ep).name}"
+          MdlGradeTrack.import_for ep
           count += 1
 	  skipcount = 0
         rescue
