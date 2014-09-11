@@ -1,6 +1,8 @@
 class MdlGradeTrack < ActiveRecord::Base
   attr_accessible :course_type, :mag, :mdl_id, :name, :tag, :total, :created_at
 
+  belongs_to :person
+
   def self.import_for(person)
     person = person.kind_of?(Person) ? person : Person.get(person) 
     begin
