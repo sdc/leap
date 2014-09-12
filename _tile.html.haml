@@ -1,5 +1,4 @@
-.col-xs-6.col-sm-4.col-md-4.col-lg-3.tile[tile.object]{:style => "background:##{tile.bg}", "data-link" => tile.link, 
-                                                       :class => (tile.link || tile.modal_body) ? "highlight-hover" : nil}
+.col-xs-6.col-sm-4.col-md-4.col-lg-3.tile[tile.object]{:style => "background:##{tile.bg}", "data-link" => tile.link}
   .background-icon
     %i.fa{:class => tile.icon}
   .row.foreground
@@ -12,18 +11,15 @@
     .row= render :partial => tile.partial, :object => tile.object || tile
   - else
     %p= simple_format(tile.body)
-- if tile.modal_body
+
+- if tile.modal_title or tile.modal_body
   .modal.fade{:id => dom_id(tile.object)+"_modal"}
     .modal-dialog
       .modal-content
         - if tile.modal_title
           .modal-header
-            %h3.modal-title=raw tile.modal_title
+            %h4.modal-title= tile.modal_title 
         .modal-body= raw tile.modal_body
-        .modal-footer
-          %button.btn.btn-default{"data-dismiss" => "modal"}
-            %i.fa.fa-close
-            Close
-
   :javascript
-     $('##{dom_id(tile.object)}').click(function() {$('##{dom_id(tile.object)}_modal').modal('show')})
+     $('##{dom_id(tile.object)}').click(function() {$('##{dom_id(tile.object)}_modal').modal('show')}).css("cursor","pointer")
+
