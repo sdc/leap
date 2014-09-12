@@ -12,3 +12,14 @@
               %tr
                 %th= e.first
                 %td= e.last
+
+.row
+  .col-xs-12.text-right
+    Get this as:
+    .btn-group
+      = link_to(admin_stats_url(:format => :json), :class => "btn btn-default") do 
+        %i.fa.fa-file-o
+        JSON
+      = link_to(admin_stats_url(:format => :xml), :class => "btn btn-default") do 
+        %i.fa.fa-file-code-o
+        XML

@@ -16,7 +16,7 @@
 
 class Admin::StatsController < ApplicationController
 
-  respond_to :html, :json
+  respond_to :html, :json, :xml
   before_filter :admin_page
   layout "cloud"
 
