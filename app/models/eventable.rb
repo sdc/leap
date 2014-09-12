@@ -40,6 +40,9 @@ class Eventable < ActiveRecord::Base
     humanize
   end
 
+  def created_by_id; end
+  def created_by_id=(poo); end
+
   def staff_only?
     false
   end
@@ -61,6 +64,7 @@ class Eventable < ActiveRecord::Base
   def timetable_length
     3600
   end
+
 
   # For new front page
 

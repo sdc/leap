@@ -4,7 +4,7 @@ Ilp2::Application.routes.draw do
     resources :settings
     resources :views
     match 'test'       => 'test#index', :as => :test
-    match 'stats'      => 'test#stats'
+    match 'stats'      => 'stats#index'
     match 'test/login' => 'test#login', :as => :test_login
   end
   resources :views

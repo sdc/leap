@@ -1,7 +1,9 @@
-class MdlGradeTrack < ActiveRecord::Base
+class MdlGradeTrack < Eventable
   attr_accessible :course_type, :mag, :mdl_id, :name, :tag, :total, :created_at
 
   belongs_to :person
+
+  after_create {|t| t.events.create(:event_date => t.created_at, :transition => ':create')}
 
   def self.import_for(person)
     person = person.kind_of?(Person) ? person : Person.get(person) 
