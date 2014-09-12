@@ -1,0 +1,14 @@
+.row
+  %h1.col-xs-12 Events
+    
+.row
+  - @stats.sort.each do |t|
+    .col-sm-4
+      .panel.panel-default
+        .panel-body
+          %h3= t.first
+          %table.table
+            - t.last.sort.each do |e|
+              %tr
+                %th= e.first
+                %td= e.last

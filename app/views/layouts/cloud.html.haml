@@ -78,128 +78,131 @@
               = link_to admin_test_login_url, :title => "Click to change user" do
                 %i.fa.fa-refresh
     .container
-      .row.visible-xs.visible-sm
-        .col-xs-12.hidden-clidebar
-          %h3{:style => "margin-top:0"}
-            = @topic.name
-            %small= @topic.mis_id
+      - if @topic
+        .row.visible-xs.visible-sm
+          .col-xs-12.hidden-clidebar
+            %h3{:style => "margin-top:0"}
+              = @topic.name
+              %small= @topic.mis_id
       .row 
-        #clidebar.col-xs-12.col-lg-3.col-md-4.visible-lg.visible-md
-          .panel.panel-default
-            .panel-body
-              .row
-                .col-md-6.col-sm-2.col-xs-6
-                  = image_tag @topic.photo_uri, :id => "person-photo", :class => "img-responsive img-circle"
-                .name.text-left.col-md-6.col-sm-10.col-xs-6
-                  %h4= @topic.name
-                  %h4
-                    %small= @topic.mis_id
-                  %h5.flags
-                    - if @user.staff? and !@topic.note.blank?
-                      = link_to "#note-modal", {"data-toggle" => "modal", :title => "Note on student records system"} do
-                        %i.text-warning.fa.fa.fa-flag
-                    - if @user.staff? and !@topic.contact_allowed
-                      %i.text-danger.fa.fa-exclamation-triangle{:title => "Do not contact this person!"}
-                    - if @topic.staff?
-                      %i.text-success.fa.fa-mortar-board{:title => "Staff Member"}
-          .btn-group.btn-group-justified.panel
-            = link_to(person_timetables_url(@topic), :class => "btn btn-default") do
-              %i.fa.fa-fw.fa-calendar
-              Timetable
-            - if @user.staff?
-              = link_to(Settings.ebs_person_base_url + @topic.mis_id.to_s, :class => "btn btn-default") do
-                %i.fa.fa-fw{:class => Settings.ebs_link_icon}
-                = Settings.ebs_link_name
-          = render :partial => "new_note"
-          #sidebar-accordion.panel-group
-            - unless @topic.staff?
-              .panel.panel-default
-                .panel-heading
-                  %h4.panel-title
-                    %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#personal-details"}
-                      %i.fa.fa-user.fa-fw
-                      Personal Details
-                #personal-details.panel-collapse.collapse
-                  .panel-body
-                    %dl
-                      %dt Address
-                      %dd= @topic.address_text
-                      - unless @topic.home_phone.blank?
-                        %dt Home Phone
-                        %dd= @topic.home_phone
-                      - unless @topic.mobile_number.blank?
-                        %dt Mobile Phone
-                        %dd= @topic.mobile_number
-                      - unless @topic.personal_email.blank?
-                        %dt Personal Email
-                        %dd= mail_to(@topic.personal_email)
-                      - if @topic.date_of_birth 
-                        %dt Date of Birth
-                        %dd= "#{@topic.date_of_birth.to_date.to_s} (Age: #{@topic.age})"
-                      - unless @topic.next_of_kin.blank?
-                        %dt Next of Kin
-                        %dd= @topic.next_of_kin
-                    - if @topic.current_user?
-                      .text-right
-                        Are your details incorrect?
-                        = link_to "Notify Us", Settings.notify_details_change_url, :class => "btn btn-info"
+        - if @topic
+          #clidebar.col-xs-12.col-lg-3.col-md-4.visible-lg.visible-md
             .panel.panel-default
-              .panel-heading
-                %h4.panel-title
-                  %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#timeline-links"}
-                    %i.fa.fa-clock-o.fa-fw
-                    Timeline
-              #timeline-links.panel-collapse.collapse.in
-                .panel-body
-                  %ul=render @views
-            .panel.panel-default
-              .panel-heading
-                %h4.panel-title
-                  %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#moodle-courses"}
-                    %i.fa.fa-graduation-cap.fa-fw
-                    Moodle Courses
-              #moodle-courses.panel-collapse.collapse
-                .panel-body
-                  = link_to("#{Settings.moodle_host}#{Settings.moodle_path}",
-                              {:target => Settings.moodle_link_target})  do
+              .panel-body
+                .row
+                  .col-md-6.col-sm-2.col-xs-6
+                    = image_tag @topic.photo_uri, :id => "person-photo", :class => "img-responsive img-circle"
+                  .name.text-left.col-md-6.col-sm-10.col-xs-6
+                    %h4= @topic.name
                     %h4
-                      %i.fa.fa-home
-                      Moodle Home
-                  #moodle-courses-links
-                    %i.fa.fa-circle-o-notch.fa-spin
-                    loading...
-            - if @sidebar_links
-              - tmpid = "custom_links_1"
-              - @sidebar_links.each do |menu|
+                      %small= @topic.mis_id
+                    %h5.flags
+                      - if @user.staff? and !@topic.note.blank?
+                        = link_to "#note-modal", {"data-toggle" => "modal", :title => "Note on student records system"} do
+                          %i.text-warning.fa.fa.fa-flag
+                      - if @user.staff? and !@topic.contact_allowed
+                        %i.text-danger.fa.fa-exclamation-triangle{:title => "Do not contact this person!"}
+                      - if @topic.staff?
+                        %i.text-success.fa.fa-mortar-board{:title => "Staff Member"}
+            .btn-group.btn-group-justified.panel
+              = link_to(person_timetables_url(@topic), :class => "btn btn-default") do
+                %i.fa.fa-fw.fa-calendar
+                Timetable
+              - if @user.staff?
+                = link_to(Settings.ebs_person_base_url + @topic.mis_id.to_s, :class => "btn btn-default") do
+                  %i.fa.fa-fw{:class => Settings.ebs_link_icon}
+                  = Settings.ebs_link_name
+            = render :partial => "new_note"
+            #sidebar-accordion.panel-group
+              - unless @topic.staff?
                 .panel.panel-default
                   .panel-heading
                     %h4.panel-title
-                      %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "##{tmpid}"}
-                        %i.fa.fa-fw{:class => menu[1]}
-                        = menu[0]
-                  .panel-collapse.collapse{:id => tmpid}
+                      %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#personal-details"}
+                        %i.fa.fa-user.fa-fw
+                        Personal Details
+                  #personal-details.panel-collapse.collapse
                     .panel-body
-                      %ul.fa-ul
-                        - menu[2].each do |item|
-                          %li
-                            = link_to item[1] do
-                              %i.fa.fa-li{:class => item[2] || "fa-link"}
-                              = item[0]
-                - tmpid.next!
-        #main-content.col-xs-12.col-lg-9.col-md-8= yield
-        = javascript_tag "$('#moodle-courses-links').load('#{moodle_block_person_url(@topic)}')"
-        #note-modal.modal.fade
-          .modal-dialog
-            .modal-content
-              .modal-header
-                %h4.modal-title Learner has a note on student records system.
-              .modal-body
-                - if Person.user.admin?
-                  = simple_format @topic.note
-                - else
-                  %p Contact your student records department or Leap admin for more information
-              .modal-footer
-                %button.btn.btn-default{"data-dismiss" => "modal"}Close
+                      %dl
+                        %dt Address
+                        %dd= @topic.address_text
+                        - unless @topic.home_phone.blank?
+                          %dt Home Phone
+                          %dd= @topic.home_phone
+                        - unless @topic.mobile_number.blank?
+                          %dt Mobile Phone
+                          %dd= @topic.mobile_number
+                        - unless @topic.personal_email.blank?
+                          %dt Personal Email
+                          %dd= mail_to(@topic.personal_email)
+                        - if @topic.date_of_birth 
+                          %dt Date of Birth
+                          %dd= "#{@topic.date_of_birth.to_date.to_s} (Age: #{@topic.age})"
+                        - unless @topic.next_of_kin.blank?
+                          %dt Next of Kin
+                          %dd= @topic.next_of_kin
+                      - if @topic.current_user?
+                        .text-right
+                          Are your details incorrect?
+                          = link_to "Notify Us", Settings.notify_details_change_url, :class => "btn btn-info"
+              .panel.panel-default
+                .panel-heading
+                  %h4.panel-title
+                    %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#timeline-links"}
+                      %i.fa.fa-clock-o.fa-fw
+                      Timeline
+                #timeline-links.panel-collapse.collapse.in
+                  .panel-body
+                    %ul=render @views
+              .panel.panel-default
+                .panel-heading
+                  %h4.panel-title
+                    %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#moodle-courses"}
+                      %i.fa.fa-graduation-cap.fa-fw
+                      Moodle Courses
+                #moodle-courses.panel-collapse.collapse
+                  .panel-body
+                    = link_to("#{Settings.moodle_host}#{Settings.moodle_path}",
+                                {:target => Settings.moodle_link_target})  do
+                      %h4
+                        %i.fa.fa-home
+                        Moodle Home
+                    #moodle-courses-links
+                      %i.fa.fa-circle-o-notch.fa-spin
+                      loading...
+              - if @sidebar_links
+                - tmpid = "custom_links_1"
+                - @sidebar_links.each do |menu|
+                  .panel.panel-default
+                    .panel-heading
+                      %h4.panel-title
+                        %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "##{tmpid}"}
+                          %i.fa.fa-fw{:class => menu[1]}
+                          = menu[0]
+                    .panel-collapse.collapse{:id => tmpid}
+                      .panel-body
+                        %ul.fa-ul
+                          - menu[2].each do |item|
+                            %li
+                              = link_to item[1] do
+                                %i.fa.fa-li{:class => item[2] || "fa-link"}
+                                = item[0]
+                  - tmpid.next!
+        #main-content.col-xs-12{:class => @topic ? ["col-lg-9","col-md-8"] : nil}= yield
+        - if @topic
+          = javascript_tag "$('#moodle-courses-links').load('#{moodle_block_person_url(@topic)}')"
+          #note-modal.modal.fade
+            .modal-dialog
+              .modal-content
+                .modal-header
+                  %h4.modal-title Learner has a note on student records system.
+                .modal-body
+                  - if Person.user.admin?
+                    = simple_format @topic.note
+                  - else
+                    %p Contact your student records department or Leap admin for more information
+                .modal-footer
+                  %button.btn.btn-default{"data-dismiss" => "modal"}Close
         #leap-about-modal.modal.fade
           .modal-dialog
             .modal-content

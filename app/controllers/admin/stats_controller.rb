@@ -16,14 +16,16 @@
 
 class Admin::StatsController < ApplicationController
 
+  respond_to :html, :json
   before_filter :admin_page
+  layout "cloud"
 
   def index
-    stats = Hash.new
-    stats[:ever] = Event.group(:eventable_type).count
-    stats[:this_week] = Event.group(:eventable_type).where(:event_date => Time.now.all_week).count
-    stats[:this_month] = Event.group(:eventable_type).where(:event_date => Time.now.all_month).count
-    render :json=> stats
+    @stats = Hash.new
+    @stats["All Time"] = Event.group(:eventable_type).count
+    @stats["This Week"] = Event.group(:eventable_type).where(:event_date => Time.now.all_week).count
+    @stats["This Month"] = Event.group(:eventable_type).where(:event_date => Time.now.all_month).count
+    respond_with @stats
   end
 
 end
