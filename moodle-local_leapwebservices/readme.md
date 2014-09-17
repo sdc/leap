@@ -3,7 +3,7 @@
 
 ## Introduction
 
-This plugin contains the web services required for integration between [Moodle](http://moodle.org) 2 and [Leap](http://leap-ilp.com), South Devon College's ILP ( individual learning plan) system. More info about Leap can be found at [leap-ilp.com](http://leap-ilp.com).
+This plugin contains the web services required for integration between [Moodle](http://moodle.org) 2 and [Leap](http://leap-ilp.com), South Devon College's ILP (individual learning plan) system. More info about Leap can be found at [leap-ilp.com](http://leap-ilp.com).
 
 
 ## Purpose
@@ -19,14 +19,14 @@ This local Moodle plugin has it's own repository located at [github.com/sdc/mood
 
 ## Moodle versions
 
-This plugin has been written to work with South Devon College's currently-in-production version of Moodle, which at this time is 2.5. This plugin also works in Moodle 2.4 except the `get_users_by_username` function, which requires a function not found in Moodle 2.4 or earlier.
+This plugin has been written to work with South Devon College's currently-in-production version of Moodle, which at this time is 2.7, but has been working in production with 2.6 and 2.5. This plugin also works in Moodle 2.4 except the `get_users_by_username` function, which requires a function not found in Moodle 2.4 or earlier.
 
 Earlier versions (2.0 to 2.3) have not been exhaustively tested with this plugin.
 
 
 ## Licence
 
-Copyright &copy; 2011-2013 South Devon College.
+Copyright &copy; 2011-2014 South Devon College.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -63,7 +63,7 @@ Before installation, please check you have the following files and structure:
 
 ## Configuration
 
-(**Note:** This guide has been written using Moodle 2.5. If you are using a different version of Moodle, your mileage may vary.)
+(**Note:** This guide has been written using Moodle 2.5, and added to over time using Moodles 2.6 and 2.7. If you are using a different version of Moodle, your mileage may vary.)
 
 This plugin has no configuration itself, however your Moodle installation will require configuration to correctly use web services. 
 
@@ -86,6 +86,8 @@ This plugin has no configuration itself, however your Moodle installation will r
     Click **3. Create a specific user**.  Create this "Leap user" as you see fit: give it a relevant username ("*leapuser*" in our case) and a **strong** password, as this user will have considerable control over core Moodle functions. 
 
 5.  Create a new role ("web services") with appropriate protocol capabilities allowed (**webservice/rest:use**). Click on **Administration (block) &rarr; Site Administration &rarr; Users &rarr; Permissions &rarr; Define roles**, and click on **Add role**.
+
+    **TODO: This has changed slightly in Moodle 2.7, with the addition of an extra step (page) and some expanded options. Edit and amend appropriately.**
 
     Type in a relevant short (internal) name and a full (human readable) name, as well as a description (will only be seen by admins).  Ignore *Role archetype*. Check only the **system** check box. Search for and **allow** the following capabilities:
 
@@ -112,6 +114,14 @@ This plugin has no configuration itself, however your Moodle installation will r
     * moodle/user:viewdetails (View user profiles)
     * moodle/user:viewhiddendetails (View hidden details of users)
 
+    **Gradebook**
+    * moodle/grade:viewall (View all grades)
+
+    **Badges**
+    * moodle/badges:viewbadges (View available badges without earning them)
+    * moodle/badges:viewawarded (View users who earned a specific badge without being able to award a badge)
+    * moodle/badges:viewotherbadges (View public badges in other users' profiles)
+
     (**Note:** the best way is to use your web browser's search feature and search for the text exactly as it appears: it will get you to the exact capability or very close.)
 
 6.  Assign the new *web services role* to the *web services user* as a system role: click on **Administration (block) &rarr; Site Administration &rarr; Users &rarr; Permissions &rarr; Assign system roles**.  Click on *webservices* (or whatever you have named your new role), then search in the box on the right for the new *Leap user*, then **add** the new user so the name appears in the box on the right.  It should be the only name in that box.  Return to the **Web services &rarr; Overview** screen.
@@ -120,9 +130,11 @@ This plugin has no configuration itself, however your Moodle installation will r
 
     The results page should show the user as assigned to the *web service* role (what appears on-screen will be whatever you called the web service) and *authenticated user* in *system* context.
 
-    Check that the list of capabilities in *5, above*, is set to **yes** (highlighted in green).  When done, return to the **Web services &rarr; Overview** screen.
+    Check that the list of capabilities in *5, above*, is set to **yes** (possibly highlighted in green, depending on your theme).  When done, return to the **Web services &rarr; Overview** screen.
 
 8.  Click **5. Select a service**.  In the **Built-in services** section you should see an entry for *Leap*, and probably also an entry for the *Moodle mobile web service*, which will be greyed out if this is not turned on via the checkbox at the top of the page. (*Moodle mobile web services* are not required to be turned on for Leap web services to work.)
+
+    **TODO: This has changed slightly in Moodle 2.7: the list of authorised users did not show the already-authorised Leap User. Double-check this is not a bug or mistake following this procedure, and then edit and amend appropriately.**
 
     Clicking on **Authorised users** next to *Leap* will show you a list of users authorised to use the Leap web services. It should show only the user you have assigned, but at the bottom of the page is a section titled **Change settings for the authorised users**: if there are any problems with the assigned user (lacking a particular context) they will be listed here in orange, and will need to be fixed before progressing further. Clicking on the user's name or email address will show some further security options, such as *IP restriction* (so a user can access the web service only from one or a range of IP addresses, blank by default) and a *Valid until* date when the access will cease (off by default). If you change any settings here, click **Update** to save them.
 
@@ -133,6 +145,8 @@ This plugin has no configuration itself, however your Moodle installation will r
 9.  **6. Add functions** and **7. Select a specific user** have already been completed as part of **5. Select a service**, so ignore them. 
 
 10. Click **8. Create a token for a user**.
+
+    **TODO: This first step has changed slightly in Moodle 2.7: instead of typing in the name of a user, you can choose from a list. Edit and amend appropriately.**
 
     In the *Username / user id*  box, type in the exact username of the user created / selected in **step 4**, above.  This is a required field.
 
@@ -156,7 +170,7 @@ This plugin has no configuration itself, however your Moodle installation will r
 
 12. There are no built-in tests within Moodle which can test the Leap web service, only a handful of Moodle's own functions. The only way to test it is to add the token to an already-configured Leap system and test to see if a user's Moodle courses are being shown.
 
-    Log in to your **Leap** installation as an administrative user.  Click on the **Admin** dropdiown menu at the top on the right, next to your name. If you cannot see this menu, you do not have administrative rights on your Leap installation.  Select **Settings**.
+    Log in to your **Leap** installation as an administrative user.  Click on the **Admin** dropdown menu at the top on the right, next to your name. If you cannot see this menu, you do not have administrative rights on your Leap installation.  Select **Settings**.
     
     Scroll down the screen until you see a section called **Old settings**. (This may change in the future as the settings aspect of Leap is improved.)  Find a field called **Moodle token** and paste into this field the token Moodle generated in step 10, above.
     
@@ -495,9 +509,168 @@ The above query should return the following data structure (data for example pur
 
 **Note:** The `<SINGLE>` element will appear as many times as there are assignments assigned to *USERNAME*.
 
- 
+
+### `get_targets_by_username`
+
+* Pass: a user's username.
+* Returns: targets (MAG, TAG, L3VA) for each 'tagged' course the user is *manually* enrolled on:
+    * leapcore - the type of core course found, as tagged manually
+    * course_shortname - the short course name
+    * course_fullname - the full course name
+    * course_id - the course ID number
+    * mag - Minimum Achievable Grade
+    * mag_display - Minimum Achievable Grade (for display)
+    * tag - Target Achievable Grade
+    * tag_display - Target Achievable Grade (for display)
+    * l3va - Level 3 Value Added
+    * l3va_display - Level 3 Value Added (for display)
+    * course_total - course total score
+    * course_total_display - course total score (for display)
+    * course_total_modified - course total modification timestamp
+
+Use a URL with the following format:
+
+`http://yourmoodle.com/webservice/rest/server.php?wstoken=YOURTOKEN&wsfunction=local_leapwebservices_get_targets_by_username&username=USERNAME`
+
+...where *YOURTOKEN* is the token created within Moodle, and *USERNAME* is a user's username, e.g.:
+
+`http://yourmoodle.com/webservice/rest/server.php?wstoken=a180245560982a0e48e43577238c0198&wsfunction=local_leapwebservices_get_targets_by_username&username=paulvaughan`
+
+The above query should return the following data structure (data for example purposes only):
+
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <RESPONSE>
+      <MULTIPLE>
+        <SINGLE>
+          <KEY name="leapcore">
+            <VALUE>core</VALUE>
+          </KEY>
+          <KEY name="course_shortname">
+            <VALUE>TC001</VALUE>
+          </KEY>
+          <KEY name="course_fullname">
+            <VALUE>Test Course 001</VALUE>
+          </KEY>
+          <KEY name="course_id">
+            <VALUE>2</VALUE>
+          </KEY>
+          <KEY name="mag">
+            <VALUE>3</VALUE>
+          </KEY>
+          <KEY name="mag_display">
+            <VALUE>Merit</VALUE>
+          </KEY>
+          <KEY name="tag">
+            <VALUE>4</VALUE>
+          </KEY>
+          <KEY name="tag_display">
+            <VALUE>Distinction</VALUE>
+          </KEY>
+          <KEY name="l3va">
+            <VALUE>56.789</VALUE>
+          </KEY>
+          <KEY name="l3va_display">
+            <VALUE>56.78900</VALUE>
+          </KEY>
+          <KEY name="course_total">
+            <VALUE>4</VALUE>
+          </KEY>
+          <KEY name="course_total_display">
+            <VALUE>Distinction</VALUE>
+          </KEY>
+          <KEY name="course_total_modified">
+            <VALUE>1410555555</VALUE>
+          </KEY>
+        </SINGLE>
+      </MULTIPLE>
+    </RESPONSE>
+
+**Note:** The `<SINGLE>` element will appear as many times as there are courses manually tagged with `leapcore_*`.
+
+
+### `get_badges_by_username`
+
+* Pass: a user's username.
+* Returns: any badges the user has been issued.
+    * course_id - Moodle ID of the course the badge is assigned to
+    * date_issued - timestamp in Unix epoch format
+    * description - badge description
+    * details_link - full URL to the badge details page on Moodle
+    * image_url - full URL to the image
+    * name - badge name
+
+Use a URL with the following format:
+
+`http://yourmoodle.com/webservice/rest/server.php?wstoken=YOURTOKEN&wsfunction=local_leapwebservices_get_badges_by_username&username=USERNAME`
+
+...where *YOURTOKEN* is the token created within Moodle, and *USERNAME* is a user's username, e.g.:
+
+`http://yourmoodle.com/webservice/rest/server.php?wstoken=a180245560982a0e48e43577238c0198&wsfunction=local_leapwebservices_get_badges_by_username&username=paulvaughan`
+
+The above query should return the following data structure (data for example purposes only):
+
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <RESPONSE>
+      <MULTIPLE>
+        <SINGLE>
+          <KEY name="course_id">
+            <VALUE>2</VALUE>
+          </KEY>
+          <KEY name="date_issued">
+            <VALUE>1410555555</VALUE>
+          </KEY>
+          <KEY name="description">
+            <VALUE>You've successfully logged in to Moodle!</VALUE>
+          </KEY>
+          <KEY name="image_url">
+            <VALUE>http://yourmoodle.com/pluginfile.php/5/badges/userbadge/3/82f5ae9338cd8e8738cb1f44216a2a7b655ce1cc?forcedownload=1</VALUE>
+          </KEY>
+          <KEY name="details_link">
+            <VALUE>http://yourmoodle.com/badges/badge.php?hash=82f5ae9338cd8e8738cb1f44216a2a7b655ce1cc</VALUE>
+          </KEY>
+          <KEY name="name">
+            <VALUE>Achievement Get: Logging In</VALUE>
+          </KEY>
+        </SINGLE>
+        <SINGLE>
+          <KEY name="course_id">
+            <VALUE>3</VALUE>
+          </KEY>
+          <KEY name="date_issued">
+            <VALUE>1410555556</VALUE>
+          </KEY>
+          <KEY name="description">
+            <VALUE>You've been blown up by a Creeper ten times!</VALUE>
+          </KEY>
+          <KEY name="image_url">
+            <VALUE>http://yourmoodle.com/pluginfile.php/5/badges/userbadge/2/ba39f99bcff91246a51f0f7af7f8560db989f1a8?forcedownload=1</VALUE>
+          </KEY>
+          <KEY name="details_link">
+            <VALUE>http://yourmoodle.com/badges/badge.php?hash=ba39f99bcff91246a51f0f7af7f8560db989f1a8</VALUE>
+          </KEY>
+          <KEY name="name">
+            <VALUE>Creeperlicious</VALUE>
+          </KEY>
+        </SINGLE>
+      </MULTIPLE>
+    </RESPONSE>
+
+**Note:** The `<SINGLE>` element will appear as many times as there are badges issued to *USERNAME*.
+
+
+## To Do
+
+* After the 2.7 upgrade, check and test all web services thoroughly on a fresh 2.7 instance, rewriting the documentation if necessary.
+
+
 ## History
 
+* 2014-09-17, v0.5.0: Added a new webservice to retrieve any badges which have been issued to a user.
+* 2014-09-16, v0.4.2: Targets: added government/politics and human biology; selects only manual student enrolments; revert use of MAG instead of course grade item. 
+* 2014-09-09, v0.4.1: new service modified to send null instead of a failing grade if the score is null.
+* 2014-07-29, v0.4.0: added new service 'get_targets_by_username' to allow Leap to query Moodle for L3VM, MAG and TAG scores.
+* 2014-05-09, v0.3.7: fixed (more) deprecated function warnings.
+* 2014-05-08, v0.3.6: fixed deprecated function warnings which were filling the server logs.
 * 2013-12-05, v0.3.5: Fixed the 'get_assignments_by_username' webservice to use newer 'assign' rather than older 'assignments' system; wrote API documentation; version bump.
 * 2013-12-05, v0.3.4: Fixed the 'get_users_by_username' webservice for Moodle 2.5 or greater only; wrote API documentation; version bump.
 * 2013-12-02, v0.3.3: Removed hardcoded mdl_ table prefixes and version bump.
