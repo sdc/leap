@@ -29,6 +29,7 @@ class PeopleController < ApplicationController
           @tiles = @topic.events.where(:eventable_type => "Target",:transition => :overdue).
                    where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)
           @tiles += @topic.events.where(:eventable_type => "Note").limit(8)
+          @tiles += @topic.events.where(:eventable_type => "MdlBadge").limit(8)
           @tiles = @tiles.sort_by(&:event_date).map(&:to_tile)
           @tiles.unshift(SimplePoll.where(:id => Settings.current_simple_poll).first.to_tile) unless Settings.current_simple_poll.blank?
           tracks = @topic.mdl_grade_tracks.group(:course_type).order(:created_at).flatten
