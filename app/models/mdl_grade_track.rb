@@ -5,6 +5,15 @@ class MdlGradeTrack < Eventable
 
   after_create {|t| t.events.create(:event_date => t.created_at, :transition => ':create')}
 
+  def self.import_all
+    peeps = ActiveResource::Connection.new(Settings.moodle_host).
+              get("#{Settings.moodle_path}/webservice/rest/server.php?" +
+              "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_users_with_mag").body
+    Nokogiri::XML(peeps).xpath('//MULTIPLE/SINGLE').each do |peep|
+      import_for(peep.xpath("KEY[@name='username']/VALUE").first.content)
+    end
+  end
+
   def self.import_for(person)
     person = person.kind_of?(Person) ? person : Person.get(person) 
     begin
