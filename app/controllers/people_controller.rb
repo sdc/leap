@@ -47,7 +47,7 @@ class PeopleController < ApplicationController
         end
       end
       format.json do 
-        render :json => @topic.to_json(:methods => [:l3va], :except => [:photo])
+        render :json => @topic.to_json(:methods => [:l3va,:gcse_english,:gcse_maths], :except => [:photo])
       end
       format.jpg do
         if @topic.photo

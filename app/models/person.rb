@@ -146,6 +146,14 @@ class Person < ActiveRecord::Base
 
   def l3va; lat_score end
 
+  def gcse_english
+    qualifications.where(:qual_type => "GCSE", :title => "ENGLISH LANGUAGE").last.try :grade
+  end
+
+  def gcse_maths
+    qualifications.where(:qual_type => "GCSE", :title => "ENGLISH LANGUAGE").last.try :grade
+  end
+
   def address_text
     address.blank? ? nil : [address, town, postcode].reject(&:nil?).join(", ")
   end
