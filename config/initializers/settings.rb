@@ -68,6 +68,7 @@ Settings.defaults[:moodle_path]                  = ""
 Settings.defaults[:moodle_token]                 = ""
 Settings.defaults[:moodle_user_postfix]          = ""
 Settings.defaults[:moodle_link_target]           = "_self"
+Settings.defaults[:moodle_badge_block_courses]   = ""
 
 # Attendance Import
 Settings.defaults[:attendance_table]             = ""

@@ -1,0 +1,11 @@
+.col-xs-12
+  .row
+    %h2.col-xs-12#current_badge{:style => "margin-bottom:1ex"} &nbsp;
+  .row
+    - course_badges.all_in_course.each do |badge|
+      .col-xs-3.ppd_badge
+        = link_to badge.link_url, :title => badge[:title], "data-toggle" => "popover", "data-content" => badge[:description] do
+          = image_tag badge.image_url, :class => "img-responsive"
+:coffeescript
+  $('.ppd_badge').mouseover ->
+    $('#current_badge').html($(this).find('a').attr("title"))

@@ -32,6 +32,8 @@ class PeopleController < ApplicationController
           @tiles += @topic.events.where(:eventable_type => "MdlBadge").limit(8)
           @tiles = @tiles.sort_by(&:event_date).map(&:to_tile)
           @tiles.unshift(SimplePoll.where(:id => Settings.current_simple_poll).first.to_tile) unless Settings.current_simple_poll.blank?
+          ppdc = Settings.moodle_badge_block_courses.try(:split,",")
+          @tiles.unshift(@topic.mdl_badges.where(:mdl_course_id => ppdc).last.to_course_tile) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
           tracks = @topic.mdl_grade_tracks.group(:course_type).order(:created_at).flatten
           @tiles.unshift(["english","maths","core"].reject{|ct| tracks.detect{|t| t.course_type == ct}}.first([3 - tracks.count,0].max).map do |ct|
             @topic.mdl_grade_tracks.where(:course_type => ct).last.try(:to_tile) or
@@ -40,7 +42,7 @@ class PeopleController < ApplicationController
           @tiles.unshift(tracks.map{|x| x.to_tile})
           @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
-          @tiles = @tiles.flatten.uniq{|t| t.object}
+          @tiles = @tiles.flatten #.uniq{|t| t.object}
           render :action => "home"
         end
       end

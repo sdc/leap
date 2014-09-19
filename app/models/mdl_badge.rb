@@ -27,11 +27,20 @@ class MdlBadge < Eventable
     end
   end
 
-  def to_tile
-  end
-
   def icon_url 
     image_url 
+  end
+
+  def to_course_tile
+    Tile.new({:title => "PPD",
+              :bg => "7755cc",
+              :icon => "fa-dot-circle-o",
+              :partial_path => "tiles/course_badges",
+              :object => self})
+  end
+
+  def all_in_course
+    MdlBadge.where(:mdl_course_id => mdl_course_id)
   end
 
   def title
