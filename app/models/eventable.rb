@@ -40,9 +40,6 @@ class Eventable < ActiveRecord::Base
     humanize
   end
 
-  def created_by_id; end
-  def created_by_id=(poo); end
-
   def staff_only?
     false
   end
