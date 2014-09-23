@@ -16,17 +16,18 @@
   .col-xs-2.text-right.btn-group
     %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
       %i.fa.fa-download.fa-fw
-      %span.hidden-xs Download
-      %span.caret
-    %ul.dropdown-menu
+      %span.hidden-xs 
+        Download
+        %span.caret
+    %ul.dropdown-menu.dropdown-menu-right
       %li
         = link_to :format => :ics do
           %i.fa.fa-fw.fa-calendar
-          This week
+          Week
       %li
         = link_to :format => :ics, :year => true do
           %i.fa.fa-fw.fa-calendar-o
-          Whole year
+          Year
       - if @view.controls? and params[:all].nil?
         = link_to "#", :class => "pull-right btn btn-info", :id => "show-timetable-controls-button" do
           Add event

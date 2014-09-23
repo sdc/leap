@@ -47,5 +47,13 @@ class TimetableEvent
               :object   => self})
   end
 
+  def to_ics
+    e = Icalendar::Event.new
+    e.dtstart = timetable_start.getutc
+    e.dtend = timetable_end.getutc
+    e.summary = "#{title} with #{teachers.join(", ")}"
+    e.location = rooms.join(", ")
+    return e
+  end
 
 end
