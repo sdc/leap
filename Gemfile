@@ -14,6 +14,7 @@ gem 'rails-latex'
 gem 'nokogiri', "1.5.10"
 gem 'coffee-filter'
 gem 'yui-compressor'
+gem 'icalendar'
 
 platforms :ruby do
   gem 'mysql2'
