@@ -17,3 +17,13 @@ $ ->
     $(e).closest('.tile').attr('data-link',$(e).attr('data-link'))
   $('.tile[data-link]').click ->
     document.location = $(this).attr('data-link')
+  $('#show_weekend').click ->
+    $('.monday,.tuesday').hide()
+    $('.weekend').show()
+    $('#show_weekend').hide()
+    $('#hide_weekend').show()
+  $('#hide_weekend').click ->
+    $('.monday,.tuesday').show()
+    $('.weekend').hide()
+    $('#show_weekend').show()
+    $('#hide_weekend').hide()

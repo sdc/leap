@@ -21,15 +21,23 @@ class TimetableEvent
   def timetable_margin
    ((timetable_start.getutc - timetable_start.getutc.change(:hour => 8,:minute => 0, :sec => 0, :usec => 0)) / 50).floor
   end
-
+ 
   def timetable_height
-    ((timetable_end - timetable_start) /56).floor
+    ((timetable_end - timetable_start) /50).floor
   end
 
   def subtitle; nil end
   def body; nil end
   def is_deletable?; false end
   def id; mis_id end
+
+  def cl_status
+    {"unknown"    => "default",
+     "complete"   => "success",
+     "current"    => "warning",
+     "incomplete" => "danger"
+    }[status]
+  end
 
   def to_tile
     Tile.new({:title    => "Next Lesson",

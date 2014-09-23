@@ -151,7 +151,7 @@ class Person < ActiveRecord::Base
   end
 
   def gcse_maths
-    qualifications.where(:qual_type => "GCSE", :title => "ENGLISH LANGUAGE").last.try :grade
+    qualifications.where(:qual_type => "GCSE", :title => "MATHS").last.try :grade
   end
 
   def address_text

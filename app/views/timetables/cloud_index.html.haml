@@ -1,0 +1,48 @@
+.row
+  %ul.col-xs-10.text-left.pager{:style => "margin-top:0;padding-right:0;"}
+    = form_tag person_timetables_url, :method => :get, :class => "form-inline" do
+      %li
+        = link_to person_timetables_url(@topic,:date => @date - 1.week), :class => "btn" do
+          %i.fa.fa-arrow-left
+          Previous Week
+      .hidden-xs.input-group
+        = text_field_tag(:date, @date.strftime("%d %B %Y"), :class => "form-control", "data-provide" => "datepicker", "data-date-format" => 'd MM yyyy')
+        %span.input-group-btn
+          %button.btn.btn-primary Go!
+      %li
+        = link_to person_timetables_url(@topic,:date => @date + 1.week), :class => "btn" do
+          Next Week
+          %i.fa.fa-arrow-right
+  .col-xs-2.text-right.btn-group
+    %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
+      %i.fa.fa-download.fa-fw
+      %span.hidden-xs Download
+      %span.caret
+    %ul.dropdown-menu
+      %li
+        = link_to :format => :ics do
+          %i.fa.fa-fw.fa-calendar
+          This week
+      %li
+        = link_to :format => :ics, :year => true do
+          %i.fa.fa-fw.fa-calendar-o
+          Whole year
+      - if @view.controls? and params[:all].nil?
+        = link_to "#", :class => "pull-right btn btn-info", :id => "show-timetable-controls-button" do
+          Add event
+          %i.icon-plus.icon-white
+- if @view.controls? and params[:all].nil?
+  %div#timetable-header{:load_block => send("header_#{@topic.class.name.underscore}_view_url",@topic,@view)}= image_tag "ajax-loader.gif"
+.row#timetable.panel.panel-default
+  .col-xs-1
+    .hour{:style => "height:37px"}
+    - 8.upto(20) do |hour|
+      .hour.visible-xs= hour
+      .hour.hidden-xs= "#{hour}.00"
+  - @date.upto(@date.end_of_week) do |day|
+    = render :partial => "cloud_day", :object => day, :locals => {:slots => (@registers + @events).select {|r| r.timetable_start > day and r.timetable_start < day.tomorrow.midnight }}
+  .col-xs-1.day
+    %button.btn.btn-primary#show_weekend{:style => "width:100%"}
+      %i.fa.fa-angle-double-right
+    %button.btn.btn-primary#hide_weekend{:style => "width:100%;display:none"}
+      %i.fa.fa-angle-double-left

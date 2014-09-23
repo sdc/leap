@@ -17,6 +17,7 @@
 class TimetablesController < ApplicationController
 
   before_filter :set_date
+  layout :set_layout
   
   def index
     @date = @date.to_date.at_beginning_of_week
@@ -29,9 +30,15 @@ class TimetablesController < ApplicationController
       []
     end
     respond_to do |format|
-      format.html 
-      format.xml { render :xml => @topic }
+      format.html { render :action => Settings.home_page == "new" ? :cloud_index : :index }
+      format.xml  { render :xml => @topic }
     end
   end
+
+  def set_layout
+    return "application" unless @topic.kind_of?(Person)
+    Settings.home_page == "new" ? "cloud" : "application"
+  end
+
 
 end
