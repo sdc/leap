@@ -7,6 +7,7 @@ class CreateMdlBadges < ActiveRecord::Migration
       t.text :body
       t.integer :mdl_course_id
       t.string :link_url
+      t.integer :created_by_id
       t.timestamps
     end
   end

@@ -2,6 +2,15 @@ class MdlBadge < Eventable
   attr_accessible :body, :image_url, :mdl_course_id, :person_id, :title, :created_at
   after_create {|badge| badge.events.create!(:event_date => created_at, :transition => :create)}
 
+  def self.import_all
+    peeps = ActiveResource::Connection.new(Settings.moodle_host).
+              get("#{Settings.moodle_path}/webservice/rest/server.php?" +
+              "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_users_with_badges").body
+    Nokogiri::XML(peeps).xpath('//MULTIPLE/SINGLE').each do |peep|
+      import_for(peep.xpath("KEY[@name='username']/VALUE").first.content)
+    end
+  end
+
   def MdlBadge.import_for(person)
     person = person.kind_of?(Person) ? person : Person.get(person)
     begin
