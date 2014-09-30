@@ -15,6 +15,8 @@ gem 'nokogiri', "1.5.10"
 gem 'coffee-filter'
 gem 'yui-compressor'
 
+gem 'whenever', :require => false
+
 platforms :ruby do
   gem 'mysql2'
   gem 'therubyracer'
