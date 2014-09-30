@@ -39,4 +39,5 @@ end
 group :development do
   gem 'capistrano'
   gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
 end
