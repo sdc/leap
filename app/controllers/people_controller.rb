@@ -42,6 +42,7 @@ class PeopleController < ApplicationController
           @tiles.unshift(tracks.map{|x| x.to_tile})
           @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
+          @tiles.unshift(GlobalNews.last.to_tile) if GlobalNews.any?
           @tiles = @tiles.flatten #.uniq{|t| t.object}
           render :action => "home"
         end
