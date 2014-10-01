@@ -1,6 +1,7 @@
 class MdlBadge < Eventable
   attr_accessible :body, :image_url, :mdl_course_id, :person_id, :title, :created_at
   after_create {|badge| badge.events.create!(:event_date => created_at, :transition => :create)}
+  belongs_to :person
 
   def self.import_all
     peeps = ActiveResource::Connection.new(Settings.moodle_host).
@@ -49,7 +50,7 @@ class MdlBadge < Eventable
   end
 
   def all_in_course
-    MdlBadge.where(:mdl_course_id => mdl_course_id)
+    person.mdl_badges.where(:mdl_course_id => mdl_course_id)
   end
 
   def title
