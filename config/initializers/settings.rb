@@ -69,6 +69,8 @@ Settings.defaults[:moodle_token]                 = ""
 Settings.defaults[:moodle_user_postfix]          = ""
 Settings.defaults[:moodle_link_target]           = "_self"
 Settings.defaults[:moodle_badge_block_courses]   = ""
+Settings.defaults[:moodle_grade_track_import]    = "off"
+Settings.defaults[:moodle_badge_import]          = "off"
 
 # Attendance Import
 Settings.defaults[:attendance_table]             = ""

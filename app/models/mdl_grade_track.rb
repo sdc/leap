@@ -5,12 +5,19 @@ class MdlGradeTrack < Eventable
 
   after_create {|t| t.events.create(:event_date => t.created_at, :transition => ':create')}
 
-  def self.import_all
-    peeps = ActiveResource::Connection.new(Settings.moodle_host).
-              get("#{Settings.moodle_path}/webservice/rest/server.php?" +
-              "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_users_with_mag").body
-    Nokogiri::XML(peeps).xpath('//MULTIPLE/SINGLE').each do |peep|
-      import_for(peep.xpath("KEY[@name='username']/VALUE").first.content)
+  def self.import_all 
+    if Settings.moodle_grade_track_import == "on"
+      puts "\n\n****************************************"
+      puts "* Stating Moodle Grade Tracker Imports *"
+      puts "****************************************\n"
+      peeps = ActiveResource::Connection.new(Settings.moodle_host).
+                get("#{Settings.moodle_path}/webservice/rest/server.php?" +
+                "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_users_with_mag").body
+      Nokogiri::XML(peeps).xpath('//MULTIPLE/SINGLE').each do |peep|
+        import_for(peep.xpath("KEY[@name='username']/VALUE").first.content)
+      end
+    else 
+      puts "Grade Track Import turned off."
     end
   end
 

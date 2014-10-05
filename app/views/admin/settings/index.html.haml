@@ -22,7 +22,7 @@
       = text_area_tag "advert_box_html", Settings.advert_box_html
 
   .control-group
-    %label.control-label Hope page selector
+    %label.control-label Home Page selector
     .controls
       = select_tag "home_page", options_for_select(["old","new"], Settings.home_page)
     .help-text
@@ -173,6 +173,26 @@
     %label.control-label Open Moodle Links in New Window
     .controls
       = select_tag "moodle_link_target",options_for_select([["Open links in same window", "_self"], ["Open links in new window", "_blank"]], Settings.moodle_link_target)
+  %h3 Moodle Integration Features
+  .control-group
+    %label.control-label Import Moodle Grade Tracker info
+    .controls
+      = select_tag "moodle_grade_track_import", options_for_select(["on","off"], Settings.moodle_grade_track_import)
+      .help-text 
+        Don't select this unless you have the moodle gradebook integration setup from SDC - this stuff
+        will be rolled into the mainstream Leap release soon!
+  .control-group
+    %label.control-label Import Moodle Badges
+    .controls
+      = select_tag "moodle_badge_import", options_for_select(["on","off"], Settings.moodle_badge_import)
+      .help-text Moodle badges earned will be imported into Leap
+  .control-group
+    %label.control-label Moodle Badge Block Courses
+    .controls
+      = text_field_tag "moodle_badge_block_courses", Settings.moodle_badge_block_courses
+      .help-text List moodle course ids here and badges earned on those courses will be collected together on a home page block
+      
+      
 
   %h2 Pathways
   .control-group
@@ -320,7 +340,8 @@
                                  "current_review_window","review_grades","reverse_scores","event_notes","moodle_user_postfix",
                                  "moodle_host","moodle_path","moodle_token","moodle_link_target","attendance_table",
                                  "attendance_culm_column","attendance_week_column","attendance_low_score","attendance_high_score",
-                                 "attendance_date_column","custom_css","quals_editing","clidebar_links","home_page","ws_user","ws_token"]
+                                 "attendance_date_column","custom_css","quals_editing","clidebar_links","home_page","ws_user","ws_token",
+                                 "moodle_grade_track_import","mdl_badge_import","mdl_badge_block_courses"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize
