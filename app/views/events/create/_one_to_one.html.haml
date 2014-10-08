@@ -1,0 +1,23 @@
+%h2 Tutorial: A review of your Personalised Learning Profile
+= create_event_form ReviewLine do |f|
+  .span9
+    .row
+      .span1= image_tag "events/reviews.png"
+      .span4
+        = select_tag "unitxhoose", options_for_select(Settings.one_to_one_prompts.lines.select{|l| l.start_with? "|"}.map{|l| [l[1..-1],"prompt#{l.gsub(/\W+/,"_")}"]}),:class => "span4"
+        = f.hidden_field :unit
+        = f.text_area :body, :style => "height:100px"
+      - Settings.one_to_one_prompts.split("|").map(&:lines).reject(&:blank?).each do |l|
+        .span4.the_prompts{:id => "prompt_#{l.first.gsub(/\W+/,"_")}"}
+          %h4 Questions to prompt conversation:
+          %ul
+            - l[1..-1].each do |i|
+              %li= i
+  = add_event_button
+:coffeescript
+  $('#unitxhoose').change (e) ->
+    $('.the_prompts').hide('fast')
+    $('#' + $('#unitxhoose').val()).show('fast')
+    unit = $('option[value=' + $('#unitxhoose').val() + ']').html()
+    $('#review_line_unit').val(unit)
+  $('#unitxhoose').change()

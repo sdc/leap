@@ -56,6 +56,9 @@ Settings.defaults[:review_cat_attitude] = "Attitude"
 Settings.defaults[:review_cat_completion] = "Completion of Work"
 Settings.defaults[:reverse_scores] = "Forward"
 
+# One-to-one review questions and prompts
+Settings.defaults[:one_to_one_prompts] = ""
+
 # Event Notes
 Settings.defaults[:event_notes] = "staff"
 
