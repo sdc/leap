@@ -5,9 +5,9 @@
     = pretty_date(next_lesson.timetable_start, day: true)
   %h4
     %i.fa.fa-fw.fa-clock-o
-    = next_lesson.timetable_start.getutc.to_s(:time)
+    = next_lesson.timetable_start.to_s(:time)
     &ndash;
-    = next_lesson.timetable_end.getutc.to_s(:time)
+    = next_lesson.timetable_end.to_s(:time)
   %h5
     %i.fa.fa-fw.fa-map-marker
     = next_lesson.rooms.join (",")

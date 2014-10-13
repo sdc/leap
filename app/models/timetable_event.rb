@@ -19,7 +19,7 @@ class TimetableEvent
   attr_accessor :title, :timetable_start, :timetable_end, :rooms, :teachers, :mark, :status, :mis_id
 
   def timetable_margin
-   ((timetable_start.getutc - timetable_start.getutc.change(:hour => 8,:minute => 0, :sec => 0, :usec => 0)) / 50).floor
+   ((timetable_start - timetable_start.change(:hour => 8,:minute => 0, :sec => 0, :usec => 0)) / 50).floor
   end
 
   def timetable_height
