@@ -50,7 +50,6 @@ module MisPerson
 
     def import(mis_id, options = {})
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
-      # NOTE: Need to change these defaults after launch
       options.reverse_merge! Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}]
       logger.info "Importing user #{mis_id}"
       if (ep = (Ebs::Person.find_by_person_code((mis_id.to_s.match(/\d{3}/) ? mis_id.to_s.tr('^0-9','') : mis_id)) or 
@@ -58,29 +57,32 @@ module MisPerson
           ))
         @person = Person.find_or_create_by_mis_id(ep.id)
         #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
-        @person.update_attributes(
-          :forename      => ep.known_as.blank? ? ep.forename : ep.known_as,
-          :surname       => ep.surname,
-          :middle_names  => ep.middle_names && ep.middle_names.split,
-          :address       => ep.address ? [ep.address.address_line_1,ep.address.address_line_2,
-                             ep.address.address_line_3,ep.address.address_line_4].reject{|a| a.blank?} : [],
-          :town          => ep.address ? ep.address.town : "",
-          :postcode      => ep.address ? [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" ") : "",
-          :photo         => Ebs::Blob.table_exists? && ep.blobs.photos.first.try(:binary_object),
-          :mobile_number => ep.mobile_phone_number,
-          :next_of_kin   => [ep.fes_next_of_kin, ep.fes_nok_contact_no].join(" "),
-          :date_of_birth => ep.date_of_birth,
-          #:uln           => ep.unique_learn_no,
-          :mis_id        => ep.person_code,
-          :staff         => ep.fes_staff_code?,
-          :username      => (ep.send(Settings.ebs_username_field) or ep.id.to_s),
-          :personal_email=> ep.personal_email,
-          :home_phone    => ep.address && ep.address.telephone,
-          :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil
-        )
-       
-        @person.update_attribute("contact_allowed", Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
-        @person.save if options[:save] 
+        if @person.updated_at.nil? or @person.updated_at < ep.updated_date
+          @person.update_attributes(
+            :forename      => ep.known_as.blank? ? ep.forename : ep.known_as,
+            :surname       => ep.surname,
+            :middle_names  => ep.middle_names && ep.middle_names.split,
+            :address       => ep.address ? [ep.address.address_line_1,ep.address.address_line_2,
+                              ep.address.address_line_3,ep.address.address_line_4].reject{|a| a.blank?} : [],
+            :town          => ep.address ? ep.address.town : "",
+            :postcode      => ep.address ? [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" ") : "",
+            :photo         => Ebs::Blob.table_exists? && ep.blobs.photos.first.try(:binary_object),
+            :mobile_number => ep.mobile_phone_number,
+            :next_of_kin   => [ep.fes_next_of_kin, ep.fes_nok_contact_no].join(" "),
+            :date_of_birth => ep.date_of_birth,
+            #:uln           => ep.unique_learn_no,
+            :mis_id        => ep.person_code,
+            :staff         => ep.fes_staff_code?,
+            :username      => (ep.send(Settings.ebs_username_field) or ep.id.to_s),
+            :personal_email=> ep.personal_email,
+            :home_phone    => ep.address && ep.address.telephone,
+            :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil
+          )
+          @person.update_attribute("contact_allowed", Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
+          @person.save if options[:save] 
+        else
+          puts "Update not needed since #{@person.updated_at} < #{ep.updated_date}"
+        end
         @person.import_courses if options[:courses]
         @person.import_attendances if options[:attendances]
         @person.import_quals if options[:quals]
@@ -161,7 +163,9 @@ module MisPerson
   end
 
   def import_courses
-    mis_person.people_units.order("progress_date").each do |pu|
+    return self unless mis.people_units.any?
+    last_update = (person_courses.order("updated_at DESC").first.try(:updated_at) or Date.today - 5.years)
+    mis_person.people_units.where("updated_date > ?",last_update).order("progress_date").each do |pu|
       next unless pu.uio_id
       course = Course.import(pu.uio_id,{:people => false})
       next unless course
@@ -210,8 +214,9 @@ module MisPerson
   end
 
   def import_quals
-    mis_person.learner_aims.each do |la|
-      next unless la.unit_instance_occurrence && la.grade
+    last_update = qualifications.order("updated_at DESC").first.try(:updated_at) or Date.today - 5.years
+    mis_person.learner_aims.where("uio_id IS NOT NULL and grade IS NOT NULL and updated_date > ?",last_update).each do |la|
+      next unless la.unit_instance_occurrence 
       next unless Qualification.where(:mis_id => la.id).empty?
       nq=qualifications.create(
         :title      => la.unit_instance_occurrence.title,
@@ -249,7 +254,8 @@ module MisCourse
   end
 
   def import_people
-    mis_course.people_units.order("progress_date").each do |pu|
+    last_update = person_courses.order("updated_at DESC").first.try(:updated_at) or Date.today - 5.years
+    mis_course.people_units.where("updated_date > ?",last_update).order("progress_date").each do |pu|
       person = Person.import(pu.person_code, {:courses => false})
       pc= PersonCourse.find_or_create_by_person_id_and_course_id(person.id,id)
       if pu.unit_type == "A" 
