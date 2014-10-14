@@ -9,6 +9,8 @@
     
 - else
   = link_to_if @user.staff? && !Settings.ebs_course_base_url.blank?, person_course.course.name, (Settings.ebs_course_base_url + person_course.course.mis_id)
+  - unless person_course.tutorgroup.blank?
+    %span.label= person_course.tutorgroup
 - unless event.transition == :create
   %div
     - if person_course.start_date and person_course.end_date

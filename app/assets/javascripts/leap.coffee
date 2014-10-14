@@ -90,3 +90,6 @@ $(document).ready ->
 
   $('#show-timetable-controls-button').on 'click', ->
     $('#timetable-header').toggle('fast')
+
+  $('#tutorgroup_id').change ->
+    document.location = $('#tutorgroup_id').val()

@@ -85,6 +85,7 @@ class ApplicationController < ActionController::Base
         @topic = Person.get(params[:person_id],params[:refresh]) or redirect_to "/404.html"
       elsif params[:course_id]
         @topic = Course.get(params[:course_id],params[:refresh]) or redirect_to "/404.html"
+        @tutorgroup = params[:tutorgroup]
       else
         @topic = @user
       end

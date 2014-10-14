@@ -18,6 +18,10 @@
   %dl.span5.dl-horizontal
     %dt Course Code:
     %dd.last= @topic.code
+    - if @tutorgroup
+      %dt Tutorgroup:
+      %dd
+        %span.label= @tutorgroup
 
 .row.home-page-block.full
   %h2 Class List

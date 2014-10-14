@@ -5,6 +5,8 @@
       .span2
         %h5= truncate(pc.person.name, :length => 20)
         %h6= pc.person.mis_id      
+        - unless pc.tutorgroup.blank?
+          %span.label= pc.tutorgroup
         - if pc.mis_status
           %span.label{:class => pc.status}= pc.mis_status
         - else
