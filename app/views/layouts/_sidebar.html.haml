@@ -1,5 +1,7 @@
 .person-photo= image_tag(@topic.photo_uri, :size => "130x130")
 %h1= @topic.name
+- if @topic.kind_of? Course and @topic.person_courses.detect{|pu| !pu.tutorgroup.blank?}
+  = select_tag :tutorgroup_id, options_for_select([["Tutorgroups",url_for(:tutorgroup => nil)]] + @topic.person_courses.map{|pc| pc.tutorgroup}.uniq.map{|tg| [tg,url_for(:tutorgroup => tg)]},url_for(:tutorgroup => @tutorgroup)), :class => "span2"
 %h6= link_to_if @affiliation == "staff", @topic.mis_code, Settings.ebs_person_base_url + @topic.mis_id.to_s
 %ul.sidebar
   = icon_link @user.staff? ? "#{@topic.class.name.humanize} Home" : "Home", @topic, "home"

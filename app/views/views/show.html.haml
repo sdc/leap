@@ -1,5 +1,5 @@
 - if @view.controls? and params[:all].nil?
-  %div{:load_block => send("header_#{@topic.class.name.underscore}_view_url",@topic,@view)}= image_tag "ajax-loader.gif"
+  %div{:load_block => send("header_#{@topic.class.name.underscore}_view_url",@topic,@view,:tutorgroup => @tutorgroup)}= image_tag "ajax-loader.gif"
 = render @events
 - if @events.empty?
   .alert.row.alert-block.no-fade

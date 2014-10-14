@@ -52,7 +52,11 @@ class ViewsController < ApplicationController
       Event.scoped
     elsif (@affiliation == "staff" and @topic.kind_of? Course)
       @multi = true
-      Event.where(:person_id => @topic.people.map{|p| p.id})
+      if @tutorgroup
+        Event.where(:person_id => @topic.person_courses.where(:tutorgroup => @tutorgroup).map{|p| p.person_id})
+      else
+        Event.where(:person_id => @topic.people.map{|p| p.id})
+      end
     else
       @multi = false
       @topic.events

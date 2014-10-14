@@ -1,5 +1,5 @@
 %li.row[view]
-  = link_to((send("#{@topic.class.name.underscore}_view_url",@topic,view) + (params[:all] ? "?all=true" : "")), :class => "sidebar_button") do
+  = link_to((send("#{@topic.class.name.underscore}_view_url",@topic,view,:tutorgroup => @tutorgroup) + (params[:all] ? "?all=true" : "")), :class => "sidebar_button") do
     .col-xs-2
       = image_tag(view.icon_url, :size => "30x30", :class=>"pull-left") 
     .col-xs-10

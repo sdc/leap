@@ -94,7 +94,11 @@ module EventsHelper
       if @topic.kind_of? Person
         concat(hidden_field_tag(:person_id, @topic.mis_id))
       else
-        concat(select_tag :person_id, options_for_select(@topic.people.map{|p| [p.name, p.mis_id]}), :prompt => "Select a Person")
+        if @tutorgroup
+          concat(select_tag :person_id, options_for_select(@topic.person_courses.where(:tutorgroup => @tutorgroup).map{|p| [p.person.name, p.person.mis_id]}), :prompt => "Select a Person")
+        else
+          concat(select_tag :person_id, options_for_select(@topic.people.map{|p| [p.name, p.mis_id]}), :prompt => "Select a Person")
+        end
       end
       concat(hidden_field_tag(:eventable_type, klass))
       block.call(f)

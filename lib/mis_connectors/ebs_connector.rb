@@ -170,6 +170,7 @@ module MisPerson
         pc.update_attributes({:status => :not_started,
                               :start_date       => pu.unit_instance_occurrence.qual_start_date,
                               :application_date => pu.created_date,
+                              :tutorgroup => pu.tutorgroup,
                               :mis_status => pu.status},
                              {:without_protection => true}
                             )
@@ -177,6 +178,7 @@ module MisPerson
         pc.update_attributes({:enrolment_date => pu.created_date,
                               :start_date     => pu.unit_instance_occurrence.qual_start_date,
                               :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
+                              :tutorgroup => pu.tutorgroup,
                               :mis_status => pu.status,
                               :end_date => [:complete,:incomplete].include?(Ilp2::Application.config.mis_progress_codes[pu.progress_code]) ? pu.progress_date : pu.unit_instance_occurrence.qual_end_date},
                              {:without_protection => true}
@@ -256,12 +258,14 @@ module MisCourse
         pc.update_attributes({:status => :not_started,
                               :start_date       => pu.unit_instance_occurrence.qual_start_date,
                               :application_date => pu.created_date,
+                              :tutorgroup => pu.tutorgroup,
                               :mis_status => pu.status},
                              {:without_protection => true}
                             )
       elsif pu.unit_type == "R"
         pc.update_attributes({:enrolment_date => pu.created_date,
                               :start_date     => pu.unit_instance_occurrence.qual_start_date,
+                              :tutorgroup => pu.tutorgroup,
                               :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
                               :end_date => pu.progress_date,
                               :mis_status => pu.status},
