@@ -57,4 +57,8 @@ class Course < ActiveRecord::Base
     "courses.png"
   end
 
+  def tutorgroups
+    groups = person_courses.group("tutorgroup").map{|pc| pc.tutorgroup}.reject{|g| g.blank?}
+  end
+
 end
