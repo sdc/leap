@@ -251,7 +251,7 @@ module MisCourse
 
   def self.included receiver
     receiver.extend ClassMethods
-    receiver.belongs_to :mis, :class_name => "Ebs::UnitInstanceOccurrences", :foreign_key => :mis_id
+    receiver.belongs_to :mis, :class_name => "Ebs::UnitInstanceOccurrence", :foreign_key => :mis_id
     receiver.belongs_to :mis_course, :class_name => "Ebs::UnitInstanceOccurrence", :foreign_key => :mis_id
   end
 
