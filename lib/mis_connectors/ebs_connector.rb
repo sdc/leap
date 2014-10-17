@@ -319,7 +319,7 @@ module MisCourse
           :title  => ec.title,
           :code   => ec.fes_uins_instance_code,
           :year   => ec.calocc_occurrence_code,
-          :mis_id => ec.id
+          :mis_id => mis_id
         )
         @course.update_attribute("vague_title",ec.send(Settings.application_title_field)) unless Settings.application_title_field.blank?
         @course.save if options[:save]
