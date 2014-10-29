@@ -55,9 +55,9 @@ module MisPerson
       if (ep = (Ebs::Person.find_by_person_code((mis_id.to_s.match(/\d{3}/) ? mis_id.to_s.tr('^0-9','') : mis_id)) or 
                 Ebs::Person.where(Settings.ebs_username_field => mis_id.to_s).first
           ))
-        @person = Person.find_or_create_by_mis_id(ep.id)
+        @person = Person.find_by_mis_id(ep.id) || Person.new(:mis_id => ep.id)
         #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
-        if @person.updated_at.nil? or @person.updated_at < ep.updated_date
+        if @person.new_record? or (@person.updated_at < ep.updated_date)
           @person.update_attributes(
             :forename      => ep.known_as.blank? ? ep.forename : ep.known_as,
             :surname       => ep.surname,
@@ -319,7 +319,7 @@ module MisCourse
           :title  => ec.title,
           :code   => ec.fes_uins_instance_code,
           :year   => ec.calocc_occurrence_code,
-          :mis_id => ec.id
+          :mis_id => mis_id
         )
         @course.update_attribute("vague_title",ec.send(Settings.application_title_field)) unless Settings.application_title_field.blank?
         @course.save if options[:save]
