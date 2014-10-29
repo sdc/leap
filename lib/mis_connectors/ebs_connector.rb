@@ -203,7 +203,7 @@ module MisPerson
       Date.civil(1900,1,1)
     end
     mis_person.attendances.
-      where("#{Settings.attendance_date_column} > ?",(last_date - 2.weeks)).#strftime("%Y-%d-%m %H:%M:%S")).
+      where("#{Settings.attendance_date_column} > ? and #{Settings.attendance_date_column} < ?",(last_date - 2.weeks),Date.tomorrow).#strftime("%Y-%d-%m %H:%M:%S")).
       each do |att|
         na=Attendance.find_or_create_by_person_id_and_week_beginning(id,att.send(Settings.attendance_date_column))
         na.update_attributes(
