@@ -234,6 +234,7 @@ module MisPerson
   def import_absences
     Ebs::Absence.find_all_by_person_id(mis_id).each do |a|
       next if absences.detect{|ab| a.notified_at == ab.created_at}
+      next unless a.notified_at
       na = absences.create(
         :body => a.reason_extra,
         :category => a.reason,
