@@ -76,7 +76,25 @@ $functions = array(
         'classpath'     => 'local/leapwebservices/externallib.php',
         'description'   => 'Get all awarded badges for a specific user.',
         'type'          => 'read',
-        'capabilities'  => 'moodle/badges:viewotherbadges,moodle/badges:viewawarded,moodle/badges:viewbadges',
+        'capabilities'  => 'moodle/user:viewdetails,moodle/badges:viewotherbadges,moodle/badges:viewawarded,moodle/badges:viewbadges',
+    ),
+
+    'local_leapwebservices_get_users_with_mag' => array(
+        'classname'     => 'local_leapwebservices_external',
+        'methodname'    => 'get_users_with_mag',
+        'classpath'     => 'local/leapwebservices/externallib.php',
+        'description'   => 'Get all users who have a MAG set.',
+        'type'          => 'read',
+        'capabilities'  => 'moodle/user:viewdetails,moodle/grade:viewall',
+    ),
+
+    'local_leapwebservices_get_users_with_badges' => array(
+        'classname'     => 'local_leapwebservices_external',
+        'methodname'    => 'get_users_with_badges',
+        'classpath'     => 'local/leapwebservices/externallib.php',
+        'description'   => 'Get all users who have been issued a badge.',
+        'type'          => 'read',
+        'capabilities'  => 'moodle/user:viewdetails,moodle/badges:viewbadges',
     ),
 );
 
@@ -90,6 +108,8 @@ $services = array(
             'local_leapwebservices_get_assignments_by_username',
             'local_leapwebservices_get_targets_by_username',
             'local_leapwebservices_get_badges_by_username',
+            'local_leapwebservices_get_users_with_mag',
+            'local_leapwebservices_get_users_with_badges',
         ),
         'restrictedusers'   => 1,
         'enabled'           => 1,

@@ -515,7 +515,11 @@ class local_leapwebservices_external extends external_api {
             'a2_physics'        => 'leapcore_a2_physics',
             'a2_psychology'     => 'leapcore_a2_psychology',
             'a2_sociology'      => 'leapcore_a2_sociology',
+
             'btecex_applsci'    => 'leapcore_btecex_applsci',
+
+            'gcse_english'      => 'leapcore_gcse_english',
+            'gcse_maths'        => 'leapcore_gcse_maths',
 
         );
 
@@ -532,7 +536,7 @@ class local_leapwebservices_external extends external_api {
                 FROM mdl_user u
                     JOIN mdl_user_enrolments ue ON ue.userid = u.id
                     JOIN mdl_enrol e ON e.id = ue.enrolid
-                        AND e.enrol = 'manual'
+                        -- AND e.enrol = 'manual'
                     JOIN mdl_role_assignments ra ON ra.userid = u.id
                     JOIN mdl_context ct ON ct.id = ra.contextid
                         AND ct.contextlevel = 50
@@ -565,19 +569,32 @@ class local_leapwebservices_external extends external_api {
             // Walk through a fair few objects to get the course's time modified, final grade and named grade.
             $gi         = new grade_item();
             // The course item is actually the right one to use, even if it is null.
-            $gi_item    = $gi::fetch( array( 'courseid' => $courses[$core]['course_id'], 'itemtype' => 'manual', 'itemname' => 'course' ) );
+            //$gi_item    = $gi::fetch( array( 'courseid' => $courses[$core]['course_id'], 'itemtype' => 'manual', 'itemname' => 'course' ) );
+            $gi_item    = $gi::fetch( array( 'courseid' => $courses[$core]['course_id'], 'itemtype' => 'course' ) );
             $courses[$core]['course_total_modified'] = $gi_item->timemodified;
 
             $gg         = new grade_grade();
             $gg_grade   = $gg::fetch( array( 'itemid' => $gi_item->id, 'userid' => $user->id ) );
-            $courses[$core]['course_total'] = $gg_grade->finalgrade;
 
             // If the scale is going to be a U (or Refer, or Fail etc) as the L3VA is 0, pass null.
-            if ( $gg_grade->finalgrade > 0 ) {
+            if ( $gg_grade && $gg_grade->finalgrade > 0 ) {
+                $courses[$core]['course_total'] = $gg_grade->finalgrade;
+
                 $gs         = new grade_scale();
                 $gs_scale   = $gs::fetch( array( 'id' => $gi_item->scaleid ) );
-                $courses[$core]['course_total_display'] = $gs_scale->get_nearest_item( $gg_grade->finalgrade );
+                if ( $gs_scale ) {
+                    $courses[$core]['course_total_display'] = $gs_scale->get_nearest_item( $gg_grade->finalgrade );
+                } else {
+                    if ( is_numeric( $gg_grade->finalgrade ) ) {
+                        $courses[$core]['course_total_display'] = round( $courses[$core]['course_total'], 0, PHP_ROUND_HALF_UP );
+                    } else {
+                        $courses[$core]['course_total_display'] = $courses[$core]['course_total'];
+                    }
+                }
+
             } else {
+                $courses[$core]['course_total'] = 0;
+
                 $courses[$core]['course_total_display'] = null;
             }
 
@@ -599,7 +616,12 @@ class local_leapwebservices_external extends external_api {
 
                     // If the scale is going to be a U (or Refer, or Fail etc) as the L3VA is 0, pass null.
                     if ( $gg_grade->finalgrade > 0 ) {
-                        $courses[$core][strtolower($target) . '_display'] = $gs_scale->get_nearest_item( $gg_grade->finalgrade );
+                        // If there's no scale, just pass the data across.
+                        if ( $gs_scale ) {
+                            $courses[$core][strtolower($target) . '_display'] = $gs_scale->get_nearest_item( $gg_grade->finalgrade );
+                        } else {
+                            $courses[$core][strtolower($target) . '_display'] = $gg_grade->finalgrade;
+                        }
                     } else {
                         $courses[$core][strtolower($target) . '_display'] = null;
                     }
@@ -607,6 +629,11 @@ class local_leapwebservices_external extends external_api {
                 } else {
 
                     $courses[$core][strtolower($target) . '_display'] = $courses[$core][strtolower($target)];
+                }
+
+                // Rounding.
+                if ( is_numeric( $courses[$core][strtolower($target) . '_display'] ) ) {
+                    $courses[$core][strtolower($target) . '_display'] = round( $courses[$core][strtolower($target) . '_display'], 2, PHP_ROUND_HALF_UP );
                 }
 
             }
@@ -705,12 +732,9 @@ class local_leapwebservices_external extends external_api {
 
         $output = array();
         if ( !$userbadges ) {
-            $output[0]['course_id']    = null;
-            $output[0]['date_issued']  = null;
-            $output[0]['description']  = null;
-            $output[0]['details_link'] = null;
-            $output[0]['image_url']    = null;
-            $output[0]['name']         = null;
+
+            return $output;
+
         } else {
             $output = array();
             $count = 0;
@@ -753,5 +777,133 @@ class local_leapwebservices_external extends external_api {
 
     } // END function.
 
+
+    /**
+     * Returns description of method parameters
+     * @return external_function_parameters
+     */
+    public static function get_users_with_mag_parameters() {
+        return new external_function_parameters(
+            array()
+        );
+    } // END function.
+
+    /**
+     * Get user information
+     *
+     * @param string $username EBS username, could be 8-digit int or string.
+     * @return array An array describing targets (and metadata) for that user for all leapcore_* courses.
+     */
+    public static function get_users_with_mag() {
+        global $CFG, $DB;
+
+        // One query to get all the details we need.
+        $sql = "SELECT DISTINCT gg.userid, u.username
+                FROM {$CFG->prefix}grade_items gi, {$CFG->prefix}grade_grades gg, {$CFG->prefix}user u
+                WHERE gi.itemname = 'MAG'
+                    AND gi.id = gg.itemid
+                    AND gg.userid = u.id;";
+
+        if ( !$users = $DB->get_records_sql( $sql ) ) {
+            return array();
+            exit(1);
+        }
+
+        $output = array();
+        $count = 0;
+        foreach ( $users as $user ) {
+            $count++;
+
+            $output[$count]['userid'] = $user->userid;
+            $tmp = explode( '@', $user->username);
+            $output[$count]['username'] = $tmp[0];
+        }
+
+        return $output;
+
+    } // END function.
+
+    /**
+     * Returns description of method result value
+     * @return external_description
+     */
+    public static function get_users_with_mag_returns() {
+        return new external_multiple_structure(
+            new external_single_structure(
+                array(
+                    'userid'    => new external_value( PARAM_INT,   'Moodle ID of the user.' ),
+                    'username'  => new external_value( PARAM_TEXT,  'Username of the user.' ),
+                )
+            )
+        );
+
+    } // END function.
+
+    /**
+     * Returns description of method parameters
+     * @return external_function_parameters
+     */
+    public static function get_users_with_badges_parameters() {
+        return new external_function_parameters(
+            array()
+        );
+    } // END function.
+
+    /**
+     * Get user information
+     *
+     * @return array A list of users who have been assigned badges.
+     */
+    public static function get_users_with_badges() {
+        global $CFG, $DB;
+
+        // One query to get all the details we need.
+        $now    = time();
+        $then   = $now - ( 60 * 60 * 24 * 365 );  // One year ago.
+        $sql = "SELECT DISTINCT u.id, u.username
+                FROM {$CFG->prefix}user u, {$CFG->prefix}badge_issued bi
+                WHERE u.id = bi.userid
+                    AND bi.visible = 1
+                    AND (
+                        bi.dateexpire > {$now}
+                        OR bi.dateexpire IS NULL
+                    )
+                    AND bi.dateissued > {$then}
+                ORDER BY u.id ASC;";
+
+        if ( !$users = $DB->get_records_sql( $sql ) ) {
+            return array();
+            exit(1);
+        }
+
+        $output = array();
+        $count = 0;
+        foreach ( $users as $user ) {
+            $count++;
+
+            $output[$count]['userid'] = $user->id;
+            $tmp = explode( '@', $user->username);
+            $output[$count]['username'] = $tmp[0];
+        }
+
+        return $output;
+
+    } // END function.
+
+    /**
+     * Returns description of method result value
+     * @return external_description
+     */
+    public static function get_users_with_badges_returns() {
+        return new external_multiple_structure(
+            new external_single_structure(
+                array(
+                    'userid'    => new external_value( PARAM_INT,   'Moodle ID of the user.' ),
+                    'username'  => new external_value( PARAM_TEXT,  'Username of the user.' ),
+                )
+            )
+        );
+
+    } // END function.
 
 } // END class.

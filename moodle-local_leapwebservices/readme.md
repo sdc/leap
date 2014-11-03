@@ -658,6 +658,94 @@ The above query should return the following data structure (data for example pur
 **Note:** The `<SINGLE>` element will appear as many times as there are badges issued to *USERNAME*.
 
 
+### `get_users_with_mag`
+
+* Pass: nothing.
+* Returns: a list of users who have a not-null, > 0 MAG in the gradebook (regardless of course):
+    * id - the user's Moodle id
+    * username - the user's (EBS) username
+
+Use a URL with the following format:
+
+`http://yourmoodle.com/webservice/rest/server.php?wstoken=YOURTOKEN&wsfunction=local_leapwebservices_get_users_with_mag`
+
+...where *YOURTOKEN* is the token created within Moodle, e.g.:
+
+`http://yourmoodle.com/webservice/rest/server.php?wstoken=a180245560982a0e48e43577238c0198&wsfunction=local_leapwebservices_get_users_with_mag`
+
+The above query should return the following data structure (data for example purposes only):
+
+
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <RESPONSE>
+      <MULTIPLE>
+        <SINGLE>
+          <KEY name="userid">
+            <VALUE>1234</VALUE>
+          </KEY>
+          <KEY name="username">
+            <VALUE>paulvaughan</VALUE>
+          </KEY>
+        </SINGLE>
+        <SINGLE>
+          <KEY name="userid">
+            <VALUE>5678</VALUE>
+          </KEY>
+          <KEY name="username">
+            <VALUE>123454678</VALUE>
+          </KEY>
+        </SINGLE>
+      </MULTIPLE>
+    </RESPONSE>
+
+
+**Note:** The `<SINGLE>` element will appear as many times as there are users with MAGs in the gradebook.
+
+
+### `get_users_with_badges`
+
+* Pass: nothing.
+* Returns: a list of users who have been assigned a badge which is visible and not-expired:
+    * id - the user's Moodle id
+    * username - the user's (EBS) username
+
+Use a URL with the following format:
+
+`http://yourmoodle.com/webservice/rest/server.php?wstoken=YOURTOKEN&wsfunction=local_leapwebservices_get_users_with_badges`
+
+...where *YOURTOKEN* is the token created within Moodle, e.g.:
+
+`http://yourmoodle.com/webservice/rest/server.php?wstoken=a180245560982a0e48e43577238c0198&wsfunction=local_leapwebservices_get_users_with_badges`
+
+The above query should return the following data structure, which is identical to that returned in the `get_users_with_mag` service (data for example purposes only):
+
+
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <RESPONSE>
+      <MULTIPLE>
+        <SINGLE>
+          <KEY name="userid">
+            <VALUE>1234</VALUE>
+          </KEY>
+          <KEY name="username">
+            <VALUE>paulvaughan</VALUE>
+          </KEY>
+        </SINGLE>
+        <SINGLE>
+          <KEY name="userid">
+            <VALUE>5678</VALUE>
+          </KEY>
+          <KEY name="username">
+            <VALUE>123454678</VALUE>
+          </KEY>
+        </SINGLE>
+      </MULTIPLE>
+    </RESPONSE>
+
+
+**Note:** The `<SINGLE>` element will appear as many times as there are users with MAGs in the gradebook.
+
+
 ## To Do
 
 * After the 2.7 upgrade, check and test all web services thoroughly on a fresh 2.7 instance, rewriting the documentation if necessary.
@@ -665,7 +753,10 @@ The above query should return the following data structure (data for example pur
 
 ## History
 
-* 2014-09-17, v0.5.0: Added a new webservice to retrieve any badges which have been issued to a user.
+* 2014-10-31, v0.7.1: Over-zealous pruning of unnecessary code removed necessary code; rounded numbers sent where no scale exists.
+* 2014-09-24, v0.7.0: Added a new webservice to retrieve all users who have been issued at least one (visible, not-expired) badge.
+* 2014-09-18, v0.6.0: Added a new webservice to retrieve all users who have a non-null, > 0 MAG grade in the gradebook, regardless of course.
+* 2014-09-17, v0.5.0: Added a new webservice to retrieve badges which have been issued to a user.
 * 2014-09-16, v0.4.2: Targets: added government/politics and human biology; selects only manual student enrolments; revert use of MAG instead of course grade item. 
 * 2014-09-09, v0.4.1: new service modified to send null instead of a failing grade if the score is null.
 * 2014-07-29, v0.4.0: added new service 'get_targets_by_username' to allow Leap to query Moodle for L3VM, MAG and TAG scores.
