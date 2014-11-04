@@ -1,0 +1,15 @@
+.timetable-event{:style => "top:#{cloud_slot.timetable_margin + 37}px;height:#{cloud_slot.timetable_height}px", 
+  :class => "bg-#{cloud_slot.cl_status}"}
+  %h5= cloud_slot.title
+  %ul
+    %li
+      = cloud_slot.timetable_start.getutc.strftime('%H.%M')
+      - if cloud_slot.timetable_end 
+        = "- #{cloud_slot.timetable_end.getutc.strftime('%H.%M')}"
+    - if cloud_slot.kind_of? TimetableEvent
+      %li= cloud_slot.rooms.join ", "
+      %li
+        %i= cloud_slot.teachers.join ", "
+      .mark{:class => "text-#{cloud_slot.cl_status}", :style => "background:transparent"}= cloud_slot.mark
+    - elsif cloud_slot.kind_of? Event
+      .body= cloud_slot.body
