@@ -44,6 +44,7 @@ class PeopleController < ApplicationController
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
           @tiles.unshift(GlobalNews.last.to_tile) if GlobalNews.any?
           @tiles = @tiles.flatten #.uniq{|t| t.object}
+          @on_home_page = true
           render :action => "home"
         end
       end
@@ -72,6 +73,7 @@ class PeopleController < ApplicationController
     end
     @people  ||= []
     @courses ||= []
+    render Settings.home_page == "new" ? "cl_search" : "search"
   end
 
   def select
@@ -141,6 +143,7 @@ class PeopleController < ApplicationController
     case action_name
     when /\_block$/ then false
     when "show" then Settings.home_page == "new" ? "cloud" : "application"
+    when "search" then Settings.home_page == "new" ? "cloud" : "application"
     else "application"
     end
   end

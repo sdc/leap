@@ -1,0 +1,17 @@
+.panel.panel-default
+  .panel-body
+    .row
+      .col-xs-6
+        = image_tag sb_person.photo_uri, :id => "person-photo", :class => "img-responsive img-circle"
+      .name.text-left.col-xs-6
+        %h4= sb_person.name
+        %h4
+          %small= sb_person.mis_id
+        %h5.flags
+          - if @user.staff? and !sb_person.note.blank? and @on_home_page
+            = link_to "#note-modal", {"data-toggle" => "modal", :title => "Note on student records system"} do
+              %i.text-warning.fa.fa.fa-flag
+          - if @user.staff? and !sb_person.contact_allowed
+            %i.text-danger.fa.fa-exclamation-triangle{:title => "Do not contact this person!"}
+          - if sb_person.staff?
+            %i.text-success.fa.fa-mortar-board{:title => "Staff Member"}
