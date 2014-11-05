@@ -73,6 +73,7 @@ class PeopleController < ApplicationController
     end
     @people  ||= []
     @courses ||= []
+    @page_title = "Search for #{params[:q]}"
     render Settings.home_page == "new" ? "cl_search" : "search"
   end
 

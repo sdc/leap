@@ -1,7 +1,11 @@
 !!!
 %html{:lang => "en"}
   %head
-    %title= @topic ? "#{@topic.name} : Leap"  : "Leap"
+    %title
+      - if @topic or @page_title
+        = "#{@topic.try(:name) or @page_title} : Leap" 
+      - else
+        Leap
     = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
     = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
     = stylesheet_link_tag  'https://fonts.googleapis.com/css?family=Patua+One'

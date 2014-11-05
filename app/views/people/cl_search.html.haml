@@ -1,8 +1,13 @@
 .col-md-4.col-lg-6.searchy
   .row
-    %h1 People
+    %h1 
+      People
+      %span.visible-sm.visible-xs.pull-right
+        = link_to "#courses", :class => "btn btn-default btn-md" do
+          Skip to courses
+          %i.fa.fa-arrow-down
     .row= render :partial => "cl_person", :collection => @people
-.col-md-8.col-lg-6.searchy
+.col-md-8.col-lg-6.searchy#courses
   %h1 Courses
   .panel.span-xs-12
     .panel-body
