@@ -1,39 +1,40 @@
 .row
-  %ul.col-xs-10.text-left.pager{:style => "margin-top:0;padding-right:0;"}
+  %ul.col-xs-8.text-left.pager{:style => "margin-top:0;padding-right:0;"}
     = form_tag person_timetables_url, :method => :get, :class => "form-inline" do
       %li
         = link_to person_timetables_url(@topic,:date => @date - 1.week), :class => "btn" do
           %i.fa.fa-arrow-left
-          Previous Week
+          %span.hidden-xs Week
+          Previous 
       .hidden-xs.input-group
         = text_field_tag(:date, @date.strftime("%d %B %Y"), :class => "form-control", "data-provide" => "datepicker", "data-date-format" => 'd MM yyyy')
         %span.input-group-btn
           %button.btn.btn-primary Go!
       %li
         = link_to person_timetables_url(@topic,:date => @date + 1.week), :class => "btn" do
-          Next Week
+          Next
+          %span.hidden-xs Week
           %i.fa.fa-arrow-right
-  .col-xs-2.text-right.btn-group
-    %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
-      %i.fa.fa-download.fa-fw
-      %span.hidden-xs 
-        Download
-        %span.caret
-    %ul.dropdown-menu.dropdown-menu-right
-      %li
-        = link_to :format => :ics do
-          %i.fa.fa-fw.fa-calendar
-          Week
-      %li
-        = link_to :format => :ics, :year => true do
-          %i.fa.fa-fw.fa-calendar-o
-          Year
-      - if @view.controls? and params[:all].nil?
-        = link_to "#", :class => "pull-right btn btn-info", :id => "show-timetable-controls-button" do
-          Add event
-          %i.icon-plus.icon-white
-- if @view.controls? and params[:all].nil?
-  %div#timetable-header{:load_block => send("header_#{@topic.class.name.underscore}_view_url",@topic,@view)}= image_tag "ajax-loader.gif"
+  .col-xs-2.text-right
+    .btn-group
+      %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
+        %i.fa.fa-download.fa-fw
+        %span.hidden-xs 
+          Download
+          %span.caret
+      %ul.dropdown-menu.dropdown-menu-right
+        %li
+          = link_to :format => :ics do
+            %i.fa.fa-fw.fa-calendar
+            Week
+        %li
+          = link_to :format => :ics, :year => true do
+            %i.fa.fa-fw.fa-calendar-o
+            Year
+  .col-xs-2
+    %button.btn.btn-primary
+      %i.fa.fa-fw.fa-plus
+      %span.hidden-xs Add Event
 .row#timetable.panel.panel-default
   .col-xs-1
     .hour{:style => "height:37px"}
