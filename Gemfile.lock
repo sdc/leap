@@ -72,6 +72,7 @@ GEM
     haml (3.1.8)
     hike (1.2.3)
     i18n (0.6.9)
+    icalendar (2.1.2)
     jdbc-mysql (5.1.30)
     journey (1.0.4)
     jquery-rails (2.3.0)
@@ -191,6 +192,7 @@ DEPENDENCIES
   coffee-filter
   coffee-rails (= 3.2.2)
   haml
+  icalendar
   jquery-rails (~> 2.3.0)
   less-rails
   less-rails-bootstrap (= 2.0.13)
