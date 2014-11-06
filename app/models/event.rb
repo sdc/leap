@@ -130,4 +130,8 @@ class Event < ActiveRecord::Base
     return Tile.new attrs
   end
 
+  def cl_status
+    "info"
+  end
+
 end
