@@ -1,10 +1,9 @@
 .row
-  %ul.col-xs-8.text-left.pager{:style => "margin-top:0;padding-right:0;"}
+  %ul.col-xs-9.text-left.pager{:style => "margin-top:0;padding-right:0;"}
     = form_tag person_timetables_url, :method => :get, :class => "form-inline" do
       %li
         = link_to person_timetables_url(@topic,:date => @date - 1.week), :class => "btn" do
           %i.fa.fa-arrow-left
-          %span.hidden-xs Week
           Previous 
       .hidden-xs.input-group
         = text_field_tag(:date, @date.strftime("%d %B %Y"), :class => "form-control", "data-provide" => "datepicker", "data-date-format" => 'd MM yyyy')
@@ -13,28 +12,10 @@
       %li
         = link_to person_timetables_url(@topic,:date => @date + 1.week), :class => "btn" do
           Next
-          %span.hidden-xs Week
           %i.fa.fa-arrow-right
-  .col-xs-2.text-right
-    .btn-group
-      %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
-        %i.fa.fa-download.fa-fw
-        %span.hidden-xs 
-          Download
-          %span.caret
-      %ul.dropdown-menu.dropdown-menu-right
-        %li
-          = link_to :format => :ics do
-            %i.fa.fa-fw.fa-calendar
-            Week
-        %li
-          = link_to :format => :ics, :year => true do
-            %i.fa.fa-fw.fa-calendar-o
-            Year
-  .col-xs-2
-    %button.btn.btn-primary
-      %i.fa.fa-fw.fa-plus
-      %span.hidden-xs Add Event
+  %button.btn.btn-primary.pull-right
+    %i.fa.fa-fw.fa-plus
+    %span.hidden-xs Add Event
 .row#timetable.panel.panel-default
   .col-xs-1
     .hour{:style => "height:37px"}
@@ -48,3 +29,19 @@
       %i.fa.fa-angle-double-right
     %button.btn.btn-primary#hide_weekend{:style => "width:100%;display:none"}
       %i.fa.fa-angle-double-left
+.row
+  .pull-right
+    .btn-group.dropup
+      %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
+        %i.fa.fa-download.fa-fw
+        Download
+        %span.caret
+      %ul.dropdown-menu.dropdown-menu-right
+        %li
+          = link_to :format => :ics do
+            %i.fa.fa-fw.fa-calendar
+            Week
+        %li
+          = link_to :format => :ics, :year => true do
+            %i.fa.fa-fw.fa-calendar-o
+            Year
