@@ -1,0 +1,10 @@
+.panel.panel-default
+  .panel-body
+    .row
+      .col-xs-6
+        = image_tag topic.photo_uri, :id => "person-photo", :class => "img-responsive img-circle"
+      .name.text-left.col-xs-6
+        %h4= topic.name
+        %h4
+          %small= topic.mis_id
+        %h5.flags
