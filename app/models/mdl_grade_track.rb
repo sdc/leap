@@ -53,11 +53,18 @@ class MdlGradeTrack < Eventable
   end
 
   def to_tile
-    Tile.new({:title        => name || "#{course_type.humanize} Tracker",
-              :bg           => "aacccc",
+    bg = if(status == :success)
+      "a66"
+    elsif status == :current
+      "da6"
+    else
+      "6a6"
+    end
+    Tile.new({:title        => name,
+              :bg           => bg,
               :icon         => "fa-bar-chart-o",
               :partial_path => "tiles/grade_track",
-              :link         => name ? Settings.moodle_host + Settings.moodle_path + "/grade/report/#{Person.user.staff? ? 'grader' : 'user'}/index.php?id=" + mdl_id.to_s : nil,
+              :link         => Settings.moodle_host + Settings.moodle_path + "/grade/report/user/index.php?id=" + mdl_id.to_s,
               :object       => self})
   end
 
