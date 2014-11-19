@@ -1,10 +1,13 @@
 .panel.panel-default
   .panel-body
     .row
-      .col-xs-6
-        = image_tag topic.photo_uri, :id => "person-photo", :class => "img-responsive img-circle"
-      .name.text-left.col-xs-6
-        %h4= topic.name
+      .text-left.col-xs-12
+        %h4= topic.name.titlecase
         %h4
-          %small= topic.mis_id
+          %small
+            = topic.code
+            &ndash;
+            = topic.year
+        - if @topic.person_courses.detect{|pu| !pu.tutorgroup.blank?}
+          = tutorgroup_select @topic, @tutorgroup
         %h5.flags

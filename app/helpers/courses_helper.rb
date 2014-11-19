@@ -1,5 +1,5 @@
 # Leap - Electronic Individual Learning Plan Software
-# Copyright (C) 2011 South Devon College
+# Copyright (C) 2014 South Devon College
 
 # Leap is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -14,10 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class Ebs::Model < ActiveRecord::Base
+module CoursesHelper
 
-  ActiveRecord::Base.default_timezone = :local
-  self.abstract_class = true
-  #establish_connection :ebs
+  def tutorgroup_select(course,current_tg)
+    select_tag :tutorgroup_id, options_for_select(
+      [["All Tutorgroups", url_for(:tutorgroup => nil)]] + 
+      course.tutorgroups.map{|tg| [tg,url_for(:tutorgroup => tg)]},url_for(:tutorgroup => current_tg)
+    )
+  end
 
 end

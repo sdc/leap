@@ -27,3 +27,10 @@ $ ->
     $('.weekend').hide()
     $('#show_weekend').show()
     $('#hide_weekend').hide()
+  $('#tutorgroup_id').change ->
+    document.location = $('#tutorgroup_id').val()
+  $('[data-row-hide]').click ->
+    $($(this).attr('data-row-hide')).toggleClass("visible-lg")
+  $('#course-home-tabs a').on 'shown.bs.tab', (e) -> 
+    $.cookie "course-home-tabs",$(e.target).attr('href'), {expires: 365}
+  $("#course-home-tabs a[href=#{$.cookie('course-home-tabs')}]").tab('show')

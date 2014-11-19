@@ -14,6 +14,7 @@
     = javascript_include_tag "//code.jquery.com/jquery-1.11.0.min.js"
     = javascript_include_tag '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
     = javascript_include_tag 'jquery.peity.min'
+    = javascript_include_tag 'jquery.cookie'
     = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js'
     = javascript_include_tag 'cloud_events'
     = csrf_meta_tag
@@ -31,7 +32,7 @@
       .row 
         - if @topic
           #clidebar.col-lg-3.col-md-4.visible-lg.visible-md
-            = render :partial => "people/sb_person", :object => @topic
+            = render :partial => "#{@topic.class.name.downcase.pluralize}/namebox", :object => @topic, :as => :topic
             .btn-group.btn-group-justified.panel
               = link_to(person_timetables_url(@topic), :class => "btn btn-default") do
                 %i.fa.fa-fw.fa-calendar
@@ -42,7 +43,7 @@
                   = Settings.ebs_link_name
             = render :partial => "people/new_note"
             #sidebar-accordion.panel-group
-              = render "layouts/sidebar/personal_details" unless @topic.staff?
+              = render "layouts/sidebar/personal_details" if @topic.person? unless @topic.staff?
               = render "layouts/sidebar/timeline_links"
               = render "layouts/sidebar/moodle_links"
               = render "layouts/sidebar/custom_links"

@@ -61,4 +61,7 @@ class Course < ActiveRecord::Base
     groups = person_courses.group("tutorgroup").map{|pc| pc.tutorgroup}.reject{|g| g.blank?}
   end
 
+  def person?; false end
+  def course?; true end
+
 end

@@ -19,6 +19,7 @@ class PersonCourse < Eventable
   include MisPersonCourse
 
   delegate :code, :vague_title, :app_siblings, :to => :course
+  delegate :photo_uri, :name, :mis_id, :note, :contact_allowed, :staff?, :to => :person
   has_many :entry_reqs, :through => :course
 
   belongs_to :course
@@ -71,6 +72,14 @@ class PersonCourse < Eventable
     else
       self[:status]
     end
+  end
+
+  def cl_status
+    {"unknown"    => "default",
+     "complete"   => "success",
+     "current"    => "warning",
+     "incomplete" => "danger"
+    }[status] or "default"
   end
 
   def extra_panes(tr)

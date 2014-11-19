@@ -1,0 +1,85 @@
+%ul.row.nav.nav-tabs#course-home-tabs
+  %li.active 
+    %a{:href => "#photo-list", "data-toggle" => "tab"} Photo List
+  %li 
+    %a{:href => "#traffic-lights", "data-toggle" => "tab"} Traffic Lights
+
+.tab-content
+  .tab-pane.fade.in.active.panel.panel-default.row#photo-list{:style => "border-top: 0"}
+    %br
+    = render :partial => "people/enrolment", :collection => @person_courses
+  .tab-pane.fade.panel.panel-default.row#traffic-lights
+    %table.table.table-hover.table-condensed.table-responsive
+      %thead
+        %tr
+          %th{:colspan => 2}
+          %th.bl Core
+          %th.core_hide.visible-lg{:colspan => 2}
+          %th.text-right
+            %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".core_hide"}
+              %i.fa.fa-eye
+          %th.bl English
+          %th.visible-lg.english_hide{:colspan => 2}
+          %th.text-right
+            %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".english_hide"}
+              %i.fa.fa-eye
+          %th.bl Maths
+          %th.visible-lg.maths_hide{:colspan => 2}
+          %th.text-right
+            %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".maths_hide"}
+              %i.fa.fa-eye
+          -#%th{:colspan => 2}
+        %tr
+          %th.text-right Name
+          %th Code
+          - ["core","english","maths"].each do |ct|
+            %th.bl Att
+            %th.visible-lg{:class => "#{ct}_hide"} MAG
+            %th.visible-lg{:class => "#{ct}_hide"} TAG
+            %th Grade
+          -#%th PI
+          -#%th Review
+      %tbody
+        - @person_courses.each do |pc|
+          %tr
+            %td.text-right
+              %b= link_to pc.name, pc.person
+            %td
+              %small= pc.mis_id
+            - ["core","english","maths"].each do |ct|
+              - if pc.person.attendance(ct)
+                %td.bl{:class => pc.person.attendance(ct).status(true)}= "#{pc.person.attendance(ct).try :att_year}%"
+              - else
+                %td.bl.danger.text-center
+                  %i.fa.fa-frown-o
+              - if mag = pc.person.mdl_grade_tracks.send(ct).last.try(:mag)
+                %td.visible-lg{:class => "#{ct}_hide"}= mag
+              - else
+                %td.visible-lg.danger.text-center{:class => ["#{ct}_hide","danger"]}
+                  %i.fa.fa-frown-o
+              - if tag = pc.person.mdl_grade_tracks.send(ct).last.try(:tag)
+                %td.visible-lg{:class => "#{ct}_hide"}= tag
+              - else
+                %td.visible-lg.danger.text-center{:class => "#{ct}_hide"}
+                  %i.fa.fa-frown-o
+              %td{:class => pc.person.mdl_grade_tracks.send(ct).last.try(:status)}= pc.person.mdl_grade_tracks.send(ct).last.try :total
+            -#%td
+            -#%td
+            
+-#
+  .span9.btn-group{"data-toggle" => "buttons-radio", :style => "margin-bottom:10px;"}
+    %a.btn.btn-primary.active{"data-course-person-filter" => "show-all"} 
+      %i.icon-white.icon-filter
+      All
+    - @statuses.each do |s|
+      - next if s.blank?
+      %a.btn{"data-course-person-filter" => s.parameterize}= s
+  = render :partial => "person", :collection => @person_courses, :as => "pc"
+
+-# if @user.staff?
+  .row
+    .span5
+      .row.home-page-block.left{:load_block => reviews_block_course_url(@topic)}= image_tag "ajax-loader.gif"
+    .span5
+      - unless @topic.entry_reqs.empty?
+        .row.home-page-block.right{:load_block => entry_reqs_block_course_url(@topic)}= image_tag "ajax-loader.gif"

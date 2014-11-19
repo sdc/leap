@@ -5,6 +5,10 @@ class MdlGradeTrack < Eventable
 
   after_create {|t| t.events.create(:event_date => t.created_at, :transition => ':create')}
 
+  scope "english", -> { where(:course_type => ["english","gcse_english"]) }
+  scope "maths", -> { where(:course_type => ["maths","gcse_maths"]) }
+  scope "core", ->{ where("course_type NOT IN (?)",["maths","gcse_maths","english","gcse_english"]) }
+
   def self.import_all 
     if Settings.moodle_grade_track_import == "on"
       puts "\n\n****************************************"
@@ -55,6 +59,20 @@ class MdlGradeTrack < Eventable
               :partial_path => "tiles/grade_track",
               :link         => name ? Settings.moodle_host + Settings.moodle_path + "/grade/report/#{Person.user.staff? ? 'grader' : 'user'}/index.php?id=" + mdl_id.to_s : nil,
               :object       => self})
+  end
+
+  def status
+    begin
+      unless tag.blank?
+        return :sucess if Grade.new(total) >= Grade.new(tag)
+      end
+      unless mag.blank?
+        return :current if Grade.new(total) >= Grade.new(mag)
+      end
+    rescue ArgumentError
+      return :danger
+    end
+    return :danger
   end
 
 end

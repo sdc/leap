@@ -30,13 +30,13 @@ class Attendance < Eventable
     end
   end
 
-  def status
+  def status(bs = false)
     if att_year < Settings.attendance_low_score.to_i
-      :overdue
+      bs ? :danger : :overdue
     elsif att_year < Settings.attendance_high_score.to_i
-      :start
+      bs ? :warning : :start
     else
-      :complete
+      bs ? :success : :complete
     end
   end
 
