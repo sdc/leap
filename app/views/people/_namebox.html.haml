@@ -1,7 +1,7 @@
 .panel.panel-default
   .panel-body
     .row
-      = image_tag topic.photo_uri, :id => "person-photo", :class => "img-responsive img-circle col-xs-6"
+      = image_tag person_url(topic.mis_id, :format => :jpg), :id => "person-photo", :class => "img-responsive img-circle col-xs-6"
       %h4= topic.name
       %h4
         %small= topic.mis_id

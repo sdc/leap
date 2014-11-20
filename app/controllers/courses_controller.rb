@@ -27,7 +27,7 @@ class CoursesController < ApplicationController
     end
     respond_to do |format|
       format.html do
-        @statuses = @topic.person_courses.select(:mis_status).map(&:mis_status).uniq
+        @statuses = @topic.person_courses.map{|pc| [pc.mis_status,pc.cl_status]}.uniq.reject{|s| s.blank?}
         render :action => "cl_show", :layout => "cloud" if Settings.home_page == "new"
       end
       format.jpg { redirect_to "/assets/courses.png" }

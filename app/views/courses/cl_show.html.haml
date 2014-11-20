@@ -7,6 +7,13 @@
 .tab-content
   .tab-pane.fade.in.active.panel.panel-default.row#photo-list{:style => "border-top: 0"}
     %br
+    .col-xs-12
+      .btn-group{:style => "margin-bottom:15px"}
+        %a.btn.btn-primary.btn-sm.active{"data-course-person-filter" => "show-all"}
+          %i.fa.fa-filter
+            All
+        - @statuses.each do |s|
+          %a.btn.btn-sm{"data-course-person-filter" => s.first.parameterize, :class => "btn-#{s.last}"}= s.first
     = render :partial => "people/enrolment", :collection => @person_courses
   .tab-pane.fade.panel.panel-default.row#traffic-lights
     %table.table.table-hover.table-condensed.table-responsive
@@ -43,7 +50,7 @@
       %tbody
         - @person_courses.each do |pc|
           %tr
-            %td.text-right
+            %td.text-right{:class => pc.cl_status}
               %b= link_to pc.name, pc.person
             - if pc.person.l3va
               %td= pc.person.l3va

@@ -34,3 +34,15 @@ $ ->
   $('#course-home-tabs a').on 'shown.bs.tab', (e) -> 
     $.cookie "course-home-tabs",$(e.target).attr('href'), {expires: 365}
   $("#course-home-tabs a[href=#{$.cookie('course-home-tabs')}]").tab('show')
+  $('[data-course-person-filter]').click ->
+    filterCourseList $(this).attr('data-course-person-filter')
+
+ filterCourseList = (status) ->
+    $("[data-course-person-filter]").removeClass("active")
+    $("[data-course-person-filter=#{status}]").addClass("active")
+    if status == "show-all"
+      $(".person_course").show()
+    else
+      $(".person_course:not([data-mis-status=#{status}])").hide()
+      $(".person_course[data-mis-status=#{status}]").show()
+
