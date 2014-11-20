@@ -41,8 +41,8 @@ $ ->
     $("[data-course-person-filter]").removeClass("active")
     $("[data-course-person-filter=#{status}]").addClass("active")
     if status == "show-all"
-      $(".person_course").show()
+      $("[data-mis-status]").show()
     else
-      $(".person_course:not([data-mis-status=#{status}])").hide()
-      $(".person_course[data-mis-status=#{status}]").show()
+      $("[data-mis-status]:not([data-mis-status=#{status}])").hide()
+      $("[data-mis-status=#{status}]").show()
 
