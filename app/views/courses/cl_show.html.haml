@@ -28,24 +28,28 @@
           %th.text-right
             %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".maths_hide"}
               %i.fa.fa-eye
-          -#%th{:colspan => 2}
+          %th.bl{:colspan => 3}
         %tr
           %th.text-right Name
-          %th Code
+          %th LV3A
           - ["core","english","maths"].each do |ct|
             %th.bl Att
             %th.visible-lg{:class => "#{ct}_hide"} MAG
             %th.visible-lg{:class => "#{ct}_hide"} TAG
             %th Grade
-          -#%th PI
-          -#%th Review
+          %th.bl Review
+          %th PI
+          %th WP
       %tbody
         - @person_courses.each do |pc|
           %tr
             %td.text-right
               %b= link_to pc.name, pc.person
-            %td
-              %small= pc.mis_id
+            - if pc.person.l3va
+              %td= pc.person.l3va
+            - else
+              %td.bl.danger.text-center
+                %i.fa.fa-frown-o
             - ["core","english","maths"].each do |ct|
               - if pc.person.attendance(ct)
                 %td.bl{:class => pc.person.attendance(ct).status(true)}= "#{pc.person.attendance(ct).try :att_year}%"
@@ -63,7 +67,27 @@
                 %td.visible-lg.danger.text-center{:class => "#{ct}_hide"}
                   %i.fa.fa-frown-o
               %td{:class => pc.person.mdl_grade_tracks.send(ct).last.try(:status)}= pc.person.mdl_grade_tracks.send(ct).last.try :total
-            -#%td
+            - if Settings.current_review_window
+              - if cr = pc.person.reviews.where(:window => Settings.current_review_window).first
+                %td.bl.text-center{:class => cr.published ? "success"   : "warning",
+                                   :title => cr.published ? "Published" : "Started"}
+                  = link_to person_event_url(cr.person, cr.events.creation.first) do
+                    - if cr.published
+                      %i.fa.fa-star-full
+                    - else
+                      %i.fa.fa-star-half-full
+              - else
+                %td.bl.text-center.danger{:title => "Not Started"}
+                  = link_to(person_view_url(pc.person,View.where(:name => "reviews").for_user.first)) do
+                    %i.fa.fa-star-o
+            - else
+              %td{:title => "No Review Open"}
+            %td
+              - ints = pc.person.events.where(:eventable_type => "Intervention",:transition => :create).this_year.count
+              - if ints != 0
+                = link_to(person_view_url(pc.person,View.where(:name => "intervention").for_user.first)) do
+                  .label.label-danger= ints
+            %td
             -#%td
             
 -#
