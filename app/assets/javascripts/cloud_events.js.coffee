@@ -1,4 +1,6 @@
 $ ->
+  $("[title]").tooltip
+    container: "body"
   $('#cleap .delete-event').on 'ajax:complete', ->
     $(this).closest('.tile').hide("slow")
   show_clidebar = ->

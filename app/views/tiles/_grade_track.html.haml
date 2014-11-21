@@ -6,10 +6,16 @@
     %h2 Coming Soon!
     %br
     .fa.fa-question-circle{:style => "font-size: 100px;color:#333"}
-.col-xs-12
-  .progress
-    .progress-bar.progress-bar-striped{:style => "width:75%"}
-      7 out of 10
+- if grade_track.completion_out_of
+  .col-xs-12
+    .progress
+      .progress-bar.progress-bar-striped{:style => "width:#{grade_track.completion_percent}%"}
+        - if grade_track.completion_total == 0
+          %small.text-muted.text-center &nbsp; No completion yet
+        - if grade_track.completion_total > 0
+          = grade_track.completion_total
+          out of
+          = grade_track.completion_out_of
 
 :coffeescript
   canvas = $('##{dom_id(grade_track)} canvas')[0]

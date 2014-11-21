@@ -21,3 +21,12 @@
           = link_to admin_test_login_url, :title => "Click to change user" do
             %i.fa.fa-user.fa-fw
             Change User
+      %li.divider
+      %li.dropdown-header Testing
+      - if @topic.kind_of? Person
+        %li
+          = link_to MdlGradeTrack.user_url(@topic.username) do
+            %i.fa.fa-file-code-o.fa-fw
+            Moodle Grade Track XML
+
+
