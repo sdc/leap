@@ -18,7 +18,7 @@
     .col-xs-12
     = render :partial => "people/enrolment", :collection => @person_courses
   .tab-pane.fade.panel.panel-default.row#traffic-lights
-    %table.table.table-hover.table-condensed.table-responsive
+    %table#plp-overview-table.table.table-hover.table-condensed.table-responsive
       %thead
         %tr
           %th{:colspan => 3}
@@ -87,9 +87,11 @@
                                    :title => cr.published ? "Published" : "Started"}
                   = link_to person_event_url(cr.person, cr.events.creation.first) do
                     - if cr.published
-                      %i.fa.fa-star-full
+                      %i.fa.fa-star
+                      .hide Complete
                     - else
                       %i.fa.fa-star-half-full
+                      .hide Started
               - else
                 %td.bl.text-center.danger{:title => "Not Started"}
                   = link_to(person_view_url(pc.person,View.where(:name => "reviews").for_user.first)) do
@@ -99,8 +101,25 @@
             %td
               - ints = pc.person.events.where(:eventable_type => "Intervention",:transition => :create).this_year.count
               - if ints != 0
-                = link_to(person_view_url(pc.person,View.where(:name => "intervention").for_user.first)) do
+                = link_to(person_view_url(pc.person,"intervention")) do
                   .label.label-danger= ints
+    %br
+    .pull-right
+      .btn-group.dropup
+        %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
+          %i.fa.fa-download.fa-fw
+          Download
+          %span.caret
+        %ul.dropdown-menu.dropdown-menu-right
+          %li
+            %a{"data-download-table" => "#plp-overview-table", "data-download-type" => "excel"} 
+              %i.fa.fa-fw.fa-file-excel-o
+              Excel
+          %li
+            %a{"data-download-table" => "#plp-overview-table", "data-download-type" => "csv"} 
+              %i.fa.fa-fw.fa-file-o
+              CSV
+  .tab-pane.fade.panel.panel-default.row#progress
   .tab-pane.fade.panel.panel-default.row#progress
     %table.table.table-hover.table-condensed.table-responsive
       %thead
@@ -120,19 +139,6 @@
                   .progress-bar{:style => "width:#{(rand*100).floor}%"}
                     = (rand*9).floor
                     out of 10
-            
-
-            
--#
-  .span9.btn-group{"data-toggle" => "buttons-radio", :style => "margin-bottom:10px;"}
-    %a.btn.btn-primary.active{"data-course-person-filter" => "show-all"} 
-      %i.icon-white.icon-filter
-      All
-    - @statuses.each do |s|
-      - next if s.blank?
-      %a.btn{"data-course-person-filter" => s.parameterize}= s
-  = render :partial => "person", :collection => @person_courses, :as => "pc"
-
 -# if @user.staff?
   .row
     .span5

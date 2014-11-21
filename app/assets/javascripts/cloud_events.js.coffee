@@ -36,6 +36,11 @@ $ ->
   $("#course-home-tabs a[href=#{$.cookie('course-home-tabs')}]").tab('show')
   $('[data-course-person-filter]').click ->
     filterCourseList $(this).attr('data-course-person-filter')
+  $('[data-download-table]').click ->
+    $($(this).attr('data-download-table')).tableExport
+      type: $(this).attr('data-download-type')
+      escape: $(this).attr('data-download-escape') or false
+      htmlContent: true
 
  filterCourseList = (status) ->
     $("[data-course-person-filter]").removeClass("active")
