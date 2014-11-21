@@ -57,7 +57,7 @@ module MisPerson
           ))
         @person = Person.find_by_mis_id(ep.id) || Person.new(:mis_id => ep.id)
         #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
-        if @person.new_record? or (@person.updated_at < ep.updated_date)
+        if @person.new_record? or ep.updated_date.nil? or (@person.updated_at < ep.updated_date)
           @person.update_attributes(
             :forename      => ep.known_as.blank? ? ep.forename : ep.known_as,
             :surname       => ep.surname,
@@ -209,8 +209,9 @@ module MisPerson
         na=Attendance.find_or_create_by_person_id_and_week_beginning(id,att.send(Settings.attendance_date_column))
         na.update_attributes(
           :week_beginning => att.send(Settings.attendance_date_column),
-          :att_year   => att.send(Settings.attendance_culm_column),
-          :att_week   => att.send(Settings.attendance_week_column)
+          :att_year    => att.send(Settings.attendance_culm_column),
+          :att_week    => att.send(Settings.attendance_week_column),
+          :course_type => Settings.attendance_type_column.blank? ? "overall" : att.send(Settings.attendance_type_column).downcase
         )
       end
     return self

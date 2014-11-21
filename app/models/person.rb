@@ -67,8 +67,9 @@ class Person < ActiveRecord::Base
     mis_id.to_s
   end
 
-  def attendance(course_type = "all")
-    attendances.last
+  def attendance(course_type = "overall")
+    course_type = course_type.to_s
+    attendances.where(:course_type => course_type).last
   end
 
   def Person.get(mis_id,fresh=false)

@@ -59,7 +59,7 @@
             - else
               %td.danger.text-center
                 %i.fa.fa-frown-o
-            - if pc.person.attendance
+            - if pc.person.attendance(:overall)
               %td{:class => pc.person.attendance.status(true)}= "#{pc.person.attendance.try :att_year}%"
             - else
               %td.danger.text-center
@@ -68,20 +68,20 @@
               - title = pc.person.mdl_grade_tracks.send(ct).last.try(:name)
               - if pc.person.attendance(ct)
                 %td.bl{:class => pc.person.attendance(ct).status(true), :title => title}= "#{pc.person.attendance(ct).try :att_year}%"
+                - if mag = pc.person.mdl_grade_tracks.send(ct).last.try(:mag)
+                  %td.visible-lg{:class => "#{ct}_hide", :title => title}= mag
+                - else
+                  %td.visible-lg.danger.text-center{:class => ["#{ct}_hide","danger"]}
+                    %i.fa.fa-frown-o
+                - if tag = pc.person.mdl_grade_tracks.send(ct).last.try(:tag)
+                  %td.visible-lg{:class => "#{ct}_hide", :title => title}= tag
+                - else
+                  %td.visible-lg.danger.text-center{:class => "#{ct}_hide"}
+                    %i.fa.fa-frown-o
+                  %td{:class => pc.person.mdl_grade_tracks.send(ct).last.try(:status), :title => title}= pc.person.mdl_grade_tracks.send(ct).last.try :total
               - else
-                %td.bl.danger.text-center
-                  %i.fa.fa-frown-o
-              - if mag = pc.person.mdl_grade_tracks.send(ct).last.try(:mag)
-                %td.visible-lg{:class => "#{ct}_hide", :title => title}= mag
-              - else
-                %td.visible-lg.danger.text-center{:class => ["#{ct}_hide","danger"]}
-                  %i.fa.fa-frown-o
-              - if tag = pc.person.mdl_grade_tracks.send(ct).last.try(:tag)
-                %td.visible-lg{:class => "#{ct}_hide", :title => title}= tag
-              - else
-                %td.visible-lg.danger.text-center{:class => "#{ct}_hide"}
-                  %i.fa.fa-frown-o
-              %td{:class => pc.person.mdl_grade_tracks.send(ct).last.try(:status), :title => title}= pc.person.mdl_grade_tracks.send(ct).last.try :total
+                %td.bl.text-center{:colspan => 4}
+                  %small.text-muted No attendance
             - if Settings.current_review_window
               - if cr = pc.person.reviews.where(:window => Settings.current_review_window).first
                 %td.bl.text-center{:class => cr.published ? "success"   : "warning",
@@ -135,18 +135,21 @@
             %td.text-right
               %b= link_to pc.person.name, pc.person
             - ["core","english","maths"].each do |ct|
-              - if out_of = pc.person.mdl_grade_tracks.send(ct).last.try(:completion_out_of)
-                - total = pc.person.mdl_grade_tracks.send(ct).last.try(:completion_total)
-                %td.bl{:title => pc.person.mdl_grade_tracks.send(ct).last.try(:name)}
-                  .progress.text-center
-                    - unless total == 0
-                      .progress-bar{:style => "width:#{pc.person.mdl_grade_tracks.send(ct).last.try(:completion_percent)}%"}
-                        = total
-                        out of 
-                        = out_of
+              - if pc.person.attendance(ct)
+                - if out_of = pc.person.mdl_grade_tracks.send(ct).last.try(:completion_out_of)
+                  - total = pc.person.mdl_grade_tracks.send(ct).last.try(:completion_total)
+                  %td.bl{:title => pc.person.mdl_grade_tracks.send(ct).last.try(:name)}
+                    .progress.text-center
+                      - unless total == 0
+                        .progress-bar{:style => "width:#{pc.person.mdl_grade_tracks.send(ct).last.try(:completion_percent)}%"}
+                          = total
+                          out of 
+                          = out_of
+                - else
+                  %td.text-center.danger
+                    %i.fa.fa-frown-o
               - else
-                %td.text-center.danger
-                  %i.fa.fa-frown-o
+                %td
 -# if @user.staff?
   .row
     .span5
