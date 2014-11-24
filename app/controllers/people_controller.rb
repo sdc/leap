@@ -40,6 +40,7 @@ class PeopleController < ApplicationController
           #  MdlGradeTrack.new(:course_type => ct).to_tile
           #end)
           @tiles.unshift(tracks.map{|x| x.to_tile})
+          @tiles.unshift(@topic.attendances.where(:course_type => "overall").last.events.first.try :to_tile) if @topic.attendances.where(:course_type => "overall").any?
           @tiles.unshift(@topic.attendances.where(:course_type => "overall").last.events.first.try :to_tile)
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
           @tiles.unshift(GlobalNews.last.to_tile) if GlobalNews.any?
