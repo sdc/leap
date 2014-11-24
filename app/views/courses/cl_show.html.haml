@@ -65,23 +65,32 @@
               %td.danger.text-center
                 %i.fa.fa-frown-o
             - ["core","english","maths"].each do |ct|
-              - title = pc.person.mdl_grade_tracks.send(ct).last.try(:name)
               - if pc.person.attendance(ct)
+                - gt = pc.person.mdl_grade_tracks.send(ct).last
+                - title = gt.try(:name) || "No Grade Tracker"
                 %td.bl{:class => pc.person.attendance(ct).status(true), :title => title}= "#{pc.person.attendance(ct).try :att_year}%"
-                - if mag = pc.person.mdl_grade_tracks.send(ct).last.try(:mag)
-                  %td.visible-lg{:class => "#{ct}_hide", :title => title}= mag
+                - if gt.kind_of? MdlGradeTrack
+                  - ["mag","tag"].each do |g|
+                    - unless gt.send(g).blank?
+                      %td.visible-lg{:class => "#{ct}_hide", :title => title}= gt.send(g)
+                    - else
+                      %td.text-muted.visible-lg.danger.text-center{:class => ["#{ct}_hide","danger"], :title => title}
+                        %i.fa.fa-frown-o
+                  - unless gt.total.blank?
+                    %td{:class => gt.try(:status), :title => title}= gt.total
+                  - else
+                    %td.text-muted.danger.text-center{:class => ["#{ct}_hide","danger"], :title => title}
+                      %i.fa.fa-frown-o
                 - else
-                  %td.visible-lg.danger.text-center{:class => ["#{ct}_hide","danger"]}
-                    %i.fa.fa-frown-o
-                - if tag = pc.person.mdl_grade_tracks.send(ct).last.try(:tag)
-                  %td.visible-lg{:class => "#{ct}_hide", :title => title}= tag
-                - else
-                  %td.visible-lg.danger.text-center{:class => "#{ct}_hide"}
-                    %i.fa.fa-frown-o
-                %td{:class => pc.person.mdl_grade_tracks.send(ct).last.try(:status), :title => title}= pc.person.mdl_grade_tracks.send(ct).last.try :total
+                  %td.text-muted.bl.visible-lg.active.text-center{:colspan => 3, :title => "No Grade Tracker"}
+                    %i.fa.fa-meh-o
+                  %td.text-muted.bl.hidden-lg.active.text-center{:title => "No Grade Tracker"}
+                    %i.fa.fa-meh-o
               - else
-                %td.bl.text-center{:colspan => 4}
-                  %small.text-muted No attendance
+                %td.bl.text-center.visible-lg{:colspan => 4}
+                  %small.text-muted No enrolment
+                %td.bl.text-center.hidden-lg{:colspan => 2}
+                  %small.text-muted No enrolment
             - if Settings.current_review_window
               - if cr = pc.person.reviews.where(:window => Settings.current_review_window).first
                 %td.bl.text-center{:class => cr.published ? "success"   : "warning",

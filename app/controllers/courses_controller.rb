@@ -16,6 +16,7 @@
 
 class CoursesController < ApplicationController
   
+  before_filter       :staff_only
   skip_before_filter  :set_topic
   before_filter       :course_set_topic
 
