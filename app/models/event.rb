@@ -49,6 +49,7 @@ class Event < ActiveRecord::Base
 
   scope :unique_eventable, group("eventable_id,eventable_type")
   scope :creation, where(:transition => :create)
+  scope :this_year, lambda {where("event_date > ?",year_start)}
   default_scope order("event_date DESC")
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id) unless person_id}
@@ -61,6 +62,19 @@ class Event < ActiveRecord::Base
   delegate :past?, :to => :event_date
 
   attr_accessor :first_in_past
+
+  def self.year_start
+    @date = Date.today
+    (d,m) = Settings.year_boundary_date.split("/").map{|x| x.to_i}
+    ab = @date.change(:day => d,:month => m)
+    if ab < @date
+      @date = ab
+      @end_date = ab 
+    else
+      @end_date = ab
+      @date = ab - 1.year
+    end
+  end
 
   [:title,:subtitle,:icon_url,:body,:extra_panes,:status,:staff_only?,
    :timetable_length,:tile_bg,:tile_icon,:tile_title].each do |method|
@@ -128,6 +142,10 @@ class Event < ActiveRecord::Base
       end
     end
     return Tile.new attrs
+  end
+
+  def cl_status
+    "info"
   end
 
 end

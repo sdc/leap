@@ -31,7 +31,7 @@
       All
     - @statuses.each do |s|
       - next if s.blank?
-      %a.btn{"data-course-person-filter" => s.parameterize}= s
+      %a.btn{"data-course-person-filter" => s.first.parameterize}= s.first
   = render :partial => "person", :collection => @person_courses, :as => "pc"
   -#- if @topic.person_courses.count > 12
   -#  #expand_students{:style => "cursor:pointer"} See all students...

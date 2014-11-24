@@ -40,10 +40,11 @@ class PeopleController < ApplicationController
           #  MdlGradeTrack.new(:course_type => ct).to_tile
           #end)
           @tiles.unshift(tracks.map{|x| x.to_tile})
-          @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
+          @tiles.unshift(@topic.events.where(:eventable_type => "Attendance").last.try :to_tile) 
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
           @tiles.unshift(GlobalNews.last.to_tile) if GlobalNews.any?
-          @tiles = @tiles.flatten #.uniq{|t| t.object}
+          @tiles = @tiles.flatten.reject{|t| t.nil?} #.uniq{|t| t.object}
+          @on_home_page = true
           render :action => "home"
         end
       end
@@ -72,6 +73,8 @@ class PeopleController < ApplicationController
     end
     @people  ||= []
     @courses ||= []
+    @page_title = "Search for #{params[:q]}"
+    render Settings.home_page == "new" ? "cl_search" : "search"
   end
 
   def select
@@ -141,6 +144,7 @@ class PeopleController < ApplicationController
     case action_name
     when /\_block$/ then false
     when "show" then Settings.home_page == "new" ? "cloud" : "application"
+    when "search" then Settings.home_page == "new" ? "cloud" : "application"
     else "application"
     end
   end

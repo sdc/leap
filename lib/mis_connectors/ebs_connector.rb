@@ -57,7 +57,7 @@ module MisPerson
           ))
         @person = Person.find_by_mis_id(ep.id) || Person.new(:mis_id => ep.id)
         #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
-        if @person.new_record? or (@person.updated_at < ep.updated_date)
+        if @person.new_record? or ep.updated_date.nil? or (@person.updated_at < ep.updated_date)
           @person.update_attributes(
             :forename      => ep.known_as.blank? ? ep.forename : ep.known_as,
             :surname       => ep.surname,
@@ -165,7 +165,8 @@ module MisPerson
   def import_courses
     return self unless mis.people_units.any?
     last_update = (person_courses.order("updated_at DESC").first.try(:updated_at) or Date.today - 5.years)
-    mis_person.people_units.where("updated_date > ?",last_update).order("progress_date").each do |pu|
+    #mis_person.people_units.where("updated_date > ?",last_update).order("progress_date").each do |pu|
+    mis_person.people_units.order("progress_date").each do |pu|
       next unless pu.uio_id
       course = Course.import(pu.uio_id,{:people => false})
       next unless course
@@ -205,11 +206,14 @@ module MisPerson
     mis_person.attendances.
       where("#{Settings.attendance_date_column} > ? and #{Settings.attendance_date_column} < ?",(last_date - 2.weeks),Date.tomorrow).#strftime("%Y-%d-%m %H:%M:%S")).
       each do |att|
-        na=Attendance.find_or_create_by_person_id_and_week_beginning(id,att.send(Settings.attendance_date_column))
+        next unless att.send(Settings.attendance_date_column)
+        course_type = Settings.attendance_type_column.blank? ? "overall" : (att.send(Settings.attendance_type_column) || "overall").downcase
+        na=Attendance.find_or_create_by_person_id_and_week_beginning_and_course_type(id,att.send(Settings.attendance_date_column),course_type)
         na.update_attributes(
           :week_beginning => att.send(Settings.attendance_date_column),
-          :att_year   => att.send(Settings.attendance_culm_column),
-          :att_week   => att.send(Settings.attendance_week_column)
+          :att_year    => att.send(Settings.attendance_culm_column),
+          :att_week    => att.send(Settings.attendance_week_column),
+          :course_type => Settings.attendance_type_column.blank? ? "overall" : (att.send(Settings.attendance_type_column) || "overall").downcase
         )
       end
     return self
@@ -258,7 +262,8 @@ module MisCourse
 
   def import_people
     last_update = person_courses.order("updated_at DESC").first.try(:updated_at) or Date.today - 5.years
-    mis_course.people_units.where("updated_date > ?",last_update).order("progress_date").each do |pu|
+    mis_course.people_units.order("progress_date").each do |pu|
+    #mis_course.people_units.where("updated_date > ?",last_update).order("progress_date").each do |pu|
       person = Person.import(pu.person_code, {:courses => false})
       pc= PersonCourse.find_or_create_by_person_id_and_course_id(person.id,id)
       if pu.unit_type == "A" 

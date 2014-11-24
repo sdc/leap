@@ -67,17 +67,17 @@ class Person < ActiveRecord::Base
     mis_id.to_s
   end
 
+  def attendance(course_type = "overall")
+    course_type = course_type.to_s
+    attendances.where(:course_type => course_type).last
+  end
+
   def Person.get(mis_id,fresh=false)
     mis_id = mis_id.to_s.tr('^0-9','') if mis_id.to_s.match(/\d{6}/)
     return import(mis_id) if fresh
     return find_by_username(mis_id) || import(mis_id)
   end
    
-    #person = (fresh ? import(mis_id) : find_by_mis_id(mis_id.to_s.match(/\d{6}/) ? mis_id.to_s.tr('^0-9','') : mis_id) or find_by_username(mis_id)) or import(mis_id)
-    #BKSB.import_for(mis_id) if fresh && !Settings.bksb_url.blank?
-    #return person
-  #end
-
   def name(options = {})
     names = [forename]
     names += middle_names if options[:middle_names] and middle_names
@@ -157,5 +157,8 @@ class Person < ActiveRecord::Base
   def address_text
     address.blank? ? nil : [address, town, postcode].reject(&:nil?).join(", ")
   end
+
+  def person?; true end
+  def course?; false end
 
 end

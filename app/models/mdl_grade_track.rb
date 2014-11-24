@@ -1,9 +1,21 @@
 class MdlGradeTrack < Eventable
-  attr_accessible :course_type, :mag, :mdl_id, :name, :tag, :total, :created_at, :created_by_id
+  attr_accessible :course_type, :mag, :mdl_id, :name, :tag, :total, 
+                  :completion_total, :completion_out_of, :created_at, :created_by_id
 
   belongs_to :person
 
   after_create {|t| t.events.create(:event_date => t.created_at, :transition => ':create')}
+
+  scope "english", -> { where(:course_type => ["english","gcse_english"]) }
+  scope "maths", -> { where(:course_type => ["maths","gcse_maths"]) }
+  scope "core", ->{ where("course_type NOT IN (?)",["maths","gcse_maths","english","gcse_english"]) }
+
+  def self.user_url(username)
+    "#{Settings.moodle_host}#{Settings.moodle_path}/webservice/rest/server.php?" +
+    "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_targets_by_username&username=" +
+    username + Settings.moodle_user_postfix
+  end
+
 
   def self.import_all 
     if Settings.moodle_grade_track_import == "on"
@@ -37,24 +49,52 @@ class MdlGradeTrack < Eventable
       next if person.mdl_grade_tracks.where(:created_at  => Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i),
                                             :course_type => course.xpath("KEY[@name='leapcore']/VALUE").first.content).any?
       person.mdl_grade_tracks.create do |t|
-        t.name        = course.xpath("KEY[@name='course_fullname']/VALUE").first.content
-        t.mdl_id      = course.xpath("KEY[@name='course_id']/VALUE").first.content
-        t.tag         = course.xpath("KEY[@name='tag_display']/VALUE").first.content
-        t.mag         = course.xpath("KEY[@name='mag_display']/VALUE").first.content
-        t.total       = course.xpath("KEY[@name='course_total_display']/VALUE").first.content
-        t.created_at  = Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i)
-        t.course_type = course.xpath("KEY[@name='leapcore']/VALUE").first.content
+        t.name              = course.xpath("KEY[@name='course_fullname']/VALUE").first.content
+        t.mdl_id            = course.xpath("KEY[@name='course_id']/VALUE").first.content
+        t.tag               = course.xpath("KEY[@name='tag_display']/VALUE").first.content
+        t.mag               = course.xpath("KEY[@name='mag_display']/VALUE").first.content
+        t.total             = course.xpath("KEY[@name='course_total_display']/VALUE").first.content
+        t.completion_total  = course.xpath("KEY[@name='course_completion_completed']/VALUE").first.content
+        t.completion_out_of = course.xpath("KEY[@name='course_completion_total']/VALUE").first.content
+        t.course_type       = course.xpath("KEY[@name='leapcore']/VALUE").first.content
+        t.created_at        = Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i)
       end
     end
   end
 
+  def completion_percent
+    return nil unless completion_total and completion_out_of
+    ((completion_total.to_f / completion_out_of) * 100).round
+  end
+
   def to_tile
-    Tile.new({:title        => name || "#{course_type.humanize} Tracker",
-              :bg           => "aacccc",
+    bg = if(status == :success)
+      "a66"
+    elsif status == :current
+      "da6"
+    else
+      "6a6"
+    end
+    Tile.new({:title        => name,
+              :bg           => bg,
               :icon         => "fa-bar-chart-o",
               :partial_path => "tiles/grade_track",
-              :link         => name ? Settings.moodle_host + Settings.moodle_path + "/grade/report/#{Person.user.staff? ? 'grader' : 'user'}/index.php?id=" + mdl_id.to_s : nil,
+              :link         => Settings.moodle_host + Settings.moodle_path + "/grade/report/user/index.php?id=" + mdl_id.to_s,
               :object       => self})
+  end
+
+  def status
+    begin
+      unless tag.blank?
+        return :sucess if Grade.new(total) >= Grade.new(tag)
+      end
+      unless mag.blank?
+        return :current if Grade.new(total) >= Grade.new(mag)
+      end
+    rescue ArgumentError
+      return :danger
+    end
+    return :danger
   end
 
 end

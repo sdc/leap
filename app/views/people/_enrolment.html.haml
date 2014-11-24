@@ -1,0 +1,3 @@
+.col-xs-12.col-sm-4[enrolment]{"data-mis-status" => enrolment.mis_status.downcase}
+  = link_to enrolment.person, :class => "person" do
+    = render :partial => "people/namebox", :object => enrolment, :as => :topic

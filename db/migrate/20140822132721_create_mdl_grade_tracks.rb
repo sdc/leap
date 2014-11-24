@@ -8,6 +8,7 @@ class CreateMdlGradeTracks < ActiveRecord::Migration
       t.string :mag
       t.string :total
       t.integer :person_id
+      t.integer :created_by_id
       t.timestamps
     end
   end

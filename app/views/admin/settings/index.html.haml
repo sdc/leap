@@ -78,6 +78,15 @@
     .controls
       =text_field_tag "attendance_date_column", Settings.attendance_date_column
   .control-group
+    %label.control-label Course type column
+    .controls
+      =text_field_tag "attendance_type_column", Settings.attendance_type_column
+    .help-text
+      %p 
+        If you put a column name in here, the attendance import will import the data from here as the course type. Overall attendances should
+        then be recorded as "overall" in this field. Extra functionality will be added, but to begin with, "maths","english" and "core" will split
+        attendances for those course types for the course-overview related to the grade tracker moodle functionality!
+  .control-group
     %label Bad - OK - Good attendance percentages
     .controls
       %span.add-on
@@ -348,7 +357,7 @@
                                  "attendance_culm_column","attendance_week_column","attendance_low_score","attendance_high_score",
                                  "attendance_date_column","custom_css","quals_editing","clidebar_links","home_page","ws_user","ws_token",
                                  "moodle_grade_track_import","moodle_badge_import","moodle_badge_block_courses",
-                                 "one_to_one_prompts"]
+                                 "one_to_one_prompts","attendance_type_column"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

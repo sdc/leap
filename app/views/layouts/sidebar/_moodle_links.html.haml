@@ -1,0 +1,16 @@
+.panel.panel-default
+  .panel-heading
+    %h4.panel-title
+      %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#moodle-courses"}
+        %i.fa.fa-graduation-cap.fa-fw
+        Moodle Courses
+  #moodle-courses.panel-collapse.collapse
+    .panel-body
+      = link_to("#{Settings.moodle_host}#{Settings.moodle_path}",
+                  {:target => Settings.moodle_link_target})  do
+        %h4
+          %i.fa.fa-home
+          Moodle Home
+      #moodle-courses-links
+        %i.fa.fa-circle-o-notch.fa-spin
+        loading...
