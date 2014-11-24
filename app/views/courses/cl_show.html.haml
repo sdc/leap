@@ -78,7 +78,7 @@
                 - else
                   %td.visible-lg.danger.text-center{:class => "#{ct}_hide"}
                     %i.fa.fa-frown-o
-                  %td{:class => pc.person.mdl_grade_tracks.send(ct).last.try(:status), :title => title}= pc.person.mdl_grade_tracks.send(ct).last.try :total
+                %td{:class => pc.person.mdl_grade_tracks.send(ct).last.try(:status), :title => title}= pc.person.mdl_grade_tracks.send(ct).last.try :total
               - else
                 %td.bl.text-center{:colspan => 4}
                   %small.text-muted No attendance

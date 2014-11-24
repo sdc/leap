@@ -40,10 +40,10 @@ class PeopleController < ApplicationController
           #  MdlGradeTrack.new(:course_type => ct).to_tile
           #end)
           @tiles.unshift(tracks.map{|x| x.to_tile})
-          @tiles.unshift(@topic.attendances.last.to_tile) if @topic.attendances.any?
+          @tiles.unshift(@topic.events.where(:eventable_type => "Attendance").last.try :to_tile) 
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
           @tiles.unshift(GlobalNews.last.to_tile) if GlobalNews.any?
-          @tiles = @tiles.flatten #.uniq{|t| t.object}
+          @tiles = @tiles.flatten.reject{|t| t.nil?} #.uniq{|t| t.object}
           @on_home_page = true
           render :action => "home"
         end
