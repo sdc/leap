@@ -207,6 +207,7 @@ module MisPerson
       where("#{Settings.attendance_date_column} > ? and #{Settings.attendance_date_column} < ?",(last_date - 2.weeks),Date.tomorrow).#strftime("%Y-%d-%m %H:%M:%S")).
       each do |att|
         next unless att.send(Settings.attendance_date_column)
+        next unless att.send(Settings.attendance_culm_column)
         course_type = Settings.attendance_type_column.blank? ? "overall" : (att.send(Settings.attendance_type_column) || "overall").downcase
         na=Attendance.find_or_create_by_person_id_and_week_beginning_and_course_type(id,att.send(Settings.attendance_date_column),course_type)
         na.update_attributes(
