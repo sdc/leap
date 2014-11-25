@@ -4,6 +4,7 @@
       Admin
       %i.fa.fa-caret-down
     %ul.dropdown-menu
+      %li.dropdown-header Settings
       %li
         = link_to admin_settings_url do
           %i.fa.fa-cog.fa-fw
@@ -21,12 +22,16 @@
           = link_to admin_test_login_url, :title => "Click to change user" do
             %i.fa.fa-user.fa-fw
             Change User
-      %li.divider
-      %li.dropdown-header Testing
       - if @topic.kind_of? Person
+        %li.divider
+        %li.dropdown-header 
+          Data for
+          = @topic.name
         %li
           = link_to MdlGradeTrack.user_url(@topic.username) do
             %i.fa.fa-file-code-o.fa-fw
             Moodle Grade Track XML
-
-
+        %li 
+          = link_to admin_sync_grade_tracks_url(:person_id => @topic.mis_id) do
+            %i.fa.fa-bar-chart.fa-fw
+            Sync Moodle Grade Tracks
