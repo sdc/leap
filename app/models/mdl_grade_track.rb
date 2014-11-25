@@ -84,12 +84,16 @@ class MdlGradeTrack < Eventable
   end
 
   def status
+    gtot = Grade.new(total)
+    return :info if gtot.blank?
+    gtag = Grade.new(tag)
+    gmag = Grade.new(mag)
     begin
-      unless tag.blank?
-        return :sucess if Grade.new(total) >= Grade.new(tag)
+      unless gtag.blank?
+        return :sucess if gtot >= gtag
       end
-      unless mag.blank?
-        return :current if Grade.new(total) >= Grade.new(mag)
+      unless gmag.blank?
+        return :current if gtot >= gmag
       end
     rescue ArgumentError
       return :danger

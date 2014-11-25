@@ -1,6 +1,6 @@
 class Grade
 
-  SCHEMES = {:btec =>  [:refer,
+  SCHEMES = {:pmd =>   [:refer,
                         :pass,
                         :merit,
                         :distinction],
@@ -11,17 +11,21 @@ class Grade
                         :d,
                         :e,
                         :f,
-                        :g],
-           :percent => [0..100]
+                        :g]
           }
-  
-  include Comparable  
 
-  attr_accessor :grade
-  
+  include Comparable
+
+  attr_accessor :grade, :scheme
+
   def initialize(grade)
-    return nil if grade.nil?
-    @grade = grade.downcase.to_sym
+    if grade.kind_of? Integer
+      @grade = grade
+      @scheme = :number
+    elsif grade.kind_of? String
+      @grade = grade.downcase.to_sym
+      @scheme = SCHEMES.detect{|k,v| v.include? @grade}.try :first
+    end
   end
 
   def <=>(other)
@@ -32,11 +36,11 @@ class Grade
   end
 
   def to_s
-    grade.to_s.titlecase
+    @grade.to_s.titlecase
   end
 
-  def scheme
-    SCHEMES.detect{|k,v| v.include? grade}.try :first
-  end
+  def blank?; @grade.blank? end
+  def nil?; @grade.nil? end
 
 end
+
