@@ -1,19 +1,20 @@
-.panel.panel-default
+.panel.panel-default.namebox
   .panel-body
     .row
-      = image_tag person_url(topic.mis_id, :format => :jpg), :id => "person-photo", :class => "img-responsive img-circle col-xs-6"
-      %h4= topic.name
-      %h4
-        %small= topic.mis_id
-      %h5.flags
-        - if @user.staff? and !topic.note.blank? and @on_home_page
-          = link_to "#note-modal", {"data-toggle" => "modal", :title => "Note on student records system"} do
-            %i.text-warning.fa.fa.fa-flag
-        - if @user.staff? and !topic.contact_allowed
-          %i.text-danger.fa.fa-exclamation-triangle{:title => "Do not contact this person!"}
-        - if topic.staff?
-          %i.text-success.fa.fa-mortar-board{:title => "Staff Member"}
-      - if topic.kind_of? PersonCourse
-        .label{:class => "label-#{topic.cl_status}"}= topic.mis_status
-        - unless topic.tutorgroup.blank?
-          %small= topic.tutorgroup
+      = image_tag person_url(topic.mis_id, :format => :jpg), :id => "person-photo", :class => "img-responsive img-circle col-xs-5"
+      .col-xs-7
+        %h4= topic.name
+        %h4
+          %small= topic.mis_id
+        %h5.flags
+          - if topic.kind_of? PersonCourse
+            .label{:class => "label-#{topic.cl_status}"}= topic.mis_status
+            - unless topic.tutorgroup.blank?
+              %small= topic.tutorgroup
+          - if @user.staff? and !topic.note.blank? and @on_home_page
+            = link_to "#note-modal", {"data-toggle" => "modal", :title => "Note on student records system"} do
+              %i.text-warning.fa.fa.fa-flag
+          - if @user.staff? and !topic.contact_allowed
+            %i.text-danger.fa.fa-exclamation-triangle{:title => "Do not contact this person!"}
+          - if topic.staff?
+            %i.text-success.fa.fa-mortar-board{:title => "Staff Member"}
