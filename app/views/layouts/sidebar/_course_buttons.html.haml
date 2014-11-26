@@ -1,0 +1,13 @@
+.btn-group.btn-group-justified.panel
+  - if @user.my_courses.try "include?", @topic.id
+    = link_to add_course_url(@topic), :class => "btn btn-default active", :title => "Remove from My Courses", :method => :post do
+      %i.fa.fa-fw.fa-minus
+      My courses
+  - else
+    = link_to add_course_url(@topic), :class => "btn btn-default", :title => "Add to My Courses", :method => :post do
+      %i.fa.fa-fw.fa-plus
+      My courses
+  = link_to(Settings.ebs_course_base_url + @topic.mis_id.to_s, :class => "btn btn-default") do
+    %i.fa.fa-fw{:class => Settings.ebs_link_icon}
+    = Settings.ebs_link_name
+

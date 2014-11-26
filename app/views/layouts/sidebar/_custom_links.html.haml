@@ -1,3 +1,23 @@
+- if @user.staff?
+  .panel.panel-default
+    .panel-heading
+      %h4.panel-title 
+        %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#my-courses-block"}
+          %i.fa.fa-fw.fa-bookmark
+          My Courses
+    #my-courses-block.panel-collapse.collase
+      .panel-body
+        - if @user.my_courses.try "any?"
+          %ul.fa-ul
+            - @user.my_courses.map{|c| Course.find(c)}.each do |course|
+              %li
+                = link_to course do
+                  %i.fa.fa-li.fa-link
+                  = course.name
+        - else
+          Woop
+
+          
 - if @sidebar_links
   - tmpid = "custom_links_1"
   - @sidebar_links.each do |menu|

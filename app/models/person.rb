@@ -126,6 +126,10 @@ class Person < ActiveRecord::Base
     mis_id
   end
 
+  def code
+    mis_id
+  end
+
   def photo_uri
     if Settings.lorem_pictures.blank?
       if photo

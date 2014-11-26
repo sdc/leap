@@ -34,7 +34,7 @@ class Course < ActiveRecord::Base
   end
 
   def name
-    title or code
+    title.try(:titlecase) or code
   end
 
   def to_param
