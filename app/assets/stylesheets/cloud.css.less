@@ -120,17 +120,21 @@ body {
 
 a.person {
   color: inherit;
-  .namebox .panel-body {
-    padding: 5px;
-  }
   &:hover {
     text-decoration:none;
     .panel-body {
       background: #eff;
     }
   }
+}
+.namebox .panel-body {
+  overflow: hidden;
+  padding: 5px;
   h4,h5 {
     margin: 0;
+  }
+  .person-info {
+    padding-left: 0;
   }
 }
 
