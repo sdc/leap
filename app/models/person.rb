@@ -55,6 +55,11 @@ class Person < ActiveRecord::Base
   serialize :address
   serialize :my_courses
 
+  def self.me
+    # Convinience method to get Kev at SDC
+    Person.get(10083332)
+  end
+
   def age
     age_on(Date.today)
   end
