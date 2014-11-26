@@ -30,7 +30,7 @@ class PeopleController < ApplicationController
                    where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)
           @tiles += @topic.events.where(:eventable_type => "Note").limit(8)
           @tiles += @topic.events.where(:eventable_type => "MdlBadge").limit(8)
-          @tiles = @tiles.sort_by(&:event_date).map(&:to_tile)
+          @tiles = @tiles.sort_by(&:event_date).reverse.map(&:to_tile)
           @tiles.unshift(SimplePoll.where(:id => Settings.current_simple_poll).first.to_tile) unless Settings.current_simple_poll.blank?
           ppdc = Settings.moodle_badge_block_courses.try(:split,",")
           @tiles.unshift(@topic.mdl_badges.where(:mdl_course_id => ppdc).last.to_course_tile) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
