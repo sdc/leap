@@ -1,10 +1,11 @@
 .col-xs-12
   %h2= poll.question
   - if myans = @topic.simple_poll_answers.where(:simple_poll_id => poll.id).first
-    - poll.results.each do |ans|
-      .row{:class => myans.answer == ans.first ? "current" : nil}
-        .col-xs-2= ans.last
-        .col-xs-3= ans.first
+    %table.table.table-condensed{:style => "font-size:75%"}
+      - poll.results.each do |ans|
+        %tr{:class => myans.answer == ans.first ? "text-danger" : nil}
+          %td.text-right= ans.last
+          %td= ans.first
   - else
     = create_event_form SimplePollAnswer do |f|
       = hidden_field_tag "simple_poll_answer[simple_poll_id]", poll.id
