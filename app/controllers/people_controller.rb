@@ -19,12 +19,12 @@ class PeopleController < ApplicationController
   skip_before_filter :set_topic
   before_filter      :person_set_topic, :except => [:search]
   before_filter      :staff_only, :only => [:search,:select]
-  before_filter      :parse_sidebar_links, :only => [:show]
   layout :set_layout
 
   def show
     respond_to do |format|
       format.html do
+        @sidebar_links = parse_sidebar_links
         if Settings.home_page == "new"
           @tiles = @topic.events.where(:eventable_type => "Target",:transition => :overdue).
                    where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)
@@ -152,9 +152,9 @@ class PeopleController < ApplicationController
   end
 
   def parse_sidebar_links
-    @sidebar_links = Settings.clidebar_links.split(/^\|/).drop(1)
-                     .map{|menu| menu.split("\n").reject(&:blank?).map(&:chomp)}
-                     .map{|menu| menu.first.split("|") + [menu.drop(1).map{|item| item.split("|")}]}
+    Settings.clidebar_links.split(/^\|/).drop(1)
+            .map{|menu| menu.split("\n").reject(&:blank?).map(&:chomp)}
+            .map{|menu| menu.first.split("|") + [menu.drop(1).map{|item| item.split("|")}]}
   end
 
 end

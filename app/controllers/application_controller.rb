@@ -92,13 +92,6 @@ class ApplicationController < ActionController::Base
     else
       @topic = @user
     end
-    @courses = if @topic.kind_of? Person
-      @topic.person_courses.
-             select{|pc| pc.status == "current" and pc.course}.
-             map{|pc| "course_#{pc.course.code.downcase}"}
-    else
-      []
-    end
   end
 
   def get_views
