@@ -33,9 +33,9 @@
             = render :partial => "#{@topic.class.name.downcase.pluralize}/namebox", :object => @topic, :as => :topic
             - if @topic.kind_of? Person
               = render :partial => "layouts/sidebar/person_buttons"
+              = render :partial => "people/new_note"
             - elsif @topic.kind_of? Course
               = render :partial => "layouts/sidebar/course_buttons"
-            = render :partial => "people/new_note"
             #sidebar-accordion.panel-group
               = render "layouts/sidebar/personal_details" if @topic.person? unless @topic.staff?
               = render "layouts/sidebar/timeline_links"

@@ -5,7 +5,7 @@
         %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#my-courses-block"}
           %i.fa.fa-fw.fa-bookmark
           My Courses
-    #my-courses-block.panel-collapse.collase
+    #my-courses-block.panel-collapse.collapse
       .panel-body
         - if @user.my_courses.try "any?"
           %ul.fa-ul
