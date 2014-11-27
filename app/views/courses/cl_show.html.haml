@@ -47,7 +47,7 @@
             %th.visible-lg{:class => "#{ct}_hide"} MAG
             %th.visible-lg{:class => "#{ct}_hide"} TAG
             %th Grade
-          %th.bl{:title => "Review Completion"} Rev
+          %th.bl{:title => @window || "No open review window"} Rev
           %th{:title => "Positive Intervention"} PI
       %tbody
         - @person_courses.each do |pc|
@@ -91,8 +91,8 @@
                   %small.text-muted No enrolment
                 %td.bl.text-center.hidden-lg{:colspan => 2}
                   %small.text-muted No enrolment
-            - if Settings.current_review_window
-              - if cr = pc.person.reviews.where(:window => Settings.current_review_window).first
+            - if @window
+              - if cr = pc.person.reviews.where(:window => @window).first
                 %td.bl.text-center{:class => cr.published ? "success"   : "warning",
                                    :title => cr.published ? "Published" : "Started"}
                   = link_to person_event_url(cr.person, cr.events.creation.first) do
@@ -113,6 +113,13 @@
               - if ints != 0
                 = link_to(person_view_url(pc.person,"intervention")) do
                   .label.label-danger= ints
+      %tfoot
+        %tr
+          %td{:colspan => 15} 
+          %td.text-center
+            - if @rpub 
+              = link_to course_view_url(@topic,View.for_user.find_by_name("reviews"), :status => "complete", :title => @window, :format => "pdf"), :class => "btn btn-default btn-xs", :title => "Print all published reviews" do
+                %i.fa.fa-print
     %br
     .pull-right
       .btn-group.dropup

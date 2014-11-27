@@ -79,7 +79,7 @@ class MdlGradeTrack < Eventable
               :bg           => bg,
               :icon         => "fa-bar-chart-o",
               :partial_path => "tiles/grade_track",
-              :link         => Settings.moodle_host + Settings.moodle_path + "/grade/report/user/index.php?id=" + mdl_id.to_s,
+              :link         => Settings.moodle_host + Settings.moodle_path + "/grade/report/grader/index.php?id=" + mdl_id.to_s,
               :object       => self})
   end
 
