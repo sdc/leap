@@ -74,7 +74,7 @@ class Person < ActiveRecord::Base
 
   def attendance(course_type = "overall")
     course_type = course_type.to_s
-    Rails.cache.fetch("#{mis_id}_#{course_type}_attendance") do
+    Rails.cache.fetch("#{mis_id}_#{course_type}_attendance", :expires_in => 8.hours) do
       attendances.where(:course_type => course_type).last
     end
   end
@@ -150,7 +150,7 @@ class Person < ActiveRecord::Base
   end
 
   def lat_score
-    Rails.cache.fetch("#{mis_id}_l3va_score") do
+    Rails.cache.fetch("#{mis_id}_l3va_score", :expires_in => 1.hour) do
       if qualifications.detect{|q| q.lat_score.kind_of? Fixnum}
         (qualifications.select{|q| q.lat_score.kind_of? Fixnum}.sum{|q| q.lat_score} / 
          qualifications.select{|q| q.lat_score.kind_of? Fixnum}.count.to_f).round(2)
