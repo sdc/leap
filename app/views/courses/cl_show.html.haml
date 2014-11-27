@@ -107,7 +107,7 @@
                   = link_to(person_view_url(pc.person,View.where(:name => "reviews").for_user.first)) do
                     %i.fa.fa-star-o
             - else
-              %td{:title => "No Review Open"}
+              %td.bl{:title => "No Review Open"}
             %td
               - ints = pc.person.events.where(:eventable_type => "Intervention",:transition => :create).this_year.count
               - if ints != 0
