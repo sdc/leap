@@ -74,7 +74,9 @@ class Person < ActiveRecord::Base
 
   def attendance(course_type = "overall")
     course_type = course_type.to_s
-    attendances.where(:course_type => course_type).last
+    Rails.cache.fetch("#{mis_id}_#{course_type}_attendance") do
+      attendances.where(:course_type => course_type).last
+    end
   end
 
   def Person.get(mis_id,fresh=false)
@@ -148,9 +150,14 @@ class Person < ActiveRecord::Base
   end
 
   def lat_score
-    return false unless qualifications.detect{|q| q.lat_score.kind_of? Fixnum}
-    (qualifications.select{|q| q.lat_score.kind_of? Fixnum}.sum{|q| q.lat_score} / 
-     qualifications.select{|q| q.lat_score.kind_of? Fixnum}.count.to_f).round(2)
+    Rails.cache.fetch("#{mis_id}_l3va_score") do
+      if qualifications.detect{|q| q.lat_score.kind_of? Fixnum}
+        (qualifications.select{|q| q.lat_score.kind_of? Fixnum}.sum{|q| q.lat_score} / 
+         qualifications.select{|q| q.lat_score.kind_of? Fixnum}.count.to_f).round(2)
+      else
+        false
+      end
+    end
   end
 
   def l3va; lat_score end

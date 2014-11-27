@@ -18,6 +18,8 @@ gem 'icalendar'
 
 gem 'whenever', :require => false
 
+gem 'memcache-client'
+
 platforms :ruby do
   gem 'mysql2'
   gem 'therubyracer'
