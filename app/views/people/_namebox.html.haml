@@ -11,7 +11,7 @@
             .label{:class => "label-#{topic.cl_status}"}= topic.mis_status
             - unless topic.tutorgroup.blank?
               %small= topic.tutorgroup
-          - if @user.staff? and !topic.note.blank? and @on_home_page
+          - if @user.staff? and !topic.note.blank?
             = link_to "#note-modal", {"data-toggle" => "modal", :title => "Note on student records system"} do
               %i.text-warning.fa.fa.fa-flag
           - if @user.staff? and !topic.contact_allowed
