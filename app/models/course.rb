@@ -29,6 +29,10 @@ class Course < ActiveRecord::Base
     (fresh ? import(mis_id, :people => true) : find_by_mis_id(mis_id)) or import(mis_id, :people => true)
   end
 
+  def other_years
+    Course.where(:code => code).order(:year)
+  end
+
   def app_siblings 
     vague_title.blank? ? [self] : Course.app_siblings_for(vague_title)
   end
