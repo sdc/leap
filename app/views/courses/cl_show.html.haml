@@ -156,11 +156,13 @@
                   - total = pc.person.mdl_grade_tracks.send(ct).last.try(:completion_total)
                   %td.bl{:title => pc.person.mdl_grade_tracks.send(ct).last.try(:name)}
                     .progress.text-center
-                      - unless total == 0
-                        .progress-bar{:style => "width:#{pc.person.mdl_grade_tracks.send(ct).last.try(:completion_percent)}%"}
-                          = total
-                          out of 
-                          = out_of
+                      .progress-bar{:style => "width:#{pc.person.mdl_grade_tracks.send(ct).last.try(:completion_percent)}%"}
+                        = total
+                      .text-muted 
+                        - if total == 0
+                          0
+                        out of 
+                        = out_of
                 - else
                   %td.text-center.danger
                     %i.fa.fa-frown-o
