@@ -33,8 +33,9 @@ class MdlGradeTrack < Eventable
     end
   end
 
-  def self.import_for(person)
+  def self.import_for(person,delete = true)
     person = person.kind_of?(Person) ? person : Person.get(person) 
+    person.mdl_grade_tracks.destroy_all
     begin
       tracks = ActiveResource::Connection.new(Settings.moodle_host).
                    get("#{Settings.moodle_path}/webservice/rest/server.php?" +
