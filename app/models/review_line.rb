@@ -39,7 +39,7 @@ class ReviewLine < Eventable
   end
 
   def staff_only?
-    review ? review.staff_only? : true
+    review ? review.staff_only? : false
   end
 
   def tile_icon
