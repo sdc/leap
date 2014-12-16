@@ -7,6 +7,9 @@
     .progress
       .progress-bar.progress-bar-striped{:style => "width:#{grade_track.completion_percent}%"}
         = grade_track.completion_total
+      .text-muted
+        - if grade_track.completion_total == 0
+          0
         out of
         = grade_track.completion_out_of
 
