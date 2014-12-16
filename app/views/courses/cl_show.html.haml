@@ -88,9 +88,9 @@
                     %i.fa.fa-meh-o
               - else
                 %td.bl.text-center.visible-lg{:colspan => 4}
-                  %small.text-muted No enrolment
+                  %small.text-muted Enhanced PPD
                 %td.bl.text-center.hidden-lg{:colspan => 2}
-                  %small.text-muted No enrolment
+                  %small.text-muted Enhanced PPD
             - if @window
               - if cr = pc.person.reviews.where(:window => @window).first
                 %td.bl.text-center{:class => cr.published ? "success"   : "warning",
