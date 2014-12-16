@@ -77,7 +77,7 @@ $(document).ready ->
     if ($(window).scrollTop() == $(document).height() - $(window).height())
       $('#more_events').click() unless $('#more_events').first().css('display') == "none"
 
-  $('#expand-mini').on 'click',  -> 
+  $('.expand-mini').on 'click',  -> 
     ul = $(this).closest("ul")
     ul.find('.body.short').hide()
     ul.find('.body.long').show()

@@ -7,7 +7,7 @@
       = event.body
       %h3= event.created_by_text :event => false
     %li.controls
-      %i#expand-mini.icon-chevron-right.clicky
+      %i.expand-mini.icon-chevron-right.clicky
       - if event.is_deletable?
         = link_to event_url(event), :method => :delete, :class => "delete-mini hide", 
                                     :confirm => "Delete this note?" do
