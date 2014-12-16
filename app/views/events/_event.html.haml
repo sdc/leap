@@ -36,8 +36,8 @@
       - event.children.each do |child|
         .row
           .span10= render :partial => "events/mini", :object => child, :as => "event"
-      .row
-        .extended.span10{:style => "display:none"}
+    .row
+      .extended.span10{:style => "display:none"}
 - rescue Exception => e
   .donthide
     .row
