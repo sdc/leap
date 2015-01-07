@@ -22,9 +22,9 @@ class CoursesController < ApplicationController
 
   def show
     @person_courses = if @tutorgroup
-      @topic.person_courses.where(:tutorgroup => @tutorgroup).sort_by{|pc| pc.person.name(:surname_first => true)}
+      @topic.person_courses.includes(:person => "mdl_grade_tracks").where(:tutorgroup => @tutorgroup).sort_by{|pc| pc.person.name(:surname_first => true)}
     else
-      @topic.person_courses.sort_by{|pc| pc.person.name(:surname_first => true)}
+      @topic.person_courses.includes(:person => "mdl_grade_tracks").sort_by{|pc| pc.person.name(:surname_first => true)}
     end
     respond_to do |format|
       format.html do
