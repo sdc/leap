@@ -59,6 +59,10 @@ class Attendance < Eventable
     end
   end
 
+  def to_tile
+    Tile.new(tile_attrs)
+  end
+
   def tile_attrs
     bg = if att_year < Settings.attendance_low_score.to_i
       "a66"
@@ -69,9 +73,10 @@ class Attendance < Eventable
     end
     {:icon         => "fa-check-circle",
      :partial_path => "tiles/attendance",
-     :subtitle     => nil,
+     :subtitle     => course_type.titlecase,
      :bg           => bg,
-     :title        => "Attendance"
+     :title        => "Attendance", 
+     :object       => self
     }
   end
 
