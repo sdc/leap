@@ -41,6 +41,7 @@ class PeopleController < ApplicationController
           #end)
           @tiles.unshift(tracks.map{|x| x.to_tile})
           attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).last}.reject{|x| x.nil?}
+          attendances.select!{|x| x.course_type != "overall"} if attendances.length == 2
           @tiles.unshift(attendances.map{|x| x.to_tile})
           #if @topic.attendances.where(:course_type => "overall").any?
           #  @tiles.unshift(@topic.attendances.where(:course_type => "overall").last.events.first.try :to_tile)
