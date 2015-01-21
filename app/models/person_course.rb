@@ -18,9 +18,8 @@ class PersonCourse < Eventable
 
   include MisPersonCourse
 
-  delegate :code, :vague_title, :app_siblings, :to => :course
+  delegate :code, :vague_title, :entry_reqs, :to => :course
   delegate :photo_uri, :name, :mis_id, :note, :contact_allowed, :staff?, :to => :person
-  has_many :entry_reqs, :through => :course
 
   belongs_to :course
   belongs_to :person

@@ -8,16 +8,13 @@ class EntryReq < ActiveRecord::Base
   def self.import(file)
     old_logger_level, logger.level = logger.level, Logger::ERROR if logger
     CSV.foreach(file) do |row|
-      if course=Course.find_by_year_and_code("14/15",row[0])
-        ["Numeracy","Literacy","General","Specialist","Additional"].each_with_index do |r,i|
-          next if row[i+1].blank?
-          next if course.entry_reqs.where(:category => r).first
-          course.entry_reqs.create(:category => r,:body => row[i+1]) unless row[i+1] == "Please select"
-	  puts "Added #{r} to #{course.name}"
-        end
-      else 
-        puts "*" * 40
-        puts row[0] + " - not found!"
+      app_title = row[0]
+      course_title = row[1]
+      course_qual = row[2]
+      ["Maths","English","General","Specialist","Specialist 2"].each_with_index do |r,i|
+        next if row[i+3].blank?
+        er = EntryReq.find_or_create_by_app_title_and_course_title_and_course_qual_and_category_and_live(app_title,course_title,course_qual,r,true)
+	      puts "Added #{r} to #{course.name}"
       end
     end
   ensure

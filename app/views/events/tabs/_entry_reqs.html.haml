@@ -1,9 +1,9 @@
-- person_course.app_siblings.each do |app|
+- person_course.entry_reqs.each do |course,ers|
   .span10
-    - unless app.entry_reqs.empty?
-      %h4= "#{app.title} (#{app.code})"
+    - if ers.detect{|er| er.live or EntryReqMet.find_by_entry_req_id_and_person_id(er.id,person_course.person_id)}
+      %h4= "#{ers.first.course_qual} #{ers.first.course_title}"
       %table.table
-        = render app.entry_reqs
+        = render ers.select{|er| er.live or EntryReqMet.find_by_entry_req_id_and_person_id(er.id,person_course.person_id)}
 
 :coffeescript
   $('.er-met').on 'click', (e) ->

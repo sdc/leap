@@ -20,8 +20,6 @@ class Course < ActiveRecord::Base
 
   has_many :person_courses, :conditions => "enrolment_date is not null"
   has_many :people, :through => :person_courses
-  has_many :entry_reqs
-  scope :app_siblings_for, lambda { |at| where(:vague_title => at).order(:title) }
 
   scoped_search :on => [:title,:code]
 
@@ -31,10 +29,6 @@ class Course < ActiveRecord::Base
 
   def other_years
     Course.where(:code => code).order(:year)
-  end
-
-  def app_siblings 
-    vague_title.blank? ? [self] : Course.app_siblings_for(vague_title)
   end
 
   def name
@@ -63,6 +57,11 @@ class Course < ActiveRecord::Base
 
   def tutorgroups
     groups = person_courses.group("tutorgroup").map{|pc| pc.tutorgroup}.reject{|g| g.blank?}
+  end
+
+  def entry_reqs
+    return [] if vague_title.blank?
+    EntryReq.where(:app_title => vague_title).group_by{|er| [er.app_title,er.course_title,er.course_qual]}
   end
 
   def person?; false end
