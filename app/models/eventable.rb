@@ -78,4 +78,8 @@ class Eventable < ActiveRecord::Base
    events.last.to_tile
  end
 
+ def is_deleted?
+   respond_to? :deleted and deleted
+ end
+
 end

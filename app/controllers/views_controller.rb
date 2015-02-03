@@ -32,6 +32,7 @@ class ViewsController < ApplicationController
       @events = @events.select{|e| e.title.to_s == params[:title]} if params[:title]
       @events.detect{|e| e.past? }.try("first_in_past=",true) unless @events.first.past? if @events.try(:first)
       @events.reject!{|e| e.staff_only?} unless @user.staff?
+      @events.reject!{|e| e.is_deleted?}
       respond_with(@events) do |f|
         f.js {render @events}
       end

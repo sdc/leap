@@ -16,7 +16,7 @@
 
 class Absence < Eventable
 
-  attr_accessible :lessons_missed, :category, :body, :usage_code, :contact_category, :created_at
+  attr_accessible :lessons_missed, :category, :body, :usage_code, :contact_category, :created_at, :deleted
 
   after_create {|ab| ab.events.create!(:event_date => created_at, :transition => :create)}
 
