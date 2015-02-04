@@ -64,12 +64,16 @@ class Attendance < Eventable
   end
 
   def tile_attrs
-    bg = if att_year < Settings.attendance_low_score.to_i
-      "a66"
-    elsif att_year < Settings.attendance_high_score.to_i
-      "da6"
-    else
-      "6a6"
+    begin
+      bg = if att_year < Settings.attendance_low_score.to_i
+        "a66"
+      elsif att_year < Settings.attendance_high_score.to_i
+        "da6"
+      else
+        "6a6"
+      end
+    rescue
+      bg = "6a6"
     end
     {:icon         => "fa-check-circle",
      :partial_path => "tiles/attendance",
