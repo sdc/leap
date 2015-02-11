@@ -73,7 +73,7 @@ module EventsHelper
   end
 
   def event_format(text)
-    auto_link(simple_format(strip_tags(text)))
+    simple_format(strip_tags(text))
   end
 
   def lesc(text)
