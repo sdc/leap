@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Disciplinary < Eventable
-
   attr_accessible :level, :body
 
   validates :body, presence: true
@@ -26,5 +25,4 @@ class Disciplinary < Eventable
   def title
     Hash[*Settings.disciplinary_levels.split(",")][level.to_s]
   end
-
 end

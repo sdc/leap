@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::Address < Ebs::Model
-
   self.table_name = "addresses"
 
   default_scope -> { where(owner_type: "P") }
@@ -26,5 +25,4 @@ class Ebs::Address < Ebs::Model
   def postcode
     (uk_post_code_pt1 || "") + " " + (uk_post_code_pt2 || "")
   end
-
 end

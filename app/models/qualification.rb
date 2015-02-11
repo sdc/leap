@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Qualification < Eventable
-
   include MisQualification
 
   after_create  {|qual| qual.events.create!(event_date: created_at, transition: qual.predicted? ? :create : :complete)}
@@ -97,5 +96,4 @@ class Qualification < Eventable
   def is_deletable? 
     Person.user.admin? or (Time.now - Settings.delete_delay.to_i < eventable.updated_at and Person.user == eventable.updated_by)
   end
-
 end

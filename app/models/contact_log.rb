@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class ContactLog < Eventable
-
   attr_accessible :body
 
   after_create {|contact_log| contact_log.events.create!(event_date: created_at, transition: :create)}
@@ -27,5 +26,4 @@ class ContactLog < Eventable
   def icon_url
     created_by.photo_uri
   end
-
 end

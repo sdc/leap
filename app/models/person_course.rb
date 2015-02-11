@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class PersonCourse < Eventable
-
   include MisPersonCourse
 
   delegate :code, :vague_title, :entry_reqs, to: :course
@@ -97,5 +96,4 @@ class PersonCourse < Eventable
   def tile_attrs
     {icon: "fa-graduation-cap"}
   end
-
 end

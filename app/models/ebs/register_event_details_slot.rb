@@ -48,5 +48,4 @@ class Ebs::RegisterEventDetailsSlot < Ebs::Model
     else "unknown"
     end
   end
-
 end

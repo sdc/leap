@@ -15,8 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class TtActivity < Eventable
-
-
   REPEAT_TYPES = ["No repeat","Weekly","Monthly"]
 
   TIME_SELECT = (0..600).step(15).map{|x| ["#{x.divmod(60).join(" hours ")} mins",x*60]}.drop 1
@@ -52,5 +50,4 @@ class TtActivity < Eventable
   def timetable_length
     self[:timetable_length]
   end
-
 end

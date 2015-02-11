@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Eventable < ActiveRecord::Base
-
   self.abstract_class = true
 
   belongs_to :person
@@ -81,5 +80,4 @@ class Eventable < ActiveRecord::Base
  def is_deleted?
    respond_to? :deleted and deleted
  end
-
 end

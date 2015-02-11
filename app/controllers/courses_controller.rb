@@ -87,5 +87,4 @@ class CoursesController < ApplicationController
     params[:course_id] = params[:id]
     set_topic
   end
-
 end

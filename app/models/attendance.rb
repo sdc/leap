@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Attendance < Eventable
-
   default_scope order: 'week_beginning'
 
   after_create do |attendance|
@@ -83,5 +82,4 @@ class Attendance < Eventable
      object: self
     }
   end
-
 end

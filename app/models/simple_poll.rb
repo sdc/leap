@@ -15,5 +15,4 @@ class SimplePoll < ActiveRecord::Base
               object: self
             })
   end
-
 end

@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Course < ActiveRecord::Base
-
   include MisCourse
 
   attr_accessible :title, :code, :year, :mis_id, :vague_title
@@ -68,5 +67,4 @@ class Course < ActiveRecord::Base
 
   def person?; false end
   def course?; true end
-
 end

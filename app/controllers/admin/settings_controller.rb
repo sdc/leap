@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::SettingsController < ApplicationController
-
   skip_before_filter :maintenance_mode
   before_filter :admin_page
 
@@ -37,5 +36,4 @@ class Admin::SettingsController < ApplicationController
     flash[:success] = "Admin settings successfully updated!"
     redirect_to admin_settings_url
   end
-
 end

@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class ViewsController < ApplicationController
-
   respond_to :html, :xml, :js, :pdf
 
   before_filter :set_scope
@@ -63,5 +62,4 @@ class ViewsController < ApplicationController
       @topic.events
     end
   end
-
 end

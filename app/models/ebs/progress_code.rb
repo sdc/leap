@@ -15,7 +15,5 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::ProgressCode < Ebs::Model
-
   self.primary_key = "type_name"
-
 end

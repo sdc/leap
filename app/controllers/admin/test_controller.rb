@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::TestController < ApplicationController
-
   skip_before_filter :set_user  , except: [:stats]
   before_filter      :admin_page, only: [:stats]
 
@@ -31,5 +30,4 @@ class Admin::TestController < ApplicationController
       redirect_to :back, notice: "That person doesn't exist!"
     end
   end
-
 end

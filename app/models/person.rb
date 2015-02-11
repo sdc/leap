@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Person < ActiveRecord::Base
-
   include MisPerson
 
   scoped_search on: [:forename, :surname, :mis_id]
@@ -177,5 +176,4 @@ class Person < ActiveRecord::Base
 
   def person?; true end
   def course?; false end
-
 end

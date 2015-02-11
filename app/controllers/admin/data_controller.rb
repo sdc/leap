@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::DataController < ApplicationController
-
   respond_to :html, :json, :xml
   before_filter :admin_page
   layout :cloud
@@ -24,5 +23,4 @@ class Admin::DataController < ApplicationController
     MdlGradeTrack.import_for(params[:person_id])
     redirect_to :back
   end
-
 end

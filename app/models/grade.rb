@@ -1,5 +1,4 @@
 class Grade
-
   SCHEMES = {pmd: [:refer,
                         :pass,
                         :merit,
@@ -41,6 +40,5 @@ class Grade
 
   def blank?; @grade.blank? end
   def nil?; @grade.nil? end
-
 end
 

@@ -101,5 +101,4 @@ class MdlGradeTrack < Eventable
     end
     return :danger
   end
-
 end

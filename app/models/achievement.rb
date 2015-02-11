@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Achievement < Eventable
-
   attr_accessible :body, :year
 
   after_create {|q| q.events.create!(event_date: created_at, transition: :create)}
@@ -25,5 +24,4 @@ class Achievement < Eventable
   def title
     ["Achievement",year.year.to_s]
   end
-
 end

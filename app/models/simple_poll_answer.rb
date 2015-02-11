@@ -1,5 +1,4 @@
 class SimplePollAnswer < Eventable
-
   attr_accessible :answer, :created_by, :person_id, :simple_poll_id
 
   belongs_to :person
@@ -15,5 +14,4 @@ class SimplePollAnswer < Eventable
   def extra_panes
     [["Results","events/tabs/simple_poll_answer"]]
   end
-
 end

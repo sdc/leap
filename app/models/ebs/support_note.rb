@@ -15,10 +15,8 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::SupportNote < Ebs::Model
-
   self.table_name = "sdc_ilp_support_notes"
   self.primary_key = :id
 
   belongs_to :person
-
 end

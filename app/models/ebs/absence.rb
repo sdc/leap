@@ -15,11 +15,9 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::Absence < Ebs::Model
-
   self.primary_key = :id
 
   self.table_name = "sdc_ilp_absences"
 
   belongs_to :person
-
 end

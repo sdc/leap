@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::RegisterEventSlot < Ebs::Model
-
   self.table_name = "register_event_slots"
   self.primary_key = :id
 
@@ -33,5 +32,4 @@ class Ebs::RegisterEventSlot < Ebs::Model
   def learners
     register_event_details_slots.where(object_type: "L").map{|d| d.the_object}.reject{|x| x.nil?}
   end
-
 end

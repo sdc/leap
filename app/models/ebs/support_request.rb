@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::SupportRequest < Ebs::Model
-
   self.table_name = "sdc_ilp_support_requests"
   self.primary_key = :id
 
@@ -34,6 +33,4 @@ class Ebs::SupportRequest < Ebs::Model
        []
      end
    end
-
-
 end

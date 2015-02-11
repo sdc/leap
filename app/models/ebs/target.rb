@@ -15,10 +15,8 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::Target < Ebs::Model
-
   self.table_name = "sdc_ilp_targets"
   self.primary_key = :id
 
   belongs_to :person
-
 end

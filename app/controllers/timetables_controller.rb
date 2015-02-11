@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class TimetablesController < ApplicationController
-
   before_filter :set_date
   layout :set_layout
   
@@ -55,6 +54,4 @@ class TimetablesController < ApplicationController
     return "application" unless @topic.kind_of?(Person)
     Settings.home_page == "new" ? "cloud" : "application"
   end
-
-
 end

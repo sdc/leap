@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::PeopleUnit < Ebs::Model
-
   belongs_to :person, foreign_key: "person_code"
   belongs_to :unit_instance_occurrence , foreign_key: "uio_id"
   has_one    :people_unit_special, foreign_key: "people_units_id"
@@ -31,5 +30,4 @@ class Ebs::PeopleUnit < Ebs::Model
   def tutorgroup
     tutorgroups.last.try :name
   end
-
 end

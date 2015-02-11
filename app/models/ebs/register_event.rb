@@ -15,8 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::RegisterEvent < Ebs::Model
-
   self.primary_key = :id
   has_many :register_event_details_slots
-
 end

@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::Room < Ebs::Model
-
   self.primary_key = :id
   has_many "register_event_details",
            conditions: "object_type = 'R'",
@@ -23,5 +22,4 @@ class Ebs::Room < Ebs::Model
   has_many "register_event_details_slots",
            conditions: "object_type = 'R'",
            foreign_key: "object_id"
-
 end

@@ -1,5 +1,4 @@
 class Intervention < Eventable
-
   attr_accessible :disc_text, :incident_date, :pi_type, :referral, :referral_category, :referral_text, :workshops
 
   after_create {|i| i.events.create!(event_date: created_at, transition: :create)}
@@ -49,5 +48,4 @@ class Intervention < Eventable
   def body
     disc_text if status == :incomplete
   end
-
 end

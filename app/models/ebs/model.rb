@@ -15,9 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::Model < ActiveRecord::Base
-
   ActiveRecord::Base.default_timezone = :local
   self.abstract_class = true
   establish_connection :ebs
-
 end

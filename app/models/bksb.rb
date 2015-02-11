@@ -1,5 +1,4 @@
 class BKSB < ActiveResource::Base
-
 # Look, this happens in an odd way. I rewrite element_path so it points to all the 
 # results for a person. You pass in the person code as the id. So, yes, Rails would
 # expect a single result but actually gets a load of results in the format BKSB
@@ -56,5 +55,4 @@ class BKSB < ActiveResource::Base
     end
     return person
   end
-
 end

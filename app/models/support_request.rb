@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class SupportRequest < Eventable
-
   attr_accessible :difficulties, :sessions, :workshop
 
   serialize :sessions
@@ -35,5 +34,4 @@ class SupportRequest < Eventable
     s = sessions.blank? ? [] : sessions
     s << "Workshop" if workshop
   end
-
 end

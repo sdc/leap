@@ -1,5 +1,4 @@
 class EntryReqMet < Eventable
-
   attr_accessible :met, :entry_req_id, :no_but
 
   belongs_to  :entry_req
@@ -19,5 +18,4 @@ class EntryReqMet < Eventable
   def title
     ["Entry Req.", met ? "Met" : "Not Met"]
   end
-
 end

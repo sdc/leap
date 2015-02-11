@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class ProgressionReview < Eventable
-
   attr_accessible :approved, :reason
 
   serialize :reason
@@ -40,5 +39,4 @@ class ProgressionReview < Eventable
   def tile_icon
     "#{approved ? 'fa-ban' : 'fa-check'} on fa-fast-forward"
   end
-
 end

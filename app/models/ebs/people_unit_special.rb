@@ -15,9 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::PeopleUnitSpecial < Ebs::Model
-
   self.table_name = "people_units_special"
   belongs_to :people_unit, foreign_key: "people_units_id"
   self.primary_key = :id
-
 end

@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class PeopleController < ApplicationController
-
   skip_before_filter :set_topic
   before_filter      :person_set_topic, except: [:search]
   before_filter      :staff_only, only: [:search,:select]
@@ -159,5 +158,4 @@ class PeopleController < ApplicationController
             .map{|menu| menu.split("\n").reject(&:blank?).map(&:chomp)}
             .map{|menu| menu.first.split("|") + [menu.drop(1).map{|item| item.split("|")}]}
   end
-
 end

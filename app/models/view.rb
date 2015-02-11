@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class View < ActiveRecord::Base
-
   serialize :transitions
   serialize :events
   serialize :affiliations
@@ -40,5 +39,4 @@ class View < ActiveRecord::Base
   def long_name
     "#{label}: #{affiliations.join ", "}"
   end
-
 end

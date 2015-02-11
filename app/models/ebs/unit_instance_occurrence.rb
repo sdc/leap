@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::UnitInstanceOccurrence < Ebs::Model
-
   self.primary_key = :uio_id
   
   has_many :people_units, foreign_key: "uio_id"
@@ -28,5 +27,4 @@ class Ebs::UnitInstanceOccurrence < Ebs::Model
   def title
     long_description or fes_long_description
   end
-
 end

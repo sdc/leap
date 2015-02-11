@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::Blob < Ebs::Model
-
   self.primary_key = :id
 
   belongs_to :person

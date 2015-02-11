@@ -29,7 +29,6 @@
 #
 
 class Event < ActiveRecord::Base
-
   validates :person_id,      presence: true
   validates :event_date,     presence: true
   validates :eventable_id,   presence: true
@@ -149,5 +148,4 @@ class Event < ActiveRecord::Base
   def cl_status
     "info"
   end
-
 end

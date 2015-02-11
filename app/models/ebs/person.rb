@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::Person < Ebs::Model
-
   self.primary_key = :person_code
 
   scoped_search on: [:forename, :surname, :person_code]
@@ -43,5 +42,4 @@ class Ebs::Person < Ebs::Model
   def address
     Ebs::Address.where(owner_ref: "#{id}").where("end_date IS NULL").last
   end
-
 end

@@ -22,7 +22,6 @@
 # This model is eventable. It creates a single event when it is created.
 
 class Note < Eventable
-
   attr_accessible :body
 
   after_create {|note| note.events.create!(event_date: created_at, transition: :create)}
@@ -33,5 +32,4 @@ class Note < Eventable
     {icon: "fa-pencil-square-o",
      partial_path: "tiles/note"}
   end
-
 end

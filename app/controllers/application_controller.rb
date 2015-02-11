@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class ApplicationController < ActionController::Base
-
   protect_from_forgery
 
   layout proc{ |c| c.request.xhr? ? false : "application" }
@@ -106,5 +105,4 @@ class ApplicationController < ActionController::Base
   def staff_only
     redirect_to "/404.html" unless @affiliation == "staff"
   end
-
 end

@@ -15,11 +15,9 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::PeopleUnitTutorgroup < Ebs::Model
-
   belongs_to :tutorgroup
 
   def people_unit
     Ebs::PeopleUnit.find(people_units_id)
   end
-
 end

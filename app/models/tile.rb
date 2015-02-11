@@ -1,5 +1,4 @@
 class Tile
-
   include ActiveModel::Conversion
 
   attr_accessor :id, :title, :bg, :icon, :is_deletable, :subtitle, :body, :person_id, :partial_path, :object, :link, :modal_title, :modal_body
@@ -23,5 +22,4 @@ class Tile
   def is_deletable?; is_deletable end
 
   def persisted?; false end
-
 end

@@ -15,10 +15,8 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::LearnerAim < Ebs::Model
-
   self.primary_key = :id
 
   belongs_to :person, foreign_key: "person_code"
   belongs_to :unit_instance_occurrence, foreign_key: "uio_id"
-
 end

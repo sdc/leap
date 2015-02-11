@@ -55,5 +55,4 @@ class TimetableEvent
     e.location = rooms.join(", ")
     return e
   end
-
 end

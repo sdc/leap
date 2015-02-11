@@ -15,7 +15,6 @@
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::ViewsController < ApplicationController
-
   before_filter :admin_page
 
   def index
@@ -45,5 +44,4 @@ class Admin::ViewsController < ApplicationController
     flash[:success] = "Deleted view #{@view.name}"
     redirect_to admin_views_path(@view.id)
   end
-
 end

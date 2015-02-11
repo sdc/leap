@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class SupportStrategy < Eventable
-
   attr_accessible :body, :agreed_date, :completed_date, :declined_date, :event_id
 
   after_create {|req| req.events.create!(event_date: created_at, transition: :create, parent_id: event_id)}
@@ -52,5 +51,4 @@ class SupportStrategy < Eventable
     when :create then "Support Strategy Created"
     end
   end
-
 end
