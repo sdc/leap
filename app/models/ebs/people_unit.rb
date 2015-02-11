@@ -22,7 +22,7 @@ class Ebs::PeopleUnit < Ebs::Model
   has_many   :people_unit_tutorgroups, :foreign_key => "people_units_id"
   has_many   :tutorgroups, :through => :people_unit_tutorgroups
   belongs_to :code, :foreign_key => "progress_code", :class_name => "ProgressCode"
-  set_primary_key :id
+  self.primary_key = :id
 
   def status
     code.try(:fes_short_description)

@@ -16,7 +16,7 @@
 
 class Ebs::Person < Ebs::Model
 
-  set_primary_key :person_code
+  self.primary_key = :person_code
 
   scoped_search :on => [:forename, :surname, :person_code]
 

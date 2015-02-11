@@ -16,10 +16,10 @@
 
 class Ebs::Address < Ebs::Model
 
-  set_table_name "addresses"
+  self.table_name = "addresses"
 
   default_scope -> { where(:owner_type => "P") }
-  set_primary_key "owner_ref"
+  self.primary_key = "owner_ref"
 
   belongs_to :person,  :foreign_key => "owner_ref"
 

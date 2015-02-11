@@ -16,7 +16,7 @@
 
 class Ebs::SdcIlpQualification < Ebs::Model
 
-  set_primary_key :id
+  self.primary_key = :id
   belongs_to :person
   belongs_to :unit_instance_occurrence, :foreign_key => "uio_id"
 
