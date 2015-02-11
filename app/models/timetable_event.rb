@@ -33,18 +33,18 @@ class TimetableEvent
 
   def cl_status
     { "unknown"    => "default",
-     "complete"   => "success",
-     "current"    => "warning",
-     "incomplete" => "danger"
+      "complete"   => "success",
+      "current"    => "warning",
+      "incomplete" => "danger"
     }[status]
   end
 
   def to_tile
     Tile.new({ title: "Next Lesson",
-              bg: "9aa",
-              icon: "fa-calendar",
-              partial_path: "tiles/next_lesson",
-              object: self })
+               bg: "9aa",
+               icon: "fa-calendar",
+               partial_path: "tiles/next_lesson",
+               object: self })
   end
 
   def to_ics

@@ -30,6 +30,6 @@ class Note < Eventable
 
   def tile_attrs
     { icon: "fa-pencil-square-o",
-     partial_path: "tiles/note" }
+      partial_path: "tiles/note" }
   end
 end

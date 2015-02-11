@@ -9,10 +9,10 @@ class SimplePoll < ActiveRecord::Base
 
   def to_tile
     Tile.new({ title: "Poll",
-              bg: "9d9",
-              icon: "fa-pie-chart",
-              partial_path: "tiles/poll",
-              object: self
+               bg: "9d9",
+               icon: "fa-pie-chart",
+               partial_path: "tiles/poll",
+               object: self
             })
   end
 end

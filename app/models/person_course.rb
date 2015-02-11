@@ -74,9 +74,9 @@ class PersonCourse < Eventable
 
   def cl_status
     { "unknown"    => "default",
-     "complete"   => "success",
-     "current"    => "warning",
-     "incomplete" => "danger"
+      "complete"   => "success",
+      "current"    => "warning",
+      "incomplete" => "danger"
     }[status] || "default"
   end
 

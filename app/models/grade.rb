@@ -3,7 +3,7 @@ class Grade
                         :pass,
                         :merit,
                         :distinction],
-           letter: [:"a*",
+              letter: [:"a*",
                         :a,
                         :b,
                         :c,

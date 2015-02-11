@@ -93,8 +93,8 @@ class Target < Eventable
 
   def tile_attrs
     { icon: "fa-bullseye",
-     title: "Target",
-     subtitle: nil,
-     partial_path: "tiles/target" }
+      title: "Target",
+      subtitle: nil,
+      partial_path: "tiles/target" }
   end
 end

@@ -89,7 +89,7 @@ module EventsHelper
 
   def create_event_form(klass, html_options = {}, remote = false, &block)
     form_for(@topic.kind_of?(Person) ? @topic.send(klass.name.tableize).new : klass.new, remote: remote,
-      url: "/events", html: html_options.reverse_merge(class: "form")
+                                                                                         url: "/events", html: html_options.reverse_merge(class: "form")
     ) do |f|
       if @topic.kind_of? Person
         concat(hidden_field_tag(:person_id, @topic.mis_id))

@@ -50,10 +50,10 @@ class MdlBadge < Eventable
 
   def to_course_tile
     Tile.new({ title: "PPD",
-              bg: "7755cc",
-              icon: "fa-dot-circle-o",
-              partial_path: "tiles/course_badges",
-              object: self })
+               bg: "7755cc",
+               icon: "fa-dot-circle-o",
+               partial_path: "tiles/course_badges",
+               object: self })
   end
 
   def all_in_course
@@ -66,11 +66,11 @@ class MdlBadge < Eventable
 
   def tile_attrs
     { icon: "fa-dot-circle-o",
-     title: "New Badge",
-     subtitle: self[:title],
-     partial_path: "tiles/mdl_badge",
-     link: link_url,
-     object: self }
+      title: "New Badge",
+      subtitle: self[:title],
+      partial_path: "tiles/mdl_badge",
+      link: link_url,
+      object: self }
   end
 
 
