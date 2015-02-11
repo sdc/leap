@@ -128,7 +128,8 @@ GEM
       rails (>= 3.0.0)
     rails-observers (0.1.2)
       activemodel (~> 4.0)
-    rails-settings (1.0.0)
+    rails-settings-cached (0.3.1)
+      rails (>= 4.0.0.beta1)
     railties (4.0.13)
       actionpack (= 4.0.13)
       activesupport (= 4.0.13)
@@ -207,7 +208,7 @@ DEPENDENCIES
   protected_attributes
   rails (~> 4.0.13)
   rails-latex
-  rails-settings
+  rails-settings-cached (= 0.3.1)
   ruby-oci8
   scoped_search
   sqlite3

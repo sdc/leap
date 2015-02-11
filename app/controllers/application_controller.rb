@@ -45,7 +45,6 @@ class ApplicationController < ActionController::Base
   private
 
   def maintenance_mode
-    debugger
     render :file => "public/maintenance_mode.html.erb", :layout => nil, :locals => {:message => Settings.maintenance_mode} unless Settings.maintenance_mode.blank?
   end
 

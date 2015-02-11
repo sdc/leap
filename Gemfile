@@ -7,7 +7,7 @@ gem 'less-rails-bootstrap', "2.0.13"
 gem 'jquery-rails', '~> 2.3.0'
 gem 'symbolize'
 gem 'scoped_search'
-gem 'rails-settings', :require => 'settings'
+gem 'rails-settings-cached', "0.3.1"
 gem 'uglifier', "1.0.3"
 gem 'rails-latex'
 gem 'nokogiri', "1.5.10"
