@@ -20,5 +20,5 @@ class ProfileQuestion < Eventable
   after_create { |q| q.events.create!(event_date: created_at, transition: :create) }
 
   validates :question, :answer, presence: true
-  validates :question, inclusion: {in: Settings.profile_questions.split(";")}
+  validates :question, inclusion: { in: Settings.profile_questions.split(";") }
 end

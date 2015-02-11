@@ -41,7 +41,7 @@ class Course < ActiveRecord::Base
   end
 
   def as_param
-    {course_id: mis_id.to_s}
+    { course_id: mis_id.to_s }
   end
 
   def mis_code

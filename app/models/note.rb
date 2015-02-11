@@ -29,7 +29,7 @@ class Note < Eventable
   validates :body, presence: true
 
   def tile_attrs
-    {icon: "fa-pencil-square-o",
-     partial_path: "tiles/note"}
+    { icon: "fa-pencil-square-o",
+     partial_path: "tiles/note" }
   end
 end

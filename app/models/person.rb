@@ -117,7 +117,7 @@ class Person < ActiveRecord::Base
   end
 
   def as_param
-    {person_id: mis_id.to_s}
+    { person_id: mis_id.to_s }
   end
 
   def staff?

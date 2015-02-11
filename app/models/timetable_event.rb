@@ -32,7 +32,7 @@ class TimetableEvent
   def id; mis_id end
 
   def cl_status
-    {"unknown"    => "default",
+    { "unknown"    => "default",
      "complete"   => "success",
      "current"    => "warning",
      "incomplete" => "danger"
@@ -40,11 +40,11 @@ class TimetableEvent
   end
 
   def to_tile
-    Tile.new({title: "Next Lesson",
+    Tile.new({ title: "Next Lesson",
               bg: "9aa",
               icon: "fa-calendar",
               partial_path: "tiles/next_lesson",
-              object: self})
+              object: self })
   end
 
   def to_ics

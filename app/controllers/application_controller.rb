@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   private
 
   def maintenance_mode
-    render file: "public/maintenance_mode.html.erb", layout: nil, locals: {message: Settings.maintenance_mode} unless Settings.maintenance_mode.blank?
+    render file: "public/maintenance_mode.html.erb", layout: nil, locals: { message: Settings.maintenance_mode } unless Settings.maintenance_mode.blank?
   end
 
   def set_user

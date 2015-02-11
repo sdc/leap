@@ -22,9 +22,9 @@ class PersonCourse < Eventable
 
   belongs_to :course
   belongs_to :person
-  has_one :enrolment_event,   as: :eventable, class_name: "Event", conditions: {transition: :start}
-  has_one :application_event, as: :eventable, class_name: "Event", conditions: {transition: :create}
-  has_one :complete_event,    as: :eventable, class_name: "Event", conditions: {transition: :complete}
+  has_one :enrolment_event,   as: :eventable, class_name: "Event", conditions: { transition: :start }
+  has_one :application_event, as: :eventable, class_name: "Event", conditions: { transition: :create }
+  has_one :complete_event,    as: :eventable, class_name: "Event", conditions: { transition: :complete }
 
   attr_accessible :offer_code, :status, :start_date, :application_date, :mis_status
 
@@ -57,7 +57,7 @@ class PersonCourse < Eventable
   end
 
   def to_xml(options = {})
-    super({include: :course}.merge(options))
+    super({ include: :course }.merge(options))
   end
 
   def status
@@ -73,7 +73,7 @@ class PersonCourse < Eventable
   end
 
   def cl_status
-    {"unknown"    => "default",
+    { "unknown"    => "default",
      "complete"   => "success",
      "current"    => "warning",
      "incomplete" => "danger"
@@ -94,6 +94,6 @@ class PersonCourse < Eventable
   end
 
   def tile_attrs
-    {icon: "fa-graduation-cap"}
+    { icon: "fa-graduation-cap" }
   end
 end

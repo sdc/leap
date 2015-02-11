@@ -35,9 +35,9 @@ class Intervention < Eventable
 
   def extra_panes(tr)
     if tr == :complete
-      {"Referral Details" => "events/tabs/pi_refer_details"}
+      { "Referral Details" => "events/tabs/pi_refer_details" }
     elsif disc_text.nil?
-      {"Outcome" => "events/tabs/disciplinary_outcome"}
+      { "Outcome" => "events/tabs/disciplinary_outcome" }
     end
   end
 

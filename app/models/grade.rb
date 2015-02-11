@@ -1,5 +1,5 @@
 class Grade
-  SCHEMES = {pmd: [:refer,
+  SCHEMES = { pmd: [:refer,
                         :pass,
                         :merit,
                         :distinction],

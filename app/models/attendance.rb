@@ -74,7 +74,7 @@ class Attendance < Eventable
     rescue
       bg = "6a6"
     end
-    {icon: "fa-check-circle",
+    { icon: "fa-check-circle",
      partial_path: "tiles/attendance",
      subtitle: course_type.titlecase,
      bg: bg,
