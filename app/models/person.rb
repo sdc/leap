@@ -64,7 +64,7 @@ class Person < ActiveRecord::Base
   end
 
   def age_on(date)
-    ((date.to_date - date_of_birth.to_date)/365).to_i
+    ((date.to_date - date_of_birth.to_date) / 365).to_i
   end
 
   def to_param

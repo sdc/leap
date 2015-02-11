@@ -11,7 +11,7 @@ class Intervention < Eventable
 
   def self.intervention_types
     its = {}
-    Settings.intervention_types.split(";").each { |x| b=x.split(':'); its[b.first.split(",").first] = b.last.split(",") }
+    Settings.intervention_types.split(";").each { |x| b = x.split(':'); its[b.first.split(",").first] = b.last.split(",") }
     return its
   end
 

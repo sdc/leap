@@ -23,7 +23,7 @@ class TimetableEvent
   end
 
   def timetable_height
-    ((timetable_end - timetable_start) /50).floor
+    ((timetable_end - timetable_start) / 50).floor
   end
 
   def subtitle; nil end

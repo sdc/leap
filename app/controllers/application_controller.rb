@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
       end
     rescue
       flash.notice = "Incorrect date entered! Using today instead."
-      @date=Time.now
+      @date = Time.now
     end
   end
 

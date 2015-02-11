@@ -39,7 +39,7 @@ class MdlBadge < Eventable
         t.body        = badge.xpath("KEY[@name='description']/VALUE").first.content
         t.image_url   = image_url
         t.link_url    = badge.xpath("KEY[@name='details_link']/VALUE").first.content
-        t.mdl_course_id=badge.xpath("KEY[@name='course_id']/VALUE").first.content
+        t.mdl_course_id = badge.xpath("KEY[@name='course_id']/VALUE").first.content
       end
     end
   end

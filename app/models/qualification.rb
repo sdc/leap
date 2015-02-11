@@ -19,7 +19,7 @@ class Qualification < Eventable
 
   after_create  { |qual| qual.events.create!(event_date: created_at, transition: qual.predicted? ? :create : :complete) }
 
-  before_save   { |q| q.predicted=true if (Person.user and !Person.user.staff?) }
+  before_save   { |q| q.predicted = true if (Person.user and !Person.user.staff?) }
 
   before_update { |q| q.events.first.update_attribute("event_date", q.created_at) }
 
@@ -29,11 +29,11 @@ class Qualification < Eventable
 
   belongs_to :person
 
-  QOE_LAT = { "GNVQ"          => { "WEIGHT"=>4, "DISTINCTION"=>220, "MERIT"=>184, "PASS"=>160 },
-	            "GCSE"          => { "A"=>52, "B"=>46, "C"=>40, "D"=>34, "WEIGHT"=>1, "E"=>28, "F"=>22, "G"=>16, "A*"=>58, "U"=>0 },
-	            "FIRST DIPLOMA" => { "WEIGHT"=>2, "DISTINCTION"=>136, "MERIT"=>112, "PASS"=>76 },
-	            "DOUBLE GCSE"   => { "A*A*"=>106, "AA"=>104, "BB"=>92, "CC"=>80, "DD"=>68, "EE"=>56, "FF"=>44, "GG"=>32, "NN"=>0, "UU"=>0, "WEIGHT"=>2 },
-	            "SHORT GCSE"    => { "A"=>26, "B"=>23, "C"=>20, "D"=>17, "WEIGHT"=>0.5, "E"=>14, "F"=>11, "G"=>8, "A*"=>29, "U"=>0 }
+  QOE_LAT = { "GNVQ"          => { "WEIGHT" => 4, "DISTINCTION" => 220, "MERIT" => 184, "PASS" => 160 },
+	            "GCSE"          => { "A" => 52, "B" => 46, "C" => 40, "D" => 34, "WEIGHT" => 1, "E" => 28, "F" => 22, "G" => 16, "A*" => 58, "U" => 0 },
+	            "FIRST DIPLOMA" => { "WEIGHT" => 2, "DISTINCTION" => 136, "MERIT" => 112, "PASS" => 76 },
+	            "DOUBLE GCSE"   => { "A*A*" => 106, "AA" => 104, "BB" => 92, "CC" => 80, "DD" => 68, "EE" => 56, "FF" => 44, "GG" => 32, "NN" => 0, "UU" => 0, "WEIGHT" => 2 },
+	            "SHORT GCSE"    => { "A" => 26, "B" => 23, "C" => 20, "D" => 17, "WEIGHT" => 0.5, "E" => 14, "F" => 11, "G" => 8, "A*" => 29, "U" => 0 }
             }
 
   def body

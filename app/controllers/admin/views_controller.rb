@@ -22,7 +22,7 @@ class Admin::ViewsController < ApplicationController
   end
 
   def edit
-    @event_types=Dir.glob(Rails.root + 'app/models/*.rb').map { |f| File.basename(f, ".rb").classify }
+    @event_types = Dir.glob(Rails.root + 'app/models/*.rb').map { |f| File.basename(f, ".rb").classify }
     @view = View.find params[:id]
   end
 
