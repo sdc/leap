@@ -23,14 +23,14 @@ class Grade
       @scheme = :number
     elsif grade.kind_of? String
       @grade = grade.downcase.to_sym
-      @scheme = SCHEMES.detect{|k,v| v.include? @grade}.try :first
+      @scheme = SCHEMES.detect{ |k,v| v.include? @grade }.try :first
     end
   end
 
   def <=>(other)
     return nil unless scheme and other.scheme and scheme == other.scheme
     return 0 if grade == other.grade
-    return -1 if SCHEMES[scheme].detect{|g| g == grade or g == other.grade} == grade
+    return -1 if SCHEMES[scheme].detect{ |g| g == grade or g == other.grade } == grade
     return 1
   end
 

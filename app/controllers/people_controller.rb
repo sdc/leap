@@ -38,16 +38,16 @@ class PeopleController < ApplicationController
           #  @topic.mdl_grade_tracks.where(:course_type => ct).last.try(:to_tile) or
           #  MdlGradeTrack.new(:course_type => ct).to_tile
           #end)
-          @tiles.unshift(tracks.map{|x| x.to_tile})
-          attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(course_type: ct).last}.reject{|x| x.nil?}
-          attendances.select!{|x| x.course_type != "overall"} if attendances.length == 2
-          @tiles.unshift(attendances.map{|x| x.to_tile})
+          @tiles.unshift(tracks.map{ |x| x.to_tile })
+          attendances = ["overall","core","maths","english"].map{ |ct| @topic.attendances.where(course_type: ct).last }.reject{ |x| x.nil? }
+          attendances.select!{ |x| x.course_type != "overall" } if attendances.length == 2
+          @tiles.unshift(attendances.map{ |x| x.to_tile })
           #if @topic.attendances.where(:course_type => "overall").any?
           #  @tiles.unshift(@topic.attendances.where(:course_type => "overall").last.events.first.try :to_tile)
           #end
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
           @tiles.unshift(GlobalNews.last.to_tile) if GlobalNews.any?
-          @tiles = @tiles.flatten.reject{|t| t.nil?} #.uniq{|t| t.object}
+          @tiles = @tiles.flatten.reject{ |t| t.nil? } #.uniq{|t| t.object}
           @on_home_page = true
           render action: "home"
         end
@@ -84,7 +84,7 @@ class PeopleController < ApplicationController
   def select
     if params[:q]
       @people = Person.search_for(params[:q]).order("surname,forename").limit(20)
-      render json: @people.map{|p| {id: p.id,name: p.name, readonly: p==@user}}.to_json
+      render json: @people.map{ |p| {id: p.id,name: p.name, readonly: p==@user} }.to_json
     end
   end
 
@@ -155,7 +155,7 @@ class PeopleController < ApplicationController
 
   def parse_sidebar_links
     Settings.clidebar_links.split(/^\|/).drop(1)
-            .map{|menu| menu.split("\n").reject(&:blank?).map(&:chomp)}
-            .map{|menu| menu.first.split("|") + [menu.drop(1).map{|item| item.split("|")}]}
+            .map{ |menu| menu.split("\n").reject(&:blank?).map(&:chomp) }
+            .map{ |menu| menu.first.split("|") + [menu.drop(1).map{ |item| item.split("|") }] }
   end
 end

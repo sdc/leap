@@ -49,7 +49,7 @@ class Attendance < Eventable
 
   def siblings_same_year(course_type = "overall")
     course_type = course_type.to_s
-    d,m = Settings.year_boundary_date.split("/").map{|x| x.to_i}
+    d,m = Settings.year_boundary_date.split("/").map{ |x| x.to_i }
     bty = week_beginning.change(month: m, day: d)
     if bty > week_beginning
       return Attendance.where(course_type: course_type, person_id: person_id, week_beginning: bty.change(year: bty.year - 1)..bty)

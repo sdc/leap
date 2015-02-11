@@ -1,7 +1,7 @@
 class Intervention < Eventable
   attr_accessible :disc_text, :incident_date, :pi_type, :referral, :referral_category, :referral_text, :workshops
 
-  after_create {|i| i.events.create!(event_date: created_at, transition: :create)}
+  after_create { |i| i.events.create!(event_date: created_at, transition: :create) }
 
   after_save do |i|
     if i.disc_text_changed? and i.disc_text_was.nil?
@@ -11,12 +11,12 @@ class Intervention < Eventable
 
   def self.intervention_types
     its = {}
-    Settings.intervention_types.split(";").each{|x| b=x.split(':'); its[b.first.split(",").first] = b.last.split(",")}
+    Settings.intervention_types.split(";").each{ |x| b=x.split(':'); its[b.first.split(",").first] = b.last.split(",") }
     return its
   end
 
   def self.intervention_note(key)
-    Hash[Settings.intervention_types.split(";").map{|x| x.split(':').first.split(',')}][key]
+    Hash[Settings.intervention_types.split(";").map{ |x| x.split(':').first.split(',') }][key]
   end
 
   def icon_url(tr)

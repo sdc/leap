@@ -19,7 +19,7 @@ class Review < Eventable
 
   has_many :review_lines, dependent: :destroy
 
-  after_create {|req| req.events.create!(event_date: created_at - 10, transition: :create)}
+  after_create { |req| req.events.create!(event_date: created_at - 10, transition: :create) }
 
   before_save do |rev|
     #rev.attendance = person.attendance.att_year

@@ -22,7 +22,7 @@ class BKSB < ActiveResource::Base
     x = BKSB.find(person_code)
     x.Subject.each do |s|
       subject = s.subjectName
-      s.Section.find{|x| x.sectionName == "Assessments"}.AssessmentType.each do |a|
+      s.Section.find{ |x| x.sectionName == "Assessments" }.AssessmentType.each do |a|
         if a.AssessmentType == "IA"
           next unless a.respond_to? :IA_Result
           (a.IA_Result.kind_of?(Array) ? a.IA_Result : [a.IA_Result]).each do |a|

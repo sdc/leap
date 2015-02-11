@@ -4,7 +4,7 @@ class MdlGradeTrack < Eventable
 
   belongs_to :person
 
-  after_create {|t| t.events.create(event_date: t.created_at, transition: ':create')}
+  after_create { |t| t.events.create(event_date: t.created_at, transition: ':create') }
 
   scope "english", -> { where(course_type: ["english","gcse_english"]) }
   scope "maths", -> { where(course_type: ["maths","gcse_maths"]) }

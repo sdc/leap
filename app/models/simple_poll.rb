@@ -4,7 +4,7 @@ class SimplePoll < ActiveRecord::Base
   has_many :simple_poll_answers
 
   def results
-    simple_poll_answers.group("answer").count.sort{|a,b| b.last <=> a.last}
+    simple_poll_answers.group("answer").count.sort{ |a,b| b.last <=> a.last }
   end
 
   def to_tile

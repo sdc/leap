@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     begin
       @date = if params[:date]
         if params[:date].kind_of? Hash
-          Time.gm(*[:year,:month,:day].map{|x| params[:date][x].to_i})
+          Time.gm(*[:year,:month,:day].map{ |x| params[:date][x].to_i })
         else
           Time.parse(params[:date])
         end
@@ -62,8 +62,8 @@ class ApplicationController < ActionController::Base
     else
       aff_var = request.env["affiliation"] || request.env["HTTP_AJP_AFFILIATION"]
       if aff_var
-        affs = aff_var.split(";").map{|a| a.split("@").first.downcase}
-        Person.affiliation = @affiliation = ["staff","student","applicant","affiliate"].find{|a| affs.include? a}
+        affs = aff_var.split(";").map{ |a| a.split("@").first.downcase }
+        Person.affiliation = @affiliation = ["staff","student","applicant","affiliate"].find{ |a| affs.include? a }
       end
       uname,domain = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"].try(:downcase).try(:split,'@')
       unless Settings.sdc.blank?

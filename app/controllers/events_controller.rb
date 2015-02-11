@@ -36,7 +36,7 @@ class EventsController < ApplicationController
           logger.error c.to_s + " -- " + e
         end
         flash[:error] = "#{et.singularize.humanize.titleize} could not be created!"
-        flash[:details] = @event.errors.map{|c,e| "<b>#{c}:</b> #{e}"}.join "<br />"
+        flash[:details] = @event.errors.map{ |c,e| "<b>#{c}:</b> #{e}" }.join "<br />"
       end
       if view = params[:redirect_to] 
         redirect_to params[:redirect_to]
@@ -62,8 +62,8 @@ class EventsController < ApplicationController
         flash[:error] = "#{@event.eventable_type.humanize} could not be updated!"
       end
       respond_to do |f|
-        f.js   {render @event}
-        f.html {redirect_to :back}
+        f.js   { render @event }
+        f.html { redirect_to :back }
       end
     else
       redirect_to "/404.html"
@@ -79,7 +79,7 @@ class EventsController < ApplicationController
       flash[:error] = "#{@event.eventable_type.singularize.humanize.titleize} could not be deleted"
     end
     respond_to do |f|
-      f.html {redirect_to :back}
+      f.html { redirect_to :back }
       f.js 
     end
   end

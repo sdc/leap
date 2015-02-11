@@ -53,7 +53,7 @@ class Event < ActiveRecord::Base
   scope :this_year, -> { where("event_date > ?",year_start) }
   default_scope -> { order("event_date DESC") }
 
-  before_validation {|event| update_attribute("person_id", event.eventable.person_id) unless person_id}
+  before_validation { |event| update_attribute("person_id", event.eventable.person_id) unless person_id }
   before_create do |event| 
     event.event_date = event.eventable.created_at unless event_date
     event.created_by_id = Person.user ? Person.user.id : nil unless event.created_by_id
@@ -66,7 +66,7 @@ class Event < ActiveRecord::Base
 
   def self.year_start
     @date = Date.today
-    (d,m) = Settings.year_boundary_date.split("/").map{|x| x.to_i}
+    (d,m) = Settings.year_boundary_date.split("/").map{ |x| x.to_i }
     ab = @date.change(day: d,month: m)
     if ab < @date
       @date = ab

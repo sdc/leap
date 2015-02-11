@@ -17,11 +17,11 @@
 class Qualification < Eventable
   include MisQualification
 
-  after_create  {|qual| qual.events.create!(event_date: created_at, transition: qual.predicted? ? :create : :complete)}
+  after_create  { |qual| qual.events.create!(event_date: created_at, transition: qual.predicted? ? :create : :complete) }
 
-  before_save   {|q| q.predicted=true if (Person.user and !Person.user.staff?) }
+  before_save   { |q| q.predicted=true if (Person.user and !Person.user.staff?) }
                
-  before_update {|q| q.events.first.update_attribute("event_date", q.created_at) }
+  before_update { |q| q.events.first.update_attribute("event_date", q.created_at) }
 
   validates :title, presence: true 
   
@@ -37,7 +37,7 @@ class Qualification < Eventable
             }
 
   def body
-    [self[:qual_type],self[:title]].reject{|x| x.blank?}.join ": "
+    [self[:qual_type],self[:title]].reject{ |x| x.blank? }.join ": "
   end
 
   def subtitle

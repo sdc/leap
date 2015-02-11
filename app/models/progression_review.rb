@@ -21,7 +21,7 @@ class ProgressionReview < Eventable
 
   validates :reason, presence: true, unless: :approved?
 
-  before_create {|pr| pr.reason = nil if approved; reason.delete("") if reason}
+  before_create { |pr| pr.reason = nil if approved; reason.delete("") if reason }
   
   after_create  do |pr| 
     ev = pr.events.create! event_date: created_at, transition: :complete

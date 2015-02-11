@@ -25,7 +25,7 @@ module EventsHelper
   def special_title(thing,wrap = :div)
     text = case thing.class.name
     when "String" then thing
-    when "Array"  then thing.map{|t| content_tag(wrap, special_title(t))}.join " "
+    when "Array"  then thing.map{ |t| content_tag(wrap, special_title(t)) }.join " "
     when "Date"   then pretty_date thing
     when "Time"   then pretty_date thing
     when "Course" then link_to_if @affiliation == "staff", thing.code, thing
@@ -95,9 +95,9 @@ module EventsHelper
         concat(hidden_field_tag(:person_id, @topic.mis_id))
       else
         if @tutorgroup
-          concat(select_tag :person_id, options_for_select(@topic.person_courses.where(tutorgroup: @tutorgroup).map{|p| [p.person.name, p.person.mis_id]}), prompt: "Select a Person")
+          concat(select_tag :person_id, options_for_select(@topic.person_courses.where(tutorgroup: @tutorgroup).map{ |p| [p.person.name, p.person.mis_id] }), prompt: "Select a Person")
         else
-          concat(select_tag :person_id, options_for_select(@topic.people.map{|p| [p.name, p.mis_id]}), prompt: "Select a Person")
+          concat(select_tag :person_id, options_for_select(@topic.people.map{ |p| [p.name, p.mis_id] }), prompt: "Select a Person")
         end
       end
       concat(hidden_field_tag(:eventable_type, klass))

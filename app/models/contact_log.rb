@@ -17,7 +17,7 @@
 class ContactLog < Eventable
   attr_accessible :body
 
-  after_create {|contact_log| contact_log.events.create!(event_date: created_at, transition: :create)}
+  after_create { |contact_log| contact_log.events.create!(event_date: created_at, transition: :create) }
 
   validates :body, presence: true
 
