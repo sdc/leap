@@ -16,9 +16,9 @@
 
 # = Event
 #
-# This class handles all the abstracted behaviour that a good event should implement. It's here so that we can 
+# This class handles all the abstracted behaviour that a good event should implement. It's here so that we can
 # treat all events polymorphically. All the real work is done in the model for the actual event type that
-# we call an eventable. Examples include Target and Note. Events are never created directly, 
+# we call an eventable. Examples include Target and Note. Events are never created directly,
 # this should be done by the eventable.
 #
 # Event implements four methods which all do pretty much the same thing. title, +subtitle+, +icon_url+ and +body+ each call
@@ -42,7 +42,7 @@ class Event < ActiveRecord::Base
   belongs_to :parent, class_name: "Event", foreign_key: "parent_id"
   has_many :targets, dependent: :nullify
 
-  attr_accessible :event_date, :transition, :parent_id 
+  attr_accessible :event_date, :transition, :parent_id
 
   TRANSITIONS = [:create, :to_start, :start, :overdue, :complete, :drop, :hidden]
 
@@ -54,7 +54,7 @@ class Event < ActiveRecord::Base
   default_scope -> { order("event_date DESC") }
 
   before_validation { |event| update_attribute("person_id", event.eventable.person_id) unless person_id }
-  before_create do |event| 
+  before_create do |event|
     event.event_date = event.eventable.created_at unless event_date
     event.created_by_id = Person.user ? Person.user.id : nil unless event.created_by_id
   end
@@ -70,7 +70,7 @@ class Event < ActiveRecord::Base
     ab = @date.change(day: d, month: m)
     if ab < @date
       @date = ab
-      @end_date = ab 
+      @end_date = ab
     else
       @end_date = ab
       @date = ab - 1.year
@@ -80,7 +80,7 @@ class Event < ActiveRecord::Base
   [:title, :subtitle, :icon_url, :body, :extra_panes, :status, :staff_only?,
    :timetable_length, :tile_bg, :tile_icon, :tile_title, :is_deleted?].each do |method|
     define_method method do
-      if eventable.respond_to?(method) 
+      if eventable.respond_to?(method)
         m = eventable.method(method)
         if m.arity == 1
           m.call(transition)

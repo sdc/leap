@@ -27,7 +27,7 @@ class Review < Eventable
       events.create(event_date: Time.now, transition: :complete) if rev.published
     end
   end
-  
+
   def title
     window
   end

@@ -20,5 +20,5 @@ class Ebs::Blob < Ebs::Model
   belongs_to :person
 
   scope :photos, -> { where(blob_name: "PERSON_PICTURE") }
-  
+
 end

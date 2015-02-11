@@ -1,5 +1,5 @@
 class BKSB < ActiveResource::Base
-# Look, this happens in an odd way. I rewrite element_path so it points to all the 
+# Look, this happens in an odd way. I rewrite element_path so it points to all the
 # results for a person. You pass in the person code as the id. So, yes, Rails would
 # expect a single result but actually gets a load of results in the format BKSB
 # presents them. But as long as I parse these out and create the Qualification

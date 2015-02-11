@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class CoursesController < ApplicationController
-  
+
   before_filter       :staff_only
   skip_before_filter  :set_topic
   before_filter       :course_set_topic
@@ -80,9 +80,9 @@ class CoursesController < ApplicationController
     @user.save
     redirect_to @topic
   end
-  
+
   private
-  
+
   def course_set_topic
     params[:course_id] = params[:id]
     set_topic

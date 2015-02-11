@@ -20,19 +20,19 @@ class Qualification < Eventable
   after_create  { |qual| qual.events.create!(event_date: created_at, transition: qual.predicted? ? :create : :complete) }
 
   before_save   { |q| q.predicted=true if (Person.user and !Person.user.staff?) }
-               
+
   before_update { |q| q.events.first.update_attribute("event_date", q.created_at) }
 
-  validates :title, presence: true 
-  
+  validates :title, presence: true
+
   attr_accessible :awarding_body, :grade, :predicted, :qual_type, :seen, :title, :created_at
 
   belongs_to :person
 
-  QOE_LAT = {"GNVQ"          => {"WEIGHT"=>4, "DISTINCTION"=>220, "MERIT"=>184, "PASS"=>160}, 
-	     "GCSE"          => {"A"=>52, "B"=>46, "C"=>40, "D"=>34, "WEIGHT"=>1, "E"=>28, "F"=>22, "G"=>16, "A*"=>58, "U"=>0}, 
-	     "FIRST DIPLOMA" => {"WEIGHT"=>2, "DISTINCTION"=>136, "MERIT"=>112, "PASS"=>76}, 
-	     "DOUBLE GCSE"   => {"A*A*"=>106, "AA"=>104, "BB"=>92, "CC"=>80, "DD"=>68, "EE"=>56, "FF"=>44, "GG"=>32, "NN"=>0, "UU"=>0, "WEIGHT"=>2}, 
+  QOE_LAT = {"GNVQ"          => {"WEIGHT"=>4, "DISTINCTION"=>220, "MERIT"=>184, "PASS"=>160},
+	     "GCSE"          => {"A"=>52, "B"=>46, "C"=>40, "D"=>34, "WEIGHT"=>1, "E"=>28, "F"=>22, "G"=>16, "A*"=>58, "U"=>0},
+	     "FIRST DIPLOMA" => {"WEIGHT"=>2, "DISTINCTION"=>136, "MERIT"=>112, "PASS"=>76},
+	     "DOUBLE GCSE"   => {"A*A*"=>106, "AA"=>104, "BB"=>92, "CC"=>80, "DD"=>68, "EE"=>56, "FF"=>44, "GG"=>32, "NN"=>0, "UU"=>0, "WEIGHT"=>2},
 	     "SHORT GCSE"    => {"A"=>26, "B"=>23, "C"=>20, "D"=>17, "WEIGHT"=>0.5, "E"=>14, "F"=>11, "G"=>8, "A*"=>29, "U"=>0}
             }
 
@@ -61,7 +61,7 @@ class Qualification < Eventable
     return "Qualification" if seen?
     return "Qualification" if !mis_id.blank?
     return ["Predicted", "Grade"] if predicted?
-    return ["Qualification", "(not_seen)"] 
+    return ["Qualification", "(not_seen)"]
   end
 
   def lat_score
@@ -69,7 +69,7 @@ class Qualification < Eventable
       # Only calc lat scores for quals with grades
       return "No Grade" if grade.blank?
       # Only calc lat_scores for quals on entry
-      return "Imported Qual" if mis_id 
+      return "Imported Qual" if mis_id
       # Don't include predicted grades
       return "Predicted Grade" if predicted?
       # Only quals acheived between 16 & 18 years count towards LAT
@@ -81,7 +81,7 @@ class Qualification < Eventable
       #end
       #return "Ineligible Date" unless created_at.between?(Date.civil(2014,8,1) - years.years,Date.today)#civil(2014,9,1))
       # Only return LAT scores if we can work them out from the info we have
-      return "No scores for qual type" unless QOE_LAT[qual_type.strip.upcase] 
+      return "No scores for qual type" unless QOE_LAT[qual_type.strip.upcase]
       return "No scores for this grade" unless QOE_LAT[qual_type.strip.upcase][grade.strip.upcase]
       QOE_LAT[qual_type.strip.upcase][grade.strip.upcase]
     rescue
@@ -91,9 +91,9 @@ class Qualification < Eventable
 
   def tile_attrs
     {icon: "fa-certificate"}
-  end 
+  end
 
-  def is_deletable? 
+  def is_deletable?
     Person.user.admin? or (Time.now - Settings.delete_delay.to_i < eventable.updated_at and Person.user == eventable.updated_by)
   end
 end

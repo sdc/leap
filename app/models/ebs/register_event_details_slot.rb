@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::RegisterEventDetailsSlot < Ebs::Model
-  
+
   self.primary_key = :id
   belongs_to :register_event
   belongs_to :register_event_slot
@@ -24,7 +24,7 @@ class Ebs::RegisterEventDetailsSlot < Ebs::Model
 
   def the_object
     begin
-      case object_type 
+      case object_type
       when "R" then Ebs::Room.find_by_id(object_id)
       when "T" then Ebs::Person.find(object_id)
       when "L" then Ebs::Person.find(object_id)

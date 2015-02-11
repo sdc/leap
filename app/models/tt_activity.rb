@@ -23,7 +23,7 @@ class TtActivity < Eventable
 
   before_save :fix_start_time
 
-  after_create do |act| 
+  after_create do |act|
     act.repeat_number = 1 if act.repeat_type == "No repeat"
     this_start = act.start_time
     1.upto(act.repeat_number) do |i|

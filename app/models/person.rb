@@ -49,7 +49,7 @@ class Person < ActiveRecord::Base
   has_many :mdl_grade_tracks
   has_many :mdl_badges
   belongs_to :tutor, class_name: "Person", foreign_key: "tutor_id"
-  
+
   serialize :middle_names
   serialize :address
   serialize :my_courses
@@ -83,7 +83,7 @@ class Person < ActiveRecord::Base
     return import(mis_id) if fresh
     return find_by_username(mis_id) || find_by_mis_id(mis_id) || import(mis_id)
   end
-   
+
   def name(options = {})
     names = [forename]
     names += middle_names if options[:middle_names] and middle_names
@@ -152,7 +152,7 @@ class Person < ActiveRecord::Base
   def lat_score
     Rails.cache.fetch("#{mis_id}_l3va_score", expires_in: 1.hour) do
       if qualifications.detect{ |q| q.lat_score.kind_of? Fixnum }
-        (qualifications.select{ |q| q.lat_score.kind_of? Fixnum }.sum{ |q| q.lat_score } / 
+        (qualifications.select{ |q| q.lat_score.kind_of? Fixnum }.sum{ |q| q.lat_score } /
          qualifications.select{ |q| q.lat_score.kind_of? Fixnum }.count.to_f).round(2)
       else
         false

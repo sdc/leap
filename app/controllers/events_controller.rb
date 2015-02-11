@@ -38,11 +38,11 @@ class EventsController < ApplicationController
         flash[:error] = "#{et.singularize.humanize.titleize} could not be created!"
         flash[:details] = @event.errors.map{ |c, e| "<b>#{c}:</b> #{e}" }.join "<br />"
       end
-      if view = params[:redirect_to] 
+      if view = params[:redirect_to]
         redirect_to params[:redirect_to]
       else
         begin
-          render @event 
+          render @event
         rescue
           redirect_to :back
         end
@@ -71,7 +71,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = @topic.events.find(params[:id])  
+    @event = @topic.events.find(params[:id])
     if @event.is_deletable?
       flash[:success] = "#{@event.eventable_type.singularize.humanize.titleize} deleted"
       @event.eventable.destroy
@@ -80,7 +80,7 @@ class EventsController < ApplicationController
     end
     respond_to do |f|
       f.html { redirect_to :back }
-      f.js 
+      f.js
     end
   end
 end

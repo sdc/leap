@@ -24,7 +24,7 @@ class Admin::SettingsController < ApplicationController
 
   def create
     Settings.defaults.keys.each do |k|
-      if params[k] 
+      if params[k]
         logger.info "KEY: #{k}"
         logger.info "CLASS: #{Settings[k].class}"
         case Settings[k].class.name

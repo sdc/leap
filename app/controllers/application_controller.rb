@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
       end
       uname, domain = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"].try(:downcase).try(:split, '@')
       unless Settings.sdc.blank?
-        if @affiliation == "student" and uname.match(/^[sne]/) 
+        if @affiliation == "student" and uname.match(/^[sne]/)
           uname.gsub!(/^s/, "10")
           uname.gsub!(/^n/, "20")
           uname.gsub!(/^e/, "30")

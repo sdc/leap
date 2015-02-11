@@ -60,7 +60,7 @@ class PersonCourse < Eventable
     super({include: :course}.merge(options))
   end
 
-  def status 
+  def status
     if self[:status] == "current"
       if start_date
         start_date <= Date.today ? "current" : "not_started"
@@ -82,7 +82,7 @@ class PersonCourse < Eventable
 
   def extra_panes(tr)
     panes = ActiveSupport::OrderedHash.new
-    if tr == :create 
+    if tr == :create
       unless entry_reqs.empty?
         panes["Entry Requirements"] = "events/tabs/entry_reqs"
       end

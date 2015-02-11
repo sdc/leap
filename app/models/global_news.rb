@@ -12,5 +12,5 @@ class GlobalNews < ActiveRecord::Base
       object: self
     })
   end
- 
+
 end

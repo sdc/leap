@@ -17,7 +17,7 @@
 # = Target
 #
 # These are (hopefully) SMART targets stored against a person. They can be attached to any other event in the system, usually
-# taken to be the event which inspired the target or towards which the target is working. 
+# taken to be the event which inspired the target or towards which the target is working.
 #
 # This model is eventable. It creates two events when set, one showing the creation of the target and one as a reminder of the target's
 # completion date. When it is completed it new event noting its completion.
@@ -30,7 +30,7 @@ class Target < Eventable
   belongs_to :set_by, class_name: "Person", foreign_key: "set_by_person_id"
   belongs_to :event
 
-  after_create do |target| 
+  after_create do |target|
     target.events.create(event_date: created_at, parent_id: event_id, transition: :start)
     target.events.create(event_date: target_date, transition: :overdue)
   end
@@ -66,8 +66,8 @@ class Target < Eventable
   # Returns the target eventable subtitle. This is the target due date unless the event is the completion of the target, when it is +nil+.
   def subtitle(tr)
     if tr == :start
-      ["Due", target_date] 
-    else 
+      ["Due", target_date]
+    else
       ["Set", created_at]
     end
   end

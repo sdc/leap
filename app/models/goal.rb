@@ -15,10 +15,10 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Goal < Eventable
- 
+
   attr_accessible :body
 
-  after_create do |target| 
+  after_create do |target|
     target.events.create!(event_date: created_at)
   end
 end

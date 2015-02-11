@@ -5,9 +5,9 @@ class EntryReqMet < Eventable
 
   after_save do |erm|
     if erm.met?
-      erm.events.find_or_create_by_transition(:complete) 
+      erm.events.find_or_create_by_transition(:complete)
     else
-      erm.events.find_or_create_by_transition(:drop) 
+      erm.events.find_or_create_by_transition(:drop)
     end
   end
 

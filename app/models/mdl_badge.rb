@@ -44,8 +44,8 @@ class MdlBadge < Eventable
     end
   end
 
-  def icon_url 
-    image_url 
+  def icon_url
+    image_url
   end
 
   def to_course_tile
@@ -73,5 +73,5 @@ class MdlBadge < Eventable
      object: self}
   end
 
- 
+
 end

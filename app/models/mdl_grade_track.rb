@@ -1,5 +1,5 @@
 class MdlGradeTrack < Eventable
-  attr_accessible :course_type, :mag, :mdl_id, :name, :tag, :total, 
+  attr_accessible :course_type, :mag, :mdl_id, :name, :tag, :total,
                   :completion_total, :completion_out_of, :created_at, :created_by_id
 
   belongs_to :person
@@ -17,7 +17,7 @@ class MdlGradeTrack < Eventable
   end
 
 
-  def self.import_all 
+  def self.import_all
     if Settings.moodle_grade_track_import == "on"
       puts "\n\n****************************************"
       puts "* Stating Moodle Grade Tracker Imports *"
@@ -28,13 +28,13 @@ class MdlGradeTrack < Eventable
       Nokogiri::XML(peeps).xpath('//MULTIPLE/SINGLE').each do |peep|
         import_for(peep.xpath("KEY[@name='username']/VALUE").first.content)
       end
-    else 
+    else
       puts "Grade Track Import turned off."
     end
   end
 
   def self.import_for(person, delete = true)
-    person = person.kind_of?(Person) ? person : Person.get(person) 
+    person = person.kind_of?(Person) ? person : Person.get(person)
     person.mdl_grade_tracks.destroy_all
     begin
       tracks = ActiveResource::Connection.new(Settings.moodle_host).

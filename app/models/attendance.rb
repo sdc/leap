@@ -78,7 +78,7 @@ class Attendance < Eventable
      partial_path: "tiles/attendance",
      subtitle: course_type.titlecase,
      bg: bg,
-     title: "Attendance", 
+     title: "Attendance",
      object: self
     }
   end

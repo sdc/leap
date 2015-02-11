@@ -33,7 +33,7 @@ module EventsHelper
     end
     (text and (text.size < 3  or text.last == "%")) ? content_tag(:span, text, class: "big") : text
   end
-    
+
   def event_classes(event, mini = false)
     classes =  [mini ? "child-event" : "event", event.status, dom_id(event), dom_id(event.eventable), dom_class(event.eventable)]
     classes << "with_person" if @multi
@@ -42,7 +42,7 @@ module EventsHelper
   end
 
   def extend_event_button(event)
-    link_to(image_tag("actions/event_open.png"), 
+    link_to(image_tag("actions/event_open.png"),
             open_extended_event_url(event, person_id: event.person.mis_id), remote: true, class: "extend-button"
            ) +
     image_tag("actions/event_opened.png", class: "close-extend-button", style: "display:none") +
@@ -50,7 +50,7 @@ module EventsHelper
   end
 
   def delete_event_button(event)
-    link_to image_tag("events/delete_event.png"), person_event_url(event.person, event), 
+    link_to image_tag("events/delete_event.png"), person_event_url(event.person, event),
     method: :delete, remote: true,
     class:  "delete-event-button",
     data: {confirm: "This will delete the entire #{event.eventable_type.singularize.humanize.titleize}.\nAre you sure?"}
@@ -82,7 +82,7 @@ module EventsHelper
 
   def add_event_button(text = "Add")
     content_tag :div, width: "59px" do
-      submit_tag text, class: "btn btn-primary pull-right", 
+      submit_tag text, class: "btn btn-primary pull-right",
                        style: "margin-right:10px"
     end
   end
@@ -104,6 +104,6 @@ module EventsHelper
       block.call(f)
     end
   end
-    
+
 
 end

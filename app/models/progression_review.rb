@@ -22,8 +22,8 @@ class ProgressionReview < Eventable
   validates :reason, presence: true, unless: :approved?
 
   before_create { |pr| pr.reason = nil if approved; reason.delete("") if reason }
-  
-  after_create  do |pr| 
+
+  after_create  do |pr|
     ev = pr.events.create! event_date: created_at, transition: :complete
     unless pr.approved?
       pr.person.targets.create! event_id: ev.id, body: "Speak to a member of Helpzone about alternative courses", target_date: Date.parse("31-05-2013")
@@ -35,7 +35,7 @@ class ProgressionReview < Eventable
   def status; approved ? :complete : :incomplete end
 
   def title; "Continuing Learning" end
- 
+
   def tile_icon
     "#{approved ? 'fa-ban' : 'fa-check'} on fa-fast-forward"
   end

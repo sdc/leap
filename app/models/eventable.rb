@@ -21,7 +21,7 @@ class Eventable < ActiveRecord::Base
   belongs_to :created_by, foreign_key: "created_by_id", class_name: "Person"
   has_many :events, as: :eventable, dependent: :destroy
 
-  before_validation do |e| 
+  before_validation do |e|
     update_attribute("created_by_id", Person.user ? Person.user.id : nil) unless e.created_by_id
   end
 
@@ -30,7 +30,7 @@ class Eventable < ActiveRecord::Base
   def icon_url
     "events/#{self.class.name.tableize}.png"
   end
-  
+
   def humanize
     self.class.name.underscore.humanize.titleize
   end
@@ -46,7 +46,7 @@ class Eventable < ActiveRecord::Base
   def status
     return :unknown
   end
-  
+
   def created_by_text
     if respond_to? :mis and mis
       "Imported from MIS"
