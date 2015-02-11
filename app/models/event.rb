@@ -43,6 +43,8 @@ class Event < ActiveRecord::Base
   belongs_to :parent, :class_name => "Event", :foreign_key => "parent_id"
   has_many :targets, :dependent => :nullify
 
+  attr_accessible :event_date, :transition, :parent_id 
+
   TRANSITIONS = [:create,:to_start,:start,:overdue,:complete,:drop,:hidden]
 
   symbolize :transition , :in => TRANSITIONS, :methods => true, :scopes => true, :allow_nil => true

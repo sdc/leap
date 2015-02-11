@@ -18,6 +18,8 @@ class Course < ActiveRecord::Base
 
   include MisCourse
 
+  attr_accessible :title, :code, :year, :mis_id, :vague_title
+
   has_many :person_courses, :conditions => "enrolment_date is not null"
   has_many :people, :through => :person_courses
 
