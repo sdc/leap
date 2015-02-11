@@ -1,16 +1,16 @@
 class Grade
   SCHEMES = { pmd: [:refer,
-                        :pass,
-                        :merit,
-                        :distinction],
+                    :pass,
+                    :merit,
+                    :distinction],
               letter: [:"a*",
-                        :a,
-                        :b,
-                        :c,
-                        :d,
-                        :e,
-                        :f,
-                        :g]
+                       :a,
+                       :b,
+                       :c,
+                       :d,
+                       :e,
+                       :f,
+                       :g]
           }
 
   include Comparable
