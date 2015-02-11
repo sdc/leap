@@ -38,7 +38,7 @@ module EventsHelper
     classes =  [mini ? "child-event" : "event", event.status, dom_id(event), dom_id(event.eventable), dom_class(event.eventable)]
     classes << "with_person" if @multi
     classes << "with_subtitle" if event.subtitle
-    return classes
+    classes
   end
 
   def extend_event_button(event)
@@ -69,7 +69,7 @@ module EventsHelper
 
   def pretty_time(date)
     return nil if date == date.midnight
-    return date.strftime("%H.%M %P")
+    date.strftime("%H.%M %P")
   end
 
   def event_format(text)

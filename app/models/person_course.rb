@@ -90,7 +90,7 @@ class PersonCourse < Eventable
         panes["Meeting outcome"]  = "events/tabs/application_offer"
       end
     end
-    return panes
+    panes
   end
 
   def tile_attrs

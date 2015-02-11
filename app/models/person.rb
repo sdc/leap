@@ -81,7 +81,7 @@ class Person < ActiveRecord::Base
   def Person.get(mis_id, fresh=false)
     mis_id = mis_id.to_s.tr('^0-9', '') if mis_id.to_s.match(/\d{6}/)
     return import(mis_id) if fresh
-    return find_by_username(mis_id) || find_by_mis_id(mis_id) || import(mis_id)
+    find_by_username(mis_id) || find_by_mis_id(mis_id) || import(mis_id)
   end
 
   def name(options = {})

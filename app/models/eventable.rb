@@ -44,7 +44,7 @@ class Eventable < ActiveRecord::Base
   end
 
   def status
-    return :unknown
+    :unknown
   end
 
   def created_by_text

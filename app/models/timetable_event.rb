@@ -53,6 +53,6 @@ class TimetableEvent
     e.dtend = timetable_end.getutc
     e.summary = "#{title} with #{teachers.join(", ")}"
     e.location = rooms.join(", ")
-    return e
+    e
   end
 end

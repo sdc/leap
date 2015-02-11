@@ -53,6 +53,6 @@ class BKSB < ActiveResource::Base
         end
       end
     end
-    return person
+    person
   end
 end

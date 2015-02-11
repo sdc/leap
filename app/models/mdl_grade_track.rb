@@ -99,6 +99,6 @@ class MdlGradeTrack < Eventable
     rescue ArgumentError
       return :danger
     end
-    return :danger
+    :danger
   end
 end

@@ -44,7 +44,7 @@ class TtActivity < Eventable
   end
 
   def status
-    return "start"
+    "start"
   end
 
   def timetable_length

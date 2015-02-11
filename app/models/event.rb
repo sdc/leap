@@ -142,7 +142,7 @@ class Event < ActiveRecord::Base
         attrs.merge!(eventable.tile_attrs)
       end
     end
-    return Tile.new attrs
+    Tile.new attrs
   end
 
   def cl_status

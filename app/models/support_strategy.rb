@@ -40,7 +40,7 @@ class SupportStrategy < Eventable
     return "incomplete" if declined_date
     return "complete"   if completed_date
     return "current"    if agreed_date
-    return "not_started"
+    "not_started"
   end
 
   def title(tr)

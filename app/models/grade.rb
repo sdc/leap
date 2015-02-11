@@ -31,7 +31,7 @@ class Grade
     return nil unless scheme && other.scheme && scheme == other.scheme
     return 0 if grade == other.grade
     return -1 if SCHEMES[scheme].detect { |g| g == grade || g == other.grade } == grade
-    return 1
+    1
   end
 
   def to_s
