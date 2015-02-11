@@ -1,5 +1,5 @@
-.timetable-event{:style => "top:#{cloud_slot.timetable_margin + 37}px;height:#{cloud_slot.timetable_height}px", 
-  :class => "bg-#{cloud_slot.cl_status}"}
+.timetable-event{style: "top:#{cloud_slot.timetable_margin + 37}px;height:#{cloud_slot.timetable_height}px", 
+                 class: "bg-#{cloud_slot.cl_status}"}
   %h5= cloud_slot.title
   %ul
     %li
@@ -10,11 +10,11 @@
       %li= cloud_slot.rooms.join ", "
       %li
         %i= cloud_slot.teachers.join ", "
-      .mark{:class => "text-#{cloud_slot.cl_status}", :style => "background:transparent"}= cloud_slot.mark
+      .mark{class: "text-#{cloud_slot.cl_status}", style: "background:transparent"}= cloud_slot.mark
     - elsif cloud_slot.kind_of? Event
       .body= cloud_slot.body
   - if cloud_slot.is_deletable?
-    = link_to cloud_slot, :method => :delete, :class => "btn btn-danger btn-xs pull-right", :confirm => "Are you sure?" do
+    = link_to(cloud_slot, method: :delete, class: "btn btn-danger btn-xs pull-right", data:{confirm: "Are you sure?"}) do
       %i.fa.fa-trash
       Delete
       

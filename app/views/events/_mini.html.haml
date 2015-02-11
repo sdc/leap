@@ -1,15 +1,15 @@
-%div{:class => event_classes(event, true)}
+%div{class: event_classes(event, true)}
   %ul
-    %li.icon= image_tag(event.icon_url, :size => "24x24", :alt => event.title, :title => event.title)
+    %li.icon= image_tag(event.icon_url, size: "24x24", alt: event.title, title: event.title)
     %li.title= event.title
-    %li.body.short= event.body.truncate(90,:separator => " ")
+    %li.body.short= event.body.truncate(90, separator: " ")
     %li.body.long.hide
       = event.body
-      %h3= event.created_by_text :event => false
+      %h3= event.created_by_text(event: false)
     %li.controls
       %i.expand-mini.icon-chevron-right.clicky
       - if event.is_deletable?
-        = link_to event_url(event), :method => :delete, :class => "delete-mini hide", 
-                                    :confirm => "Delete this note?" do
+        = link_to(event_url(event), method: :delete, class: "delete-mini hide", 
+                                    data: {confirm: "Delete this note?"}) do
           %i.icon-trash.clicky
 
