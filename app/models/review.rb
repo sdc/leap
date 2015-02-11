@@ -23,7 +23,7 @@ class Review < Eventable
 
   before_save do |rev|
     #rev.attendance = person.attendance.att_year
-    if rev.published_changed? and !rev.published_was
+    if rev.published_changed? && !rev.published_was
       events.create(event_date: Time.now, transition: :complete) if rev.published
     end
   end
@@ -33,7 +33,7 @@ class Review < Eventable
   end
 
   def extra_panes
-    [["Comment", "reviews/edit"]] if Person.user.staff? and status.to_s == "current"
+    [["Comment", "reviews/edit"]] if Person.user.staff? && status.to_s == "current"
   end
 
   def status; published ? :complete : :current end

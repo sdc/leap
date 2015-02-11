@@ -28,9 +28,9 @@ class Grade
   end
 
   def <=>(other)
-    return nil unless scheme and other.scheme and scheme == other.scheme
+    return nil unless scheme && other.scheme && scheme == other.scheme
     return 0 if grade == other.grade
-    return -1 if SCHEMES[scheme].detect { |g| g == grade or g == other.grade } == grade
+    return -1 if SCHEMES[scheme].detect { |g| g == grade || g == other.grade } == grade
     return 1
   end
 

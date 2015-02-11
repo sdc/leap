@@ -19,7 +19,7 @@ class Qualification < Eventable
 
   after_create  { |qual| qual.events.create!(event_date: created_at, transition: qual.predicted? ? :create : :complete) }
 
-  before_save   { |q| q.predicted = true if (Person.user and !Person.user.staff?) }
+  before_save   { |q| q.predicted = true if (Person.user && !Person.user.staff?) }
 
   before_update { |q| q.events.first.update_attribute("event_date", q.created_at) }
 
@@ -45,7 +45,7 @@ class Qualification < Eventable
   end
 
   def extra_panes
-    if Person.user.staff? and Settings.quals_editing == "on"
+    if Person.user.staff? && Settings.quals_editing == "on"
       [["Edit", "events/tabs/edit_qual"]]
     end
   end
@@ -94,6 +94,6 @@ class Qualification < Eventable
   end
 
   def is_deletable?
-    Person.user.admin? or (Time.now - Settings.delete_delay.to_i < eventable.updated_at and Person.user == eventable.updated_by)
+    Person.user.admin? || (Time.now - Settings.delete_delay.to_i < eventable.updated_at && Person.user == eventable.updated_by)
   end
 end

@@ -36,10 +36,10 @@ class Target < Eventable
   end
 
   after_save do |target|
-    if target.complete_date_changed? and target.complete_date_was.nil?
+    if target.complete_date_changed? && target.complete_date_was.nil?
       events.create!(event_date: complete_date, transition: :complete)
     end
-    if target.drop_date_changed? and target.drop_date_was.nil?
+    if target.drop_date_changed? && target.drop_date_was.nil?
       events.create!(event_date: drop_date, transition: :drop)
     end
   end

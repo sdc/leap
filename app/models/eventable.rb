@@ -48,7 +48,7 @@ class Eventable < ActiveRecord::Base
   end
 
   def created_by_text
-    if respond_to? :mis and mis
+    if respond_to?(:mis) && mis
       "Imported from MIS"
     elsif created_by
       "#{self.humanize} created by #{created_by.name}"
@@ -78,6 +78,6 @@ class Eventable < ActiveRecord::Base
  end
 
  def is_deleted?
-   respond_to? :deleted and deleted
+   respond_to?(:deleted) && deleted
  end
 end

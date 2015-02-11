@@ -31,7 +31,7 @@ module EventsHelper
     when "Course" then link_to_if @affiliation == "staff", thing.code, thing
     when "Person" then link_to_if @affiliation == "staff", thing.name, thing
     end
-    (text and (text.size < 3  or text.last == "%")) ? content_tag(:span, text, class: "big") : text
+    (text && (text.size < 3  || text.last == "%")) ? content_tag(:span, text, class: "big") : text
   end
 
   def event_classes(event, mini = false)

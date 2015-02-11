@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
       end
       uname, domain = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"].try(:downcase).try(:split, '@')
       unless Settings.sdc.blank?
-        if @affiliation == "student" and uname.match(/^[sne]/)
+        if @affiliation == "student" && uname.match(/^[sne]/)
           uname.gsub!(/^s/, "10")
           uname.gsub!(/^n/, "20")
           uname.gsub!(/^e/, "30")
@@ -81,13 +81,14 @@ class ApplicationController < ActionController::Base
   def set_topic
     if @affiliation == "staff"
       if params[:person_id]
-        @topic = Person.get(params[:person_id], params[:refresh]) or redirect_to "/404.html"
+        @topic = Person.get(params[:person_id], params[:refresh]) 
       elsif params[:course_id]
-        @topic = Course.get(params[:course_id], params[:refresh]) or redirect_to "/404.html"
+        @topic = Course.get(params[:course_id], params[:refresh]) 
         @tutorgroup = params[:tutorgroup]
       else
         @topic = @user
       end
+      redirect_to "/404.html" unless @topic
     else
       @topic = @user
     end
@@ -98,7 +99,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_page
-    @user.admin? or redirect_to "/404.html"
+    @user.admin? || redirect_to("/404.html")
     @topic = nil
   end
 

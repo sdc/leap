@@ -26,7 +26,7 @@ class EventsController < ApplicationController
 
   def create
     et = params.delete(:eventable_type).tableize
-    if @affiliation == "staff" or Settings.students_create_events.split(",").include? et
+    if @affiliation == "staff" || Settings.students_create_events.split(",").include?(et)
       @event = @topic.send(et).build(params[et.singularize])
       if @event.save
         flash[:success] = "New #{et.singularize.humanize.titleize} created"
@@ -55,7 +55,7 @@ class EventsController < ApplicationController
   def update
     @event = @topic.events.find(params[:id])
     et = @event.eventable_type.tableize
-    if @affiliation == "staff" or Settings.students_update_events.split(",").include? et
+    if @affiliation == "staff" || Settings.students_update_events.split(",").include?(et)
       if @event.eventable.update_attributes(params[et.singularize])
         flash[:success] = "#{@event.eventable_type.humanize} updated"
       else

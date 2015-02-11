@@ -25,6 +25,6 @@ class Ebs::UnitInstanceOccurrence < Ebs::Model
   scoped_search on: [:fes_uins_instance_code, :long_description]
 
   def title
-    long_description or fes_long_description
+    long_description || fes_long_description
   end
 end

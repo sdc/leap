@@ -29,16 +29,16 @@ class PersonCourse < Eventable
   attr_accessible :offer_code, :status, :start_date, :application_date, :mis_status
 
   after_save do |person_course|
-    if person_course.application_date_changed? and person_course.application_date_was == nil
+    if person_course.application_date_changed? && person_course.application_date_was == nil
       person_course.events.create(event_date: person_course.application_date, transition: :create)
     end
-    if person_course.enrolment_date_changed? and person_course.enrolment_date_was == nil
+    if person_course.enrolment_date_changed? && person_course.enrolment_date_was == nil
       person_course.events.create(event_date: person_course.enrolment_date, transition: :to_start)
     end
-    if person_course.start_date_changed? and person_course.start_date_was == nil
+    if person_course.start_date_changed? && person_course.start_date_was == nil
       person_course.events.create(event_date: person_course.start_date, transition: :start)
     end
-    if person_course.end_date_changed? and person_course.end_date_was == nil
+    if person_course.end_date_changed? && person_course.end_date_was == nil
       person_course.events.create(event_date: person_course.end_date, transition: :complete)
     end
   end
@@ -77,7 +77,7 @@ class PersonCourse < Eventable
      "complete"   => "success",
      "current"    => "warning",
      "incomplete" => "danger"
-    }[status] or "default"
+    }[status] || "default"
   end
 
   def extra_panes(tr)
@@ -86,7 +86,7 @@ class PersonCourse < Eventable
       unless entry_reqs.empty?
         panes["Entry Requirements"] = "events/tabs/entry_reqs"
       end
-      if !Settings.application_title_field.blank? and Person.user.staff?
+      if !Settings.application_title_field.blank? && Person.user.staff?
         panes["Meeting outcome"]  = "events/tabs/application_offer"
       end
     end

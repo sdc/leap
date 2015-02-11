@@ -99,12 +99,12 @@ class Event < ActiveRecord::Base
 
   def is_deletable?
     return true if Person.user.staff? && eventable_type == "Qualification"
-    Person.user.admin? or (Time.now - Settings.delete_delay.to_i < eventable.created_at and Person.user == eventable.created_by)
+    Person.user.admin? || (Time.now - Settings.delete_delay.to_i < eventable.created_at && Person.user == eventable.created_by)
   end
 
   def created_by_text(options = {})
     options.reverse_merge!(event: true, eventable: true)
-    ret = (created_by and options[:event]) ? "Event created by #{created_by.name}<br />" : ""
+    ret = (created_by && options[:event]) ? "Event created by #{created_by.name}<br />" : ""
     ret += eventable.created_by_text if options[:eventable]
   end
 

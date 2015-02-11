@@ -25,7 +25,7 @@ class Course < ActiveRecord::Base
   scoped_search on: [:title, :code]
 
   def Course.get(mis_id, fresh=false)
-    (fresh ? import(mis_id, people: true) : find_by_mis_id(mis_id)) or import(mis_id, people: true)
+    (fresh ? import(mis_id, people: true) : find_by_mis_id(mis_id)) || import(mis_id, people: true)
   end
 
   def other_years
@@ -33,7 +33,7 @@ class Course < ActiveRecord::Base
   end
 
   def name
-    title.try(:titlecase) or code
+    title.try(:titlecase) || code
   end
 
   def to_param

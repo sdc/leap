@@ -4,7 +4,7 @@ class Intervention < Eventable
   after_create { |i| i.events.create!(event_date: created_at, transition: :create) }
 
   after_save do |i|
-    if i.disc_text_changed? and i.disc_text_was.nil?
+    if i.disc_text_changed? && i.disc_text_was.nil?
       i.events.create!(event_date: Time.now, transition: :complete, parent_id: i.events.creation.first.id)
     end
   end

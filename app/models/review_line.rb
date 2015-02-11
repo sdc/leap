@@ -26,11 +26,11 @@ class ReviewLine < Eventable
   end
 
   def title
-    window or "Individual Review"
+    window || "Individual Review"
   end
 
   def extra_panes
-    [["Edit", "events/tabs/review_line"]] if Person.user.staff? and status.to_s == "current"
+    [["Edit", "events/tabs/review_line"]] if Person.user.staff? && status.to_s == "current"
   end
 
   def status

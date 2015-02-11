@@ -64,7 +64,7 @@ class MdlGradeTrack < Eventable
   end
 
   def completion_percent
-    return nil unless completion_total and completion_out_of
+    return nil unless completion_total && completion_out_of
     ((completion_total.to_f / completion_out_of) * 100).round
   end
 
