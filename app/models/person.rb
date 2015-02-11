@@ -125,7 +125,7 @@ class Person < ActiveRecord::Base
   end
 
   def admin?
-    Settings.admin_users.map { |x| x.to_i }.include? id
+    Settings.admin_users.map(&:to_i).include? id
   end
 
   def mis_code
@@ -152,7 +152,7 @@ class Person < ActiveRecord::Base
   def lat_score
     Rails.cache.fetch("#{mis_id}_l3va_score", expires_in: 1.hour) do
       if qualifications.detect { |q| q.lat_score.kind_of? Fixnum }
-        (qualifications.select { |q| q.lat_score.kind_of? Fixnum }.sum { |q| q.lat_score } /
+        (qualifications.select { |q| q.lat_score.kind_of? Fixnum }.sum(&:lat_score) /
          qualifications.select { |q| q.lat_score.kind_of? Fixnum }.count.to_f).round(2)
       else
         false

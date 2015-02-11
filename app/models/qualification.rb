@@ -37,7 +37,7 @@ class Qualification < Eventable
             }
 
   def body
-    [self[:qual_type], self[:title]].reject { |x| x.blank? }.join ": "
+    [self[:qual_type], self[:title]].reject(&:blank?).join ": "
   end
 
   def subtitle

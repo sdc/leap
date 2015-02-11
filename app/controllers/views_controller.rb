@@ -29,9 +29,9 @@ class ViewsController < ApplicationController
         limit(request.format == "pdf" ? 20000 : 20)
       @events = @events.select { |e| e.status.to_s == params[:status] } if params[:status]
       @events = @events.select { |e| e.title.to_s == params[:title] } if params[:title]
-      @events.detect { |e| e.past? }.try("first_in_past=", true) unless @events.first.past? if @events.try(:first)
-      @events.reject! { |e| e.staff_only? } unless @user.staff?
-      @events.reject! { |e| e.is_deleted? }
+      @events.detect(&:past?).try("first_in_past=", true) unless @events.first.past? if @events.try(:first)
+      @events.reject!(&:staff_only?) unless @user.staff?
+      @events.reject!(&:is_deleted?)
       respond_with(@events) do |f|
         f.js { render @events }
       end
@@ -53,9 +53,9 @@ class ViewsController < ApplicationController
     elsif (@affiliation == "staff" && @topic.kind_of?(Course))
       @multi = true
       if @tutorgroup
-        Event.where(person_id: @topic.person_courses.where(tutorgroup: @tutorgroup).map { |p| p.person_id })
+        Event.where(person_id: @topic.person_courses.where(tutorgroup: @tutorgroup).map(&:person_id))
       else
-        Event.where(person_id: @topic.people.map { |p| p.id })
+        Event.where(person_id: @topic.people.map(&:id))
       end
     else
       @multi = false
