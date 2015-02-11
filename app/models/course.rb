@@ -57,12 +57,12 @@ class Course < ActiveRecord::Base
   end
 
   def tutorgroups
-    groups = person_courses.group("tutorgroup").map{ |pc| pc.tutorgroup }.reject{ |g| g.blank? }
+    groups = person_courses.group("tutorgroup").map { |pc| pc.tutorgroup }.reject { |g| g.blank? }
   end
 
   def entry_reqs
     return [] if vague_title.blank?
-    EntryReq.where(app_title: vague_title).group_by{ |er| [er.app_title, er.course_title, er.course_qual] }
+    EntryReq.where(app_title: vague_title).group_by { |er| [er.app_title, er.course_title, er.course_qual] }
   end
 
   def person?; false end

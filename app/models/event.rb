@@ -66,7 +66,7 @@ class Event < ActiveRecord::Base
 
   def self.year_start
     @date = Date.today
-    (d, m) = Settings.year_boundary_date.split("/").map{ |x| x.to_i }
+    (d, m) = Settings.year_boundary_date.split("/").map { |x| x.to_i }
     ab = @date.change(day: d, month: m)
     if ab < @date
       @date = ab

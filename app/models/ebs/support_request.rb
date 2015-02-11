@@ -28,7 +28,7 @@ class Ebs::SupportRequest < Ebs::Model
 
    def res
      begin
-       register_events.map{ |reid| Ebs::RegisterEvent.find(reid) }.map{ |re| re.description }
+       register_events.map { |reid| Ebs::RegisterEvent.find(reid) }.map { |re| re.description }
      rescue
        []
      end
