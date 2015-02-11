@@ -22,8 +22,8 @@ class TimetablesController < ApplicationController
     @date = @date.to_date.at_beginning_of_week
     @end_date = @date.next_week
     if params[:year]
-      (d,m) = Settings.year_boundary_date.split("/").map{ |x| x.to_i }
-      ab = @date.change(day: d,month: m)
+      (d, m) = Settings.year_boundary_date.split("/").map{ |x| x.to_i }
+      ab = @date.change(day: d, month: m)
       if ab < @date
         @date = ab
         @end_date = ab + 1.year

@@ -19,7 +19,7 @@ class Person < ActiveRecord::Base
 
   scoped_search on: [:forename, :surname, :mis_id]
 
-  AFFILIATIONS = ["staff","student","applicant","affiliate"]
+  AFFILIATIONS = ["staff", "student", "applicant", "affiliate"]
 
   has_many :events
   has_many :review_lines
@@ -78,8 +78,8 @@ class Person < ActiveRecord::Base
     end
   end
 
-  def Person.get(mis_id,fresh=false)
-    mis_id = mis_id.to_s.tr('^0-9','') if mis_id.to_s.match(/\d{6}/)
+  def Person.get(mis_id, fresh=false)
+    mis_id = mis_id.to_s.tr('^0-9', '') if mis_id.to_s.match(/\d{6}/)
     return import(mis_id) if fresh
     return find_by_username(mis_id) || find_by_mis_id(mis_id) || import(mis_id)
   end

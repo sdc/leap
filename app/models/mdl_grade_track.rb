@@ -6,9 +6,9 @@ class MdlGradeTrack < Eventable
 
   after_create { |t| t.events.create(event_date: t.created_at, transition: ':create') }
 
-  scope "english", -> { where(course_type: ["english","gcse_english"]) }
-  scope "maths", -> { where(course_type: ["maths","gcse_maths"]) }
-  scope "core", ->{ where("course_type NOT IN (?)",["maths","gcse_maths","english","gcse_english"]) }
+  scope "english", -> { where(course_type: ["english", "gcse_english"]) }
+  scope "maths", -> { where(course_type: ["maths", "gcse_maths"]) }
+  scope "core", ->{ where("course_type NOT IN (?)", ["maths", "gcse_maths", "english", "gcse_english"]) }
 
   def self.user_url(username)
     "#{Settings.moodle_host}#{Settings.moodle_path}/webservice/rest/server.php?" +
@@ -33,7 +33,7 @@ class MdlGradeTrack < Eventable
     end
   end
 
-  def self.import_for(person,delete = true)
+  def self.import_for(person, delete = true)
     person = person.kind_of?(Person) ? person : Person.get(person) 
     person.mdl_grade_tracks.destroy_all
     begin

@@ -15,14 +15,14 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Pathway < Eventable
-  attr_accessible :pathway,:subject
+  attr_accessible :pathway, :subject
 
   after_create { |q| q.events.create!(event_date: created_at, transition: :create) }
 
-  validates :pathway,:subject, presence: true
+  validates :pathway, :subject, presence: true
 
   def title
-    ["Pathway",subject]
+    ["Pathway", subject]
   end
 
   def body; pathway end

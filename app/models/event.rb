@@ -44,13 +44,13 @@ class Event < ActiveRecord::Base
 
   attr_accessible :event_date, :transition, :parent_id 
 
-  TRANSITIONS = [:create,:to_start,:start,:overdue,:complete,:drop,:hidden]
+  TRANSITIONS = [:create, :to_start, :start, :overdue, :complete, :drop, :hidden]
 
   symbolize :transition , in: TRANSITIONS, methods: true, scopes: true, allow_nil: true
 
   scope :unique_eventable, -> { group("eventable_id,eventable_type") }
   scope :creation, -> { where(transition: :create) }
-  scope :this_year, -> { where("event_date > ?",year_start) }
+  scope :this_year, -> { where("event_date > ?", year_start) }
   default_scope -> { order("event_date DESC") }
 
   before_validation { |event| update_attribute("person_id", event.eventable.person_id) unless person_id }
@@ -66,8 +66,8 @@ class Event < ActiveRecord::Base
 
   def self.year_start
     @date = Date.today
-    (d,m) = Settings.year_boundary_date.split("/").map{ |x| x.to_i }
-    ab = @date.change(day: d,month: m)
+    (d, m) = Settings.year_boundary_date.split("/").map{ |x| x.to_i }
+    ab = @date.change(day: d, month: m)
     if ab < @date
       @date = ab
       @end_date = ab 
@@ -77,8 +77,8 @@ class Event < ActiveRecord::Base
     end
   end
 
-  [:title,:subtitle,:icon_url,:body,:extra_panes,:status,:staff_only?,
-   :timetable_length,:tile_bg,:tile_icon,:tile_title,:is_deleted?].each do |method|
+  [:title, :subtitle, :icon_url, :body, :extra_panes, :status, :staff_only?,
+   :timetable_length, :tile_bg, :tile_icon, :tile_title, :is_deleted?].each do |method|
     define_method method do
       if eventable.respond_to?(method) 
         m = eventable.method(method)
@@ -113,7 +113,7 @@ class Event < ActiveRecord::Base
   end
 
   def timetable_margin
-   ((timetable_start - timetable_start.change(hour: 8,minute: 0, sec: 0, usec: 0)) / 50).floor
+   ((timetable_start - timetable_start.change(hour: 8, minute: 0, sec: 0, usec: 0)) / 50).floor
   end
 
   def timetable_height

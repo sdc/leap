@@ -22,9 +22,9 @@ class Course < ActiveRecord::Base
   has_many :person_courses, conditions: "enrolment_date is not null"
   has_many :people, through: :person_courses
 
-  scoped_search on: [:title,:code]
+  scoped_search on: [:title, :code]
 
-  def Course.get(mis_id,fresh=false)
+  def Course.get(mis_id, fresh=false)
     (fresh ? import(mis_id, people: true) : find_by_mis_id(mis_id)) or import(mis_id, people: true)
   end
 
@@ -62,7 +62,7 @@ class Course < ActiveRecord::Base
 
   def entry_reqs
     return [] if vague_title.blank?
-    EntryReq.where(app_title: vague_title).group_by{ |er| [er.app_title,er.course_title,er.course_qual] }
+    EntryReq.where(app_title: vague_title).group_by{ |er| [er.app_title, er.course_title, er.course_qual] }
   end
 
   def person?; false end

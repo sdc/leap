@@ -36,7 +36,7 @@ class Ebs::RegisterEventDetailsSlot < Ebs::Model
   end
 
   def usage
-    Ebs::Usage.find_by_usage_code_and_object_type(usage_code,object_type)
+    Ebs::Usage.find_by_usage_code_and_object_type(usage_code, object_type)
   end
 
   def status

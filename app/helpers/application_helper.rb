@@ -16,10 +16,10 @@
 
 module ApplicationHelper
 
-  def icon_link(text,link="#",icon=false)
+  def icon_link(text, link="#", icon=false)
     content_tag(:li, class: "row") do
       link_to link do
-        image_tag("icons/#{icon or text.downcase.tr(' ','_')}.png", size: "30x30") + text
+        image_tag("icons/#{icon or text.downcase.tr(' ', '_')}.png", size: "30x30") + text
       end
     end
   end

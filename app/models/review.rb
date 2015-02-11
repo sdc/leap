@@ -33,7 +33,7 @@ class Review < Eventable
   end
 
   def extra_panes
-    [["Comment","reviews/edit"]] if Person.user.staff? and status.to_s == "current"
+    [["Comment", "reviews/edit"]] if Person.user.staff? and status.to_s == "current"
   end
 
   def status; published ? :complete : :current end

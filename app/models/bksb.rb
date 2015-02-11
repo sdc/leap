@@ -27,7 +27,7 @@ class BKSB < ActiveResource::Base
           next unless a.respond_to? :IA_Result
           (a.IA_Result.kind_of?(Array) ? a.IA_Result : [a.IA_Result]).each do |a|
             begin
-              n = person.qualifications.find_or_initialize_by_mis_id_and_awarding_body(a.session_id,"BKSB")
+              n = person.qualifications.find_or_initialize_by_mis_id_and_awarding_body(a.session_id, "BKSB")
               n.title = "Initial Assessment: #{subject}"
               n.grade = "#{"Entry " if a.result.match(/Entry/)}Level #{a.result.last}"
               n.created_at = DateTime.parse(a.DateCompleted)
@@ -40,7 +40,7 @@ class BKSB < ActiveResource::Base
           next unless a.respond_to? :Diag_Result
           (a.Diag_Result.kind_of?(Array) ? a.Diag_Result : [a.Diag_Result]).each do |a|
             begin
-              n = person.qualifications.find_or_initialize_by_mis_id_and_awarding_body(a.session_id,"BKSB")
+              n = person.qualifications.find_or_initialize_by_mis_id_and_awarding_body(a.session_id, "BKSB")
               n.title = "Diagnostic Assessment: #{subject}"
               n.grade = "#{a.totalScore} out of #{a.totalOutOf} (#{a.percentScore}%)"
               n.created_at = DateTime.parse(a.dateTaken)

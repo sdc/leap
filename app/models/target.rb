@@ -88,7 +88,7 @@ class Target < Eventable
 
   # Returns the partial to render for the details pane
   def extra_panes
-    [["Completion","targets/details"]]
+    [["Completion", "targets/details"]]
   end
 
   def tile_attrs

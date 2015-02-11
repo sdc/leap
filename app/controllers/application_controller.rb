@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     begin
       @date = if params[:date]
         if params[:date].kind_of? Hash
-          Time.gm(*[:year,:month,:day].map{ |x| params[:date][x].to_i })
+          Time.gm(*[:year, :month, :day].map{ |x| params[:date][x].to_i })
         else
           Time.parse(params[:date])
         end
@@ -63,14 +63,14 @@ class ApplicationController < ActionController::Base
       aff_var = request.env["affiliation"] || request.env["HTTP_AJP_AFFILIATION"]
       if aff_var
         affs = aff_var.split(";").map{ |a| a.split("@").first.downcase }
-        Person.affiliation = @affiliation = ["staff","student","applicant","affiliate"].find{ |a| affs.include? a }
+        Person.affiliation = @affiliation = ["staff", "student", "applicant", "affiliate"].find{ |a| affs.include? a }
       end
-      uname,domain = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"].try(:downcase).try(:split,'@')
+      uname, domain = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"].try(:downcase).try(:split, '@')
       unless Settings.sdc.blank?
         if @affiliation == "student" and uname.match(/^[sne]/) 
-          uname.gsub!(/^s/,"10")
-          uname.gsub!(/^n/,"20")
-          uname.gsub!(/^e/,"30")
+          uname.gsub!(/^s/, "10")
+          uname.gsub!(/^n/, "20")
+          uname.gsub!(/^e/, "30")
         end
       end
       Person.user = @user = Person.get(uname)
@@ -81,9 +81,9 @@ class ApplicationController < ActionController::Base
   def set_topic
     if @affiliation == "staff"
       if params[:person_id]
-        @topic = Person.get(params[:person_id],params[:refresh]) or redirect_to "/404.html"
+        @topic = Person.get(params[:person_id], params[:refresh]) or redirect_to "/404.html"
       elsif params[:course_id]
-        @topic = Course.get(params[:course_id],params[:refresh]) or redirect_to "/404.html"
+        @topic = Course.get(params[:course_id], params[:refresh]) or redirect_to "/404.html"
         @tutorgroup = params[:tutorgroup]
       else
         @topic = @user

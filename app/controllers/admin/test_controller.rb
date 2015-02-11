@@ -24,7 +24,7 @@ class Admin::TestController < ApplicationController
   def login
     session[:user_id] = params[:login]
     session[:user_affiliation] = params[:affiliation]
-    if person = Person.get(session[:user_id],true)
+    if person = Person.get(session[:user_id], true)
       redirect_to person
     else
       redirect_to :back, notice: "That person doesn't exist!"

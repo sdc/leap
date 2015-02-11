@@ -12,6 +12,6 @@ class SimplePollAnswer < Eventable
   after_create { |ans| ans.events.create!(event_date: created_at, transition: :create) }
 
   def extra_panes
-    [["Results","events/tabs/simple_poll_answer"]]
+    [["Results", "events/tabs/simple_poll_answer"]]
   end
 end

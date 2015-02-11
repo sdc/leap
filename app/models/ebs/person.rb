@@ -36,7 +36,7 @@ class Ebs::Person < Ebs::Model
   has_many :blobs, foreign_key: "owner_ref"
 
   def name
-    [forename,surname].join(" ")
+    [forename, surname].join(" ")
   end
 
   def address

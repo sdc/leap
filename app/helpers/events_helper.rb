@@ -22,7 +22,7 @@ module EventsHelper
   end
 
 
-  def special_title(thing,wrap = :div)
+  def special_title(thing, wrap = :div)
     text = case thing.class.name
     when "String" then thing
     when "Array"  then thing.map{ |t| content_tag(wrap, special_title(t)) }.join " "
@@ -31,11 +31,11 @@ module EventsHelper
     when "Course" then link_to_if @affiliation == "staff", thing.code, thing
     when "Person" then link_to_if @affiliation == "staff", thing.name, thing
     end
-    (text and (text.size < 3  or text.last == "%")) ? content_tag(:span,text,class: "big") : text
+    (text and (text.size < 3  or text.last == "%")) ? content_tag(:span, text, class: "big") : text
   end
     
   def event_classes(event, mini = false)
-    classes =  [mini ? "child-event" : "event",event.status,dom_id(event),dom_id(event.eventable),dom_class(event.eventable)]
+    classes =  [mini ? "child-event" : "event", event.status, dom_id(event), dom_id(event.eventable), dom_class(event.eventable)]
     classes << "with_person" if @multi
     classes << "with_subtitle" if event.subtitle
     return classes
@@ -43,7 +43,7 @@ module EventsHelper
 
   def extend_event_button(event)
     link_to(image_tag("actions/event_open.png"), 
-            open_extended_event_url(event,person_id: event.person.mis_id), remote: true, class: "extend-button"
+            open_extended_event_url(event, person_id: event.person.mis_id), remote: true, class: "extend-button"
            ) +
     image_tag("actions/event_opened.png", class: "close-extend-button", style: "display:none") +
     image_tag("ajax-loader.gif", style: "display:none", class: "event-spinner", size: "16x16")
@@ -87,7 +87,7 @@ module EventsHelper
     end
   end
 
-  def create_event_form(klass,html_options = {},remote = false,&block)
+  def create_event_form(klass, html_options = {}, remote = false, &block)
     form_for(@topic.kind_of?(Person) ? @topic.send(klass.name.tableize).new : klass.new, remote: remote,
       url: "/events", html: html_options.reverse_merge(class: "form")
     ) do |f|

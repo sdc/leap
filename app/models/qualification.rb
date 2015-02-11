@@ -37,7 +37,7 @@ class Qualification < Eventable
             }
 
   def body
-    [self[:qual_type],self[:title]].reject{ |x| x.blank? }.join ": "
+    [self[:qual_type], self[:title]].reject{ |x| x.blank? }.join ": "
   end
 
   def subtitle
@@ -46,7 +46,7 @@ class Qualification < Eventable
 
   def extra_panes
     if Person.user.staff? and Settings.quals_editing == "on"
-      [["Edit","events/tabs/edit_qual"]]
+      [["Edit", "events/tabs/edit_qual"]]
     end
   end
 
@@ -60,8 +60,8 @@ class Qualification < Eventable
   def title
     return "Qualification" if seen?
     return "Qualification" if !mis_id.blank?
-    return ["Predicted","Grade"] if predicted?
-    return ["Qualification","(not_seen)"] 
+    return ["Predicted", "Grade"] if predicted?
+    return ["Qualification", "(not_seen)"] 
   end
 
   def lat_score
