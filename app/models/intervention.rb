@@ -2,11 +2,11 @@ class Intervention < Eventable
 
   attr_accessible :disc_text, :incident_date, :pi_type, :referral, :referral_category, :referral_text, :workshops
 
-  after_create {|i| i.events.create!(:event_date => created_at, :transition => :create)}
+  after_create {|i| i.events.create!(event_date: created_at, transition: :create)}
 
   after_save do |i|
     if i.disc_text_changed? and i.disc_text_was.nil?
-      i.events.create!(:event_date => Time.now, :transition => :complete, :parent_id => i.events.creation.first.id)
+      i.events.create!(event_date: Time.now, transition: :complete, parent_id: i.events.creation.first.id)
     end
   end
 

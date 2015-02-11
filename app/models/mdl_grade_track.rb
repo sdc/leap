@@ -4,10 +4,10 @@ class MdlGradeTrack < Eventable
 
   belongs_to :person
 
-  after_create {|t| t.events.create(:event_date => t.created_at, :transition => ':create')}
+  after_create {|t| t.events.create(event_date: t.created_at, transition: ':create')}
 
-  scope "english", -> { where(:course_type => ["english","gcse_english"]) }
-  scope "maths", -> { where(:course_type => ["maths","gcse_maths"]) }
+  scope "english", -> { where(course_type: ["english","gcse_english"]) }
+  scope "maths", -> { where(course_type: ["maths","gcse_maths"]) }
   scope "core", ->{ where("course_type NOT IN (?)",["maths","gcse_maths","english","gcse_english"]) }
 
   def self.user_url(username)
@@ -46,8 +46,8 @@ class MdlGradeTrack < Eventable
       return nil
     end
     Nokogiri::XML(tracks).xpath('//MULTIPLE/SINGLE').each do |course|
-      next if person.mdl_grade_tracks.where(:created_at  => Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i),
-                                            :course_type => course.xpath("KEY[@name='leapcore']/VALUE").first.content).any?
+      next if person.mdl_grade_tracks.where(created_at: Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i),
+                                            course_type: course.xpath("KEY[@name='leapcore']/VALUE").first.content).any?
       a=person.mdl_grade_tracks.create do |t|
         t.name              = course.xpath("KEY[@name='course_fullname']/VALUE").first.content
         t.mdl_id            = course.xpath("KEY[@name='course_id']/VALUE").first.content
@@ -76,12 +76,12 @@ class MdlGradeTrack < Eventable
     else
       "6a6"
     end
-    Tile.new({:title        => name,
-              :bg           => bg,
-              :icon         => "fa-bar-chart-o",
-              :partial_path => "tiles/grade_track",
-              :link         => Settings.moodle_host + Settings.moodle_path + "/grade/report/grader/index.php?id=" + mdl_id.to_s,
-              :object       => self})
+    Tile.new({title: name,
+              bg: bg,
+              icon: "fa-bar-chart-o",
+              partial_path: "tiles/grade_track",
+              link: Settings.moodle_host + Settings.moodle_path + "/grade/report/grader/index.php?id=" + mdl_id.to_s,
+              object: self})
   end
 
   def status

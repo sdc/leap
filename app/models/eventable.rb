@@ -19,14 +19,14 @@ class Eventable < ActiveRecord::Base
   self.abstract_class = true
 
   belongs_to :person
-  belongs_to :created_by, :foreign_key => "created_by_id", :class_name => "Person"
-  has_many :events, :as => :eventable, :dependent => :destroy
+  belongs_to :created_by, foreign_key: "created_by_id", class_name: "Person"
+  has_many :events, as: :eventable, dependent: :destroy
 
   before_validation do |e| 
     update_attribute("created_by_id", Person.user ? Person.user.id : nil) unless e.created_by_id
   end
 
-  validates :person_id, :presence => true
+  validates :person_id, presence: true
 
   def icon_url
     "events/#{self.class.name.tableize}.png"

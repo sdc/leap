@@ -20,6 +20,6 @@ class Ebs::Attendance < Ebs::Model
 
   default_scope -> { order(Settings.attendance_date_column) }
 
-  belongs_to :person,  :foreign_key => "per_person_code"
+  belongs_to :person,  foreign_key: "per_person_code"
 
 end

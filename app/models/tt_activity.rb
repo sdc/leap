@@ -29,7 +29,7 @@ class TtActivity < Eventable
     act.repeat_number = 1 if act.repeat_type == "No repeat"
     this_start = act.start_time
     1.upto(act.repeat_number) do |i|
-      act.events.create!(:event_date => this_start, :transition => :start)
+      act.events.create!(event_date: this_start, transition: :start)
       this_start = case act.repeat_type.downcase
       when "weekly" then this_start + 1.week
       when "monthly" then this_start + 1.month

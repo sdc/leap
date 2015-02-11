@@ -24,7 +24,7 @@ class TimetablesController < ApplicationController
     @end_date = @date.next_week
     if params[:year]
       (d,m) = Settings.year_boundary_date.split("/").map{|x| x.to_i}
-      ab = @date.change(:day => d,:month => m)
+      ab = @date.change(day: d,month: m)
       if ab < @date
         @date = ab
         @end_date = ab + 1.year
@@ -33,20 +33,20 @@ class TimetablesController < ApplicationController
         @date = ab - 1.year
       end
     end
-    @registers = @topic.timetable_events(:from => @date, :to => @end_date)
+    @registers = @topic.timetable_events(from: @date, to: @end_date)
     @view = View.for_user.find_by_name("timetable")
     @events = if @topic.kind_of? Person
-      @topic.events.where(:event_date => (@date.to_time + 1.hour + 1.second)..@end_date, :transition => @view.transitions, :eventable_type => @view.events) 
+      @topic.events.where(event_date: (@date.to_time + 1.hour + 1.second)..@end_date, transition: @view.transitions, eventable_type: @view.events) 
     else
       []
     end
     respond_to do |format|
-      format.html { render :action => Settings.home_page == "new" ? :cloud_index : :index }
-      format.xml { render :xml => @topic }
+      format.html { render action: Settings.home_page == "new" ? :cloud_index : :index }
+      format.xml { render xml: @topic }
       format.ics do
         cal = Icalendar::Calendar.new
         @registers.each {|r| cal.add_event(r.to_ics)}
-        render :text => cal.to_ical
+        render text: cal.to_ical
       end
     end
   end

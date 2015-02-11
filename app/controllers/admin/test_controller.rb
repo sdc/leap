@@ -16,8 +16,8 @@
 
 class Admin::TestController < ApplicationController
 
-  skip_before_filter :set_user  , :except => [:stats]
-  before_filter      :admin_page, :only   => [:stats]
+  skip_before_filter :set_user  , except: [:stats]
+  before_filter      :admin_page, only: [:stats]
 
   def index
   end
@@ -28,7 +28,7 @@ class Admin::TestController < ApplicationController
     if person = Person.get(session[:user_id],true)
       redirect_to person
     else
-      redirect_to :back, :notice => "That person doesn't exist!"
+      redirect_to :back, notice: "That person doesn't exist!"
     end
   end
 

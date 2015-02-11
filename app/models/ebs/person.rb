@@ -18,30 +18,30 @@ class Ebs::Person < Ebs::Model
 
   self.primary_key = :person_code
 
-  scoped_search :on => [:forename, :surname, :person_code]
+  scoped_search on: [:forename, :surname, :person_code]
 
-  belongs_to :note, :foreign_key => "notes"
+  belongs_to :note, foreign_key: "notes"
   has_many :targets
   has_many :learner_aims,
-           :foreign_key => "person_code"
+           foreign_key: "person_code"
   has_one  :address, 
-           :foreign_key => "owner_ref",
-           :conditions  => ["end_date IS NULL"]
+           foreign_key: "owner_ref",
+           conditions: ["end_date IS NULL"]
   has_many :people_units,
-           :foreign_key => "person_code"
+           foreign_key: "person_code"
   has_many :unit_instance_occurrences, 
-           :through => :people_units
+           through: :people_units
   has_many :attendances,
-           :foreign_key => "person_code"
-  belongs_to :tutor, :class_name => "Person", :foreign_key => "student_staff_tutor"
-  has_many :blobs, :foreign_key => "owner_ref"
+           foreign_key: "person_code"
+  belongs_to :tutor, class_name: "Person", foreign_key: "student_staff_tutor"
+  has_many :blobs, foreign_key: "owner_ref"
 
   def name
     [forename,surname].join(" ")
   end
 
   def address
-    Ebs::Address.where(:owner_ref => "#{id}").where("end_date IS NULL").last
+    Ebs::Address.where(owner_ref: "#{id}").where("end_date IS NULL").last
   end
 
 end

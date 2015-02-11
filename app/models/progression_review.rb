@@ -20,14 +20,14 @@ class ProgressionReview < Eventable
 
   serialize :reason
 
-  validates :reason, :presence => true, :unless => :approved?
+  validates :reason, presence: true, unless: :approved?
 
   before_create {|pr| pr.reason = nil if approved; reason.delete("") if reason}
   
   after_create  do |pr| 
-    ev = pr.events.create! :event_date => created_at, :transition => :complete
+    ev = pr.events.create! event_date: created_at, transition: :complete
     unless pr.approved?
-      pr.person.targets.create! :event_id => ev.id, :body => "Speak to a member of Helpzone about alternative courses", :target_date => Date.parse("31-05-2013")
+      pr.person.targets.create! event_id: ev.id, body: "Speak to a member of Helpzone about alternative courses", target_date: Date.parse("31-05-2013")
     end
   end
 

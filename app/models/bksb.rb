@@ -15,7 +15,7 @@ class BKSB < ActiveResource::Base
   end
 
   def BKSB.element_path(id, prefix_options = {}, query_options = nil)
-    "/bksb_reporting/API/Results.aspx#{query_string(:p => Settings.bksb_pwd, :u => id)}"
+    "/bksb_reporting/API/Results.aspx#{query_string(p: Settings.bksb_pwd, u: id)}"
   end
 
   def self.import_for(person_code)

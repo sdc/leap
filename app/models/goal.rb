@@ -19,7 +19,7 @@ class Goal < Eventable
   attr_accessible :body
 
   after_create do |target| 
-    target.events.create!(:event_date => created_at)
+    target.events.create!(event_date: created_at)
   end
 
 end

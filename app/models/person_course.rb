@@ -18,29 +18,29 @@ class PersonCourse < Eventable
 
   include MisPersonCourse
 
-  delegate :code, :vague_title, :entry_reqs, :to => :course
-  delegate :photo_uri, :name, :mis_id, :note, :contact_allowed, :staff?, :to => :person
+  delegate :code, :vague_title, :entry_reqs, to: :course
+  delegate :photo_uri, :name, :mis_id, :note, :contact_allowed, :staff?, to: :person
 
   belongs_to :course
   belongs_to :person
-  has_one :enrolment_event,   :as => :eventable, :class_name => "Event", :conditions => {:transition => :start}
-  has_one :application_event, :as => :eventable, :class_name => "Event", :conditions => {:transition => :create}
-  has_one :complete_event,    :as => :eventable, :class_name => "Event", :conditions => {:transition => :complete}
+  has_one :enrolment_event,   as: :eventable, class_name: "Event", conditions: {transition: :start}
+  has_one :application_event, as: :eventable, class_name: "Event", conditions: {transition: :create}
+  has_one :complete_event,    as: :eventable, class_name: "Event", conditions: {transition: :complete}
 
   attr_accessible :offer_code, :status, :start_date, :application_date, :mis_status
 
   after_save do |person_course|
     if person_course.application_date_changed? and person_course.application_date_was == nil
-      person_course.events.create(:event_date => person_course.application_date, :transition => :create)
+      person_course.events.create(event_date: person_course.application_date, transition: :create)
     end
     if person_course.enrolment_date_changed? and person_course.enrolment_date_was == nil
-      person_course.events.create(:event_date => person_course.enrolment_date, :transition => :to_start)
+      person_course.events.create(event_date: person_course.enrolment_date, transition: :to_start)
     end
     if person_course.start_date_changed? and person_course.start_date_was == nil
-      person_course.events.create(:event_date => person_course.start_date, :transition => :start)
+      person_course.events.create(event_date: person_course.start_date, transition: :start)
     end
     if person_course.end_date_changed? and person_course.end_date_was == nil
-      person_course.events.create(:event_date => person_course.end_date, :transition => :complete)
+      person_course.events.create(event_date: person_course.end_date, transition: :complete)
     end
   end
 
@@ -58,7 +58,7 @@ class PersonCourse < Eventable
   end
 
   def to_xml(options = {})
-    super({:include => :course}.merge(options))
+    super({include: :course}.merge(options))
   end
 
   def status 
@@ -95,7 +95,7 @@ class PersonCourse < Eventable
   end
 
   def tile_attrs
-    {:icon => "fa-graduation-cap"}
+    {icon: "fa-graduation-cap"}
   end
 
 end

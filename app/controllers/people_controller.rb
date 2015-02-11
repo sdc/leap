@@ -17,8 +17,8 @@
 class PeopleController < ApplicationController
 
   skip_before_filter :set_topic
-  before_filter      :person_set_topic, :except => [:search]
-  before_filter      :staff_only, :only => [:search,:select]
+  before_filter      :person_set_topic, except: [:search]
+  before_filter      :staff_only, only: [:search,:select]
   layout :set_layout
 
   def show
@@ -26,21 +26,21 @@ class PeopleController < ApplicationController
       format.html do
         @sidebar_links = parse_sidebar_links
         if Settings.home_page == "new"
-          @tiles = @topic.events.where(:eventable_type => "Target",:transition => :overdue).
-                   where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)
-          @tiles += @topic.events.where(:eventable_type => "Note").limit(8)
-          @tiles += @topic.events.where(:eventable_type => "MdlBadge").limit(8)
+          @tiles = @topic.events.where(eventable_type: "Target",transition: :overdue).
+                   where(event_date: (Date.today - 1.week)..(Date.today + 1.month)).limit(8)
+          @tiles += @topic.events.where(eventable_type: "Note").limit(8)
+          @tiles += @topic.events.where(eventable_type: "MdlBadge").limit(8)
           @tiles = @tiles.sort_by(&:event_date).reverse.map(&:to_tile)
-          @tiles.unshift(SimplePoll.where(:id => Settings.current_simple_poll).first.to_tile) unless Settings.current_simple_poll.blank?
+          @tiles.unshift(SimplePoll.where(id: Settings.current_simple_poll).first.to_tile) unless Settings.current_simple_poll.blank?
           ppdc = Settings.moodle_badge_block_courses.try(:split,",")
-          @tiles.unshift(@topic.mdl_badges.where(:mdl_course_id => ppdc).last.to_course_tile) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
+          @tiles.unshift(@topic.mdl_badges.where(mdl_course_id: ppdc).last.to_course_tile) if ppdc && @topic.mdl_badges.where(mdl_course_id: ppdc).any?
           tracks = @topic.mdl_grade_tracks.group(:course_type).order(:created_at).flatten
           #@tiles.unshift(["english","maths","core"].reject{|ct| tracks.detect{|t| t.course_type == ct}}.first([3 - tracks.count,0].max).map do |ct|
           #  @topic.mdl_grade_tracks.where(:course_type => ct).last.try(:to_tile) or
           #  MdlGradeTrack.new(:course_type => ct).to_tile
           #end)
           @tiles.unshift(tracks.map{|x| x.to_tile})
-          attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).last}.reject{|x| x.nil?}
+          attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(course_type: ct).last}.reject{|x| x.nil?}
           attendances.select!{|x| x.course_type != "overall"} if attendances.length == 2
           @tiles.unshift(attendances.map{|x| x.to_tile})
           #if @topic.attendances.where(:course_type => "overall").any?
@@ -50,15 +50,15 @@ class PeopleController < ApplicationController
           @tiles.unshift(GlobalNews.last.to_tile) if GlobalNews.any?
           @tiles = @tiles.flatten.reject{|t| t.nil?} #.uniq{|t| t.object}
           @on_home_page = true
-          render :action => "home"
+          render action: "home"
         end
       end
       format.json do 
-        render :json => @topic.to_json(:methods => [:l3va,:gcse_english,:gcse_maths], :except => [:photo])
+        render json: @topic.to_json(methods: [:l3va,:gcse_english,:gcse_maths], except: [:photo])
       end
       format.jpg do
         if @topic.photo
-          send_data @topic.photo, :disposition => 'inline', :type => "image/jpg"
+          send_data @topic.photo, disposition: 'inline', type: "image/jpg"
         else
           redirect_to "/assets/noone.png"
         end
@@ -85,7 +85,7 @@ class PeopleController < ApplicationController
   def select
     if params[:q]
       @people = Person.search_for(params[:q]).order("surname,forename").limit(20)
-      render :json => @people.map{|p| {:id => p.id,:name => p.name, :readonly => p==@user}}.to_json
+      render json: @people.map{|p| {id: p.id,name: p.name, readonly: p==@user}}.to_json
     end
   end
 
@@ -132,8 +132,8 @@ class PeopleController < ApplicationController
   end
 
   def poll_block
-    @poll = SimplePoll.where(:id => Settings.current_simple_poll).first unless Settings.current_simple_poll.blank?
-    @myans = @topic.simple_poll_answers.where(:simple_poll_id => @poll.id).first
+    @poll = SimplePoll.where(id: Settings.current_simple_poll).first unless Settings.current_simple_poll.blank?
+    @myans = @topic.simple_poll_answers.where(simple_poll_id: @poll.id).first
   end
 
 

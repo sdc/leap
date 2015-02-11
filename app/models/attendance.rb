@@ -16,10 +16,10 @@
 
 class Attendance < Eventable
 
-  default_scope :order => 'week_beginning'
+  default_scope order: 'week_beginning'
 
   after_create do |attendance|
-    attendance.events.create!(:event_date => week_beginning.end_of_week, :transition => :complete) if attendance.course_type == "overall"
+    attendance.events.create!(event_date: week_beginning.end_of_week, transition: :complete) if attendance.course_type == "overall"
   end
 
   def title
@@ -51,11 +51,11 @@ class Attendance < Eventable
   def siblings_same_year(course_type = "overall")
     course_type = course_type.to_s
     d,m = Settings.year_boundary_date.split("/").map{|x| x.to_i}
-    bty = week_beginning.change(:month => m, :day => d)
+    bty = week_beginning.change(month: m, day: d)
     if bty > week_beginning
-      return Attendance.where(:course_type => course_type, :person_id => person_id, :week_beginning => bty.change(:year => bty.year - 1)..bty)
+      return Attendance.where(course_type: course_type, person_id: person_id, week_beginning: bty.change(year: bty.year - 1)..bty)
     else
-      return Attendance.where(:course_type => course_type, :person_id => person_id, :week_beginning => bty..bty.change(:year => bty.year + 1))
+      return Attendance.where(course_type: course_type, person_id: person_id, week_beginning: bty..bty.change(year: bty.year + 1))
     end
   end
 
@@ -75,12 +75,12 @@ class Attendance < Eventable
     rescue
       bg = "6a6"
     end
-    {:icon         => "fa-check-circle",
-     :partial_path => "tiles/attendance",
-     :subtitle     => course_type.titlecase,
-     :bg           => bg,
-     :title        => "Attendance", 
-     :object       => self
+    {icon: "fa-check-circle",
+     partial_path: "tiles/attendance",
+     subtitle: course_type.titlecase,
+     bg: bg,
+     title: "Attendance", 
+     object: self
     }
   end
 

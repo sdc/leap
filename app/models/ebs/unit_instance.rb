@@ -18,6 +18,6 @@ class Ebs::UnitInstance < Ebs::Model
 
   self.primary_key = "fes_unit_instance_code"
   
-  has_many :unit_instance_occurrences, :foreign_key => :fes_uins_instance_code
+  has_many :unit_instance_occurrences, foreign_key: :fes_uins_instance_code
 
 end

@@ -25,13 +25,13 @@ class Note < Eventable
 
   attr_accessible :body
 
-  after_create {|note| note.events.create!(:event_date => created_at, :transition => :create)}
+  after_create {|note| note.events.create!(event_date: created_at, transition: :create)}
 
-  validates :body, :presence => true
+  validates :body, presence: true
 
   def tile_attrs
-    {:icon => "fa-pencil-square-o",
-     :partial_path => "tiles/note"}
+    {icon: "fa-pencil-square-o",
+     partial_path: "tiles/note"}
   end
 
 end

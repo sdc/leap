@@ -20,17 +20,17 @@ class Course < ActiveRecord::Base
 
   attr_accessible :title, :code, :year, :mis_id, :vague_title
 
-  has_many :person_courses, :conditions => "enrolment_date is not null"
-  has_many :people, :through => :person_courses
+  has_many :person_courses, conditions: "enrolment_date is not null"
+  has_many :people, through: :person_courses
 
-  scoped_search :on => [:title,:code]
+  scoped_search on: [:title,:code]
 
   def Course.get(mis_id,fresh=false)
-    (fresh ? import(mis_id, :people => true) : find_by_mis_id(mis_id)) or import(mis_id, :people => true)
+    (fresh ? import(mis_id, people: true) : find_by_mis_id(mis_id)) or import(mis_id, people: true)
   end
 
   def other_years
-    Course.where(:code => code).order(:year)
+    Course.where(code: code).order(:year)
   end
 
   def name
@@ -42,7 +42,7 @@ class Course < ActiveRecord::Base
   end
 
   def as_param
-    {:course_id => mis_id.to_s}
+    {course_id: mis_id.to_s}
   end
 
   def mis_code
@@ -63,7 +63,7 @@ class Course < ActiveRecord::Base
 
   def entry_reqs
     return [] if vague_title.blank?
-    EntryReq.where(:app_title => vague_title).group_by{|er| [er.app_title,er.course_title,er.course_qual]}
+    EntryReq.where(app_title: vague_title).group_by{|er| [er.app_title,er.course_title,er.course_qual]}
   end
 
   def person?; false end

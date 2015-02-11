@@ -18,9 +18,9 @@ class Pathway < Eventable
 
   attr_accessible :pathway,:subject
 
-  after_create {|q| q.events.create!(:event_date => created_at, :transition => :create)}
+  after_create {|q| q.events.create!(event_date: created_at, transition: :create)}
 
-  validates :pathway,:subject, :presence => true
+  validates :pathway,:subject, presence: true
 
   def title
     ["Pathway",subject]

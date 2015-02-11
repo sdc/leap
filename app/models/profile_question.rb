@@ -18,9 +18,9 @@ class ProfileQuestion < Eventable
 
   attr_accessible :question, :answer
 
-  after_create {|q| q.events.create!(:event_date => created_at, :transition => :create)}
+  after_create {|q| q.events.create!(event_date: created_at, transition: :create)}
 
-  validates :question, :answer, :presence => true
-  validates :question, :inclusion => {:in => Settings.profile_questions.split(";")}
+  validates :question, :answer, presence: true
+  validates :question, inclusion: {in: Settings.profile_questions.split(";")}
 
 end

@@ -19,8 +19,8 @@ class Ebs::RegisterEventDetailsSlot < Ebs::Model
   self.primary_key = :id
   belongs_to :register_event
   belongs_to :register_event_slot
-  delegate   :description, :to => :register_event
-  delegate   :rooms, :teachers, :to => :register_event_slot
+  delegate   :description, to: :register_event
+  delegate   :rooms, :teachers, to: :register_event_slot
 
   def the_object
     begin

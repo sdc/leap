@@ -18,14 +18,14 @@ class Person < ActiveRecord::Base
 
   include MisPerson
 
-  scoped_search :on => [:forename, :surname, :mis_id]
+  scoped_search on: [:forename, :surname, :mis_id]
 
   AFFILIATIONS = ["staff","student","applicant","affiliate"]
 
   has_many :events
   has_many :review_lines
   has_many :person_courses
-  has_many :courses, :through => :person_courses
+  has_many :courses, through: :person_courses
   has_many :attendances
   has_many :notes
   has_many :targets
@@ -49,7 +49,7 @@ class Person < ActiveRecord::Base
   has_many :event_notes
   has_many :mdl_grade_tracks
   has_many :mdl_badges
-  belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
+  belongs_to :tutor, class_name: "Person", foreign_key: "tutor_id"
   
   serialize :middle_names
   serialize :address
@@ -74,8 +74,8 @@ class Person < ActiveRecord::Base
 
   def attendance(course_type = "overall")
     course_type = course_type.to_s
-    Rails.cache.fetch("#{mis_id}_#{course_type}_attendance", :expires_in => 8.hours) do
-      attendances.where(:course_type => course_type).last
+    Rails.cache.fetch("#{mis_id}_#{course_type}_attendance", expires_in: 8.hours) do
+      attendances.where(course_type: course_type).last
     end
   end
 
@@ -118,7 +118,7 @@ class Person < ActiveRecord::Base
   end
 
   def as_param
-    {:person_id => mis_id.to_s}
+    {person_id: mis_id.to_s}
   end
 
   def staff?
@@ -151,7 +151,7 @@ class Person < ActiveRecord::Base
   end
 
   def lat_score
-    Rails.cache.fetch("#{mis_id}_l3va_score", :expires_in => 1.hour) do
+    Rails.cache.fetch("#{mis_id}_l3va_score", expires_in: 1.hour) do
       if qualifications.detect{|q| q.lat_score.kind_of? Fixnum}
         (qualifications.select{|q| q.lat_score.kind_of? Fixnum}.sum{|q| q.lat_score} / 
          qualifications.select{|q| q.lat_score.kind_of? Fixnum}.count.to_f).round(2)
@@ -164,11 +164,11 @@ class Person < ActiveRecord::Base
   def l3va; lat_score end
 
   def gcse_english
-    qualifications.where(:qual_type => "GCSE", :predicted => false).where("LOWER(title) = ?", "english language").last.try :grade
+    qualifications.where(qual_type: "GCSE", predicted: false).where("LOWER(title) = ?", "english language").last.try :grade
   end
 
   def gcse_maths
-    qualifications.where(:qual_type => "GCSE", :predicted => false).where("LOWER(title) LIKE ?", "math%").last.try :grade
+    qualifications.where(qual_type: "GCSE", predicted: false).where("LOWER(title) LIKE ?", "math%").last.try :grade
   end
 
   def address_text

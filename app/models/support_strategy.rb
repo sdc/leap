@@ -18,17 +18,17 @@ class SupportStrategy < Eventable
 
   attr_accessible :body, :agreed_date, :completed_date, :declined_date, :event_id
 
-  after_create {|req| req.events.create!(:event_date => created_at, :transition => :create, :parent_id => event_id)}
+  after_create {|req| req.events.create!(event_date: created_at, transition: :create, parent_id: event_id)}
 
   after_save do |ss|
     if ss.agreed_date_changed? and ss.agreed_date_was == nil
-      ss.events.create(:event_date => ss.agreed_date, :transition => :start)
+      ss.events.create(event_date: ss.agreed_date, transition: :start)
     end
     if ss.declined_date_changed? and ss.declined_date_was == nil
-      ss.events.create(:event_date => ss.declined_date, :transition => :incomplete)
+      ss.events.create(event_date: ss.declined_date, transition: :incomplete)
     end
     if ss.completed_date_changed? and ss.completed_date_was == nil
-      ss.events.create(:event_date => ss.completed_date, :transition => :complete)
+      ss.events.create(event_date: ss.completed_date, transition: :complete)
     end
   end
 

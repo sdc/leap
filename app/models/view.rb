@@ -21,16 +21,16 @@ class View < ActiveRecord::Base
   serialize :affiliations
   serialize :controls
 
-  validates :transitions, :presence => true
-  validates :events, :presence => true
-  validates :affiliations, :presence => true
-  validates :name, :presence => true
+  validates :transitions, presence: true
+  validates :events, presence: true
+  validates :affiliations, presence: true
+  validates :name, presence: true
 
-  belongs_to :parent, :class_name => "View"
-  has_many   :children, :class_name => "View", :foreign_key => "parent_id"
+  belongs_to :parent, class_name: "View"
+  has_many   :children, class_name: "View", foreign_key: "parent_id"
 
   scope :for_user,  -> { where('affiliations like ?', "%#{Person.affiliation}%")}
-  scope :in_list,   -> { where(:in_list => true) }
+  scope :in_list,   -> { where(in_list: true) }
   scope :top_level, -> { where("parent_id is null") }
 
   def to_param

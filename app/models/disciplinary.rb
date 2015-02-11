@@ -18,10 +18,10 @@ class Disciplinary < Eventable
 
   attr_accessible :level, :body
 
-  validates :body, :presence => true
-  validates :level, :presence => true, :numericality => true
+  validates :body, presence: true
+  validates :level, presence: true, numericality: true
 
-  after_create {|disciplinary| disciplinary.events.create!(:event_date => created_at, :transition => :complete)}
+  after_create {|disciplinary| disciplinary.events.create!(event_date: created_at, transition: :complete)}
 
   def title
     Hash[*Settings.disciplinary_levels.split(",")][level.to_s]

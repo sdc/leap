@@ -22,16 +22,16 @@ class CoursesController < ApplicationController
 
   def show
     @person_courses = if @tutorgroup
-      @topic.person_courses.includes(:person => "mdl_grade_tracks").where(:tutorgroup => @tutorgroup).sort_by{|pc| pc.person.name(:surname_first => true)}
+      @topic.person_courses.includes(person: "mdl_grade_tracks").where(tutorgroup: @tutorgroup).sort_by{|pc| pc.person.name(surname_first: true)}
     else
-      @topic.person_courses.includes(:person => "mdl_grade_tracks").sort_by{|pc| pc.person.name(:surname_first => true)}
+      @topic.person_courses.includes(person: "mdl_grade_tracks").sort_by{|pc| pc.person.name(surname_first: true)}
     end
     respond_to do |format|
       format.html do
         @window = Settings.current_review_window.blank? ? nil : Settings.current_review_window
-        @rpub =   Review.where(:person_id => @topic.people.map{|p| p.id}, :published => true, :window => @window).any?
+        @rpub =   Review.where(person_id: @topic.people.map{|p| p.id}, published: true, window: @window).any?
         @statuses = @topic.person_courses.map{|pc| [pc.mis_status,pc.cl_status]}.uniq.reject{|s| s.blank?}
-        render :action => "cl_show", :layout => "cloud" if Settings.home_page == "new"
+        render action: "cl_show", layout: "cloud" if Settings.home_page == "new"
       end
       format.jpg { redirect_to "/assets/courses.png" }
     end
@@ -62,8 +62,8 @@ class CoursesController < ApplicationController
 
   def reviews_block
     @window = Settings.current_review_window
-    @pub =   Review.where(:person_id => @topic.people.map{|p| p.id}, :published => true, :window => @window).count
-    @unpub = Review.where(:person_id => @topic.people.map{|p| p.id}, :window => @window).count - @pub
+    @pub =   Review.where(person_id: @topic.people.map{|p| p.id}, published: true, window: @window).count
+    @unpub = Review.where(person_id: @topic.people.map{|p| p.id}, window: @window).count - @pub
   end
 
   def entry_reqs_block

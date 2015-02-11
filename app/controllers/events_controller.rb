@@ -18,7 +18,7 @@ class EventsController < ApplicationController
 
   def open_extended
     @event = @topic.events.find(params[:id])
-    render :partial => "extended", :object => @event, :as => :event
+    render partial: "extended", object: @event, as: :event
   end
 
   def show

@@ -1,10 +1,10 @@
 class Grade
 
-  SCHEMES = {:pmd =>   [:refer,
+  SCHEMES = {pmd: [:refer,
                         :pass,
                         :merit,
                         :distinction],
-           :letter =>  [:"a*",
+           letter: [:"a*",
                         :a,
                         :b,
                         :c,

@@ -18,9 +18,9 @@ class EventNote < Eventable
 
   attr_accessible :body, :parent_event_id
 
-  after_create {|note| note.events.create!(:event_date => created_at, :transition => :create, :parent_id => parent_event_id)}
+  after_create {|note| note.events.create!(event_date: created_at, transition: :create, parent_id: parent_event_id)}
 
-  validates :body, :presence => true, :length => {:in => 5..500}
+  validates :body, presence: true, length: {in: 5..500}
 
   def title
     created_at.strftime("%d %b %y")

@@ -18,9 +18,9 @@ class Achievement < Eventable
 
   attr_accessible :body, :year
 
-  after_create {|q| q.events.create!(:event_date => created_at, :transition => :create)}
+  after_create {|q| q.events.create!(event_date: created_at, transition: :create)}
 
-  validates :body,:year, :presence => true
+  validates :body,:year, presence: true
 
   def title
     ["Achievement",year.year.to_s]

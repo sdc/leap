@@ -1,6 +1,6 @@
 class MdlBadge < Eventable
   attr_accessible :body, :image_url, :mdl_course_id, :person_id, :title, :created_at
-  after_create {|badge| badge.events.create!(:event_date => created_at, :transition => :create)}
+  after_create {|badge| badge.events.create!(event_date: created_at, transition: :create)}
   belongs_to :person
 
   def self.import_all
@@ -32,7 +32,7 @@ class MdlBadge < Eventable
     end
     badges = Nokogiri::XML(badges).xpath('//MULTIPLE/SINGLE').each do |badge|
       image_url = badge.xpath("KEY[@name='image_url']/VALUE").first.content
-      next if person.mdl_badges.where(:image_url => image_url).any?
+      next if person.mdl_badges.where(image_url: image_url).any?
       person.mdl_badges.create do |t|
         t.title       = badge.xpath("KEY[@name='name']/VALUE").first.content
         t.created_at  = Time.at(badge.xpath("KEY[@name='date_issued']/VALUE").first.content.to_i)
@@ -49,15 +49,15 @@ class MdlBadge < Eventable
   end
 
   def to_course_tile
-    Tile.new({:title => "PPD",
-              :bg => "7755cc",
-              :icon => "fa-dot-circle-o",
-              :partial_path => "tiles/course_badges",
-              :object => self})
+    Tile.new({title: "PPD",
+              bg: "7755cc",
+              icon: "fa-dot-circle-o",
+              partial_path: "tiles/course_badges",
+              object: self})
   end
 
   def all_in_course
-    person.mdl_badges.where(:mdl_course_id => mdl_course_id)
+    person.mdl_badges.where(mdl_course_id: mdl_course_id)
   end
 
   def title
@@ -65,12 +65,12 @@ class MdlBadge < Eventable
   end
 
   def tile_attrs
-    {:icon => "fa-dot-circle-o",
-     :title => "New Badge",
-     :subtitle => self[:title],
-     :partial_path => "tiles/mdl_badge",
-     :link => link_url,
-     :object => self}
+    {icon: "fa-dot-circle-o",
+     title: "New Badge",
+     subtitle: self[:title],
+     partial_path: "tiles/mdl_badge",
+     link: link_url,
+     object: self}
   end
 
  

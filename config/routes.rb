@@ -10,13 +10,13 @@ Ilp2::Application.routes.draw do
   end
   resources :views
   resources :events do
-    get "more", :on => :collection
-    get "open_extended", :on => :member
+    get "more", on: :collection
+    get "open_extended", on: :member
   end
   resources :people do
     resources :events, :timetables
-    resources :views, :only => [:show] do
-      get "header", :on => :member
+    resources :views, only: [:show] do
+      get "header", on: :member
     end
     collection do
       get :search, :select
@@ -28,7 +28,7 @@ Ilp2::Application.routes.draw do
   end
   resources :courses do
     resources :views do
-      get "header", :on => :member
+      get "header", on: :member
     end 
     resources :timetables
     member do
@@ -38,5 +38,5 @@ Ilp2::Application.routes.draw do
   end
 
 
-  root :to => "people#index"
+  root to: "people#index"
 end

@@ -8,11 +8,11 @@ class SimplePoll < ActiveRecord::Base
   end
 
   def to_tile
-    Tile.new({:title => "Poll",
-              :bg => "9d9",
-              :icon => "fa-pie-chart",
-              :partial_path => "tiles/poll",
-              :object => self
+    Tile.new({title: "Poll",
+              bg: "9d9",
+              icon: "fa-pie-chart",
+              partial_path: "tiles/poll",
+              object: self
             })
   end
 

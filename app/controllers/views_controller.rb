@@ -26,7 +26,7 @@ class ViewsController < ApplicationController
       @subviews = @view.parent_id ? @view.parent.try(:children) : @view.children
       @events =
         @scope.where("event_date < ?", @date).
-        where(:transition => @view.transitions, :eventable_type => @view.events).
+        where(transition: @view.transitions, eventable_type: @view.events).
         limit(request.format=="pdf" ? 20000 : 20)
       @events = @events.select{|e| e.status.to_s == params[:status]} if params[:status]
       @events = @events.select{|e| e.title.to_s == params[:title]} if params[:title]
@@ -54,9 +54,9 @@ class ViewsController < ApplicationController
     elsif (@affiliation == "staff" and @topic.kind_of? Course)
       @multi = true
       if @tutorgroup
-        Event.where(:person_id => @topic.person_courses.where(:tutorgroup => @tutorgroup).map{|p| p.person_id})
+        Event.where(person_id: @topic.person_courses.where(tutorgroup: @tutorgroup).map{|p| p.person_id})
       else
-        Event.where(:person_id => @topic.people.map{|p| p.id})
+        Event.where(person_id: @topic.people.map{|p| p.id})
       end
     else
       @multi = false
