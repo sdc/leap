@@ -27,11 +27,11 @@ class ApplicationController < ActionController::Base
   def set_date(default_offset = 0)
     begin
       @date = if params[:date]
-        if params[:date].kind_of? Hash
-          Time.gm(*[:year, :month, :day].map { |x| params[:date][x].to_i })
-        else
-          Time.parse(params[:date])
-        end
+                if params[:date].kind_of? Hash
+                  Time.gm(*[:year, :month, :day].map { |x| params[:date][x].to_i })
+                else
+                  Time.parse(params[:date])
+                end
       else
         Time.now + default_offset
       end

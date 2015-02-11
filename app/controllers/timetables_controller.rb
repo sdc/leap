@@ -35,7 +35,7 @@ class TimetablesController < ApplicationController
     @registers = @topic.timetable_events(from: @date, to: @end_date)
     @view = View.for_user.find_by_name("timetable")
     @events = if @topic.kind_of? Person
-      @topic.events.where(event_date: (@date.to_time + 1.hour + 1.second)..@end_date, transition: @view.transitions, eventable_type: @view.events)
+                @topic.events.where(event_date: (@date.to_time + 1.hour + 1.second)..@end_date, transition: @view.transitions, eventable_type: @view.events)
     else
       []
     end

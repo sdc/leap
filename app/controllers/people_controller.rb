@@ -68,10 +68,10 @@ class PeopleController < ApplicationController
   def search
     if params[:q]
       if params[:mis]
-         @people = Person.mis_search_for(params[:q])
+        @people = Person.mis_search_for(params[:q])
          @courses = Course.mis_search_for(params[:q])
       else
-         @people = Person.search_for(params[:q]).order("surname,forename").limit(50)
+        @people = Person.search_for(params[:q]).order("surname,forename").limit(50)
          @courses = Course.search_for(params[:q]).order("year DESC,title").limit(50)
       end
     end

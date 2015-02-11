@@ -65,7 +65,7 @@ class Attendance < Eventable
   def tile_attrs
     begin
       bg = if att_year < Settings.attendance_low_score.to_i
-        "a66"
+             "a66"
       elsif att_year < Settings.attendance_high_score.to_i
         "da6"
       else

@@ -113,7 +113,7 @@ class Person < ActiveRecord::Base
   end
 
   def current_user?
-     self == Person.user
+    self == Person.user
   end
 
   def as_param
