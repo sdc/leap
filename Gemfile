@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
-gem 'rails', "3.2.17"
-gem 'coffee-rails', "3.2.2"
+gem 'rails', "~> 4.0.13"
+gem 'coffee-rails', "~> 4.0.0"
 gem 'haml'
 gem "less-rails"
 gem 'less-rails-bootstrap', "2.0.13"
@@ -8,23 +8,26 @@ gem 'jquery-rails', '~> 2.3.0'
 gem 'symbolize'
 gem 'scoped_search'
 gem 'rails-settings', :require => 'settings'
-gem 'rails_autolink', '1.0.9'
 gem 'uglifier', "1.0.3"
 gem 'rails-latex'
 gem 'nokogiri', "1.5.10"
 gem 'coffee-filter'
 gem 'yui-compressor'
 gem 'icalendar'
+gem 'protected_attributes'
+gem 'activeresource'
 
 gem 'whenever', :require => false
 
 gem 'memcache-client'
 
+gem 'debugger'
+
 platforms :ruby do
   gem 'mysql2'
   gem 'therubyracer'
-  gem 'activerecord-sqlserver-adapter'
-  gem 'activerecord-oracle_enhanced-adapter', '~> 1.4.0'
+  gem 'activerecord-sqlserver-adapter', '~> 4.0'
+  gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.0'
   gem 'activerecord-mysql-adapter'
   gem 'ruby-oci8'#, "2.1.0"
   gem 'tiny_tds', "0.5.1"

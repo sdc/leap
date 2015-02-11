@@ -16,7 +16,7 @@
 
 class Ebs::PeopleUnitTutorgroup < Ebs::Model
 
-  default_scope { order("start_date DESC") }
+  default_scope -> { order("start_date DESC") }
   belongs_to :people_unit
   belongs_to :tutorgroup
 

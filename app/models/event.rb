@@ -47,10 +47,10 @@ class Event < ActiveRecord::Base
 
   symbolize :transition , :in => TRANSITIONS, :methods => true, :scopes => true, :allow_nil => true
 
-  scope :unique_eventable, group("eventable_id,eventable_type")
-  scope :creation, where(:transition => :create)
-  scope :this_year, lambda {where("event_date > ?",year_start)}
-  default_scope order("event_date DESC")
+  scope :unique_eventable, -> { group("eventable_id,eventable_type") }
+  scope :creation, -> { where(:transition => :create) }
+  scope :this_year, -> { where("event_date > ?",year_start) }
+  default_scope -> { order("event_date DESC") }
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id) unless person_id}
   before_create do |event| 

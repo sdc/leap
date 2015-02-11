@@ -18,8 +18,6 @@ class Ebs::Person < Ebs::Model
 
   set_primary_key :person_code
 
-  #default_scope where("date_of_birth is not null")#.where("fes_user_25 = 1")
-
   scoped_search :on => [:forename, :surname, :person_code]
 
   belongs_to :note, :foreign_key => "notes"

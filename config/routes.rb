@@ -3,10 +3,10 @@ Ilp2::Application.routes.draw do
   namespace :admin do
     resources :settings
     resources :views
-    match 'test'       => 'test#index', :as => :test
-    match 'stats'      => 'stats#index'
-    match 'test/login' => 'test#login', :as => :test_login
-    match 'sync_grade_tracks' => 'data#sync_grade_tracks'
+    get 'test'       => 'test#index', :as => :test
+    get 'stats'      => 'stats#index'
+    get 'test/login' => 'test#login', :as => :test_login
+    get 'sync_grade_tracks' => 'data#sync_grade_tracks'
   end
   resources :views
   resources :events do
