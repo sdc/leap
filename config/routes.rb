@@ -5,8 +5,8 @@ Ilp2::Application.routes.draw do
     resources :views
     get 'test'       => 'test#index', :as => :test
     get 'stats'      => 'stats#index'
-    post 'test/login' => 'test#login', :as => :test_login
     get 'sync_grade_tracks' => 'data#sync_grade_tracks'
+    match 'test/login' => 'test#login', :as => :test_login, :via => [:get, :post]
   end
   resources :views
   resources :events do
