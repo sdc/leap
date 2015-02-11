@@ -18,7 +18,7 @@ module EventsHelper
 
   def event_date(event)
     content_tag(:div, pretty_date(event.event_date), class: "date") +
-    content_tag(:div, pretty_time(event.event_date), class: "time")
+      content_tag(:div, pretty_time(event.event_date), class: "time")
   end
 
 
@@ -45,8 +45,8 @@ module EventsHelper
     link_to(image_tag("actions/event_open.png"),
             open_extended_event_url(event, person_id: event.person.mis_id), remote: true, class: "extend-button"
            ) +
-    image_tag("actions/event_opened.png", class: "close-extend-button", style: "display:none") +
-    image_tag("ajax-loader.gif", style: "display:none", class: "event-spinner", size: "16x16")
+      image_tag("actions/event_opened.png", class: "close-extend-button", style: "display:none") +
+      image_tag("ajax-loader.gif", style: "display:none", class: "event-spinner", size: "16x16")
   end
 
   def delete_event_button(event)

@@ -155,7 +155,7 @@ class PeopleController < ApplicationController
 
   def parse_sidebar_links
     Settings.clidebar_links.split(/^\|/).drop(1)
-            .map { |menu| menu.split("\n").reject(&:blank?).map(&:chomp) }
-            .map { |menu| menu.first.split("|") + [menu.drop(1).map { |item| item.split("|") }] }
+      .map { |menu| menu.split("\n").reject(&:blank?).map(&:chomp) }
+      .map { |menu| menu.first.split("|") + [menu.drop(1).map { |item| item.split("|") }] }
   end
 end
