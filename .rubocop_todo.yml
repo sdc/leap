@@ -136,11 +136,6 @@ Style/PredicateName:
 Style/Semicolon:
   Enabled: false
 
-# Offense count: 15
-# Cop supports --auto-correct.
-#Style/SingleSpaceBeforeFirstArg:
-#  Enabled: false
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/SpaceAfterControlKeyword:
@@ -149,8 +144,8 @@ Style/SpaceAfterControlKeyword:
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/SpaceAroundEqualsInParameterDefault:
-  Enabled: false
+# Style/SpaceAroundEqualsInParameterDefault:
+#   Enabled: false
 
 # Offense count: 3
 # Cop supports --auto-correct.

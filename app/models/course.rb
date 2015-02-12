@@ -24,7 +24,7 @@ class Course < ActiveRecord::Base
 
   scoped_search on: [:title, :code]
 
-  def self.get(mis_id, fresh=false)
+  def self.get(mis_id, fresh = false)
     (fresh ? import(mis_id, people: true) : find_by_mis_id(mis_id)) || import(mis_id, people: true)
   end
 

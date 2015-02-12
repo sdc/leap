@@ -78,7 +78,7 @@ class Person < ActiveRecord::Base
     end
   end
 
-  def self.get(mis_id, fresh=false)
+  def self.get(mis_id, fresh = false)
     mis_id = mis_id.to_s.tr('^0-9', '') if mis_id.to_s.match(/\d{6}/)
     return import(mis_id) if fresh
     find_by_username(mis_id) || find_by_mis_id(mis_id) || import(mis_id)
