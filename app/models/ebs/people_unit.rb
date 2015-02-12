@@ -16,7 +16,7 @@
 
 class Ebs::PeopleUnit < Ebs::Model
   belongs_to :person, foreign_key: "person_code"
-  belongs_to :unit_instance_occurrence , foreign_key: "uio_id"
+  belongs_to :unit_instance_occurrence, foreign_key: "uio_id"
   has_one :people_unit_special, foreign_key: "people_units_id"
   has_many :people_unit_tutorgroups, foreign_key: "people_units_id"
   has_many :tutorgroups, through: :people_unit_tutorgroups

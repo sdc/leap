@@ -46,7 +46,7 @@ class Event < ActiveRecord::Base
 
   TRANSITIONS = [:create, :to_start, :start, :overdue, :complete, :drop, :hidden]
 
-  symbolize :transition , in: TRANSITIONS, methods: true, scopes: true, allow_nil: true
+  symbolize :transition, in: TRANSITIONS, methods: true, scopes: true, allow_nil: true
 
   scope :unique_eventable, -> { group("eventable_id,eventable_type") }
   scope :creation, -> { where(transition: :create) }

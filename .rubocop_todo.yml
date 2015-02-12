@@ -141,16 +141,10 @@ Style/Semicolon:
 Style/SpaceAfterControlKeyword:
   Enabled: false
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# Style/SpaceAroundEqualsInParameterDefault:
-#   Enabled: false
-
 # Offense count: 3
 # Cop supports --auto-correct.
-Style/SpaceBeforeComma:
-  Enabled: false
+#Style/SpaceBeforeComma:
+#  Enabled: false
 
 # Offense count: 1
 # Cop supports --auto-correct.

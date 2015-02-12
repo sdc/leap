@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::TestController < ApplicationController
-  skip_before_filter :set_user  , except: [:stats]
+  skip_before_filter :set_user, except: [:stats]
   before_filter :admin_page, only: [:stats]
 
   def index
