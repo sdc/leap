@@ -20,7 +20,7 @@ class Admin::StatsController < ApplicationController
   layout "cloud"
 
   def index
-    @stats = Hash.new
+    @stats = {}
     @stats["All Time"] = Event.group(:eventable_type).count
     @stats["This Week"] = Event.group(:eventable_type).where(event_date: Time.now.all_week).count
     @stats["This Month"] = Event.group(:eventable_type).where(event_date: Time.now.all_month).count
