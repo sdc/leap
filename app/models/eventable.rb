@@ -66,7 +66,7 @@ class Eventable < ActiveRecord::Base
 
   def tile_bg
     (1..6).map { ((6..9).to_a.sample).to_s }.join
-    #(rand * 999999).floor.to_s.ljust(6,"0")
+    # (rand * 999999).floor.to_s.ljust(6,"0")
   end
 
   def tile_icon

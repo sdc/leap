@@ -34,20 +34,20 @@ class PeopleController < ApplicationController
           ppdc = Settings.moodle_badge_block_courses.try(:split, ",")
           @tiles.unshift(@topic.mdl_badges.where(mdl_course_id: ppdc).last.to_course_tile) if ppdc && @topic.mdl_badges.where(mdl_course_id: ppdc).any?
           tracks = @topic.mdl_grade_tracks.group(:course_type).order(:created_at).flatten
-          #@tiles.unshift(["english","maths","core"].reject{|ct| tracks.detect{|t| t.course_type == ct}}.first([3 - tracks.count,0].max).map do |ct|
+          # @tiles.unshift(["english","maths","core"].reject{|ct| tracks.detect{|t| t.course_type == ct}}.first([3 - tracks.count,0].max).map do |ct|
           #  @topic.mdl_grade_tracks.where(:course_type => ct).last.try(:to_tile) or
           #  MdlGradeTrack.new(:course_type => ct).to_tile
-          #end)
+          # end)
           @tiles.unshift(tracks.map(&:to_tile))
           attendances = %w(overall core maths english).map { |ct| @topic.attendances.where(course_type: ct).last }.reject(&:nil?)
           attendances.select! { |x| x.course_type != "overall" } if attendances.length == 2
           @tiles.unshift(attendances.map(&:to_tile))
-          #if @topic.attendances.where(:course_type => "overall").any?
+          # if @topic.attendances.where(:course_type => "overall").any?
           #  @tiles.unshift(@topic.attendances.where(:course_type => "overall").last.events.first.try :to_tile)
-          #end
+          # end
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
           @tiles.unshift(GlobalNews.last.to_tile) if GlobalNews.any?
-          @tiles = @tiles.flatten.reject(&:nil?) #.uniq{|t| t.object}
+          @tiles = @tiles.flatten.reject(&:nil?) # .uniq{|t| t.object}
           @on_home_page = true
           render action: "home"
         end

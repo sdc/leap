@@ -71,13 +71,13 @@ class Qualification < Eventable
     # Don't include predicted grades
     return "Predicted Grade" if predicted?
     # Only quals acheived between 16 & 18 years count towards LAT
-    #years = case person.age_on(Date.civil(2014,9,1))
-    #when 16 then 1
-    #when 17 then 2
-    #when 18 then 3
-    #else 0
-    #end
-    #return "Ineligible Date" unless created_at.between?(Date.civil(2014,8,1) - years.years,Date.today)#civil(2014,9,1))
+    # years = case person.age_on(Date.civil(2014,9,1))
+    # when 16 then 1
+    # when 17 then 2
+    # when 18 then 3
+    # else 0
+    # end
+    # return "Ineligible Date" unless created_at.between?(Date.civil(2014,8,1) - years.years,Date.today)#civil(2014,9,1))
     # Only return LAT scores if we can work them out from the info we have
     return "No scores for qual type" unless QOE_LAT[qual_type.strip.upcase]
     return "No scores for this grade" unless QOE_LAT[qual_type.strip.upcase][grade.strip.upcase]

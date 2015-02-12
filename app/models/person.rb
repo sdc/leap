@@ -139,7 +139,7 @@ class Person < ActiveRecord::Base
   def photo_uri
     if Settings.lorem_pictures.blank?
       if photo
-        #"data:image/jpeg;base64," + ActiveSupport::Base64.encode64(photo)
+        # "data:image/jpeg;base64," + ActiveSupport::Base64.encode64(photo)
         "/people/#{mis_id}.jpg"
       else
         "noone.png"

@@ -107,8 +107,8 @@ Style/IfUnlessModifier:
 
 # Offense count: 17
 # Cop supports --auto-correct.
-Style/LeadingCommentSpace:
-  Enabled: false
+# Style/LeadingCommentSpace:
+#   Enabled: false
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -133,18 +133,13 @@ Style/Semicolon:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/SpaceAfterControlKeyword:
-  Enabled: false
+# Style/SpaceAfterControlKeyword:
+#   Enabled: false
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/SpaceInsideBrackets:
-  Enabled: false
-
-# Offense count: 3
-# Cop supports --auto-correct.
-#Style/SpecialGlobalVars:
-#  Enabled: false
+# Style/SpaceInsideBrackets:
+#   Enabled: false
 
 # Offense count: 504
 # Cop supports --auto-correct.

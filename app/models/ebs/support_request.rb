@@ -22,9 +22,9 @@ class Ebs::SupportRequest < Ebs::Model
   serialize :register_events
   serialize :difficulty
 
-  #def res
+  # def res
   #  register_events ? register_events.map{|reid| RegisterEvent.find_by_id(reid) or nil}.reject{|re| re.nil?}.map{|re| re.description} : []
-  #end
+  # end
 
   def res
     register_events.map { |reid| Ebs::RegisterEvent.find(reid) }.map(&:description)
