@@ -6,11 +6,9 @@
         = "#{@topic.try(:name) or @page_title} : Leap" 
       - else
         Leap
-    = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
-    = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
+    = stylesheet_link_tag "application"
     = stylesheet_link_tag  'https://fonts.googleapis.com/css?family=Patua+One'
     = stylesheet_link_tag '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css'
-    = stylesheet_link_tag 'cloud'
     = javascript_include_tag "//code.jquery.com/jquery-1.11.0.min.js"
     = javascript_include_tag '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
     = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js'
