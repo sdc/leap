@@ -19,7 +19,7 @@ class Qualification < Eventable
 
   after_create  { |qual| qual.events.create!(event_date: created_at, transition: qual.predicted? ? :create : :complete) }
 
-  before_save   { |q| q.predicted = true if (Person.user && !Person.user.staff?) }
+  before_save   { |q| q.predicted = true if Person.user && !Person.user.staff? }
 
   before_update { |q| q.events.first.update_attribute("event_date", q.created_at) }
 

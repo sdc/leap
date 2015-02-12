@@ -120,11 +120,6 @@ Style/NegatedIf:
 Style/Next:
   Enabled: false
 
-# Offense count: 7
-# Cop supports --auto-correct.
-#Style/NilComparison:
-#  Enabled: false
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/NumericLiterals:
@@ -133,8 +128,8 @@ Style/NumericLiterals:
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: AllowSafeAssignment.
-Style/ParenthesesAroundCondition:
-  Enabled: false
+#Style/ParenthesesAroundCondition:
+#  Enabled: false
 
 # Offense count: 5
 # Configuration parameters: NamePrefix, NamePrefixBlacklist.
