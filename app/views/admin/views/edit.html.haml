@@ -59,7 +59,7 @@
       = text_area_tag :controls, @view.controls.try(:map) {|c| c.first + ':' + c.last}.try(:join,";")
   .form-actions
     = link_to "Cancel", admin_views_path, :class => "btn"
-    = link_to_submit :class => "btn btn-primary" do
+    = submit_tag  do
       %i.icon-hdd.icon-white
       Save Changes
 
