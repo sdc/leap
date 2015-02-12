@@ -18,6 +18,9 @@ Lint/HandleExceptions:
 Style/AccessorMethodName:
   Enabled: false
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 AllCops:
   Exclude:
     - 'app/models/bksb.rb'

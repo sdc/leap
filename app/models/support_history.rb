@@ -22,8 +22,6 @@ class SupportHistory < Eventable
   def extra_panes
     if Person.affiliation == "staff"
       [["Strategy", "support_strategies/new"]]
-    else
-      nil
     end
   end
 end

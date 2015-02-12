@@ -32,23 +32,13 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 17
 
-# Offense count: 13
-# Configuration parameters: IndentWhenRelativeTo, SupportedStyles, IndentOneStep.
-# Style/CaseIndentation:
-#   Enabled: false
-
-# Offense count: 30
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/ClassAndModuleChildren:
-  Enabled: false
-
 # Offense count: 76
 Style/Documentation:
   Enabled: false
 
 # Offense count: 2
-Style/EmptyElse:
-  Enabled: false
+# Style/EmptyElse:
+#   Enabled: false
 
 # Offense count: 9
 # Cop supports --auto-correct.
