@@ -11,3 +11,6 @@ Style/NumericLiterals:
 
 Lint/AssignmentInCondition:
   Enabled: false
+
+Lint/HandleExceptions:
+  Enabled: false
