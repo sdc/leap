@@ -45,9 +45,8 @@ class Qualification < Eventable
   end
 
   def extra_panes
-    if Person.user.staff? && Settings.quals_editing == "on"
-      [["Edit", "events/tabs/edit_qual"]]
-    end
+    return unless Person.user.staff? && Settings.quals_editing == "on"
+    [["Edit", "events/tabs/edit_qual"]]
   end
 
   def status

@@ -21,6 +21,9 @@ Style/AccessorMethodName:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Style/PredicateName:
+  Enabled: false
+
 AllCops:
   Exclude:
     - 'app/models/bksb.rb'

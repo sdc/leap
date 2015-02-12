@@ -23,9 +23,8 @@ class SupportRequest < Eventable
   after_create { |req| req.events.create!(event_date: created_at, transition: :create) }
 
   def extra_panes
-    if Person.affiliation == "staff"
-      [["Strategy", "support_strategies/new"]]
-    end
+    return unless Person.affiliation == "staff"
+    [["Strategy", "support_strategies/new"]]
   end
 
   def all_sessions

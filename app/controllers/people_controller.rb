@@ -82,10 +82,9 @@ class PeopleController < ApplicationController
   end
 
   def select
-    if params[:q]
-      @people = Person.search_for(params[:q]).order("surname,forename").limit(20)
-      render json: @people.map { |p| { id: p.id, name: p.name, readonly: p == @user } }.to_json
-    end
+    return unless params[:q]
+    @people = Person.search_for(params[:q]).order("surname,forename").limit(20)
+    render json: @people.map { |p| { id: p.id, name: p.name, readonly: p == @user } }.to_json
   end
 
   def index
