@@ -19,18 +19,17 @@ class Admin::SettingsController < ApplicationController
   before_filter :admin_page
 
   def index
-    @settings = Settings.defaults.keys.sort
+    @settings = Settings.all.keys.sort
   end
 
   def create
-    Settings.defaults.keys.each do |k|
-      if params[k]
-        logger.info "KEY: #{k}"
-        logger.info "CLASS: #{Settings[k].class}"
-        case Settings[k].class.name
-        when "Array" then Settings[k] = params[k].split(",")
-        else Settings[k] = params[k]
-        end
+    Settings.all.keys.each do |k|
+      next unless params[k]
+      logger.info "KEY: #{k}"
+      logger.info "CLASS: #{Settings[k].class}"
+      case Settings[k].class.name
+      when "Array" then Settings[k] = params[k].split(",")
+      else Settings[k] = params[k]
       end
     end
     flash[:success] = "Admin settings successfully updated!"

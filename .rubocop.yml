@@ -24,6 +24,9 @@ Style/ClassAndModuleChildren:
 Style/PredicateName:
   Enabled: false
 
+Style/IfUnlessModifier:
+  Enabled: false
+
 AllCops:
   Exclude:
     - 'app/models/bksb.rb'

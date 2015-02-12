@@ -36,20 +36,10 @@ Metrics/PerceivedComplexity:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 2
-# Configuration parameters: MinBodyLength.
-# Style/GuardClause:
-#   Enabled: false
-
-# Offense count: 2
-# Configuration parameters: MaxLineLength.
-Style/IfUnlessModifier:
-  Enabled: false
-
 # Offense count: 1
 # Configuration parameters: EnforcedStyle, MinBodyLength, SupportedStyles.
-Style/Next:
-  Enabled: false
+# Style/Next:
+#   Enabled: false
 
 # Offense count: 2
 # Cop supports --auto-correct.
