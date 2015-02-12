@@ -95,7 +95,6 @@ class Person < ActiveRecord::Base
     names.join " "
   end
 
-
   def self.user
     Thread.current[:user]
   end

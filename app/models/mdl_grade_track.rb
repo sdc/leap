@@ -16,7 +16,6 @@ class MdlGradeTrack < Eventable
       username + Settings.moodle_user_postfix
   end
 
-
   def self.import_all
     if Settings.moodle_grade_track_import == "on"
       puts "\n\n****************************************"

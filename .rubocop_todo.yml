@@ -27,16 +27,6 @@ Lint/ParenthesesAsGroupedExpression:
 Lint/ShadowingOuterLocalVariable:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Lint/UnusedBlockArgument:
-#   Enabled: false
-
-# Offense count: 4
-# Cop supports --auto-correct.
-# Lint/UnusedMethodArgument:
-#   Enabled: false
-
 # Offense count: 6
 Lint/UselessAssignment:
   Enabled: false
@@ -92,8 +82,8 @@ Style/EmptyElse:
 
 # Offense count: 9
 # Cop supports --auto-correct.
-Style/EmptyLines:
-  Enabled: false
+# Style/EmptyLines:
+#   Enabled: false
 
 # Offense count: 2
 # Configuration parameters: MinBodyLength.

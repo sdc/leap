@@ -20,7 +20,6 @@ module EventsHelper
       content_tag(:div, pretty_time(event.event_date), class: "time")
   end
 
-
   def special_title(thing, wrap = :div)
     text = case thing.class.name
     when "String" then thing

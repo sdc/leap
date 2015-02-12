@@ -133,8 +133,6 @@ class PeopleController < ApplicationController
     @myans = @topic.simple_poll_answers.where(simple_poll_id: @poll.id).first
   end
 
-
-
   private
 
   def person_set_topic

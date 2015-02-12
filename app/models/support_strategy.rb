@@ -31,7 +31,6 @@ class SupportStrategy < Eventable
     end
   end
 
-
   def extra_panes
     [["Details", "events/tabs/support_strategy_details"]]
   end
