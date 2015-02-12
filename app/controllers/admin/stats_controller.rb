@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::StatsController < ApplicationController
-  respond_to :html, :json, :xml
   before_action :admin_page
   layout "cloud"
 
@@ -24,6 +23,5 @@ class Admin::StatsController < ApplicationController
     @stats["All Time"] = Event.group(:eventable_type).count
     @stats["This Week"] = Event.group(:eventable_type).where(event_date: Time.now.all_week).count
     @stats["This Month"] = Event.group(:eventable_type).where(event_date: Time.now.all_month).count
-    respond_with @stats
   end
 end

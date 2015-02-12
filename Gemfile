@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-gem 'rails', "~> 4.1.9"
+gem 'rails', "~> 4.2.0"
 gem 'coffee-rails', "~> 4.0.0"
 gem 'haml'
 gem "less-rails"
@@ -10,7 +10,7 @@ gem 'scoped_search'
 gem 'rails-settings-cached', "0.3.1"
 gem 'uglifier', "1.0.3"
 gem 'rails-latex'
-gem 'nokogiri', "1.5.10"
+gem 'nokogiri', "~>1.6.0"
 gem 'coffee-filter'
 gem 'yui-compressor'
 gem 'icalendar'
@@ -26,10 +26,10 @@ gem 'debugger'
 platforms :ruby do
   gem 'mysql2'
   gem 'therubyracer'
-  gem 'activerecord-sqlserver-adapter', '~> 4.1'
-  gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.0'
+  gem 'activerecord-sqlserver-adapter', '~> 4.2'
+  gem 'activerecord-oracle_enhanced-adapter', github: 'rsim/oracle-enhanced', branch: 'rails42'
   gem 'activerecord-mysql-adapter'
-  gem 'ruby-oci8'#, "2.1.0"
+  gem 'ruby-oci8', '~> 2.1.0'
   gem 'tiny_tds', "0.5.1"
   gem 'sqlite3'
 end

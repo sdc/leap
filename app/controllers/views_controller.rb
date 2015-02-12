@@ -15,8 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class ViewsController < ApplicationController
-  respond_to :html, :xml, :js, :pdf
-
   before_action :set_scope
   before_action { |c| c.set_date(1.year) }
 
@@ -32,7 +30,10 @@ class ViewsController < ApplicationController
       @events.detect(&:past?).try("first_in_past=", true) unless @events.first.past? if @events.try(:first)
       @events.reject!(&:staff_only?) unless @user.staff?
       @events = @events.reject(&:is_deleted?)
-      respond_with(@events) do |f|
+      respond_to do |f|
+        f.html
+        f.pdf
+        f.xml { render xml: @events }
         f.js { render @events }
       end
     else
