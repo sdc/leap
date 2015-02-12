@@ -11,7 +11,7 @@ class MdlGradeTrack < Eventable
   scope "core", -> { where("course_type NOT IN (?)", ["maths", "gcse_maths", "english", "gcse_english"]) }
 
   def self.user_url(username)
-    "#{Settings.moodle_host}#{Settings.moodle_path}/webservice/rest/server.php?" +
+    "#{Settings.moodle_host}#{Settings.moodle_path}/webservice/rest/server.php?" \
       "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_targets_by_username&username=" +
       username + Settings.moodle_user_postfix
   end
@@ -23,7 +23,7 @@ class MdlGradeTrack < Eventable
       puts "* Stating Moodle Grade Tracker Imports *"
       puts "****************************************\n"
       peeps = ActiveResource::Connection.new(Settings.moodle_host)
-              .get("#{Settings.moodle_path}/webservice/rest/server.php?" +
+              .get("#{Settings.moodle_path}/webservice/rest/server.php?" \
                 "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_users_with_mag").body
       Nokogiri::XML(peeps).xpath('//MULTIPLE/SINGLE').each do |peep|
         import_for(peep.xpath("KEY[@name='username']/VALUE").first.content)
@@ -38,7 +38,7 @@ class MdlGradeTrack < Eventable
     person.mdl_grade_tracks.destroy_all
     begin
       tracks = ActiveResource::Connection.new(Settings.moodle_host)
-               .get("#{Settings.moodle_path}/webservice/rest/server.php?" +
+               .get("#{Settings.moodle_path}/webservice/rest/server.php?" \
                    "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_targets_by_username&username=" +
                    person.username + Settings.moodle_user_postfix).body
     rescue

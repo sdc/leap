@@ -9,7 +9,7 @@ class MdlBadge < Eventable
       puts "* Stating Moodle Badge Imports *"
       puts "****************************************\n"
       peeps = ActiveResource::Connection.new(Settings.moodle_host)
-              .get("#{Settings.moodle_path}/webservice/rest/server.php?" +
+              .get("#{Settings.moodle_path}/webservice/rest/server.php?" \
                 "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_users_with_badges").body
       Nokogiri::XML(peeps).xpath('//MULTIPLE/SINGLE').each do |peep|
         import_for(peep.xpath("KEY[@name='username']/VALUE").first.content)
@@ -23,7 +23,7 @@ class MdlBadge < Eventable
     person = person.kind_of?(Person) ? person : Person.get(person)
     begin
       badges = ActiveResource::Connection.new(Settings.moodle_host)
-               .get("#{Settings.moodle_path}/webservice/rest/server.php?" +
+               .get("#{Settings.moodle_path}/webservice/rest/server.php?" \
                    "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_badges_by_username&username=" +
                    person.username + Settings.moodle_user_postfix).body
     rescue

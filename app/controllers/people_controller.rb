@@ -107,7 +107,7 @@ class PeopleController < ApplicationController
   def moodle_block
     begin
       mcourses = ActiveResource::Connection.new(Settings.moodle_host)
-                 .get("#{Settings.moodle_path}/webservice/rest/server.php?" +
+                 .get("#{Settings.moodle_path}/webservice/rest/server.php?" \
                  "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_user_courses&username=" +
                  @topic.username + Settings.moodle_user_postfix).body
       @moodle_courses = Nokogiri::XML(mcourses).xpath('//MULTIPLE/SINGLE').map do |course|
