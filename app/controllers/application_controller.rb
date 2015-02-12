@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
       aff_var = request.env["affiliation"] || request.env["HTTP_AJP_AFFILIATION"]
       if aff_var
         affs = aff_var.split(";").map { |a| a.split("@").first.downcase }
-        Person.affiliation = @affiliation = ["staff", "student", "applicant", "affiliate"].find { |a| affs.include? a }
+        Person.affiliation = @affiliation = %w(staff student applicant affiliate).find { |a| affs.include? a }
       end
       uname, domain = request.env[ env["eppn"] ? "eppn" : "REMOTE_USER"].try(:downcase).try(:split, '@')
       unless Settings.sdc.blank?

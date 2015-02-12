@@ -39,7 +39,7 @@ class PeopleController < ApplicationController
           #  MdlGradeTrack.new(:course_type => ct).to_tile
           #end)
           @tiles.unshift(tracks.map(&:to_tile))
-          attendances = ["overall", "core", "maths", "english"].map { |ct| @topic.attendances.where(course_type: ct).last }.reject(&:nil?)
+          attendances = %w(overall core maths english).map { |ct| @topic.attendances.where(course_type: ct).last }.reject(&:nil?)
           attendances.select! { |x| x.course_type != "overall" } if attendances.length == 2
           @tiles.unshift(attendances.map(&:to_tile))
           #if @topic.attendances.where(:course_type => "overall").any?

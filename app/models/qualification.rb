@@ -60,7 +60,7 @@ class Qualification < Eventable
   def title
     return "Qualification" if seen?
     return "Qualification" if !mis_id.blank?
-    return ["Predicted", "Grade"] if predicted?
+    return %w(Predicted Grade) if predicted?
     ["Qualification", "(not_seen)"]
   end
 
