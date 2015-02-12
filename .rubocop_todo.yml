@@ -72,18 +72,6 @@ Metrics/PerceivedComplexity:
 Style/AccessorMethodName:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-#Style/AlignParameters:
-#  Enabled: false
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-#Style/BracesAroundHashParameters:
-#  Enabled: false
-
 # Offense count: 13
 # Configuration parameters: IndentWhenRelativeTo, SupportedStyles, IndentOneStep.
 Style/CaseIndentation:
@@ -96,13 +84,13 @@ Style/ClassAndModuleChildren:
 
 # Offense count: 4
 # Cop supports --auto-correct.
-Style/ClassMethods:
-  Enabled: false
+#Style/ClassMethods:
+#  Enabled: false
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/CommentIndentation:
-  Enabled: false
+#Style/CommentIndentation:
+#  Enabled: false
 
 # Offense count: 76
 Style/Documentation:

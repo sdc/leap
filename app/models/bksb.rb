@@ -1,10 +1,10 @@
 class BKSB < ActiveResource::Base
-# Look, this happens in an odd way. I rewrite element_path so it points to all the
-# results for a person. You pass in the person code as the id. So, yes, Rails would
-# expect a single result but actually gets a load of results in the format BKSB
-# presents them. But as long as I parse these out and create the Qualification
-# events properly and we NEVER USE THIS EXPECTING IT TO BE A PROPER ACTIVERESOURCE
-# then everything will be fine :)
+  # Look, this happens in an odd way. I rewrite element_path so it points to all the
+  # results for a person. You pass in the person code as the id. So, yes, Rails would
+  # expect a single result but actually gets a load of results in the format BKSB
+  # presents them. But as long as I parse these out and create the Qualification
+  # events properly and we NEVER USE THIS EXPECTING IT TO BE A PROPER ACTIVERESOURCE
+  # then everything will be fine :)
 
   unless Settings.bksb_url.blank?
     self.format = :xml
@@ -13,7 +13,7 @@ class BKSB < ActiveResource::Base
     self.password = Settings.bksb_iis_pwd
   end
 
-  def BKSB.element_path(id, prefix_options = {}, query_options = nil)
+  def self.element_path(id, prefix_options = {}, query_options = nil)
     "/bksb_reporting/API/Results.aspx#{query_string(p: Settings.bksb_pwd, u: id)}"
   end
 
