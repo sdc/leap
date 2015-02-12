@@ -28,8 +28,8 @@ class Admin::SettingsController < ApplicationController
         logger.info "KEY: #{k}"
         logger.info "CLASS: #{Settings[k].class}"
         case Settings[k].class.name
-          when "Array" then Settings[k] = params[k].split(",")
-          else Settings[k] = params[k]
+        when "Array" then Settings[k] = params[k].split(",")
+        else Settings[k] = params[k]
         end
       end
     end

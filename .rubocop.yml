@@ -15,6 +15,9 @@ Lint/AssignmentInCondition:
 Lint/HandleExceptions:
   Enabled: false
 
+Style/AccessorMethodName:
+  Enabled: false
+
 AllCops:
   Exclude:
     - 'app/models/bksb.rb'

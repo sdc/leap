@@ -49,11 +49,12 @@ class PersonCourse < Eventable
 
   def title(tr)
     [course, case tr
-      when :create   then "Application"
-      when :to_start then "Enrolment"
-      when :start    then "Start"
-      when :complete then "Complete" # TODO: distinguish between complete, w/d, incomplete etc
-    end]
+             when :create   then "Application"
+             when :to_start then "Enrolment"
+             when :start    then "Start"
+             when :complete then "Complete" # TODO: distinguish between complete, w/d, incomplete etc
+             end
+    ]
   end
 
   def to_xml(options = {})

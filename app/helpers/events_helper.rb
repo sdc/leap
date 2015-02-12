@@ -22,13 +22,13 @@ module EventsHelper
 
   def special_title(thing, wrap = :div)
     text = case thing.class.name
-    when "String" then thing
-    when "Array"  then thing.map { |t| content_tag(wrap, special_title(t)) }.join " "
-    when "Date"   then pretty_date thing
-    when "Time"   then pretty_date thing
-    when "Course" then link_to_if @affiliation == "staff", thing.code, thing
-    when "Person" then link_to_if @affiliation == "staff", thing.name, thing
-    end
+           when "String" then thing
+           when "Array"  then thing.map { |t| content_tag(wrap, special_title(t)) }.join " "
+           when "Date"   then pretty_date thing
+           when "Time"   then pretty_date thing
+           when "Course" then link_to_if @affiliation == "staff", thing.code, thing
+           when "Person" then link_to_if @affiliation == "staff", thing.name, thing
+           end
     (text && (text.size < 3  || text.last == "%")) ? content_tag(:span, text, class: "big") : text
   end
 
