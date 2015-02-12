@@ -19,11 +19,11 @@ class Admin::SettingsController < ApplicationController
   before_action :admin_page
 
   def index
-    @settings = Settings.all.keys.sort
+    @settings = Settings.get_all.keys.sort
   end
 
   def create
-    Settings.all.keys.each do |k|
+    Settings.get_all.keys.each do |k|
       next unless params[k]
       logger.info "KEY: #{k}"
       logger.info "CLASS: #{Settings[k].class}"
