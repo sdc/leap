@@ -105,15 +105,10 @@ Style/GuardClause:
 Style/IfUnlessModifier:
   Enabled: false
 
-# Offense count: 17
-# Cop supports --auto-correct.
-# Style/LeadingCommentSpace:
-#   Enabled: false
-
 # Offense count: 2
 # Cop supports --auto-correct.
-Style/NegatedIf:
-  Enabled: false
+# Style/NegatedIf:
+#   Enabled: false
 
 # Offense count: 1
 # Configuration parameters: EnforcedStyle, MinBodyLength, SupportedStyles.
@@ -130,16 +125,6 @@ Style/PredicateName:
 # Configuration parameters: AllowAsExpressionSeparator.
 Style/Semicolon:
   Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Style/SpaceAfterControlKeyword:
-#   Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Style/SpaceInsideBrackets:
-#   Enabled: false
 
 # Offense count: 504
 # Cop supports --auto-correct.
