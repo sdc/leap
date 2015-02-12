@@ -14,3 +14,7 @@ Lint/AssignmentInCondition:
 
 Lint/HandleExceptions:
   Enabled: false
+
+AllCops:
+  Exclude:
+    - 'app/models/bksb.rb'

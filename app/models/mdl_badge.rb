@@ -30,7 +30,7 @@ class MdlBadge < Eventable
       # Almost certainly the user doesn't exist on Moodle yet
       return nil
     end
-    badges = Nokogiri::XML(badges).xpath('//MULTIPLE/SINGLE').each do |badge|
+    Nokogiri::XML(badges).xpath('//MULTIPLE/SINGLE').each do |badge|
       image_url = badge.xpath("KEY[@name='image_url']/VALUE").first.content
       next if person.mdl_badges.where(image_url: image_url).any?
       person.mdl_badges.create do |t|

@@ -57,7 +57,7 @@ class Course < ActiveRecord::Base
   end
 
   def tutorgroups
-    groups = person_courses.group("tutorgroup").map(&:tutorgroup).reject(&:blank?)
+    person_courses.group("tutorgroup").map(&:tutorgroup).reject(&:blank?)
   end
 
   def entry_reqs
