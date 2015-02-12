@@ -26,7 +26,7 @@ class View < ActiveRecord::Base
   validates :name, presence: true
 
   belongs_to :parent, class_name: "View"
-  has_many   :children, class_name: "View", foreign_key: "parent_id"
+  has_many :children, class_name: "View", foreign_key: "parent_id"
 
   scope :for_user,  -> { where('affiliations like ?', "%#{Person.affiliation}%") }
   scope :in_list,   -> { where(in_list: true) }

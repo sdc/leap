@@ -130,27 +130,16 @@ Style/NumericLiterals:
 Style/PredicateName:
   Enabled: false
 
-# Offense count: 4
-# Cop supports --auto-correct.
-#Style/RedundantSelf:
-#  Enabled: false
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: AllowAsExpressionSeparator.
 Style/Semicolon:
   Enabled: false
 
-# Offense count: 21
-# Cop supports --auto-correct.
-# Configuration parameters: AllowIfMethodIsEmpty.
-Style/SingleLineMethods:
-  Enabled: false
-
 # Offense count: 15
 # Cop supports --auto-correct.
-Style/SingleSpaceBeforeFirstArg:
-  Enabled: false
+#Style/SingleSpaceBeforeFirstArg:
+#  Enabled: false
 
 # Offense count: 1
 # Cop supports --auto-correct.

@@ -19,7 +19,7 @@ class Ebs::RegisterEventSlot < Ebs::Model
   self.primary_key = :id
 
   belongs_to :register_event
-  has_many   :register_event_details_slots
+  has_many :register_event_details_slots
 
   def rooms
     register_event_details_slots.where(object_type: "R").map(&:the_object).reject(&:nil?)
