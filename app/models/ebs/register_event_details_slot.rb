@@ -22,16 +22,14 @@ class Ebs::RegisterEventDetailsSlot < Ebs::Model
   delegate   :rooms, :teachers, to: :register_event_slot
 
   def the_object
-    begin
-      case object_type
-      when "R" then Ebs::Room.find_by_id(object_id)
-      when "T" then Ebs::Person.find(object_id)
-      when "L" then Ebs::Person.find(object_id)
-      else throw "Not a known object"
-      end
-    rescue
-      nil
+    case object_type
+    when "R" then Ebs::Room.find_by_id(object_id)
+    when "T" then Ebs::Person.find(object_id)
+    when "L" then Ebs::Person.find(object_id)
+    else throw "Not a known object"
     end
+  rescue
+    nil
   end
 
   def usage

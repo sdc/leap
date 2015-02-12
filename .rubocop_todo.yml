@@ -125,12 +125,6 @@ Style/Next:
 Style/NumericLiterals:
   MinDigits: 9
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: AllowSafeAssignment.
-#Style/ParenthesesAroundCondition:
-#  Enabled: false
-
 # Offense count: 5
 # Configuration parameters: NamePrefix, NamePrefixBlacklist.
 Style/PredicateName:
@@ -138,8 +132,8 @@ Style/PredicateName:
 
 # Offense count: 6
 # Cop supports --auto-correct.
-Style/RedundantBegin:
-  Enabled: false
+#Style/RedundantBegin:
+#  Enabled: false
 
 # Offense count: 4
 # Cop supports --auto-correct.

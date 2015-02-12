@@ -105,21 +105,19 @@ class PeopleController < ApplicationController
   end
 
   def moodle_block
-    begin
-      mcourses = ActiveResource::Connection.new(Settings.moodle_host)
-                 .get("#{Settings.moodle_path}/webservice/rest/server.php?" \
-                 "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_user_courses&username=" +
-                 @topic.username + Settings.moodle_user_postfix).body
-      @moodle_courses = Nokogiri::XML(mcourses).xpath('//MULTIPLE/SINGLE').map do |course|
-        Hash[:id,      course.xpath("KEY[@name='id']/VALUE").first.content,
-             :name,    course.xpath("KEY[@name='fullname']/VALUE").first.content,
-             :canedit, course.xpath("KEY[@name='canedit']/VALUE").first.content == "1"
-            ]
-      end
-    rescue
-      logger.error "Can't connect to Moodle: #{$!}"
-      @moodle_courses = false
+    mcourses = ActiveResource::Connection.new(Settings.moodle_host)
+               .get("#{Settings.moodle_path}/webservice/rest/server.php?" \
+               "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_user_courses&username=" +
+               @topic.username + Settings.moodle_user_postfix).body
+    @moodle_courses = Nokogiri::XML(mcourses).xpath('//MULTIPLE/SINGLE').map do |course|
+      Hash[:id,      course.xpath("KEY[@name='id']/VALUE").first.content,
+           :name,    course.xpath("KEY[@name='fullname']/VALUE").first.content,
+           :canedit, course.xpath("KEY[@name='canedit']/VALUE").first.content == "1"
+          ]
     end
+  rescue
+    logger.error "Can't connect to Moodle: #{$!}"
+    @moodle_courses = false
   end
 
   def attendance_block
