@@ -73,11 +73,11 @@ class Eventable < ActiveRecord::Base
     "fa-circle-thin"
   end
 
- def to_tile
-   events.last.to_tile
- end
+  def to_tile
+    events.last.to_tile
+  end
 
- def is_deleted?
-   respond_to?(:deleted) && deleted
- end
+  def is_deleted?
+    respond_to?(:deleted) && deleted
+  end
 end

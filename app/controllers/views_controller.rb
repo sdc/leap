@@ -49,17 +49,17 @@ class ViewsController < ApplicationController
   def set_scope
     @scope = if (@affiliation == "staff" && params[:all])
                @multi = true
-      Event.scoped
+               Event.scoped
              elsif (@affiliation == "staff" && @topic.kind_of?(Course))
                @multi = true
-      if @tutorgroup
-        Event.where(person_id: @topic.person_courses.where(tutorgroup: @tutorgroup).map(&:person_id))
-      else
-        Event.where(person_id: @topic.people.map(&:id))
-      end
+               if @tutorgroup
+                 Event.where(person_id: @topic.person_courses.where(tutorgroup: @tutorgroup).map(&:person_id))
+               else
+                 Event.where(person_id: @topic.people.map(&:id))
+               end
              else
                @multi = false
-      @topic.events
+               @topic.events
     end
   end
 end

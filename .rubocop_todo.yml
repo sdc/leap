@@ -95,14 +95,9 @@ Style/EmptyElse:
 Style/EmptyLines:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-#Style/EmptyLiteral:
-#  Enabled: false
-
 # Offense count: 2
 # Configuration parameters: MinBodyLength.
-#Style/GuardClause:
+Style/GuardClause:
   Enabled: false
 
 # Offense count: 2
@@ -110,16 +105,10 @@ Style/EmptyLines:
 Style/IfUnlessModifier:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-#Style/IndentHash:
-#  Enabled: false
-
 # Offense count: 7
 # Cop supports --auto-correct.
-Style/IndentationConsistency:
-  Enabled: false
+# Style/IndentationConsistency:
+#  Enabled: false
 
 # Offense count: 17
 # Cop supports --auto-correct.
