@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Attendance < Eventable
-  default_scope order: 'week_beginning'
+  default_scope { order('week_beginning') }
 
   after_create do |attendance|
     attendance.events.create!(event_date: week_beginning.end_of_week, transition: :complete) if attendance.course_type == "overall"

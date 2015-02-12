@@ -36,11 +36,6 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 17
 
-# Offense count: 6
-# Configuration parameters: Include.
-Rails/DefaultScope:
-  Enabled: false
-
 # Offense count: 10
 # Configuration parameters: Include.
 Rails/Output:
