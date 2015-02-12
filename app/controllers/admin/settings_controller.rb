@@ -15,8 +15,8 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::SettingsController < ApplicationController
-  skip_before_filter :maintenance_mode
-  before_filter :admin_page
+  skip_before_action :maintenance_mode
+  before_action :admin_page
 
   def index
     @settings = Settings.all.keys.sort

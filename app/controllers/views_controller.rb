@@ -17,8 +17,8 @@
 class ViewsController < ApplicationController
   respond_to :html, :xml, :js, :pdf
 
-  before_filter :set_scope
-  before_filter { |c| c.set_date(1.year) }
+  before_action :set_scope
+  before_action { |c| c.set_date(1.year) }
 
   def show
     if @view = View.for_user.find_by_name(params[:id])

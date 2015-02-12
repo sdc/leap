@@ -15,7 +15,7 @@
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::ViewsController < ApplicationController
-  before_filter :admin_page
+  before_action :admin_page
 
   def index
     @views = View.all

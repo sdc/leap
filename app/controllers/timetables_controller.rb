@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class TimetablesController < ApplicationController
-  before_filter :set_date
+  before_action :set_date
   layout :set_layout
 
   def index
