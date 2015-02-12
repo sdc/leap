@@ -40,11 +40,11 @@ class TimetableEvent
   end
 
   def to_tile
-    Tile.new({ title: "Next Lesson",
-               bg: "9aa",
-               icon: "fa-calendar",
-               partial_path: "tiles/next_lesson",
-               object: self })
+    Tile.new(title: "Next Lesson",
+             bg: "9aa",
+             icon: "fa-calendar",
+             partial_path: "tiles/next_lesson",
+             object: self)
   end
 
   def to_ics

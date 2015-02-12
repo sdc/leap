@@ -51,9 +51,9 @@ module EventsHelper
 
   def delete_event_button(event)
     link_to image_tag("events/delete_event.png"), person_event_url(event.person, event),
-    method: :delete, remote: true,
-    class:  "delete-event-button",
-    data: { confirm: "This will delete the entire #{event.eventable_type.singularize.humanize.titleize}.\nAre you sure?" }
+            method: :delete, remote: true,
+            class:  "delete-event-button",
+            data: { confirm: "This will delete the entire #{event.eventable_type.singularize.humanize.titleize}.\nAre you sure?" }
   end
 
   def pretty_date(date, options = {})
