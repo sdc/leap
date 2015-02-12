@@ -8,3 +8,6 @@ Style/SingleLineMethods:
 
 Style/NumericLiterals:
   Enabled: false
+
+Lint/AssignmentInCondition:
+  Enabled: false

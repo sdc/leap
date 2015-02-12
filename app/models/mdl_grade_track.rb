@@ -74,7 +74,7 @@ class MdlGradeTrack < Eventable
            "da6"
          else
            "6a6"
-    end
+         end
     Tile.new(title: name,
              bg: bg,
              icon: "fa-bar-chart-o",

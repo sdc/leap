@@ -38,7 +38,7 @@ class EventsController < ApplicationController
         flash[:error] = "#{et.singularize.humanize.titleize} could not be created!"
         flash[:details] = @event.errors.map { |c, e| "<b>#{c}:</b> #{e}" }.join "<br />"
       end
-      if view = params[:redirect_to]
+      if params[:redirect_to]
         redirect_to params[:redirect_to]
       else
         begin

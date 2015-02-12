@@ -5,19 +5,9 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 3
-# Configuration parameters: AllowSafeAssignment.
-Lint/AssignmentInCondition:
-  Enabled: false
-
-# Offense count: 6
-# Configuration parameters: AlignWith, SupportedStyles.
-Lint/EndAlignment:
-  Enabled: false
-
 # Offense count: 2
-Lint/HandleExceptions:
-  Enabled: false
+# Lint/HandleExceptions:
+#   Enabled: false
 
 # Offense count: 1
 Lint/ParenthesesAsGroupedExpression:

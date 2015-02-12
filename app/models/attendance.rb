@@ -68,7 +68,7 @@ class Attendance < Eventable
              "da6"
            else
              "6a6"
-      end
+           end
     rescue
       bg = "6a6"
     end

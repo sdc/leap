@@ -24,7 +24,7 @@ class CoursesController < ApplicationController
                         @topic.person_courses.includes(person: "mdl_grade_tracks").where(tutorgroup: @tutorgroup).sort_by { |pc| pc.person.name(surname_first: true) }
                       else
                         @topic.person_courses.includes(person: "mdl_grade_tracks").sort_by { |pc| pc.person.name(surname_first: true) }
-    end
+                      end
     respond_to do |format|
       format.html do
         @window = Settings.current_review_window.blank? ? nil : Settings.current_review_window

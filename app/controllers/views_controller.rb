@@ -60,6 +60,6 @@ class ViewsController < ApplicationController
              else
                @multi = false
                @topic.events
-    end
+             end
   end
 end
