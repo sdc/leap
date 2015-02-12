@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class TimetableEvent
-
   attr_accessor :title, :timetable_start, :timetable_end, :rooms, :teachers, :mark, :status, :mis_id
 
   def timetable_margin

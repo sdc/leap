@@ -10,5 +10,4 @@ class GlobalNews < ActiveRecord::Base
              modal_body: body,
              object: self)
   end
-
 end

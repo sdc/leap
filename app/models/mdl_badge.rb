@@ -72,6 +72,4 @@ class MdlBadge < Eventable
       link: link_url,
       object: self }
   end
-
-
 end
