@@ -110,11 +110,6 @@ Style/IfUnlessModifier:
 Style/LeadingCommentSpace:
   Enabled: false
 
-# Offense count: 8
-# Cop supports --auto-correct.
-#Style/LineEndConcatenation:
-#  Enabled: false
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/NegatedIf:
@@ -127,8 +122,8 @@ Style/Next:
 
 # Offense count: 7
 # Cop supports --auto-correct.
-Style/NilComparison:
-  Enabled: false
+#Style/NilComparison:
+#  Enabled: false
 
 # Offense count: 2
 # Cop supports --auto-correct.

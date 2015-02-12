@@ -29,16 +29,16 @@ class PersonCourse < Eventable
   attr_accessible :offer_code, :status, :start_date, :application_date, :mis_status
 
   after_save do |person_course|
-    if person_course.application_date_changed? && person_course.application_date_was == nil
+    if person_course.application_date_changed? && person_course.application_date_was.nil?
       person_course.events.create(event_date: person_course.application_date, transition: :create)
     end
-    if person_course.enrolment_date_changed? && person_course.enrolment_date_was == nil
+    if person_course.enrolment_date_changed? && person_course.enrolment_date_was.nil?
       person_course.events.create(event_date: person_course.enrolment_date, transition: :to_start)
     end
-    if person_course.start_date_changed? && person_course.start_date_was == nil
+    if person_course.start_date_changed? && person_course.start_date_was.nil?
       person_course.events.create(event_date: person_course.start_date, transition: :start)
     end
-    if person_course.end_date_changed? && person_course.end_date_was == nil
+    if person_course.end_date_changed? && person_course.end_date_was.nil?
       person_course.events.create(event_date: person_course.end_date, transition: :complete)
     end
   end
