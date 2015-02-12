@@ -130,15 +130,10 @@ Style/NumericLiterals:
 Style/PredicateName:
   Enabled: false
 
-# Offense count: 6
-# Cop supports --auto-correct.
-#Style/RedundantBegin:
-#  Enabled: false
-
 # Offense count: 4
 # Cop supports --auto-correct.
-Style/RedundantSelf:
-  Enabled: false
+#Style/RedundantSelf:
+#  Enabled: false
 
 # Offense count: 2
 # Cop supports --auto-correct.

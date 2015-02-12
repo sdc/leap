@@ -51,7 +51,7 @@ class Eventable < ActiveRecord::Base
     if respond_to?(:mis) && mis
       "Imported from MIS"
     elsif created_by
-      "#{self.humanize} created by #{created_by.name}"
+      "#{humanize} created by #{created_by.name}"
     else
       "Auto-generated"
     end
