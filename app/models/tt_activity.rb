@@ -40,7 +40,7 @@ class TtActivity < Eventable
 
   def fix_start_time
     self.start_time = Time.new(tmp_date.year, tmp_date.month, tmp_date.day,
-	                              tmp_time.hour, tmp_time.min)
+                               tmp_time.hour, tmp_time.min)
   end
 
   def status
