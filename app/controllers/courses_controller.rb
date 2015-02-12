@@ -53,7 +53,7 @@ class CoursesController < ApplicationController
         @moodle_courses = mcourses.map { |x| x.respond_to?(:last) ? x.last : x["KEY"] }.map { |a| a.map { |b| [b["name"], b["VALUE"]] } }.map { |x| Hash[x] }.select { |x| x["visible"] == "1" }
       end
     rescue
-      logger.error "Can't connect to Moodle: #{$!}"
+      logger.error "Can't connect to Moodle: #{$ERROR_INFO}"
       @moodle_courses = false
     end
     render "people/moodle_block"

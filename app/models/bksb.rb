@@ -45,7 +45,7 @@ class BKSB < ActiveResource::Base
               n.grade = "#{a.totalScore} out of #{a.totalOutOf} (#{a.percentScore}%)"
               n.created_at = DateTime.parse(a.dateTaken)
               n.save
-              logger.error "Error importing BKSB for #{person_code}. #{$!}"
+              logger.error "Error importing BKSB for #{person_code}. #{$ERROR_INFO}"
             rescue
               # Just in case something breaky happens
             end

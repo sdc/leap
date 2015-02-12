@@ -116,7 +116,7 @@ class PeopleController < ApplicationController
           ]
     end
   rescue
-    logger.error "Can't connect to Moodle: #{$!}"
+    logger.error "Can't connect to Moodle: #{$ERROR_INFO}"
     @moodle_courses = false
   end
 
