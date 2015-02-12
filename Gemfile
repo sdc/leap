@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-gem 'rails', "~> 4.0.13"
+gem 'rails', "~> 4.1.9"
 gem 'coffee-rails', "~> 4.0.0"
 gem 'haml'
 gem "less-rails"
@@ -26,7 +26,7 @@ gem 'debugger'
 platforms :ruby do
   gem 'mysql2'
   gem 'therubyracer'
-  gem 'activerecord-sqlserver-adapter', '~> 4.0'
+  gem 'activerecord-sqlserver-adapter', '~> 4.1'
   gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.0'
   gem 'activerecord-mysql-adapter'
   gem 'ruby-oci8'#, "2.1.0"

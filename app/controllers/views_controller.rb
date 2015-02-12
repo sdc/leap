@@ -31,7 +31,7 @@ class ViewsController < ApplicationController
       @events = @events.select { |e| e.title.to_s == params[:title] } if params[:title]
       @events.detect(&:past?).try("first_in_past=", true) unless @events.first.past? if @events.try(:first)
       @events.reject!(&:staff_only?) unless @user.staff?
-      @events.reject!(&:is_deleted?)
+      @events = @events.reject(&:is_deleted?)
       respond_with(@events) do |f|
         f.js { render @events }
       end
@@ -49,7 +49,7 @@ class ViewsController < ApplicationController
   def set_scope
     @scope = if @affiliation == "staff" && params[:all]
                @multi = true
-               Event.scoped
+               Event.limit(100)
              elsif @affiliation == "staff" && @topic.kind_of?(Course)
                @multi = true
                if @tutorgroup
