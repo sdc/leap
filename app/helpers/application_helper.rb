@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 module ApplicationHelper
-
   def icon_link(text, link="#", icon=false)
     content_tag(:li, class: "row") do
       link_to link do
@@ -27,5 +26,4 @@ module ApplicationHelper
   def link_to_submit(*args, &block)
     link_to_function (block_given? ? capture(&block) : args[0]), "$(this).closest('form').submit()", args.extract_options!
   end
-
 end

@@ -15,7 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 module EventsHelper
-
   def event_date(event)
     content_tag(:div, pretty_date(event.event_date), class: "date") +
       content_tag(:div, pretty_time(event.event_date), class: "time")
@@ -104,6 +103,4 @@ module EventsHelper
       block.call(f)
     end
   end
-
-
 end
