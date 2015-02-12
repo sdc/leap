@@ -120,11 +120,6 @@ Style/NegatedIf:
 Style/Next:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/NumericLiterals:
-  MinDigits: 9
-
 # Offense count: 5
 # Configuration parameters: NamePrefix, NamePrefixBlacklist.
 Style/PredicateName:
@@ -171,16 +166,16 @@ Style/StringLiteralsInInterpolation:
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/TrailingBlankLines:
-  Enabled: false
+# Style/TrailingBlankLines:
+#   Enabled: false
 
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleForMultiline, SupportedStyles.
-Style/TrailingComma:
-  Enabled: false
+# Style/TrailingComma:
+#   Enabled: false
 
 # Offense count: 2
 # Cop supports --auto-correct.
-Style/TrailingWhitespace:
-  Enabled: false
+# Style/TrailingWhitespace:
+#   Enabled: false

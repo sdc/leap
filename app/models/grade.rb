@@ -42,4 +42,3 @@ class Grade
 
   def nil?; @grade.nil? end
 end
-

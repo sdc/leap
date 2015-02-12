@@ -133,7 +133,7 @@ class Event < ActiveRecord::Base
       subtitle: subtitle,
       body: body,
       person_id: person_id,
-      object: self,
+      object: self
     }
     if eventable.respond_to? :tile_attrs
       if eventable.method(:tile_attrs).arity == 1

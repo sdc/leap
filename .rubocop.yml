@@ -5,3 +5,6 @@ Style/ClassCheck:
 
 Style/SingleLineMethods:
   Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false

@@ -79,9 +79,9 @@ class ApplicationController < ActionController::Base
   def set_topic
     if @affiliation == "staff"
       if params[:person_id]
-        @topic = Person.get(params[:person_id], params[:refresh]) 
+        @topic = Person.get(params[:person_id], params[:refresh])
       elsif params[:course_id]
-        @topic = Course.get(params[:course_id], params[:refresh]) 
+        @topic = Course.get(params[:course_id], params[:refresh])
         @tutorgroup = params[:tutorgroup]
       else
         @topic = @user
