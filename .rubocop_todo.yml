@@ -82,24 +82,14 @@ Style/CaseIndentation:
 Style/ClassAndModuleChildren:
   Enabled: false
 
-# Offense count: 4
-# Cop supports --auto-correct.
-#Style/ClassMethods:
-#  Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-#Style/CommentIndentation:
-#  Enabled: false
-
 # Offense count: 76
 Style/Documentation:
   Enabled: false
 
 # Offense count: 9
 # Cop supports --auto-correct.
-Style/ElseAlignment:
-  Enabled: false
+#Style/ElseAlignment:
+#  Enabled: false
 
 # Offense count: 2
 Style/EmptyElse:
@@ -108,8 +98,8 @@ Style/EmptyElse:
 # Offense count: 6
 # Cop supports --auto-correct.
 # Configuration parameters: AllowAdjacentOneLineDefs.
-Style/EmptyLineBetweenDefs:
-  Enabled: false
+#Style/EmptyLineBetweenDefs:
+#  Enabled: false
 
 # Offense count: 9
 # Cop supports --auto-correct.

@@ -32,8 +32,8 @@ class ApplicationController < ActionController::Base
                 else
                   Time.parse(params[:date])
                 end
-      else
-        Time.now + default_offset
+              else
+                Time.now + default_offset
       end
     rescue
       flash.notice = "Incorrect date entered! Using today instead."

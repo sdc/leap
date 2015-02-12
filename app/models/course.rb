@@ -66,5 +66,6 @@ class Course < ActiveRecord::Base
   end
 
   def person?; false end
+
   def course?; true end
 end

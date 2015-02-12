@@ -39,6 +39,7 @@ class Grade
   end
 
   def blank?; @grade.blank? end
+
   def nil?; @grade.nil? end
 end
 

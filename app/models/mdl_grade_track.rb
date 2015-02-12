@@ -71,10 +71,10 @@ class MdlGradeTrack < Eventable
   def to_tile
     bg = if(status == :success)
            "a66"
-    elsif status == :current
-      "da6"
-    else
-      "6a6"
+         elsif status == :current
+           "da6"
+         else
+           "6a6"
     end
     Tile.new(title: name,
              bg: bg,

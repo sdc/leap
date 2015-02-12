@@ -27,8 +27,11 @@ class TimetableEvent
   end
 
   def subtitle; nil end
+
   def body; nil end
+
   def is_deletable?; false end
+
   def id; mis_id end
 
   def cl_status

@@ -36,8 +36,8 @@ class TimetablesController < ApplicationController
     @view = View.for_user.find_by_name("timetable")
     @events = if @topic.kind_of? Person
                 @topic.events.where(event_date: (@date.to_time + 1.hour + 1.second)..@end_date, transition: @view.transitions, eventable_type: @view.events)
-    else
-      []
+              else
+                []
     end
     respond_to do |format|
       format.html { render action: Settings.home_page == "new" ? :cloud_index : :index }

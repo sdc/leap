@@ -175,5 +175,6 @@ class Person < ActiveRecord::Base
   end
 
   def person?; true end
+
   def course?; false end
 end
