@@ -13,7 +13,7 @@ class BKSB < ActiveResource::Base
     self.password = Settings.bksb_iis_pwd
   end
 
-  def self.element_path(id, prefix_options = {}, query_options = nil)
+  def self.element_path(id, _prefix_options = {}, _query_options = nil)
     "/bksb_reporting/API/Results.aspx#{query_string(p: Settings.bksb_pwd, u: id)}"
   end
 

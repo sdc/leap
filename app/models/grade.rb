@@ -23,7 +23,7 @@ class Grade
       @scheme = :number
     elsif grade.kind_of? String
       @grade = grade.downcase.to_sym
-      @scheme = SCHEMES.detect { |k, v| v.include? @grade }.try :first
+      @scheme = SCHEMES.detect { |_k, v| v.include? @grade }.try :first
     end
   end
 

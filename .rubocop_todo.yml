@@ -29,13 +29,13 @@ Lint/ShadowingOuterLocalVariable:
 
 # Offense count: 2
 # Cop supports --auto-correct.
-Lint/UnusedBlockArgument:
-  Enabled: false
+# Lint/UnusedBlockArgument:
+#   Enabled: false
 
 # Offense count: 4
 # Cop supports --auto-correct.
-Lint/UnusedMethodArgument:
-  Enabled: false
+# Lint/UnusedMethodArgument:
+#   Enabled: false
 
 # Offense count: 6
 Lint/UselessAssignment:
@@ -104,11 +104,6 @@ Style/GuardClause:
 # Configuration parameters: MaxLineLength.
 Style/IfUnlessModifier:
   Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Style/NegatedIf:
-#   Enabled: false
 
 # Offense count: 1
 # Configuration parameters: EnforcedStyle, MinBodyLength, SupportedStyles.
