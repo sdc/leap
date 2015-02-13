@@ -15,6 +15,8 @@ gem 'uglifier', "~> 2.7.0"
 gem 'yui-compressor'
 gem 'icalendar'
 gem 'protected_attributes'
+gem 'activerecord-deprecated_finders', require: 'active_record/deprecated_finders'
+
 gem 'activeresource'
 
 gem 'whenever', :require => false
