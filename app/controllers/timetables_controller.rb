@@ -16,7 +16,7 @@
 
 class TimetablesController < ApplicationController
   before_action :set_date
-  layout :set_layout
+  layout "cloud"
 
   def index
     @date = @date.to_date.at_beginning_of_week
@@ -40,18 +40,13 @@ class TimetablesController < ApplicationController
                 []
               end
     respond_to do |format|
-      format.html { render action: Settings.home_page == "new" ? :cloud_index : :index }
-      format.xml { render xml: @topic }
+      format.html 
+      format.json { render json: @registers }
       format.ics do
         cal = Icalendar::Calendar.new
         @registers.each { |r| cal.add_event(r.to_ics) }
         render text: cal.to_ical
       end
     end
-  end
-
-  def set_layout
-    return "application" unless @topic.kind_of?(Person)
-    Settings.home_page == "new" ? "cloud" : "application"
   end
 end

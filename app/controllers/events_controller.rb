@@ -80,7 +80,7 @@ class EventsController < ApplicationController
     end
     respond_to do |f|
       f.html { redirect_to :back }
-      f.js
+      f.js   { render json: @event }
     end
   end
 end

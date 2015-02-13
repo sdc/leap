@@ -4,4 +4,5 @@
 //= require twitter/bootstrap
 //= require jquery.peity.min
 //= require bootstrap-datepicker
+//= require angular
 //= require leap

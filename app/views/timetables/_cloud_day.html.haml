@@ -1,5 +1,0 @@
-.col-xs-2.day{:class => [cloud_day.cwday > 5 ? "weekend" : "weekday", Date::DAYNAMES[cloud_day.wday].downcase,cloud_day == Date.today ? "bg-warning" : nil]}
-  .daytitle
-    %h4.hidden-xs.text-center= Date::DAYNAMES[cloud_day.wday]
-    %h4.visible-xs.text-center= Date::ABBR_DAYNAMES[cloud_day.wday]
-  = render :partial => "cloud_slot", :collection => slots

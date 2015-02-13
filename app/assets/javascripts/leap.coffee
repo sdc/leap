@@ -1,8 +1,6 @@
 $ ->
   $("[title]").tooltip
     container: "body"
-  $('#cleap .delete-event').on 'ajax:complete', ->
-    $(this).closest('.tile').hide("slow")
   show_clidebar = ->
     $('#clidebar').hide().removeClass("visible-lg visible-md").slideDown 'slow'
     $('.hidden-clidebar').hide('quick')

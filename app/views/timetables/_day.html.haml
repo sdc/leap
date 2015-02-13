@@ -1,3 +1,5 @@
-.day{:class => times ? "with-times" : "plain"}
-  %h4= Date::DAYNAMES[day.wday]
-  = render :partial => "slot", :collection => slots
+.col-xs-2.day{class: [day.cwday > 5 ? "weekend" : "weekday", Date::DAYNAMES[day.wday].downcase,day == Date.today ? "bg-warning" : nil]}
+  .daytitle
+    %h4.hidden-xs.text-center= Date::DAYNAMES[day.wday]
+    %h4.visible-xs.text-center= Date::ABBR_DAYNAMES[day.wday]
+  = render partial: "slot", collection: slots
