@@ -16,6 +16,7 @@ gem 'yui-compressor'
 gem 'icalendar'
 gem 'protected_attributes'
 gem 'activerecord-deprecated_finders', require: 'active_record/deprecated_finders'
+gem 'bootstrap-datepicker-rails'
 
 gem 'activeresource'
 
