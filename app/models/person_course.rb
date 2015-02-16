@@ -98,4 +98,8 @@ class PersonCourse < Eventable
     {:icon => "fa-graduation-cap"}
   end
 
+  def mis_status
+    self[:mis_status] || ""
+  end
+
 end

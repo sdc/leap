@@ -3,7 +3,7 @@
     %a.btn.btn-primary.btn-sm.active{"data-course-person-filter" => "show-all"}
       %i.fa.fa-filter
         All
-    - @statuses.each do |s|
+    - @statuses.reject{|x| x.first.nil?}.each do |s|
       %a.btn.btn-sm{"data-course-person-filter" => s.first.parameterize, :class => "btn-#{s.last}"}= s.first
   %li.active 
     %a{:href => "#photo-list", "data-toggle" => "tab"} Photo List
