@@ -36,6 +36,8 @@ $ ->
   $('#course-home-tabs a').on 'shown.bs.tab', (e) -> 
     $.cookie "course-home-tabs",$(e.target).attr('href'), {expires: 365}
   $("#course-home-tabs a[href=#{$.cookie('course-home-tabs')}]").tab('show')
+  if $('[data-course-person-filter=active]').length == 1
+    filterCourseList("active")
   $('[data-course-person-filter]').click ->
     filterCourseList $(this).attr('data-course-person-filter')
   $('[data-download-table]').click ->
