@@ -16,7 +16,6 @@
 
 class Admin::StatsController < ApplicationController
   before_action :admin_page
-  layout "cloud"
 
   def index
     @stats = {}

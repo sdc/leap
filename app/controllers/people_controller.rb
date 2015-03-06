@@ -142,8 +142,6 @@ class PeopleController < ApplicationController
   def set_layout
     case action_name
     when /\_block$/ then false
-    when "show" then Settings.home_page == "new" ? "cloud" : "application"
-    when "search" then Settings.home_page == "new" ? "cloud" : "application"
     else "application"
     end
   end

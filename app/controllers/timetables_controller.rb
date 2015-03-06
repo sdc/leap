@@ -16,7 +16,6 @@
 
 class TimetablesController < ApplicationController
   before_action :set_date
-  layout "cloud"
 
   def index
     @date = @date.to_date.at_beginning_of_week

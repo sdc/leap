@@ -17,7 +17,6 @@
 class Admin::DataController < ApplicationController
   respond_to :html, :json, :xml
   before_action :admin_page
-  layout :cloud
 
   def sync_grade_tracks
     MdlGradeTrack.import_for(params[:person_id])

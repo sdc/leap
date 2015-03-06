@@ -30,7 +30,6 @@ class CoursesController < ApplicationController
         @window = Settings.current_review_window.blank? ? nil : Settings.current_review_window
         @rpub =   Review.where(person_id: @topic.people.map(&:id), published: true, window: @window).any?
         @statuses = @topic.person_courses.map { |pc| [pc.mis_status, pc.cl_status] }.uniq.reject(&:blank?)
-        render action: "cl_show", layout: "cloud" if Settings.home_page == "new"
       end
       format.jpg { redirect_to "/assets/courses.png" }
     end

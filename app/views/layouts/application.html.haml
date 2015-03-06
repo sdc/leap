@@ -1,37 +1,52 @@
 !!!
-%html
+%html{:lang => "en"}
   %head
-    - if @topic
-      %title= "#{@topic.name} : Leap"
-    - else
-      %title Leap
-    = favicon_link_tag
-    = stylesheet_link_tag 'application'
-    - unless Settings.custom_css.blank?
-      :css
-        /* Here begins the custom CSS ======================================== */
-        #{Settings.custom_css}
-    = javascript_include_tag "application"
+    %title
+      - if @topic or @page_title
+        = "#{@topic.try(:name) or @page_title} : Leap" 
+      - else
+        Leap
+    = stylesheet_link_tag "application"
+    = javascript_include_tag 'application'
     = csrf_meta_tag
-    = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty?
-  %body{:class => Person.affiliation}
-    = render :partial => "layouts/top_bar" if @user.try(:staff?)
-    #main-container.container
-      .row
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"}
+    = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty? or Rails.env == "development"
+  %body#cleap{:class => Person.affiliation}
+    = render "layouts/top_bar/main"
+    .container
+      - if @topic
+        .row.visible-xs.visible-sm
+          .col-xs-12.hidden-clidebar
+            %h3{:style => "margin-top:0"}
+              = @topic.name
+              %small= @topic.code
+      .row 
         - if @topic
-          #side-pane
-            - if params[:all] and @user.staff?
-              = render :partial => "layouts/all_sidebar"
-            - else
-              = render :partial => "layouts/sidebar"
-        #main-pane{:class => @topic ? nil : "no-sidebar"}
-          = render :partial => "layouts/alerts"
-          = yield
-      #footer
-        = link_to_if @affiliation == "staff", raw("leap &mdash; electronic individual learning plans &mdash; &copy; 2011 - 2014"), "http://leap-ilp.com"
-    - if @affiliation == "affiliate"
-      = image_tag "parent_mode.png", :style => "position:fixed;right:0;bottom:0;font-size:0"
-    - if Rails.env == "development"
-      = link_to admin_test_login_url do
-        = image_tag "dev_mode.png", :style => "position:fixed;right:0;bottom:0;font-size:0"
-    #help{:style => "display:none"}
+          #clidebar.col-lg-3.col-md-4.visible-lg.visible-md
+            = render :partial => "#{@topic.class.name.downcase.pluralize}/namebox", :object => @topic, :as => :topic
+            - if @topic.kind_of? Person
+              = render :partial => "layouts/sidebar/person_buttons"
+              = render :partial => "people/new_note"
+            - elsif @topic.kind_of? Course
+              = render :partial => "layouts/sidebar/course_buttons"
+            #sidebar-accordion.panel-group
+              = render "layouts/sidebar/personal_details" if @topic.person? unless @topic.staff?
+              = render "layouts/sidebar/timeline_links"
+              = render "layouts/sidebar/moodle_links"
+              = render "layouts/sidebar/custom_links"
+        #main-content.col-xs-12{:class => @topic ? ["col-lg-9","col-md-8"] : nil}= yield
+        - if @topic.kind_of? Person
+          = javascript_tag "$('#moodle-courses-links').load('#{moodle_block_person_url(@topic)}')"
+          #note-modal.modal.fade
+            .modal-dialog
+              .modal-content
+                .modal-header
+                  %h4.modal-title Learner has a note on student records system.
+                .modal-body
+                  - if Person.user.admin?
+                    = simple_format @topic.note
+                  - else
+                    %p Contact your student records department or Leap admin for more information
+                .modal-footer
+                  %button.btn.btn-default{"data-dismiss" => "modal"}Close
+        = render :partial => "layouts/footer"
