@@ -6,3 +6,4 @@
 //= require bootstrap-datepicker
 //= require angular
 //= require leap
+//= require timeline
