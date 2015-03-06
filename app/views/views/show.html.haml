@@ -12,3 +12,13 @@
         Load more events
         %i.icon-arrow-down
   #more_events_loading{:style => "display:none"}= image_tag "ajax-loader.gif" 
+
+%ul#leap-timeline(ng-controller="timelineEventsController" ng-init="getEvents('#{request.original_url + ".json"}')")
+  %li.leap-event(ng-repeat="event in events")
+    %h2.col-xs-1.text-center
+      %img(ng-src="/assets/{{ event.icon_url }}")
+    .col-xs-11
+      %h2
+        %span(ng-bind-html="event.title || eventable_type")
+        %small {{ event.event_date | date:'short' }}
+      %p(ng-bind-html="event.body")

@@ -5,5 +5,6 @@
 //= require jquery.peity.min
 //= require bootstrap-datepicker
 //= require angular
+//= require angular-sanitize
 //= require leap
 //= require timeline

@@ -18,13 +18,9 @@ gem 'protected_attributes'
 gem 'activerecord-deprecated_finders', require: 'active_record/deprecated_finders'
 gem 'bootstrap-datepicker-rails'
 gem 'angularjs-rails', '~> 1.3.10'
-
 gem 'activeresource'
-
 gem 'whenever', :require => false
-
 gem 'memcache-client'
-
 gem 'debugger'
 
 platforms :ruby do

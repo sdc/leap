@@ -17,6 +17,7 @@
 class Admin::TestController < ApplicationController
   skip_before_action :set_user, except: [:stats]
   before_action :admin_page, only: [:stats]
+  layout false
 
   def index
   end

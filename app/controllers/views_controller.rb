@@ -20,21 +20,24 @@ class ViewsController < ApplicationController
 
   def show
     if @view = View.for_user.find_by_name(params[:id])
-      @subviews = @view.parent_id ? @view.parent.try(:children) : @view.children
-      @events =
-        @scope.where("event_date < ?", @date)
-        .where(transition: @view.transitions, eventable_type: @view.events)
-        .limit(request.format == "pdf" ? 20000 : 20)
-      @events = @events.select { |e| e.status.to_s == params[:status] } if params[:status]
-      @events = @events.select { |e| e.title.to_s == params[:title] } if params[:title]
-      @events.detect(&:past?).try("first_in_past=", true) unless @events.first.past? if @events.try(:first)
-      @events.reject!(&:staff_only?) unless @user.staff?
-      @events = @events.reject(&:is_deleted?)
       respond_to do |f|
-        f.html
+        f.html do
+          @subviews = @view.parent_id ? @view.parent.try(:children) : @view.children
+        end
         f.pdf
-        f.xml { render xml: @events }
-        f.js { render @events }
+        f.json do
+          @events =
+            @scope.where("event_date < ?", @date)
+            .where(transition: @view.transitions, eventable_type: @view.events)
+            .limit(request.format == "pdf" ? 20000 : 20)
+          @events = @events.select { |e| e.status.to_s == params[:status] } if params[:status]
+          @events = @events.select { |e| e.title.to_s == params[:title] } if params[:title]
+          @events.detect(&:past?).try("first_in_past=", true) unless @events.first.past? if @events.try(:first)
+          @events.reject!(&:staff_only?) unless @user.staff?
+          @events = @events.reject(&:is_deleted?)
+          render json: @events
+        end
+        f.js   { render @events }
       end
     else
       redirect_to "/404.html"

@@ -22,6 +22,10 @@ class EventsController < ApplicationController
 
   def show
     @event = @topic.events.find(params[:id])
+    respond_to do |f|
+      f.html
+      f.json { render json: @event.as_json(methods: [:title, :icon_url, :body]) }
+    end
   end
 
   def create
