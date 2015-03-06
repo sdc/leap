@@ -15,48 +15,43 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 module MisPerson
-
-  def self.included receiver
+  def self.included(receiver)
     receiver.extend ClassMethods
   end
 
   module ClassMethods
-
     def connector
       "No connector"
     end
 
     def import(mis_id)
-      return Person.find_by_mis_id(mis_id) || false
+      Person.find_by_mis_id(mis_id) || false
     end
   end
 
   def photo_path
-    return "/assets/noone.png"
+    "/assets/noone.png"
   end
 
   def import_courses
-      return Person.find_by_mis_id(mis_id) || false
-  end
-  
-  def timetable_events(*junk)
-    return []
+    Person.find_by_mis_id(mis_id) || false
   end
 
+  def timetable_events(*_junk)
+    []
+  end
 end
 
 module MisCourse
-
-  def self.included receiver
+  def self.included(receiver)
     receiver.extend ClassMethods
   end
 
   module ClassMethods
     def import(mis_id)
-      return Course.find_by_mis_id(mis_id) || false
+      Course.find_by_mis_id(mis_id) || false
     end
   end
-
 end
 
 module MisQualification
