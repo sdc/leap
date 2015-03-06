@@ -40,7 +40,7 @@ class TimetablesController < ApplicationController
                 []
               end
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render json: @registers }
       format.ics do
         cal = Icalendar::Calendar.new
