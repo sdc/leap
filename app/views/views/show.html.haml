@@ -22,5 +22,5 @@
     .leap-event-main
       %h2
         %span(ng-bind-html="event.title || eventable_type")
-        %small {{ event.event_date | date:'short' }}
+        %small {{ event.event_date | date:'d MMMM yyyy' }}
       %p(ng-bind-html="event.body")
