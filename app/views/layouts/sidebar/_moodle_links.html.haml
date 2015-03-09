@@ -1,7 +1,7 @@
 .panel.panel-default
   .panel-heading
     %h4.panel-title
-      %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#moodle-courses"}
+      %a(data-toggle="collapse" data-parent="#sidebar-accordion" href ="#moodle-courses")
         %i.fa.fa-graduation-cap.fa-fw
         Moodle Courses
   #moodle-courses.panel-collapse.collapse
@@ -11,6 +11,8 @@
         %h4
           %i.fa.fa-home
           Moodle Home
-      #moodle-courses-links
-        %i.fa.fa-circle-o-notch.fa-spin
-        loading...
+      %ul(ng-controller="moodleCoursesController" ng-init="getCourses('#{moodle_courses_person_url(@topic.mis_id)}')")
+        %li(ng-repeat="course in courses") 
+          %a(ng-href="{{ course.url }}" 
+             style="font-weight: {{ course.canedit ? 'bold' : 'normal' }}"
+             target="_BLANK") {{ course.name }}

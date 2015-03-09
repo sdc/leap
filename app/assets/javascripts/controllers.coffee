@@ -9,6 +9,11 @@ angular.module 'leapApp', ['ngSanitize','infinite-scroll']
   $scope.getEvent = (id) ->
     $http.get(eventUrl(id)).success (data) ->
       $scope.events[i] = data for e,i in $scope.events when e.id == id
+
+.controller 'moodleCoursesController', ($scope,$http) ->
+  $scope.getCourses = (url) ->
+    $http.get(url).success (data) ->
+      $scope.courses = data
         
 .filter 'iconUrl', ->
   (input) ->

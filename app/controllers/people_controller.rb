@@ -103,20 +103,22 @@ class PeopleController < ApplicationController
     @targets = @topic.targets.limit(8).where("complete_date is null")
   end
 
-  def moodle_block
+  def moodle_courses
     mcourses = ActiveResource::Connection.new(Settings.moodle_host)
                .get("#{Settings.moodle_path}/webservice/rest/server.php?" \
                "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_user_courses&username=" +
                @topic.username + Settings.moodle_user_postfix).body
     @moodle_courses = Nokogiri::XML(mcourses).xpath('//MULTIPLE/SINGLE').map do |course|
-      Hash[:id,      course.xpath("KEY[@name='id']/VALUE").first.content,
+      Hash[:url, "#{Settings.moodle_host}#{Settings.moodle_path}/course/view.php?id=#{course.xpath("KEY[@name='id']/VALUE").first.content}",
            :name,    course.xpath("KEY[@name='fullname']/VALUE").first.content,
            :canedit, course.xpath("KEY[@name='canedit']/VALUE").first.content == "1"
           ]
     end
+    render json: @moodle_courses
   rescue
     logger.error "Can't connect to Moodle: #{$ERROR_INFO}"
     @moodle_courses = false
+    render json: []
   end
 
   def attendance_block

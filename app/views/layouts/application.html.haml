@@ -36,7 +36,6 @@
               = render "layouts/sidebar/custom_links"
         #main-content.col-xs-12{:class => @topic ? ["col-lg-9","col-md-8"] : nil}= yield
         - if @topic.kind_of? Person
-          = javascript_tag "$('#moodle-courses-links').load('#{moodle_block_person_url(@topic)}')"
           #note-modal.modal.fade
             .modal-dialog
               .modal-content

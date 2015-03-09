@@ -177,11 +177,6 @@
     .controls
       = text_field_tag "moodle_user_postfix",Settings.moodle_user_postfix
       .help-text If your Leap usernames need anything added to become Moodle usernames (such as the shibboleth scope) then add this here, otherwise leave blank.
-  %h3 Moodle User Home Block
-  .control-group
-    %label.control-label Open Moodle Links in New Window
-    .controls
-      = select_tag "moodle_link_target",options_for_select([["Open links in same window", "_self"], ["Open links in new window", "_blank"]], Settings.moodle_link_target)
   %h3 Moodle Integration Features
   .control-group
     %label.control-label Import Moodle Grade Tracker info
