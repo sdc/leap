@@ -15,7 +15,7 @@ Ilp2::Application.routes.draw do
   end
   resources :people do
     resources :events, :timetables
-    resources :views, only: [:show] do
+    resources :views, only: [:show,:index] do
       get "header", on: :member
     end
     collection do

@@ -17,7 +17,7 @@
 class ViewsController < ApplicationController
   before_action :set_scope
   before_action { |c| c.set_date(1.year) }
-  layout false
+  layout false, except: [:index]
 
   def show
     if @view = View.for_user.find_by_name(params[:id])
@@ -43,7 +43,10 @@ class ViewsController < ApplicationController
   end
 
   def index
-    render json: View.top_level.order("position").in_list.for_user
+    respond_to do |f|
+      f.json { render json: View.top_level.order("position").in_list.for_user }
+      f.html
+    end
   end
 
   def header

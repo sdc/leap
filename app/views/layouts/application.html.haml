@@ -35,8 +35,7 @@
               = render "layouts/sidebar/moodle_links"
               = render "layouts/sidebar/custom_links"
         #main-content.col-xs-12{:class => @topic ? ["col-lg-9","col-md-8"] : nil}
-          .angulary(ng-view)
-          -#= yield
+          = yield
         - if @topic.kind_of? Person
           #note-modal.modal.fade
             .modal-dialog
