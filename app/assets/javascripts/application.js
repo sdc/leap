@@ -8,4 +8,4 @@
 //= require angular-sanitize
 //= require infinite-scroll
 //= require leap
-//= require timeline
+//= require controllers

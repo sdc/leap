@@ -1,18 +1,18 @@
 $ ->
   $("[title]").tooltip
     container: "body"
-  show_clidebar = ->
-    $('#clidebar').hide().removeClass("visible-lg visible-md").slideDown 'slow'
-    $('.hidden-clidebar').hide('quick')
-  hide_clidebar = ->
-    $('#clidebar').slideUp
+  show_sidebar = ->
+    $('#sidebar').hide().removeClass("visible-lg visible-md").slideDown 'slow'
+    $('.hidden-sidebar').hide('quick')
+  hide_sidebar = ->
+    $('#sidebar').slideUp
       duration: 'slow'
       complete: -> $(this).addClass("visible-lg visible-md").show()
-    $('.hidden-clidebar').show('quick')
-  $('#navbar-collapse').on 'show.bs.collapse', -> show_clidebar()
-  $('#navbar-collapse').on 'hide.bs.collapse', -> hide_clidebar()
-  $('#show-clidebar').click ->
-    if $('#clidebar').hasClass('visible-lg') then show_clidebar() else hide_clidebar()
+    $('.hidden-sidebar').show('quick')
+  $('#navbar-collapse').on 'show.bs.collapse', -> show_sidebar()
+  $('#navbar-collapse').on 'hide.bs.collapse', -> hide_sidebar()
+  $('#show-sidebar').click ->
+    if $('#sidebar').hasClass('visible-lg') then show_sidebar() else hide_sidebar()
   $('.tile [data-link]').each (i,e) ->
     $(e).closest('.tile').attr('data-link',$(e).attr('data-link'))
   $('.tile[data-link]').click ->

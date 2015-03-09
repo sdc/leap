@@ -16,13 +16,13 @@
     .container
       - if @topic
         .row.visible-xs.visible-sm
-          .col-xs-12.hidden-clidebar
+          .col-xs-12.hidden-sidebar
             %h3{:style => "margin-top:0"}
               = @topic.name
               %small= @topic.code
       .row 
         - if @topic
-          #clidebar.col-lg-3.col-md-4.visible-lg.visible-md
+          #sidebar.col-lg-3.col-md-4.visible-lg.visible-md
             = render :partial => "#{@topic.class.name.downcase.pluralize}/namebox", :object => @topic, :as => :topic
             - if @topic.kind_of? Person
               = render :partial => "layouts/sidebar/person_buttons"
