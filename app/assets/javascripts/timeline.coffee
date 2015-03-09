@@ -1,4 +1,4 @@
-app = angular.module 'leapApp', ['ngSanitize']
+app = angular.module 'leapApp', ['ngSanitize','infinite-scroll','leapAppFilters']
 
 app.controller 'timelineEventsController', ($scope,$http) ->
   $scope.getEvents = (url) ->
@@ -9,12 +9,12 @@ app.controller 'timelineEventsController', ($scope,$http) ->
   $scope.getEvent = (id) ->
     $http.get(eventUrl(id)).success (data) ->
       $scope.events[i] = data for e,i in $scope.events when e.id == id
+        
+filters = angular.module('leapAppFilters', [])
 
-  #$scope.pretty_title = (title) ->
-  #  switch title.constructor.name
-  #    when "String" then title
-  #    when "Array" then "<div>#{title[0]}</div><div>#{title[1]}</div>"
-  #    else "plop"
+filters.filter 'iconUrl', ->
+  (input) ->
+    if /^http/.test(input) then input else "/assets/#{input}"
 
 eventUrl = (id) ->
   "/events/#{id}.json"

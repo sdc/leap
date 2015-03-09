@@ -6,5 +6,6 @@
 //= require bootstrap-datepicker
 //= require angular
 //= require angular-sanitize
+//= require infinite-scroll
 //= require leap
 //= require timeline

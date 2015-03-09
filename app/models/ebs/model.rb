@@ -17,5 +17,5 @@
 class Ebs::Model < ActiveRecord::Base
   ActiveRecord::Base.default_timezone = :local
   self.abstract_class = true
-  #establish_connection :ebs
+  establish_connection :ebs
 end
