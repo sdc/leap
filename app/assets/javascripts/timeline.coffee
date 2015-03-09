@@ -1,6 +1,6 @@
-app = angular.module 'leapApp', ['ngSanitize','infinite-scroll']
+angular.module 'leapApp', ['ngSanitize','infinite-scroll']
 
-app.controller 'timelineEventsController', ($scope,$http) ->
+.controller 'timelineEventsController', ($scope,$http) ->
   $scope.getEvents = (url) ->
     $http.get(url).success (data) ->
       $scope.events = data
