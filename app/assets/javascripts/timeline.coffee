@@ -1,4 +1,4 @@
-app = angular.module 'leapApp', ['ngSanitize','infinite-scroll','leapAppFilters']
+app = angular.module 'leapApp', ['ngSanitize','infinite-scroll']
 
 app.controller 'timelineEventsController', ($scope,$http) ->
   $scope.getEvents = (url) ->
@@ -10,9 +10,7 @@ app.controller 'timelineEventsController', ($scope,$http) ->
     $http.get(eventUrl(id)).success (data) ->
       $scope.events[i] = data for e,i in $scope.events when e.id == id
         
-filters = angular.module('leapAppFilters', [])
-
-filters.filter 'iconUrl', ->
+.filter 'iconUrl', ->
   (input) ->
     if /^http/.test(input) then input else "/assets/#{input}"
 
