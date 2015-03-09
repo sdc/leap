@@ -22,7 +22,6 @@ class ApplicationController < ActionController::Base
   before_action :maintenance_mode
   before_action :set_user
   before_action :set_topic
-  before_action :get_views
 
   def set_date(default_offset = 0)
     @date = if params[:date]
@@ -90,10 +89,6 @@ class ApplicationController < ActionController::Base
     else
       @topic = @user
     end
-  end
-
-  def get_views
-    @views = View.top_level.order("position").in_list.for_user
   end
 
   def admin_page

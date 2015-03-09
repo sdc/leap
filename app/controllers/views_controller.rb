@@ -17,13 +17,12 @@
 class ViewsController < ApplicationController
   before_action :set_scope
   before_action { |c| c.set_date(1.year) }
+  layout false
 
   def show
     if @view = View.for_user.find_by_name(params[:id])
       respond_to do |f|
-        f.html do
-          @subviews = @view.parent_id ? @view.parent.try(:children) : @view.children
-        end
+        f.html 
         f.pdf
         f.json do
           @events =
@@ -37,11 +36,14 @@ class ViewsController < ApplicationController
           @events = @events.reject(&:is_deleted?)
           render json: @events
         end
-        f.js   { render @events }
       end
     else
       redirect_to "/404.html"
     end
+  end
+
+  def index
+    render json: View.top_level.order("position").in_list.for_user
   end
 
   def header

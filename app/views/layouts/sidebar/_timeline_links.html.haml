@@ -1,9 +1,11 @@
 .panel.panel-default
   .panel-heading
     %h4.panel-title
-      %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#timeline-links"}
+      %a(data-toggle="collapse" data-parent="#sidebar-accordion" href="#timeline-links")
         %i.fa.fa-clock-o.fa-fw
         Timeline
   #timeline-links.panel-collapse.collapse.in
     .panel-body
-      %ul=render @views
+      %ul(ng-controller='viewsController' ng-init='getViews()')
+        %li(ng-repeat="view in views") 
+          %a(ng-href="#/timeline/{{ view.name }}/#{@topic.mis_id}") {{ view.label }}
