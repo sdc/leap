@@ -27,8 +27,8 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       $scope.views = data
 
 .controller 'moodleCoursesController', ($scope,$http) ->
-  $scope.getCourses = (url) ->
-    $http.get(url).success (data) ->
+  $scope.getCourses = (mis_id) ->
+    $http.get("/people/#{mis_id}/moodle_courses.json").success (data) ->
       $scope.courses = data
         
 .filter 'iconUrl', ->
