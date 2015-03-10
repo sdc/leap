@@ -4,7 +4,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   $routeProvider
     .when '/timeline/:view_name/:person_id', 
       controller: "timelineEventsController"
-      templateUrl: "/views/all"
+      templateUrl: "/assets/timeline.html"
   ])
 
 .controller 'timelineEventsController', ($scope,$http,$routeParams) ->

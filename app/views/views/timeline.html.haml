@@ -1,0 +1,24 @@
+-#
+  - if @view.controls? and params[:all].nil?
+    %div{:load_block => send("header_#{@topic.class.name.underscore}_view_url",@topic,@view,:tutorgroup => @tutorgroup)}= image_tag "ajax-loader.gif"
+  = render @events
+  - if @events.empty?
+    .alert.row.alert-block.no-fade
+      There are currently no #{@view.label.pluralize} to view.
+  - else
+    #more_events_div{:style => "text-align:center"}
+      = link_to view_url(@view,{:all => params[:all], :date => @events.last.event_date}.merge(@topic.as_param)), :remote => true, :id => "more_events", :class => "btn" do
+        %i.icon-arrow-down
+        Load more events
+        %i.icon-arrow-down
+  #more_events_loading{:style => "display:none"}= image_tag "ajax-loader.gif" 
+
+%ul#leap-timeline(ng-controller="timelineEventsController")
+  %li.leap-event(ng-repeat="event in events track by event.id")
+    %img.leap-icon(ng-src="{{ event.icon_url | iconUrl }}")
+    .leap-event-main
+      %h2
+        %span(ng-bind-html="event.title || eventable_type")
+        %small {{ event.event_date | date:'d MMMM yyyy' }}
+      %p(ng-bind-html="event.body")
+  %button(ng-click="getEvents()") Load more events
