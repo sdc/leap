@@ -1,0 +1,6 @@
+#leap-tiles(ng-controller="timelineEventsController")
+  .leap-tile(ng-repeat="event in events track by event.id")
+    .background-icon
+      %i.fa(ng-class="event.tile_icon")
+    .foreground
+      %h1(ng-bind="event.title")

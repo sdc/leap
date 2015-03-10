@@ -24,7 +24,7 @@ class EventsController < ApplicationController
     @event = @topic.events.find(params[:id])
     respond_to do |f|
       f.html
-      f.json { render json: @event.as_json(methods: [:title, :icon_url, :body]) }
+      f.json { render json: @event.as_json(methods: [:title, :icon_url, :body, :tile_icon]) }
     end
   end
 

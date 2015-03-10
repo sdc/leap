@@ -1,0 +1,39 @@
+#leap-tiles {
+  border-radius: 4px;
+  .make-row;
+  .leap-tile {
+    .make-xs-column(6);
+    .make-sm-column(4);
+    .make-lg-column(3);
+    border-left:1px #eee solid;
+    border-bottom:1px #eee solid;
+    height: 200px;
+    color: #eee;
+    font-size: 18px;
+    background-color: #2df;
+    z-index: 0;
+    .foreground {
+      z-index: 10;
+    }
+    .background-icon {
+      overflow: hidden;
+      i {
+        z-index: -10;
+        position: absolute;
+        font-size: 125px;
+        bottom:0px;
+        right:8px;
+        color: #666666;
+        opacity: 0.4;
+      }
+    }
+    h1 {
+      font-size: 23px;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin:4px 0 8px 0;
+      font-family: 'Patua One', serif;
+    }
+  }
+}

@@ -5,6 +5,9 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     .when '/timeline/:view_name/:person_id', 
       controller: "timelineEventsController"
       templateUrl: "/assets/timeline.html"
+    .when '/tiles/:view_name/:person_id', 
+      controller: "timelineEventsController"
+      templateUrl: "/assets/tiles.html"
   ])
 
 .controller 'timelineEventsController', ($scope,$http,$routeParams) ->
