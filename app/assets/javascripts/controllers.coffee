@@ -1,4 +1,4 @@
-angular.module 'leapApp', ['ngRoute','ngSanitize','infinite-scroll']
+angular.module 'leapApp', ['ngRoute','ngSanitize']
 
 .config(['$routeProvider', ($routeProvider) ->
   $routeProvider
@@ -8,14 +8,18 @@ angular.module 'leapApp', ['ngRoute','ngSanitize','infinite-scroll']
   ])
 
 .controller 'timelineEventsController', ($scope,$http,$routeParams) ->
-  $scope.getEvents = (url) ->
-    $http.get("/people/#{$routeParams.person_id}/views/#{$routeParams.view_name}.json").success (data) ->
-      $scope.events = data
-      $scope.getEvent(d.id) for d in data
-
   $scope.getEvent = (id) ->
     $http.get(eventUrl(id)).success (data) ->
       $scope.events[i] = data for e,i in $scope.events when e.id == id
+
+  $scope.getEvents = ->
+    date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
+    $http.get("/people/#{$routeParams.person_id}/views/#{$routeParams.view_name}.json?date=#{date}").success (data) ->
+      $scope.events = $scope.events.concat(data)
+      $scope.getEvent(d.id) for d in data
+
+  $scope.events = []
+  $scope.getEvents()
 
 .controller 'viewsController', ($scope,$http) ->
   $scope.getViews = ->

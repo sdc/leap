@@ -3,10 +3,10 @@
 //= require jquery-ui
 //= require twitter/bootstrap
 //= require jquery.peity.min
+//= require jquery.cookie
 //= require bootstrap-datepicker
 //= require angular
 //= require angular-sanitize
 //= require angular-route
-//= require infinite-scroll
 //= require leap
 //= require controllers
