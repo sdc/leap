@@ -2,7 +2,7 @@
   .panel.panel-default
     .panel-heading
       %h4.panel-title 
-        %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#my-courses-block"}
+        %a(data-toggle="collapse" data-parent="#sidebar-accordion" data-target="#my-courses-block")
           %i.fa.fa-fw.fa-bookmark
           My Courses
     #my-courses-block.panel-collapse.collapse
@@ -24,7 +24,7 @@
     .panel.panel-default
       .panel-heading
         %h4.panel-title
-          %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "##{tmpid}"}
+          %a(data-toggle="collapse" data-parent="#sidebar-accordion" data-target="##{tmpid}")
             %i.fa.fa-fw{:class => menu[1]}
             = menu[0]
       .panel-collapse.collapse{:id => tmpid}

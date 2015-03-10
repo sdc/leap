@@ -9,8 +9,9 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 
 .controller 'timelineEventsController', ($scope,$http,$routeParams) ->
   $scope.getEvent = (id) ->
-    $http.get(eventUrl(id)).success (data) ->
-      $scope.events[i] = data for e,i in $scope.events when e.id == id
+    $http.get "/people/#{$routeParams.person_id}/events/#{id}.json"
+      .success (data) ->
+        $scope.events[i] = data for e,i in $scope.events when e.id == id
 
   $scope.getEvents = ->
     date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
@@ -34,6 +35,3 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 .filter 'iconUrl', ->
   (input) ->
     if /^http/.test(input) then input else "/assets/#{input}"
-
-eventUrl = (id) ->
-  "/events/#{id}.json"
