@@ -8,4 +8,6 @@
     .panel-body
       %ul(ng-controller='viewsController' ng-init='getViews()')
         %li(ng-repeat="view in views") 
-          %a(ng-href="#{person_views_url(@topic.mis_id)}#/timeline/{{ view.name }}/#{@topic.mis_id}") {{ view.label }}
+          %a(ng-href="#{person_views_url(@topic.mis_id)}#/timeline/{{ view.name }}/#{@topic.mis_id}") 
+            %img(ng-src='/assets/{{ view.icon_url }}')
+            {{ view.label }}
