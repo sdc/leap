@@ -11,7 +11,7 @@
         %h4
           %i.fa.fa-home
           Moodle Home
-      %ul(ng-controller="moodleCoursesController" ng-init="getCourses('#{@topic.mis_id}')")
+      %ul(ng-controller="moodleCoursesController")
         %li(ng-repeat="course in courses") 
           %a(ng-href="{{ course.url }}" 
              style="font-weight: {{ course.canedit ? 'bold' : 'normal' }}"

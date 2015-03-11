@@ -10,13 +10,14 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       templateUrl: "/assets/tiles.html"
   ])
 
-.controller 'timelineEventsController', ($scope,$http,$routeParams) ->
+.controller 'timelineEventsController', ($scope,$rootScope,$http,$routeParams,Topic) ->
   $scope.getEvent = (id) ->
     $http.get "/people/#{$routeParams.person_id}/events/#{id}.json"
       .success (data) ->
         $scope.events[i] = data for e,i in $scope.events when e.id == id
 
   $scope.getEvents = ->
+    Topic.set($routeParams.person_id)
     date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
     $http.get("/people/#{$routeParams.person_id}/views/#{$routeParams.view_name}.json?date=#{date}").success (data) ->
       $scope.events = $scope.events.concat(data)
@@ -29,11 +30,22 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   $scope.getViews = ->
     $http.get('/views.json').success (data) ->
       $scope.views = data
+  $scope.getViews()
 
-.controller 'moodleCoursesController', ($scope,$http) ->
+.controller 'moodleCoursesController', ($scope,$http,Topic) ->
   $scope.getCourses = (mis_id) ->
     $http.get("/people/#{mis_id}/moodle_courses.json").success (data) ->
       $scope.courses = data
+  $scope.$watch Topic.get, -> 
+    $scope.getCourses(Topic.get().mis_id) if Topic.get()
+
+.factory 'Topic', ($http,$rootScope) ->
+  topic = false
+  set:
+    (mis_id) ->
+      $http.get("/people/#{mis_id}.json").success (data) ->
+        topic = data
+  get: -> topic
         
 .filter 'iconUrl', ->
   (input) ->
