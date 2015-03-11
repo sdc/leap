@@ -1,10 +1,10 @@
 .btn-group.btn-group-justified.panel
   - if controller_name == "timetables"
-    = link_to(person_url(@topic), :class => "btn btn-default") do
+    %a.btn.btn-default(ng-href="/people/{{ topic.mis_id }}" ng)
       %i.fa.fa-fw.fa-home
       Home
   - else
-    = link_to(person_timetables_url(@topic), :class => "btn btn-default") do
+    %a.btn.btn-default(ng-href="/people/{{ topic.mis_id }}/timetables")
       %i.fa.fa-fw.fa-calendar
       Timetable
   - if @user.staff?
