@@ -11,7 +11,7 @@
     = csrf_meta_tag
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"}
     = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty? or Rails.env == "development"
-  %body(ng-app="leapApp")
+  %body(ng-app="leapApp" ng-controller="topicController")
     = render "layouts/top_bar/main"
     .container
       - if @topic

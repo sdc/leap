@@ -10,7 +10,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       templateUrl: "/assets/tiles.html"
   ])
 
-.controller 'timelineEventsController', ($scope,$rootScope,$http,$routeParams,Topic) ->
+.controller 'timelineEventsController', ($scope,$http,$routeParams,Topic) ->
   $scope.getEvent = (id) ->
     $http.get "/people/#{$routeParams.person_id}/events/#{id}.json"
       .success (data) ->
@@ -27,8 +27,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   $scope.getEvents()
 
 .controller 'topicController', ($scope,Topic) ->
-  $scope.$watch Topic.get, ->
-    $scope.topic = Topic.get() if Topic.get()
+  $scope.$watch Topic.get, -> $scope.topic = Topic.get() if Topic.get()
 
 .controller 'viewsController', ($scope,$http) ->
   $scope.getViews = ->
@@ -40,8 +39,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   $scope.getCourses = (mis_id) ->
     $http.get("/people/#{mis_id}/moodle_courses.json").success (data) ->
       $scope.courses = data
-  $scope.$watch Topic.get, ->
-    $scope.getCourses(Topic.get().mis_id) if Topic.get()
+  $scope.$watch Topic.get, -> $scope.getCourses(Topic.get().mis_id) if Topic.get()
 
 .factory 'Topic', ($http) ->
   topic = false
