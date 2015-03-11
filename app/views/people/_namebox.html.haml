@@ -1,20 +1,17 @@
-.panel.panel-default.namebox
-  .panel-body
+.namebox(ng-controller="topicController")
+  .body
     .row
-      = image_tag person_url(topic.mis_id, :format => :jpg), :id => "person-photo", :class => "img-responsive img-circle col-xs-5"
+      %img.namebox-pic(ng-src="/people/{{ topic.mis_id }}.jpg")
       .col-xs-7.person-info
-        %h4= topic.name
+        %h4 {{ topic.name }} 
         %h4
-          %small= topic.mis_id
+          %small {{ topic.mis_id }}
         %h5.flags
-          - if topic.kind_of? PersonCourse
+          -# if topic.kind_of? PersonCourse
             .label{:class => "label-#{topic.cl_status}"}= topic.mis_status
             - unless topic.tutorgroup.blank?
               %small= topic.tutorgroup
-          - if @user.staff? and !topic.note.blank?
-            = link_to "#note-modal", {"data-toggle" => "modal", :title => "Note on student records system"} do
-              %i.text-warning.fa.fa.fa-flag
-          - if @user.staff? and !topic.contact_allowed
-            %i.text-danger.fa.fa-exclamation-triangle{:title => "Do not contact this person!"}
-          - if topic.staff?
-            %i.text-success.fa.fa-mortar-board{:title => "Staff Member"}
+          %a(data-toggle="modal" title="Note on student records system" data-target="#note-modal" ng-show="topic.note")
+            %i.text-warning.fa.fa.fa-flag
+          %i.text-danger.fa.fa-exclamation-triangle(title="Do not contact this person!" ng-hide="topic.contact_allowed")
+          %i.text-success.fa.fa-mortar-board(title="Staff Member" ng-show="topic.staff")

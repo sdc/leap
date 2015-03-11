@@ -26,6 +26,10 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   $scope.events = []
   $scope.getEvents()
 
+.controller 'topicController', ($scope,Topic) ->
+  $scope.$watch Topic.get, ->
+    $scope.topic = Topic.get() if Topic.get()
+
 .controller 'viewsController', ($scope,$http) ->
   $scope.getViews = ->
     $http.get('/views.json').success (data) ->
@@ -36,10 +40,10 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   $scope.getCourses = (mis_id) ->
     $http.get("/people/#{mis_id}/moodle_courses.json").success (data) ->
       $scope.courses = data
-  $scope.$watch Topic.get, -> 
+  $scope.$watch Topic.get, ->
     $scope.getCourses(Topic.get().mis_id) if Topic.get()
 
-.factory 'Topic', ($http,$rootScope) ->
+.factory 'Topic', ($http) ->
   topic = false
   set:
     (mis_id) ->

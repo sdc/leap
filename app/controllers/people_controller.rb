@@ -53,7 +53,9 @@ class PeopleController < ApplicationController
         end
       end
       format.json do
-        render json: @topic.to_json(methods: [:l3va, :gcse_english, :gcse_maths], except: [:photo])
+        json_methods = %w(l3va gcse_english gcse_maths name)
+        json_except = ["photo"]
+        render json: @topic.to_json(methods: json_methods, except: json_except)
       end
       format.jpg do
         if @topic.photo
@@ -138,6 +140,7 @@ class PeopleController < ApplicationController
 
   def person_set_topic
     params[:person_id] = params[:id]
+    params[:person_id] = @user.mis_id if params[:person_id] == "user"
     set_topic
   end
 
