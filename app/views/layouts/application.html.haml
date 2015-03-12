@@ -88,8 +88,36 @@
                     .text-right
                       Are your details incorrect?
                       = link_to "Notify Us", Settings.notify_details_change_url, :class => "btn btn-info"
-            =# render "layouts/sidebar/timeline_links"
-            =# render "layouts/sidebar/moodle_links"
+            .panel.panel-default
+              .panel-heading
+                %h4.panel-title
+                  %a(data-toggle="collapse" data-parent="#sidebar-accordion" data-target="#timeline-links")
+                    %i.fa.fa-clock-o.fa-fw
+                    Timeline
+              #timeline-links.panel-collapse.collapse.in
+                .panel-body
+                  %ul(ng-controller='viewsController')
+                    %li(ng-repeat="view in views")
+                      %a(ng-href="/views#/timeline/{{ view.name }}/{{ topic.mis_id }}")
+                        %img(ng-src='/assets/{{ view.icon_url }}')
+                        {{ view.label }}
+            .panel.panel-default
+              .panel-heading
+                %h4.panel-title
+                  %a(data-toggle="collapse" data-parent="#sidebar-accordion" data-target="#moodle-courses")
+                    %i.fa.fa-graduation-cap.fa-fw
+                    Moodle Courses
+              #moodle-courses.panel-collapse.collapse
+                .panel-body
+                  %a{href: "#{Settings.moodle_host}#{Settings.moodle_path}", target: Settings.moodle_link_target}
+                    %h4
+                      %i.fa.fa-home
+                      Moodle Home
+                  %ul(ng-controller="moodleCoursesController")
+                    %li(ng-repeat="course in courses")
+                      %a(ng-href="{{ course.url }}"
+                         style="font-weight: {{ course.canedit ? 'bold' : 'normal' }}"
+                         target="Settings.moodle_link_target") {{ course.name }}
             =# render "layouts/sidebar/custom_links"
         #main-content.col-xs-12{:class => @topic ? ["col-lg-9","col-md-8"] : nil}
           = yield
