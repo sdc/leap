@@ -53,9 +53,12 @@ class PeopleController < ApplicationController
         end
       end
       format.json do
-        json_methods = %w(l3va gcse_english gcse_maths name)
-        json_except = ["photo"]
-        render json: @topic.to_json(methods: json_methods, except: json_except)
+        json_methods  = %w(l3va gcse_english gcse_maths name staff address_text age)
+        json_methods += %w(address_text age) unless @topic.staff?
+        json_only     = %w(forename surname contact_allowed home_phone mis_id
+                           mobile_number next_of_kin personal_email postcode town)
+        json_only    += %w(note date_of_birth) unless @topic.staff?
+        render json: @topic.to_json(methods: json_methods, only: json_only)
       end
       format.jpg do
         if @topic.photo

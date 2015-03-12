@@ -1,6 +1,0 @@
-//= require 'jquery_ujs'
-//= require 'jquery.peity.min'
-//= require 'jquery.cookie'
-//= require 'tableExport'
-//= require 'jquery.base64'
-//= require 'cloud_events'

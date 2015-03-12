@@ -27,7 +27,7 @@ class ViewsController < ApplicationController
           .limit(request.format == "pdf" ? 20000 : 20)
         @events = @events.select { |e| e.status.to_s == params[:status] } if params[:status]
         @events = @events.select { |e| e.title.to_s == params[:title] } if params[:title]
-        @events.reject!(&:staff_only?) unless @user.staff?
+        @events.all.reject!(&:staff_only?) unless @user.staff?
         @events = @events.reject(&:is_deleted?)
         render json: @events
     end

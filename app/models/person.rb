@@ -123,6 +123,8 @@ class Person < ActiveRecord::Base
     current_user? ? (Person.affiliation == "staff") : self[:staff]
   end
 
+  def staff; staff? end
+
   def admin?
     Settings.admin_users.map(&:to_i).include? id
   end

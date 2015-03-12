@@ -2,13 +2,17 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 
 .config(['$routeProvider', ($routeProvider) ->
   $routeProvider
-    .when '/timeline/:view_name/:person_id', 
+    .when '/timeline/:view_name/:person_id',
       controller: "timelineEventsController"
       templateUrl: "/assets/timeline.html"
-    .when '/tiles/:view_name/:person_id', 
+    .when '/tiles/:view_name/:person_id',
       controller: "timelineEventsController"
       templateUrl: "/assets/tiles.html"
   ])
+
+.config ["$httpProvider", ($httpProvider) ->
+  $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
+  ]
 
 .controller 'timelineEventsController', ($scope,$http,$routeParams,Topic) ->
   $scope.getEvent = (id) ->
@@ -26,7 +30,9 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   $scope.events = []
   $scope.getEvents()
 
-.controller 'topicController', ($scope,Topic) ->
+.controller 'topicController', ($scope,Topic,User) ->
+  $scope.user = User.set()
+  $scope.$watch User.get,  -> $scope.user  = User.get()  if User.get()
   $scope.$watch Topic.get, -> $scope.topic = Topic.get() if Topic.get()
 
 .controller 'viewsController', ($scope,$http) ->
@@ -48,6 +54,14 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       $http.get("/people/#{mis_id}.json").success (data) ->
         topic = data
   get: -> topic
+
+.factory 'User', ($http) ->
+  user= false
+  set: ->
+    $http.get("/people/user.json").success (data) ->
+      user = data
+  get: -> user
+  staff: -> user?.staff
         
 .filter 'iconUrl', ->
   (input) ->
