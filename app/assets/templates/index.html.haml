@@ -1,13 +1,86 @@
 !!!
-%html{:lang => "en"}
+%html{lang: "en"}
   %head
+    %meta{charset: "utf-8"}
     %title Leap
     = stylesheet_link_tag "application"
     = javascript_include_tag 'application'
-    = csrf_meta_tag
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"}
   %body(ng-app="leapApp" ng-controller="topicController")
-    = render "layouts/top_bar/main"
+    .container.nrp
+      %nav.navbar.navbar-default
+        .navbar-header
+          %button.navbar-toggle{"data-toggle" => "collapse", "data-target" => "#navbar-collapse"}
+            %i.fa.fa-bars
+          %a(data-toggle="modal" data-target="#leap-about-modal")
+            %img.navbar-brand{src: "#{asset_url('/icons/leap-logo.png')}"}
+        #navbar-collapse.collapse.navbar-collapse
+          %form(ng-show="user.staff"){action: "/people/search", method: :get, class: "navbar-form navbar-left"}
+            .input-group
+              %input.form-control{name: "q", placeholder: "Search..."}
+              %span.input-group-btn
+                %button.btn.btn-default{type: "submit"}
+                  %i.fa.fa-search
+                  Go
+          %ul.nav.navbar-nav
+            %li.dropdown(ng-if="topic.staff")
+              %button.btn.navbar-btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
+                Admin
+                %i.fa.fa-caret-down
+              %ul.dropdown-menu
+                %li.dropdown-header Settings
+                %li
+                  %a{href: "/admin/settings"}
+                    %i.fa.fa-cog.fa-fw
+                    Edit Settings
+                %li
+                  %a{href: "/admin/views"}
+                    %i.fa.fa-th-list.fa-fw
+                    Setup Views
+                %li
+                  %a{href: "/admin/stats"}
+                    %i.fa.fa-bar-chart-o.fa-fw
+                    Statistics
+                  %li
+                    %a{href: "/test/login", :title => "Click to change user"}
+                      %i.fa.fa-user.fa-fw
+                      Change User
+                  %li.divider
+                  %li.dropdown-header
+                    Data for {{ topic.name }}
+                -#
+                  %li
+                    = link_to MdlGradeTrack.user_url(@topic.username) do
+                      %i.fa.fa-file-code-o.fa-fw
+                      Moodle Grade Track XML
+                  %li
+                    = link_to admin_sync_grade_tracks_url(:person_id => @topic.mis_id) do
+                      %i.fa.fa-bar-chart.fa-fw
+                      Sync Moodle Grade Tracks
+            %li.dropdown.hidden-xs.hidden-sm
+              %button.btn.navbar-btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown"}
+                Write Note
+                %i.fa.fa-edit
+              .panel.dropdown-menu.dropdown-menu-right.panel-default{:style => "width:400px;padding-top:0"}
+                .panel-heading
+                  %h4.panel-title= Settings.front_page_note_prompt
+                -#.panel-body
+                  = form_for @user.notes.new, :url => "/events" do |f|
+                    = f.hidden_field :person_id
+                    = hidden_field_tag :eventable_type, "Note"
+                    = hidden_field_tag :redirect_to, person_view_url(@user, View.for_user.where(:name => "all").first, :anchor => "current_time_break")
+                    .input-group
+                      = f.text_field :body, :class => "form-control", :placeholder => "Write a note..."
+                      %span.input-group-btn
+                        %button{:type => "submit", :class => "btn btn-primary"}
+                          %i.fa.fa-edit
+
+          %button.navbar-btn.btn.btn-default.navbar-right.visible-sm#show-sidebar
+            %i.fa.fa-bars
+          %p.navbar-text.navbar-right
+            %span.hidden-sm
+              Logged in as
+            %a.navbar-link{href: "/"} {{ user.name }}
     .container
       .row.visible-xs.visible-sm
         .col-xs-12.hidden-sidebar
@@ -83,11 +156,11 @@
                       %dd {{ topic.date_of_birth | date:'d MMMM yyyy' }} (Age: {{ topic.age }})
                     %span(ng-if="topic.next_of_kin")
                       %dt Next of Kin
-                      %dd= @topic.next_of_kin
+                      %dd {{ topic.next_of_next }}
                   %span(ng-if="topic.mis_id == user.mis_id")
                     .text-right
                       Are your details incorrect?
-                      = link_to "Notify Us", Settings.notify_details_change_url, :class => "btn btn-info"
+                      %a.btn.btn-info{href: Settings.notify_details_change_url} Notify us!
             .panel.panel-default
               .panel-heading
                 %h4.panel-title
@@ -98,7 +171,7 @@
                 .panel-body
                   %ul(ng-controller='viewsController')
                     %li(ng-repeat="view in views")
-                      %a(ng-href="/views#/timeline/{{ view.name }}/{{ topic.mis_id }}")
+                      %a(ng-href="#/timeline/{{ view.name }}/{{ topic.mis_id }}")
                         %img(ng-src='/assets/{{ view.icon_url }}')
                         {{ view.label }}
             .panel.panel-default
@@ -119,8 +192,8 @@
                          style="font-weight: {{ course.canedit ? 'bold' : 'normal' }}"
                          target="Settings.moodle_link_target") {{ course.name }}
             =# render "layouts/sidebar/custom_links"
-        #main-content.col-xs-12{:class => @topic ? ["col-lg-9","col-md-8"] : nil}
-          = yield
+        #main-content.col-xs-12.col-lg-9.col-md-8
+          .ng-view
         - if @topic.kind_of? Person
           #note-modal.modal.fade
             .modal-dialog

@@ -93,7 +93,7 @@ class PeopleController < ApplicationController
   end
 
   def index
-    redirect_to person_url(@user)
+    redirect_to "/assets/index.html#timeline/all/user"
   end
 
   def next_lesson_block
