@@ -13,7 +13,7 @@
           %button.navbar-toggle{"data-toggle" => "collapse", "data-target" => "#navbar-collapse"}
             %i.fa.fa-bars
           %a(data-toggle="modal" data-target="#leap-about-modal")
-            %img.navbar-brand{src: "#{asset_url('/icons/leap-logo.png')}"}
+            %img.navbar-brand{src: asset_path('icons/leap-logo.png')}
         #navbar-collapse.collapse.navbar-collapse
           %form(ng-show="user.staff"){action: "/people/search", method: :get, class: "navbar-form navbar-left"}
             .input-group
