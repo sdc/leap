@@ -14,7 +14,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
   ]
 
-.controller 'timelineEventsController', ($scope,$http,$routeParams,Topic) ->
+.controller 'timelineEventsController', ($scope,$http,$routeParams,Topic,User) ->
   $scope.getEvent = (id) ->
     $http.get "/people/#{$routeParams.person_id}/events/#{id}.json"
       .success (data) ->
@@ -22,6 +22,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 
   $scope.getEvents = ->
     Topic.set($routeParams.person_id)
+    User.set()
     date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
     $http.get("/people/#{$routeParams.person_id}/views/#{$routeParams.view_name}.json?date=#{date}").success (data) ->
       $scope.events = $scope.events.concat(data)
@@ -30,37 +31,30 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   $scope.events = []
   $scope.getEvents()
 
-.controller 'topicController', ($scope,Topic,User) ->
-  $scope.user = User.set()
-  $scope.$watch User.get,  -> $scope.user  = User.get()  if User.get()
-  $scope.$watch Topic.get, -> $scope.topic = Topic.get() if Topic.get()
-
 .controller 'viewsController', ($scope,$http) ->
   $scope.getViews = ->
     $http.get('/views.json').success (data) ->
       $scope.views = data
   $scope.getViews()
 
-.controller 'moodleCoursesController', ($scope,$http,Topic) ->
+.controller 'moodleCoursesController', ($scope,$http,$rootScope) ->
   $scope.getCourses = (mis_id) ->
     $http.get("/people/#{mis_id}/moodle_courses.json").success (data) ->
       $scope.courses = data
-  $scope.$watch Topic.get, -> $scope.getCourses(Topic.get().mis_id) if Topic.get()
+  $rootScope.$watch "topic", (topic) -> $scope.getCourses(topic.mis_id) if $rootScope.topic
 
-.factory 'Topic', ($http) ->
+.factory 'Topic', ($http,$rootScope) ->
   topic = false
   set:
     (mis_id) ->
       $http.get("/people/#{mis_id}.json").success (data) ->
-        topic = data
-  get: -> topic
+        $rootScope.topic = data
 
-.factory 'User', ($http) ->
+.factory 'User', ($http,$rootScope) ->
   user= false
   set: ->
     $http.get("/people/user.json").success (data) ->
-      user = data
-  get: -> user
+      $rootScope.user = data
   staff: -> user?.staff
         
 .filter 'iconUrl', ->
