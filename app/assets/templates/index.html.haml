@@ -77,10 +77,13 @@
 
           %button.navbar-btn.btn.btn-default.navbar-right.visible-sm#show-sidebar
             %i.fa.fa-bars
-          %p.navbar-text.navbar-right
-            %span.hidden-sm
-              Logged in as
-            %a.navbar-link{href: "/"} {{ user.name }}
+          %a.navbar-right.user-menu-link.dropdown-toggle(data-toggle="dropdown")
+            %img(ng-src="/people/{{ user.mis_id }}.jpg")
+          .user-menu.panel.dropdown-menu.dropdown-menu-right.panel-default{style: "padding-top:0"}
+            .panel-body
+              %h3 
+                %span.text-muted Logged in as
+                {{ user.name }}
     .container
       .row.visible-xs.visible-sm
         .col-xs-12.hidden-sidebar

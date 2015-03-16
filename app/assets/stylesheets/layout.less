@@ -1,11 +1,13 @@
-.img-rounded-top {
+.rounded-top {
   border-top-left-radius:  @border-radius-large;
   border-top-right-radius: @border-radius-large;
   border: 1px solid @thumbnail-border;
   border-bottom: none;
 }
 
-.img-rounded-bottom {
+.rounded-bottom {
+  border-top-left-radius:0;
+  border-top-right-radius:0;
   border-bottom-left-radius:  @border-radius-large;
   border-bottom-right-radius: @border-radius-large;
   border: 1px solid @thumbnail-border;
@@ -16,6 +18,41 @@ a[data-target] {
   cursor: pointer
 }
 
+.container.nrp {
+  padding-right: 0;
+  @media (max-width: 992px) {
+    padding-left: 0;
+  }
+  .navbar {
+    margin-bottom: 10px;
+    form.navbar-form {
+      padding-right: 0;
+    }
+    .navbar-btn {
+      margin-left: 15px;
+    }
+    .user-menu-link img {
+      .img-circle;
+      height: @navbar-height - 8px;
+      margin: 4px;
+    }
+    .user-menu {
+      .rounded-bottom;
+      margin-top:0;
+      text-align:right;
+      h3 {
+        font-size: 14px;
+        font-weight: bold;
+        margin:0;
+      }
+    }
+  }
+}
+
+.navbar-toggle,#show-sidebar {
+  margin-left:10px;
+}
+
 .topic-box {
   color: @headings-color;
   margin-bottom: 1em;
@@ -24,11 +61,11 @@ a[data-target] {
   }
   img {
     .img-responsive;
-    .img-rounded-top;
+    .rounded-top;
     background: #fff;
   }
   .topic-box-bottom {
-    .img-rounded-bottom;
+    .rounded-bottom;
     padding: 5px;
     background: #fff;
     @media (min-width: @screen-sm-min) {

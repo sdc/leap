@@ -28,7 +28,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
         $scope.events[i] = data for e,i in $scope.events when e.id == id
 
   $scope.getEvents = ->
-    Topic.set($routeParams.person_id)
+    Topic.set($routeParams.person_id or $rootscope.user.mis_id)
     date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
     $http.get("/people/#{$routeParams.person_id}/views/#{$routeParams.view_name}.json?date=#{date}").success (data) ->
       $scope.events = $scope.events.concat(data)
