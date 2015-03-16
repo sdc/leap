@@ -122,18 +122,6 @@
                 = "..."
               %a.btn.btn-default
                 = "..."
-          .panel.panel-default
-            .panel-heading
-              %h4.panel-title= Settings.front_page_note_prompt
-            .panel-body
-              %form.form-inline{action: "/events"}
-                .input-group
-                  %input.form-control{type: "text", name: "note[body]", placeholder: "Write a note:"}
-                  %span.input-group-btn
-                    %button{:type => "submit", :class => "btn btn-primary"}
-                      %i.fa.fa-edit
-          -# elsif @topic.kind_of? Course
-            = render :partial => "layouts/sidebar/course_buttons"
           #sidebar-accordion.panel-group
             .panel.panel-default(ng-if="!topic.staff")
               .panel-heading
