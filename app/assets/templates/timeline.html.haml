@@ -3,7 +3,7 @@
     %div{:load_block => send("header_#{@topic.class.name.underscore}_view_url",@topic,@view,:tutorgroup => @tutorgroup)}= image_tag "ajax-loader.gif"
 .alert.alert-warning(ng-hide="events.length > 0")
   Nothing to show!
-%ul#leap-timeline(ng-controller="timelineEventsController")
+%ul#leap-timeline
   %li.leap-event(ng-repeat="event in events track by event.id")
     %img.leap-icon(src="/assets/ajax-loader.gif" ng-src="{{ event.icon_url | iconUrl }}")
     .leap-event-main

@@ -53,12 +53,7 @@ class PeopleController < ApplicationController
         end
       end
       format.json do
-        json_methods  = %w(l3va gcse_english gcse_maths name staff address_text age)
-        json_methods += %w(address_text age) unless @topic.staff?
-        json_only     = %w(forename surname contact_allowed home_phone mis_id
-                           mobile_number next_of_kin personal_email postcode town)
-        json_only    += %w(note date_of_birth) unless @topic.staff?
-        render json: @topic.to_json(methods: json_methods, only: json_only)
+        render json: @topic
       end
       format.jpg do
         if @topic.photo
@@ -82,8 +77,7 @@ class PeopleController < ApplicationController
     end
     @people  ||= []
     @courses ||= []
-    @page_title = "Search for #{params[:q]}"
-    render Settings.home_page == "new" ? "cl_search" : "search"
+    render json: @people
   end
 
   def select
@@ -93,7 +87,7 @@ class PeopleController < ApplicationController
   end
 
   def index
-    redirect_to "/assets/index.html#timeline/all/user"
+    redirect_to "/assets/index.html#timeline/all/#{Person.user.mis_id}"
   end
 
   def next_lesson_block

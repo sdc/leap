@@ -8,13 +8,20 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     .when '/tiles/:view_name/:person_id',
       controller: "timelineEventsController"
       templateUrl: "/assets/tiles.html"
+    .when '/search/:q',
+      controller: 'searchController',
+      templateUrl: '/assets/search.html'
   ])
 
 .config ["$httpProvider", ($httpProvider) ->
   $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
   ]
 
-.controller 'timelineEventsController', ($scope,$http,$routeParams,Topic,User) ->
+.run ($http,$rootScope) ->
+  $http.get("/people/user.json").success (data) ->
+    $rootScope.user = data
+
+.controller 'timelineEventsController', ($scope,$http,$routeParams,Topic) ->
   $scope.getEvent = (id) ->
     $http.get "/people/#{$routeParams.person_id}/events/#{id}.json"
       .success (data) ->
@@ -22,12 +29,10 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 
   $scope.getEvents = ->
     Topic.set($routeParams.person_id)
-    User.set()
     date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
     $http.get("/people/#{$routeParams.person_id}/views/#{$routeParams.view_name}.json?date=#{date}").success (data) ->
       $scope.events = $scope.events.concat(data)
       $scope.getEvent(d.id) for d in data
-
   $scope.events = []
   $scope.getEvents()
 
@@ -43,6 +48,21 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       $scope.courses = data
   $rootScope.$watch "topic", (topic) -> $scope.getCourses(topic.mis_id) if $rootScope.topic
 
+.controller 'searchController', ($scope,$rootScope,$http,$location,$routeParams) ->
+  $scope.working = false
+  $scope.search = ->
+    $location.path("/search/#{$scope.q}")
+
+  $scope.gotoPerson = (mis_id) ->
+    $location.path("/timeline/#{mis_id}")
+
+  $scope.doSearch = ->
+    $scope.working = true
+    $http.get("/people/search.json?q=#{$routeParams.q}").success (data) ->
+      $scope.people = data
+      $scope.working = false
+  $scope.doSearch()
+
 .factory 'Topic', ($http,$rootScope) ->
   topic = false
   set:
@@ -50,13 +70,6 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       $http.get("/people/#{mis_id}.json").success (data) ->
         $rootScope.topic = data
 
-.factory 'User', ($http,$rootScope) ->
-  user= false
-  set: ->
-    $http.get("/people/user.json").success (data) ->
-      $rootScope.user = data
-  staff: -> user?.staff
-        
 .filter 'iconUrl', ->
   (input) ->
     if /^http/.test(input) then input else "/assets/#{input}"

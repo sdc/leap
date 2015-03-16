@@ -64,6 +64,7 @@ class Person < ActiveRecord::Base
   end
 
   def age_on(date)
+    return nil unless date_of_birth
     ((date.to_date - date_of_birth.to_date) / 365).to_i
   end
 
@@ -178,4 +179,13 @@ class Person < ActiveRecord::Base
   def person?; true end
 
   def course?; false end
+
+  def as_json(options = {})
+    json_methods  = %w(l3va gcse_english gcse_maths name staff address_text age)
+    json_methods += %w(address_text age) unless staff?
+    json_only     = %w(forename surname contact_allowed home_phone mis_id
+                       mobile_number next_of_kin personal_email postcode town)
+    json_only    += %w(note date_of_birth) unless staff?
+    super options.merge(methods: json_methods, only: json_only)
+  end
 end

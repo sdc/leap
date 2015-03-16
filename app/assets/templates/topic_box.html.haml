@@ -1,0 +1,12 @@
+.panel.panel-default
+  .panel-body
+    %a.col-xs-4.col-lg-2.topic-box(ng-repeat="topic in people" href="#/timeline/all/{{ topic.mis_id }}")
+      %img(ng-src="/people/{{ topic.mis_id }}.jpg")
+      .topic-box-bottom
+        %h2 {{ topic.forename }}
+        %h2 {{ topic.surname }}
+        %small 
+          {{ topic.mis_id }}
+          %i.text-warning.fa.fa.fa-flag(ng-show="topic.note")
+          %i.text-danger.fa.fa-exclamation-triangle(title="Do not contact this person!" ng-hide="topic.contact_allowed")
+          %i.text-success.fa.fa-mortar-board(title="Staff Member" ng-show="topic.staff")

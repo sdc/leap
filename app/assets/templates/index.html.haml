@@ -15,9 +15,9 @@
           %a(data-toggle="modal" data-target="#leap-about-modal")
             %img.navbar-brand{src: asset_path('icons/leap-logo.png')}
         #navbar-collapse.collapse.navbar-collapse
-          %form(ng-show="user.staff"){action: "/people/search", method: :get, class: "navbar-form navbar-left"}
+          %form.navbar-form.navbar-left(ng-show="user.staff" ng-controller="searchController" ng-submit="search()")
             .input-group
-              %input.form-control{name: "q", placeholder: "Search..."}
+              %input.form-control(ng-model="q" placeholder="Search..." ng-change="search()" ng-model-options="{ debounce: 400 }")
               %span.input-group-btn
                 %button.btn.btn-default{type: "submit"}
                   %i.fa.fa-search
@@ -193,7 +193,7 @@
                          target="Settings.moodle_link_target") {{ course.name }}
             =# render "layouts/sidebar/custom_links"
         #main-content.col-xs-12.col-lg-9.col-md-8
-          .ng-view
+          .row.ng-view
         - if @topic.kind_of? Person
           #note-modal.modal.fade
             .modal-dialog

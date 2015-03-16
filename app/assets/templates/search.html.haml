@@ -1,0 +1,6 @@
+.alert.alert-info(ng-show="working")
+  %img{src: asset_path("ajax-loader.gif")}
+  Searching...
+.alert.alert-warning(ng-hide="working || people.length > 0")
+  No results :(
+%div{ng: {include: "'#{asset_url("topic_box.html")}'", hide: "working || people.length == 0"}}
