@@ -12,8 +12,7 @@
         .navbar-header
           %button.navbar-toggle{"data-toggle" => "collapse", "data-target" => "#navbar-collapse"}
             %i.fa.fa-bars
-          %a(data-toggle="modal" data-target="#leap-about-modal")
-            %img.navbar-brand{src: asset_path('icons/leap-logo.png')}
+          %img.navbar-brand{src: asset_path('icons/leap-logo.png')}
         #navbar-collapse.collapse.navbar-collapse
           %form.navbar-form.navbar-left(ng-show="user.staff" ng-controller="searchController" ng-submit="search()")
             .input-group
@@ -84,6 +83,18 @@
               %h3 
                 %span.text-muted Logged in as
                 {{ user.name }}
+              %small
+                %a{href: "/"}
+                  %i.fa.fa-home
+                  Home
+                %span.text-muted &ndash;
+                %a(data-toggle="modal" data-target="#about-modal")
+                  %i.fa.fa-info
+                  About Leap
+                %span.text-muted &ndash;
+                %a(data-toggle="modal" data-target="#logout-modal")
+                  %i.fa.fa-sign-out
+                  Logout
     .container
       .row.visible-xs.visible-sm
         .col-xs-12.hidden-sidebar
@@ -188,7 +199,7 @@
             =# render "layouts/sidebar/custom_links"
         #main-content.col-xs-12.col-lg-9.col-md-8
           .row.ng-view
-        - if @topic.kind_of? Person
+        -# if @topic.kind_of? Person
           #note-modal.modal.fade
             .modal-dialog
               .modal-content
@@ -201,34 +212,41 @@
                     %p Contact your student records department or Leap admin for more information
                 .modal-footer
                   %button.btn.btn-default{"data-dismiss" => "modal"}Close
-          #leap-about-modal.modal.fade
-            .modal-dialog
-              .modal-content
-                .modal-header
-                  %h4.modal-title About Leap
-                .modal-body
-                  .row
-                    .col-xs-4.col-xs-offset-4
-                      %img.img-responsive{src: asset_path("leap-logo.png")}
-                  .row
-                    .col-xs-10.col-xs-offset-1
-                      %h4.text-center
-                        Open source individual learning plans
-                        %br/
-                        %small Copyright 2011&ndash;2014 South Devon College
-                  .row
-                    .col-xs-10.col-xs-offset-1.text-center
-                      .btn-group.btn-group-lg
-                        %a.btn.btn-default{href: "https://github.com/sdc/leap", target: "_BLANK", title: "Leap on Github"}
-                          %i.fa.fa-fw.fa-github
-                        %a.btn.btn-default{href: "https://twitter.com/leapilp", target: "_BLANK", title: "Leap on Twitter"}
-                          %i.fa.fa-fw.fa-twitter
-                        %a.btn.btn-default{href: "https://plus.google.com/+leap-ilp", target: "_BLANK", title: "Leap on Google+"}
-                          %i.fa.fa-fw.fa-google-plus
-                        %a.btn.btn-default{href: "mailto:leap@southdevon.ac.uk", target: "_BLANK", title: "Email us"}
-                          %i.fa.fa-fw.fa-envelope
-                .modal-footer
-                  %button.btn.btn-default{"data-dismiss" => "modal"}Close
+        #about-modal.modal.fade
+          .modal-dialog
+            .modal-content
+              .modal-header
+                %h4.modal-title About Leap
+              .modal-body
+                .row
+                  .col-xs-4.col-xs-offset-4
+                    %img.img-responsive{src: asset_path("leap-logo.png")}
+                .row
+                  .col-xs-10.col-xs-offset-1
+                    %h4.text-center
+                      Open source individual learning plans
+                      %br/
+                      %small Copyright 2011&ndash;2014 South Devon College
+                .row
+                  .col-xs-10.col-xs-offset-1.text-center
+                    .btn-group.btn-group-lg
+                      %a.btn.btn-default{href: "https://github.com/sdc/leap", target: "_BLANK", title: "Leap on Github"}
+                        %i.fa.fa-fw.fa-github
+                      %a.btn.btn-default{href: "https://twitter.com/leapilp", target: "_BLANK", title: "Leap on Twitter"}
+                        %i.fa.fa-fw.fa-twitter
+                      %a.btn.btn-default{href: "https://plus.google.com/+leap-ilp", target: "_BLANK", title: "Leap on Google+"}
+                        %i.fa.fa-fw.fa-google-plus
+                      %a.btn.btn-default{href: "mailto:leap@southdevon.ac.uk", target: "_BLANK", title: "Email us"}
+                        %i.fa.fa-fw.fa-envelope
+              .modal-footer
+                %button.btn.btn-default{"data-dismiss" => "modal"}Close
+        #logout-modal.modal.fade
+          .modal-dialog
+            .modal-content
+              .modal-header
+                %h4.modal-title Logout
+              .modal-body
+                To logout, close your browser.
     :javascript
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', '#{Settings.google_analytics_code}']);
