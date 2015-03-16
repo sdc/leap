@@ -1,6 +1,9 @@
 .alert.alert-info(ng-show="working")
-  %img{src: asset_path("ajax-loader.gif")}
+  %i.fa.fa-circle-o-notch.fa-spin
   Searching...
 .alert.alert-warning(ng-hide="working || people.length > 0")
-  No results :(
-%div{ng: {include: "'#{asset_url("topic_box.html")}'", hide: "working || people.length == 0"}}
+  No results
+.panel.panel-default(ng-hide="working || people.length == 0")
+  .panel-body
+    .col-xs-4.col-lg-2(ng-repeat="topic in people" href="#/timeline/all/{{ topic.mis_id }}")
+      .topic-box{ng: {include: "'#{asset_url("topic_box.html")}'"}}

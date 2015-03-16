@@ -25,10 +25,21 @@ a[data-target] {
   img {
     .img-responsive;
     .img-rounded-top;
+    background: #fff;
   }
   .topic-box-bottom {
     .img-rounded-bottom;
     padding: 5px;
+    background: #fff;
+    @media (min-width: @screen-sm-min) {
+      height: 71px;
+    }
+    @media (min-width: @screen-md-min) {
+      height: 53px;
+    }
+    @media (min-width: @screen-lg-min) {
+      height: 69px;
+    }
   }
   h2 {
     margin: 0;
@@ -40,5 +51,12 @@ a[data-target] {
   }
   small {
     .text-muted;
+  }
+}
+
+.topic-buttons {
+  .make-xs-column(6);
+  a {
+    text-align: left;
   }
 }

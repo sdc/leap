@@ -89,34 +89,25 @@
             %small {{ topic.code }}
       .row 
         #sidebar.col-lg-3.col-md-4.visible-lg.visible-md
-          .namebox.panel
-            .body
-              .row
-                %img.namebox-pic(ng-src="/people/{{ topic.mis_id }}.jpg")
-                .col-xs-7.person-info
-                  %h4 {{ topic.name }}
-                  %h4
-                    %small {{ topic.mis_id }}
-                  %h5.flags
-                    -# if topic.kind_of? PersonCourse
-                      .label{:class => "label-#{topic.cl_status}"}= topic.mis_status
-                      - unless topic.tutorgroup.blank?
-                        %small= topic.tutorgroup
-                    %a(data-toggle="modal" title="Note on student records system" data-target="#note-modal" ng-show="topic.note")
-                      %i.text-warning.fa.fa.fa-flag
-                    %i.text-danger.fa.fa-exclamation-triangle(title="Do not contact this person!" ng-hide="topic.contact_allowed")
-                    %i.text-success.fa.fa-mortar-board(title="Staff Member" ng-show="topic.staff")
-          .btn-group.btn-group-justified.panel
-            %a.btn.btn-default(ng-href="/people/{{ topic.mis_id }}" ng)
-              %i.fa.fa-fw.fa-home
-              Home
-            %a.btn.btn-default(ng-href="/people/{{ topic.mis_id }}/timetables")
-              %i.fa.fa-fw.fa-calendar
-              Timetable
-            -# if @user.staff?
-              = link_to(Settings.ebs_person_base_url + @topic.mis_id.to_s, :class => "btn btn-default") do
+          .row
+            .col-xs-6.topic-box{ng: {include: "'#{asset_url("topic_box.html")}'", hide: "working || people.length == 0"},
+                                style: "padding-right:0"}
+            .topic-buttons.btn-group-vertical
+              %a.btn.btn-default(ng-href="#/timeline/{{ topic.mis_id }}/all")
+                %i.fa.fa-fw.fa-home
+                Home
+              %a.btn.btn-default(ng-href="/people/{{ topic.mis_id }}/timetables")
+                %i.fa.fa-fw.fa-calendar
+                Timetable
+              %a.btn.btn-default{href: Settings.ebs_person_base_url + "{{ topic.mis_id }}"}
                 %i.fa.fa-fw{:class => Settings.ebs_link_icon}
                 = Settings.ebs_link_name
+              %a.btn.btn-default
+                = "..."
+              %a.btn.btn-default
+                = "..."
+              %a.btn.btn-default
+                = "..."
           .panel.panel-default
             .panel-heading
               %h4.panel-title= Settings.front_page_note_prompt
