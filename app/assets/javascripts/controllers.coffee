@@ -46,7 +46,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   $scope.getCourses = (mis_id) ->
     $http.get("/people/#{mis_id}/moodle_courses.json").success (data) ->
       $scope.courses = data
-  $rootScope.$watch "topic", (topic) -> $scope.getCourses(topic.mis_id) if $rootScope.topic
+  $rootScope.$watch "user", (user) -> $scope.getCourses(user.mis_id) if $rootScope.user
 
 .controller 'searchController', ($scope,$rootScope,$http,$location,$routeParams) ->
   $scope.working = false
