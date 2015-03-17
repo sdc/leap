@@ -16,60 +16,72 @@
             .input-group
               %input.form-control(ng-model="q" placeholder="Search..." 
                                   ng-change="search()" ng-model-options="{ debounce: 400 }"
-                                  style="width:75px" ng-style="searchStyle" 
-                                  ng-focus="searchStyle={'width': '200px'}" 
-                                  ng-blur="searchStyle={'width': '75px'}"
                                  )
               %span.input-group-btn
                 %button.btn.btn-default{type: "submit"}
                   %i.fa.fa-search
                   Go
-          %li.dropdown
-            %a.dropdown-toggle{"data-toggle" => "dropdown"}(ng-if="topic.staff")
-              Admin
-              %i.fa.fa-caret-down
-            %ul.dropdown-menu
-              %li.dropdown-header Settings
-              %li
-                %a{href: "/admin/settings"}
-                  %i.fa.fa-cog.fa-fw
-                  Edit Settings
-              %li
-                %a{href: "/admin/views"}
-                  %i.fa.fa-th-list.fa-fw
-                  Setup Views
-              %li
-                %a{href: "/admin/stats"}
-                  %i.fa.fa-bar-chart-o.fa-fw
-                  Statistics
-              %li
-                %a{href: "/test/login", :title => "Click to change user"}
-                  %i.fa.fa-user.fa-fw
-                  Change User
-              %li.divider
-              %li.dropdown-header
-                Data for {{ topic.name }}
-        .navbar-right.navbar-link
-          %a.user-menu-link.dropdown-toggle(data-toggle="dropdown")
-            %img(ng-src="/people/{{ user.mis_id }}.jpg")
-          .user-menu.panel.dropdown-menu.dropdown-menu-right.panel-default{style: "padding-top:0"}
-            .panel-body
-              %h3 
-                %span.text-muted Logged in as
-                {{ user.name }}
-              %small
-                %a{href: "/"}
-                  %i.fa.fa-home
-                  Home
-                %span.text-muted &ndash;
-                %a(data-toggle="modal" data-target="#about-modal")
-                  %i.fa.fa-info
-                  About Leap
-                %span.text-muted &ndash;
-                %a(data-toggle="modal" data-target="#logout-modal")
-                  %i.fa.fa-sign-out
-                  Logout
- 
+          %li
+            .btn-group.navbar-btn
+              %a.btn.btn-default{href: "#{Settings.moodle_host}#{Settings.moodle_path}", target: Settings.moodle_link_target}
+                %i.fa.fa-mortar-board
+                Moodle
+              %a.btn.btn-default.dropdown-toggle(data-toggle="dropdown")
+                %i.fa.fa-caret-down
+              %ul.dropdown-menu(ng-controller="moodleCoursesController")
+                %li(ng-repeat="course in courses")
+                  %a(ng-href="{{ course.url }}"
+                     style="font-weight: {{ course.canedit ? 'bold' : 'normal' }}"
+                     target="Settings.moodle_link_target") {{ course.name }}
+        %ul.nav.navbar-right.navbar-nav
+          %li
+            .navbar-btn
+              %a.btn.btn-default.dropdown-toggle(data-toggle="dropdown" ng-if="topic.staff")
+                %i.fa.fa-cogs
+                Admin
+                %i.fa.fa-caret-down
+              %ul.dropdown-menu
+                %li.dropdown-header Settings
+                %li
+                  %a{href: "/admin/settings"}
+                    %i.fa.fa-cog.fa-fw
+                    Edit Settings
+                %li
+                  %a{href: "/admin/views"}
+                    %i.fa.fa-th-list.fa-fw
+                    Setup Views
+                %li
+                  %a{href: "/admin/stats"}
+                    %i.fa.fa-bar-chart-o.fa-fw
+                    Statistics
+                %li
+                  %a{href: "/test/login", :title => "Click to change user"}
+                    %i.fa.fa-user.fa-fw
+                    Change User
+                %li.divider
+                %li.dropdown-header
+                  Data for {{ topic.name }}
+          %li
+            .navbar-link
+              %a.user-menu-link.dropdown-toggle(data-toggle="dropdown")
+                %img(ng-src="/people/{{ user.mis_id }}.jpg")
+              .user-menu.panel.dropdown-menu.dropdown-menu-right.panel-default{style: "padding-top:0"}
+                .panel-body
+                  %h3 
+                    %span.text-muted Logged in as
+                    {{ user.name }}
+                  %small
+                    %a{href: "/"}
+                      %i.fa.fa-home
+                      Home
+                    %span.text-muted &ndash;
+                    %a(data-toggle="modal" data-target="#about-modal")
+                      %i.fa.fa-info
+                      About Leap
+                    %span.text-muted &ndash;
+                    %a(data-toggle="modal" data-target="#logout-modal")
+                      %i.fa.fa-sign-out
+                      Logout
     .container
       .row.visible-xs.visible-sm
         .col-xs-12.hidden-sidebar
@@ -142,24 +154,6 @@
                       %a(ng-href="#/timeline/{{ view.name }}/{{ topic.mis_id }}")
                         %img(ng-src='/assets/{{ view.icon_url }}')
                         {{ view.label }}
-            .panel.panel-default
-              .panel-heading
-                %h4.panel-title
-                  %a(data-toggle="collapse" data-parent="#sidebar-accordion" data-target="#moodle-courses")
-                    %i.fa.fa-graduation-cap.fa-fw
-                    Moodle Courses
-              #moodle-courses.panel-collapse.collapse
-                .panel-body
-                  %a{href: "#{Settings.moodle_host}#{Settings.moodle_path}", target: Settings.moodle_link_target}
-                    %h4
-                      %i.fa.fa-home
-                      Moodle Home
-                  %ul(ng-controller="moodleCoursesController")
-                    %li(ng-repeat="course in courses")
-                      %a(ng-href="{{ course.url }}"
-                         style="font-weight: {{ course.canedit ? 'bold' : 'normal' }}"
-                         target="Settings.moodle_link_target") {{ course.name }}
-            =# render "layouts/sidebar/custom_links"
         #main-content.col-xs-12.col-lg-9.col-md-8
           .row.ng-view
         -# if @topic.kind_of? Person
