@@ -82,7 +82,7 @@
                     %a(data-toggle="modal" data-target="#logout-modal")
                       %i.fa.fa-sign-out
                       Logout
-    .container
+    .container(ng-controller="topicController")
       .row.visible-xs.visible-sm
         .col-xs-12.hidden-sidebar
           %h3{:style => "margin-top:0"}
@@ -103,8 +103,9 @@
               %a.btn.btn-default{href: Settings.ebs_person_base_url + "{{ topic.mis_id }}"}
                 %i.fa.fa-fw{:class => Settings.ebs_link_icon}
                 = Settings.ebs_link_name
-              %a.btn.btn-default
-                = "..."
+              %a.btn.btn-default(ng-click="update()" ng-class="topic.updating")
+                %i.fa.fa-fw.fa-refresh(ng-class="{'fa-spin':topic.updating}")
+                Refresh
               %a.btn.btn-default
                 = "..."
               %a.btn.btn-default
