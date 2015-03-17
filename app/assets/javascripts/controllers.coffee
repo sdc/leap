@@ -13,10 +13,6 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       templateUrl: '/assets/search.html'
   ])
 
-.config ["$httpProvider", ($httpProvider) ->
-  $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
-  ]
-
 .run ($http,$rootScope) ->
   $http.get("/people/user.json").success (data) ->
     $rootScope.user = data

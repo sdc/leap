@@ -15,8 +15,6 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class ApplicationController < ActionController::Base
-  protect_from_forgery
-
   layout proc { |c| c.request.xhr? ? false : "application" }
 
   before_action :maintenance_mode
