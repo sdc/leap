@@ -181,11 +181,11 @@ class Person < ActiveRecord::Base
   def course?; false end
 
   def as_json(options = {})
-    json_methods  = %w(l3va gcse_english gcse_maths name staff address_text age)
-    json_methods += %w(address_text age) unless staff?
-    json_only     = %w(forename surname contact_allowed home_phone mis_id
-                       mobile_number next_of_kin personal_email postcode town)
-    json_only    += %w(note date_of_birth) unless staff?
+    json_methods  = %w(l3va gcse_english gcse_maths name staff)
+    json_methods += %w(address_text age) if current_user? || !staff?
+    json_only     = %w(forename surname contact_allowed mis_id)
+    json_only    += %w(note date_of_birth mobile_number home_phone 
+                       next_of_kin personal_email postcode town) if current_user? || !staff?
     super options.merge(methods: json_methods, only: json_only)
   end
 end

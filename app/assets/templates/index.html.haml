@@ -61,7 +61,7 @@
                 %li.divider
                 %li.dropdown-header
                   Data for {{ topic.name }}
-          %li
+          %li{style: "margin-left:7px;"}
             .navbar-link
               %a.user-menu-link.dropdown-toggle(data-toggle="dropdown")
                 %img(ng-src="/people/{{ user.mis_id }}.jpg")
@@ -93,7 +93,7 @@
           .row
             .col-xs-6.topic-box{ng: {include: "'#{asset_url("topic_box.html")}'", hide: "working || people.length == 0"},
                                 style: "padding-right:0"}
-            .topic-buttons.btn-group-vertical
+            %nav.topic-buttons.btn-group-vertical
               %a.btn.btn-default(ng-href="#/timeline/{{ topic.mis_id }}/all")
                 %i.fa.fa-fw.fa-home
                 Home
@@ -110,7 +110,7 @@
               %a.btn.btn-default
                 = "..."
           #sidebar-accordion.panel-group
-            .panel.panel-default(ng-if="!topic.staff")
+            .panel.panel-default(ng-if="topic.address_text")
               .panel-heading
                 %h4.panel-title
                   %a(data-toggle="collapse" data-parent="#sidebar-accordion" data-target="#personal-details")
@@ -118,7 +118,17 @@
                     Personal Details
               #personal-details.panel-collapse.collapse
                 .panel-body
-                  %dl
+                  %small
+                    .label.label-warning(ng-show="topic.note")
+                      %i.fa.fa.fa-flag
+                      Note on MIS
+                    .label.label-danger(ng-hide="topic.contact_allowed")
+                      %i.fa.fa-exclamation-triangle(ng-hide="topic.contact_allowed")
+                      Do not contact!
+                    .label.label-success(ng-show="topic.staff")
+                      %i.fa.fa-mortar-board
+                      Staff member
+                  %dl{style: "margin-top:1ex"}
                     %dt Address
                     %dd {{ topic.address_text }}
                     %span(ng-if="topic.home_phone")
@@ -136,7 +146,7 @@
                       %dd {{ topic.date_of_birth | date:'d MMMM yyyy' }} (Age: {{ topic.age }})
                     %span(ng-if="topic.next_of_kin")
                       %dt Next of Kin
-                      %dd {{ topic.next_of_next }}
+                      %dd {{ topic.next_of_kin }}
                   %span(ng-if="topic.mis_id == user.mis_id")
                     .text-right
                       Are your details incorrect?
