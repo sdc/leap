@@ -38,8 +38,15 @@ a[data-target],a[data-toggle] {
 .topic-box {
   color: @headings-color;
   margin-bottom: 1em;
+  &:hover .topic-box-bottom,
+  &:hover img {
+    box-shadow: 3px 3px 2px #888;
+  }
   a {
     color: inherit;
+    &:hover {
+      text-decoration: none;
+    }
   }
   img {
     .img-responsive;
