@@ -11,10 +11,16 @@
       font-family: "Patua One";
     }
     .leap-icon {
-      .pull-left;
-      margin-right: @grid-gutter-width;
-      width: 48px;
-      height: 48px;
+      .make-xs-column(2);
+      .make-sm-column(1);
+      img {
+        width: 48px;
+        height: 48px;
+      }
+    }
+    .leap-event-main {
+      .make-xs-column(10);
+      .make-sm-column(11);
     }
   }
 }

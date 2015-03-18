@@ -5,7 +5,8 @@
   Nothing to show!
 %ul#leap-timeline
   %li.leap-event(ng-repeat="event in events track by event.id")
-    %img.leap-icon(src="/assets/ajax-loader.gif" ng-src="{{ event.icon_url | iconUrl }}")
+    .leap-icon
+      %img(src="/assets/ajax-loader.gif" ng-src="{{ event.icon_url | iconUrl }}")
     .leap-event-main
       %h2
         %span(ng-bind-html="event.title || eventable_type")
