@@ -1,18 +1,29 @@
 #sidebar {
   .panel {
     margin-bottom: 5px;
-  }
-}
-
-#timeline-links {
-  li {
-    .make-row;
-    img {
-      .make-xs-column(2);
-      .make-md-column(3);
+    ul {
+      list-style: none;
+      padding-left: 8px;
     }
-    span {
-      .make-md-column(9);
+  }
+
+  .topic-buttons {
+    .make-xs-column(6);
+    a {
+      text-align: left;
+    }
+  }
+
+  #timeline-links {
+    li {
+      .make-row;
+      img {
+        .make-xs-column(2);
+        .make-md-column(3);
+      }
+      span {
+        .make-md-column(9);
+      }
     }
   }
 }

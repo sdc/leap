@@ -1,3 +1,7 @@
+body {
+  background: #eee;
+}
+
 .rounded-top {
   border-top-left-radius:  @border-radius-large;
   border-top-right-radius: @border-radius-large;
@@ -16,23 +20,6 @@
 
 a[data-target],a[data-toggle] {
   cursor: pointer
-}
-
-.navbar {
-  margin-bottom: 10px;
-  .user-menu-link img {
-    .img-circle;
-    height: @navbar-height - 8px;
-    margin: 4px;
-  }
-  .user-menu {
-    width: 275px;
-    h3 {
-      font-size: 14px;
-      font-weight: bold;
-      margin-top:0;
-    }
-  }
 }
 
 .topic-box {
@@ -77,12 +64,5 @@ a[data-target],a[data-toggle] {
   }
   small {
     .text-muted;
-  }
-}
-
-.topic-buttons {
-  .make-xs-column(6);
-  a {
-    text-align: left;
   }
 }
