@@ -83,13 +83,8 @@
                       %i.fa.fa-sign-out
                       Logout
     .container(ng-controller="topicController")
-      .row.visible-xs.visible-sm
-        .col-xs-12.hidden-sidebar
-          %h3{:style => "margin-top:0"}
-            {{ topic.name }}
-            %small {{ topic.code }}
       .row 
-        #sidebar.col-lg-3.col-md-4.visible-lg.visible-md
+        #sidebar
           .row
             .col-xs-6.topic-box{ng: {include: "'#{asset_url("topic_box.html")}'", hide: "working || people.length == 0"},
                                 style: "padding-right:0"}
@@ -165,7 +160,7 @@
                       %a(ng-href="#/timeline/{{ view.name }}/{{ topic.mis_id }}")
                         %img(ng-src='/assets/{{ view.icon_url }}')
                         {{ view.label }}
-        #main-content.col-xs-12.col-lg-9.col-md-8
+        #main-content
           .row.ng-view
         -# if @topic.kind_of? Person
           #note-modal.modal.fade

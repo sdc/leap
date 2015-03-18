@@ -1,4 +1,5 @@
 #sidebar {
+  .make-md-column(3);
   .panel {
     margin-bottom: 5px;
     ul {
@@ -11,18 +12,10 @@
     .make-xs-column(6);
     a {
       text-align: left;
-    }
-  }
-
-  #timeline-links {
-    li {
-      .make-row;
-      img {
-        .make-xs-column(2);
-        .make-md-column(3);
-      }
-      span {
-        .make-md-column(9);
+      text-overflow: ellipsis;
+      overflow:hidden;
+      @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        i      { display: none; }
       }
     }
   }

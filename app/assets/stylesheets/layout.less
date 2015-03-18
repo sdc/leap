@@ -2,6 +2,10 @@ body {
   background: #eee;
 }
 
+#main-content {
+  .make-md-column(9);
+}
+
 .rounded-top {
   border-top-left-radius:  @border-radius-large;
   border-top-right-radius: @border-radius-large;
@@ -39,6 +43,7 @@ a[data-target],a[data-toggle] {
     .img-responsive;
     .rounded-top;
     background: #fff;
+    width: 100%;
   }
   .topic-box-bottom {
     .rounded-bottom;
@@ -48,10 +53,11 @@ a[data-target],a[data-toggle] {
       height: 71px;
     }
     @media (min-width: @screen-md-min) {
-      height: 53px;
+      height: 94px;
     }
     @media (min-width: @screen-lg-min) {
       height: 69px;
+     .flags { display: inline; }
     }
   }
   h2 {

@@ -5,5 +5,5 @@
   No results
 .panel.panel-default(ng-hide="working || people.length == 0")
   .panel-body
-    .col-xs-4.col-lg-2(ng-repeat="topic in people" href="#/timeline/all/{{ topic.mis_id }}")
+    .col-xs-6.col-md-3.col-lg-2(ng-repeat="topic in people" href="#/timeline/all/{{ topic.mis_id }}")
       .topic-box{ng: {include: "'#{asset_url("topic_box.html")}'"}}
