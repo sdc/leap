@@ -57,7 +57,7 @@ class Target < Eventable
   def title(tr)
     case tr
     when :complete then "Target Complete"
-    when :start    then "Target Set"
+    when :start    then "I set a target to #{body} by #{target_date}"
     when :drop     then "Target Dropped"
     else "Target Due"
     end

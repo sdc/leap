@@ -86,8 +86,7 @@
       .row 
         #sidebar
           .row
-            .col-xs-6.topic-box{ng: {include: "'#{asset_url("topic_box.html")}'", hide: "working || people.length == 0"},
-                                style: "padding-right:0"}
+            .topic-box(ng-include="'#{asset_url("topic_box.html")}'")
             %nav.topic-buttons.btn-group-vertical
               %a.btn.btn-default(ng-href="#/timeline/all/{{ topic.mis_id }}")
                 %i.fa.fa-fw.fa-home
