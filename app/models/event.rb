@@ -60,7 +60,7 @@ class Event < ActiveRecord::Base
   end
 
   delegate :body,  to: :eventable
-  delegate :past?, to: :event_date
+  delegate :past?, :future?, to: :event_date
 
   attr_accessor :first_in_past
 
@@ -100,7 +100,8 @@ class Event < ActiveRecord::Base
       end
     end
     { date: event_date,
-      id: id
+      id: id,
+      faIcon: "fa-circle-o"
     }.merge(attrs)
   end
 

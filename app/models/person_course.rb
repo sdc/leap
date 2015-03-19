@@ -66,7 +66,7 @@ class PersonCourse < Eventable
             when :create    then "applied for"
             when :to_start  then "enrolled on"
             when :start     then "started"
-            when :comple    then "completed"
+            when :complete  then "completed"
             end,
       title: course.name,
       iconUrl: "events/course.png",

@@ -50,4 +50,11 @@ class TtActivity < Eventable
   def timetable_length
     self[:timetable_length]
   end
+     
+   def as_timeline_event(e)
+    { verb: if e.future? then "will have" else "had" end,
+      title: title + ": " + body,
+      iconUrl: "events/tt_activities.png"
+    }
+  end
 end

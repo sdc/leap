@@ -70,19 +70,15 @@ class Qualification < Eventable
     return "Unexpected error!"
   end
 
-  def as_tile(e)
-    { icon: "fa-certificate" }
-  end
-
   def as_timeline_event(e)
     { verb: case e.transition
             when :create   then "am predicted"
             when :complete then "achieved"
             end,
       title:  [grade, "in", qual_type, title.humanize].reject(&:blank?).join(" "),
+      tileTitle: "Qualification",
       iconUrl: "events/qualifications.png",
-      date: e.event_date,
-      id: e.id
+      faIcon: "fa-certificate"
     }
   end
 

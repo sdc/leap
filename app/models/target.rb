@@ -105,7 +105,7 @@ class Target < Eventable
             when :completed then "completed a target to"
             when :drop      then "dropped a target to"
             end,
-      title: body,
+      title: body.sub(/\W$/,''),
       targetDate: target_date,
       iconUrl: icon_url
     }
