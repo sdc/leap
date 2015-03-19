@@ -35,10 +35,6 @@ class Eventable < ActiveRecord::Base
     self.class.name.underscore.humanize.titleize
   end
 
-  def title
-    humanize
-  end
-
   def staff_only?
     false
   end
@@ -78,7 +74,8 @@ class Eventable < ActiveRecord::Base
     respond_to?(:deleted) && deleted
   end
 
-  def as_timeline_event(tr)
-    {}
+  def as_timeline_event(e)
+    { verb: "have a broken",
+      title: humanize } 
   end
 end

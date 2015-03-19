@@ -5,6 +5,7 @@
 //= require jquery.peity.min
 //= require jquery.cookie
 //= require bootstrap-datepicker
+//= require moment
 //= require angular
 //= require angular-sanitize
 //= require angular-route

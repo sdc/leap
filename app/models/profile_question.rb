@@ -21,4 +21,12 @@ class ProfileQuestion < Eventable
 
   validates :question, :answer, presence: true
   validates :question, inclusion: { in: Settings.profile_questions.split(";") }
+
+  def as_timeline_event(e)
+    { verb: "answered:",
+      title: question,
+      text: answer,
+      iconUrl: "events/profile_questions.png"
+    }
+  end
 end

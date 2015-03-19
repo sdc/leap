@@ -36,32 +36,17 @@ class Qualification < Eventable
               "SHORT GCSE"    => { "A" => 26, "B" => 23, "C" => 20, "D" => 17, "WEIGHT" => 0.5, "E" => 14, "F" => 11, "G" => 8, "A*" => 29, "U" => 0 }
             }
 
-  def body
-    [self[:qual_type], self[:title]].reject(&:blank?).join ": "
-  end
-
-  def subtitle
-    grade
-  end
-
   def extra_panes
     return unless Person.user.staff? && Settings.quals_editing == "on"
     [["Edit", "events/tabs/edit_qual"]]
   end
 
-  def status
-    return :complete if seen?
-    return :complete unless mis_id.blank?
-    return :not_started if predicted?
-    :current
-  end
-
-  def title
-    return "Qualification" if seen?
-    return "Qualification" unless mis_id.blank?
-    return %w(Predicted Grade) if predicted?
-    ["Qualification", "(not_seen)"]
-  end
+  #def title
+  #  return "Qualification" if seen?
+  #  return "Qualification" unless mis_id.blank?
+  #  return %w(Predicted Grade) if predicted?
+  #  ["Qualification", "(not_seen)"]
+  #end
 
   def lat_score
     return "No Grade" if grade.blank?
@@ -85,8 +70,20 @@ class Qualification < Eventable
     return "Unexpected error!"
   end
 
-  def tile_attrs
+  def as_tile(e)
     { icon: "fa-certificate" }
+  end
+
+  def as_timeline_event(e)
+    { verb: case e.transition
+            when :create   then "am predicted"
+            when :complete then "achieved"
+            end,
+      title:  [grade, "in", qual_type, title.humanize].reject(&:blank?).join(" "),
+      iconUrl: "events/qualifications.png",
+      date: e.event_date,
+      id: e.id
+    }
   end
 
   def is_deletable?

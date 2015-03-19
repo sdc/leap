@@ -89,6 +89,6 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   (input) ->
     if /^http/.test(input) then input else "/assets/#{input}"
 
-.filter 'leap-date', ->
-  (input)
-    
+.filter 'leapDate', ->
+  (input) ->
+    moment(input).fromNow()

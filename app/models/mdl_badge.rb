@@ -60,16 +60,20 @@ class MdlBadge < Eventable
     person.mdl_badges.where(mdl_course_id: mdl_course_id)
   end
 
-  def title
-    "Badge"
-  end
-
-  def tile_attrs
+  def as_tile
     { icon: "fa-dot-circle-o",
       title: "New Badge",
-      subtitle: self[:title],
+      subtitle: title,
       partial_path: "tiles/mdl_badge",
       link: link_url,
       object: self }
+  end
+
+  def as_timeline_event(e)
+    { verb: "earned a new badge:",
+      title: title,
+      link: link_url,
+      iconUrlRaw: image_url
+    }
   end
 end

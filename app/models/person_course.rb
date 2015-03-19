@@ -40,41 +40,8 @@ class PersonCourse < Eventable
     end
   end
 
-  def icon_url
-    "events/course.png"
-  end
-
-  def title(tr)
-    case tr
-    when :create   then "Applied for"
-    when :to_start then "Enrolled on"
-    when :start    then "Started"
-    when :complete then "Completed" # TODO: distinguish between complete, w/d, incomplete etc
-    end + " " + course.name
-  end
-
   def to_xml(options = {})
     super({ include: :course }.merge(options))
-  end
-
-  def status
-    if self[:status] == "current"
-      if start_date
-        start_date <= Date.today ? "current" : "not_started"
-      else
-        "unknown"
-      end
-    else
-      self[:status]
-    end
-  end
-
-  def cl_status
-    { "unknown"    => "default",
-      "complete"   => "success",
-      "current"    => "warning",
-      "incomplete" => "danger"
-    }[status] || "default"
   end
 
   def extra_panes(tr)
@@ -90,7 +57,19 @@ class PersonCourse < Eventable
     panes
   end
 
-  def tile_attrs
+  def as_tile
     { icon: "fa-graduation-cap" }
+  end
+
+   def as_timeline_event(e)
+    { verb: case e.transition
+            when :create    then "applied for"
+            when :to_start  then "enrolled on"
+            when :start     then "started"
+            when :comple    then "completed"
+            end,
+      title: course.name,
+      iconUrl: "events/course.png",
+    }
   end
 end

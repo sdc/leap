@@ -14,4 +14,11 @@ class SimplePollAnswer < Eventable
   def extra_panes
     [["Results", "events/tabs/simple_poll_answer"]]
   end
+
+  def as_timeline_event(e)
+    { verb: "voted #{answer} to",
+      title: question,
+      iconUrl: "events/simple_poll_answers.png"
+    }
+  end
 end

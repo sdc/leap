@@ -7,6 +7,7 @@ gem "less-rails", "~> 2.6.0"
 gem 'twitter-bootstrap-rails', "~> 3.2.0"
 gem 'jquery-rails', '~> 4.0.3'
 gem 'jquery-ui-rails', '~> 5.0.0'
+gem 'momentjs-rails'
 gem 'symbolize'
 gem 'scoped_search'
 gem 'rails-settings-cached', "~> 0.4.1"

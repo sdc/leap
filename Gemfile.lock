@@ -146,6 +146,8 @@ GEM
     mime-types (2.4.3)
     mini_portile (0.6.2)
     minitest (5.5.1)
+    momentjs-rails (2.9.0)
+      railties (>= 3.1)
     multi_json (1.11.0)
     mysql (2.9.1)
     mysql2 (0.3.17)
@@ -245,6 +247,7 @@ DEPENDENCIES
   jquery-ui-rails (~> 5.0.0)
   less-rails (~> 2.6.0)
   memcache-client
+  momentjs-rails
   mysql2
   nokogiri (~> 1.6.0)
   protected_attributes

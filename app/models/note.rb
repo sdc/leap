@@ -28,8 +28,17 @@ class Note < Eventable
 
   validates :body, presence: true
 
-  def tile_attrs
+  def as_tile
     { icon: "fa-pencil-square-o",
       partial_path: "tiles/note" }
+  end
+
+  def as_timeline_event(e)
+    { verb: "made a note.",
+      text: body,
+      iconUrl: "events/notes.png",
+      date: e.event_date,
+      id: e.id
+    }
   end
 end

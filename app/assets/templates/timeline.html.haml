@@ -6,9 +6,11 @@
 %ul#leap-timeline
   %li.leap-event(ng-repeat="event in events track by event.id" id="leap-event-{{ event.id }}")
     .leap-icon
-      %img(src="/assets/ajax-loader.gif" ng-src="{{ event.iconUrl | iconUrl }}")
+      %img(src="/assets/ajax-loader.gif" ng-src="{{ event.iconUrlRaw || (event.iconUrl | iconUrl) }}")
     .leap-event-main
-      .text-muted.small {{ event.date | date:'d MMMM yyyy' }}
+      .text-muted.small {{ event.date | leapDate }}
       %h2
-        I {{ event.verb }} {{ event.text }}<span ng-if="event.targetDate"> by {{ event.targetDate | date }}</span>
-  %button(ng-click="getEvents()") Load more events
+        I {{ event.verb }} {{ event.title }}
+        %span(ng-if="event.targetDate") by {{ event.targetDate | date }}
+      %p(ng-if="event.text") {{ event.text }}
+%button(ng-click="getEvents()") Load more events
