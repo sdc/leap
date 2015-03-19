@@ -32,7 +32,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 
   $scope.getEvents = ->
     date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
-    $http.get("/people/#{$routeParams.person_id}/views/#{$routeParams.view_name}.json?date=#{date}").success (data) ->
+    $http.get("/people/#{$routeParams.person_id}/views/#{$routeParams.view_name}.json#{ "?date=#{date}" if date}").success (data) ->
       $scope.events = $scope.events.concat(data)
       $scope.updateEvents()
       #$interval $scope.updateEvents, 15000
@@ -52,7 +52,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   $scope.getCourses = (mis_id) ->
     $http.get("/people/#{mis_id}/moodle_courses.json").success (data) ->
       $scope.courses = data
-  #$rootScope.$watch "user", (user) -> $scope.getCourses(user.mis_id)
+  $rootScope.$watch "user", (user) -> $scope.getCourses(user.mis_id)
 
 .controller 'searchController', ($scope,$http,$location,$routeParams) ->
   $scope.working = false
@@ -88,3 +88,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 .filter 'iconUrl', ->
   (input) ->
     if /^http/.test(input) then input else "/assets/#{input}"
+
+.filter 'leap-date', ->
+  (input)
+    

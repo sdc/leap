@@ -4,12 +4,11 @@
 .alert.alert-warning(ng-hide="events.length > 0")
   Nothing to show!
 %ul#leap-timeline
-  %li.leap-event(ng-repeat="event in events track by event.id")
+  %li.leap-event(ng-repeat="event in events track by event.id" id="leap-event-{{ event.id }}")
     .leap-icon
-      %img(src="/assets/ajax-loader.gif" ng-src="{{ event.icon_url | iconUrl }}")
+      %img(src="/assets/ajax-loader.gif" ng-src="{{ event.iconUrl | iconUrl }}")
     .leap-event-main
+      .text-muted.small {{ event.date | date:'d MMMM yyyy' }}
       %h2
-        %span(ng-bind-html="event.title || eventable_type")
-        %small {{ event.event_date | date:'d MMMM yyyy' }}
-      %p(ng-bind-html="event.body")
+        I {{ event.verb }} {{ event.text }}<span ng-if="event.targetDate"> by {{ event.targetDate | date }}</span>
   %button(ng-click="getEvents()") Load more events

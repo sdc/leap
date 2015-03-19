@@ -91,6 +91,16 @@ class Event < ActiveRecord::Base
     end
   end
 
+  def as_timeline_event
+    if eventable.respond_to?(:as_timeline_event)
+      if eventable.method(:as_timeline_event).arity == 1
+        eventable.as_timeline_event(self)
+      else
+        eventable.as_timeline_event
+      end
+    end
+  end
+
   def first_in_past?; first_in_past; end
 
   def to_xml(options = {}, &_block)

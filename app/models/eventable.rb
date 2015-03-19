@@ -77,4 +77,8 @@ class Eventable < ActiveRecord::Base
   def is_deleted?
     respond_to?(:deleted) && deleted
   end
+
+  def as_timeline_event(tr)
+    {}
+  end
 end

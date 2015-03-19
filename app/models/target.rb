@@ -97,4 +97,19 @@ class Target < Eventable
       subtitle: nil,
       partial_path: "tiles/target" }
   end
+
+  def as_timeline_event(e)
+    { verb: case e.transition
+            when :start     then "set a target to"
+            when :overdue   then "set a target to"
+            when :completed then "completed a target to"
+            when :drop      then "dropped a target to"
+            end,
+      text: body,
+      targetDate: target_date,
+      iconUrl: icon_url,
+      date: e.event_date
+    }
+      
+  end
 end
