@@ -1,7 +1,4 @@
--#
-  - if @view.controls? and params[:all].nil?
-    %div{:load_block => send("header_#{@topic.class.name.underscore}_view_url",@topic,@view,:tutorgroup => @tutorgroup)}= image_tag "ajax-loader.gif"
-.alert.alert-warning(ng-hide="events.length > 0")
+.alert.alert-warning(ng-if="events.length == 0")
   Nothing to show!
 %ul#leap-timeline
   %li.leap-event(ng-repeat="event in events track by event.id" id="leap-event-{{ event.id }}")
