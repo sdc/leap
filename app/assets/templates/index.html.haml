@@ -4,217 +4,198 @@
     %meta{charset: "utf-8"}
     %title Leap
     = stylesheet_link_tag "application"
+    = javascript_include_tag 'vendor/modernizr'
     = javascript_include_tag 'application'
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"}
   %body(ng-app="leapApp")
-    %nav.navbar.navbar-default
-      .container
-        .navbar-header
-          %img.navbar-brand{src: asset_path('icons/leap-logo.png')}
-        %ul.nav.navbar-nav
-          %form.navbar-form.navbar-left(ng-show="user.staff" ng-controller="searchController" ng-submit="search()")
-            .input-group
-              %input.form-control(ng-model="q" placeholder="Search..." 
-                                  ng-change="search()" ng-model-options="{ debounce: 400 }"
-                                 )
-              %span.input-group-btn
-                %button.btn.btn-default{type: "submit"}
-                  %i.fa.fa-search
-                  Go
-          %li
-            .btn-group.navbar-btn
-              %a.btn.btn-default{href: "#{Settings.moodle_host}#{Settings.moodle_path}", target: Settings.moodle_link_target}
-                %i.fa.fa-mortar-board
-                Moodle
-              %a.btn.btn-default.dropdown-toggle(data-toggle="dropdown")
-                %i.fa.fa-caret-down
-              %ul.dropdown-menu(ng-controller="moodleCoursesController")
-                %li(ng-repeat="course in courses")
-                  %a(ng-href="{{ course.url }}"
-                     style="font-weight: {{ course.canedit ? 'bold' : 'normal' }}"
-                     target="Settings.moodle_link_target") {{ course.name }}
-        %ul.nav.navbar-right.navbar-nav
-          %li
-            .navbar-btn
-              %a.btn.btn-default.dropdown-toggle(data-toggle="dropdown" ng-if="topic.staff")
-                %i.fa.fa-cogs
-                Admin
-                %i.fa.fa-caret-down
-              %ul.dropdown-menu
-                %li.dropdown-header Settings
-                %li
-                  %a{href: "/admin/settings"}
-                    %i.fa.fa-cog.fa-fw
-                    Edit Settings
-                %li
-                  %a{href: "/admin/views"}
-                    %i.fa.fa-th-list.fa-fw
-                    Setup Views
-                %li
-                  %a{href: "/admin/stats"}
-                    %i.fa.fa-bar-chart-o.fa-fw
-                    Statistics
-                %li
-                  %a{href: "/test/login", :title => "Click to change user"}
-                    %i.fa.fa-user.fa-fw
-                    Change User
-                %li.divider
-                %li.dropdown-header
-                  Data for {{ topic.name }}
-          %li{style: "margin-left:7px;"}
-            .navbar-link
-              %a.user-menu-link.dropdown-toggle(data-toggle="dropdown")
-                %img(ng-src="/people/{{ user.mis_id }}.jpg")
-              .user-menu.panel.dropdown-menu.dropdown-menu-right.panel-default{style: "padding-top:0"}
-                .panel-body
-                  %h3 
-                    %span.text-muted Logged in as
-                    {{ user.name }}
-                  %small
-                    %a{href: "/"}
-                      %i.fa.fa-home
-                      Home
-                    %span.text-muted &ndash;
-                    %a(data-toggle="modal" data-target="#about-modal")
-                      %i.fa.fa-info
-                      About Leap
-                    %span.text-muted &ndash;
-                    %a(data-toggle="modal" data-target="#logout-modal")
-                      %i.fa.fa-sign-out
-                      Logout
-    .container(ng-controller="topicController")
-      .row 
-        #sidebar
-          .row
-            .topic-box(ng-include="'#{asset_url("topic_box.html")}'")
-            %nav.topic-buttons.btn-group-vertical
-              %a.btn.btn-default(ng-href="#/timeline/all/{{ topic.mis_id }}")
-                %i.fa.fa-fw.fa-home
-                Home
-              %a.btn.btn-default(ng-href="/people/{{ topic.mis_id }}/timetables")
-                %i.fa.fa-fw.fa-calendar
-                Timetable
-              %a.btn.btn-default{href: Settings.ebs_person_base_url + "{{ topic.mis_id }}"}
-                %i.fa.fa-fw{:class => Settings.ebs_link_icon}
-                = Settings.ebs_link_name
-              %a.btn.btn-default(ng-click="update()" ng-class="topic.updating")
-                %i.fa.fa-fw.fa-refresh(ng-class="{'fa-spin':topic.updating}")
-                Refresh
-              %a.btn.btn-default
-                = "..."
-              %a.btn.btn-default
-                = "..."
-          #sidebar-accordion.panel-group
-            .panel.panel-default(ng-if="topic.address_text")
-              .panel-heading
-                %h4.panel-title
-                  %a(data-toggle="collapse" data-parent="#sidebar-accordion" data-target="#personal-details")
-                    %i.fa.fa-user.fa-fw
-                    Personal Details
-              #personal-details.panel-collapse.collapse
-                .panel-body
-                  %small
-                    .label.label-warning(ng-show="topic.note")
-                      %i.fa.fa.fa-flag
-                      Note on MIS
-                    .label.label-danger(ng-hide="topic.contact_allowed")
-                      %i.fa.fa-exclamation-triangle(ng-hide="topic.contact_allowed")
-                      Do not contact!
-                    .label.label-success(ng-show="topic.staff")
-                      %i.fa.fa-mortar-board
-                      Staff member
-                  %dl{style: "margin-top:1ex"}
-                    %dt Address
-                    %dd {{ topic.address_text }}
-                    %span(ng-if="topic.home_phone")
-                      %dt Home Phone
-                      %dd {{ topic.home_phone }}
-                    %span(ng-if="topic.mobile_number")
-                      %dt Mobile Phone
-                      %dd {{ topic.mobile_number }}
-                    %span(ng-if="topic.personal_email")
-                      %dt Personal Email
-                      %dd 
-                        %a(ng-href="mailto:{{ topic.personal_email}}") {{ topic.personal_email }}
-                    %span(ng-if="topic.date_of_birth")
-                      %dt Date of Birth
-                      %dd {{ topic.date_of_birth | date:'d MMMM yyyy' }} (Age: {{ topic.age }})
-                    %span(ng-if="topic.next_of_kin")
-                      %dt Next of Kin
-                      %dd {{ topic.next_of_kin }}
-                  %span(ng-if="topic.mis_id == user.mis_id")
-                    .text-right
-                      Are your details incorrect?
-                      %a.btn.btn-info{href: Settings.notify_details_change_url} Notify us!
-            .panel.panel-default
-              .panel-heading
-                %h4.panel-title
-                  %a(data-toggle="collapse" data-parent="#sidebar-accordion" data-target="#timeline-links")
-                    %i.fa.fa-clock-o.fa-fw
-                    Timeline
-              #timeline-links.panel-collapse.collapse.in
-                .panel-body
-                  %ul(ng-controller='viewsController')
-                    %li(ng-repeat="view in views")
-                      %a(ng-href="#/timeline/{{ view.name }}/{{ topic.mis_id }}")
-                        %img(ng-src='/assets/{{ view.icon_url }}')
-                        {{ view.label }}
-        #main-content
-          .row.ng-view
-        -# if @topic.kind_of? Person
-          #note-modal.modal.fade
-            .modal-dialog
-              .modal-content
-                .modal-header
-                  %h4.modal-title Learner has a note on student records system.
-                .modal-body
-                  - if Person.user.admin?
-                    = simple_format @topic.note
-                  - else
-                    %p Contact your student records department or Leap admin for more information
-                .modal-footer
-                  %button.btn.btn-default{"data-dismiss" => "modal"}Close
-        #about-modal.modal.fade
+    %nav.top-bar(data-topbar)
+      %ul.title-area
+        %li.name 
+          %h1 
+            %img{src: asset_path('icons/leap-logo.png')}
+      %section.top-bar-section
+        %ul
+          %li.has-form(ng-show="user.staff" ng-controller="searchController" ng-submit="search()")
+            %input(type="text" placeholder="Find Stuff" ng-model="q" placeholder="Search..." ng-change="search()" ng-model-options="{ debounce: 400 }")
+          %li.has-dropdown
+            %a Moodle
+            %ul.dropdown(ng-controller="moodleCoursesController")
+              %li
+                %a{href: "#{Settings.moodle_host}#{Settings.moodle_path}", target: Settings.moodle_link_target}
+                  Moodle Home
+              %li(ng-repeat="course in courses")
+                %a(ng-href="{{ course.url }}"
+                   style="font-weight: {{ course.canedit ? 'bold' : 'normal' }}"
+                   target="Settings.moodle_link_target") {{ course.name }}
+        %ul.right
+          %li.has-dropdown
+            %a(ng-if="topic.staff")
+              Admin
+            %ul.dropdown
+              %li
+                %a{href: "/admin/settings"}
+                  %i.fa.fa-cog.fa-fw
+                  Edit Settings
+              %li
+                %a{href: "/admin/views"}
+                  %i.fa.fa-th-list.fa-fw
+                  Setup Views
+              %li
+                %a{href: "/admin/stats"}
+                  %i.fa.fa-bar-chart-o.fa-fw
+                  Statistics
+              %li
+                %a{href: "/test/login", :title => "Click to change user"}
+                  %i.fa.fa-user.fa-fw
+                  Change User
+          %li.has-dropdown.home-menu
+            %a
+              %img(ng-src="/people/{{ user.mis_id }}.jpg")
+            .dropdown
+              %h3 
+                %span.text-muted Logged in as
+                {{ user.name }}
+              %small
+                %a{href: "/"}
+                  Home
+                %span.text-muted &ndash;
+                %a(data-toggle="modal" data-target="#about-modal")
+                  About Leap
+                %span.text-muted &ndash;
+                %a(data-toggle="modal" data-target="#logout-modal")
+                  Logout
+    .row(ng-controller="topicController")
+      #sidebar
+        .row
+          .topic-box(ng-include="'#{asset_url("topic_box.html")}'")
+          %nav.topic-buttons.btn-group-vertical
+            %a.btn.btn-default(ng-href="#/timeline/all/{{ topic.mis_id }}")
+              %i.fa.fa-fw.fa-home
+              Home
+            %a.btn.btn-default(ng-href="/people/{{ topic.mis_id }}/timetables")
+              %i.fa.fa-fw.fa-calendar
+              Timetable
+            %a.btn.btn-default{href: Settings.ebs_person_base_url + "{{ topic.mis_id }}"}
+              %i.fa.fa-fw{:class => Settings.ebs_link_icon}
+              = Settings.ebs_link_name
+            %a.btn.btn-default(ng-click="update()" ng-class="topic.updating")
+              %i.fa.fa-fw.fa-refresh(ng-class="{'fa-spin':topic.updating}")
+              Refresh
+            %a.btn.btn-default
+              = "..."
+            %a.btn.btn-default
+              = "..."
+        #sidebar-accordion.panel-group
+          .panel.panel-default(ng-if="topic.address_text")
+            .panel-heading
+              %h4.panel-title
+                %a(data-toggle="collapse" data-parent="#sidebar-accordion" data-target="#personal-details")
+                  %i.fa.fa-user.fa-fw
+                  Personal Details
+            #personal-details.panel-collapse.collapse
+              .panel-body
+                %small
+                  .label.label-warning(ng-show="topic.note")
+                    %i.fa.fa.fa-flag
+                    Note on MIS
+                  .label.label-danger(ng-hide="topic.contact_allowed")
+                    %i.fa.fa-exclamation-triangle(ng-hide="topic.contact_allowed")
+                    Do not contact!
+                  .label.label-success(ng-show="topic.staff")
+                    %i.fa.fa-mortar-board
+                    Staff member
+                %dl{style: "margin-top:1ex"}
+                  %dt Address
+                  %dd {{ topic.address_text }}
+                  %span(ng-if="topic.home_phone")
+                    %dt Home Phone
+                    %dd {{ topic.home_phone }}
+                  %span(ng-if="topic.mobile_number")
+                    %dt Mobile Phone
+                    %dd {{ topic.mobile_number }}
+                  %span(ng-if="topic.personal_email")
+                    %dt Personal Email
+                    %dd 
+                      %a(ng-href="mailto:{{ topic.personal_email}}") {{ topic.personal_email }}
+                  %span(ng-if="topic.date_of_birth")
+                    %dt Date of Birth
+                    %dd {{ topic.date_of_birth | date:'d MMMM yyyy' }} (Age: {{ topic.age }})
+                  %span(ng-if="topic.next_of_kin")
+                    %dt Next of Kin
+                    %dd {{ topic.next_of_kin }}
+                %span(ng-if="topic.mis_id == user.mis_id")
+                  .text-right
+                    Are your details incorrect?
+                    %a.btn.btn-info{href: Settings.notify_details_change_url} Notify us!
+          .panel.panel-default
+            .panel-heading
+              %h4.panel-title
+                %a(data-toggle="collapse" data-parent="#sidebar-accordion" data-target="#timeline-links")
+                  %i.fa.fa-clock-o.fa-fw
+                  Timeline
+            #timeline-links.panel-collapse.collapse.in
+              .panel-body
+                %ul(ng-controller='viewsController')
+                  %li(ng-repeat="view in views")
+                    %a(ng-href="#/timeline/{{ view.name }}/{{ topic.mis_id }}")
+                      %img(ng-src='/assets/{{ view.icon_url }}')
+                      {{ view.label }}
+      #main-content
+        .row.ng-view
+      -# if @topic.kind_of? Person
+        #note-modal.modal.fade
           .modal-dialog
             .modal-content
               .modal-header
-                %h4.modal-title About Leap
+                %h4.modal-title Learner has a note on student records system.
               .modal-body
-                .row
-                  .col-xs-4.col-xs-offset-4
-                    %img.img-responsive{src: asset_path("leap-logo.png")}
-                .row
-                  .col-xs-10.col-xs-offset-1
-                    %h4.text-center
-                      Open source individual learning plans
-                      %br/
-                      %small Copyright 2011&ndash;2014 South Devon College
-                .row
-                  .col-xs-10.col-xs-offset-1.text-center
-                    .btn-group.btn-group-lg
-                      %a.btn.btn-default{href: "https://github.com/sdc/leap", target: "_BLANK", title: "Leap on Github"}
-                        %i.fa.fa-fw.fa-github
-                      %a.btn.btn-default{href: "https://twitter.com/leapilp", target: "_BLANK", title: "Leap on Twitter"}
-                        %i.fa.fa-fw.fa-twitter
-                      %a.btn.btn-default{href: "https://plus.google.com/+leap-ilp", target: "_BLANK", title: "Leap on Google+"}
-                        %i.fa.fa-fw.fa-google-plus
-                      %a.btn.btn-default{href: "mailto:leap@southdevon.ac.uk", target: "_BLANK", title: "Email us"}
-                        %i.fa.fa-fw.fa-envelope
+                - if Person.user.admin?
+                  = simple_format @topic.note
+                - else
+                  %p Contact your student records department or Leap admin for more information
               .modal-footer
                 %button.btn.btn-default{"data-dismiss" => "modal"}Close
-        #logout-modal.modal.fade
-          .modal-dialog
-            .modal-content
-              .modal-header
-                %h4.modal-title Logout
-              .modal-body
-                To logout, close your browser.
-    :javascript
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', '#{Settings.google_analytics_code}']);
-      _gaq.push(['_trackPageview']);
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+      #about-modal.modal.fade
+        .modal-dialog
+          .modal-content
+            .modal-header
+              %h4.modal-title About Leap
+            .modal-body
+              .row
+                .col-xs-4.col-xs-offset-4
+                  %img.img-responsive{src: asset_path("leap-logo.png")}
+              .row
+                .col-xs-10.col-xs-offset-1
+                  %h4.text-center
+                    Open source individual learning plans
+                    %br/
+                    %small Copyright 2011&ndash;2014 South Devon College
+              .row
+                .col-xs-10.col-xs-offset-1.text-center
+                  .btn-group.btn-group-lg
+                    %a.btn.btn-default{href: "https://github.com/sdc/leap", target: "_BLANK", title: "Leap on Github"}
+                      %i.fa.fa-fw.fa-github
+                    %a.btn.btn-default{href: "https://twitter.com/leapilp", target: "_BLANK", title: "Leap on Twitter"}
+                      %i.fa.fa-fw.fa-twitter
+                    %a.btn.btn-default{href: "https://plus.google.com/+leap-ilp", target: "_BLANK", title: "Leap on Google+"}
+                      %i.fa.fa-fw.fa-google-plus
+                    %a.btn.btn-default{href: "mailto:leap@southdevon.ac.uk", target: "_BLANK", title: "Email us"}
+                      %i.fa.fa-fw.fa-envelope
+            .modal-footer
+              %button.btn.btn-default{"data-dismiss" => "modal"}Close
+      #logout-modal.modal.fade
+        .modal-dialog
+          .modal-content
+            .modal-header
+              %h4.modal-title Logout
+            .modal-body
+              To logout, close your browser.
+  :javascript
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '#{Settings.google_analytics_code}']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();

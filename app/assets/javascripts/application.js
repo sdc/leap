@@ -1,13 +1,10 @@
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui
-//= require twitter/bootstrap
-//= require jquery.peity.min
-//= require jquery.cookie
-//= require bootstrap-datepicker
-//= require moment
+//= require foundation
 //= require angular
 //= require angular-sanitize
 //= require angular-route
-//= require leap
 //= require controllers
+//= rewquire_self
+
+$(function(){ $(document).foundation(); });

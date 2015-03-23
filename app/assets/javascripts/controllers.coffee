@@ -52,7 +52,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   $scope.getCourses = (mis_id) ->
     $http.get("/people/#{mis_id}/moodle_courses.json").success (data) ->
       $scope.courses = data
-  $rootScope.$watch "user", (user) -> $scope.getCourses(user.mis_id)
+  $rootScope.$watch "user", (user) -> $scope.getCourses(user.mis_id) if user
 
 .controller 'searchController', ($scope,$http,$location,$routeParams) ->
   $scope.working = false
@@ -90,5 +90,5 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     if /^http/.test(input) then input else "/assets/#{input}"
 
 .filter 'leapDate', ->
-  (input) ->
-    moment(input).fromNow()
+  (input) -> input
+  #  moment(input).fromNow()

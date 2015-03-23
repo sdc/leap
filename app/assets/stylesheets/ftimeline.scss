@@ -1,0 +1,19 @@
+.home-menu img { height:30px; }
+
+.top-bar {
+  margin-bottom: 10px;
+}
+
+#sidebar {
+  @include grid-column($columns:3);
+  .topic-box {
+    @include grid-column($columns:6);
+    h2 {
+      font-size: 20px;
+    }
+  }
+}
+
+#main-content {
+  @include grid-column($columns:9)
+}
