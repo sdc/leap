@@ -31,7 +31,8 @@ class CoursesController < ApplicationController
         @rpub =   Review.where(person_id: @topic.people.map(&:id), published: true, window: @window).any?
         @statuses = @topic.person_courses.map { |pc| [pc.mis_status, pc.cl_status] }.uniq.reject(&:blank?)
       end
-      format.jpg { redirect_to "/assets/courses.png" }
+      format.jpg  { redirect_to "/assets/courses.png" }
+      format.json { render json: @topic }
     end
   end
 

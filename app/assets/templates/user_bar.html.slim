@@ -1,0 +1,7 @@
+img src=asset_path("leap-logo.png")
+leap-person src="user"
+  a href="#/person/{{user.mis_id}}" {{ user.name }}
+ul.course-list
+  li.heading My Courses
+  li ng-repeat="course_id in user.my_courses"
+    leap-course mis-id="{{ course_id }}"

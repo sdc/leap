@@ -1,0 +1,10 @@
+a href="#/person/{{ person.mis_id }}/timeline/all"
+  img ng-src="/people/{{ person.mis_id }}.jpg"
+  .topic-box-bottom
+    h1 {{ person.forename }}
+    h1 {{ person.surname }}
+    h2 {{ person.mis_id }}
+    .flags
+      i.text-warning.fa.fa.fa-flag(ng-show="person.note")
+      i.text-danger.fa.fa-exclamation-triangle(title="Do not contact this person!" ng-hide="person.contact_allowed")
+      i.text-success.fa.fa-mortar-board(title="Staff Member" ng-show="person.staff")

@@ -2,10 +2,12 @@ source 'http://rubygems.org'
 #gem 'rails', "~> 4.2.0"
 gem 'rails', git: 'https://github.com/rails/rails.git', branch: '4-2-stable'
 gem 'coffee-rails', "~> 4.1.0"
-gem 'haml', "~> 4.0.6"
 gem 'jquery-rails', '~> 4.0.3'
 gem 'jquery-ui-rails', '~> 5.0.0'
+gem 'slim-rails'
 gem 'foundation-rails'
+gem 'sass-rails'
+gem 'font-awesome-sass'
 gem 'symbolize'
 gem 'scoped_search'
 gem 'rails-settings-cached', "~> 0.4.1"
@@ -16,7 +18,6 @@ gem 'yui-compressor'
 gem 'icalendar'
 gem 'protected_attributes'
 gem 'activerecord-deprecated_finders', require: 'active_record/deprecated_finders'
-gem 'bootstrap-datepicker-rails'
 gem 'angularjs-rails', '~> 1.3.10'
 gem 'activeresource', require: 'active_resource'
 gem 'whenever', :require => false

@@ -189,7 +189,7 @@ class Person < ActiveRecord::Base
     json_methods += %w(address_text age) if current_user? || !staff?
     json_only     = %w(forename surname contact_allowed mis_id)
     json_only    += %w(note date_of_birth mobile_number home_phone 
-                       next_of_kin personal_email postcode town) if current_user? || !staff?
+                       next_of_kin personal_email postcode town my_courses) if current_user? || !staff?
     super options.merge(methods: json_methods, only: json_only)
   end
 end

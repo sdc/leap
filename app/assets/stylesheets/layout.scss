@@ -1,0 +1,73 @@
+$sidebar-width: 20%;
+
+.scrolling-pane {
+  position: absolute;
+  top: $topbar-height;
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: all .25s ease-out;
+}
+
+.leap-sidebar {
+  @extend .scrolling-pane;
+  width: $sidebar-width;
+  padding: 5px;
+}
+
+.sidebar-toggle-button {
+  width: $sidebar-width;
+}
+
+leap-user-bar {
+  @extend .leap-sidebar;
+  left: $sidebar-width * -1; 
+  @media #{$medium-up} { 
+    left:0;
+    &.off-canvas {
+      left: $sidebar-width * -1; 
+    }
+  }
+}
+
+leap-topic-bar {
+  @extend .leap-sidebar;
+  background: green;
+  left: 0;
+  @media #{$medium-up} { 
+    left: $sidebar-width;
+    &.off-canvas {
+      left: $sidebar-width * -1; 
+    }
+  }
+}
+
+leap-user-bar.off-canvas + leap-topic-bar {
+  left: 0;
+  &.off-canvas {
+    left: $sidebar-width * -1; 
+  }
+}
+
+leap-top-bar {
+}
+
+#main-content {
+  @extend .scrolling-pane;
+  background: green;
+  right:0;
+  background: yellow;
+  width: 100% - $sidebar-width;
+  @media #{$medium-up} { 
+    width: 100% - (2 * $sidebar-width);
+  }
+}
+
+leap-user-bar.off-canvas ~ #main-content,
+leap-topic-bar.off-canvas + #main-content {
+  width: 100% - $sidebar-width;
+}
+
+leap-user-bar.off-canvas + leap-topic-bar.off-canvas + #main-content {
+  width: 100%
+}

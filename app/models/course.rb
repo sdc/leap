@@ -68,4 +68,13 @@ class Course < ActiveRecord::Base
   def person?; false end
 
   def course?; true end
+
+  def as_json(options = {})
+    json_methods  = %w(name)
+    #json_methods += %w() if current_user? || !staff?
+    json_only     = %w(id title code year mis_id vague_title my_courses)
+    #json_only    += %w() if current_user? || !staff?
+    super options.merge(methods: json_methods, only: json_only)
+  end
+
 end

@@ -1,0 +1,15 @@
+doctype html
+html lang="en"
+  head
+    meta charset="utf8"
+    title Leap
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "vendor/modernizr"
+    = javascript_include_tag "application"
+    meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+  body ng-app="leapApp"
+    leap-top-bar 
+    leap-user-bar ng-class="{'off-canvas': $root.hideUserBar}"
+    leap-topic-bar ng-class="{'off-canvas': $root.hideTopicBar}"
+    #main-content
+      ng-view
