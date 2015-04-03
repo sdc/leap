@@ -1,6 +1,6 @@
 img src=asset_path("leap-logo.png")
-leap-person src="user"
-  a href="#/person/{{user.mis_id}}" {{ user.name }}
+form.search_form ng-controller="searchController"
+  input type="text" placeholder="Find stuff..." ng-model="q" ng-change="search()" ng-model-options=" { debounce: 400 }"
 ul.course-list
   li.heading My Courses
   li ng-repeat="course_id in user.my_courses"

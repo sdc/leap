@@ -14,18 +14,19 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     .when '/person/:person_id/tiles/:view_name',
       controller: "timelineController"
       templateUrl: "/assets/tiles.html"
-    .when '/search/:q',
+    .when '/search',
       controller: 'searchController',
       templateUrl: '/assets/search.html'
 ])
 
 .run ($http,$rootScope) ->
   $http.get("/people/user.json").success (data) ->
-    $rootScope.user = data
+    $rootScope.user = $rootScope.topic = data
     $rootScope.hideUserBar = $rootScope.hideTopicBar = false
 
 .controller 'timelineController', ($scope,$http,$routeParams,$rootScope,Topic,$interval) ->
   $scope.update_count = 0
+  $rootScope.hideTopicBar = false
   $scope.getEvent = (id) ->
     $scope.update_count++
     $rootScope.topic.updating = "btn-success"
@@ -60,21 +61,19 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 #     $scope.courses = data
 #  $rootScope.$watch "user", (user) -> $scope.getCourses(user.mis_id) if user
 #
-#.controller 'searchController', ($scope,$http,$location,$routeParams) ->
-#  $scope.working = false
-#  $scope.search = ->
-#    $location.path("/search/#{$scope.q}")
-#
-#  $scope.gotoPerson = (mis_id) ->
-#    $location.path("/timeline/#{mis_id}")
-#
-#  $scope.doSearch = ->
-#    $scope.working = true
-#    $http.get("/people/search.json?q=#{$routeParams.q}").success (data) ->
-#      $scope.people = data
-#      $scope.working = false
-#  $scope.doSearch()
-#
+.controller 'searchController', ($scope,$http,$location,$routeParams,$rootScope) ->
+  $scope.working = false
+  $scope.search = ->
+    $location.path("/search").search("q",$scope.q)
+
+  $scope.doSearch = ->
+    $scope.working = true
+    $rootScope.hideTopicBar = true
+    $http.get("/people/search.json?q=#{$routeParams.q}").success (data) ->
+      $scope.people = data
+      $scope.working = false
+  $scope.doSearch()
+
 #.controller 'topicController', ($scope,$rootScope,Topic) ->
 #  $scope.update = -> Topic.update()
 #
@@ -124,7 +123,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       scope.course = data
 
 .directive 'leapPerson', ($http,$rootScope) ->
-  restrict: "E"
+  restrict: "EA"
   templateUrl: '/assets/person.html'
   scope:
     misId: '@'
@@ -138,4 +137,3 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     else if scope.src == "topic"
       $rootScope.$watch "topic", (topic) ->
         scope.person = topic
-

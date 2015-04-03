@@ -1,3 +1,19 @@
+leap-top-bar {
+  leap-person {
+    img { 
+      height: $topbar-height; 
+      width: auto;
+      float: right;
+    }
+    .name { 
+      display: inline; 
+      color: $topbar-link-color;
+    }
+  }
+}
+
 leap-person {
-  img { width: 100% };
+  img { width: 100%    }
+  a   { color: inherit }
+  .name > div { display: inline }
 }

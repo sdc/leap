@@ -1,9 +1,0 @@
-.alert.alert-info(ng-show="working")
-  %i.fa.fa-circle-o-notch.fa-spin
-  Searching...
-.alert.alert-warning(ng-hide="working || people.length > 0")
-  No results
-.panel.panel-default(ng-hide="working || people.length == 0")
-  .panel-body
-    .col-xs-6.col-md-3.col-lg-2(ng-repeat="topic in people" href="#/timeline/all/{{ topic.mis_id }}")
-      .topic-box{ng: {include: "'#{asset_url("topic_box.html")}'"}}

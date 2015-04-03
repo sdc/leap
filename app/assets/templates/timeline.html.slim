@@ -7,7 +7,7 @@ ul#leap-timeline
     .leap-event-main
       .text-muted.small {{ event.date }}
       h2
-        I {{ event.verb }} {{ event.title }}
+        | I {{ event.verb }} {{ event.title }}
         span ng-if="event.targetDate" by {{ event.targetDate | date }}
       p ng-if="event.text" {{ event.text }}
 button ng-click="getEvents()" Load more events

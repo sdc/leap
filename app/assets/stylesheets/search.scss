@@ -1,0 +1,6 @@
+#search-results {
+  @media #{$small-up}  { @include block-grid(2) }
+  @media #{$medium-up} { @include block-grid(4) }
+  @media #{$large-up}  { @include block-grid(7) }
+  @media #{$xlarge-up} { @include block-grid(8) }
+}

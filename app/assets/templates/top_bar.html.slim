@@ -1,11 +1,18 @@
 nav.top-bar data-topbar=true  
   section.top-bar-section
-    ul.left style="width:100%"
-      li.sidebar-toggle-button
+    ul.left
+      li.sidebar-toggle-button ng-class="{active: !$root.hideUserBar}"
         a ng-click="toggleUserBar()"
-          i.fa.fa-arrow-left>
-          | Hide
-      li
+          i.fa.fa-user>
+          .on  Show
+          .off Hide
+      li.divider
+      li.sidebar-toggle-button ng-class="{active: !$root.hideTopicBar}"
         a ng-click="toggleTopicBar()"
-          i.fa.fa-arrow-left>
-          | Hide
+          i.fa.fa-bars>
+          .on  Show
+          .off Hide
+      li.divider
+    ul.right
+      li 
+        leap-person src="user"
