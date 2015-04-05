@@ -1,5 +1,12 @@
 $sidebar-width: 20%;
 
+body,h1,h2,h3,h4,h5,li { font-family: "Raleway Regular" }
+
+.top-bar .title-area img { 
+  height: $topbar-height;
+  padding: 8px 0;
+}
+
 .scrolling-pane {
   position: absolute;
   top: $topbar-height;

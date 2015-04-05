@@ -1,9 +1,9 @@
 leap-top-bar {
   leap-person {
     img { 
-      height: $topbar-height; 
       width: auto;
       float: right;
+      height: $topbar-height;
     }
     .name { 
       display: inline; 
