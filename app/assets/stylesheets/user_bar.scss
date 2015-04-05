@@ -1,5 +1,8 @@
 leap-user-bar {
+  .search-form {
+    input[type=text]     { @include grid-column(5) }
+  }
   ul.course-list {
-    @extend .side-nav;
+    @include side-nav();
   }
 }
