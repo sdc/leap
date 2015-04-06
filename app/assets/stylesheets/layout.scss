@@ -1,25 +1,27 @@
 $sidebar-width: 20%;
 
-body,h1,h2,h3,h4,h5,li { font-family: "Raleway Regular" }
-
-.top-bar .title-area img { 
-  height: $topbar-height;
-  padding: 8px 0;
+.leap-logo {
+  font-family: "MeriendaOne";
+  color: #3cd;
+  background: linear-gradient(#5ef, #06a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .scrolling-pane {
   position: absolute;
-  top: $topbar-height;
   bottom: 0;
+  top: $topbar-height;
   overflow-x: hidden;
   overflow-y: auto;
   transition: all .25s ease-out;
+  padding: 5px;
 }
 
 .leap-sidebar {
   @extend .scrolling-pane;
   width: $sidebar-width;
-  padding: 5px;
+  top: $topbar-height;
 }
 
 .sidebar-toggle-button {
@@ -32,7 +34,7 @@ body,h1,h2,h3,h4,h5,li { font-family: "Raleway Regular" }
 leap-user-bar {
   @extend .leap-sidebar;
   z-index: 10;
-  background: white;
+  background: #f0f0f0;
   left: $sidebar-width * -1; 
   @media #{$medium-up} { 
     left:0;
@@ -44,7 +46,7 @@ leap-user-bar {
 
 leap-topic-bar {
   @extend .leap-sidebar;
-  background: white;
+  background: #e0e0e0;
   z-index: 0;
   left: 0;
   @media #{$medium-up} { 
