@@ -12,9 +12,14 @@ leap-person {
     }
     .name {
       display: inline; 
-      overflow: hidden;
     }
   }
   a { color: inherit }
-  .name > div { display: inline }
+  .name { 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    .forename,.surname {
+      display: inline;
+    }
+  }
 }
