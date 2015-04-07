@@ -19,35 +19,20 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       templateUrl: '/assets/search.html'
 ])
 
-.run ($http,$rootScope) ->
-  $http.get("/people/user.json").success (data) ->
-    $rootScope.user = $rootScope.topic = data
-    $rootScope.hideUserBar = $rootScope.hideTopicBar = false
+.run ($http,$rootScope,Topic) ->
+  Topic.set().then (data) -> $rootScope.user = data
 
-.controller 'timelineController', ($scope,$http,$routeParams,$rootScope,Topic,$interval) ->
-  #$scope.update_count = 0
-  $rootScope.hideTopicBar = false
-  #$scope.getEvent = (id) ->
-  #  $scope.update_count++
-  #  $rootScope.topic.updating = "btn-success"
-  #  $http.get "/people/#{$routeParams.person_id}/events/#{id}.json"
-  #    .success (data) ->
-  #      $scope.events[i] = data for e,i in $scope.events when e.id == id
-  #      $rootScope.topic.updating = false unless --$scope.update_count
-
-  #$scope.updateEvents = ->
-  #  $scope.getEvent(d.id) for d in $scope.events
-
+.controller 'timelineController', ($scope,$http,$routeParams,$rootScope,Topic) ->
   $scope.getEvents = ->
   #  date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
-    $http.get("/people/#{$routeParams.person_id}/views/#{$routeParams.view_name}").success (data) ->
+    $http.get("/people/#{Topic.getId()}/views/#{$routeParams.view_name}").success (data) ->
       $scope.events = $scope.events.concat(data)
-  #    $scope.updateEvents()
-  #    $interval $scope.updateEvents, 5000
-  Topic.set $routeParams.person_id
-  $scope.events = []
-  $scope.getEvents()
   #$scope.$on "updated_topic", -> $scope.updateEvents()
+  $rootScope.hideTopicBar = false
+  $scope.events = []
+  Topic.set($routeParams.person_id).then ->
+    $scope.getEvents()
+  #$scope.update_count = 0
 
 #.controller 'viewsController', ($scope,$http) ->
 #  $scope.getViews = ->
@@ -75,21 +60,23 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   $scope.doSearch()
 
 .factory 'Topic', ($http,$rootScope) ->
+  topic = false
   set:
-    (mis_id) ->
-      $http.get("/people/#{mis_id}.json").success (data) ->
-        $rootScope.topic = data
-  update: ->
-    if $rootScope.topic
-      $rootScope.topic.updating = "btn-warning"
-      $http.get("/people/#{$rootScope.topic.mis_id}.json?refresh=true").success (data) ->
-        $rootScope.topic = data
-        $rootScope.$broadcast("updated_topic")
+    (mis_id = "user") ->
+      $http.get("/people/#{mis_id}.json").then (result) ->
+        topic = result.data
+        $rootScope.$broadcast("setTopic")
+        console.log "Topic set to #{topic.name} (#{topic.mis_id})"
+        topic
+  get: -> topic
+  getId: -> topic.mis_id
+  #update: ->
+  #  if $rootScope.topic
+  #    $rootScope.topic.updating = "btn-warning"
+  #    $http.get("/people/#{$rootScope.topic.mis_id}.json?refresh=true").success (data) ->
+  #      $rootScope.topic = data
+  #      $rootScope.$broadcast("updated_topic")
 
-#.filter 'iconUrl', ->
-#  (input) ->
-#    if /^http/.test(input) then input else "/assets/#{input}"
-#
 .directive 'leapUserBar', ($rootScope) ->
   restrict: "E"
   templateUrl: '/assets/user_bar.html'
@@ -119,7 +106,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     $http.get("/courses/#{scope.misId}.json").success (data) ->
       scope.course = data
 
-.directive 'leapPerson', ($http,$rootScope) ->
+.directive 'leapPerson', ($http,$rootScope,Topic) ->
   restrict: "EA"
   templateUrl: '/assets/person.html'
   scope:
@@ -134,14 +121,15 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     else if scope.src == "user"
       scope.person = $rootScope.user
     else if scope.src == "topic"
-      $rootScope.$watch "topic", (topic) ->
-        scope.person = topic
+      scope.person = Topic.get()
+      $rootScope.$on 'setTopic', ->
+        scope.person = Topic.get()
 
-.directive 'leapTimelineEvent', ($http,$rootScope,Topic) ->
+.directive 'leapTimelineEvent', ($http,Topic) ->
   restrict: "E"
   templateUrl: '/assets/timeline_event.html'
   scope:
     leapEventId: '@'
   link: (scope,element,attrs) ->
-    $http.get("/people/#{$rootScope.topic.mis_id}/events/#{scope.leapEventId}.json").success (data) ->
+    $http.get("/people/#{Topic.getId()}/events/#{scope.leapEventId}.json").success (data) ->
       scope.event = data
