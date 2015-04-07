@@ -4,4 +4,4 @@
 .no-results ng-if="!working && people.length == 0"
   | No results
 ul#search-results ng-hide="working || people.length == 0" data-equalizer=true
-  li ng-repeat="person in people": leap-person mis-id="{{ person.mis_id }}"
+  li ng-repeat="person in people": leap-person mis-id="person.mis_id"

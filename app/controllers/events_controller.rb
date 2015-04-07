@@ -15,13 +15,14 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class EventsController < ApplicationController
+  before_action :set_scope
   def open_extended
     @event = @topic.events.find(params[:id])
     render partial: "extended", object: @event, as: :event
   end
 
   def show
-    @event = @topic.events.find(params[:id])
+    @event = @scope.find(params[:id])
     render json: @event.as_timeline_event
   end
 
@@ -83,5 +84,22 @@ class EventsController < ApplicationController
       f.html { redirect_to :back }
       f.js   { render json: @event }
     end
+  end
+
+  def set_scope
+    @scope = if @affiliation == "staff" && params[:all]
+               @multi = true
+               Event.limit(100)
+             elsif @affiliation == "staff" && @topic.kind_of?(Course)
+               @multi = true
+               if @tutorgroup
+                 Event.where(person_id: @topic.person_courses.where(tutorgroup: @tutorgroup).map(&:person_id))
+               else
+                 Event.where(person_id: @topic.people.map(&:id))
+               end
+             else
+               @multi = false
+               @topic.events
+             end
   end
 end

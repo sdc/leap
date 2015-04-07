@@ -2,18 +2,12 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 
 .config(['$routeProvider', ($routeProvider) ->
   $routeProvider
-    .when '/person/:person_id',
+    .when '/:topic_type/:topic_id',
       controller: "timelineController",
-      templateUrl: "/assets/tiles.html"
-    .when '/course/:course_id',
-      controller: "timelineController",
-      templateUrl: "/assets/people.html"
-    .when '/person/:person_id/timeline/:view_name',
+      templateUrl: "/assets/timeline.html"
+    .when '/:topic_type/:topic_id/timeline/:view_name',
       controller: "timelineController"
       templateUrl: "/assets/timeline.html"
-    .when '/person/:person_id/tiles/:view_name',
-      controller: "timelineController"
-      templateUrl: "/assets/tiles.html"
     .when '/search',
       controller: 'searchController',
       templateUrl: '/assets/search.html'
@@ -25,12 +19,12 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 .controller 'timelineController', ($scope,$http,$routeParams,$rootScope,Topic) ->
   $scope.getEvents = ->
   #  date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
-    $http.get("/people/#{Topic.getId()}/views/#{$routeParams.view_name}").success (data) ->
+    $http.get("#{Topic.urlBase()}/views/#{$routeParams.view_name || 'all'}").success (data) ->
       $scope.events = $scope.events.concat(data)
   #$scope.$on "updated_topic", -> $scope.updateEvents()
   $rootScope.hideTopicBar = false
   $scope.events = []
-  Topic.set($routeParams.person_id).then -> $scope.getEvents()
+  Topic.set($routeParams.topic_id,$routeParams.topic_type).then -> $scope.getEvents()
   #$scope.update_count = 0
 
 #.controller 'moodleCoursesController', ($scope,$http,$rootScope) ->
@@ -53,24 +47,32 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 .factory 'Topic', ($http,$rootScope) ->
   topic = false
   set:
-    (mis_id = "user") ->
-      $http.get("/people/#{mis_id}.json").then (result) ->
+    (mis_id = "user", type = "person") ->
+      $http.get("/#{if type == 'person' then 'people' else 'courses'}/#{mis_id}.json").then (result) ->
         topic = result.data
+        topic.type = type
         $rootScope.$broadcast("setTopic")
         $rootScope.hideTopicBar = false
-        console.log "Topic set to #{topic.name} (#{topic.mis_id})"
+        console.log "Topic set to #{topic.type}: #{topic.name} (#{topic.mis_id})"
+        console.log result
         topic
   get: -> topic
   getId: -> topic.mis_id
+  getType: -> topic.type
+  urlBase: ->
+    (switch topic.type
+      when "person" then "/people/"
+      when "course" then "/courses/"
+    ) + topic.mis_id
 
 .directive 'leapViewsMenu', ($http,Topic,$rootScope) ->
   restrict: "E"
   templateUrl: "/assets/views_menu.html"
   link: (scope) ->
-    scope.refresh = -> $http.get('/views.json').success (data) ->
+    $rootScope.$on 'setTopic', ->
+      $http.get('/views.json').success (data) ->
         scope.views = data
-        scope.baseUrl = "#/person/#{Topic.getId()}/"
-    $rootScope.$on 'setTopic', -> scope.refresh()
+        scope.baseUrl = "#/#{Topic.getType()}/#{Topic.getId()}/"
 
 .directive 'leapUserBar', ($rootScope) ->
   restrict: "E"
@@ -87,38 +89,40 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   restrict: "E"
   templateUrl: '/assets/top_bar.html'
   link: (scope) ->
-    scope.toggleUserBar = ->
-      $rootScope.hideUserBar = !$rootScope.hideUserBar
-    scope.toggleTopicBar = ->
-      $rootScope.hideTopicBar = !$rootScope.hideTopicBar
+    scope.toggleUserBar = ->  $rootScope.hideUserBar =  !$rootScope.hideUserBar
+    scope.toggleTopicBar = -> $rootScope.hideTopicBar = !$rootScope.hideTopicBar
 
-.directive 'leapCourse', ($http) ->
+.directive 'leapTopic', (Topic,$rootScope) ->
+  restrict: "E"
+  templateUrl: "/assets/topic.html"
+  link: (scope) ->
+    $rootScope.$on 'setTopic', ->
+      scope.topicType = Topic.getType()
+      scope.misId = Topic.getId()
+
+.directive 'leapCourse', ($http,$rootScope,Topic) ->
   restrict: "E"
   templateUrl: '/assets/course.html'
   scope:
-    misId: '@'
+    misId: '='
+    size: '='
   link: (scope,element,attrs) ->
-    $http.get("/courses/#{scope.misId}.json").success (data) ->
-      scope.course = data
+    scope.size = attrs.size if attrs.size
+    scope.$watch 'misId', ->
+      $http.get("/courses/#{scope.misId}.json").success (data) ->
+        scope.course = data
 
 .directive 'leapPerson', ($http,$rootScope,Topic) ->
   restrict: "EA"
   templateUrl: '/assets/person.html'
   scope:
-    misId: '@'
-    src: '@'
-    size: '@'
+    misId: '='
+    size: '='
   link: (scope,element,attrs) ->
     scope.size = attrs.size if attrs.size
-    if attrs.misId
+    scope.$watch 'misId', ->
       $http.get("/people/#{scope.misId}.json").success (data) ->
         scope.person = data
-    else if scope.src == "user"
-      scope.person = $rootScope.user
-    else if scope.src == "topic"
-      scope.person = Topic.get()
-      $rootScope.$on 'setTopic', ->
-        scope.person = Topic.get()
 
 .directive 'leapTimelineEvent', ($http,Topic) ->
   restrict: "E"
@@ -126,5 +130,5 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   scope:
     leapEventId: '@'
   link: (scope,element,attrs) ->
-    $http.get("/people/#{Topic.getId()}/events/#{scope.leapEventId}.json").success (data) ->
+    $http.get("#{Topic.urlBase()}/events/#{scope.leapEventId}.json").success (data) ->
       scope.event = data
