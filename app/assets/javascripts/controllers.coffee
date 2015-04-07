@@ -48,16 +48,14 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 #
 .controller 'searchController', ($scope,$http,$location,$routeParams,$rootScope) ->
   $scope.working = false
-  $scope.search = ->
-    $location.path("/search").search("q",$scope.q)
-
+  $scope.search = -> $location.path("/search").search("q",$scope.q)
   $scope.doSearch = ->
     $scope.working = true
     $rootScope.hideTopicBar = true
     $http.get("/people/search.json?q=#{$routeParams.q}").success (data) ->
       $scope.people = data
       $scope.working = false
-  $scope.doSearch()
+  $scope.$on '$routeChangeSuccess', -> $scope.doSearch()
 
 .factory 'Topic', ($http,$rootScope) ->
   topic = false
