@@ -25,29 +25,29 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     $rootScope.hideUserBar = $rootScope.hideTopicBar = false
 
 .controller 'timelineController', ($scope,$http,$routeParams,$rootScope,Topic,$interval) ->
-  $scope.update_count = 0
+  #$scope.update_count = 0
   $rootScope.hideTopicBar = false
-  $scope.getEvent = (id) ->
-    $scope.update_count++
-    $rootScope.topic.updating = "btn-success"
-    $http.get "/people/#{$routeParams.person_id}/events/#{id}.json"
-      .success (data) ->
-        $scope.events[i] = data for e,i in $scope.events when e.id == id
-        $rootScope.topic.updating = false unless --$scope.update_count
+  #$scope.getEvent = (id) ->
+  #  $scope.update_count++
+  #  $rootScope.topic.updating = "btn-success"
+  #  $http.get "/people/#{$routeParams.person_id}/events/#{id}.json"
+  #    .success (data) ->
+  #      $scope.events[i] = data for e,i in $scope.events when e.id == id
+  #      $rootScope.topic.updating = false unless --$scope.update_count
 
-  $scope.updateEvents = ->
-    $scope.getEvent(d.id) for d in $scope.events
+  #$scope.updateEvents = ->
+  #  $scope.getEvent(d.id) for d in $scope.events
 
   $scope.getEvents = ->
-    date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
-    $http.get("/people/#{$routeParams.person_id}/views/#{$routeParams.view_name || "all"}.json#{ "?date=#{date}" if date}").success (data) ->
+  #  date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
+    $http.get("/people/#{$routeParams.person_id}/views/#{$routeParams.view_name}").success (data) ->
       $scope.events = $scope.events.concat(data)
-      $scope.updateEvents()
-      #$interval $scope.updateEvents, 5000
+  #    $scope.updateEvents()
+  #    $interval $scope.updateEvents, 5000
   Topic.set $routeParams.person_id
   $scope.events = []
   $scope.getEvents()
-  $scope.$on "updated_topic", -> $scope.updateEvents()
+  #$scope.$on "updated_topic", -> $scope.updateEvents()
 
 #.controller 'viewsController', ($scope,$http) ->
 #  $scope.getViews = ->
@@ -74,9 +74,6 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       $scope.working = false
   $scope.doSearch()
 
-#.controller 'topicController', ($scope,$rootScope,Topic) ->
-#  $scope.update = -> Topic.update()
-#
 .factory 'Topic', ($http,$rootScope) ->
   set:
     (mis_id) ->
@@ -139,3 +136,12 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     else if scope.src == "topic"
       $rootScope.$watch "topic", (topic) ->
         scope.person = topic
+
+.directive 'leapTimelineEvent', ($http,$rootScope,Topic) ->
+  restrict: "E"
+  templateUrl: '/assets/timeline_event.html'
+  scope:
+    leapEventId: '@'
+  link: (scope,element,attrs) ->
+    $http.get("/people/#{$rootScope.topic.mis_id}/events/#{scope.leapEventId}.json").success (data) ->
+      scope.event = data

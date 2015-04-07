@@ -1,0 +1,7 @@
+article
+  time datetime="{{ event.date }}"
+    div ng-if="event.date.slice(0,10) != events[$index -1].date.slice(0,10)" {{ event.date | date : "dd MMM" }}
+  h1.icon.fa class="{{ event.faIcon }}"
+  .body
+    h1 I {{ event.verb }} {{ event.title }}
+    p ng-if="event.text" {{ event.text }}

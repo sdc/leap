@@ -1,3 +1,12 @@
-.no-events-alert {
+.no-events {
   @include alert($bg: $info-color);
+}
+
+#timeline {
+  article {
+    @include grid-row;
+    time {    @include grid-column(1)  }
+    h1.icon { @include grid-column(1)  }
+    .body   { @include grid-column(10) }
+  }
 }
