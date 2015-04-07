@@ -30,8 +30,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   #$scope.$on "updated_topic", -> $scope.updateEvents()
   $rootScope.hideTopicBar = false
   $scope.events = []
-  Topic.set($routeParams.person_id).then ->
-    $scope.getEvents()
+  Topic.set($routeParams.person_id).then -> $scope.getEvents()
   #$scope.update_count = 0
 
 #.controller 'moodleCoursesController', ($scope,$http,$rootScope) ->
@@ -64,13 +63,14 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   get: -> topic
   getId: -> topic.mis_id
 
-.directive 'leapViewsMenu', ($http,Topic) ->
+.directive 'leapViewsMenu', ($http,Topic,$rootScope) ->
   restrict: "E"
   templateUrl: "/assets/views_menu.html"
   link: (scope) ->
-    $http.get('/views.json').success (data) ->
-      scope.views = data
-      scope.baseUrl = "#/person/#{Topic.getId()}/"
+    scope.refresh = -> $http.get('/views.json').success (data) ->
+        scope.views = data
+        scope.baseUrl = "#/person/#{Topic.getId()}/"
+    $rootScope.$on 'setTopic', -> scope.refresh()
 
 .directive 'leapUserBar', ($rootScope) ->
   restrict: "E"
