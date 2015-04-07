@@ -1,13 +1,14 @@
 a href="#/person/{{ person.mis_id }}/timeline/all"
   img ng-src="/people/{{ person.mis_id }}.jpg"
-  .name
+  h3.name
     .forename {{ person.forename }}
-    .forename {{ person.surname }}
-  .mis_id {{ person.mis_id }}
-  .flags
-    .label.alert.round.has-tip>(ng-show="person.note" data-tooltip=true title="This person has a note on the MIS")
-      i.fa.fa.fa-flag
-    .label.warning.round.has-tip>(title="Do not contact this person!" ng-hide="person.contact_allowed" data-tooltip=true)
-      i.fa.fa-exclamation-triangle
-    .label.success.round.has-tip(title="Staff Member" ng-show="person.staff" data-tooltip=true)
-      i.fa.fa-mortar-board
+    .surname  {{ person.surname }}
+  .bottom ng-if="size != 'small'"
+    .mis_id {{ person.mis_id }}
+    .flags
+      .label.alert.round.has-tip>(ng-show="person.note" data-tooltip=true title="This person has a note on the MIS")
+        i.fa.fa.fa-flag
+      .label.warning.round.has-tip>(title="Do not contact this person!" ng-hide="person.contact_allowed" data-tooltip=true)
+        i.fa.fa-exclamation-triangle
+      .label.success.round.has-tip(title="Staff Member" ng-show="person.staff" data-tooltip=true)
+        i.fa.fa-mortar-board

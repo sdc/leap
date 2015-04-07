@@ -128,7 +128,9 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   scope:
     misId: '@'
     src: '@'
+    size: '@'
   link: (scope,element,attrs) ->
+    scope.size = attrs.size if attrs.size
     if attrs.misId
       $http.get("/people/#{scope.misId}.json").success (data) ->
         scope.person = data

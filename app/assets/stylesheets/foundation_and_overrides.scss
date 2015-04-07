@@ -205,12 +205,12 @@ $header-font-family: "Fjalla One";
 // $header-text-rendering: optimizeLegibility;
 
 // We use these to control header font sizes
-// $h1-font-size: rem-calc(44);
-// $h2-font-size: rem-calc(37);
-// $h3-font-size: rem-calc(27);
-// $h4-font-size: rem-calc(23);
-// $h5-font-size: rem-calc(18);
-// $h6-font-size: 1rem;
+$h1-font-size: rem-calc(30);
+$h2-font-size: rem-calc(25);
+$h3-font-size: rem-calc(20);
+$h4-font-size: rem-calc(15);
+$h5-font-size: rem-calc(10);
+$h6-font-size: 1rem;
 
 // We use these to control header size reduction on small screens
 // $h1-font-reduction: rem-calc(10) !default;
@@ -262,7 +262,7 @@ $header-font-family: "Fjalla One";
 // $hr-border-width: 1px;
 // $hr-border-style: solid;
 // $hr-border-color: $gainsboro;
-// $hr-margin: rem-calc(20);
+// $hr-margin: rem-calc(15);
 
 // We use these to style lists
 // $list-font-family: $paragraph-font-family;
@@ -1125,7 +1125,7 @@ $header-font-family: "Fjalla One";
 // $include-html-nav-classes: $include-html-classes;
 
 // We use this to control padding.
-// $side-nav-padding: rem-calc(14 0);
+// $side-nav-padding: rem-calc(4 0);
 
 // We use these to control list styles.
 // $side-nav-list-type: none;
@@ -1138,7 +1138,7 @@ $header-font-family: "Fjalla One";
 // $side-nav-link-color-hover: scale-color($side-nav-link-color, $lightness: 30%);
 // $side-nav-link-bg-hover: hsla(0, 0, 0, 0.025);
 // $side-nav-link-margin: 0;
-// $side-nav-link-padding: rem-calc(7 14);
+$side-nav-link-padding: rem-calc(1 9);
 // $side-nav-font-size: rem-calc(14);
 // $side-nav-font-weight: $font-weight-normal;
 // $side-nav-font-weight-active: $side-nav-font-weight;
