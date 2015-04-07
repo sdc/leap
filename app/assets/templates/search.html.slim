@@ -1,7 +1,7 @@
-.no-events ng-show="working"
-  i.fa.fa-circle-o-notch.fa-spin
+.working ng-show="working"
+  i.fa.fa-circle-o-notch.fa-spin>
   | Searching...
-.no-events-alert ng-hide="working || people.length > 0"
+.no-results ng-hide="working || people.length > 0"
   | No results
 ul#search-results ng-hide="working || people.length == 0" data-equalizer=true
   li leap-person=true ng-repeat="person in people" mis-id="{{ person.mis_id }}"

@@ -34,12 +34,6 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     $scope.getEvents()
   #$scope.update_count = 0
 
-#.controller 'viewsController', ($scope,$http) ->
-#  $scope.getViews = ->
-#    $http.get('/views.json').success (data) ->
-#      $scope.views = data
-#  $scope.getViews()
-#
 #.controller 'moodleCoursesController', ($scope,$http,$rootScope) ->
 #  $scope.getCourses = (mis_id) ->
 #    $http.get("/people/#{mis_id}/moodle_courses.json").success (data) ->
@@ -55,7 +49,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     $http.get("/people/search.json?q=#{$routeParams.q}").success (data) ->
       $scope.people = data
       $scope.working = false
-  $scope.$on '$routeChangeSuccess', -> $scope.doSearch()
+  $scope.doSearch()
 
 .factory 'Topic', ($http,$rootScope) ->
   topic = false
@@ -64,16 +58,19 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       $http.get("/people/#{mis_id}.json").then (result) ->
         topic = result.data
         $rootScope.$broadcast("setTopic")
+        $rootScope.hideTopicBar = false
         console.log "Topic set to #{topic.name} (#{topic.mis_id})"
         topic
   get: -> topic
   getId: -> topic.mis_id
-  #update: ->
-  #  if $rootScope.topic
-  #    $rootScope.topic.updating = "btn-warning"
-  #    $http.get("/people/#{$rootScope.topic.mis_id}.json?refresh=true").success (data) ->
-  #      $rootScope.topic = data
-  #      $rootScope.$broadcast("updated_topic")
+
+.directive 'leapViewsMenu', ($http,Topic) ->
+  restrict: "E"
+  templateUrl: "/assets/views_menu.html"
+  link: (scope) ->
+    $http.get('/views.json').success (data) ->
+      scope.views = data
+      scope.baseUrl = "#/person/#{Topic.getId()}/"
 
 .directive 'leapUserBar', ($rootScope) ->
   restrict: "E"

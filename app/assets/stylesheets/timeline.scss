@@ -1,5 +1,5 @@
 .no-events {
-  @include alert($bg: $info-color);
+  @include alert($bg: $warning-color);
 }
 
 #timeline {

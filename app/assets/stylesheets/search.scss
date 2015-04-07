@@ -1,3 +1,11 @@
+.no-results {
+  @include alert($bg: $warning-color);
+}
+
+.working{
+  @include alert($bg: $info-color);
+}
+
 #search-results {
   @media #{$small-up}  { @include block-grid(2) }
   @media #{$medium-up} { @include block-grid(4) }
