@@ -69,10 +69,12 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   restrict: "E"
   templateUrl: "/assets/views_menu.html"
   link: (scope) ->
-    $rootScope.$on 'setTopic', ->
+    scope.refresh = ->
       $http.get('/views.json').success (data) ->
         scope.views = data
         scope.baseUrl = "#/#{Topic.getType()}/#{Topic.getId()}/"
+    $rootScope.$on 'setTopic', -> scope.refresh
+    scope.refresh()
 
 .directive 'leapUserBar', ($rootScope) ->
   restrict: "E"
@@ -96,9 +98,11 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   restrict: "E"
   templateUrl: "/assets/topic.html"
   link: (scope) ->
-    $rootScope.$on 'setTopic', ->
+    scope.refresh = ->
       scope.topicType = Topic.getType()
       scope.misId = Topic.getId()
+    $rootScope.$on 'setTopic', -> scope.refresh()
+    scope.refresh()
 
 .directive 'leapCourse', ($http,$rootScope,Topic) ->
   restrict: "E"

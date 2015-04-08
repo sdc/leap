@@ -6,4 +6,5 @@ leap-user-bar {
   ul.course-list {
     @include side-nav();
   }
+  h2 { font-size: $h4-font-size}
 }
