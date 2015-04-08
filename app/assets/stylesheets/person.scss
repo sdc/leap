@@ -1,26 +1,28 @@
 leap-top-bar leap-person {
-  img { float: right }
   .name { color: $topbar-link-color }
+  img { height: $topbar-height }
 }
 
+leap-user-bar leap-person,leap-topic-bar leap-person {
+  img { height: $topbar-height * 2}
+  h2  { font-size: $h3-font-size}
+} 
+
 leap-person {
-  img { width: 100% }
-  h2 { margin-bottom: 0}
-  &[size=small] {
-    img { 
-      height: $topbar-height;
-      width: auto;
-    }
-    .name {
-      display: inline; 
-    }
-  }
+  @extend .clearfix;
+  img { width: 100%;
+        float:right;
+        margin-bottom: 5px;
+       }
+  h2 { margin-bottom: 0 }
+  img { width: auto }
   a { color: inherit }
   .name { 
     overflow: hidden;
     text-overflow: ellipsis;
-    .forename,.surname {
-      display: inline;
-    }
+    word-wrap: break-word;
+  }
+  .name,.forename,.surname {
+    display: inline;
   }
 }
