@@ -1,3 +1,4 @@
 leap-views-menu ul {
   @include side-nav();
+  .active { background: $info-color } 
 }

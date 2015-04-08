@@ -54,7 +54,6 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
         $rootScope.$broadcast("setTopic")
         $rootScope.hideTopicBar = false
         console.log "Topic set to #{topic.type}: #{topic.name} (#{topic.mis_id})"
-        console.log result
         topic
   get: -> topic
   getId: -> topic.mis_id
@@ -69,12 +68,10 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   restrict: "E"
   templateUrl: "/assets/views_menu.html"
   link: (scope) ->
-    scope.refresh = ->
+    $rootScope.$on 'setTopic', ->
       $http.get('/views.json').success (data) ->
         scope.views = data
         scope.baseUrl = "#/#{Topic.getType()}/#{Topic.getId()}/"
-    $rootScope.$on 'setTopic', -> scope.refresh
-    scope.refresh()
 
 .directive 'leapUserBar', ($rootScope) ->
   restrict: "E"
@@ -98,11 +95,9 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   restrict: "E"
   templateUrl: "/assets/topic.html"
   link: (scope) ->
-    scope.refresh = ->
+    $rootScope.$on 'setTopic', ->
       scope.topicType = Topic.getType()
       scope.misId = Topic.getId()
-    $rootScope.$on 'setTopic', -> scope.refresh()
-    scope.refresh()
 
 .directive 'leapCourse', ($http,$rootScope,Topic) ->
   restrict: "E"
@@ -115,6 +110,9 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     scope.$watch 'misId', ->
       $http.get("/courses/#{scope.misId}.json").success (data) ->
         scope.course = data
+    scope.current = ->
+      return false unless scope.course
+      Topic.getType() is "course" and Topic.getId() is scope.course.mis_id
 
 .directive 'leapPerson', ($http,$rootScope,Topic) ->
   restrict: "EA"

@@ -5,6 +5,9 @@ leap-user-bar {
   }
   ul.course-list {
     @include side-nav();
+    a.active {
+      background: $info-color !important;
+    }
   }
   h2 { font-size: $h4-font-size}
 }
