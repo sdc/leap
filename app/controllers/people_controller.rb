@@ -87,7 +87,7 @@ class PeopleController < ApplicationController
   end
 
   def index
-    redirect_to "/assets/index.html#timeline/all/#{Person.user.mis_id}"
+    redirect_to "/assets/index.html#/person/#{Person.user.mis_id}"
   end
 
   def next_lesson_block

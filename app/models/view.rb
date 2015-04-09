@@ -15,6 +15,8 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class View < ActiveRecord::Base
+  attr_accessible :transitions, :events, :affiliations, :name, :label
+
   serialize :transitions
   serialize :events
   serialize :affiliations

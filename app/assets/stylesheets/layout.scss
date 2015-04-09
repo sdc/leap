@@ -1,4 +1,5 @@
-$sidebar-width: 25%;
+$sidebar-width-large: 20%;
+$sidebar-width: 40%;
 
 .number { font-family: $font-family-monospace }
 
@@ -23,6 +24,7 @@ $sidebar-width: 25%;
 .leap-sidebar {
   @extend .scrolling-pane;
   width: $sidebar-width;
+  @media #{$medium-up} { width: $sidebar-width-large }
   top: $topbar-height;
 }
 
@@ -37,12 +39,10 @@ leap-user-bar {
   @extend .leap-sidebar;
   z-index: 10;
   background: #f0f0f0;
-  left: $sidebar-width * -1; 
-  @media #{$medium-up} { 
-    left:0;
-    &.off-canvas {
-      left: $sidebar-width * -1; 
-    }
+  left:0;
+  &.off-canvas {
+    left: $sidebar-width * -1; 
+    @media #{$medium-up} { left: $sidebar-width-large * -1 }
   }
 }
 
@@ -50,12 +50,11 @@ leap-topic-bar {
   @extend .leap-sidebar;
   background: #e0e0e0;
   z-index: 0;
-  left: 0;
-  @media #{$medium-up} { 
-    left: $sidebar-width;
-    &.off-canvas {
-      left: $sidebar-width * -1; 
-    }
+  left: $sidebar-width;
+  @media #{$medium-up} { left: $sidebar-width-large }
+  &.off-canvas {
+    left: $sidebar-width * -1; 
+    @media #{$medium-up} { left: $sidebar-width-large * -1 }
   }
 }
 
@@ -63,25 +62,35 @@ leap-user-bar.off-canvas + leap-topic-bar {
   left: 0;
   &.off-canvas {
     left: $sidebar-width * -1; 
+    @media #{$medium-up} { left: $sidebar-width-large * -1 }
   }
 }
 
 #main-content {
   @extend .scrolling-pane;
   background: green;
-  right:0;
+  right: $sidebar-width * -2;
+  width: 100%;
   background: white;
-  width: 100% - $sidebar-width;
+  //width: 100% - (2 * $sidebar-width);
   @media #{$medium-up} { 
-    width: 100% - (2 * $sidebar-width);
+    width: 100% - ($sidebar-width-large * 2);
+    right: 0;
   }
 }
 
 leap-user-bar.off-canvas ~ #main-content,
 leap-topic-bar.off-canvas + #main-content {
-  width: 100% - $sidebar-width;
+  right: $sidebar-width * -1;
+  width: 100%;
+  //width: 100% - $sidebar-width;
+  @media #{$medium-up} { 
+    width: 100% - $sidebar-width-large;
+    right: 0;
+  }
 }
 
 leap-user-bar.off-canvas + leap-topic-bar.off-canvas + #main-content {
-  width: 100%
+  width: 100%;
+  right:0;
 }

@@ -1,8 +1,3 @@
-.no-events-alert ng-if="events.length == 0"
-  | Nothing to show!
-ul#leap-tiles
-  li.leap-tile ng-repeat="event in events track by event.id"
-    .background-icon
-      i ng-class="['fa', event.faIcon]"
-    .foreground
-      h1 {{ event.tileTitle }}
+#tiles
+  .no-events ng-if="events.length == 0" Nothing to show!
+  leap-tile ng-repeat="event in events track by event.id" leap-event-id="{{ event.id }}"

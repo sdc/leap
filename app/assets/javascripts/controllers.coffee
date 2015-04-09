@@ -8,13 +8,17 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     .when '/:topic_type/:topic_id/timeline/:view_name',
       controller: "timelineController"
       templateUrl: "/assets/timeline.html"
+    .when '/:topic_type/:topic_id/tiles/:view_name',
+      controller: "timelineController"
+      templateUrl: "/assets/tiles.html"
     .when '/search',
       controller: 'searchController',
       templateUrl: '/assets/search.html'
 ])
 
-.run ($http,$rootScope,Topic) ->
+.run ($http,$rootScope,Topic,$window) ->
   Topic.set().then (data) -> $rootScope.user = data
+  $rootScope.hideUserBar = $rootScope.hideTopicBar = $window.innerWidth < 640
 
 .controller 'timelineController', ($scope,$http,$routeParams,$rootScope,Topic) ->
   $scope.getEvents = ->
@@ -129,6 +133,15 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 .directive 'leapTimelineEvent', ($http,Topic) ->
   restrict: "E"
   templateUrl: '/assets/timeline_event.html'
+  scope:
+    leapEventId: '@'
+  link: (scope,element,attrs) ->
+    $http.get("#{Topic.urlBase()}/events/#{scope.leapEventId}.json").success (data) ->
+      scope.event = data
+
+.directive 'leapTile', ($http,Topic) ->
+  restrict: "E"
+  templateUrl: '/assets/tile.html'
   scope:
     leapEventId: '@'
   link: (scope,element,attrs) ->
