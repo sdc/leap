@@ -46,13 +46,14 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       $scope.working = false
   $scope.doSearch()
 
-.factory 'Topic', ($http,$rootScope) ->
+.factory 'Topic', ($http,$rootScope,$document) ->
   topic = false
   set:
     (mis_id = "user", type = "person") ->
       $http.get("/#{if type == 'person' then 'people' else 'courses'}/#{mis_id}.json").then (result) ->
         topic = result.data
         topic.type = type
+        $document.foundation()
         $rootScope.$broadcast("setTopic")
         console.log "Topic set to #{topic.type}: #{topic.name} (#{topic.mis_id})"
         topic
