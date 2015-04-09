@@ -77,7 +77,7 @@ class PeopleController < ApplicationController
     end
     @people  ||= []
     @courses ||= []
-    render json: @people
+    render json: {people: @people, courses: @courses}
   end
 
   def select

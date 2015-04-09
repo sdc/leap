@@ -42,7 +42,8 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     $scope.working = true
     Topic.reset()
     $http.get("/people/search.json?q=#{$routeParams.q}").success (data) ->
-      $scope.people = data
+      $scope.people = data.people
+      $scope.courses = data.courses
       $scope.working = false
   $scope.doSearch()
 
@@ -120,6 +121,16 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     scope.$watch 'misId', ->
       $http.get("/people/#{scope.misId}.json").success (data) ->
         scope.person = data
+
+.directive 'leapCourseHeader', ($http,Topic) ->
+  restrict: "EA"
+  templateUrl: '/assets/course_header.html'
+  scope:
+    misId: '='
+  link: (scope,element,attrs) ->
+    scope.$watch 'misId', ->
+      $http.get("/courses/#{scope.misId}.json").success (data) ->
+        scope.course = data
 
 .directive 'leapCourse', ($http,$rootScope,Topic) ->
   restrict: "E"

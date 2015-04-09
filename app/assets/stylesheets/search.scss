@@ -7,8 +7,20 @@
 }
 
 #search-results {
-  @media #{$small-up}  { @include block-grid(2) }
-  @media #{$medium-up} { @include block-grid(4) }
-  @media #{$large-up}  { @include block-grid(7) }
-  @media #{$xlarge-up} { @include block-grid(8) }
+  h2 { font-size: $h3-font-size }
+  .people {
+     @media #{$small-up}  {@include grid-column(12)}
+     @media #{$medium-up} {@include grid-column(6)}
+     @media #{$large-up}  {@include grid-column(7)}
+    ul {
+      @media #{$small-up}  { @include block-grid(2) }
+      @media #{$large-up}  { @include block-grid(4) }
+      @media #{$xlarge-up} { @include block-grid(5) }
+    }
+  }
+  .courses {
+    @media #{$small-up}  { @include grid-column(12) }
+    @media #{$medium-up} { @include grid-column(6) }
+    @media #{$large-up}  { @include grid-column(5) }
+  }
 }
