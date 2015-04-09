@@ -18,7 +18,6 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 
 .run ($http,$rootScope,Topic,$window) ->
   Topic.set().then (data) -> $rootScope.user = data
-  $rootScope.hideUserBar = $rootScope.hideTopicBar = $window.innerWidth < 640
 
 .controller 'timelineController', ($scope,$http,$routeParams,$rootScope,Topic) ->
   $scope.getEvents = ->
@@ -26,7 +25,6 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     $http.get("#{Topic.urlBase()}/views/#{$routeParams.view_name || 'all'}").success (data) ->
       $scope.events = $scope.events.concat(data)
   #$scope.$on "updated_topic", -> $scope.updateEvents()
-  $rootScope.hideTopicBar = false
   $scope.events = []
   Topic.set($routeParams.topic_id,$routeParams.topic_type).then -> $scope.getEvents()
   #$scope.update_count = 0
@@ -37,12 +35,12 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 #     $scope.courses = data
 #  $rootScope.$watch "user", (user) -> $scope.getCourses(user.mis_id) if user
 #
-.controller 'searchController', ($scope,$http,$location,$routeParams,$rootScope) ->
+.controller 'searchController', ($scope,$http,$location,$routeParams,Topic) ->
   $scope.working = false
   $scope.search = -> $location.path("/search").search("q",$scope.q)
   $scope.doSearch = ->
     $scope.working = true
-    $rootScope.hideTopicBar = true
+    Topic.reset()
     $http.get("/people/search.json?q=#{$routeParams.q}").success (data) ->
       $scope.people = data
       $scope.working = false
@@ -56,9 +54,11 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
         topic = result.data
         topic.type = type
         $rootScope.$broadcast("setTopic")
-        $rootScope.hideTopicBar = false
         console.log "Topic set to #{topic.type}: #{topic.name} (#{topic.mis_id})"
         topic
+  reset: ->
+    topic = false
+    $rootScope.$broadcast("setTopic")
   get: -> topic
   getId: -> topic.mis_id
   getType: -> topic.type
@@ -72,10 +72,12 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   restrict: "E"
   templateUrl: "/assets/views_menu.html"
   link: (scope) ->
-    $rootScope.$on 'setTopic', ->
+    refresh = ->
       $http.get('/views.json').success (data) ->
         scope.views = data
         scope.baseUrl = "#/#{Topic.getType()}/#{Topic.getId()}/"
+    $rootScope.$on 'setTopic', -> refresh()
+    refresh()
 
 .directive 'leapUserBar', ($rootScope) ->
   restrict: "E"
@@ -83,17 +85,22 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   link: (scope) ->
     scope.user = $rootScope.user
     
-.directive 'leapTopicBar', ($rootScope) ->
+.directive 'leapTopicBar', (Topic) ->
   restrict: "E"
   templateUrl: '/assets/topic_bar.html'
-  link: (scope) ->
+
+.directive 'leapTopicHeader', ($rootScope,Topic) ->
+  restrict: "EA"
+  templateUrl: '/assets/topic_header.html'
+  link: (scope, element) ->
+    $rootScope.$on 'setTopic', ->
+      scope.topicType = Topic.getType()
+      scope.topic = Topic.get()
+      if scope.topic then element.show() else element.hide()
 
 .directive 'leapTopBar', ($rootScope) ->
   restrict: "E"
   templateUrl: '/assets/top_bar.html'
-  link: (scope) ->
-    scope.toggleUserBar = ->  $rootScope.hideUserBar =  !$rootScope.hideUserBar
-    scope.toggleTopicBar = -> $rootScope.hideTopicBar = !$rootScope.hideTopicBar
 
 .directive 'leapTopic', (Topic,$rootScope) ->
   restrict: "E"
@@ -102,6 +109,16 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     $rootScope.$on 'setTopic', ->
       scope.topicType = Topic.getType()
       scope.misId = Topic.getId()
+
+.directive 'leapPersonHeader', ($http,Topic) ->
+  restrict: "EA"
+  templateUrl: '/assets/person_header.html'
+  scope:
+    misId: '='
+  link: (scope,element,attrs) ->
+    scope.$watch 'misId', ->
+      $http.get("/people/#{scope.misId}.json").success (data) ->
+        scope.person = data
 
 .directive 'leapCourse', ($http,$rootScope,Topic) ->
   restrict: "E"

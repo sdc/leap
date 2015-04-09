@@ -3,18 +3,9 @@ nav.top-bar data-topbar=true
     a href="/" leap
   section.top-bar-section
     ul.left
-      li.sidebar-toggle-button ng-class="{active: !$root.hideUserBar}"
-        a ng-click="toggleUserBar()"
-          i.fa.fa-user>
-          .on  Show
-          .off Hide
-      li.divider
-      li.sidebar-toggle-button ng-class="{active: !$root.hideTopicBar}"
-        a ng-click="toggleTopicBar()"
-          i.fa.fa-bars>
-          .on  Show
-          .off Hide
-      li.divider
+      li.has-form
+        form.search-form ng-controller="searchController"
+          input type="text" placeholder="Find stuff..." ng-model="q" ng-change="search()" ng-model-options=" { debounce: 400 }"
     ul.right
       li 
-        leap-person mis-id="$root.user.mis_id" size="small"
+        leap-person mis-id="$root.user.mis_id"

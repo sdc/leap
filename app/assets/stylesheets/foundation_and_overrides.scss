@@ -1125,7 +1125,7 @@ $microformat-abbr-font-decoration: none;
 // $include-html-nav-classes: $include-html-classes;
 
 // We use this to control padding.
-// $side-nav-padding: rem-calc(4 0);
+$side-nav-padding: rem-calc(0 0);
 
 // We use these to control list styles.
 // $side-nav-list-type: none;
@@ -1425,8 +1425,8 @@ $side-nav-link-padding: rem-calc(1 9);
 // Transitions and breakpoint styles
 // $topbar-transition-speed: 300ms;
 // Using rem-calc for the below breakpoint causes issues with top bar
-$topbar-breakpoint: #{lower-bound($medium-range)}; // Change to 9999px for always mobile layout
-$topbar-media-query: $small-up;
+// $topbar-breakpoint: #{lower-bound($small-range)}; // Change to 9999px for always mobile layout
+// $topbar-media-query: $medium-up;
 
 // Divider Styles
 // $topbar-divider-border-bottom: solid 1px  scale-color($topbar-bg-color, $lightness: 13%);

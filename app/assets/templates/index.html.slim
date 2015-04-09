@@ -9,7 +9,6 @@ html lang="en"
     meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
   body ng-app="leapApp"
     leap-top-bar 
-    leap-user-bar ng-class="{'off-canvas': $root.hideUserBar}"
-    leap-topic-bar ng-class="{'off-canvas': $root.hideTopicBar}"
-    #main-content
-      ng-view
+    /leap-user-bar
+    header leap-topic-header=true
+    #main-content ng-view=true

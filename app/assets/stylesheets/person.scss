@@ -1,19 +1,15 @@
-leap-top-bar leap-person {
-  .name { color: $topbar-link-color }
-  img { height: $topbar-height }
-}
 
-leap-user-bar leap-person,leap-topic-bar leap-person {
-  img { height: $topbar-height * 2}
-  h2  { font-size: $h3-font-size}
-} 
+.top-bar leap-person {
+  .name { color: $topbar-link-color }
+  .flags { display: none }
+  img { 
+    height: $topbar-height;
+    float:right;
+  }
+}
 
 leap-person {
   @extend .clearfix;
-  img { width: 100%;
-        float:right;
-        margin-bottom: 5px;
-       }
   h2 { margin-bottom: 0 }
   img { width: auto }
   a { color: inherit }

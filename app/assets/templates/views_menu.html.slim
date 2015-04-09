@@ -1,4 +1,3 @@
 ul
-  li.heading Views
   li ng-repeat="view in views"
     a ng-href="{{ baseUrl }}{{ view.page_type || 'timeline'}}/{{ view.name }}" {{ view.label }}

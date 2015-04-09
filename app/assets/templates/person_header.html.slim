@@ -1,0 +1,13 @@
+img.topic-pic ng-src="/people/{{ person.mis_id }}.jpg"
+h1.name
+  .forename {{ person.forename }}
+  .surname  {{ person.surname }}
+  small.number {{ person.mis_id }}
+/.flags
+  .label.alert.round.has-tip ng-if="person.note" data-tooltip=true title="This person has a note on the MIS"
+    i.fa.fa.fa-flag
+  .label.warning.round.has-tip title="Do not contact this person!" ng-if="!person.contact_allowed" data-tooltip=true
+    i.fa.fa-exclamation-triangle
+  .label.success.round.has-tip title="Staff Member" ng-if="person.staff" data-tooltip=true
+    i.fa.fa-mortar-board
+leap-views-menu
