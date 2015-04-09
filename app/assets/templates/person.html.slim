@@ -1,5 +1,5 @@
 a ng-href="#/person/{{ person.mis_id }}/timeline/all"
-  img ng-src="/people/{{ person.mis_id }}.jpg"
+  img ng-src="{{ person.photo_uri }}"
   h2.name
     .forename {{ person.forename }}
     .surname  {{ person.surname }}

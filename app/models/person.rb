@@ -15,6 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Person < ActiveRecord::Base
+  require 'identicon'
   include MisPerson
 
   attr_accessible :forename, :surname, :middle_names, :address, :town, :postcode, :photo, 
@@ -145,10 +146,10 @@ class Person < ActiveRecord::Base
   def photo_uri
     if Settings.lorem_pictures.blank?
       if photo
-        # "data:image/jpeg;base64," + ActiveSupport::Base64.encode64(photo)
+        #"data:image/jpeg;base64," + ActiveSupport::Base64.encode64(photo)
         "/people/#{mis_id}.jpg"
       else
-        "noone.png"
+        Identicon.data_url_for mis_id
       end
     else
       "http://lorempixel.com/130/130/#{Settings.lorem_pictures}/#{id.to_s.last}"
@@ -185,7 +186,7 @@ class Person < ActiveRecord::Base
   def course?; false end
 
   def as_json(options = {})
-    json_methods  = %w(l3va gcse_english gcse_maths name staff)
+    json_methods  = %w(l3va gcse_english gcse_maths name staff photo_uri)
     json_methods += %w(address_text age) if current_user? || !staff?
     json_only     = %w(forename surname contact_allowed mis_id)
     json_only    += %w(note date_of_birth mobile_number home_phone 

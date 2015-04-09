@@ -22,6 +22,7 @@ gem 'angularjs-rails', '~> 1.3.10'
 gem 'activeresource', require: 'active_resource'
 gem 'whenever', :require => false
 gem 'memcache-client'
+gem 'identicon'
 gem 'debugger'
 
 platforms :ruby do
