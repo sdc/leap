@@ -4,7 +4,7 @@ leap-topic-header header {
   background: $topic-header-bg;
   &:not(.fixed) { 
     @include grid-row;
-    .personal-details {
+    .topic-details {
       @include grid-row;
       .topic-pic      { @include grid-column(2) }
       .name           { @include grid-column(4) }

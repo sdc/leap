@@ -143,9 +143,6 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     scope.$watch 'misId', ->
       $http.get("/courses/#{scope.misId}.json").success (data) ->
         scope.course = data
-    scope.current = ->
-      return false unless scope.course
-      Topic.getType() is "course" and Topic.getId() is scope.course.mis_id
 
 .directive 'leapPerson', ($http,$rootScope,Topic) ->
   restrict: "EA"
