@@ -7,7 +7,7 @@ leap-topic-header header {
     .personal-details {
       @include grid-row;
       .topic-pic      { @include grid-column(2) }
-      .name           { @include grid-column(6) }
+      .name           { @include grid-column(4) }
     }
   }
   &.fixed {
