@@ -1,17 +1,19 @@
-
 .top-bar leap-person {
   .name { color: $topbar-link-color }
-  .flags { display: none }
   a { padding: 0 !important}
   img { 
-    padding-left: 7px;
-    height: $topbar-height;
     float:right;
+    padding-left: 7px;
   }
 }
 
+leap-topic-header .fixed, .top-bar leap-person {
+  .flags { display: none }
+  img { height: $topbar-height }
+  h1 { font-size: $h2-font-size }
+}
+
 leap-person {
-  @extend .clearfix;
   h2 { margin-bottom: 0 }
   img { width: auto }
   a { color: inherit }

@@ -1,4 +1,7 @@
-leap-views-menu ul {
-  @include side-nav();
-  text-align:right;
+header leap-views-menu {
+  @include grid-row;
+  ul { 
+    @include grid-column(3);
+    @include side-nav;
+  }
 }
