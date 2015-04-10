@@ -2,7 +2,9 @@
 .top-bar leap-person {
   .name { color: $topbar-link-color }
   .flags { display: none }
+  a { padding: 0 !important}
   img { 
+    padding-left: 7px;
     height: $topbar-height;
     float:right;
   }
