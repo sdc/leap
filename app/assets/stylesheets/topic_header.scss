@@ -3,6 +3,6 @@ header[leap-topic-header] {
   background: #ddd;
   padding: 1rem 0;
   .topic-pic      { @include grid-column(2) }
-  .name           { @include grid-column(8) }
-  leap-views-menu { @include grid-column(2) }
+  .name           { @include grid-column(6) }
+  leap-views-menu { @include grid-column(4) }
 }
