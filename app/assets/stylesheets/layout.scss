@@ -11,3 +11,7 @@
 #main-content {
   @include grid-row();
 }
+
+.topbar {
+  z-index: 5
+}
