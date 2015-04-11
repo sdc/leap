@@ -16,7 +16,6 @@
 
 class Admin::TestController < ApplicationController
   skip_before_action :set_user, except: [:stats]
-  before_action :admin_page, only: [:stats]
   layout false
 
   def index
@@ -25,8 +24,8 @@ class Admin::TestController < ApplicationController
   def login
     session[:user_id] = params[:login]
     session[:user_affiliation] = params[:affiliation]
-    if person = Person.get(session[:user_id], true)
-      redirect_to person
+    if person = Person.get(session[:user_id])
+      redirect_to root_url
     else
       redirect_to :back, notice: "That person doesn't exist!"
     end

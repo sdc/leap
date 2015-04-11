@@ -1,22 +1,25 @@
-h1 Test mode.
-
-p
-  The users below can be used in testing mode. 
-  Click on the link for staff, student or parent mode to log in as that user in that role.
-
-p
-  Once you've logged in, you can change your login at any time by clicking on "Testing Mode" on the bottom right corner of the screen...
-
-#login_as
-  div
-    - if Settings.test_logins and !Settings.test_logins.empty?
-      = render :partial => "people/login_as", :collection => Settings.test_logins.split(/,/).map{|p|Person.get(p)}
-    - else
-      = form_tag admin_test_login_url do
-        div
-          label Person Id
-        div= text_field_tag 'login'
-        div
-          label User Affiliation
-        div= select_tag "affiliation", options_for_select(["staff","student","affiliate","applicant"])
-        div= submit_tag "Login"
+doctype html
+html lang="en"
+  head 
+    title Leap test login.
+    = stylesheet_link_tag "application"
+  body
+    .row
+      .small-12.columns
+        br
+        .panel
+          h1 Leap Test Login
+          - if flash[:notice]
+            .alert= flash.notice
+          - if Person.user
+            .alert 
+              You're currently logged in as 
+              = Person.user.name
+          = form_tag admin_test_login_url do
+            div
+              label Username or person code
+            div= text_field_tag 'login', "khughes"
+            div
+              label User Affiliation
+            div= select_tag "affiliation", options_for_select(["staff","student","affiliate","applicant"])
+            div= submit_tag "Login", class: "button radius"
