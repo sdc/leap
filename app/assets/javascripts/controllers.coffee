@@ -173,3 +173,18 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   link: (scope,element,attrs) ->
     $http.get("#{Topic.urlBase()}/events/#{scope.leapEventId}.json").success (data) ->
       scope.event = data
+
+.directive 'autoActive', ($location) ->
+  restrict: 'A',
+  scope: false,
+  link: (scope, element) ->
+    setActive = ->
+      path = $location.path()
+      angular.forEach element.find('li'), (li) ->
+        anchor = li.querySelector('a')
+        if (anchor.href.match('#' + path + '(?=\\?|$)'))
+          angular.element(li).addClass('active')
+        else
+          angular.element(li).removeClass('active')
+    scope.$on '$locationChangeSuccess', setActive
+    setActive()

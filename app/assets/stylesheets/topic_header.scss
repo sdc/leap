@@ -12,6 +12,11 @@ leap-topic-header header {
   }
   &.fixed {
     top: $topbar-height;
+    .topic-details { 
+      @include grid-column(5); 
+      padding: 0 5px 0 0;
+    }
+    .views-menu  { @include grid-column(7) }
     leap-views-menu {
       ul { padding: 0 }
       li {

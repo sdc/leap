@@ -3,5 +3,6 @@ header leap-views-menu {
   ul { 
     @include grid-column(3);
     @include side-nav;
+    li.active { background: $snow }
   }
 }
