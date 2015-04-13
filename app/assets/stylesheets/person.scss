@@ -1,28 +1,23 @@
-.top-bar leap-person {
-  .name { color: $topbar-link-color }
-  a { padding: 0 !important}
-  img { 
-    float:right;
-    padding-left: 7px;
-  }
-}
-
-leap-topic-header .fixed, .top-bar leap-person {
-  .flags { display: none }
-  img { height: $topbar-height }
-  h1 { font-size: $h2-font-size }
-}
-
 leap-person {
-  h2 { margin-bottom: 0 }
   img { width: auto }
   a { color: inherit }
-  .name { 
+  h1 { 
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
   }
-  .name,.forename,.surname {
-    display: inline;
+  h1,.forename,.surname { display: inline }
+}
+
+.top-bar leap-person {
+  img { 
+    float:right;
+    padding-left: 7px;
+    height: $topbar-height 
   }
+  h1 { 
+    font-size: $h3-font-size;
+    color: $topbar-link-color
+  }
+  .flags { display: none }
 }

@@ -1,8 +1,0 @@
-header leap-views-menu {
-  @include grid-row;
-  ul { 
-    @include grid-column(3);
-    @include side-nav;
-    li.active { background: $snow }
-  }
-}

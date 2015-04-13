@@ -2,28 +2,72 @@ $topic-header-bg: #abc;
 
 leap-topic-header header {
   background: $topic-header-bg;
-  &:not(.fixed) { 
-    @include grid-row;
-    .topic-details {
-      @include grid-row;
-      .topic-pic      { @include grid-column(2) }
-      .name           { @include grid-column(4) }
+
+  leap-person { 
+    @media #{$small-up}  { @include grid-column(12) }
+    @media #{$medium-up} { @include grid-column(6) }
+  }
+  leap-course { 
+    @media #{$small-up}  { @include grid-column(12) }
+    @media #{$medium-up} { @include grid-column(6) }
+  }
+
+  .personal-details {
+    @media #{$small-up}  { display: none } 
+    @media #{$medium-up} { display: block; @include grid-column(6) }
+  }
+
+  .views-menu {
+    @include grid-column(12);
+    views-menu { @include grid-row }
+    ul {
+      @include grid-column(3);
+      @include side-nav;
+      li.active { background: $snow }
     }
   }
+
+  &:not(.fixed) { 
+    @include grid-row;
+    border: 1px solid scale-color($topic-header-bg, $lightness: $panel-function-factor);
+    border-top: none;
+    leap-person { 
+      img { 
+        @media #{$small-up}  { @include grid-column(4) }
+        @media #{$medium-up} { @include grid-column(6) }
+        @media #{$large-up}  { @include grid-column(4) }
+      }
+      h1 { 
+        @media #{$small-up}  { @include grid-column($columns: 8, $collapse: true) }
+        @media #{$medium-up} { @include grid-column($columns: 6, $collapse: true) }
+        @media #{$large-up}  { @include grid-column($columns: 8, $collapse: true) }
+      }
+    }
+  }
+
   &.fixed {
     top: $topbar-height;
-    .topic-details { 
-      @include grid-column(5); 
-      padding: 0 5px 0 0;
+    .personal-details { display: none }
+
+    leap-person,leap-course {
+      h1{ font-size: $h3-font-size }
+      img { height: $topbar-height }
+      .flags { display: none }
     }
-    .views-menu  { @include grid-column(7) }
+    leap-person { padding-left: 0 }
+
+    .views-menu  { 
+      @media #{$small-up} { @include grid-column(12) }
+      @media #{$large-up} { @include grid-column(6) }
+    }
+
     leap-views-menu {
+      &:hover li { display: block }
       ul { padding: 0 }
       li {
         display: none;
         &.heading { display: block }
       }
-      &:hover li { display: block }
     }
   }
 }
