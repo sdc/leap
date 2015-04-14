@@ -25,7 +25,7 @@ class Qualification < Eventable
 
   validates :title, presence: true
 
-  attr_accessible :awarding_body, :grade, :predicted, :qual_type, :seen, :title, :created_at
+  attr_accessible :awarding_body, :grade, :predicted, :qual_type, :seen, :title, :created_at, :person_id
 
   belongs_to :person
 

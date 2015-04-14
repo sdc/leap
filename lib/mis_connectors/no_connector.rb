@@ -48,7 +48,7 @@ module MisCourse
   end
 
   module ClassMethods
-    def import(mis_id)
+    def import(mis_id, _refresh)
       Course.find_by_mis_id(mis_id) || false
     end
   end

@@ -16,6 +16,7 @@
 
 class Attendance < Eventable
   default_scope { order('week_beginning') }
+  attr_accessible :week_beginning, :att_year, :att_week, :course_type
 
   after_create do |attendance|
     attendance.events.create!(event_date: week_beginning.end_of_week, transition: :complete) if attendance.course_type == "overall"

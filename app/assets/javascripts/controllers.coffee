@@ -16,8 +16,9 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       templateUrl: '/assets/search.html'
 ])
 
-.run ($http,$rootScope,Topic,$window) ->
+.run ($rootScope,Topic,$interval) ->
   Topic.set().then (data) -> $rootScope.user = data
+  $interval Topic.update, 60000
 
 .controller 'timelineController', ($scope,$http,$routeParams,$rootScope,Topic) ->
   $scope.getEvents = ->
@@ -26,7 +27,9 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
       $scope.events = $scope.events.concat(data)
   #$scope.$on "updated_topic", -> $scope.updateEvents()
   $scope.events = []
-  Topic.set($routeParams.topic_id,$routeParams.topic_type).then -> $scope.getEvents()
+  Topic.set($routeParams.topic_id,$routeParams.topic_type).then ->
+    $scope.getEvents()
+    Topic.update()
   #$scope.update_count = 0
 
 #.controller 'moodleCoursesController', ($scope,$http,$rootScope) ->
@@ -51,23 +54,30 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 
 .factory 'Topic', ($http,$rootScope,$document) ->
   topic = false
+  topicType  = false
   set:
     (mis_id = "user", type = "person") ->
       $http.get("/#{if type == 'person' then 'people' else 'courses'}/#{mis_id}.json").then (result) ->
         topic = result.data
-        topic.type = type
+        topicType = type
         $document.foundation()
         $rootScope.$broadcast("setTopic")
-        console.log "Topic set to #{topic.type}: #{topic.name} (#{topic.mis_id})"
+        console.log "Topic set to #{topicType}: #{topic.name} (#{topic.mis_id})"
         topic
   reset: ->
     topic = false
     $rootScope.$broadcast("setTopic")
   get: -> topic
   getId: -> topic.mis_id
-  getType: -> topic.type
+  getType: -> topicType
+  update: ->
+    if topic
+      $http.get("/#{if topicType == 'person' then 'people' else 'courses'}/#{topic.mis_id}.json?refresh=true").then (result) ->
+        topic = result.data
+        $rootScope.$broadcast("update-topic")
+        console.log "Topic #{topicType}: #{topic.name} updated."
   urlBase: ->
-    (switch topic.type
+    (switch topicType
       when "person" then "/people/"
       when "course" then "/courses/"
     ) + topic.mis_id
@@ -139,9 +149,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   templateUrl: '/assets/course.html'
   scope:
     misId: '='
-    size: '='
   link: (scope,element,attrs) ->
-    scope.size = attrs.size if attrs.size
     scope.$watch 'misId', ->
       $http.get("/courses/#{scope.misId}.json").success (data) ->
         scope.course = data
@@ -151,12 +159,16 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   templateUrl: '/assets/person.html'
   scope:
     misId: '='
-    size: '='
   link: (scope,element,attrs) ->
-    scope.size = attrs.size if attrs.size
     scope.$watch 'misId', ->
-      $http.get("/people/#{scope.misId}.json").success (data) ->
-        scope.person = data
+      if scope.misId == Topic.getId
+        scope.person = Topic.get()
+      else
+        $http.get("/people/#{scope.misId}.json").success (data) ->
+          scope.person = data
+    $rootScope.$on "update-topic", ->
+      scope.person = Topic.get()
+        
 
 .directive 'leapTimelineEvent', ($http,Topic) ->
   restrict: "E"
