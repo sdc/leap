@@ -1,28 +1,28 @@
-angular.module 'leapApp', ['ngRoute','ngSanitize']
+angular.module 'leapApp', ['ngRoute']
 
 .config(['$routeProvider', ($routeProvider) ->
   $routeProvider
     .when '/:topic_type/:topic_id',
-      controller: "timelineController",
+      controller: "TimelineController",
       templateUrl: "/assets/timeline.html"
     .when '/:topic_type/:topic_id/timeline/:view_name',
-      controller: "timelineController"
+      controller: "TimelineController"
       templateUrl: "/assets/timeline.html"
     .when '/:topic_type/:topic_id/tiles/:view_name',
-      controller: "timelineController"
+      controller: "TimelineController"
       templateUrl: "/assets/tiles.html"
     .when '/search',
-      controller: 'searchController',
+      controller: 'SearchController',
       templateUrl: '/assets/search.html'
 ])
 
 .run ($rootScope,Topic,$interval) ->
   Topic.set().then (data) -> $rootScope.user = data
-  $interval Topic.update, 60000
+  #$interval Topic.update, 60000
 
-.controller 'timelineController', ($scope,$http,$routeParams,$rootScope,Topic) ->
+.controller 'TimelineController', ($scope,$http,$routeParams,$rootScope,Topic) ->
   $scope.getEvents = ->
-  #  date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
+    # date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
     $http.get("#{Topic.urlBase()}/views/#{$routeParams.view_name || 'all'}").success (data) ->
       $scope.events = $scope.events.concat(data)
   #$scope.$on "updated_topic", -> $scope.updateEvents()
@@ -30,7 +30,6 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   Topic.set($routeParams.topic_id,$routeParams.topic_type).then ->
     $scope.getEvents()
     Topic.update()
-  #$scope.update_count = 0
 
 #.controller 'moodleCoursesController', ($scope,$http,$rootScope) ->
 #  $scope.getCourses = (mis_id) ->
@@ -38,7 +37,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 #     $scope.courses = data
 #  $rootScope.$watch "user", (user) -> $scope.getCourses(user.mis_id) if user
 #
-.controller 'searchController', ($scope,$http,$location,$routeParams,Topic) ->
+.controller 'SearchController', ($scope,$http,$location,$routeParams,Topic) ->
   $scope.working = false
   $scope.filter = "people"
   $scope.search = -> $location.path("/search").search("q",$scope.q)
@@ -130,6 +129,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
   scope:
     misId: '='
   link: (scope,element,attrs) ->
+    scope.detailsPane='contacts'
     scope.$watch 'misId', ->
       $http.get("/people/#{scope.misId}.json").success (data) ->
         scope.person = data
@@ -161,13 +161,14 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     misId: '='
   link: (scope,element,attrs) ->
     scope.$watch 'misId', ->
+      updateListenerOff() if updateListenerOff
       if scope.misId == Topic.getId
         scope.person = Topic.get()
+        updateListenerOff = $rootScope.$on "update-topic", ->
+          scope.person = Topic.get()
       else
         $http.get("/people/#{scope.misId}.json").success (data) ->
           scope.person = data
-    $rootScope.$on "update-topic", ->
-      scope.person = Topic.get()
         
 
 .directive 'leapTimelineEvent', ($http,Topic) ->

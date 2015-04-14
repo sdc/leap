@@ -1,3 +1,17 @@
 leap-person mis-id="person.mis_id"
-.personal-details: h1 WOOOOOOOOOo
+small.personal-details
+  dl.details-tabs
+    dd ng-class="{active: detailsPane=='contacts'}"
+      a ng-click="detailsPane='contacts'" Contact Details
+    dd ng-class="{active: detailsPane=='admin'}"
+      a ng-click="detailsPane='admin'" Admin Details
+  .contact-details ng-class="{hide: detailsPane!='contacts'}"
+    .address {{ person.address_text }}
+    .phone {{ person.home_phone }}
+    .email {{ person.personal_email }}
+    .born {{ person.date_of_birth }}
+  .admin-details ng-class="{hide: detailsPane!='admin'}"
+    | Bongo
+  #person-json-modal.reveal-modal data-reveal=true 
+    code {{ person }}
 .views-menu: leap-views-menu
