@@ -59,8 +59,8 @@ angular.module 'leapApp', ['ngRoute']
       $http.get("/#{if type == 'person' then 'people' else 'courses'}/#{mis_id}.json").then (result) ->
         topic = result.data
         topicType = type
-        $document.foundation()
         $rootScope.$broadcast("setTopic")
+        $document.foundation()
         console.log "Topic set to #{topicType}: #{topic.name} (#{topic.mis_id})"
         topic
   reset: ->

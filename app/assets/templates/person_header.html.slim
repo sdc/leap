@@ -6,12 +6,14 @@ small.personal-details
     dd ng-class="{active: detailsPane=='admin'}"
       a ng-click="detailsPane='admin'" Admin Details
   .contact-details ng-class="{hide: detailsPane!='contacts'}"
-    .address {{ person.address_text }}
-    .phone {{ person.home_phone }}
-    .email {{ person.personal_email }}
-    .born {{ person.date_of_birth }}
+    .alert-box ng-if="person.staff && person.mis_id != $root.user.mis_id" Personal details are hidden for staff.
+    div {{ person.address_text }}
+    div {{ person.home_phone }}
+    div: a ng-href="mailto:{{ person.personal_email }}" {{ person.personal_email }}
+    div {{ person.date_of_birth }}
+    div ng-if="person.mis_id == $root.user.mis_id" 
+      | Are any of your details correct?
+      a< href=Settings.notify_details_change_url Notify us...
   .admin-details ng-class="{hide: detailsPane!='admin'}"
-    | Bongo
-  #person-json-modal.reveal-modal data-reveal=true 
-    code {{ person }}
+    a.button ng-href="/people/{{ person.mis_id }}.json" target="_BLANK" JSON
 .views-menu: leap-views-menu
