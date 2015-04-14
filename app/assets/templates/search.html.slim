@@ -1,16 +1,21 @@
 .working ng-if="working"
   i.fa.fa-circle-o-notch.fa-spin>
   | Searching...
-.no-results ng-if="!working && people.length == 0 && courses == 0"
-  | No results
-#search-results ng-hide="working || (people.length == 0 && courses.length == 0)"
-  .people
+#search-results ng-hide="working"
+  ul.filter
+    li: button ng-click="filter = 'people'" People
+    li: button ng-click="filter = 'courses'" Courses
+
+  #people-results ng-class="filter"
     h1 People
+    .empty ng-if="people.length==0" No people found
     ul: li ng-repeat="person in people": leap-person mis-id="person.mis_id"
-  .courses
+  #course-results ng-class="filter"
     h1 Courses
-    table: tr ng-repeat="course in courses"
-      td 
-        a ng-href="#/course/{{ course.mis_id }}" {{ course.name }}
-      td {{ course.code }}
-      td {{ course.year }}
+    .empty ng-if="courses.length == 0" No courses found
+    table ng-if="courses.length != 0"
+      tr ng-repeat="course in courses"
+        td 
+          a ng-href="#/course/{{ course.mis_id }}" {{ course.name }}
+        td {{ course.code }}
+        td {{ course.year }}

@@ -37,6 +37,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
 #
 .controller 'searchController', ($scope,$http,$location,$routeParams,Topic) ->
   $scope.working = false
+  $scope.filter = "people"
   $scope.search = -> $location.path("/search").search("q",$scope.q)
   $scope.doSearch = ->
     $scope.working = true
@@ -44,6 +45,7 @@ angular.module 'leapApp', ['ngRoute','ngSanitize']
     $http.get("/people/search.json?q=#{$routeParams.q}").success (data) ->
       $scope.people = data.people
       $scope.courses = data.courses
+      $scope.filter = "courses" if data.people.length == 0
       $scope.working = false
   $scope.doSearch()
 

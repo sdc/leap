@@ -1,26 +1,33 @@
-.no-results {
-  @include alert($bg: $warning-color);
-}
+.empty{ @include alert($bg: $warning-color) }
 
 .working{
   @include alert($bg: $info-color);
 }
 
 #search-results {
-  h2 { font-size: $h3-font-size }
-  .people {
-     @media #{$small-up}  {@include grid-column(12)}
-     @media #{$medium-up} {@include grid-column(6)}
-     @media #{$large-up}  {@include grid-column(7)}
+  @include panel;
+  .filter {
+    @include button-group-container;
+    li { @include button-group-style }
+    button { @include button }
+  }
+    
+  #people-results {
     ul {
-      @media #{$small-up}  { @include block-grid(2) }
-      @media #{$large-up}  { @include block-grid(4) }
-      @media #{$xlarge-up} { @include block-grid(5) }
+      @media #{$small-up}  { @include block-grid(3) }
+      @media #{$medium-up} { @include block-grid(6) }
+      @media #{$large-up}  { @include block-grid(8) }
+    }
+    leap-person {
+      h1 { font-size: $h2-font-size }
+      .flags { display: none }
     }
   }
-  .courses {
-    @media #{$small-up}  { @include grid-column(12) }
-    @media #{$medium-up} { @include grid-column(6) }
-    @media #{$large-up}  { @include grid-column(5) }
+
+  table { width: 100% }
+
+  @media #{$small-up} {
+    #course-results.people  { display: none }
+    #people-results.courses { display: none }
   }
 }

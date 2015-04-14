@@ -1,12 +1,13 @@
 leap-person {
-  img { width: auto }
-  a { color: inherit }
   h1 { 
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
   }
+
   h1,.forename,.surname { display: inline }
+  img { width: auto }
+  a   { color: inherit }
 }
 
 .top-bar leap-person {
@@ -15,9 +16,12 @@ leap-person {
     padding-left: 7px;
     height: $topbar-height 
   }
+
   h1 { 
     font-size: $h3-font-size;
     color: $topbar-link-color
   }
+
+  a { padding:0 !important }
   .flags { display: none }
 }
