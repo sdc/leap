@@ -16,7 +16,7 @@ angular.module 'leapApp', ['ngRoute']
       templateUrl: '/assets/search.html'
 ])
 
-.run ($rootScope,Topic,$interval) ->
+.run ($rootScope,Topic,$interval,$document) ->
   Topic.set().then (data) -> $rootScope.user = data
   $rootScope.$on "topicChanged", ->
     if topic = Topic.get()
@@ -26,6 +26,7 @@ angular.module 'leapApp', ['ngRoute']
       console.log "Topic cleared!"
     Topic.update()
   $rootScope.$on "topicUpdated", -> console.log "Topic #{Topic.getType()}: #{Topic.get().name} updated."
+  $rootScope.$on "$locationChangeSuccess", -> $document.foundation()
 
 .controller 'TimelineController', ($scope,$http,$routeParams,$rootScope,Topic) ->
   $scope.getEvents = ->
@@ -77,7 +78,7 @@ angular.module 'leapApp', ['ngRoute']
   getType: -> topicType
   update: ->
     if topic
-      $http.get("/#{if topicType == 'person' then 'people' else 'courses'}/#{topic.mis_id}.json?refresh=true").then (result) ->
+      $http.get(this.urlBase() + ".json?refresh=true").then (result) ->
         topic = result.data
         $rootScope.$broadcast("topicUpdated")
   urlBase: ->
