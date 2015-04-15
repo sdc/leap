@@ -1,27 +1,40 @@
-/ul
-  li ng-repeat="view in views"
-    a ng-href="{{ baseUrl }}{{ view.page_type || 'timeline'}}/{{ view.name }}" {{ view.label }}
 ul auto-active=true
-  li.heading: a ng-href="{{ baseUrl}}timeline/all" Home
-  li: a href="" Grade Tracks
-  li: a href="" Attendance
-  li: a href="" Cheese Wheels
-  li: a href="" Forklift
+  li.heading: a ng-href="{{ baseUrl }}timeline/all" 
+    i.fa.fa-fw.fa-home>
+    | Home
+  li: a ng-href="{{ baseUrl }}timeline/targets" 
+    i.fa.fa-fw.fa-bullseye>
+    | Targets
+  li: a href="{{ baseUrl }}timeline/contact_logs" 
+    i.fa.fa-fw.fa-comment>
+    | Contact Logs
 ul auto-active=true
-  li.heading: a ng-href="{{ baseUrl }}timeline/courses" Courses
-  li: a href="" Qualifications
-  li: a href="" Positive Intervention
-  li: a href="" Cheese
-  li: a href="" Egg Plant
+  li.heading: a ng-href="{{ baseUrl }}timeline/courses" 
+    i.fa.fa-fw.fa-mortar-board>
+    | Courses
+  li: a ng-href="{{ baseUrl }}timeline/reviews" 
+    i.fa.fa-fw.fa-pencil-square-o>
+    | Reviews
+  li: a href="{{ baseUrl }}timeline/app_profile" 
+    i.fa.fa-fw.fa-user>
+    | My Profile
 ul auto-active=true
-  li.heading: a href="#/" Home
-  li: a href="" A link
-  li: a href="" A link
-  li: a href="" A link
-  li: a href="" A link
+  li.heading: a ng-href="{{ baseUrl }}timeline/all" 
+    i.fa.fa-fw.fa-calendar>
+    | Timetable
+  li: a ng-href="{{ baseUrl }}timeline/reviews" 
+    i.fa.fa-fw.fa-pencil-square-o>
+    | Reviews
+  li: a href="{{ baseUrl }}timeline/app_profile" 
+    i.fa.fa-fw.fa-user>
+    | My Profile
 ul auto-active=true
-  li.heading: a href="#/" Home
-  li: a href="" A link
-  li: a href="" A link
-  li: a href="" A link
-  li: a href="" A link
+  li.heading: a ng-href="{{ baseUrl }}timeline/all" 
+    i.fa.fa-fw.fa-calendar>
+    | Timetable
+  li: a ng-href="{{ baseUrl }}timeline/reviews" 
+    i.fa.fa-fw.fa-pencil-square-o>
+    | Reviews
+  li: a href="{{ baseUrl }}timeline/app_profile" 
+    i.fa.fa-fw.fa-user>
+    | My Profile
