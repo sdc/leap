@@ -18,7 +18,14 @@ angular.module 'leapApp', ['ngRoute']
 
 .run ($rootScope,Topic,$interval) ->
   Topic.set().then (data) -> $rootScope.user = data
-  #$interval Topic.update, 60000
+  $rootScope.$on "topicChanged", ->
+    if topic = Topic.get()
+      console.log "Topic set to #{Topic.getType()}: #{Topic.get().name} (#{Topic.getId()})"
+      $interval Topic.update, 60000
+    else
+      console.log "Topic cleared!"
+    Topic.update()
+  $rootScope.$on "topicUpdated", -> console.log "Topic #{Topic.getType()}: #{Topic.get().name} updated."
 
 .controller 'TimelineController', ($scope,$http,$routeParams,$rootScope,Topic) ->
   $scope.getEvents = ->
@@ -27,9 +34,7 @@ angular.module 'leapApp', ['ngRoute']
       $scope.events = $scope.events.concat(data)
   #$scope.$on "updated_topic", -> $scope.updateEvents()
   $scope.events = []
-  Topic.set($routeParams.topic_id,$routeParams.topic_type).then ->
-    $scope.getEvents()
-    Topic.update()
+  Topic.set($routeParams.topic_id,$routeParams.topic_type).then (topic) -> $scope.getEvents()
 
 #.controller 'moodleCoursesController', ($scope,$http,$rootScope) ->
 #  $scope.getCourses = (mis_id) ->
@@ -51,21 +56,22 @@ angular.module 'leapApp', ['ngRoute']
       $scope.working = false
   $scope.doSearch()
 
-.factory 'Topic', ($http,$rootScope,$document) ->
+.factory 'Topic', ($http,$rootScope,$q) ->
   topic = false
   topicType  = false
-  set:
-    (mis_id = "user", type = "person") ->
+  set: (mis_id = "user", type = "person") ->
+    deferred = $q.defer()
+    unless topic && topic.mis_id == mis_id && topicType == type
       $http.get("/#{if type == 'person' then 'people' else 'courses'}/#{mis_id}.json").then (result) ->
         topic = result.data
         topicType = type
-        $rootScope.$broadcast("setTopic")
-        $document.foundation()
-        console.log "Topic set to #{topicType}: #{topic.name} (#{topic.mis_id})"
-        topic
+        $rootScope.$broadcast("topicChanged")
+        deferred.resolve topic
+    else deferred.resolve topic
+    deferred.promise
   reset: ->
-    topic = false
-    $rootScope.$broadcast("setTopic")
+    topic = topicType = false
+    $rootScope.$broadcast("topicChanged")
   get: -> topic
   getId: -> topic.mis_id
   getType: -> topicType
@@ -73,8 +79,7 @@ angular.module 'leapApp', ['ngRoute']
     if topic
       $http.get("/#{if topicType == 'person' then 'people' else 'courses'}/#{topic.mis_id}.json?refresh=true").then (result) ->
         topic = result.data
-        $rootScope.$broadcast("update-topic")
-        console.log "Topic #{topicType}: #{topic.name} updated."
+        $rootScope.$broadcast("topicUpdated")
   urlBase: ->
     (switch topicType
       when "person" then "/people/"
@@ -89,7 +94,7 @@ angular.module 'leapApp', ['ngRoute']
       $http.get('/views.json').success (data) ->
         scope.views = data
         scope.baseUrl = "#/#{Topic.getType()}/#{Topic.getId()}/"
-    $rootScope.$on 'setTopic', -> refresh()
+    $rootScope.$on 'topicChanged', -> refresh()
     refresh()
 
 .directive 'leapUserBar', ($rootScope) ->
@@ -106,7 +111,7 @@ angular.module 'leapApp', ['ngRoute']
   restrict: "EA"
   templateUrl: '/assets/topic_header.html'
   link: (scope, element) ->
-    $rootScope.$on 'setTopic', ->
+    $rootScope.$on 'topicChanged', ->
       scope.topicType = Topic.getType()
       scope.topic = Topic.get()
       if scope.topic then element.show() else element.hide()
@@ -119,7 +124,7 @@ angular.module 'leapApp', ['ngRoute']
   restrict: "E"
   templateUrl: "/assets/topic.html"
   link: (scope) ->
-    $rootScope.$on 'setTopic', ->
+    $rootScope.$on 'topicChanged', ->
       scope.topicType = Topic.getType()
       scope.misId = Topic.getId()
 
