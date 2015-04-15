@@ -21,12 +21,12 @@ angular.module 'leapApp', ['ngRoute']
   $rootScope.$on "topicChanged", ->
     if topic = Topic.get()
       console.log "Topic set to #{Topic.getType()}: #{Topic.get().name} (#{Topic.getId()})"
+      $document.foundation()
       $interval Topic.update, 60000
     else
       console.log "Topic cleared!"
     Topic.update()
   $rootScope.$on "topicUpdated", -> console.log "Topic #{Topic.getType()}: #{Topic.get().name} updated."
-  $rootScope.$on "$locationChangeSuccess", -> $document.foundation()
 
 .controller 'TimelineController', ($scope,$http,$routeParams,$rootScope,Topic) ->
   $scope.getEvents = ->
@@ -60,6 +60,12 @@ angular.module 'leapApp', ['ngRoute']
 .factory 'Topic', ($http,$rootScope,$q) ->
   topic = false
   topicType  = false
+  urlBase = ->
+    (switch topicType
+      when "person" then "/people/"
+      when "course" then "/courses/"
+    ) + topic.mis_id
+  urlBase: urlBase
   set: (mis_id = "user", type = "person") ->
     deferred = $q.defer()
     if topic && topic.mis_id == mis_id && topicType == type
@@ -79,14 +85,9 @@ angular.module 'leapApp', ['ngRoute']
   getType: -> topicType
   update: ->
     return unless topic
-    $http.get(this.urlBase() + ".json?refresh=true").then (result) ->
+    $http.get(urlBase() + ".json?refresh=true").then (result) ->
       topic = result.data
       $rootScope.$broadcast("topicUpdated")
-  urlBase: ->
-    (switch topicType
-      when "person" then "/people/"
-      when "course" then "/courses/"
-    ) + topic.mis_id
 
 .directive 'leapViewsMenu', ($http,Topic,$rootScope) ->
   restrict: "E"
