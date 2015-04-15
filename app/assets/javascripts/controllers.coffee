@@ -77,10 +77,10 @@ angular.module 'leapApp', ['ngRoute']
   getId: -> topic.mis_id
   getType: -> topicType
   update: ->
-    if topic
-      $http.get(this.urlBase() + ".json?refresh=true").then (result) ->
-        topic = result.data
-        $rootScope.$broadcast("topicUpdated")
+    return unless topic
+    $http.get(this.urlBase() + ".json?refresh=true").then (result) ->
+      topic = result.data
+      $rootScope.$broadcast("topicUpdated")
   urlBase: ->
     (switch topicType
       when "person" then "/people/"
