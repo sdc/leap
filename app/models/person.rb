@@ -129,11 +129,12 @@ class Person < ActiveRecord::Base
     current_user? ? (Person.affiliation == "staff") : self[:staff]
   end
 
-  def staff; staff? end
-
   def admin?
     Settings.admin_users.map(&:to_i).include? id
   end
+
+  def staff; staff? end
+  def admin; admin? end
 
   def mis_code
     mis_id
@@ -186,7 +187,7 @@ class Person < ActiveRecord::Base
   def course?; false end
 
   def as_json(options = {})
-    json_methods  = %w(l3va gcse_english gcse_maths name staff photo_uri)
+    json_methods  = %w(l3va gcse_english gcse_maths name staff photo_uri admin)
     json_methods += %w(address_text age) if current_user? || !staff?
     json_only     = %w(forename surname contact_allowed mis_id)
     json_only    += %w(note date_of_birth mobile_number home_phone 
