@@ -62,13 +62,14 @@ angular.module 'leapApp', ['ngRoute']
   topicType  = false
   set: (mis_id = "user", type = "person") ->
     deferred = $q.defer()
-    unless topic && topic.mis_id == mis_id && topicType == type
+    if topic && topic.mis_id == mis_id && topicType == type
+      deferred.resolve topic
+    else
       $http.get("/#{if type == 'person' then 'people' else 'courses'}/#{mis_id}.json").then (result) ->
         topic = result.data
         topicType = type
         $rootScope.$broadcast("topicChanged")
         deferred.resolve topic
-    else deferred.resolve topic
     deferred.promise
   reset: ->
     topic = topicType = false
