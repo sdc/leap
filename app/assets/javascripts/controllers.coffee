@@ -138,6 +138,7 @@ angular.module 'leapApp', ['ngRoute']
     misId: '='
   link: (scope,element,attrs) ->
     scope.detailsPane='contacts'
+    scope.refresh = -> Topic.update()
     scope.$watch 'misId', ->
       $http.get("/people/#{scope.misId}.json").success (data) ->
         scope.person = data
