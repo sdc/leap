@@ -10,10 +10,10 @@ html lang="en"
         .panel
           h1 Leap Test Login
           - if flash[:notice]
-            .alert= flash.notice
+            .alert-box= flash.notice
           - if Person.user
-            .alert 
-              You're currently logged in as 
+            .alert-box 
+              | You're currently logged in as 
               = Person.user.name
           = form_tag admin_test_login_url do
             div

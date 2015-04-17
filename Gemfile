@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
-#gem 'rails', "~> 4.2.0"
-gem 'rails', git: 'https://github.com/rails/rails.git', branch: '4-2-stable'
+gem 'rails', "~> 4.2.0"
+#gem 'rails', git: 'https://github.com/rails/rails.git', branch: '4-2-stable'
 gem 'coffee-rails', "~> 4.1.0"
 gem 'jquery-rails', '~> 4.0.3'
 gem 'jquery-ui-rails', '~> 5.0.0'
