@@ -40,10 +40,6 @@ class PersonCourse < Eventable
     end
   end
 
-  def to_xml(options = {})
-    super({ include: :course }.merge(options))
-  end
-
   def extra_panes(tr)
     panes = ActiveSupport::OrderedHash.new
     if tr == :create

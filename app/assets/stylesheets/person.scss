@@ -25,3 +25,7 @@ leap-person {
   a { padding:0 !important }
   .flags { display: none }
 }
+
+leap-timeline-event leap-person {
+  .flags,.number { display: none }
+}

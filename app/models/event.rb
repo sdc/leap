@@ -47,11 +47,11 @@ class Event < ActiveRecord::Base
   TRANSITIONS = [:create, :to_start, :start, :overdue, :complete, :drop, :hidden]
 
   symbolize :transition, in: TRANSITIONS, methods: true, scopes: true, allow_nil: true
-
-  scope :unique_eventable, -> { group("eventable_id,eventable_type") }
   scope :creation, -> { where(transition: :create) }
-  scope :this_year, -> { where("event_date > ?", year_start) }
   default_scope { order("event_date DESC") }
+
+  #scope :unique_eventable, -> { group("eventable_id,eventable_type") }
+  #scope :this_year, -> { where("event_date > ?", year_start) }
 
   before_validation { |event| update_attribute("person_id", event.eventable.person_id) unless person_id }
   before_create do |event|
@@ -59,26 +59,27 @@ class Event < ActiveRecord::Base
     event.created_by_id = Person.user ? Person.user.id : nil unless event.created_by_id
   end
 
-  delegate :body,  to: :eventable
+  #delegate :body,  to: :eventable
   delegate :past?, :future?, to: :event_date
 
-  attr_accessor :first_in_past
+  #attr_accessor :first_in_past
 
-  def self.year_start
-    @date = Date.today
-    (d, m) = Settings.year_boundary_date.split("/").map(&:to_i)
-    ab = @date.change(day: d, month: m)
-    if ab < @date
-      @date = ab
-      @end_date = ab
-    else
-      @end_date = ab
-      @date = ab - 1.year
-    end
-  end
+  #def self.year_start
+  #  @date = Date.today
+  #  (d, m) = Settings.year_boundary_date.split("/").map(&:to_i)
+  #  ab = @date.change(day: d, month: m)
+  #  if ab < @date
+  #    @date = ab
+  #    @end_date = ab
+  #  else
+  #    @end_date = ab
+  #    @date = ab - 1.year
+  #  end
+  #end
 
-  [:title, :subtitle, :icon_url, :body, :extra_panes, :status, :staff_only?,
-   :timetable_length, :tile_bg, :tile_icon, :tile_title, :is_deleted?].each do |method|
+  #[:title, :subtitle, :icon_url, :body, :extra_panes, :status, :staff_only?,
+  # :timetable_length, :tile_bg, :tile_icon, :tile_title, :is_deleted?].each do |method|
+  %w(title body is_deleted?).map(&:to_sym).each do |method|
     define_method method do
       if eventable.respond_to?(method)
         m = eventable.method(method)
@@ -92,74 +93,64 @@ class Event < ActiveRecord::Base
   end
 
   def as_timeline_event
-    attrs = if eventable.respond_to?(:as_timeline_event)
-      if eventable.method(:as_timeline_event).arity == 1
-        eventable.as_timeline_event(self)
-      else
-        eventable.as_timeline_event
-      end
-    end
-    { date: event_date,
-      id: id,
-      faIcon: "fa-circle-o"
-    }.merge(attrs)
-  end
-
-  def first_in_past?; first_in_past; end
-
-  def to_xml(options = {}, &_block)
-    super(options.reverse_merge(include: :eventable))
-  end
-
-  def is_deletable?
-    return true if Person.user.staff? && eventable_type == "Qualification"
-    Person.user.admin? || (Time.now - Settings.delete_delay.to_i < eventable.created_at && Person.user == eventable.created_by)
-  end
-
-  def created_by_text(options = {})
-    options.reverse_merge!(event: true, eventable: true)
-    ret = (created_by && options[:event]) ? "Event created by #{created_by.name}<br />" : ""
-    ret += eventable.created_by_text if options[:eventable]
-  end
-
-  def timetable_start
-    event_date
-  end
-
-  def timetable_margin
-    ((timetable_start - timetable_start.change(hour: 8, minute: 0, sec: 0, usec: 0)) / 50).floor
-  end
-
-  def timetable_height
-    (timetable_length / 56).floor
-  end
-
-  def timetable_end
-    event_date + timetable_length
-  end
-
-  def to_tile
-    attrs = {
-      title: tile_title || title,
-      bg: tile_bg,
-      icon: tile_icon,
-      is_deletable: is_deletable?,
-      subtitle: subtitle,
-      body: body,
-      person_id: person_id,
-      object: self
+    {
+      personId:   person.mis_id,
+      title:      title || eventable.humanize,
+      body:       body,
+      eventDate:  event_date,
+      #eventable:  eventable.as_timeline_event
     }
-    if eventable.respond_to? :tile_attrs
-      if eventable.method(:tile_attrs).arity == 1
-        attrs.merge!(eventable.tile_attrs(transition))
-      else
-        attrs.merge!(eventable.tile_attrs)
-      end
-    end
-    Tile.new attrs
+
   end
 
-  def cl_status
-    "info"
-  end
+  #def first_in_past?; first_in_past; end
+
+  #def is_deletable?
+  #  return true if Person.user.staff? && eventable_type == "Qualification"
+  #  Person.user.admin? || (Time.now - Settings.delete_delay.to_i < eventable.created_at && Person.user == eventable.created_by)
+  #`end
+
+  #def created_by_text(options = {})
+  #  options.reverse_merge!(event: true, eventable: true)
+  #  ret = (created_by && options[:event]) ? "Event created by #{created_by.name}<br />" : ""
+  #  ret += eventable.created_by_text if options[:eventable]
+ # end
+#
+  #def timetable_start
+  #  event_date
+  #end
+
+  #def timetable_margin
+  #  ((timetable_start - timetable_start.change(hour: 8, minute: 0, sec: 0, usec: 0)) / 50).floor
+  #end
+
+  #def timetable_height
+  #  (timetable_length / 56).floor
+  #end
+
+  #def timetable_end
+  #  event_date + timetable_length
+  #end
+
+  #def to_tile
+  #  attrs = {
+  #    title: tile_title || title,
+  #    bg: tile_bg,
+  #    icon: tile_icon,
+  #    is_deletable: is_deletable?,
+  #    subtitle: subtitle,
+  #    body: body,
+  #    person_id: person_id,
+  #    object: self
+  #  }
+  #  if eventable.respond_to? :tile_attrs
+  #    if eventable.method(:tile_attrs).arity == 1
+  #      attrs.merge!(eventable.tile_attrs(transition))
+  #    else
+  #      attrs.merge!(eventable.tile_attrs)
+  #    end
+  #  end
+  #  Tile.new attrs
+  #end
+#
 end

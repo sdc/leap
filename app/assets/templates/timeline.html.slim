@@ -1,6 +1,6 @@
 #timeline
   header
   .no-events ng-if="events.length == 0" Nothing to show!
-  leap-timeline-event ng-repeat="event in events track by event.id" leap-event-id="{{ event.id }}"
+  leap-timeline-event ng-repeat="event in events track by event.id" leap-event-id="event.id"
   button ng-click="getEvents()" Load more events
 div style="height: 1000px"

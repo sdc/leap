@@ -3,10 +3,12 @@
 }
 
 #timeline {
-  article {
+  leap-timeline-event {
     @include grid-row;
-    time {    @include grid-column(1)  }
-    h1.icon { @include grid-column(1)  }
-    .body   { @include grid-column(10) }
+    time               { @include grid-column(1)  }
+    leap-person        { @include grid-column(2)  }
+    h1.icon            { @include grid-column(1)  }
+    .body              { @include grid-column(10) }
+    leap-person +.body { @include grid-column(8)  }
   }
 }
