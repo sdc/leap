@@ -20,12 +20,11 @@ angular.module 'leapApp', ['ngRoute']
   Topic.set().then (data) -> $rootScope.user = data
   $rootScope.$on "topicChanged", ->
     if topic = Topic.get()
-      console.log "Topic set to #{topic.topicType}: #{topic.name} (#{topic.mis_id})"
+      console.log "Leap: I set the topic to #{topic.topicType}: #{topic.name} (#{topic.mis_id})"
       $document.foundation()
       #$interval Topic.update, 5000
     else
-      console.log "Topic cleared!"
-    #Topic.update()
+      console.log "Leap: I cleared the topic!"
   $rootScope.$on "topicUpdated", -> console.log "Topic #{Topic.get().topicType}: #{Topic.get().name} updated."
 
 .controller 'TimelineController', ($scope,$http,$routeParams,$rootScope,Topic) ->
@@ -33,7 +32,6 @@ angular.module 'leapApp', ['ngRoute']
     # date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
     $http.get("#{Topic.urlBase()}/views/#{$routeParams.view_name || 'all'}").success (data) ->
       $scope.events = $scope.events.concat(data)
-      #Topic.update()
   #$scope.$on "updated_topic", -> $scope.updateEvents()
   $scope.events = []
   Topic.set($routeParams.topic_id,$routeParams.topic_type).then (topic) -> $scope.getEvents()
@@ -49,8 +47,9 @@ angular.module 'leapApp', ['ngRoute']
   $scope.filter = "people"
   $scope.search = -> $location.path("/search").search("q",$scope.q)
   $scope.doSearch = ->
-    $scope.working = true
     Topic.reset()
+    return unless $routeParams.q
+    $scope.working = true
     $http.get("/people/search.json?q=#{$routeParams.q}").success (data) ->
       $scope.people = data.people
       $scope.courses = data.courses
@@ -82,6 +81,7 @@ angular.module 'leapApp', ['ngRoute']
   get: -> topic
   update: ->
     return unless topic
+    console.log "TopicFactory: I'm about to update the topic"
     $http.get(urlBase() + ".json?refresh=true").then (result) ->
       topic = result.data
       $rootScope.$broadcast("topicUpdated")
@@ -101,8 +101,13 @@ angular.module 'leapApp', ['ngRoute']
   restrict: "EA"
   templateUrl: '/assets/topic_header.html'
   link: (scope, element) ->
+    $rootScope.$on 'topicUpdated', ->
+      scope.topic = Topic.get()
+      console.log "TopicHeader: I saw the topic (#{scope.topic.name}) update"
+      scope.$broadcast "person_#{scope.topic.id}_updated"
     $rootScope.$on 'topicChanged', ->
       scope.topic = Topic.get()
+      console.log "TopicHeader: I saw the topic change to #{scope.topic.name}"
       if scope.topic then element.show() else element.hide()
 
 .directive 'leapTopBar', ($rootScope) ->
@@ -116,9 +121,11 @@ angular.module 'leapApp', ['ngRoute']
     misId: '='
   link: (scope,element,attrs) ->
     scope.detailsPane='contacts'
+    scope.refresh = -> Topic.update()
     scope.$watch 'misId', ->
       $http.get("/people/#{scope.misId}.json").success (data) ->
         scope.person = data
+        console.log "PersonHeader: I changed to #{scope.person.name}"
 
 .directive 'leapCourseHeader', ($http,Topic) ->
   restrict: "EA"
@@ -141,12 +148,17 @@ angular.module 'leapApp', ['ngRoute']
       $http.get("/courses/#{scope.misId}.json").success (data) ->
         scope.course = data
 
-.directive 'leapPerson', ($http,Topic) ->
+.directive 'leapPerson', ($http) ->
   restrict: "EA"
   templateUrl: '/assets/person.html'
   scope:
     misId: '='
   link: (scope,element,attrs) ->
+    scope.$on "person_#{scope.misId}_updated", ->
+      console.log "Person #{scope.person.name}: I need to update myself"
+      $http.get("/people/#{scope.misId}.json").success (data) ->
+        scope.person = data
+        console.log "Person #{data.name}: I updated myself."
     scope.$watch 'misId', ->
       return unless scope.misId
       $http.get("/people/#{scope.misId}.json").success (data) ->
