@@ -33,6 +33,7 @@ angular.module 'leapApp', ['ngRoute']
     # date = $scope.events[$scope.events.length-1].event_date if $scope.events.length > 1
     $http.get("#{Topic.urlBase()}/views/#{$routeParams.view_name || 'all'}").success (data) ->
       $scope.events = $scope.events.concat(data)
+      #Topic.update()
   #$scope.$on "updated_topic", -> $scope.updateEvents()
   $scope.events = []
   Topic.set($routeParams.topic_id,$routeParams.topic_type).then (topic) -> $scope.getEvents()
@@ -115,7 +116,6 @@ angular.module 'leapApp', ['ngRoute']
     misId: '='
   link: (scope,element,attrs) ->
     scope.detailsPane='contacts'
-    scope.refresh = -> Topic.update()
     scope.$watch 'misId', ->
       $http.get("/people/#{scope.misId}.json").success (data) ->
         scope.person = data
@@ -137,16 +137,18 @@ angular.module 'leapApp', ['ngRoute']
     misId: '='
   link: (scope,element,attrs) ->
     scope.$watch 'misId', ->
+      return unless scope.misId
       $http.get("/courses/#{scope.misId}.json").success (data) ->
         scope.course = data
 
-.directive 'leapPerson', ($http,$rootScope,Topic) ->
+.directive 'leapPerson', ($http,Topic) ->
   restrict: "EA"
   templateUrl: '/assets/person.html'
   scope:
     misId: '='
   link: (scope,element,attrs) ->
     scope.$watch 'misId', ->
+      return unless scope.misId
       $http.get("/people/#{scope.misId}.json").success (data) ->
         scope.person = data
         
