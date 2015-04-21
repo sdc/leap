@@ -3,12 +3,30 @@
 }
 
 #timeline {
+  h1.academic-year {
+    background: #44a;
+    color: $white;
+    padding: 5px 1ex;
+  }
+
   leap-timeline-event {
     @include grid-row;
-    time               { @include grid-column(1)  }
-    leap-person        { @include grid-column(2)  }
-    h1.icon            { @include grid-column(1)  }
-    .body              { @include grid-column(10) }
-    leap-person +.body { @include grid-column(8)  }
+    .time,.date {min-height:1px}
+    .date { 
+      @include grid-column(1);
+      @include radius;
+      text-align: center;  
+      background: #a44;
+      border-bottom: 1px white solid;
+      h3 { 
+        color: $white;
+        line-height: 1;
+      }
+    }
+    .time              { @include grid-column(1) }
+    leap-person        { @include grid-column(2) }
+    h1.icon            { @include grid-column(1) }
+    .body              { @include grid-column(9) }
+    leap-person +.body { @include grid-column(7) }
   }
 }

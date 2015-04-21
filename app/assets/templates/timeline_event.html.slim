@@ -1,5 +1,9 @@
 time datetime="{{ event.eventDate }}"
-  div {{ event.eventDate | date : "dd MMM" }}
+  .date
+    h3 ng-if="showDate"  {{ event.eventDate | date : "dd" }}
+    h3 ng-if="showDate"  {{ event.eventDate | date : "MMM" }}
+  .time 
+    h3 ng-if="showTime" {{ event.eventDate | date : "HH.mm" }}
 leap-person mis-id="event.personId" ng-if="showPerson"
 h1.icon.fa class="{{ event.faIcon }}"
 .body

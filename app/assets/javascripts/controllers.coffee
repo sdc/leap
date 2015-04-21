@@ -35,6 +35,7 @@ angular.module 'leapApp', ['ngRoute']
   $scope.events = []
   Topic.set($routeParams.topic_id,$routeParams.topic_type).then -> Timeline.update()
   $rootScope.$on "timelineUpdated", ->
+    $scope.years = Timeline.years()
     $scope.events = Timeline.get()
 
 #.controller 'moodleCoursesController', ($scope,$http,$rootScope) ->
@@ -87,20 +88,30 @@ angular.module 'leapApp', ['ngRoute']
       topic = result.data
       $rootScope.$broadcast("topicUpdated")
 
-.factory 'Timeline', ($http,$rootScope,$q,Topic,$log) ->
+.factory 'Timeline', ($http,$rootScope,$q,Topic,$log,academicYearFilter) ->
     events = []
     view = "all"
     get: -> events
+    years: -> _.uniq(_.map(events,(e) -> academicYearFilter(e.event_date)))
     update: ->
       deferred = $q.defer()
       $http.get("#{Topic.urlBase()}/views/#{view}").success (data) ->
         events = data
+        (event.eventDate = new Date event.event_date) for event in events
+        (event.academicYear = academicYearFilter(event.eventDate)) for event in events
+        (event.showDate = (events[i-1]?.eventDate.toDateString() != event.eventDate.toDateString())) for event,i in events
         $rootScope.$broadcast("timelineUpdated")
         deferred.resolve events
       deferred.promise
 
-#.controller 'moodleCoursesController', ($scope,$http,$rootScope) ->
-
+.filter 'academicYear', ->
+  (d) ->
+    date = new Date(d)
+    year = date.getFullYear()
+    if date.getMonth() >= 9
+      String(year).substring(2) + "/" + String(year + 1).substring(2)
+    else
+      String(year - 1).substring(2) + "/" + String(year).substring(2)
 
 .directive 'leapViewsMenu', ($http,Topic,$rootScope) ->
   restrict: "E"
@@ -180,19 +191,18 @@ angular.module 'leapApp', ['ngRoute']
       return unless scope.misId
       $http.get("/people/#{scope.misId}.json").success (data) ->
         scope.person = data
-        
 
 .directive 'leapTimelineEvent', ($http,Topic) ->
   restrict: "E"
   templateUrl: '/assets/timeline_event.html'
   scope:
     leapEventId: '='
+    showDate: '='
   link: (scope,element,attrs) ->
-    #scope.showDate =  element.querySelector("time")#.getAttribute('datetime').slice(0,10)
-      #element.previousElementSibling.querySelector("time").getAttribute('datetime').slice(0,10) !=
-      #  element.querySelector("time").getAttribute('datetime').slice(0,10)
     $http.get("#{Topic.urlBase()}/events/#{scope.leapEventId}.json").success (data) ->
       scope.event = data
+      scope.eventDate = new Date(scope.event.eventDate)
+      scope.showTime = !(scope.eventDate.getHours() == scope.eventDate.getMinutes() == scope.eventDate.getSeconds() == 0)
       scope.showPerson = Topic.get().topicType != "person"
 
 .directive 'leapTile', ($http,Topic) ->

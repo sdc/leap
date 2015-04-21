@@ -1,6 +1,8 @@
 #timeline
   header
   .no-events ng-if="events.length == 0" Nothing to show!
-  leap-timeline-event ng-repeat="event in events track by event.id" leap-event-id="event.id"
+  .year ng-repeat="year in years"
+    h1.academic-year {{ year }}
+    leap-timeline-event ng-repeat="event in events track by event.id | filter : {academicYear: year}" leap-event-id="event.id" show-date="event.showDate"
   button ng-click="getEvents()" Load more events
 div style="height: 1000px"

@@ -62,7 +62,7 @@ class Eventable < ActiveRecord::Base
     # (rand * 999999).floor.to_s.ljust(6,"0")
   end
 
-  def tile_icon
+  def icon
     "fa-circle-thin"
   end
 

@@ -57,15 +57,8 @@ class PersonCourse < Eventable
     { icon: "fa-graduation-cap" }
   end
 
-   def as_timeline_event(e)
-    { verb: case e.transition
-            when :create    then "applied for"
-            when :to_start  then "enrolled on"
-            when :start     then "started"
-            when :complete  then "completed"
-            end,
-      title: course.name,
-      iconUrl: "events/course.png",
-    }
+  def icon
+    "fa-graduation-cap"
   end
+
 end

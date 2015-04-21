@@ -79,7 +79,7 @@ class Event < ActiveRecord::Base
 
   #[:title, :subtitle, :icon_url, :body, :extra_panes, :status, :staff_only?,
   # :timetable_length, :tile_bg, :tile_icon, :tile_title, :is_deleted?].each do |method|
-  %w(title body is_deleted?).map(&:to_sym).each do |method|
+  %w(title body is_deleted? icon).map(&:to_sym).each do |method|
     define_method method do
       if eventable.respond_to?(method)
         m = eventable.method(method)
@@ -98,6 +98,7 @@ class Event < ActiveRecord::Base
       title:      title || eventable.humanize,
       body:       body,
       eventDate:  event_date,
+      faIcon: icon
       #eventable:  eventable.as_timeline_event
     }
 
