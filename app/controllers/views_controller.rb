@@ -23,7 +23,7 @@ class ViewsController < ApplicationController
     if @view = View.for_user.find_by_name(params[:id])
       @events = @scope.where("event_date < ?", @date)
                       .where(transition: @view.transitions, eventable_type: @view.events)
-                      .limit(request.format == "pdf" ? 20000 : 20)
+                      .limit(request.format == "pdf" ? 20000 : 100)
       @events = @events.select { |e| e.status.to_s == params[:status] } if params[:status]
       @events = @events.select { |e| e.title.to_s == params[:title] } if params[:title]
       @events.all.reject!(&:staff_only?) unless @user.staff?

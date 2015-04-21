@@ -28,11 +28,9 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
   $rootScope.$on "timelineUpdated", -> $log.info "Leap: The timeline got updated!"
 
 .controller 'TimelineController', ($scope,$http,$routeParams,Topic,Timeline,$rootScope,$log) ->
-  $scope.getEvents = ->
-    $http.get("#{Topic.urlBase()}/views/#{$routeParams.view_name || 'all'}").success (data) ->
-      $scope.events = $scope.events.concat(data)
-  $scope.events = []
-  Topic.set($routeParams.topic_id,$routeParams.topic_type).then -> Timeline.update()
+  Topic.set($routeParams.topic_id,$routeParams.topic_type).then ->
+    Timeline.setView $routeParams.view_name
+    Timeline.update()
   $rootScope.$on "timelineUpdated", ->
     $scope.years = Timeline.years()
     $scope.events = Timeline.get()
@@ -90,6 +88,8 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
 .factory 'Timeline', ($http,$rootScope,$q,Topic,$log,academicYearFilter) ->
     events = []
     view = "all"
+    setView: (v) ->
+      view = v
     get: -> events
     years: -> _.uniq(_.map(events,(e) -> academicYearFilter(e.event_date)))
     update: ->
@@ -134,7 +134,8 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
     $rootScope.$on 'topicChanged', ->
       scope.topic = Topic.get()
       $log.info "TopicHeader: I saw the topic change to #{scope.topic.name}"
-    $document.on 'scroll', -> scope.collapseTopicBar = $document.scrollTop() > 159
+    $document.on 'scroll', ->
+      scope.collapseTopicBar = $document.scrollTop() > (element.find('header').prop('offsetHeight') * 0.7)
 
 .directive 'leapTopBar', ($rootScope) ->
   restrict: "E"
