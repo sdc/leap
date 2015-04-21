@@ -18,6 +18,7 @@ leap-person {
   }
 
   h1 { 
+    @media #{$small-only} { display: none }
     font-size: $h3-font-size;
     color: $topbar-link-color
   }
