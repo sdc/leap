@@ -1,4 +1,4 @@
-angular.module 'leapApp', ['ngRoute']
+angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
 
 .config(['$routeProvider', ($routeProvider) ->
   $routeProvider
@@ -21,7 +21,6 @@ angular.module 'leapApp', ['ngRoute']
   $rootScope.$on "topicChanged", ->
     if topic = Topic.get()
       $log.info "Leap: I set the topic to #{topic.topicType}: #{topic.name} (#{topic.mis_id})"
-      $document.foundation()
       #$interval Topic.update, 5000
     else
       $log.info "Leap: I cleared the topic!"
@@ -124,7 +123,7 @@ angular.module 'leapApp', ['ngRoute']
     $rootScope.$on 'topicChanged', -> refresh()
     refresh()
 
-.directive 'leapTopicHeader', ($rootScope,Topic,$log) ->
+.directive 'leapTopicHeader', ($rootScope,Topic,$log,$document) ->
   restrict: "EA"
   templateUrl: '/assets/topic_header.html'
   link: (scope, element) ->
@@ -135,7 +134,7 @@ angular.module 'leapApp', ['ngRoute']
     $rootScope.$on 'topicChanged', ->
       scope.topic = Topic.get()
       $log.info "TopicHeader: I saw the topic change to #{scope.topic.name}"
-      if scope.topic then element.show() else element.hide()
+    $document.on 'scroll', -> scope.collapseTopicBar = $document.scrollTop() > 159
 
 .directive 'leapTopBar', ($rootScope) ->
   restrict: "E"

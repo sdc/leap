@@ -1,5 +1,7 @@
 $topic-header-bg: #abc;
 
+.topbar-gap { height: $topbar-height }
+
 leap-topic-header header {
   background: $topic-header-bg;
 

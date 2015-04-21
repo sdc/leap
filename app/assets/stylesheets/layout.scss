@@ -8,10 +8,14 @@
   -webkit-text-fill-color: transparent;
 }
 
-#main-content {
-  @include grid-row();
+leap-top-bar {
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index: 10;
 }
 
-.topbar {
-  z-index: 5
+#main-content {
+  @include grid-row();
 }

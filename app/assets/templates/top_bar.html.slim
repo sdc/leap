@@ -1,12 +1,11 @@
-.sticky.user-bar
-  nav.top-bar data-topbar=true  
-    .title-area: .name: h1.leap-logo
-      a href="/" leap
-    section.top-bar-section
-      ul.left
-        li.has-form
-          form.search-form ng-controller="SearchController"
-            input type="text" placeholder="Find stuff..." ng-model="q" ng-change="search()" ng-model-options=" { debounce: 400 }"
-      ul.right
-        li 
-          leap-person mis-id="$root.user.mis_id"
+top-bar
+  ul.title-area: li.name: h1.leap-logo
+    a href="/" leap
+  top-bar-section
+    ul.left
+      li.has-form
+        form.search-form ng-controller="SearchController"
+          input type="text" placeholder="Find stuff..." ng-model="q" ng-change="search()" ng-model-options=" { debounce: 400 }"
+    ul.right
+      li 
+        leap-person mis-id="$root.user.mis_id"
