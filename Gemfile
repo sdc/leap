@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-gem 'rails', "~> 4.2.0"
+gem 'rails', "~> 4.2.1"
 gem 'coffee-rails', "~> 4.1.0"
 gem 'activerecord_any_of'
 gem 'slim-rails'
@@ -14,7 +14,6 @@ gem 'nokogiri', "~> 1.6.0"
 gem 'uglifier', "~> 2.7.0"
 gem 'yui-compressor'
 gem 'icalendar'
-gem 'protected_attributes'
 gem 'activerecord-deprecated_finders', require: 'active_record/deprecated_finders'
 gem 'angularjs-rails', '~> 1.3.10'
 gem 'activeresource', require: 'active_resource'

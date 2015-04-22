@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class SupportRequest < Eventable
-  attr_accessible :difficulties, :sessions, :workshop
+  #attr_accessible :difficulties, :sessions, :workshop
 
   serialize :sessions
   serialize :difficulties

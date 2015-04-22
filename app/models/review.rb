@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Review < Eventable
-  attr_accessible :attendance, :published, :body, :window
+  #attr_accessible :attendance, :published, :body, :window
 
   has_many :review_lines, dependent: :destroy
 

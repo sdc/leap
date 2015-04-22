@@ -93,7 +93,7 @@
     &\parbox{40mm}{\medskip Target}&\parbox{55mm}{\medskip Actions}&\parbox{22mm}{\medskip Due Date}\\
     \hline
   <% targets.each do |target| %>
-    \parbox{40mm}{\medskip <%if target.event.eventable.kind_of?(ReviewLine) and !target.event.eventable.unit.blank? %><%= lesc target.event.eventable.unit %>\\<% end %><%= lesc target.event.eventable.created_by.name %>}
+    \parbox{40mm}{\medskip <%if target.event.eventable.kind_of?(ReviewLine) and !target.event.eventable.unit.blank? %><%= lesc target.event.eventable.unit %>\\<% end %><%= lesc target.created_by.name %>}
     &<%= lesc target.body %>&<%= lesc target.actions %>&<%= pretty_date(target.target_date) %>\\
     \hline
   <% end %>

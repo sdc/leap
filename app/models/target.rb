@@ -23,7 +23,7 @@
 # completion date. When it is completed it new event noting its completion.
 #
 class Target < Eventable
-  attr_accessible :body, :actions, :reflection, :target_date, :complete_date, :drop_date, :event, :event_id
+  #attr_accessible :body, :actions, :reflection, :target_date, :complete_date, :drop_date, :event, :event_id
 
   validates :target_date, :body, presence: true
 

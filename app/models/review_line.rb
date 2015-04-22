@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class ReviewLine < Eventable
-  attr_accessible :body, :quality, :attitude, :punctuality, :completion, :window, :unit, :review_id
+  #attr_accessible :body, :quality, :attitude, :punctuality, :completion, :window, :unit, :review_id
 
   belongs_to :review
 

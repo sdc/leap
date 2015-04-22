@@ -60,3 +60,20 @@ views:
     aff_staff: true
     aff_student: true
     admin_only: false
+  - id: 3
+    parent_id: 1
+    icon: fa-circle-o
+    title: Badges
+    topic_person: true
+    topic_course: true
+    controls: null
+    view_type: tiles
+    events: 
+      MdlBadge:
+        null
+    url: badges
+    aff_affiliate: true
+    aff_applicant: true
+    aff_staff: true
+    aff_student: true
+    admin_only: false

@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class TimetableEvent
-  attr_accessor :title, :timetable_start, :timetable_end, :rooms, :teachers, :mark, :status, :mis_id
+  #attr_accessor :title, :timetable_start, :timetable_end, :rooms, :teachers, :mark, :status, :mis_id
 
   def timetable_margin
     ((timetable_start - timetable_start.change(hour: 8, minute: 0, sec: 0, usec: 0)) / 50).floor

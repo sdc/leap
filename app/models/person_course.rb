@@ -23,7 +23,7 @@ class PersonCourse < Eventable
   belongs_to :course
   belongs_to :person
 
-  attr_accessible :offer_code, :status, :start_date, :application_date, :mis_status
+  #attr_accessible :offer_code, :status, :start_date, :application_date, :mis_status
 
   after_save do |person_course|
     if person_course.application_date_changed? && person_course.application_date_was.nil?

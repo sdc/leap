@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Absence < Eventable
-  attr_accessible :lessons_missed, :category, :body, :usage_code, :contact_category, :created_at, :deleted
+  #attr_accessible :lessons_missed, :category, :body, :usage_code, :contact_category, :created_at, :deleted
 
   after_create { |ab| ab.events.create!(event_date: created_at, transition: :create) }
 

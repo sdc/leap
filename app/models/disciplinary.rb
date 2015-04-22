@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Disciplinary < Eventable
-  attr_accessible :level, :body
+  #attr_accessible :level, :body
 
   validates :body, presence: true
   validates :level, presence: true, numericality: true

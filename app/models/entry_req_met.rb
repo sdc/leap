@@ -1,5 +1,5 @@
 class EntryReqMet < Eventable
-  attr_accessible :met, :entry_req_id, :no_but
+  #attr_accessible :met, :entry_req_id, :no_but
 
   belongs_to :entry_req
 

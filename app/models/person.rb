@@ -18,10 +18,10 @@ class Person < ActiveRecord::Base
   require 'identicon'
   include MisPerson
 
-  attr_accessible :forename, :surname, :middle_names, :address, :town, :postcode, :photo, 
-                   :mobile_number, :next_of_kin, :date_of_birth, :mis_id, :staff, :username, 
-                   :personal_email, :home_phone, :note
-                  
+  #attr_accessible :forename, :surname, :middle_names, :address, :town, :postcode, :photo, 
+  #                 :mobile_number, :next_of_kin, :date_of_birth, :mis_id, :staff, :username, 
+  #                 :personal_email, :home_phone, :note
+
   scoped_search on: [:forename, :surname, :mis_id]
 
   AFFILIATIONS = %w(staff student applicant affiliate)

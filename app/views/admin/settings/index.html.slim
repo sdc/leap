@@ -1,0 +1,301 @@
+.row 
+  h1 Leap Settings
+
+  .panel= form_for :settings 
+
+    h2 Administration
+
+    label Admin Users
+    = text_field_tag "admin_users", Settings.admin_users
+
+    /%label.control-label Custom Stylesheet
+    /.controls
+      = text_area_tag "custom_css", Settings.custom_css
+    /.help-text 
+      Any CSS put in here will be dumped into a &lt;style&gt; tag in the layout head. Use it
+      sparingly to adjust the look &amp; feel to your preferences. Be carefull, you can
+      make Leap temporarily unusable with this, although you can't lose any data.
+
+    /%label.control-label Sidebar Links
+    /.controls
+      = text_area_tag "clidebar_links", Settings.clidebar_links
+    /.help-text
+      %p
+        This controls the extra links for the new home pages (and soon to be everywhere). Each menu starts with a | 
+        and has text and an icon from
+        = link_to "Font Awesome", "http://fortawesome.github.io/Font-Awesome/icons/" 
+        separated by pipes. 
+      %p
+        Each link in that menu does not start with a pipe and has text, a url and a Font Awesome icon. Like so:
+      %pre
+        :preserve     
+          |Menu One|fa-music
+          First Item in the Menu|http://example.com|fa-music
+          Second Item in the Menu|http://example.info|fa-paw
+          |Menu Two|fa-pencil
+          An Item in the Second Menu|http://example.org|fa-money
+          You can have as many links as you like|http://example.net|fa-star
+            
+
+    h2 Attendance
+    .row
+      .medium-6.columns
+        h3 Import settings
+        label Table name
+        = text_field_tag "attendance_table", Settings.attendance_table
+        label Culmulative attendance column 
+        = text_field_tag "attendance_culm_column", Settings.attendance_culm_column
+        label Weekly attendance column
+        = text_field_tag "attendance_week_column", Settings.attendance_week_column
+        label Week date column
+        = text_field_tag "attendance_date_column", Settings.attendance_date_column
+        label Course type column
+        = text_field_tag "attendance_type_column", Settings.attendance_type_column
+      .medium-6.columns
+        h3 Good/Bad percentage boundaries
+        label.inline Bad <
+        = number_field_tag "attendance_low_score", Settings.attendance_low_score, in: 1..99
+        label.inline < OK <
+        = number_field_tag "attendance_high_score", Settings.attendance_high_score, in: 1..99
+        label.inline < Good
+
+    /%h2 BKSB
+    /.well
+      If you enter correct BKSB settings here, then BKSB results can be automatically imported for users. Leave these
+      blank to disable this.
+    /.alert.alert-warning
+      You may need to restart Leap for these settings to take effect.
+    /.control-group
+      %label.control-label BKSB URL
+      .controls
+        .input-prepend<
+          %span.add-on http://
+          = text_field_tag "bksb_url", Settings.bksb_url
+    /.control-group
+      %label.control-label BKSB API Password
+      .controls
+        .input-prepend<
+          %span.add-on
+            %i.icon-lock
+          = password_field_tag "bksb_pwd", Settings.bksb_pwd
+    /.control-group
+      %label.control-label BKSB IIS Username
+      .controls
+        .input-prepend<
+          %span.add-on
+            %i.icon-user
+          = text_field_tag "bksb_iis_username", Settings.bksb_iis_username
+    /.control-group
+      %label.control-label BKSB IIS Password
+      .controls
+        .input-prepend<
+          %span.add-on
+            %i.icon-lock
+          = password_field_tag "bksb_iis_pwd", Settings.bksb_iis_pwd
+
+    /%h2 Event Notes
+    /.well
+      %p
+        Event notes are notes which can be added to any event. They can be seen by anyone who can see the parent event attached to the
+        events as children with a datestamp instead of a title.  This setting affects who can add the notes:
+        %dl
+          %dt Off
+          %dd No-one can add notes; the feature is disabled
+          %dt Staff
+          %dd Only staff users can add notes
+          %dt Students
+          %dd 
+            Staff <em>and</em> students can add notes. Remember to add <tt>event_notes</tt> to the <strong>student_create_events</strong>
+            option or the create will fail.
+    /.control-group
+      %label.control-label Who can add event notes
+      .controls
+        = select_tag "event_notes", options_for_select(["off","staff","students"], Settings.event_notes)
+
+    h2 Moodle Integration
+    .row
+      .medium-6.columns
+        h3 Moodle host
+        label Host name
+        .row.collapse
+          .small-2.columns
+            tt.prefix http://
+          .small-10.columns
+            = text_field_tag "moodle_host", Settings.moodle_host
+        label Moodle path
+        = text_field_tag "moodle_path",Settings.moodle_path
+        label Authentication token
+        = text_field_tag "moodle_token",Settings.moodle_token
+        label Moodle user postfix
+        = text_field_tag "moodle_user_postfix",Settings.moodle_user_postfix, placeholder: "@your-college.ac.uk"
+      .medium-6.columns
+        h3 Moodle Integration Features
+        label Import Moodle Grade Tracker info
+        = select_tag "moodle_grade_track_import", options_for_select([["Import grade tracks","on"],["Do not import grade tracks","off"]], Settings.moodle_grade_track_import)
+        label Import Moodle Badges
+        = select_tag "moodle_badge_import", options_for_select([["Import Moodle badges","on"],["Do not import Moodle badges","off"]], Settings.moodle_badge_import)
+        label Moodle Badge Block Courses
+        = text_field_tag "moodle_badge_block_courses", Settings.moodle_badge_block_courses
+      
+      
+    button type="submit" Save Changes
+
+  /%h2 Pathways
+  /.control-group
+    %label.control-label Pathway choices
+    .controls
+      = text_area_tag "pathways", Settings.pathways
+
+  /%h2 Qualifications
+  /%h3 Editing Quals
+  /.control-group
+    %label.control-label Editable quals
+    .controls
+      = select_tag "quals_editing", options_for_select(["on","off"], Settings.quals_editing)
+  /%h3 Quick Quals on Entry Input
+  /.well
+    %p
+      These are comma separated lists for each of the fields in the Quick Quals on Entry input control. There's three ways of using it, you
+      can choose which with the "Selection Type" setting.
+      %dl
+        %dt Buttons
+        %dd 
+          The lists become a column of buttons below each field which, when pressed, will load that text into the input box. 
+          This is quick for bulk input and also still allows arbitrary entries.
+        %dt Select
+        %dd 
+          Standard drop-down selections. To allow arbitrary input, add an option "OTHER"; when this is selected
+          select box will be replaced with a text field          
+        %dt None
+        %dd Ignores the lists and just shows text boxes.
+      
+
+  /.control-group
+    %label.control-label Selection Type
+    .controls
+      = select_tag "qqoe_select_type", options_for_select(["Select","Button","None"], Settings.qqoe_select_type)
+  /.control-group
+    %label.control-label Qualification Types
+    .controls
+      = text_area_tag "qqoe_qual_type", Settings.qqoe_qual_type
+  /.control-group
+    %label.control-label Awarding Bodies
+    .controls
+      = text_area_tag "qqoe_awarding_body", Settings.qqoe_awarding_body
+  /.control-group
+    %label.control-label Subjects
+    .controls
+      = text_area_tag "qqoe_subject", Settings.qqoe_subject
+  /.control-group
+    %label.control-label Grades
+    .controls
+      = text_area_tag "qqoe_grade", Settings.qqoe_grade
+
+  /%h2 Reviews
+
+  /%h3 Score Titles
+  /.well Select the labels used for the four scoring categories on Reviews
+  /.control-group
+    %label.control-label Quality
+    .controls
+      = text_field_tag "review_cat_quality", Settings.review_cat_quality
+  /.control-group
+    %label.control-label Punctuality
+    .controls
+      = text_field_tag "review_cat_punctuality", Settings.review_cat_punctuality
+  /.control-group
+    %label.control-label Attitude
+    .controls
+      = text_field_tag "review_cat_attitude", Settings.review_cat_attitude
+  /.control-group
+    %label.control-label Completion
+    .controls
+      = text_field_tag "review_cat_completion", Settings.review_cat_completion
+
+  /.control-group 
+    %label.control-label One-to-one Review Questions and Prompts
+    .controls
+      = text_area_tag "one_to_one_prompts", Settings.one_to_one_prompts
+
+
+  /%h4 Grades
+  /.control-group
+    %label.control-label Review Grades
+    .controls
+      = text_field_tag "review_grades", Settings.review_grades
+      .help-text Comma separated list of the selection of grades you can choose for reviews. May break old grades horrifically.
+  /.control-group
+    %label.control-label Grade order
+    .controls
+      = select_tag "reverse_scores", options_for_select(["Forward","Reverse"],Settings.reverse_scores)
+      .help-text Show review grades in forward or reverse order
+
+  /%h3 Windows
+  /.control-group
+    %label.control-label Open Review Windows
+    .controls
+      = text_field_tag "review_windows", Settings.review_windows
+      .help-text Comma-seperated list of windows allowed to be selected from the dropdown when creating reviews
+  /.control-group
+    %label.control-label Current Review Window
+    .controls
+      = select_tag "current_review_window", options_for_select(Settings.review_windows.split(","),Settings.current_review_window), :include_blank => "No current window"
+      .help-text 
+        Which of the review-windows to show on the group print on course pages. You'll have to save changes to the
+        list of windows before you can select one here.
+
+
+  /%h2 Simple Poll
+  /.well
+    Select the poll to be displayed on users' home pages. If blank, the HTML from the "Home Page Advert Box" setting will be displayed.
+  /.control-group
+    %label.control-label Current Simple Poll
+    .controls
+      = select_tag "current_simple_poll", options_from_collection_for_select(SimplePoll.all,:id,:question,Settings.current_simple_poll), 
+                   :include_blank => "** NO POLL **"
+
+  /%h2 Unusual
+  /.well
+    Some options you may not want to use. Some of them do have uses other than my own amusement. These uses may not be obvious.
+  /.control-group
+    %label.control-label Anonymised pictures
+    .controls
+      = select_tag "lorem_pictures", options_for_select(["abstract","animals","business","cats","city","food","nightlife",
+                                                         "fashion","people","nature","sports","technics","transport"],
+                                                        Settings.lorem_pictures), 
+                    :include_blank => "Normal pictures"
+      .help-text
+        Leave blank to show users' photos or select a category to show random pictures from that category. I suggest "cats."
+
+  /%h2 Web Services
+  /.well
+    Turning this off will mean that passing the token specified as a url parameter called "token" will automatically log
+    you in as the user specified. How this gets past your Shibboleth authentication in the first place is left as an excercise for
+    the user ;)
+  /.control-group
+    %label.control-label Web Services User
+    .controls
+      = text_field_tag "ws_user", Settings.ws_user
+  /.control-group
+    %label.control-label Web Services Token
+    .controls
+      = text_field_tag "ws_token", Settings.ws_token
+
+  /%h1 Old Settings!
+  /.old-settings
+    .alert
+      I'll be working to move these into sections and to generally be easier to use over time :)
+    - @settings2 = @settings - ["admin_users","advert_box_html","bksb_pwd","bksb_url","bksb_iis_username","bksb_iis_pwd",
+                                 "qqoe_qual_type","qqoe_awarding_body","qqoe_subject","qqoe_grade","pathways",
+                                 "qqoe_select_type","current_simple_poll","lorem_pictures","review_cat_quality",
+                                 "review_cat_punctuality","review_cat_attitude","review_cat_completion","review_windows",
+                                 "current_review_window","review_grades","reverse_scores","event_notes","moodle_user_postfix",
+                                 "moodle_host","moodle_path","moodle_token","moodle_link_target","attendance_table",
+                                 "attendance_culm_column","attendance_week_column","attendance_low_score","attendance_high_score",
+                                 "attendance_date_column","custom_css","quals_editing","clidebar_links","home_page","ws_user","ws_token",
+                                 "moodle_grade_track_import","moodle_badge_import","moodle_badge_block_courses",
+                                 "one_to_one_prompts","attendance_type_column"]
+    - @settings2.each do |setting|
+      .control-group
+        %label.control-label{:for => setting}= setting.humanize
+        .controls= text_field_tag setting, Settings[setting]

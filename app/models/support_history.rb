@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class SupportHistory < Eventable
-  attr_accessible :body, :category
+  #attr_accessible :body, :category
 
   after_create { |req| req.events.create!(event_date: created_at, transition: :create) }
 

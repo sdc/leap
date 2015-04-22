@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class EventNote < Eventable
-  attr_accessible :body, :parent_event_id
+  #attr_accessible :body, :parent_event_id
 
   after_create { |note| note.events.create!(event_date: created_at, transition: :create, parent_id: parent_event_id) }
 

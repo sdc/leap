@@ -26,7 +26,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
 
 .controller 'TimelineController', ($scope,$http,$routeParams,Topic,Timeline,$rootScope,$log) ->
   Topic.set($routeParams.topic_id,$routeParams.topic_type).then ->
-    Timeline.setView $routeParams.view_name
+    Timeline.setView $routeParams.view_name || "all"
     Timeline.update()
   $rootScope.$on "timelineUpdated", ->
     $scope.years = Timeline.years()
@@ -84,7 +84,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
 
 .factory 'Timeline', ($http,$rootScope,$q,Topic,$log,academicYearFilter) ->
     events = []
-    view = "all"
+    view = null
     setView: (v) ->
       view = v
     get: -> events

@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Achievement < Eventable
-  attr_accessible :body, :year
+  #attr_accessible :body, :year
 
   after_create { |q| q.events.create!(event_date: created_at, transition: :create) }
 

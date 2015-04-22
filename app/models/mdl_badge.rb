@@ -1,5 +1,5 @@
 class MdlBadge < Eventable
-  attr_accessible :body, :image_url, :mdl_course_id, :person_id, :title, :created_at
+  #attr_accessible :body, :image_url, :mdl_course_id, :person_id, :title, :created_at
   after_create { |badge| badge.events.create!(event_date: created_at, transition: :create) }
   belongs_to :person
 
@@ -15,7 +15,7 @@ class MdlBadge < Eventable
         import_for(peep.xpath("KEY[@name='username']/VALUE").first.content)
       end
     else
-      puts "Grade Track Import turned off."
+      puts "Badge Import turned off."
     end
   end
 

@@ -15,7 +15,7 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class ProgressionReview < Eventable
-  attr_accessible :approved, :reason
+  #attr_accessible :approved, :reason
 
   serialize :reason
 
