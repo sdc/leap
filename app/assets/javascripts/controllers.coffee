@@ -5,12 +5,9 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
     .when '/:topic_type/:topic_id',
       controller: "TimelineController",
       templateUrl: "/assets/timeline.html"
-    .when '/:topic_type/:topic_id/timeline/:view_name',
+    .when '/:topic_type/:topic_id/:view_name',
       controller: "TimelineController"
       templateUrl: "/assets/timeline.html"
-    .when '/:topic_type/:topic_id/tiles/:view_name',
-      controller: "TimelineController"
-      templateUrl: "/assets/tiles.html"
     .when '/search',
       controller: 'SearchController',
       templateUrl: '/assets/search.html'
@@ -20,11 +17,11 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
   Topic.set().then (data) -> $rootScope.user = data
   $rootScope.$on "topicChanged", ->
     if topic = Topic.get()
-      $log.info "Leap: I set the topic to #{topic.topicType}: #{topic.name} (#{topic.mis_id})"
+      $log.info "Leap: I set the topic to #{topic.topic_type}: #{topic.name} (#{topic.mis_id})"
       #$interval Topic.update, 5000
     else
       $log.info "Leap: I cleared the topic!"
-  $rootScope.$on "topicUpdated", -> $log.info "Leap: Topic #{Topic.get().topicType}: #{Topic.get().name} updated."
+  $rootScope.$on "topicUpdated", -> $log.info "Leap: Topic #{Topic.get().topic_type}: #{Topic.get().name} updated."
   $rootScope.$on "timelineUpdated", -> $log.info "Leap: The timeline got updated!"
 
 .controller 'TimelineController', ($scope,$http,$routeParams,Topic,Timeline,$rootScope,$log) ->
@@ -59,14 +56,14 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
 .factory 'Topic', ($http,$rootScope,$q,$log) ->
   topic = false
   urlBase = ->
-    (switch topic.topicType
+    (switch topic.topic_type
       when "person" then "/people/"
       when "course" then "/courses/"
     ) + topic.mis_id
   urlBase: urlBase
   set: (mis_id = "user", type = "person") ->
     deferred = $q.defer()
-    if topic && topic.mis_id == mis_id && topic.topicType == type
+    if topic && topic.mis_id == mis_id && topic.topic_type == type
       deferred.resolve topic
     else
       $http.get("/#{if type == 'person' then 'people' else 'courses'}/#{mis_id}.json").then (result) ->
@@ -94,7 +91,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
     years: -> _.uniq(_.map(events,(e) -> academicYearFilter(e.event_date)))
     update: ->
       deferred = $q.defer()
-      $http.get("#{Topic.urlBase()}/views/#{view}").success (data) ->
+      $http.get("#{Topic.urlBase()}/timeline_views/#{view}").success (data) ->
         events = data
         (event.eventDate = new Date event.event_date) for event in events
         (event.academicYear = academicYearFilter(event.eventDate)) for event in events
@@ -117,9 +114,10 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
   templateUrl: "/assets/views_menu.html"
   link: (scope) ->
     refresh = ->
-      $http.get('/views.json').success (data) ->
-        scope.views = data
-        scope.baseUrl = "#/#{Topic.get().topicType}/#{Topic.get().mis_id}/"
+      $http.get('/timeline_views.json').success (data) ->
+        scope.timeline_views = data
+        console.log scope.timeline_views
+        scope.baseUrl = "#/#{Topic.get().topic_type}/#{Topic.get().mis_id}/"
     $rootScope.$on 'topicChanged', -> refresh()
     refresh()
 
@@ -203,7 +201,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
       scope.event = data
       scope.eventDate = new Date(scope.event.eventDate)
       scope.showTime = !(scope.eventDate.getHours() == scope.eventDate.getMinutes() == scope.eventDate.getSeconds() == 0)
-      scope.showPerson = Topic.get().topicType != "person"
+      scope.showPerson = Topic.get().topic_type != "person"
 
 .directive 'leapTile', ($http,Topic) ->
   restrict: "E"

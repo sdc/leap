@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  topic_type: MyString
+  view_type: MyString
+  events: MyText
+  controls: MyString
+  url: MyString
+  icon: MyString
+  aff_affiliate: false
+  aff_staff: false
+  aff_student: false
+  aff_applicant: false
+  title: MyString
+
+two:
+  topic_type: MyString
+  view_type: MyString
+  events: MyText
+  controls: MyString
+  url: MyString
+  icon: MyString
+  aff_affiliate: false
+  aff_staff: false
+  aff_student: false
+  aff_applicant: false
+  title: MyString

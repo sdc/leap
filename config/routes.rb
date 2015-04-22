@@ -1,22 +1,19 @@
 Ilp2::Application.routes.draw do
   namespace :admin do
     resources :settings
-    resources :views
     get 'test'       => 'test#index', :as => :test
     get 'stats'      => 'stats#index'
     get 'sync_grade_tracks' => 'data#sync_grade_tracks'
     match 'test/login' => 'test#login', :as => :test_login, :via => [:get, :post]
   end
-  resources :views
+  resources :timeline_views, only: :index
   resources :events do
     get "more", on: :collection
     get "open_extended", on: :member
   end
   resources :people do
     resources :events, :timetables
-    resources :views, only: [:show,:index] do
-      get "header", on: :member
-    end
+    resources :timeline_views, only: [:show,:index]
     collection do
       get :search, :select
     end
@@ -27,7 +24,7 @@ Ilp2::Application.routes.draw do
   end
   resources :courses do
     resources :events, :timetables
-    resources :views do
+    resources :timeline_views do
       get "header", on: :member
     end 
     member do

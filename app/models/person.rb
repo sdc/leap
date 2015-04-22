@@ -186,10 +186,10 @@ class Person < ActiveRecord::Base
 
   def course?; false end
 
-  def topicType; "person" end
+  def topic_type; "person" end
 
   def as_json(options = {})
-    json_methods  = %w(l3va gcse_english gcse_maths name staff photo_uri admin topicType)
+    json_methods  = %w(l3va gcse_english gcse_maths name staff photo_uri admin topic_type)
     json_methods += %w(address_text age) if current_user? || !staff?
     json_only     = %w(forename surname contact_allowed mis_id)
     json_only    += %w(note date_of_birth mobile_number home_phone 

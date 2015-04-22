@@ -69,10 +69,10 @@ class Course < ActiveRecord::Base
 
   def course?; true end
 
-  def topicType; "course" end
+  def topic_type; "course" end
 
   def as_json(options = {})
-    json_methods  = %w(name topicType)
+    json_methods  = %w(name topic_type)
     #json_methods += %w() if current_user? || !staff?
     json_only     = %w(id title code year mis_id vague_title my_courses)
     #json_only    += %w() if current_user? || !staff?
