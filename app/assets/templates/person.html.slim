@@ -4,12 +4,12 @@ a ng-href="#/person/{{ person.mis_id }}"
     .forename {{ person.forename }}
     .surname  {{ person.surname }}
     small.number< {{ person.mis_id }}
-  .flags
-    .label.alert ng-if="person.note" title="This person has a note on the MIS"
-      i.fa.fa.fa-flag
-    .label.warning title="Do not contact this person!" ng-if="!person.contact_allowed"
-      i.fa.fa-exclamation-triangle
-    .label.success title="Staff Member" ng-if="person.staff"
-      i.fa.fa-mortar-board
-    .label.success title="Admin" ng-if="person.admin"
-      i.fa.fa-key
+.flags
+  .label.alert ng-if="person.note" tooltip="This person has a note on the MIS" tooltip-trigger="mouseenter" tooltip-placement="bottom"
+    i.fa.fa.fa-flag
+  .label.warning tooltip="Do not contact this person!" tooltip-trigger="mouseenter" ng-if="!person.contact_allowed" tooltip-placement="bottom"
+    i.fa.fa-exclamation-triangle
+  .label.success tooltip="Staff Member" tooltip-trigger="mouseenter" ng-if="person.staff" tooltip-placement="bottom"
+    i.fa.fa-mortar-board
+  .label.success tooltip="User has admin privileges" tooltip-trigger="mouseenter" ng-if="person.admin" tooltip-placement="bottom"
+    i.fa.fa-key

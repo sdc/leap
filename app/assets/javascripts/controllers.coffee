@@ -1,4 +1,4 @@
-angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
+angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
 
 .config(['$routeProvider', ($routeProvider) ->
   $routeProvider
