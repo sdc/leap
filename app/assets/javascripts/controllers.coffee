@@ -116,7 +116,6 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','sticky','duScroll']
     refresh = ->
       $http.get('/timeline_views.json').success (data) ->
         scope.timeline_views = data
-        console.log scope.timeline_views
         scope.baseUrl = "#/#{Topic.get().topic_type}/#{Topic.get().mis_id}/"
     $rootScope.$on 'topicChanged', -> refresh()
     refresh()
