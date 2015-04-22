@@ -4,6 +4,8 @@
 
 #timeline {
   h1.academic-year {
+    @include radius;
+    font-size: $h2-font-size;
     background: #44a;
     color: $white;
     padding: 5px 1ex;
