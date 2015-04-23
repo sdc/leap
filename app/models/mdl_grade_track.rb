@@ -1,6 +1,6 @@
 class MdlGradeTrack < Eventable
   #attr_accessible :course_type, :mag, :mdl_id, :name, :tag, :total,
-                  :completion_total, :completion_out_of, :created_at, :created_by_id
+  #                :completion_total, :completion_out_of, :created_at, :created_by_id
 
   belongs_to :person
 
