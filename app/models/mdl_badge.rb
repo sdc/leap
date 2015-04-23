@@ -44,7 +44,7 @@ class MdlBadge < Eventable
     end
   end
 
-  def icon_url
+  def icon
     image_url
   end
 

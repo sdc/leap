@@ -132,7 +132,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
       scope.topic = Topic.get()
       $log.info "TopicHeader: I saw the topic change to #{scope.topic.name}"
     $document.on 'scroll', ->
-      scope.collapseTopicBar = $document.scrollTop() > (element.find('header').prop('offsetHeight') * 0.7)
+      scope.collapseTopicBar = $document.scrollTop() > (element.find('header').prop('offsetHeight') - 24)
 
 .directive 'leapTopBar', ($rootScope) ->
   restrict: "E"
@@ -201,6 +201,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
       scope.eventDate = new Date(scope.event.eventDate)
       scope.showTime = !(scope.eventDate.getHours() == scope.eventDate.getMinutes() == scope.eventDate.getSeconds() == 0)
       scope.showPerson = Topic.get().topic_type != "person"
+      scope.iconType = if scope.event.icon.substring(0,7) == "http://" then "image" else "fa"
 
 .directive 'leapTile', ($http,Topic) ->
   restrict: "E"

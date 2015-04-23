@@ -9,6 +9,8 @@ views:
     events: 
       Attendance:
         null
+      MdlBadge:
+        null
       ContactLog:
         null
       PersonCourse:

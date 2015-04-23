@@ -28,6 +28,9 @@
         line-height: 1;
       }
     }
+    .body {
+      h1 { font-size: $h3-font-size }
+    }
     @media #{$small-only} {
       leap-person { 
         img { @include grid-column(2) }
@@ -40,10 +43,13 @@
         @include grid-column(1,$collapse: true); 
         h3 { font-size: $h5-font-size }
       }
+      .icon { 
+        @include grid-column(1, $collapse: true);
+        text-align: center;
+      }
       .time             { display: none }
-      h1.icon           { @include grid-column(1) }
-      .body             { @include grid-column(8) }
-      leap-person~.body { @include grid-column(6) }
+      .body             { @include grid-column(7) }
+      leap-person~.body { @include grid-column(5) }
     }
     @media #{$medium-up} {
       leap-person { 
@@ -57,8 +63,11 @@
         @include grid-column(1,$collapse: true); 
         h3 { font-size: $h3-font-size }
       }
+      .icon { 
+        @include grid-column(1, $collapse: true);
+        text-align: center;
+      }
       .time             { @include grid-column(1) }
-      h1.icon           { @include grid-column(1) }
       .body             { @include grid-column(7) }
       leap-person~.body { @include grid-column(5) }
     }

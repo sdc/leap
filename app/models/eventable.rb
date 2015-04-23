@@ -73,9 +73,4 @@ class Eventable < ActiveRecord::Base
   def is_deleted?
     respond_to?(:deleted) && deleted
   end
-
-  def as_timeline_event(e)
-    { verb: "have a broken",
-      title: humanize } 
-  end
 end
