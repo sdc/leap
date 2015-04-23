@@ -88,7 +88,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
     setView: (v) ->
       view = v
     get: -> events
-    years: -> _.uniq(_.map(events,(e) -> academicYearFilter(e.event_date)))
+    years: -> _.map(_.uniq(_.map(events,(e) -> academicYearFilter(e.event_date))), (y) -> {year: y,show: true})
     update: ->
       deferred = $q.defer()
       $http.get("#{Topic.urlBase()}/timeline_views/#{view}").success (data) ->

@@ -8,6 +8,11 @@
     background: #44a;
     color: $white;
     padding: 5px 1ex;
+    .ay_switch {
+      float:right;
+      @include switch-base;
+      @include switch-style($radius: $global-radius);
+    }
   }
 
   leap-timeline-event {

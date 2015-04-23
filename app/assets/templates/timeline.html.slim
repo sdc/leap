@@ -3,7 +3,8 @@
   .no-events ng-if="events.length == 0" Nothing to show!
   .year ng-repeat="year in years"
     h1.academic-year 
-      | {{ year }}
-      .right academic year
-    leap-timeline-event ng-repeat="event in events | filter: {academicYear: year} track by event.id" leap-event-id="event.id" show-date="event.showDate"
+      | {{ year.year }}
+      .ay_switch: input id="ay_{{ $index }}" type="checkbox" ng-model="year.show": label for="ay_{{ $index }}" Woo
+    .ay_events ng-show="year.show"
+      leap-timeline-event ng-repeat="event in events | filter: {academicYear: year.year} track by event.id" leap-event-id="event.id" show-date="event.showDate"
   /button ng-click="getEvents()" Load more events
