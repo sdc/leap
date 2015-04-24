@@ -7,6 +7,7 @@ time datetime="{{ event.eventDate }}"
 leap-person mis-id="event.personId" ng-if="showPerson"
 img.icon ng-if="iconType == 'image'" ng-src="{{ event.icon }}"
 h1.icon.fa ng-if="iconType == 'fa'" class="{{ event.icon }}"
-.body
+ng-include.body src="'/assets/events/body/' + event.template" ng-if="event.template"
+.body ng-if="!event.template"
   h1 {{ event.title }}
   p ng-if="event.body" {{ event.body }}

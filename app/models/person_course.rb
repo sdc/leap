@@ -17,9 +17,6 @@
 class PersonCourse < Eventable
   include MisPersonCourse
 
-  delegate :code, :vague_title, :entry_reqs, to: :course
-  delegate :photo_uri, :name, :mis_id, :note, :contact_allowed, :staff?, to: :person
-
   belongs_to :course
   belongs_to :person
 
@@ -53,12 +50,31 @@ class PersonCourse < Eventable
     panes
   end
 
-  def as_tile
-    { icon: "fa-graduation-cap" }
-  end
-
   def icon
     "fa-graduation-cap"
   end
 
+  def timeline_template
+    "person_course.html"
+  end
+
+  def timeline_attrs(tr)
+    {
+     status: mis_status,
+     applicationTitle: course.vague_title,
+     offerCode: offer_code,
+     courseId: course.mis_id,
+     courseTitle: course.name,
+     courseCode: course.code,
+     tutorGroup: tutorgroup,
+     startDate: start_date,
+     endDate: end_date,
+     verb: case tr
+           when :create   then "Applied for"
+           when :to_start then "Enrolled on"
+           when :start    then "Started"
+           when :complete then status == "complete" ? "Completed" : "Finished"
+           end
+    }
+  end
 end

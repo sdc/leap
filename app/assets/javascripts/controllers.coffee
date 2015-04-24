@@ -24,10 +24,12 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
   $rootScope.$on "topicUpdated", -> $log.info "Leap: Topic #{Topic.get().topic_type}: #{Topic.get().name} updated."
   $rootScope.$on "timelineUpdated", -> $log.info "Leap: The timeline got updated!"
 
-.controller 'TimelineController', ($scope,$http,$routeParams,Topic,Timeline,$rootScope,$log) ->
+.controller 'TimelineController', ($scope,$http,$routeParams,Topic,Timeline,$rootScope,$log,$interval) ->
   Topic.set($routeParams.topic_id,$routeParams.topic_type).then ->
     Timeline.setView $routeParams.view_name || "all"
     Timeline.update()
+    Topic.update()
+    $interval Timeline.update, 4000
   $rootScope.$on "timelineUpdated", ->
     $scope.years = Timeline.years()
     $scope.events = Timeline.get()
@@ -78,8 +80,9 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
   update: ->
     return unless topic
     $log.info "TopicFactory: I'm about to update the topic"
-    $http.get(urlBase() + ".json?refresh=true").then (result) ->
-      topic = result.data
+    $http.get(urlBase() + ".json?refresh=true")
+    .success (data) ->
+      topic = data
       $rootScope.$broadcast("topicUpdated")
 
 .factory 'Timeline', ($http,$rootScope,$q,Topic,$log,academicYearFilter) ->

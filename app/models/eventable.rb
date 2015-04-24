@@ -24,6 +24,8 @@ class Eventable < ActiveRecord::Base
   before_validation do |e|
     update_attribute("created_by_id", Person.user ? Person.user.id : nil) unless e.created_by_id
   end
+  
+  after_save {|e| events.each &:touch }
 
   validates :person_id, presence: true
 

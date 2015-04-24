@@ -44,7 +44,7 @@ leap-topic-header header {
         @media #{$medium-up} { @include grid-column(6) }
         @media #{$large-up}  { @include grid-column(4) }
       }
-      h1 { 
+      .name { 
         @media #{$small-up}  { @include grid-column($columns: 8, $collapse: true) }
         @media #{$medium-up} { @include grid-column($columns: 6, $collapse: true) }
         @media #{$large-up}  { @include grid-column($columns: 8, $collapse: true) }
@@ -54,10 +54,10 @@ leap-topic-header header {
 
   &.fixed {
     top: $topbar-height;
+    h1 { font-size: $h3-font-size }
     .personal-details { display: none }
 
     leap-person,leap-course {
-      h1{ font-size: $h3-font-size }
       img { height: $topbar-height }
       .flags { display: none }
     }

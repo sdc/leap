@@ -70,6 +70,10 @@ class Qualification < Eventable
     return "Unexpected error!"
   end
 
+  def icon
+    "fa-certificate"
+  end
+  
   def as_timeline_event(e)
     { verb: case e.transition
             when :create   then "am predicted"

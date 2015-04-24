@@ -17,6 +17,7 @@
 
   leap-timeline-event {
     @include grid-row;
+    border-bottom: 1px solid $aluminum;
     .time,.date {min-height:1px}
     .date { 
       @include radius;
@@ -27,6 +28,11 @@
         color: $white;
         line-height: 1;
       }
+    }
+    .icon { 
+      @include grid-column(1, $collapse: true);
+      font-size: 2rem;
+      text-align: center;
     }
     .body {
       h1 { font-size: $h3-font-size }
@@ -42,10 +48,6 @@
       .date { 
         @include grid-column(1,$collapse: true); 
         h3 { font-size: $h5-font-size }
-      }
-      .icon { 
-        @include grid-column(1, $collapse: true);
-        text-align: center;
       }
       .time             { display: none }
       .body             { @include grid-column(7) }
@@ -63,13 +65,12 @@
         @include grid-column(1,$collapse: true); 
         h3 { font-size: $h3-font-size }
       }
-      .icon { 
-        @include grid-column(1, $collapse: true);
-        text-align: center;
-      }
       .time             { @include grid-column(1) }
       .body             { @include grid-column(7) }
       leap-person~.body { @include grid-column(5) }
+    }
+    @media #{$large-up} {
+      .icon { font-size: 3rem }
     }
   }
 }
