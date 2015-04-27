@@ -205,7 +205,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
       scope.eventDate = new Date(scope.event.eventDate)
       scope.showTime = !(scope.eventDate.getHours() == scope.eventDate.getMinutes() == scope.eventDate.getSeconds() == 0)
       scope.showPerson = Topic.get().topic_type != "person"
-      scope.iconType = if scope.event.icon.substring(0,7) == "http://" then "image" else "fa"
+      scope.iconType = if scope.event.icon.substring(0,3) == "fa-" then "fa" else "image"
 
 .directive 'leapTile', ($http,Topic) ->
   restrict: "E"
