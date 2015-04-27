@@ -4,7 +4,6 @@ $topic-header-bg: #abc;
 
 leap-topic-header header {
   background: $topic-header-bg;
-  @include grid-row;
 
   .views-menu {
     @include grid-column(12);
@@ -17,19 +16,18 @@ leap-topic-header header {
   }
 
   &:not(.fixed) { 
+    @include grid-row;
     border: 1px solid scale-color($topic-header-bg, $lightness: $panel-function-factor);
     border-top: none;
     .topic-and-flags{ 
       @media #{$small-up}  { @include grid-column(12, $collapse: true) }
       @media #{$medium-up} { @include grid-column(6) }
       @media #{$large-up}  { @include grid-column(5) }
-      @media #{$xlarge-up} { @include grid-column(4) }
     }
     .personal-details {
       @media #{$small-up}  { display: none } 
       @media #{$medium-up} { display: block; @include grid-column(6) }
       @media #{$large-up}  { @include grid-column(7) }
-      @media #{$xlarge-up} { @include grid-column(8) }
       .details-tabs {
         @include sub-nav;
         dd:first-child { margin-left: 0 }
@@ -50,6 +48,10 @@ leap-topic-header header {
       .flags { display: none }
     }
     leap-person { padding-left: 0 }
+
+    .topic-and-flags{ 
+      @media #{$large-up}  { @include grid-column(6) }
+     }
 
     .views-menu  { 
       @media #{$small-up} { @include grid-column(12) }
