@@ -94,13 +94,14 @@ class Event < ActiveRecord::Base
 
   def as_timeline_event
     {
-      template:   timeline_template,
-      personId:   person.mis_id,
-      title:      title || eventable.humanize,
-      body:       body,
-      eventDate:  event_date,
-      icon:       icon,
-      updatedAt:  eventable.updated_at
+      template:    timeline_template,
+      personId:    person.mis_id,
+      title:       title || eventable.humanize,
+      body:        body,
+      eventDate:   event_date,
+      icon:        icon,
+      updatedAt:   eventable.updated_at,
+      childrenIds: children.ids
     }.merge(eventable_type.camelize(:lower) => timeline_attrs)
 
   end
