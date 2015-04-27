@@ -4,25 +4,7 @@ $topic-header-bg: #abc;
 
 leap-topic-header header {
   background: $topic-header-bg;
-
-  leap-person { 
-    @media #{$small-up}  { @include grid-column(12) }
-    @media #{$medium-up} { @include grid-column(6) }
-  }
-  leap-course { 
-    @media #{$small-up}  { @include grid-column(12) }
-    @media #{$medium-up} { @include grid-column(6) }
-  }
-
-  .personal-details {
-    @media #{$small-up}  { display: none } 
-    @media #{$medium-up} { display: block; @include grid-column(6) }
-
-    .details-tabs {
-      @include sub-nav;
-      dd:first-child { margin-left: 0 }
-    }
-  }
+  @include grid-row;
 
   .views-menu {
     @include grid-column(12);
@@ -35,30 +17,32 @@ leap-topic-header header {
   }
 
   &:not(.fixed) { 
-    @include grid-row;
     border: 1px solid scale-color($topic-header-bg, $lightness: $panel-function-factor);
     border-top: none;
-    leap-person { 
-      img { 
-        @media #{$small-up}  { @include grid-column(4) }
-        @media #{$medium-up} { @include grid-column(6) }
-        @media #{$large-up}  { @include grid-column(4) }
-      }
-      .name { 
-        @media #{$small-up}  { @include grid-column($columns: 8, $collapse: true) }
-        @media #{$medium-up} { @include grid-column($columns: 6, $collapse: true) }
-        @media #{$large-up}  { @include grid-column($columns: 8, $collapse: true) }
+    .topic-and-flags{ 
+      @media #{$small-up}  { @include grid-column(12, $collapse: true) }
+      @media #{$medium-up} { @include grid-column(6) }
+    }
+    .personal-details {
+      @media #{$small-up}  { display: none } 
+      @media #{$medium-up} { display: block; @include grid-column(6) }
+      .details-tabs {
+        @include sub-nav;
+        dd:first-child { margin-left: 0 }
       }
     }
   }
 
   &.fixed {
     top: $topbar-height;
-    h1 { font-size: $h3-font-size }
+    h1 { 
+      font-size: $h3-font-size;
+      margin: 0;
+    }
     .personal-details { display: none }
 
     leap-person,leap-course {
-      img { height: $topbar-height }
+      img { height: $topbar-height; width: auto }
       .flags { display: none }
     }
     leap-person { padding-left: 0 }

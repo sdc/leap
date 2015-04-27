@@ -38,7 +38,7 @@
       h1 { font-size: $h3-font-size }
     }
     @media #{$small-only} {
-      leap-person { 
+      .about-person{ 
         img { @include grid-column(2) }
         h1  { 
           @include grid-column(2,$collapse:true);
@@ -51,10 +51,10 @@
       }
       .time             { display: none }
       .body             { @include grid-column(7) }
-      leap-person~.body { @include grid-column(5) }
+      .about-person~.body { @include grid-column(5) }
     }
     @media #{$medium-up} {
-      leap-person { 
+      .about-person{ 
         img { @include grid-column(2) }
         h1  { 
           @include grid-column(2,$collapse:true);
@@ -67,7 +67,7 @@
       }
       .time             { @include grid-column(1) }
       .body             { @include grid-column(7) }
-      leap-person~.body { @include grid-column(5) }
+      .about-person~.body { @include grid-column(5) }
     }
     @media #{$large-up} {
       .icon { font-size: 3rem }

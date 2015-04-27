@@ -18,10 +18,6 @@
       @media #{$medium-up} { @include block-grid(6) }
       @media #{$large-up}  { @include block-grid(8) }
     }
-    leap-person {
-      h1 { font-size: $h2-font-size }
-      .flags { display: none }
-    }
   }
 
   table { width: 100% }

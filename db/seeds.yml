@@ -81,16 +81,16 @@ views:
     admin_only: false
   - id: 4
     parent_id: 1
-    icon: fa-circle-o
-    title: Badges
+    icon: fa-comment
+    title: Contact Logs
     topic_person: true
     topic_course: true
     controls: null
     view_type: tiles
     events: 
-      MdlBadge:
+      ContactLog:
         null
-    url: badges
+    url: contact-logs
     aff_affiliate: true
     aff_applicant: true
     aff_staff: true

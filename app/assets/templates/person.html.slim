@@ -1,15 +1,14 @@
-a ng-href="#/person/{{ person.mis_id }}"
+a< ng-href="#/person/{{ person.mis_id }}"
   img ng-src="{{ person.photo_uri }}"
-  h1
-    .forename {{ person.forename }}
-    .surname  {{ person.surname }}
+  .name 
+    | {{ person.forename }} {{ person.surname }}
     small.number< {{ person.mis_id }}
-.flags
-  .label.alert ng-if="person.note" tooltip="This person has a note on the MIS" tooltip-trigger="mouseenter" tooltip-placement="bottom"
-    i.fa.fa.fa-flag
-  .label.warning tooltip="Do not contact this person!" tooltip-trigger="mouseenter" ng-if="!person.contact_allowed" tooltip-placement="bottom"
-    i.fa.fa-exclamation-triangle
-  .label.success tooltip="Staff Member" tooltip-trigger="mouseenter" ng-if="person.staff" tooltip-placement="bottom"
-    i.fa.fa-mortar-board
-  .label.success tooltip="User has admin privileges" tooltip-trigger="mouseenter" ng-if="person.admin" tooltip-placement="bottom"
-    i.fa.fa-key
+  .flags ng-if="flags"
+    .label.alert ng-if="person.note" tooltip="This person has a note on the MIS" tooltip-trigger="mouseenter" tooltip-placement="bottom"
+      i.fa.fa.fa-flag
+    .label.warning tooltip="Do not contact this person!" tooltip-trigger="mouseenter" ng-if="!person.contact_allowed" tooltip-placement="bottom"
+      i.fa.fa-exclamation-triangle
+    .label.success tooltip="Staff Member" tooltip-trigger="mouseenter" ng-if="person.staff" tooltip-placement="bottom"
+      i.fa.fa-mortar-board
+    .label.success tooltip="User has admin privileges" tooltip-trigger="mouseenter" ng-if="person.admin" tooltip-placement="bottom"
+      i.fa.fa-key

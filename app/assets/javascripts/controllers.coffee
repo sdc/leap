@@ -29,7 +29,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
     Timeline.setView $routeParams.view_name || "all"
     Timeline.update()
     Topic.update()
-    $interval Timeline.update, 4000
+    #$interval Timeline.update, 4000
   $rootScope.$on "timelineUpdated", ->
     $scope.years = Timeline.years()
     $scope.events = Timeline.get()
@@ -180,8 +180,9 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
   templateUrl: '/assets/person.html'
   scope:
     misId: '='
-    data: '='
+    flags: '@'
   link: (scope,element,attrs) ->
+    scope.flags = scope.flags=="flags"
     scope.$on "person_#{scope.misId}_updated", ->
       $log.info "Person #{scope.person.name}: I need to update myself"
       $http.get("/people/#{scope.misId}.json").success (data) ->

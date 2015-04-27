@@ -21,10 +21,16 @@ class ContactLog < Eventable
 
   validates :body, presence: true
 
-  def as_timeline_event(e)
-    { verb: "was contacted by #{created_by ? created_by.name : 'someone'}",
-      text: body,
-      iconUrlRaw: created_by.photo_uri,
-    }
+  def icon
+    created_by.photo_uri
   end
+
+  def timeline_template
+    "contact_log.html"
+  end
+
+  def timeline_attrs
+    { personId: created_by.mis_id }
+  end
+
 end

@@ -1,32 +1,34 @@
 leap-person {
-  h1 { 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-  }
-
-  h1,.forename,.surname { display: inline }
-  img { width: auto }
-  a   { color: inherit }
+  .name { display: inline }
 }
 
 .top-bar leap-person {
+  a { color: $topbar-link-color;
+      padding: 0 !important;
+      line-height: 2.5rem !important;
+    }
   img { 
     float:right;
-    padding-left: 7px;
-    height: $topbar-height 
+    height: $topbar-height;
+    padding-left: 1rem;
   }
-
-  h1 { 
-    @media #{$small-only} { display: none }
-    font-size: $h3-font-size;
-    color: $topbar-link-color
+  @media #{$small-only} {
+    .name { display: none }
   }
-
-  a { padding:0 !important }
-  .flags { display: none }
 }
 
-leap-timeline-event leap-person {
-  .flags,.number { display: none }
+leap-topic-header { 
+  padding-left: 0;
+  header:not(.fixed) leap-person {
+    @include grid-row;
+    img { @include grid-column(6)}
+    .name,.flags { @include grid-column(6)}
+  } 
+
+  header.fixed leap-person,leap-course {
+    img { height: $topbar-height; width: auto }
+    flags{ display: none }
+  }
 }
+
+#timeline leap-person img { height: 1em }
