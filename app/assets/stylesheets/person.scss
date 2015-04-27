@@ -21,8 +21,8 @@ leap-topic-header {
   padding-left: 0;
   header:not(.fixed) leap-person {
     @include grid-row;
-    img { @include grid-column(6)}
-    .name,.flags { @include grid-column(6)}
+    img { @include grid-column(5)}
+    .name,.flags { @include grid-column(7)}
   } 
 
   header.fixed leap-person,leap-course {
