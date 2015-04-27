@@ -22,10 +22,14 @@ leap-topic-header header {
     .topic-and-flags{ 
       @media #{$small-up}  { @include grid-column(12, $collapse: true) }
       @media #{$medium-up} { @include grid-column(6) }
+      @media #{$large-up}  { @include grid-column(5) }
+      @media #{$xlarge-up} { @include grid-column(4) }
     }
     .personal-details {
       @media #{$small-up}  { display: none } 
       @media #{$medium-up} { display: block; @include grid-column(6) }
+      @media #{$large-up}  { @include grid-column(7) }
+      @media #{$xlarge-up} { @include grid-column(8) }
       .details-tabs {
         @include sub-nav;
         dd:first-child { margin-left: 0 }

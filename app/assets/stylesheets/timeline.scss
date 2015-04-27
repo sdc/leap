@@ -4,13 +4,14 @@
 
 #timeline {
   h1.academic-year {
-    font-size: $h2-font-size;
+    font-size: $h3-font-size;
     background: #44a;
     color: $white;
     padding: 5px 1ex;
     .ay_switch {
       float:right;
       @include switch-base;
+      @include switch-size(1.5rem);
       @include switch-style($radius: $global-radius);
     }
   }
