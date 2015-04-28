@@ -37,13 +37,6 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
     $scope.events = Timeline.get()
     $scope.view = Timeline.getView()
 
-.controller 'eventController', ($scope,$http,Topic) ->
-  $scope.createEvent = ->
-    newEvent.person_id = Topic.mis_id
-    console.log $scope.newEvent
-    $http.post(Topic.urlBase() + "/events.json",$scope.newEvent).success (data) ->
-      alert "woo!"
-
 #.controller 'moodleCoursesController', ($scope,$http,$rootScope) ->
 #  $scope.getCourses = (mis_id) ->
 #    $http.get("/people/#{mis_id}/moodle_courses.json").success (data) ->
@@ -106,6 +99,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
     getView: -> view
     get: -> events
     years: -> _.map(_.uniq(_.map(events,(e) -> academicYearFilter(e.event_date))), (y) -> {year: y,show: true})
+    addEvent: (event) -> events.unshift(event)
     update: ->
       deferred = $q.defer()
       $http.get("#{Topic.urlBase()}/timeline_views/#{viewName}").success (data) ->
@@ -226,11 +220,31 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
 
 .directive 'leapTimelineControls', (Timeline,$rootScope) ->
   restrict: "E"
-  templateUrl: '/assets/timeline_controls'
+  templateUrl: '/assets/timeline_controls.html'
   link: (scope) ->
+    scope.$on "cancelEventForm", ->
+      scope.view.showControls = false
+      scope.view.showButton = true
     $rootScope.$on "timelineUpdated", ->
       view = Timeline.getView()
       view.showButton = view.controls.length > 0
+
+.directive 'leapEventForm', ($http,Topic,Timeline) ->
+  restrict: "E"
+  scope:
+    templateUrl: '='
+    eventType: '='
+  templateUrl: '/assets/event_form.html'
+  link: (scope) ->
+    scope.newEvent = {}
+    scope.cancelForm = -> scope.$emit("cancelEventForm")
+    scope.createEvent = ->
+      toPost = {eventable_type: scope.eventType }
+      toPost[scope.eventType] = scope.newEvent
+      $http.post(Topic.urlBase() + "/events.json",toPost).success (data) ->
+        Timeline.update()
+        scope.$emit("cancelEventForm")
+        #Timeline.addEvent(dataI
 
 .directive 'leapTile', ($http,Topic) ->
   restrict: "E"

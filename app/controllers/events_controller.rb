@@ -27,27 +27,15 @@ class EventsController < ApplicationController
   end
 
   def create
+    params.require(:eventable_type)
     et = params.delete(:eventable_type).tableize
     if @affiliation == "staff" || Settings.students_create_events.split(",").include?(et)
+      params.require(et.singularize).permit!
       @event = @topic.send(et).build(params[et.singularize])
       if @event.save
-        flash[:success] = "New #{et.singularize.humanize.titleize} created"
+        render json: @event
       else
-        logger.error "*" * 1000
-        @event.errors.each do |c, e|
-          logger.error c.to_s + " -- " + e
-        end
-        flash[:error] = "#{et.singularize.humanize.titleize} could not be created!"
-        flash[:details] = @event.errors.map { |c, e| "<b>#{c}:</b> #{e}" }.join "<br />"
-      end
-      if params[:redirect_to]
-        redirect_to params[:redirect_to]
-      else
-        begin
-          render @event
-        rescue
-          redirect_to :back
-        end
+        render json: { errors: @event.errors.full_messages }
       end
     else
       redirect_to "/404.html"

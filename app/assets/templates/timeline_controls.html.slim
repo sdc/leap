@@ -6,4 +6,4 @@ button#add-event-button ng-class="{'off-canvas': !view.showButton || view.showCo
   .inner
     tabset
       tab ng-repeat="control in view.controls" heading="{{ control.name }}" active="tab.active"
-        ng-include src="'/assets/events/create/' + control.templateUrl"
+        leap-event-form template-url="control.templateUrl" event-type="control.createEvent"
