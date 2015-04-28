@@ -13,7 +13,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
       templateUrl: '/assets/search.html'
 ])
 
-.run ($rootScope,Topic,$interval,$document,$log) ->
+.run ($rootScope,Topic,Timeline,$interval,$document,$log) ->
   Topic.set().then (data) -> $rootScope.user = data
   $rootScope.$on "topicChanged", ->
     if topic = Topic.get()
@@ -23,16 +23,19 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
       $log.info "Leap: I cleared the topic!"
   $rootScope.$on "topicUpdated", -> $log.info "Leap: Topic #{Topic.get().topic_type}: #{Topic.get().name} updated."
   $rootScope.$on "timelineUpdated", -> $log.info "Leap: The timeline got updated!"
+  $rootScope.$on "viewChanged", ->
+    $log.info "Leap: The view has changed to " + Timeline.getView()
+    Timeline.update()
 
 .controller 'TimelineController', ($scope,$http,$routeParams,Topic,Timeline,$rootScope,$log,$interval) ->
   Topic.set($routeParams.topic_id,$routeParams.topic_type).then ->
     Timeline.setView $routeParams.view_name || "all"
-    Timeline.update()
     Topic.update()
     #$interval Timeline.update, 4000
   $rootScope.$on "timelineUpdated", ->
     $scope.years = Timeline.years()
     $scope.events = Timeline.get()
+    $scope.view = Timeline.getView()
 
 #.controller 'moodleCoursesController', ($scope,$http,$rootScope) ->
 #  $scope.getCourses = (mis_id) ->
@@ -87,21 +90,28 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
 
 .factory 'Timeline', ($http,$rootScope,$q,Topic,$log,academicYearFilter) ->
     events = []
+    viewName = null
     view = null
     setView: (v) ->
-      view = v
+      if viewName != v
+        viewName = v
+        $rootScope.$broadcast "viewChanged"
+    getView: -> view
     get: -> events
     years: -> _.map(_.uniq(_.map(events,(e) -> academicYearFilter(e.event_date))), (y) -> {year: y,show: true})
     update: ->
       deferred = $q.defer()
-      $http.get("#{Topic.urlBase()}/timeline_views/#{view}").success (data) ->
-        events = data
+      $http.get("#{Topic.urlBase()}/timeline_views/#{viewName}").success (data) ->
+        view = data.view
+        $log.info view
+        events = data.events
         (event.eventDate = new Date event.event_date) for event in events
         (event.academicYear = academicYearFilter(event.eventDate)) for event in events
         (event.showDate = (events[i-1]?.eventDate.toDateString() != event.eventDate.toDateString())) for event,i in events
         $rootScope.$broadcast("timelineUpdated")
         deferred.resolve events
       deferred.promise
+
 
 .filter 'academicYear', ->
   (d) ->
@@ -184,7 +194,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
   link: (scope,element,attrs) ->
     scope.flags = scope.flags=="flags"
     scope.$on "person_#{scope.misId}_updated", ->
-      $log.info "Person #{scope.person.name}: I need to update myself"
+      $log.info "Person #{scope.name}: I need to update myself"
       $http.get("/people/#{scope.misId}.json").success (data) ->
         scope.person = data
         $log.info "Person #{data.name}: I updated myself."
@@ -206,6 +216,14 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
       scope.showTime = !(scope.eventDate.getHours() == scope.eventDate.getMinutes() == scope.eventDate.getSeconds() == 0)
       scope.showPerson = Topic.get().topic_type != "person"
       scope.iconType = if scope.event.icon.substring(0,3) == "fa-" then "fa" else "image"
+
+.directive 'leapTimelineControls', (Timeline,$rootScope) ->
+  restrict: "E"
+  templateUrl: '/assets/timeline_controls'
+  link: (scope) ->
+    $rootScope.$on "timelineUpdated", ->
+      view = Timeline.getView()
+      view.showButton = view.controls.length > 0
 
 .directive 'leapTile', ($http,Topic) ->
   restrict: "E"

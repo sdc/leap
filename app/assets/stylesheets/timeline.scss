@@ -1,3 +1,5 @@
+$controls-bg: #6e155f;
+
 .no-events {
   @include alert($bg: $warning-color);
 }
@@ -76,5 +78,44 @@
     
     .buttons { @include grid-row }
     .buttons > div { @include grid-column(3) }
+  }
+}
+
+#add-event-button {
+  @include button($radius: true,$padding: 0.5rem);
+  position: fixed;
+  bottom: 3%;
+  right: 3%;
+  text-align: center;
+  font-size: 1.2rem;
+  z-index: 15;
+  transition: 0.5s ease all;
+  &.off-canvas { bottom: -100% }
+  i {
+    display:block;
+    font-size: 4rem;
+  }
+}
+
+#timeline-controls {
+  position:fixed;
+  width: 100%;
+  bottom: 0;
+  left:0;
+  right:0;
+  background: $controls-bg;
+  margin-bottom: 0;
+  transition: 0.5s ease all;
+  &.off-canvas { bottom: -100% }
+  .inner {
+    @include grid-row;
+    color: #eee;
+    h1,h2,h3,h4,h5 { color: #eee }
+    .tabs dd a {
+      background: scale-color($controls-bg, $lightness: 80%);
+    }
+    .tabs dd.active a {
+      background: scale-color($controls-bg, $lightness: 60%);
+    }
   }
 }

@@ -1,0 +1,9 @@
+button#add-event-button ng-class="{'off-canvas': !view.showButton || view.showControls}" ng-click="view.showControls = true"
+  i.fa.fa-plus-circle
+  | Add event
+
+#timeline-controls ng-class="{'off-canvas': !view.showControls}"
+  .inner
+    tabset
+      tab ng-repeat="control in view.controls" heading="{{ control.name }}" active="tab.active"
+        ng-include src="'/assets/events/create/' + control.templateUrl"

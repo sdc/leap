@@ -35,6 +35,6 @@ class TimelineViewsController < ApplicationController
       @topic.events
     end
     events = scope.where.any_of(*(view.events.map{|etype,trans| {eventable_type: etype}.merge(trans ? {transition: trans} : {})}))
-    render json: events
+    render json: {view: view, events: events}
   end
 end
