@@ -88,6 +88,7 @@ views:
     controls:
       - name: Add a Contact Log
         templateUrl: contact_log.html
+        createEvent: contact_log
       - name: Plopt
         templateUrl: contact_log.html
     view_type: tiles

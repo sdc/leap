@@ -37,6 +37,13 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
     $scope.events = Timeline.get()
     $scope.view = Timeline.getView()
 
+.controller 'eventController', ($scope,$http,Topic) ->
+  $scope.createEvent = ->
+    newEvent.person_id = Topic.mis_id
+    console.log $scope.newEvent
+    $http.post(Topic.urlBase() + "/events.json",$scope.newEvent).success (data) ->
+      alert "woo!"
+
 #.controller 'moodleCoursesController', ($scope,$http,$rootScope) ->
 #  $scope.getCourses = (mis_id) ->
 #    $http.get("/people/#{mis_id}/moodle_courses.json").success (data) ->

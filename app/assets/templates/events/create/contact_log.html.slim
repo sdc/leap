@@ -1,8 +1,7 @@
-h1 Add a contact log
-input type="hidden" name="eventable_type" ng-model="newEvent.eventable_type" value="contact_log"
-input type="hidden" name="person_id" ng-model="newEvent.person_id" value="{{ topic.mis_id }}"
-textarea name="body" ng-model="newEvent.body"
-button> ng-click="submitForm()"
-  i.fa.fa-plus>
-  | Add Contact Log
-button.secondary ng-click="view.showControls = false" Cancel
+form ng-controller="eventController"
+  h1 Add a contact log
+  textarea name="body" ng-model="newEvent.body"
+  button> ng-click="createEvent()"
+    i.fa.fa-plus>
+    | Add Contact Log
+  button.secondary ng-click="view.showControls = false" Cancel
