@@ -107,7 +107,7 @@ $controls-bg: #6e155f;
   margin-bottom: 0;
   transition: 0.5s ease all;
   &.off-canvas { bottom: -100% }
-  .inner {
+  .tabbable{
     @include grid-row;
     color: #eee;
     h1,h2,h3,h4,h5 { color: #eee }
@@ -117,5 +117,6 @@ $controls-bg: #6e155f;
     .tabs dd.active a {
       background: scale-color($controls-bg, $lightness: 60%);
     }
+    leap-event-form { @include grid-column(12) }
   }
 }

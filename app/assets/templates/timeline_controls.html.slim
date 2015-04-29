@@ -3,7 +3,6 @@ button#add-event-button ng-class="{'off-canvas': !view.showButton || view.showCo
   | Add event
 
 #timeline-controls ng-class="{'off-canvas': !view.showControls}"
-  .inner
-    tabset
-      tab ng-repeat="control in view.controls" heading="{{ control.name }}" active="tab.active" select="selected(control.name)"
-        leap-event-form template-url="control.templateUrl" event-type="control.createEvent"
+  tabset
+    tab ng-repeat="control in view.controls" heading="{{ control.name }}" active="tab.active" select="selected(control.name)"
+      leap-event-form template-url="control.templateUrl" event-type="control.createEvent"
