@@ -7,4 +7,4 @@
       .ay_switch: input id="ay_{{ $index }}" type="checkbox" ng-model="year.show": label for="ay_{{ $index }}" Woo
     .ay_events ng-show="year.show"
       leap-timeline-event ng-repeat="event in events | filter: {academicYear: year.year} track by event.id" leap-event-id="event.id" show-date="event.showDate"
-leap-timeline-controls
+leap-timeline-controls ng-if="topic.topic_type == 'person'"

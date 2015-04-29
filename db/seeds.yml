@@ -101,3 +101,20 @@ views:
     aff_staff: Yes
     aff_student: Yes
     admin_only: no
+  - id: 5
+    parent_id: null
+    icon: fa-mortar-board
+    title: Courses
+    topic_person: Yes
+    topic_course: No
+    controls: null
+    view_type: tiles
+    events: 
+      PersonCourse:
+        - start
+    url: courses
+    aff_affiliate: Yes
+    aff_applicant: Yes
+    aff_staff: Yes
+    aff_student: Yes
+    admin_only: no

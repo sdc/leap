@@ -1,8 +1,8 @@
 ul ng-repeat="menu in timeline_views | filter: {parent_id: null}" auto-active="true"
   li.heading: a ng-href="{{ baseUrl }}{{ menu.url}}"
-    i.fa.fa-fw ng-class="menu.icon"
+    i.fa.fa-fw> ng-class="menu.icon"
     | {{ menu.title}}
   li ng-repeat="item in timeline_views | filter: {parent_id: menu.id}"
     a ng-href="{{ baseUrl }}{{ item.url}}"
-      i.fa.fa-fw ng-class="item.icon"
+      i.fa.fa-fw> ng-class="item.icon"
       | {{ item.title}}
