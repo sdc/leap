@@ -22,7 +22,8 @@ class ContactLog < Eventable
   validates :body, presence: true
 
   def icon
-    created_by.photo_uri
+    #created_by.photo_uri
+    "fa-comment"
   end
 
   def timeline_template

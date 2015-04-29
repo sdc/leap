@@ -36,6 +36,7 @@ $controls-bg: #6e155f;
       @include grid-column(1, $collapse: true);
       font-size: 2rem;
       text-align: center;
+      img {width: 85%; height: auto}
     }
     .body {
       h1 { font-size: $h3-font-size }

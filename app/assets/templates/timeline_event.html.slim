@@ -5,7 +5,7 @@ time datetime="{{ event.eventDate }}"
   .time 
     h3 ng-if="showTime" {{ event.eventDate | date : "HH.mm" }}
 leap-person.about-person mis-id="event.personId" ng-if="showPerson"
-img.icon ng-if="iconType == 'image'" ng-src="{{ event.icon }}"
+h1.icon ng-if="iconType == 'image'": img ng-src="{{ event.icon }}"
 h1.icon.fa ng-if="iconType == 'fa'" class="{{ event.icon }}"
 ng-include.body src="'/assets/events/timeline/' + event.template" ng-if="event.template"
 .body ng-if="!event.template"
