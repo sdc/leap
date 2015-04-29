@@ -1,6 +1,7 @@
 form
   ng-include src="'/assets/events/create/' + templateUrl"
-  button> ng-click="createEvent()"
-    i.fa.fa-plus>
-    | Add Contact Log
-  button.secondary ng-click="cancelForm()" Cancel
+  .buttons
+    button> ng-click="createEvent()"
+      i.fa.fa-plus>
+      | Add Contact Log
+    button.secondary ng-click="cancelForm()" Cancel

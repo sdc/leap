@@ -117,6 +117,9 @@ $controls-bg: #6e155f;
     .tabs dd.active a {
       background: scale-color($controls-bg, $lightness: 60%);
     }
-    leap-event-form { @include grid-column(12) }
+    leap-event-form { 
+      @include grid-column(12) ;
+      .buttons { text-align: right }
+    }
   }
 }
