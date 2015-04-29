@@ -31,6 +31,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
   Topic.set($routeParams.topic_id,$routeParams.topic_type).then ->
     Timeline.setView $routeParams.view_name || "all"
     Topic.update()
+    $scope.topic = Topic.get()
     #$interval Timeline.update, 4000
   $rootScope.$on "timelineUpdated", ->
     $scope.years = Timeline.years()
@@ -126,7 +127,7 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
   templateUrl: "/assets/views_menu.html"
   link: (scope) ->
     refresh = ->
-      $http.get('/timeline_views.json').success (data) ->
+      $http.get(Topic.urlBase() + '/timeline_views.json').success (data) ->
         scope.timeline_views = data
         scope.baseUrl = "#/#{Topic.get().topic_type}/#{Topic.get().mis_id}/"
     $rootScope.$on 'topicChanged', -> refresh()

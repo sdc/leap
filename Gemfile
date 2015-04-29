@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 gem 'rails', "~> 4.2.1"
 gem 'coffee-rails', "~> 4.1.0"
-gem 'activerecord_any_of'
 gem 'slim-rails'
 gem 'foundation-rails'
 gem 'sass-rails'

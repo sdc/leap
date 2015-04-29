@@ -16,7 +16,9 @@
 
 class TimelineViewsController < ApplicationController
   def index
-    render json: TimelineView.where.not("admin_only").as_json
+    views = TimelineView.where("aff_#{Person.affiliation}"  => true,
+                               "topic_#{@topic.topic_type}" => true)
+    render json: views
   end
 
   def show
@@ -34,7 +36,18 @@ class TimelineViewsController < ApplicationController
     else
       @topic.events
     end
-    events = scope.where.any_of(*(view.events.map{|etype,trans| {eventable_type: etype}.merge(trans ? {transition: trans} : {})}))
+    conds = []
+    str = []
+    view.events.each do |etype,trans|
+      if trans
+        str.unshift "(eventable_type = ? and transition in (?))"
+        conds.unshift etype,trans
+      else
+        str.unshift "(eventable_type = ?)"
+        conds.unshift etype
+      end
+    end
+    events = scope.where(str.join(" or "), *conds)
     render json: {view: view, events: events}
   end
 end
