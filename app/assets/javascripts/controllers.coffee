@@ -103,16 +103,10 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
       deferred = $q.defer()
       $http.get("#{Topic.urlBase()}/timeline_views/#{viewName}").success (data) ->
         view = data.view
-        for e in data.events
-          (event.eventDate = new Date event.event_date) for event in events
-          (event.academicYear = academicYearFilter(event.eventDate)) for event in events
-          (event.showDate = (events[i-1]?.eventDate.toDateString() != event.eventDate.toDateString())) for event,i in events
-          if _.findWhere(events, {id: e.id})
-            console.log "not new"
-          else
-            console.log e
-            events.push e
-          events = (_.sortBy(events,'eventDate')).reverse()
+        events = data.events
+        (event.eventDate = new Date event.event_date) for event in events
+        (event.academicYear = academicYearFilter(event.eventDate)) for event in events
+        (event.showDate = (events[i-1]?.eventDate.toDateString() != event.eventDate.toDateString())) for event,i in events
         $rootScope.$broadcast("timelineUpdated")
         deferred.resolve events
       deferred.promise
@@ -225,7 +219,11 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
 .directive 'leapTimelineControls', (Timeline,$rootScope) ->
   restrict: "E"
   templateUrl: '/assets/timeline_controls.html'
-  link: (scope) ->
+  link: (scope,element) ->
+    scope.popupControls = ->
+      scope.view.showControls = true
+      scope.view.showButton = false
+      (element.find('textarea')[0] || element.find('input')[0]).focus()
     scope.$on "cancelEventForm", ->
       scope.view.showControls = false
       scope.view.showButton = true
