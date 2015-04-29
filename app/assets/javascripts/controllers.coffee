@@ -99,16 +99,20 @@ angular.module 'leapApp', ['ngRoute','mm.foundation','duScroll']
     getView: -> view
     get: -> events
     years: -> _.map(_.uniq(_.map(events,(e) -> academicYearFilter(e.event_date))), (y) -> {year: y,show: true})
-    addEvent: (event) -> events.unshift(event)
     update: ->
       deferred = $q.defer()
       $http.get("#{Topic.urlBase()}/timeline_views/#{viewName}").success (data) ->
         view = data.view
-        $log.info view
-        events = data.events
-        (event.eventDate = new Date event.event_date) for event in events
-        (event.academicYear = academicYearFilter(event.eventDate)) for event in events
-        (event.showDate = (events[i-1]?.eventDate.toDateString() != event.eventDate.toDateString())) for event,i in events
+        for e in data.events
+          (event.eventDate = new Date event.event_date) for event in events
+          (event.academicYear = academicYearFilter(event.eventDate)) for event in events
+          (event.showDate = (events[i-1]?.eventDate.toDateString() != event.eventDate.toDateString())) for event,i in events
+          if _.findWhere(events, {id: e.id})
+            console.log "not new"
+          else
+            console.log e
+            events.push e
+          events = (_.sortBy(events,'eventDate')).reverse()
         $rootScope.$broadcast("timelineUpdated")
         deferred.resolve events
       deferred.promise
