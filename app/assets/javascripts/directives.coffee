@@ -38,7 +38,7 @@ angular.module 'leapApp'
     scope.detailsPane='contacts'
     scope.refresh = -> Topic.update()
     scope.$watch 'misId', ->
-      $http.get("/people/#{scope.misId}.json").success (data) ->
+      $http.get("/people/#{scope.misId}.json",{cache: true}).success (data) ->
         scope.person = data
         $log.info "PersonHeader: I changed to #{scope.person.name}"
 
