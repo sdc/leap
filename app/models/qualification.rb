@@ -70,7 +70,7 @@ class Qualification < Eventable
     return "Unexpected error!"
   end
 
-  def icon
+  def font_icon
     "fa-certificate"
   end
   

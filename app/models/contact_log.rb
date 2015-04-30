@@ -21,8 +21,7 @@ class ContactLog < Eventable
 
   validates :body, presence: true
 
-  def icon
-    #created_by.photo_uri
+  def font_icon
     "fa-comment"
   end
 

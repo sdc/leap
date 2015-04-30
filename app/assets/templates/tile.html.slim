@@ -1,4 +1,6 @@
-article
-  .body
-    h1 I {{ event.verb }} {{ event.title }}
-    p ng-if="event.text" {{ event.text }}
+.background
+  i.fa ng-class="event.fontIcon"
+.foreground
+  h1 ng-class="{wrap: event.tileWrap }" {{ event.tileTitle }}
+  ng-include.body src="'/assets/events/tile/' + event.tileTemplate" ng-if="event.tileTemplate" ng-class="'tile-template-' + event.tileTemplate"
+  .body ng-if="!event.tileTemplate" {{ event.body }}

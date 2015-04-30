@@ -1,5 +1,4 @@
 class MdlBadge < Eventable
-  #attr_accessible :body, :image_url, :mdl_course_id, :person_id, :title, :created_at
   after_create { |badge| badge.events.create!(event_date: created_at, transition: :create) }
   belongs_to :person
 
@@ -48,32 +47,23 @@ class MdlBadge < Eventable
     image_url
   end
 
-  def to_course_tile
-    Tile.new(title: "PPD",
-             bg: "7755cc",
-             icon: "fa-dot-circle-o",
-             partial_path: "tiles/course_badges",
-             object: self)
+  def tile_wrap
+    true
+  end
+
+  def tile_template 
+    "badge"
+  end
+
+  def font_icon
+    "fa-dot-circle-o"
   end
 
   def all_in_course
     person.mdl_badges.where(mdl_course_id: mdl_course_id)
   end
 
-  def as_tile
-    { icon: "fa-dot-circle-o",
-      title: "New Badge",
-      subtitle: title,
-      partial_path: "tiles/mdl_badge",
-      link: link_url,
-      object: self }
-  end
-
-  def as_timeline_event(e)
-    { verb: "earned a new badge:",
-      title: title,
-      link: link_url,
-      iconUrlRaw: image_url
-    }
+  def timeline_attrs
+    { imageUrl: image_url }
   end
 end

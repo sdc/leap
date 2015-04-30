@@ -91,7 +91,7 @@ views:
         createEvent: contact_log
       - name: Plopt
         templateUrl: contact_log.html
-    view_type: tiles
+    view_type: timeline
     events: 
       ContactLog:
         null
@@ -108,7 +108,7 @@ views:
     topic_person: Yes
     topic_course: No
     controls: null
-    view_type: tiles
+    view_type: timeline
     events: 
       PersonCourse:
         - start

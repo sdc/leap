@@ -80,6 +80,44 @@ $controls-bg: #6e155f;
     .buttons { @include grid-row }
     .buttons > div { @include grid-column(3) }
   }
+
+  leap-tile {
+    overflow: hidden;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    float: left;
+    background: #8f8;
+    border-right: 1px $white solid;
+    border-top: 1px $white solid;
+
+    .background {
+      overflow: hidden;
+      i {
+        position: absolute;
+        font-size: 125px;
+        bottom: 0px;
+        right: 8px;
+        color: #666666;
+        opacity: 0.4;
+      }
+    }
+
+    .foreground {
+      margin: 8px;
+      h1 {
+        color: $white;
+        font-weight: bold;
+        font-size: 23px;
+        margin-bottom: 8px;
+        &:not(.wrap) {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
 }
 
 #add-event-button {

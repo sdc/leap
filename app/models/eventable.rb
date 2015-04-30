@@ -64,7 +64,7 @@ class Eventable < ActiveRecord::Base
     # (rand * 999999).floor.to_s.ljust(6,"0")
   end
 
-  def icon
+  def font_icon
     "fa-circle-thin"
   end
 

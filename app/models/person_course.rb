@@ -50,7 +50,7 @@ class PersonCourse < Eventable
     panes
   end
 
-  def icon
+  def font_icon
     "fa-graduation-cap"
   end
 

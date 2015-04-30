@@ -1,10 +1,13 @@
 #timeline
-  header
   .no-events ng-if="events.length == 0" Nothing to show!
-  .year ng-repeat="year in years"
-    h1.academic-year 
-      | {{ year.year }}
-      .ay_switch: input id="ay_{{ $index }}" type="checkbox" ng-model="year.show": label for="ay_{{ $index }}" Woo
-    .ay_events ng-show="year.show"
-      leap-timeline-event ng-repeat="event in events | filter: {academicYear: year.year} track by event.id" leap-event-id="event.id" show-date="event.showDate"
+  div ng-switch="view.view_type"
+    .timeline-events ng-switch-when="timeline"
+      .year ng-repeat="year in years"
+        h1.academic-year 
+          | {{ year.year }}
+          .ay_switch: input id="ay_{{ $index }}" type="checkbox" ng-model="year.show": label for="ay_{{ $index }}" Woo
+        .ay_events ng-show="year.show"
+          leap-timeline-event ng-repeat="event in events | filter: {academicYear: year.year} track by event.id" leap-event-id="event.id" show-date="event.showDate"
+    .tiles ng-switch-when="tiles"
+      leap-tile ng-repeat="event in events" leap-event-id="event.id"
 leap-timeline-controls ng-if="topic.topic_type == 'person'"
