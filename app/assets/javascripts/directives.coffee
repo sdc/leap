@@ -93,7 +93,6 @@ angular.module 'leapApp'
       scope.eventDate = new Date(scope.event.eventDate)
       scope.showTime = !(scope.eventDate.getHours() == scope.eventDate.getMinutes() == scope.eventDate.getSeconds() == 0)
       scope.showPerson = Topic.get().topic_type != "person"
-      scope.iconType = if scope.event.icon.substring(0,3) == "fa-" then "fa" else "image"
 
 .directive 'leapTimelineControls', (Timeline,$rootScope) ->
   restrict: "E"
@@ -125,7 +124,6 @@ angular.module 'leapApp'
       $http.post(Topic.urlBase() + "/events.json",toPost).success (data) ->
         Timeline.update()
         scope.$emit("cancelEventForm")
-        #Timeline.addEvent(dataI
 
 .directive 'leapTile', ($http,Topic) ->
   restrict: "E"
@@ -138,7 +136,6 @@ angular.module 'leapApp'
       scope.eventDate = new Date(scope.event.eventDate)
       scope.showTime = !(scope.eventDate.getHours() == scope.eventDate.getMinutes() == scope.eventDate.getSeconds() == 0)
       scope.showPerson = Topic.get().topic_type != "person"
-      scope.iconType = if scope.event.icon.substring(0,3) == "fa-" then "fa" else "image"
 
 .directive 'autoActive', ($location) ->
   restrict: 'A',
