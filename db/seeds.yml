@@ -118,3 +118,22 @@ views:
     aff_staff: Yes
     aff_student: Yes
     admin_only: no
+  - id: 6
+    parent_id: 5
+    icon: fa-certificate
+    title: Qualifications
+    topic_person: Yes
+    topic_course: Yes
+    controls: 
+      - name: Quals on Entry
+        templateUrl: qoe.html
+    view_type: table
+    events: 
+      Qualification:
+        - create
+    url: qualifications
+    aff_affiliate: Yes
+    aff_applicant: Yes
+    aff_staff: Yes
+    aff_student: Yes
+    admin_only: no
