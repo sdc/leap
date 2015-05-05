@@ -87,7 +87,7 @@ $column-gutter: rem-calc(30);
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // We use these to define default font stacks
-$font-family-sans-serif: "Raleway", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+$font-family-sans-serif: "Roboto", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 $font-family-serif: Georgia, Cambria, "Times New Roman", Times, serif;
 $font-family-monospace: AnonymousPro, Consolas, "Liberation Mono", Courier, monospace;
 
@@ -195,7 +195,7 @@ $cursor-text-value: text;
 // $include-html-type-classes: $include-html-classes;
 
 // We use these to control header font styles
-$header-font-family: "Sniglet";
+$header-font-family: $font-family-sans-serif;
 $header-font-weight: $font-weight-normal;
 $header-font-style: bold;
 $header-font-color: $jet;

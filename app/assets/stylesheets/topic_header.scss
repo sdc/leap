@@ -50,7 +50,7 @@ leap-topic-header header {
     leap-person { padding-left: 0 }
 
     .topic-and-flags{ 
-      @media #{$large-up}  { @include grid-column(6) }
+      @media #{$large-up}  { @include grid-column(6, $collapse: true) }
      }
 
     .views-menu  { 
