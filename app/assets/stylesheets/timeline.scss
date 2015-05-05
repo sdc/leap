@@ -59,7 +59,7 @@ $controls-bg: #6e155f;
     }
     @media #{$medium-up} {
       .about-person{ 
-        img { @include grid-column(2) }
+        img { @include grid-column(1) }
         .name { 
           @include grid-column(2,$collapse:true);
           font-size: $h3-font-size 
