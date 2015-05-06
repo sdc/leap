@@ -1,11 +1,20 @@
 .topic-and-flags
   h1: leap-person mis-id="person.mis_id" flags="flags"
-.personal-details
-  dl.details-tabs
+.details
+  dl.details-tabs ng-hide="collapseTopicBar"
+    dd ng-class="{active: detailsPane=='links'}"
+      a ng-click="detailsPane='links'" 
+        i.fa.fa-link>
+        | Links
     dd ng-class="{active: detailsPane=='contacts'}"
-      a ng-click="detailsPane='contacts'" Contact Details
+      a ng-click="detailsPane='contacts'"
+        i.fa.fa-envelope-o>
+        | Contact
     dd ng-class="{active: detailsPane=='admin'}"
-      a ng-click="detailsPane='admin'" Admin Details
+      a ng-click="detailsPane='admin'" 
+        i.fa.fa-cogs>
+        | Admin
+  .views-menu ng-class="{hide: detailsPane!='links'}": leap-views-menu
   .contact-details ng-class="{hide: detailsPane!='contacts'}"
     .alert-box ng-if="person.staff && person.mis_id != $root.user.mis_id" Personal details are hidden for staff.
     div ng-if="!person.staff || person.mis_id == $root.user.mis_id"
@@ -26,4 +35,3 @@
         button.button ng-click="refresh()"
           i.fa.fa-refresh>
           | Refresh
-.views-menu: leap-views-menu

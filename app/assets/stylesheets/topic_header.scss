@@ -1,70 +1,76 @@
-$topic-header-bg: #abc;
+$topic-header-bg: $silver;
 
-.topbar-gap { height: $topbar-height }
+.topbar-gap { height: $topbar-height * 1.1 }
 
-leap-topic-header header {
-  background: $topic-header-bg;
+header.topic-header {
+  background: $silver;
+  @include grid-row;
 
-  .views-menu {
-    @include grid-column(12);
-    views-menu { @include grid-row }
-    ul {
-      @include grid-column(3);
-      @include side-nav;
-      li.active { background: $snow }
-    }
-  }
-
-  &:not(.fixed) { 
-    @include grid-row;
-    border: 1px solid scale-color($topic-header-bg, $lightness: $panel-function-factor);
-    border-top: none;
-    .topic-and-flags{ 
-      @media #{$small-up}  { @include grid-column(12, $collapse: true) }
-      @media #{$medium-up} { @include grid-column(6) }
-      @media #{$large-up}  { @include grid-column(5) }
-    }
-    .personal-details {
-      @media #{$small-up}  { display: none } 
-      @media #{$medium-up} { display: block; @include grid-column(6) }
-      @media #{$large-up}  { @include grid-column(7) }
-      .details-tabs {
-        @include sub-nav;
-        dd:first-child { margin-left: 0 }
+  leap-person-header,leap-course-header {
+    &:not(.fixed) { 
+      h1 { margin: 0 }
+      .topic-and-flags{ 
+        @media #{$small-up}  { @include grid-column(12, $collapse: true) }
+        @media #{$medium-up} { @include grid-column(6,  $collapse: true) }
+        @media #{$large-up}  { @include grid-column(5,  $collapse: true) }
+         leap-person {
+           @include grid-row($behavior: collapse);
+           img { @include grid-column(5, $collapse: true)}
+           .name,.flags { @include grid-column(7)}
+         } 
+      }
+      .details{
+        @media #{$small-up}  { display: none } 
+        @media #{$medium-up} { display: block; @include grid-column(6) }
+        @media #{$large-up}  { @include grid-column(7) }
+        .details-tabs {
+          @include sub-nav;
+          dd:first-child { margin-left: 0 }
+        }
       }
     }
-  }
 
-  &.fixed {
-    top: $topbar-height;
-    h1 { 
-      font-size: $h3-font-size;
-      margin: 0;
-    }
-    .personal-details { display: none }
+    &.fixed {
+      background: $silver;
+      top: $topbar-height;
+      h1 { 
+        font-size: $h3-font-size;
+        margin: 0;
+      }
 
-    leap-person,leap-course {
-      img { height: $topbar-height; width: auto }
-      .flags { display: none }
-    }
-    leap-person { padding-left: 0 }
+      leap-person {
+        img { height: $topbar-height; width: auto }
+        .flags { display: none }
+      }
+      leap-person { padding-left: 0 }
 
-    .topic-and-flags{ 
-      @media #{$large-up}  { @include grid-column(6, $collapse: true) }
-     }
+      .topic-and-flags{ 
+        @media #{$large-up}  { @include grid-column(4, $collapse: true) }
+       }
 
-    .views-menu  { 
-      @media #{$small-up} { @include grid-column(12) }
-      @media #{$large-up} { @include grid-column(6) }
+      leap-views-menu {
+        &:hover li { display: block }
+        ul { padding: 0 }
+        li {
+          display: none;
+          &.heading { 
+            display: block;
+            margin-top: 9px;
+          }
+        }
+      }
     }
 
     leap-views-menu {
-      &:hover li { display: block }
-      ul { padding: 0 }
-      li {
-        display: none;
-        &.heading { display: block }
+      ul {
+        @include grid-column(3);
+        @include side-nav;
+        padding-top: 0;
+        li a { padding-left: 0 !important }
+        li.active { background: $snow }
+        li { margin-bottom: 0px }
       }
     }
+
   }
 }

@@ -4,7 +4,7 @@ angular.module 'leapApp'
   Topic.set($routeParams.topic_id,$routeParams.topic_type).then ->
     Timeline.setView $routeParams.view_name || "all"
     Topic.update()
-    $scope.topic = Topic.get()
+    $rootScope.topic = Topic.get()
     #$interval Timeline.update, 4000
   $rootScope.$on "timelineUpdated", ->
     $scope.years = Timeline.years()

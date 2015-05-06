@@ -11,38 +11,33 @@ angular.module 'leapApp'
     $rootScope.$on 'topicChanged', -> refresh()
     refresh()
 
-.directive 'leapTopicHeader', ($rootScope,Topic,$log,$document) ->
-  restrict: "EA"
-  templateUrl: '/assets/topic_header.html'
-  link: (scope, element) ->
-    $rootScope.$on 'topicUpdated', ->
-      scope.topic = Topic.get()
-      $log.info "TopicHeader: I saw the topic (#{scope.topic.name}) update"
-      scope.$broadcast "person_#{scope.topic.id}_updated"
-    $rootScope.$on 'topicChanged', ->
-      scope.topic = Topic.get()
-      $log.info "TopicHeader: I saw the topic change to #{scope.topic.name}"
-    $document.on 'scroll', ->
-      scope.collapseTopicBar = $document.scrollTop() > (element.find('header').prop('offsetHeight') - 24)
-
 .directive 'leapTopBar', ($rootScope) ->
   restrict: "E"
   templateUrl: '/assets/top_bar.html'
 
-.directive 'leapPersonHeader', ($http,Topic,$log) ->
+.directive 'leapPersonHeader', ($http,Topic,$log,$document) ->
   restrict: "EA"
   templateUrl: '/assets/person_header.html'
   scope:
     misId: '='
   link: (scope,element,attrs) ->
-    scope.detailsPane='contacts'
-    scope.refresh = -> Topic.update()
+    scope.detailsPane='links'
     scope.$watch 'misId', ->
       $http.get("/people/#{scope.misId}.json",{cache: true}).success (data) ->
         scope.person = data
         $log.info "PersonHeader: I changed to #{scope.person.name}"
+    $document.on 'scroll', ->
+      scope.collapseTopicBar = $document.scrollTop() > 200
+    scope.$watch 'collapseTopicBar', (newv,oldv) ->
+      if newv && !oldv
+        element.addClass("fixed")
+        scope.oldTab = scope.detailsPane
+        scope.detailsPane = "links"
+      else if oldv && !newv
+        element.removeClass("fixed")
+        scope.detailsPane = scope.oldTab
 
-.directive 'leapCourseHeader', ($http,Topic) ->
+.directive 'leapCourseHeader', ($http,Topic,$document) ->
   restrict: "EA"
   templateUrl: '/assets/course_header.html'
   scope:
@@ -51,6 +46,8 @@ angular.module 'leapApp'
     scope.$watch 'misId', ->
       $http.get("/courses/#{scope.misId}.json").success (data) ->
         scope.course = data
+    $document.on 'scroll', ->
+      scope.collapseTopicBar = $document.scrollTop() > (element.prop('offsetHeight') - 24)
 
 .directive 'leapCourse', ($http,$rootScope,Topic) ->
   restrict: "E"

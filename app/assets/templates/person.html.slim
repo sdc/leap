@@ -6,7 +6,7 @@ a< ng-href="#/person/{{ person.mis_id }}"
   .flags ng-if="flags"
     .label.alert ng-if="person.note" tooltip="This person has a note on the MIS" tooltip-trigger="mouseenter" tooltip-placement="bottom"
       i.fa.fa.fa-flag
-    .label.warning tooltip="Do not contact this person!" tooltip-trigger="mouseenter" ng-if="!person.contact_allowed" tooltip-placement="bottom"
+    .label.warning tooltip="Do not contact this person!" tooltip-trigger="mouseenter" ng-if="person && !person.contact_allowed" tooltip-placement="bottom"
       i.fa.fa-exclamation-triangle
     .label.success tooltip="Staff Member" tooltip-trigger="mouseenter" ng-if="person.staff" tooltip-placement="bottom"
       i.fa.fa-mortar-board

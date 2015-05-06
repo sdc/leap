@@ -9,5 +9,8 @@ html lang="en"
     meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
   body ng-app="leapApp"
     leap-top-bar
-    leap-topic-header
+    .topbar-gap
+    header.topic-header ng-if="topic"
+      leap-person-header ng-if="topic.topic_type=='person'" mis-id="topic.mis_id"
+      leap-course-header ng-if="topic.topic_type=='course'" mis-id="topic.mis_id"
     #main-content ng-view=true

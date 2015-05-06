@@ -3,9 +3,7 @@
   div ng-switch="view.view_type"
     .timeline-events ng-switch-when="timeline"
       .year ng-repeat="year in years"
-        h1.academic-year 
-          | {{ year.year }}
-          .ay_switch: input id="ay_{{ $index }}" type="checkbox" ng-model="year.show": label for="ay_{{ $index }}" Woo
+        h1.academic-year ng-click="year.show = !year.show" {{ year.year }}
         .ay_events ng-show="year.show"
           leap-timeline-event ng-repeat="event in events | filter: {academicYear: year.year} track by event.id" leap-event-id="event.id" show-date="event.showDate"
     .tiles ng-switch-when="tiles"

@@ -2,20 +2,16 @@ $controls-bg: #6e155f;
 
 .no-events {
   @include alert($bg: $warning-color);
+  margin-top: 5px;
 }
 
 #timeline {
   h1.academic-year {
-    font-size: $h3-font-size;
     background: #44a;
+    font-size: $h3-font-size;
     color: $white;
     padding: 5px 1ex;
-    .ay_switch {
-      float:right;
-      @include switch-base;
-      @include switch-size(1.5rem);
-      @include switch-style($radius: $global-radius);
-    }
+    cursor: pointer;
   }
 
   leap-timeline-event {
