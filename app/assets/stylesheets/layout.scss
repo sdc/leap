@@ -2,13 +2,6 @@ body,leap-top-bar { min-width: 320px }
 
 .number { font-family: $font-family-monospace }
 
-.leap-logo {
-  color: #3cd;
-  background: linear-gradient(#5ef, #06a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 leap-top-bar {
   position: fixed;
   top:0;
