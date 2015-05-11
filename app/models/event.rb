@@ -38,6 +38,7 @@ class Event < ActiveRecord::Base
   belongs_to :created_by, class_name: "Person", foreign_key: "created_by_id"
   belongs_to :about_person, class_name: "Person", foreign_key: "about_person_id"
   belongs_to :eventable, polymorphic: true
+  belongs_to :category
   has_many :children, class_name: "Event", foreign_key: "parent_id", dependent: :nullify
   belongs_to :parent, class_name: "Event", foreign_key: "parent_id"
   has_many :targets, dependent: :nullify
@@ -105,7 +106,8 @@ class Event < ActiveRecord::Base
       icon:         icon,
       fontIcon:     font_icon,
       updatedAt:    eventable.updated_at,
-      childrenIds:  children.ids
+      childrenIds:  children.ids,
+      categoryId:   category.try(:id)
     }.merge(eventable_type.camelize(:lower) => timeline_attrs)
   end
 

@@ -29,12 +29,12 @@ class EventsController < ApplicationController
   def create
     params.require(:eventable_type)
     et = params.delete(:eventable_type).tableize
-    category = Category.find(params[et.singularize].delete(:category_id))
+    category = Category.find(params[et.singularize].delete(:category_id)) if params[et.singularize][:category_id]
     if @affiliation == "staff" || Settings.students_create_events.split(",").include?(et)
       params.require(et.singularize).permit!
       @event = @topic.send(et).build(params[et.singularize])
       if @event.save
-        @event.events.each{|e| e.update_attribute "category_id", category.id }
+        @event.events.each{|e| e.update_attribute "category_id", category.id } if category
         render json: @event
       else
         render json: { errors: @event.errors.full_messages }

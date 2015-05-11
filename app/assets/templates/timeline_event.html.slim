@@ -1,13 +1,14 @@
-time datetime="{{ event.eventDate }}"
-  .date
-    h3 ng-if="showDate"  {{ event.eventDate | date : "dd" }}
-    h3 ng-if="showDate"  {{ event.eventDate | date : "MMM" }}
-  .time 
-    h3 ng-if="showTime" {{ event.eventDate | date : "HH.mm" }}
-leap-person.about-person mis-id="event.personId" ng-if="showPerson"
-h1.icon ng-if="event.icon": img ng-src="{{ event.icon }}"
-h1.icon.fa ng-if="event.fontIcon && !event.icon" class="{{ event.fontIcon }}"
-ng-include.body src="'/assets/events/timeline/' + event.template" ng-if="event.template"
-.body ng-if="!event.template"
-  h1 {{ event.title }}
-  p ng-if="event.body" {{ event.body }}
+.background
+  time datetime="{{ event.eventDate }}"
+    .date
+      h3 ng-if="showDate"  {{ event.eventDate | date : "dd" }}
+      h3 ng-if="showDate"  {{ event.eventDate | date : "MMM" }}
+    .time 
+      h3 ng-if="showTime" {{ event.eventDate | date : "HH.mm" }}
+  leap-person.about-person mis-id="event.personId" ng-if="showPerson"
+  h1.icon ng-if="event.icon": img ng-src="{{ event.icon }}"
+  h1.icon.fa ng-if="event.fontIcon && !event.icon" class="{{ event.fontIcon }}" ng-style="iconStyle" tooltip="{{ category.title }}"
+  ng-include.body src="'/assets/events/timeline/' + event.template" ng-if="event.template"
+  .body ng-if="!event.template"
+    h1 {{ event.title }}
+    p ng-if="event.body" {{ event.body }}

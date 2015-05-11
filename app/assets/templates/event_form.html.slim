@@ -11,3 +11,4 @@ form
       input type="radio" name="itag" ng-model="newEvent.category_id" value="{{ category.id }}" id="category_switch_{{ category.id }}"
       label for="category_switch_{{ category.id }}"
       h4.right {{ category.title }}
+    a ng-click="newEvent.category_id = null" clear
