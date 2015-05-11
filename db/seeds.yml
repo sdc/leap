@@ -137,3 +137,17 @@ views:
     aff_staff: Yes
     aff_student: Yes
     admin_only: no
+
+categories:
+  - id: 1
+    title: Cores
+    color: "#4f2170"
+  - id: 2
+    title: English
+    color: "#1a695e"
+  - id: 3
+    title: Maths
+    color: "#a75d29"
+  - id: 4
+    title: PPD
+    color: "#a7a429"

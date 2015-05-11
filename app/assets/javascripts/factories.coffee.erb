@@ -52,3 +52,11 @@ angular.module 'leapApp'
         $rootScope.$broadcast("timelineUpdated")
         deferred.resolve events
       deferred.promise
+
+.factory 'Categories', ->
+  categories = []
+  <% Category.all.each do |c| %>
+  categories[<%= c.id %>] = <%= c.to_json %>
+  <% end %>
+  getAll: -> _.reject(categories, (e) -> _.isUndefined(e))
+  get: (id) -> categories[id]

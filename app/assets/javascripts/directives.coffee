@@ -91,7 +91,7 @@ angular.module 'leapApp'
       scope.showTime = !(scope.eventDate.getHours() == scope.eventDate.getMinutes() == scope.eventDate.getSeconds() == 0)
       scope.showPerson = Topic.get().topic_type != "person"
 
-.directive 'leapTimelineControls', (Timeline,$rootScope) ->
+.directive 'leapTimelineControls', (Timeline,$rootScope,Categories) ->
   restrict: "E"
   templateUrl: '/assets/timeline_controls.html'
   link: (scope,element) ->
@@ -102,11 +102,14 @@ angular.module 'leapApp'
     scope.$on "cancelEventForm", ->
       scope.view.showControls = false
       scope.view.showButton = true
+    scope.$on "categorySet", (_e,id) ->
+      console.log Categories.get(id)
+      element.find("div").css("background-color", "#{Categories.get(id).color}")
     $rootScope.$on "timelineUpdated", ->
       view = Timeline.getView()
       view.showButton = view.controls.length > 0
 
-.directive 'leapEventForm', ($http,Topic,Timeline) ->
+.directive 'leapEventForm', ($http,Topic,Timeline,Categories) ->
   restrict: "E"
   scope:
     templateUrl: '='
@@ -114,6 +117,7 @@ angular.module 'leapApp'
   templateUrl: '/assets/event_form.html'
   link: (scope) ->
     scope.newEvent = {}
+    scope.categories = Categories.getAll()
     scope.cancelForm = -> scope.$emit("cancelEventForm")
     scope.createEvent = ->
       toPost = {eventable_type: scope.eventType }
@@ -121,6 +125,8 @@ angular.module 'leapApp'
       $http.post(Topic.urlBase() + "/events.json",toPost).success (data) ->
         Timeline.update()
         scope.$emit("cancelEventForm")
+    scope.$watch "newEvent.category_id", (n,o) ->
+      scope.$emit "categorySet", n unless _.isUndefined(n)
 
 .directive 'leapTile', ($http,Topic) ->
   restrict: "E"

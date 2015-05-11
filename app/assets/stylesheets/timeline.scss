@@ -138,23 +138,34 @@ $controls-bg: #6e155f;
   bottom: 0;
   left:0;
   right:0;
-  background: $controls-bg;
   margin-bottom: 0;
+  background: $aluminum;
   transition: 0.5s ease all;
+  * {
+    transition: 0.5s ease background-color;
+  }
   &.off-canvas { bottom: -100% }
   .tabbable{
     @include grid-row;
     color: #eee;
     h1,h2,h3,h4,h5 { color: #eee }
     .tabs dd a {
-      background: scale-color($controls-bg, $lightness: 80%);
+      background: $white;
+      opacity: 0.8;
     }
     .tabs dd.active a {
-      background: scale-color($controls-bg, $lightness: 60%);
+      background: $white;
+      opacity: 0.6;
     }
     leap-event-form { 
-      @include grid-column(12) ;
-      .buttons { text-align: right }
+      form {
+        .main{
+          @include grid-column(10);
+        }
+        .category-select {
+          @include grid-column(2);
+        }
+      }
     }
   }
 }
