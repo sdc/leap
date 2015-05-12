@@ -58,7 +58,7 @@ angular.module 'leapApp'
   <% Category.all.each do |c| %>
   categories[<%= c.id %>] = <%= c.to_json %>
   <% end %>
-  getAll: -> _.reject(categories, (e) -> _.isUndefined(e))
+  getAll: -> _.filter(categories, (e) -> e?)
   get: (id) -> categories[id]
 
 .factory 'LeapEvent', ($http,Topic,$q,Categories) ->

@@ -137,7 +137,7 @@ angular.module 'leapApp'
         Timeline.update()
         scope.$emit("cancelEventForm")
     scope.$watch "newEvent.category_id", (n,o) ->
-      scope.$emit "categorySet", n unless _.isUndefined(n)
+      scope.$emit "categorySet", n if n?
 
 .directive 'leapTile', ($http,Topic) ->
   restrict: "E"
