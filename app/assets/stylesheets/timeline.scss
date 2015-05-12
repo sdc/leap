@@ -209,6 +209,7 @@ $timeline-border-color: $steel;
     }
     leap-event-form { 
       form {
+        .alert-box { @include grid-column(12) }
         .main{
           @include grid-column(10);
         }

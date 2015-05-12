@@ -1,5 +1,8 @@
 form
   .main
+    alert ng-if="errors" type="'alert radius'" 
+      h4 Errors:
+      ul: li ng-repeat="error in errors" {{ error }}
     ng-include src="'/assets/events/create/' + templateUrl"
     .buttons
       button> ng-click="createEvent()"
@@ -11,4 +14,4 @@ form
       input type="radio" name="itag" ng-model="newEvent.category_id" value="{{ category.id }}" id="category_switch_{{ category.id }}"
       label for="category_switch_{{ category.id }}"
       h4.right {{ category.title }}
-    a ng-click="newEvent.category_id = null" clear
+    a ng-click="newEvent.category_id = 0" clear

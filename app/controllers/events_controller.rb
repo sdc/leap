@@ -16,10 +16,6 @@
 
 class EventsController < ApplicationController
   before_action :set_scope
-  def open_extended
-    @event = @topic.events.find(params[:id])
-    render partial: "extended", object: @event, as: :event
-  end
 
   def show
     @event = @scope.find(params[:id])
@@ -31,13 +27,13 @@ class EventsController < ApplicationController
     et = params.delete(:eventable_type).tableize
     category = Category.find(params[et.singularize].delete(:category_id)) if params[et.singularize][:category_id]
     if @affiliation == "staff" || Settings.students_create_events.split(",").include?(et)
-      params.require(et.singularize).permit!
+      params.permit! #require(et.singularize).permit!
       @event = @topic.send(et).build(params[et.singularize])
       if @event.save
         @event.events.each{|e| e.update_attribute "category_id", category.id } if category
         render json: @event
       else
-        render json: { errors: @event.errors.full_messages }
+        render json: @event.errors.full_messages, status: 442
       end
     else
       redirect_to "/404.html"

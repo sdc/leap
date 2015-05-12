@@ -101,7 +101,6 @@ angular.module 'leapApp'
       scope.event = LeapEvent.get()
       scope.category = LeapEvent.category()
 
-
 .directive 'leapTimelineControls', (Timeline,$rootScope,Categories) ->
   restrict: "E"
   templateUrl: '/assets/timeline_controls.html'
@@ -114,8 +113,10 @@ angular.module 'leapApp'
       scope.view.showControls = false
       scope.view.showButton = true
     scope.$on "categorySet", (_e,id) ->
-      console.log Categories.get(id)
-      element.find("div").css("background-color", "#{Categories.get(id).color}")
+      if id == 0
+        scope.categoryBg = {}
+      else
+        scope.categoryBg = {"background-color": Categories.get(id).color}
     $rootScope.$on "timelineUpdated", ->
       view = Timeline.getView()
       view.showButton = view.controls.length > 0
@@ -136,7 +137,9 @@ angular.module 'leapApp'
       $http.post(Topic.urlBase() + "/events.json",toPost).success (data) ->
         Timeline.update()
         scope.$emit("cancelEventForm")
+      .error (data) -> scope.errors = data
     scope.$watch "newEvent.category_id", (n,o) ->
+      alert n
       scope.$emit "categorySet", n if n?
 
 .directive 'leapTile', ($http,Topic) ->
