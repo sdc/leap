@@ -78,7 +78,7 @@ angular.module 'leapApp'
       $http.get("/people/#{scope.misId}.json").success (data) ->
         scope.person = data
 
-.directive 'leapTimelineEvent', ($http,Topic,Categories,LeapEvent) ->
+.directive 'leapTimelineEvent', (LeapEvent) ->
   restrict: "E"
   templateUrl: '/assets/timeline_event.html'
   scope:
@@ -89,9 +89,18 @@ angular.module 'leapApp'
     LeapEvent.load(scope.leapEventId).then ->
       scope.event = LeapEvent.get()
       scope.category = LeapEvent.category()
-    scope.clicked = ->
-      scope.extended = !scope.extended
-      #scope.children = $http.get("#{Topic.urlBase()}/events/#{id}.json") for id in scope.event.childrenIds if scope.extended
+    scope.clicked = -> scope.extended = !scope.extended
+
+.directive 'leapChildEvent', (LeapEvent) ->
+  restrict: "E"
+  templateUrl: '/assets/child_event.html'
+  scope:
+    leapEventId: '='
+  link: (scope) ->
+    LeapEvent.load(scope.leapEventId).then ->
+      scope.event = LeapEvent.get()
+      scope.category = LeapEvent.category()
+
 
 .directive 'leapTimelineControls', (Timeline,$rootScope,Categories) ->
   restrict: "E"

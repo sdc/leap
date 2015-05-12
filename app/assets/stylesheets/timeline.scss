@@ -14,6 +14,7 @@ $timeline-border-color: $steel;
     color: $white;
     padding: 5px 1ex;
     cursor: pointer;
+    margin-bottom: 0;
   }
 
   leap-timeline-event {
@@ -21,21 +22,23 @@ $timeline-border-color: $steel;
       transition: 0.5s ease all;
       @include grid-column(12, $collapse:true);
       cursor: pointer;
-      //border-left:  1px solid $timeline-border-color;
-      //border-right: 1px solid $timeline-border-color;
       border-style: solid;
       border-color: $timeline-border-color;
       border-width: 0 9px 0 0;
+      padding-top: 1rem;
       &:hover { 
-        background: $silver; 
+        * { transition: 0.5s ease background-color }
+        >.main,.extra-info { background: $vapor }
         .extra-info {
           a { color: $primary-color }
         }
       }
       &.extended {
+        padding-bottom: 0;
         @include radius;
         margin: 10px 0;
         border-width: 1px 9px 1px 2px;
+        .tabs-content { margin-bottom: 0 }
       }
     }
     .main { 
@@ -81,7 +84,7 @@ $timeline-border-color: $steel;
       }
       @media #{$medium-up} {
         .about-person{ 
-          img { @include grid-column(1) }
+        primary  img { @include grid-column(1) }
           .name { 
             @include grid-column(2,$collapse:true);
             font-size: $h3-font-size 
@@ -97,6 +100,12 @@ $timeline-border-color: $steel;
       }
       @media #{$large-up} {
         .icon { font-size: 3rem }
+      }
+    }
+    &.child .main {
+      .date { 
+        background: transparent;
+        color: $oil;
       }
     }
     .extra-info {

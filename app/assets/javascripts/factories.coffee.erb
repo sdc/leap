@@ -72,8 +72,8 @@ angular.module 'leapApp'
         category.iconStyle = {"color": category.color}
         category.rowStyle = {"border-color": category.color}
       event.eventDate = new Date(event.eventDate)
-      showTime = !(event.eventDate.getHours() == event.eventDate.getMinutes() == event.eventDate.getSeconds() == 0)
-      showPerson = Topic.get().topic_type != "person"
+      event.showTime = !(event.eventDate.getHours() == event.eventDate.getMinutes() == event.eventDate.getSeconds() == 0)
+      event.showPerson = Topic.get().topic_type != "person"
       deferred.resolve event
     deferred.promise
   get: -> event
