@@ -1,4 +1,5 @@
 $controls-bg: #6e155f;
+$timeline-border-color: $steel;
 
 .no-events {
   @include alert($bg: $warning-color);
@@ -7,6 +8,7 @@ $controls-bg: #6e155f;
 
 #timeline {
   h1.academic-year {
+    @include grid-column(12);
     background: #44a;
     font-size: $h3-font-size;
     color: $white;
@@ -15,70 +17,105 @@ $controls-bg: #6e155f;
   }
 
   leap-timeline-event {
-    @include grid-row;
-    .background {
+    .timeline-event {
+      transition: 0.5s ease all;
       @include grid-column(12, $collapse:true);
       cursor: pointer;
-      &:hover { background: $silver; }
-    }
-    .time,.date {min-height:1px}
-    .date { 
-      @include radius;
-      text-align: center;  
-      background: #a44;
-      border-bottom: 1px white solid;
-      h3 { 
-        color: $white;
-        line-height: 1;
+      //border-left:  1px solid $timeline-border-color;
+      //border-right: 1px solid $timeline-border-color;
+      border-style: solid;
+      border-color: $timeline-border-color;
+      border-width: 0 9px 0 0;
+      &:hover { 
+        background: $silver; 
+        .extra-info {
+          a { color: $primary-color }
+        }
+      }
+      &.extended {
+        @include radius;
+        margin: 10px 0;
+        border-width: 1px 9px 1px 2px;
       }
     }
-    .icon { 
-      @include grid-column(1, $collapse: true);
-      font-size: 2rem;
-      text-align: center;
-      img {width: 85%; height: auto}
-    }
-    .body {
-      h1 { font-size: $h3-font-size }
-    }
-    @media #{$small-only} {
-      .about-person{ 
-        img { @include grid-column(2) }
-        .name { 
-          @include grid-column(2,$collapse:true);
-          font-size: $h5-font-size 
-        }                  
-      }
+    .main { 
+      @include grid-row;
+      .time,.date {min-height:1px}
       .date { 
-        @include grid-column(1,$collapse: true); 
-        h3 { font-size: $h5-font-size }
+        transition: 0.5s ease all;
+        @include radius;
+        text-align: center;  
+        background: #a44;
+        border-bottom: 1px white solid;
+        h3 { 
+          color: $white;
+          line-height: 1;
+        }
       }
-      .time             { display: none }
-      .body             { @include grid-column(9) }
-      .about-person~.body { @include grid-column(7) }
-    }
-    @media #{$medium-up} {
-      .about-person{ 
-        img { @include grid-column(1) }
-        .name { 
-          @include grid-column(2,$collapse:true);
-          font-size: $h3-font-size 
-        }                  
+      .icon { 
+        @include grid-column(1, $collapse: true);
+        font-size: 2rem;
+        text-align: center;
+        color: $timeline-border-color;
+        img {width: 85%; height: auto}
       }
-      .date { 
-        @include grid-column(1,$collapse: true); 
-        h3 { font-size: $h3-font-size }
+      .body {
+        h1 { font-size: $h3-font-size }
+        p { margin-bottom: 0 }
       }
-      .time             { @include grid-column(1) }
-      .body             { @include grid-column(9) }
-      .about-person~.body { @include grid-column(7) }
+      @media #{$small-only} {
+        .about-person{ 
+          img { @include grid-column(2) }
+          .name { 
+              @include grid-column(2,$collapse:true);
+            font-size: $h5-font-size 
+          }                  
+        }
+        .date { 
+          @include grid-column(1,$collapse: true); 
+            h3 { font-size: $h5-font-size }
+        }
+        .time             { display: none }
+        .body             { @include grid-column(9) }
+        .about-person~.body { @include grid-column(7) }
+      }
+      @media #{$medium-up} {
+        .about-person{ 
+          img { @include grid-column(1) }
+          .name { 
+            @include grid-column(2,$collapse:true);
+            font-size: $h3-font-size 
+          }                  
+        }
+        .date { 
+          @include grid-column(1,$collapse: true); 
+          h3 { font-size: $h3-font-size }
+          }
+        .time             { @include grid-column(1) }
+        .body             { @include grid-column(9) }
+        .about-person~.body { @include grid-column(7) }
+      }
+      @media #{$large-up} {
+        .icon { font-size: 3rem }
+      }
     }
-    @media #{$large-up} {
-      .icon { font-size: 3rem }
+    .extra-info {
+      @include grid-row;
+      a { 
+        color: $steel;
+        @include grid-column(3) 
+      }
+      @media #{$small-up} {
+        ng-pluralize { display: none }
+        .attachments { @include grid-column(3, $offset:2) }
+      }
+      @media #{$medium-up} {
+        .attachments { @include grid-column(3, $offset:3) }
+      }
+      @media #{$large-up} {
+        ng-pluralize { display: inline}
+      }
     }
-    
-    .buttons { @include grid-row }
-    .buttons > div { @include grid-column(3) }
   }
 
   leap-tile {

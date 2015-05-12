@@ -11,8 +11,7 @@ header.topic-header {
       h1 { margin: 0 }
       .topic-and-flags{ 
         @media #{$small-up}  { @include grid-column(12, $collapse: true) }
-        @media #{$medium-up} { @include grid-column(6,  $collapse: true) }
-        @media #{$large-up}  { @include grid-column(5,  $collapse: true) }
+        @media #{$medium-up} { @include grid-column(5,  $collapse: true) }
          leap-person {
            @include grid-row($behavior: collapse);
            img { @include grid-column(5, $collapse: true)}
@@ -21,8 +20,7 @@ header.topic-header {
       }
       .details{
         @media #{$small-up}  { display: none } 
-        @media #{$medium-up} { display: block; @include grid-column(6) }
-        @media #{$large-up}  { @include grid-column(7) }
+        @media #{$medium-up} { display: block; @include grid-column(7) }
         .details-tabs {
           @include sub-nav;
           dd:first-child { margin-left: 0 }
@@ -63,7 +61,7 @@ header.topic-header {
 
     leap-views-menu {
       ul {
-        @include grid-column(3);
+        @include grid-column(4);
         @include side-nav;
         padding-top: 0;
         li a { padding-left: 0 !important }

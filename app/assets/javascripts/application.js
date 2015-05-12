@@ -1,6 +1,7 @@
 //= require underscore
 //= require angular
 //= require angular-route
+//= require angular-sanitize
 //= require mm-foundation-tpls-0.6.0
 //= require angular-scroll
 //= require app
