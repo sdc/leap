@@ -1,4 +1,7 @@
 form.create_target {
   .row { @include grid-row($behavior: nest) }
-  .body,.actions,.date { @include grid-column(4) }
+  .body,.actions,.date { @include grid-column(12) }
+  @media #{$medium-up} {
+    .body,.actions,.date { @include grid-column(4) }
+  }
 }

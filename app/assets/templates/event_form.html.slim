@@ -13,5 +13,5 @@ form class="create_{{ eventType }}"
     .switch.tiny.radius ng-repeat="category in categories"
       input type="radio" name="itag" ng-model="newEvent.category_id" value="{{ category.id }}" id="category_switch_{{ category.id }}"
       label for="category_switch_{{ category.id }}"
-      h4.right {{ category.title }}
+      h4 {{ category.title }}
     a ng-click="newEvent.category_id = 0" clear

@@ -216,6 +216,9 @@ $timeline-border-color: $steel;
         }
         .category-select {
           @include grid-column(2);
+          @media #{$medium-up} { 
+            h4 { float: right }
+          }
         }
       }
     }
