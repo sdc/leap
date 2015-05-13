@@ -3,6 +3,7 @@ gem 'rails', "~> 4.2.1"
 gem 'coffee-rails', "~> 4.1.0"
 gem 'slim-rails'
 gem 'sass-rails'
+gem 'uglifier'
 gem 'font-awesome-sass'
 gem 'symbolize'
 gem 'scoped_search'
