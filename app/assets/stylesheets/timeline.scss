@@ -34,7 +34,7 @@ $timeline-border-color: $steel;
       &.extended {
         padding-bottom: 0;
         @include radius;
-        margin: 10px 0;
+        margin: 2rem 0;
         border-width: 1px 9px 1px 2px;
         .tabs-content { margin-bottom: 0 }
       }

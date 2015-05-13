@@ -1247,7 +1247,7 @@ $side-nav-link-padding: rem-calc(2 15);
 // $switch-height-sml: rem-calc(28);
 // $switch-height-med: rem-calc(36);
 // $switch-height-lrg: rem-calc(44);
-// $switch-bottom-margin: rem-calc(20);
+$switch-bottom-margin: 0; // rem-calc(20);
 
 // We use these to control default font sizes for our classes.
 // $switch-font-size-tny: 11px;
