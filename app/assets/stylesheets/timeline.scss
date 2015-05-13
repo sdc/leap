@@ -215,6 +215,7 @@ $timeline-border-color: $steel;
           @include grid-column(10);
         }
         .category-select {
+          a { display: block }
           @include grid-column(2);
           @media #{$medium-up} { 
             h4 { float: right }

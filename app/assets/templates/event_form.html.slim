@@ -10,8 +10,11 @@ form class="create_{{ eventType }}"
         | Add Contact Log
       button.secondary ng-click="cancelForm()" Cancel
   .category-select
-    .switch.tiny.radius ng-repeat="category in categories"
-      input type="radio" name="itag" ng-model="newEvent.category_id" value="{{ category.id }}" id="category_switch_{{ category.id }}"
+    .show-for-large-up.switch.tiny.radius ng-repeat="category in categories"
+      input[type="radio" name="itag" ng-model="newEvent.category_id" 
+            value="{{ category.id }}" id="category_switch_{{ category.id }}"]
       label for="category_switch_{{ category.id }}"
       h4 {{ category.title }}
+    a.hide-for-large-up[ng-repeat="category in categories" ng-click="newEvent.category_id = category.id" 
+      style="color: {{ category.color }}"] {{ category.title }}
     a ng-click="newEvent.category_id = 0" clear
