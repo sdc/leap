@@ -41,5 +41,6 @@ module Ilp2
 
     # Enable the asset pipeline
     config.assets.enabled = true
+    config.assets.paths << Rails.root.join('vendor','assets','bower_components')
   end
 end

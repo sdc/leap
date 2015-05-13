@@ -1,9 +1,9 @@
-//= require underscore
-//= require angular
-//= require angular-route
-//= require angular-sanitize
-//= require mm-foundation-tpls-0.6.0
-//= require angular-scroll
+//= require underscore/underscore
+//= require angular/angular
+//= require angular-route/angular-route
+//= require angular-sanitize/angular-sanitize
+//= require angular-foundation/mm-foundation-tpls
+//= require angular-scroll/angular-scroll
 //= require app
 //= require controllers
 //= require factories

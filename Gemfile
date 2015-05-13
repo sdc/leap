@@ -14,7 +14,6 @@ gem 'uglifier', "~> 2.7.0"
 gem 'yui-compressor'
 gem 'icalendar'
 gem 'activerecord-deprecated_finders', require: 'active_record/deprecated_finders'
-gem 'angularjs-rails', '~> 1.3.10'
 gem 'activeresource', require: 'active_resource'
 gem 'whenever', :require => false
 gem 'memcache-client'
