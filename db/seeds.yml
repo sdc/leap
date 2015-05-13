@@ -62,6 +62,10 @@ views:
     aff_staff: Yes
     aff_student: Yes
     admin_only: no
+    controls:
+      - name: Add a Target
+        templateUrl: target.html
+        createEvent: target
   - id: 3
     parent_id: 1
     icon: fa-dot-circle-o
@@ -89,8 +93,6 @@ views:
       - name: Add a Contact Log
         templateUrl: contact_log.html
         createEvent: contact_log
-      - name: Plopt
-        templateUrl: contact_log.html
     view_type: timeline
     events: 
       ContactLog:

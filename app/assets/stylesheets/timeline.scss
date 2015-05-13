@@ -197,9 +197,12 @@ $timeline-border-color: $steel;
     @include grid-row;
     color: #eee;
     h1,h2,h3,h4,h5 { color: #eee }
-    .tabs dd a {
-      background: $white;
-      opacity: 0.8;
+    .tabs {
+      @include grid-column(12);
+      dd a {
+        background: $white;
+        opacity: 0.8;
+      }
     }
     .tabs dd.active a {
       background: $white;

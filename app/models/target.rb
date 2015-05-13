@@ -23,8 +23,6 @@
 # completion date. When it is completed it new event noting its completion.
 #
 class Target < Eventable
-  #attr_accessible :body, :actions, :reflection, :target_date, :complete_date, :drop_date, :event, :event_id
-
   validates :target_date, :body, presence: true
 
   belongs_to :set_by, class_name: "Person", foreign_key: "set_by_person_id"
@@ -45,30 +43,21 @@ class Target < Eventable
   end
 
   # Returns the target eventable icon url. Complete or not?
-  def icon_url
+  def font_icon
     case status
-    when :complete   then "events/target-complete.png"
-    when :incomplete then "events/target_dropped.png"
-    else "events/target.png"
+    when :complete   then "fa-bullseye"
+    when :incomplete then "fa-bullseye"
+    else "fa-bullseye"
     end
   end
 
   # Returns the target eventable title.
   def title(tr)
     case tr
-    when :complete then "Target Complete"
-    when :start    then "I set a target to #{body} by #{target_date}"
-    when :drop     then "Target Dropped"
-    else "Target Due"
-    end
-  end
-
-  # Returns the target eventable subtitle. This is the target due date unless the event is the completion of the target, when it is +nil+.
-  def subtitle(tr)
-    if tr == :start
-      ["Due", target_date]
-    else
-      ["Set", created_at]
+    when :complete then "Completed a target"
+    when :start    then "Set a target"
+    when :drop     then "Dropped a target"
+    else "Target is due"
     end
   end
 
