@@ -2,7 +2,6 @@ source 'http://rubygems.org'
 gem 'rails', "~> 4.2.1"
 gem 'coffee-rails', "~> 4.1.0"
 gem 'slim-rails'
-gem 'foundation-rails'
 gem 'sass-rails'
 gem 'font-awesome-sass'
 gem 'symbolize'
@@ -17,7 +16,6 @@ gem 'activerecord-deprecated_finders', require: 'active_record/deprecated_finder
 gem 'activeresource', require: 'active_resource'
 gem 'whenever', :require => false
 gem 'memcache-client'
-gem 'identicon'
 gem 'debugger'
 
 platforms :ruby do
@@ -40,7 +38,6 @@ platforms :jruby do
 end
 
 group :development do
-  gem 'web-console', '~> 2.0'
   gem 'capistrano'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
