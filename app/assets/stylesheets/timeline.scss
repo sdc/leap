@@ -13,6 +13,7 @@ $timeline-border-color: $steel;
   //}
   h1.academic-year {
     @include grid-column(12);
+    @include radius;
     background: #44a;
     font-size: $h3-font-size;
     color: $white;

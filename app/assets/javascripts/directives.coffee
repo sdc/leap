@@ -137,9 +137,9 @@ angular.module 'leapApp'
         scope.$emit("cancelEventForm")
       .error (data) -> scope.errors = data
     scope.$watch "newEvent.category_id", (n,o) ->
-      scope.$emit "categorySet", n if n?
-      scope.categoryBg = if n == 0 then {} else {"background-color": Categories.get(n).color}
-      console.log scope.categoryBg
+      if n?
+        scope.$emit "categorySet", n
+        scope.categoryBg = if n == 0 then {} else {"background-color": Categories.get(n).color}
 
 .directive 'leapTile', ($http,Topic) ->
   restrict: "E"

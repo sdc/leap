@@ -4,8 +4,16 @@ header.topic-header {
   background: $iron;
 
   leap-person-header,leap-course-header {
-    .inner { @include grid-row }
     @include clearfix;
+    .inner { 
+      @include grid-row;
+      padding: 5px 0;
+    }
+    img { 
+      @include radius;
+      max-height: 150px;
+      max-width: 150px;
+    }
     &:not(.fixed) { 
       h1 { margin: 0 }
       .topic-and-flags{ 
