@@ -139,7 +139,6 @@ angular.module 'leapApp'
         scope.$emit("cancelEventForm")
       .error (data) -> scope.errors = data
     scope.$watch "newEvent.category_id", (n,o) ->
-      alert n
       scope.$emit "categorySet", n if n?
 
 .directive 'leapTile', ($http,Topic) ->

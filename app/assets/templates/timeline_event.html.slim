@@ -22,7 +22,8 @@
     a.
   .extended ng-if="extended"
     tabset
-      tab heading="Attached events"
+      tab heading="Attached events" ng-if="event.childrenIds.length > 0"
         leap-child-event ng-repeat="eventId in event.childrenIds" leap-event-id="eventId"
       tab heading="Admin Details"
-        code: pre {{ event | json }}
+        code {{ event | json }}
+  br

@@ -14,7 +14,6 @@ $timeline-border-color: $steel;
     color: $white;
     padding: 5px 1ex;
     cursor: pointer;
-    margin-bottom: 0;
   }
 
   leap-timeline-event {
@@ -25,7 +24,6 @@ $timeline-border-color: $steel;
       border-style: solid;
       border-color: $timeline-border-color;
       border-width: 0 9px 0 0;
-      padding-top: 1rem;
       &:hover { 
         * { transition: 0.5s ease background-color }
         >.main,.extra-info { background: $vapor }
