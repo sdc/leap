@@ -27,7 +27,6 @@ $timeline-border-color: $steel;
       //@media #{$xlarge-up} { @include grid-column(6, $collapse: true) }
       background: $white;
       transition: 0.5s ease all;
-      cursor: pointer;
       border-style: solid;
       border-color: $timeline-border-color;
       border-width: 0 9px 0 0;
@@ -42,11 +41,13 @@ $timeline-border-color: $steel;
         padding-bottom: 0;
         @include radius;
         margin: 2rem 0;
+        .content { padding: 0 }
         .tabs-content { margin-bottom: 0 }
       }
       .main { 
         @include grid-row;
         .time,.date {min-height:1px}
+        cursor: pointer;
         .date { 
           transition: 0.5s ease all;
           @include radius;
@@ -192,14 +193,15 @@ $timeline-border-color: $steel;
   margin-bottom: 0;
   background: $steel;
   transition: 0.5s ease all;
+  .content { padding: 0 }
+  .tabs-content { margin-bottom: 0 }
   * {
     transition: 0.5s ease background-color;
   }
   &.off-canvas { bottom: -100% }
   .tabbable{
     @include grid-row;
-    color: #eee;
-    h1,h2,h3,h4,h5 { color: #eee }
+    h1,h2,h3,h4,h5 { color: $white }
     .tabs {
       @include grid-column(12);
       dd a {
@@ -218,6 +220,10 @@ $timeline-border-color: $steel;
 leap-event-form { 
   form {
     @include clearfix;
+    background: $steel;
+    color: $white;
+    padding-top: 1rem;
+    h1,h2,h3,h4,h5 { color: $white }
     .alert-box { @include grid-column(12) }
     .event-form-main{
       @include grid-column(10);
