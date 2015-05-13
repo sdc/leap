@@ -9,14 +9,12 @@ gem 'scoped_search'
 gem 'rails-settings-cached', "~> 0.4.1"
 gem 'rails-latex'
 gem 'nokogiri', "~> 1.6.0"
-gem 'uglifier', "~> 2.7.0"
-gem 'yui-compressor'
 gem 'icalendar'
 gem 'activerecord-deprecated_finders', require: 'active_record/deprecated_finders'
 gem 'activeresource', require: 'active_resource'
 gem 'whenever', :require => false
 gem 'memcache-client'
-gem 'debugger'
+gem 'identicon'
 
 platforms :ruby do
   gem 'mysql2'
