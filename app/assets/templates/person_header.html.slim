@@ -1,37 +1,38 @@
-.topic-and-flags
-  h1: leap-person mis-id="person.mis_id" flags="flags"
-.details
-  dl.details-tabs ng-hide="collapseTopicBar"
-    dd ng-class="{active: detailsPane=='links'}"
-      a ng-click="detailsPane='links'" 
-        i.fa.fa-link>
-        | Links
-    dd ng-class="{active: detailsPane=='contacts'}"
-      a ng-click="detailsPane='contacts'"
-        i.fa.fa-envelope-o>
-        | Contact
-    dd ng-class="{active: detailsPane=='admin'}"
-      a ng-click="detailsPane='admin'" 
-        i.fa.fa-cogs>
-        | Admin
-  .views-menu ng-class="{hide: detailsPane!='links'}": leap-views-menu
-  .contact-details ng-class="{hide: detailsPane!='contacts'}"
-    .alert-box ng-if="person.staff && person.mis_id != $root.user.mis_id" Personal details are hidden for staff.
-    div ng-if="!person.staff || person.mis_id == $root.user.mis_id"
-      div {{ person.address_text }}
-      div {{ person.home_phone }}
-      div: a ng-href="mailto:{{ person.personal_email }}" {{ person.personal_email }}
-      div {{ person.date_of_birth }} (Age: {{ person.age }})
-      div ng-if="person.mis_id == $root.user.mis_id" 
-        | Are any of your details incorrect?
-        a< href=Settings.notify_details_change_url Notify us...
-  .admin-details ng-class="{hide: detailsPane!='admin'}"
-    ul.button-group.radius
-      li 
-        a.button ng-href="/people/{{ person.mis_id }}.json" target="_BLANK"
-          i.fa.fa-code>
-          | JSON
-      li 
-        button.button ng-click="refresh()"
-          i.fa.fa-refresh>
-          | Refresh
+.inner
+  .topic-and-flags
+    h1: leap-person mis-id="person.mis_id" flags="flags"
+  .details
+    dl.details-tabs ng-hide="collapseTopicBar"
+      dd ng-class="{active: detailsPane=='links'}"
+        a ng-click="detailsPane='links'" 
+          i.fa.fa-link>
+          | Links
+      dd ng-class="{active: detailsPane=='contacts'}"
+        a ng-click="detailsPane='contacts'"
+          i.fa.fa-envelope-o>
+          | Contact
+      dd ng-class="{active: detailsPane=='admin'}"
+        a ng-click="detailsPane='admin'" 
+          i.fa.fa-cogs>
+          | Admin
+    .views-menu ng-class="{hide: detailsPane!='links'}": leap-views-menu
+    .contact-details ng-class="{hide: detailsPane!='contacts'}"
+      .alert-box ng-if="person.staff && person.mis_id != $root.user.mis_id" Personal details are hidden for staff.
+      div ng-if="!person.staff || person.mis_id == $root.user.mis_id"
+        div {{ person.address_text }}
+        div {{ person.home_phone }}
+        div: a ng-href="mailto:{{ person.personal_email }}" {{ person.personal_email }}
+        div {{ person.date_of_birth }} (Age: {{ person.age }})
+        div ng-if="person.mis_id == $root.user.mis_id" 
+          | Are any of your details incorrect?
+          a< href=Settings.notify_details_change_url Notify us...
+    .admin-details ng-class="{hide: detailsPane!='admin'}"
+      ul.button-group.radius
+        li 
+          a.button ng-href="/people/{{ person.mis_id }}.json" target="_BLANK"
+            i.fa.fa-code>
+            | JSON
+        li 
+          button.button ng-click="refresh()"
+            i.fa.fa-refresh>
+            | Refresh

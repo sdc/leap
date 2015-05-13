@@ -150,7 +150,6 @@ angular.module 'leapApp'
     $http.get("#{Topic.urlBase()}/events/#{scope.leapEventId}.json").success (data) ->
       scope.event = data
       scope.eventDate = new Date(scope.event.eventDate)
-      scope.showTime = !(scope.eventDate.getHours() == scope.eventDate.getMinutes() == scope.eventDate.getSeconds() == 0)
       scope.showPerson = Topic.get().topic_type != "person"
 
 .directive 'autoActive', ($location) ->

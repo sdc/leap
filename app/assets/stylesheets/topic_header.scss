@@ -1,12 +1,11 @@
-$topic-header-bg: $silver;
-
-.topbar-gap { height: $topbar-height * 1.1 }
+.topbar-gap { height: $topbar-height }
 
 header.topic-header {
-  background: $silver;
-  @include grid-row;
+  background: $iron;
 
   leap-person-header,leap-course-header {
+    .inner { @include grid-row }
+    @include clearfix;
     &:not(.fixed) { 
       h1 { margin: 0 }
       .topic-and-flags{ 
@@ -29,7 +28,7 @@ header.topic-header {
     }
 
     &.fixed {
-      background: $silver;
+      background: $iron;
       top: $topbar-height;
       h1 { 
         font-size: $h3-font-size;
