@@ -8,6 +8,9 @@ $timeline-border-color: $steel;
 
 #timeline {
   @include grid-row;
+  //@media #{$xlarge-up} { 
+  //  max-width: rem-calc(1300);
+  //}
   h1.academic-year {
     @include grid-column(12);
     background: #44a;
@@ -19,9 +22,10 @@ $timeline-border-color: $steel;
 
   leap-timeline-event {
     .timeline-event {
+      @include grid-column(12, $collapse: true);
+      //@media #{$xlarge-up} { @include grid-column(6, $collapse: true) }
       background: $white;
       transition: 0.5s ease all;
-      @include grid-column(12, $collapse:true);
       cursor: pointer;
       border-style: solid;
       border-color: $timeline-border-color;
@@ -39,89 +43,86 @@ $timeline-border-color: $steel;
         margin: 2rem 0;
         .tabs-content { margin-bottom: 0 }
       }
-    }
-    .main { 
-      @include grid-row;
-      .time,.date {min-height:1px}
-      .date { 
-        transition: 0.5s ease all;
-        @include radius;
-        text-align: center;  
-        background: #a44;
-        border-bottom: 1px white solid;
-        h3 { 
-          color: $white;
-          line-height: 1;
-        }
-      }
-      .icon { 
-        @include grid-column(1, $collapse: true);
-        font-size: 2rem;
-        text-align: center;
-        color: $timeline-border-color;
-        img {width: 85%; height: auto}
-      }
-      .body {
-        h1 { font-size: $h3-font-size }
-        p { margin-bottom: 0 }
-      }
-      @media #{$small-only} {
-        .about-person{ 
-          img { @include grid-column(2) }
-          .name { 
-              @include grid-column(2,$collapse:true);
-            font-size: $h5-font-size 
-          }                  
-        }
+      .main { 
+        @include grid-row;
+        .time,.date {min-height:1px}
         .date { 
-          @include grid-column(1,$collapse: true); 
-            h3 { font-size: $h5-font-size }
-        }
-        .time             { display: none }
-        .body             { @include grid-column(9) }
-        .about-person~.body { @include grid-column(7) }
-      }
-      @media #{$medium-up} {
-        .about-person{ 
-        primary  img { @include grid-column(1) }
-          .name { 
-            @include grid-column(2,$collapse:true);
-            font-size: $h3-font-size 
-          }                  
-        }
-        .date { 
-          @include grid-column(1,$collapse: true); 
-          h3 { font-size: $h3-font-size }
+          transition: 0.5s ease all;
+          @include radius;
+          text-align: center;  
+          background: #a44;
+          border-bottom: 1px white solid;
+          h3 { 
+            color: $white;
+            line-height: 1;
           }
-        .time             { @include grid-column(1) }
-        .body             { @include grid-column(9) }
-        .about-person~.body { @include grid-column(7) }
+        }
+        .icon { 
+          @include grid-column(2);
+          font-size: 2.5rem;
+          text-align: center;
+          color: $timeline-border-color;
+          img {width: 85%; height: auto}
+        }
+        .body {
+          h1 { font-size: $h3-font-size }
+          p { margin-bottom: 0 }
+        }
+        @media #{$small-only} {
+          .about-person{ 
+            img { @include grid-column(2) }
+            .name { 
+                @include grid-column(2,$collapse:true);
+              font-size: $h5-font-size 
+            }                  
+          }
+          .date { 
+            @include grid-column(1,$collapse: true); 
+              h3 { font-size: $h5-font-size }
+          }
+          .time             { display: none }
+          .body             { @include grid-column(9) }
+          .about-person~.body { @include grid-column(7) }
+        }
+        @media #{$medium-up} {
+          .about-person{ 
+          primary  img { @include grid-column(1) }
+            .name { 
+              @include grid-column(2,$collapse:true);
+              font-size: $h3-font-size 
+            }                  
+          }
+          .date { 
+            @include grid-column(1,$collapse: true); 
+            h3 { font-size: $h3-font-size }
+            }
+          .time             { @include grid-column(1) }
+          .body             { @include grid-column(9) }
+          .about-person~.body { @include grid-column(7) }
+        }
+        @media #{$large-up} {
+          .icon { font-size: 3rem }
+        }
       }
-      @media #{$large-up} {
-        .icon { font-size: 3rem }
+      &.child .main {
+        .date { 
+          background: white;
+          h3 { color: $oil }
+        }
       }
-    }
-    &.child .main {
-      .date { 
-        background: transparent;
-        color: $oil;
-      }
-    }
-    .extra-info {
-      @include grid-row;
-      a { 
-        color: $steel;
-        @include grid-column(3) 
-      }
-      @media #{$small-up} {
-        ng-pluralize { display: none }
-        .attachments { @include grid-column(3, $offset:1) }
-      }
-      @media #{$medium-up} {
-        .attachments { @include grid-column(3, $offset:2) }
-      }
-      @media #{$large-up} {
-        ng-pluralize { display: inline}
+      .extra-info {
+        @include grid-row;
+        a { 
+          color: $steel;
+          @include grid-column(3) 
+        }
+        @media #{$small-up} {
+          ng-pluralize { display: none }
+          .attachments { @include grid-column(3, $offset:3) }
+        }
+        @media #{$large-up} {
+          ng-pluralize { display: inline}
+        }
       }
     }
   }
@@ -208,20 +209,23 @@ $timeline-border-color: $steel;
     .tabs dd.active a {
       background: $white;
       opacity: 0.6;
+      color: $oil;
     }
-    leap-event-form { 
-      form {
-        .alert-box { @include grid-column(12) }
-        .main{
-          @include grid-column(10);
-        }
-        .category-select {
-          a { display: block }
-          @include grid-column(2);
-          @media #{$medium-up} { 
-            h4 { float: right }
-          }
-        }
+  }
+}
+
+leap-event-form { 
+  form {
+    @include clearfix;
+    .alert-box { @include grid-column(12) }
+    .event-form-main{
+      @include grid-column(10);
+    }
+    .category-select {
+      a { display: block }
+      @include grid-column(2);
+      @media #{$medium-up} { 
+        h4 { float: right }
       }
     }
   }

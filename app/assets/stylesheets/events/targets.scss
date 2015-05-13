@@ -1,7 +1,7 @@
 form.create_target {
   .row { @include grid-row($behavior: nest) }
-  .body,.actions,.date { @include grid-column(12) }
+  .add_target_body,.add_target_actions,.add_target_date { @include grid-column(12) }
   @media #{$medium-up} {
-    .body,.actions,.date { @include grid-column(4) }
+    .add_target_body,.add_target_actions,.add_target_date { @include grid-column(4) }
   }
 }

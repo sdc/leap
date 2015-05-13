@@ -1,5 +1,5 @@
-form class="create_{{ eventType }}"
-  .main
+form class="create_{{ eventType }}" ng-style="categoryBg"
+  .event-form-main
     alert ng-if="errors" type="'alert radius'" 
       h4 Errors:
       ul: li ng-repeat="error in errors" {{ error }}

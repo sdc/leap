@@ -90,6 +90,7 @@ angular.module 'leapApp'
       scope.event = LeapEvent.get()
       scope.category = LeapEvent.category()
     scope.clicked = -> scope.extended = !scope.extended
+    scope.$on "cancelEventForm", -> scope.extended = false
 
 .directive 'leapChildEvent', (LeapEvent) ->
   restrict: "E"
@@ -113,10 +114,7 @@ angular.module 'leapApp'
       scope.view.showControls = false
       scope.view.showButton = true
     scope.$on "categorySet", (_e,id) ->
-      if id == 0
-        scope.categoryBg = {}
-      else
-        scope.categoryBg = {"background-color": Categories.get(id).color}
+      scope.categoryBg = if id == 0 then {} else {"background-color": Categories.get(id).color}
     $rootScope.$on "timelineUpdated", ->
       view = Timeline.getView()
       view.showButton = view.controls.length > 0
@@ -140,6 +138,8 @@ angular.module 'leapApp'
       .error (data) -> scope.errors = data
     scope.$watch "newEvent.category_id", (n,o) ->
       scope.$emit "categorySet", n if n?
+      scope.categoryBg = if n == 0 then {} else {"background-color": Categories.get(n).color}
+      console.log scope.categoryBg
 
 .directive 'leapTile', ($http,Topic) ->
   restrict: "E"
