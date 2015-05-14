@@ -70,7 +70,7 @@ header.topic-header {
       ul {
         @include grid-column(4);
         @include side-nav;
-        padding-top: 0;
+        padding: 0;
         li a { padding-left: 0 !important }
         li.active { background: $snow }
         li { margin-bottom: 0px }

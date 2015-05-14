@@ -47,7 +47,15 @@ angular.module 'leapApp'
       $http.get("/courses/#{scope.misId}.json").success (data) ->
         scope.course = data
     $document.on 'scroll', ->
-      scope.collapseTopicBar = $document.scrollTop() > (element.prop('offsetHeight') - 24)
+      scope.collapseTopicBar = $document.scrollTop() > 200
+    scope.$watch 'collapseTopicBar', (newv,oldv) ->
+      if newv && !oldv
+        element.addClass("fixed")
+        scope.oldTab = scope.detailsPane
+        scope.detailsPane = "links"
+      else if oldv && !newv
+        element.removeClass("fixed")
+        scope.detailsPane = scope.oldTab
 
 .directive 'leapCourse', ($http,$rootScope,Topic) ->
   restrict: "E"
@@ -124,6 +132,7 @@ angular.module 'leapApp'
   scope:
     templateUrl: '='
     eventType: '='
+    parentId: '='
   templateUrl: '/assets/event_form.html'
   link: (scope) ->
     scope.newEvent = {}
@@ -140,6 +149,7 @@ angular.module 'leapApp'
       if n?
         scope.$emit "categorySet", n
         scope.categoryBg = if n == 0 then {} else {"background-color": Categories.get(n).color}
+    scope.$watch "parentId", (n,o) -> scope.newEvent.parent_id = n
 
 .directive 'leapTile', ($http,Topic) ->
   restrict: "E"

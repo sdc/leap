@@ -29,7 +29,7 @@ class Target < Eventable
   belongs_to :event
 
   after_create do |target|
-    target.events.create(event_date: created_at, parent_id: event_id, transition: :start)
+    target.events.create(event_date: created_at, parent_id: parent_id, transition: :start)
     target.events.create(event_date: target_date, transition: :overdue)
   end
 

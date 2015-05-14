@@ -95,6 +95,7 @@ class Event < ActiveRecord::Base
 
   def as_timeline_event
     {
+      eventId:      id,
       template:     timeline_template,
       tileTemplate: tile_template,
       personId:     person.mis_id,
