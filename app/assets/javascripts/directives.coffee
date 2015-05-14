@@ -122,7 +122,7 @@ angular.module 'leapApp'
       scope.view.showControls = false
       scope.view.showButton = true
     scope.$on "categorySet", (_e,id) ->
-      scope.categoryBg = if id == 0 then {} else {"background-color": Categories.get(id).color}
+      scope.categoryBg = Categories.get(id).bgStyle
     $rootScope.$on "timelineUpdated", ->
       view = Timeline.getView()
       view.showButton = view.controls.length > 0
@@ -148,7 +148,7 @@ angular.module 'leapApp'
     scope.$watch "newEvent.category_id", (n,o) ->
       if n?
         scope.$emit "categorySet", n
-        scope.categoryBg = if n == 0 then {} else {"background-color": Categories.get(n).color}
+        scope.categoryBg = Categories.get(n).bgStyle
     scope.$watch "parentId", (n,o) -> scope.newEvent.parent_id = n
 
 .directive 'leapTile', ($http,Topic) ->

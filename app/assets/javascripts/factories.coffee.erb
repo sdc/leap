@@ -69,8 +69,9 @@ angular.module 'leapApp'
       event = data
       category = Categories.get(event.categoryId)
       if category
-        category.iconStyle = {"color": category.color}
-        category.rowStyle = {"border-color": category.color}
+        category.fgStyle = {color: category.color}
+        category.borderStyle = {"border-color": category.color}
+        category.bgStyle = {background: category.color}
       event.eventDate = new Date(event.eventDate)
       event.showTime = !(event.eventDate.getHours() == event.eventDate.getMinutes() == event.eventDate.getSeconds() == 0)
       event.showPerson = Topic.get().topic_type != "person"

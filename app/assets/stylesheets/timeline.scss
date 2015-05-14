@@ -114,10 +114,14 @@ $timeline-border-color: $steel;
         }
       }
       .extra-info {
+        padding-top: 10px;
         @include grid-row;
         a { 
           color: $steel;
           @include grid-column(3) 
+        }
+        .count {
+          display: inline;
         }
         @media #{$small-up} {
           ng-pluralize { display: none }

@@ -1,4 +1,4 @@
-.timeline-event ng-class="{extended: extended}" ng-style="category.rowStyle"
+.timeline-event ng-class="{extended: extended}" ng-style="category.borderStyle"
   .main ng-click="clicked()"
     time datetime="{{ event.eventDate }}"
       .date
@@ -7,17 +7,21 @@
           h3 {{ event.eventDate | date : "MMM" }}
     leap-person.about-person mis-id="event.personId" ng-if="event.showPerson"
     h1.icon ng-if="event.icon": img ng-src="{{ event.icon }}"
-    h1.icon.fa ng-if="event.fontIcon && !event.icon" class="{{ event.fontIcon }}" ng-style="category.iconStyle" tooltip="{{ category.title }}"
+    h1.icon.fa ng-if="event.fontIcon && !event.icon" class="{{ event.fontIcon }}" ng-style="category.fgStyle" tooltip="{{ category.title }}"
     ng-include.body src="'/assets/events/timeline/' + event.template" ng-if="event.template"
     .body ng-if="!event.template"
       h1 {{ event.title }}
       p ng-if="event.body" {{ event.body }}
   .extra-info ng-click="clicked()"
-    a.attachments
+    a.attachments tooltip="Attached events"
       i.fa.fa-paperclip>
-      span.count> {{ event.childrenIds.length }}
-      ng-pluralize count="event.childrenIds.length" when="{one: 'attached event', other: 'attached events'}"
-    a.
+      .count ng-show="event.childrenIds.length > 0"
+        | {{ event.childrenIds.length }}
+        ng-pluralize< count="event.childrenIds.length" when="{one: 'attached event', other: 'attached events'}"
+    a.category
+      i.fa.fa-tag>
+      .count
+        | {{ category.title }}
   .extended ng-if="extended"
     tabset
       tab heading="Attached events" ng-if="event.childrenIds.length > 0"
