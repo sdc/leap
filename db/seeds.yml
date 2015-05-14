@@ -142,7 +142,7 @@ views:
 
 categories:
   - id: 1
-    title: Cores
+    title: Core
     color: "#4f2170"
   - id: 2
     title: English
