@@ -1,4 +1,4 @@
-form class="create_{{ eventType }}" ng-style="categoryBg"
+form class="create_{{ eventType }}" ng-style="category.styles.bg"
   .event-form-main
     alert ng-if="errors" type="'alert radius'" 
       h4 Errors:
@@ -16,5 +16,5 @@ form class="create_{{ eventType }}" ng-style="categoryBg"
       label for="category_switch_{{ category.id }}"
       h4 {{ category.title }}
     a.hide-for-large-up[ng-repeat="category in categories" ng-click="newEvent.category_id = category.id" 
-      style="color: {{ category.color }}"] {{ category.title }}
+      ng-style="category.styles.fg"] {{ category.title }}
     a ng-click="newEvent.category_id = 0" clear

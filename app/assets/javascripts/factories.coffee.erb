@@ -56,7 +56,7 @@ angular.module 'leapApp'
 .factory 'Categories', ->
   categories = []
   <% Category.all.each do |c| %>
-  categories[<%= c.id %>] = <%= c.to_json %>
+  categories[<%= c.id %>] = <%= c.to_json(methods: :styles) %>
   <% end %>
   getAll: -> _.filter(categories, (e) -> e?)
   get: (id) -> categories[id]
@@ -68,10 +68,6 @@ angular.module 'leapApp'
     $http.get("#{Topic.urlBase()}/events/#{eventId}.json").success (data) ->
       event = data
       category = Categories.get(event.categoryId)
-      if category
-        category.fgStyle = {color: category.color}
-        category.borderStyle = {"border-color": category.color}
-        category.bgStyle = {background: category.color}
       event.eventDate = new Date(event.eventDate)
       event.showTime = !(event.eventDate.getHours() == event.eventDate.getMinutes() == event.eventDate.getSeconds() == 0)
       event.showPerson = Topic.get().topic_type != "person"

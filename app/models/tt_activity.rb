@@ -19,8 +19,6 @@ class TtActivity < Eventable
 
   TIME_SELECT = (0..600).step(15).map { |x| ["#{x.divmod(60).join(" hours ")} mins", x * 60] }.drop 1
 
-  #attr_accessible :body, :start_time, :category, :repeat_type, :repeat_number, :timetable_length, :tmp_time, :tmp_date
-
   before_save :fix_start_time
 
   after_create do |act|
@@ -38,23 +36,17 @@ class TtActivity < Eventable
 
   def title; category end
 
+  def font_icon
+    "fa-calendar"
+  end
+
   def fix_start_time
     self.start_time = Time.new(tmp_date.year, tmp_date.month, tmp_date.day,
                                tmp_time.hour, tmp_time.min)
-  end
-
-  def status
-    "start"
   end
 
   def timetable_length
     self[:timetable_length]
   end
      
-   def as_timeline_event(e)
-    { verb: if e.future? then "will have" else "had" end,
-      title: title + ": " + body,
-      iconUrl: "events/tt_activities.png"
-    }
-  end
 end

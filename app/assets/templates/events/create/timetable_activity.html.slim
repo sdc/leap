@@ -1,0 +1,29 @@
+.row
+  .tt-input
+    h3 Date
+    input type="date" ng-model="newEvent.tmp_date"
+  .tt-input
+    h3 Time
+    input type="time" ng-model="newEvent.tmp_time"
+  .tt-input
+    h3 Length
+    select ng-model="newEvent.timetable_length" 
+      - TtActivity::TIME_SELECT.each do |t|
+        option value="#{t.last}"= t.first
+  .tt-input
+    h3 Repeat
+    select ng-model="newEvent.repeat_type" 
+      - TtActivity::REPEAT_TYPES.each do |t|
+        option value=t = t
+  .tt-input
+    h3 No of repeats
+    select ng-model="newEvent.repeat_number"
+      option value="1" 1 time
+      - (2..10).map{|n|["#{n} times",n]}.each do |t|
+        option value="#{t.last}"= t.first
+  .tt-input
+    h3 Category
+    select ng-model="newEvent.category"
+      - Settings.tt_activity_categories.split(",").each do |t|
+        option value=t = t
+.row: .textarea: textarea ng-model="newEvent.body" placeholder="Describe the activity"

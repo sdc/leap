@@ -39,6 +39,8 @@ views:
         null
       Absence:
         null
+      TtActivity:
+        null
     url: all
     aff_affiliate: Yes
     aff_applicant: Yes
@@ -134,6 +136,24 @@ views:
       Qualification:
         - create
     url: qualifications
+    aff_affiliate: Yes
+    aff_applicant: Yes
+    aff_staff: Yes
+    aff_student: Yes
+    admin_only: no
+  - id: 9
+    icon: fa-comment
+    title: Timetable
+    topic_person: Yes
+    controls:
+      - name: Add a Timetable Activity
+        templateUrl: timetable_activity.html
+        createEvent: tt_activity
+    view_type: timeline
+    events: 
+      TtActivity:
+        null
+    url: timetable
     aff_affiliate: Yes
     aff_applicant: Yes
     aff_staff: Yes

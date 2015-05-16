@@ -1,0 +1,10 @@
+form.create_tt_activity {
+  .row { @include grid-row($behavior: nest) }
+  @media #{$small-up} {
+    .tt-input { @include grid-column(6) }
+  }
+  @media #{$medium-up} {
+    .tt-input { @include grid-column(4) }
+  }
+  .textarea { @include grid-column(12) }
+}
