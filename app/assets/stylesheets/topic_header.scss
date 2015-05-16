@@ -5,16 +5,22 @@ header.topic-header {
 
   leap-person-header,leap-course-header {
     @include clearfix;
-    .inner { 
-      @include grid-row;
-      padding: 5px 0;
-    }
-    img { 
-      @include radius;
-      max-height: 150px;
-      max-width: 150px;
+    .inner { @include grid-row }
+    .details{
+      @media #{$small-up}  { display: none } 
+      @media #{$medium-up} { display: block; @include grid-column(7) }
+      .details-tabs {
+        @include sub-nav;
+        dd:first-child { margin-left: 0 }
+      }
     }
     &:not(.fixed) { 
+      .inner { 
+        padding: 5px;
+        @media screen and (min-width: 1115px) {
+          padding: 5px 0;
+        }
+      }
       h1 { margin: 0 }
       .topic-and-flags{ 
         @media #{$small-up}  { @include grid-column(12, $collapse: true) }
@@ -25,13 +31,10 @@ header.topic-header {
            .name,.flags { @include grid-column(7)}
          } 
       }
-      .details{
-        @media #{$small-up}  { display: none } 
-        @media #{$medium-up} { display: block; @include grid-column(7) }
-        .details-tabs {
-          @include sub-nav;
-          dd:first-child { margin-left: 0 }
-        }
+      img { 
+        @include radius;
+        max-height: 150px;
+        max-width: 150px;
       }
     }
 
@@ -55,7 +58,6 @@ header.topic-header {
 
       leap-views-menu {
         &:hover li { display: block }
-        ul { padding: 0 }
         li {
           display: none;
           &.heading { 
