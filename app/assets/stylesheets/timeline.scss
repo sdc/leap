@@ -225,6 +225,7 @@ $timeline-border-color: $steel;
 leap-event-form { 
   form {
     @include clearfix;
+    clear:both;
     background: $steel;
     color: $white;
     padding-top: 1rem;
