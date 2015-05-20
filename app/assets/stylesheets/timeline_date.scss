@@ -2,11 +2,16 @@ leap-timeline-date {
   @include grid-row;
   .previous,.next {
     @include grid-column(2);
-    @include button($padding: $button-med, $radius: $button-round);
-    margin: 5px 0;
+    a{ 
+      @include button($padding: $button-med, $radius: $button-round);
+      margin: 5px 0;
+    }
   }
-  .aa-date-input, input[type=date]{
-    @include grid-column(4);
-    margin: 5px 0;
+  .the-date-input {
+    @include grid-column(2);
+    input { 
+      margin:0;
+      margin: 5px 0;
+    }
   }
 }
