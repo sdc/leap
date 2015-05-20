@@ -126,7 +126,7 @@ angular.module 'leapApp'
       edMom = moment(scope.event.eventDate)
       sodMom = angular.copy(edMom)
       top = edMom.diff(sodMom.startOf('day').add(8,'hours'),'minutes')
-      element.css("top", (top + 99) + "px")
+      element.css("top", (top + 36) + "px")
       element.css("background: " + scope.category.color) if scope.category
 
 .directive 'leapChildEvent', (LeapEvent) ->

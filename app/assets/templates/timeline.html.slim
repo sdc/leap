@@ -11,7 +11,7 @@
       leap-tile ng-repeat="event in events" leap-event-id="event.id"
     .timetable ng-switch-when="timetable"
       leap-timeline-date
-      .row 
+      #timetable
         .times
           - 8.upto(20) do |hour|
             .hour

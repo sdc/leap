@@ -1,4 +1,8 @@
-#timeline {
+.timetable{
+  text-align:center;
+}
+
+#timetable {
   position: relative;
   .day { 
     @include grid-column(2, $collapse: true);

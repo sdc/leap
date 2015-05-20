@@ -5,7 +5,7 @@ leap-timeline-date {
     @include button($padding: $button-med, $radius: $button-round);
     margin: 5px 0;
   }
-  .aa-date-input{
+  .aa-date-input, input[type=date]{
     @include grid-column(4);
     margin: 5px 0;
   }

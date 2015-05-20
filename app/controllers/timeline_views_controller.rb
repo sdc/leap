@@ -36,11 +36,11 @@ class TimelineViewsController < ApplicationController
     else
       @topic.events
     end
-    date = params[:date] ? Date.parse(params[:date]) : Date.today()
+    date = params[:date] ? Date.parse(params[:date]) : ( Date.today() + 1.month )
     scope = if view.view_type == "timetable"
               scope.where(event_date: date.beginning_of_week...date.end_of_week)
             else
-              scope.where("event_date > ?", date)
+              scope.where("event_date < ?", date)
             end
     conds = []
     str = []
