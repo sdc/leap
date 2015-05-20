@@ -140,7 +140,7 @@ $default-float: left;
 $last-child-float: $opposite-direction;
 
 // We use these to make sure border radius matches unless we want it different.
-$global-radius: 3px;
+$global-radius: 4px;
 $global-rounded: 1000px;
 
 // We use these to control inset shadow shiny edges and depressions.
@@ -427,10 +427,10 @@ $microformat-abbr-font-decoration: none;
 // $include-html-button-classes: $include-html-classes;
 
 // We use these to build padding for buttons.
-// $button-tny: rem-calc(10);
-// $button-sml: rem-calc(14);
-// $button-med: rem-calc(16);
-// $button-lrg: rem-calc(18);
+$button-tny: rem-calc(5);
+$button-sml: rem-calc(8);
+$button-med: rem-calc(10);
+$button-lrg: rem-calc(14);
 
 // We use this to control the display property.
 // $button-display: inline-block;

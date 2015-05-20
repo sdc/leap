@@ -34,21 +34,28 @@ angular.module 'leapApp'
     events = []
     viewName = null
     view = null
+    date = moment.utc()
     setView: (v) ->
       if viewName != v
         viewName = v
         $rootScope.$broadcast "viewChanged"
     getView: -> view
+    setDate: (d) -> date = moment(d).utc()
+    getDate: -> date
     get: -> events
     years: -> _.map(_.uniq(_.map(events,(e) -> academicYearFilter(e.event_date))), (y) -> {year: y,show: true})
     update: ->
       deferred = $q.defer()
-      $http.get("#{Topic.urlBase()}/timeline_views/#{viewName}").success (data) ->
+      $http.get("#{Topic.urlBase()}/timeline_views/#{viewName}?date=#{date.toISOString()}").success (data) ->
         view = data.view
         events = data.events
-        (event.eventDate = new Date event.event_date) for event in events
-        (event.academicYear = academicYearFilter(event.eventDate)) for event in events
-        (event.showDate = (events[i-1]?.eventDate.toDateString() != event.eventDate.toDateString())) for event,i in events
+        for event,i in events
+          event.eventDate = new Date event.event_date
+          event.timetableDay = event.eventDate.getDay()
+          event.timetableDay = if event.timetableDay == 0 then 7 else event.timetableDay - 1
+          event.academicYear = academicYearFilter(event.eventDate)
+          event.showDate = (events[i-1]?.eventDate.toDateString() != event.eventDate.toDateString())
+        endDate = _.last(events).eventDate if events.length > 1
         $rootScope.$broadcast("timelineUpdated")
         deferred.resolve events
       deferred.promise

@@ -1,10 +1,12 @@
-//= require underscore/underscore
 //= require modernizr/modernizr
+//= require underscore/underscore
+//= require moment
 //= require angular/angular
 //= require angular-route/angular-route
 //= require angular-sanitize/angular-sanitize
 //= require angular-foundation/mm-foundation-tpls
 //= require angular-scroll/angular-scroll
+//= require angular-date-picker-polyfill/dist/angular-date-picker-polyfill
 //= require app
 //= require controllers
 //= require factories

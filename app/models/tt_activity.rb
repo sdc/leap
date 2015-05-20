@@ -48,5 +48,5 @@ class TtActivity < Eventable
   def timetable_length
     self[:timetable_length]
   end
-     
+
 end

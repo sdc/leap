@@ -1,0 +1,41 @@
+#timeline {
+  position: relative;
+  .day { 
+    @include grid-column(2, $collapse: true);
+    background: $white;
+    h1 { 
+      text-align: center;
+      font-size: $h3-font-size;
+    }
+
+    &.even {
+      background: $snow;
+    }
+
+    &.day-0,&.day-6 {
+      display: none;
+    }
+ 
+  }
+
+  .hour {
+    border-top: 1px solid $silver;
+    height: 60px;
+  }
+  
+  .times,.scroll {
+    @include grid-column(1);
+    padding-top: 40px;
+  }
+  
+  leap-timetable-event {
+    position: absolute;
+    @include grid-column(2);
+    .box { 
+      @extend .category-background;
+      padding: 2px;
+      overflow: hidden;
+      @include radius;
+    }
+  }
+}

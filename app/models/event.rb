@@ -80,7 +80,8 @@ class Event < ActiveRecord::Base
 
   #[:title, :subtitle, :icon_url, :body, :extra_panes, :status, :staff_only?,
   # :timetable_length, :tile_bg, :tile_icon, :tile_title, :is_deleted?].each do |method|
-  %w(title tile_title tile_wrap body is_deleted? icon font_icon timeline_template tile_template timeline_attrs).map(&:to_sym).each do |method|
+  %w(title tile_title tile_wrap body is_deleted? icon font_icon timeline_template 
+     tile_template timeline_attrs timetable_length).map(&:to_sym).each do |method|
     define_method method do
       if eventable.respond_to?(method)
         m = eventable.method(method)
@@ -95,20 +96,25 @@ class Event < ActiveRecord::Base
 
   def as_timeline_event
     {
-      eventId:      id,
-      template:     timeline_template,
-      tileTemplate: tile_template,
-      personId:     person.mis_id,
-      title:        title || eventable.humanize,
-      tileTitle:    tile_title || title,
-      tileWrap:     tile_wrap,
-      body:         body,
-      eventDate:    event_date,
-      icon:         icon,
-      fontIcon:     font_icon,
-      updatedAt:    eventable.updated_at,
-      childrenIds:  children.ids,
-      categoryId:   category.try(:id)
+      eventId:         id,
+      template:        timeline_template,
+      tileTemplate:    tile_template,
+      personId:        person.mis_id,
+      title:           title || eventable.humanize,
+      tileTitle:       tile_title || title,
+      tileWrap:        tile_wrap,
+      body:            body,
+      eventDate:       event_date,
+      icon:            icon,
+      fontIcon:        font_icon,
+      updatedAt:       eventable.updated_at,
+      childrenIds:     children.ids,
+      categoryId:      category.try(:id),
+      timetable: {
+        length:    timetable_length,
+        endDate:   event_date + timetable_length,
+        startDate: event_date,
+      }
     }.merge(eventable_type.camelize(:lower) => timeline_attrs)
   end
 
@@ -135,29 +141,4 @@ class Event < ActiveRecord::Base
   #  (timetable_length / 56).floor
   #end
 
-  #def timetable_end
-  #  event_date + timetable_length
-  #end
-
-  #def to_tile
-  #  attrs = {
-  #    title: tile_title || title,
-  #    bg: tile_bg,
-  #    icon: tile_icon,
-  #    is_deletable: is_deletable?,
-  #    subtitle: subtitle,
-  #    body: body,
-  #    person_id: person_id,
-  #    object: self
-  #  }
-  #  if eventable.respond_to? :tile_attrs
-  #    if eventable.method(:tile_attrs).arity == 1
-  #      attrs.merge!(eventable.tile_attrs(transition))
-  #    else
-  #      attrs.merge!(eventable.tile_attrs)
-  #    end
-  #  end
-  #  Tile.new attrs
-  #end
-#
 end

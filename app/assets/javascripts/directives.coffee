@@ -86,6 +86,19 @@ angular.module 'leapApp'
       $http.get("/people/#{scope.misId}.json").success (data) ->
         scope.person = data
 
+.directive 'leapTimelineDate', (Timeline) ->
+  restrict: 'E'
+  templateUrl: '/assets/timeline_date.html'
+  link: (scope) ->
+    scope.timelineDate = Timeline.getDate().toDate()
+    scope.$watch "timelineDate", (newDate,oldDate) ->
+      Timeline.setDate(newDate)
+      Timeline.update()
+    scope.nextWeek = ->
+      scope.timelineDate = moment(scope.timelineDate).add(1,"week").toDate()
+    scope.prevWeek = ->
+      scope.timelineDate = moment(scope.timelineDate).subtract(1,"week").toDate()
+    
 .directive 'leapTimelineEvent', (LeapEvent) ->
   restrict: "E"
   templateUrl: '/assets/timeline_event.html'
@@ -99,6 +112,22 @@ angular.module 'leapApp'
       scope.category = LeapEvent.category()
     scope.clicked = -> scope.extended = !scope.extended
     scope.$on "cancelEventForm", -> scope.extended = false
+
+.directive 'leapTimetableEvent', (LeapEvent) ->
+  restrict: "E"
+  templateUrl: '/assets/timetable_event.html'
+  scope:
+    leapEventId: '='
+    showDate: '='
+  link: (scope,element,attrs) ->
+    LeapEvent.load(scope.leapEventId).then ->
+      scope.event = LeapEvent.get()
+      scope.category = LeapEvent.category()
+      edMom = moment(scope.event.eventDate)
+      sodMom = angular.copy(edMom)
+      top = edMom.diff(sodMom.startOf('day').add(8,'hours'),'minutes')
+      element.css("top", (top + 99) + "px")
+      element.css("background: " + scope.category.color) if scope.category
 
 .directive 'leapChildEvent', (LeapEvent) ->
   restrict: "E"

@@ -1,11 +1,26 @@
 #timeline
-  .no-events ng-if="events.length == 0" Nothing to show!
   div ng-switch="view.view_type"
     .timeline-events ng-switch-when="timeline"
+      .no-events ng-if="events.length == 0" Nothing to show!
       .year ng-repeat="year in years"
         h1.academic-year ng-click="year.show = !year.show" {{ year.year }}
         .ay_events ng-show="year.show"
           leap-timeline-event ng-repeat="event in events | filter: {academicYear: year.year} track by event.id" leap-event-id="event.id" show-date="event.showDate"
     .tiles ng-switch-when="tiles"
+      .no-events ng-if="events.length == 0" Nothing to show!
       leap-tile ng-repeat="event in events" leap-event-id="event.id"
+    .timetable ng-switch-when="timetable"
+      leap-timeline-date
+      .row 
+        .times
+          - 8.upto(20) do |hour|
+            .hour
+              = hour
+              |.00
+        .day ng-repeat="day in [1,2,3,4,5,6,0]" class="day-{{ day }}" ng-class="{ even: $even }"
+          h1 {{ ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][day]  }}
+          - 12.times do |hour|
+            .hour &nbsp;
+          leap-timetable-event ng-repeat="event in events | filter: { timetableDay: day }" leap-event-id="event.id"
+      .scroll d
 leap-timeline-controls ng-if="topic.topic_type == 'person'"

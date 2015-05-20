@@ -1,4 +1,3 @@
-$controls-bg: #6e155f;
 $timeline-border-color: $steel;
 
 .no-events {
@@ -225,11 +224,9 @@ $timeline-border-color: $steel;
 leap-event-form { 
   form {
     @include clearfix;
+    @extend .category-background;
     clear:both;
-    background: $steel;
-    color: $white;
     padding-top: 1rem;
-    h1,h2,h3,h4,h5 { color: $white }
     .alert-box { @include grid-column(12) }
     .event-form-main{
       @include grid-column(10);

@@ -1,4 +1,4 @@
-angular.module 'leapApp', ['ngRoute','ngSanitize','mm.foundation','duScroll']
+angular.module 'leapApp', ['ngRoute','ngSanitize','mm.foundation','duScroll', 'angular-date-picker-polyfill']
 
 .config(['$routeProvider', ($routeProvider) ->
   $routeProvider

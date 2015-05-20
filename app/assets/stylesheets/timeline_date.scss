@@ -1,0 +1,12 @@
+leap-timeline-date {
+  @include grid-row;
+  .previous,.next {
+    @include grid-column(2);
+    @include button($padding: $button-med, $radius: $button-round);
+    margin: 5px 0;
+  }
+  .aa-date-input{
+    @include grid-column(4);
+    margin: 5px 0;
+  }
+}

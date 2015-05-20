@@ -1,0 +1,6 @@
+.box ng-style="category.styles.bg"
+  h3 {{ event.title }}
+  .time 
+    | {{ event.timetable.startDate | date : "shortTime" }}
+    span<> ng-if="event.timetable.length" - {{ event.timetable.endDate | date: "shortTime" }}
+  p {{ event.body }}

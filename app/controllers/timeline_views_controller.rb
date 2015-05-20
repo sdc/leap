@@ -36,6 +36,8 @@ class TimelineViewsController < ApplicationController
     else
       @topic.events
     end
+    date = params[:date] ? Date.parse(params[:date]) : Date.today()
+    scope = scope.where(event_date: date.beginning_of_week...date.end_of_week)
     conds = []
     str = []
     view.events.each do |etype,trans|

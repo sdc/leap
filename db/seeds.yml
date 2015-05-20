@@ -149,7 +149,7 @@ views:
       - name: Add a Timetable Activity
         templateUrl: timetable_activity.html
         createEvent: tt_activity
-    view_type: timeline
+    view_type: timetable
     events: 
       TtActivity:
         null

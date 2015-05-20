@@ -16,3 +16,11 @@ leap-top-bar {
   z-index: 10;
   h3 { margin: 0 }
 }
+
+.category-background {
+  background: $steel;
+  color: $white;
+  h1,h2,h3,h4,h5 { color: $white }
+}
+
+.aa-date-input { display: inline }
