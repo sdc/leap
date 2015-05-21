@@ -6,7 +6,7 @@
 //= require angular-sanitize/angular-sanitize
 //= require angular-foundation/mm-foundation-tpls
 //= require angular-scroll/angular-scroll
-//= require angular-date-picker-polyfill/dist/angular-date-picker-polyfill
+//= require angularjs-datepicker/src/js/angular-datepicker
 //= require app
 //= require controllers
 //= require factories

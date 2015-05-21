@@ -23,6 +23,7 @@
     "angular-foundation": "~0.6.0",
     "angular-scroll": "~0.7.0",
     "foundation": "~5.5.2",
-    "moment": "~2.10.3"
+    "moment": "~2.10.3",
+    "angularjs-datepicker": "~0.2.4"
   }
 }

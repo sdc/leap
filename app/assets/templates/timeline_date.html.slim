@@ -1,9 +1,8 @@
-.previous
-  a ng-click="prevWeek()"
-    i.fa.fa-arrow-left>
-    | Previous
-.the-date-input: input type="date" ng-model="timelineDate"
-.next 
-  a ng-click="nextWeek()"
-    | Next
-    i.fa.fa-arrow-right<
+a.previous ng-click="prevWeek()"
+  i.fa.fa-arrow-left>
+  | Previous
+.date-input: datepicker format="EEE d MMMM yyyy": input ng-model="timelineDate" type="text"
+a.next ng-click="nextWeek()"
+  | Next
+  i.fa.fa-arrow-right<
+
