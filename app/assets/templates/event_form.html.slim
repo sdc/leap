@@ -10,6 +10,7 @@ form class="create_{{ eventType }}" ng-style="category.styles.bg"
         | Add Contact Log
       button.secondary ng-click="cancelForm()" Cancel
   .category-select
+    h3 Category
     .show-for-large-up.switch.tiny.radius ng-repeat="category in categories"
       input[type="radio" name="itag" ng-model="newEvent.category_id" 
             value="{{ category.id }}" id="category_switch_{{ category.id }}"]
