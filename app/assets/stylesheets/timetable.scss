@@ -12,7 +12,11 @@
       background: $snow;
     }
 
-    &.day-0,&.day-6 {
+    &.day-1.weekend,&.day-2.weekend {
+      display: none;
+    }
+
+    &.day-0:not(.weekend),&.day-6:not(.weekend) {
       display: none;
     }
  
@@ -26,6 +30,10 @@
   .times,.scroll {
     @include grid-column(1);
     padding-top: 40px;
+  }
+
+  a.scroll {
+    @include button($radius: true);
   }
   
   leap-timetable-event {

@@ -17,10 +17,12 @@
             .hour
               = hour
               |.00
-        .day ng-repeat="day in [1,2,3,4,5,6,0]" class="day-{{ day }}" ng-class="{ even: $even }"
+        .day ng-repeat="day in [1,2,3,4,5,6,0]" class="day-{{ day }}" ng-class="{ even: $even, weekend: show_weekend }"
           h1 {{ ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][day]  }}
           - 12.times do |hour|
             .hour &nbsp;
           leap-timetable-event ng-repeat="event in events | filter: { timetableDay: day }" leap-event-id="event.id"
-      .scroll d
+        a.scroll ng-click="show_weekend = !show_weekend"
+          i.fa.fa-angle-double-right ng-hide="show_weekend"
+          i.fa.fa-angle-double-left  ng-show="show_weekend"
 leap-timeline-controls ng-if="topic.topic_type == 'person'"
