@@ -98,6 +98,8 @@ angular.module 'leapApp'
       scope.timelineDate = moment(scope.timelineDate).add(1,"week").toDate()
     scope.prevWeek = ->
       scope.timelineDate = moment(scope.timelineDate).subtract(1,"week").toDate()
+    scope.today = ->
+      scope.timelineDate = Date.now()
     
 .directive 'leapTimelineEvent', (LeapEvent) ->
   restrict: "E"

@@ -1,9 +1,14 @@
 leap-timeline-date {
   @include grid-row;
-  .previous { @include grid-column(2, $offset: 2) }
+  .previous { @include grid-column(2, $offset: 1) }
+  .next { @include grid-column(2) }
   .previous,.next {
+    @include button($padding: $button-med, $radius: $button-round, $bg: $secondary-color);
+    margin: 5px 0;
+  }
+  .today { 
     @include grid-column(2);
-    @include button($padding: $button-med, $radius: $button-round);
+    @include button($padding: $button-med, $radius: $button-radius);
     margin: 5px 0;
   }
   .date-input {
