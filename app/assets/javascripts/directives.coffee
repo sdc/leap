@@ -115,6 +115,15 @@ angular.module 'leapApp'
     scope.clicked = -> scope.extended = !scope.extended
     scope.$on "cancelEventForm", -> scope.extended = false
 
+.directive 'leapRegisterEvent', ->
+  restrict: "E"
+  templateUrl: "/assets/register_event.html"
+  link: (scope,element) ->
+    edMom = moment(scope.event.timetable_start)
+    sodMom = angular.copy(edMom)
+    top = edMom.diff(sodMom.startOf('day').add(8,'hours'),'minutes')
+    element.css("top", (top + 36) + "px")
+
 .directive 'leapTimetableEvent', (LeapEvent) ->
   restrict: "E"
   templateUrl: '/assets/timetable_event.html'

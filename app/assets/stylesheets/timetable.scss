@@ -36,7 +36,7 @@
     @include button($radius: true);
   }
   
-  leap-timetable-event {
+  leap-timetable-event,leap-register-event {
     position: absolute;
     @include grid-column(2);
     .box { 

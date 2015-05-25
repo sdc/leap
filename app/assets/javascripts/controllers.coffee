@@ -9,6 +9,7 @@ angular.module 'leapApp'
   $rootScope.$on "timelineUpdated", ->
     $scope.years = Timeline.years()
     $scope.events = Timeline.get()
+    $scope.registers = Timeline.registers()
     $scope.view = Timeline.getView()
     $scope.date = Timeline.getDate()
 

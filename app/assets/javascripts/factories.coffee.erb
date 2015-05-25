@@ -32,6 +32,7 @@ angular.module 'leapApp'
 
 .factory 'Timeline', ($http,$rootScope,$q,Topic,$log,academicYearFilter) ->
     events = []
+    registers = null
     viewName = null
     view = null
     date = moment.utc()
@@ -43,12 +44,18 @@ angular.module 'leapApp'
     setDate: (d) -> date = moment(d).utc()
     getDate: -> date
     get: -> events
+    registers: -> registers
     years: -> _.map(_.uniq(_.map(events,(e) -> academicYearFilter(e.event_date))), (y) -> {year: y,show: true})
     update: ->
       deferred = $q.defer()
       $http.get("#{Topic.urlBase()}/timeline_views/#{viewName}?date=#{date.toISOString()}").success (data) ->
         view = data.view
         events = data.events
+        if data.registers
+          registers = data.registers
+          for register in registers
+            register.timetableDay = new Date(register.timetable_start).getDay()
+            #register.timetableDay = if register.timetableDay == 0 then 7 else register.timetableDay - 1
         for event,i in events
           event.eventDate = new Date event.event_date
           event.timetableDay = event.eventDate.getDay()

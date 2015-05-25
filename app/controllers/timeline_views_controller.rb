@@ -54,6 +54,7 @@ class TimelineViewsController < ApplicationController
       end
     end
     events = scope.where(str.join(" or "), *conds)
-    render json: {view: view, events: events}
+    registers = @topic.timetable_events if view.view_type == "timetable"
+    render json: {view: view, events: events, registers: registers}
   end
 end
