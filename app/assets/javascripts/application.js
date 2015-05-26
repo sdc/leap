@@ -7,6 +7,7 @@
 //= require angular-foundation/mm-foundation-tpls
 //= require angular-scroll/angular-scroll
 //= require angularjs-datepicker/src/js/angular-datepicker
+//= require angular-loading-bar
 //= require app
 //= require controllers
 //= require factories
