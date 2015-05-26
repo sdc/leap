@@ -35,7 +35,7 @@ angular.module 'leapApp'
     registers = null
     viewName = null
     view = null
-    date = moment.utc()
+    date = moment.utc().add(1,"month")
     setView: (v) ->
       if viewName != v
         viewName = v

@@ -21,23 +21,6 @@ class ApplicationController < ActionController::Base
   before_action :set_user
   before_action :set_topic
 
-  def set_date(default_offset = 0)
-    @date = if params[:date]
-              if params[:date].kind_of? Hash
-                Time.gm(*[:year, :month, :day].map { |x| params[:date][x].to_i })
-              else
-                Time.parse(params[:date])
-              end
-            else
-              Time.now + default_offset
-            end
-  rescue
-    flash.notice = "Incorrect date entered! Using today instead."
-    @date = Time.now
-  end
-
-  private
-
   def maintenance_mode
     render file: "public/maintenance_mode.html.erb", layout: nil, locals: { message: Settings.maintenance_mode } unless Settings.maintenance_mode.blank?
   end

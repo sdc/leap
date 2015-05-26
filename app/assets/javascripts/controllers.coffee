@@ -3,7 +3,7 @@ angular.module 'leapApp'
 .controller 'TimelineController', ($scope,$http,$routeParams,Topic,Timeline,$rootScope,$log,$interval) ->
   Topic.set($routeParams.topic_id,$routeParams.topic_type).then ->
     Timeline.setView $routeParams.view_name || "all"
-    Topic.update()
+    #Topic.update()
     $rootScope.topic = Topic.get()
     #$interval Timeline.update, 4000
   $rootScope.$on "timelineUpdated", ->
