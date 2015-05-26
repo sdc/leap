@@ -1,7 +1,7 @@
-.box 
-  /ng-style="category.styles.bg"
-  h3 {{ event.title}}
-  small.time 
+article.box
+  h4 {{ event.title}}
+  .time 
     | {{ event.timetable_start | date : "shortTime" }}
     span<> ng-if="event.timetable_end" - {{ event.timetable_end | date: "shortTime" }}
-  /p {{ event.body }}
+  .rooms {{ event.rooms.join(",") }}
+  .teachers {{ event.teachers.join(",") }}

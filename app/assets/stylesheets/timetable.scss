@@ -41,9 +41,16 @@
     @include grid-column(2);
     .box { 
       @extend .category-background;
-      padding: 2px;
+      padding: 3px;
       overflow: hidden;
       @include radius;
+      font-size: 0.8;
+      h4 { 
+        font-size: $h4-font-size;
+        font-weight: bold;
+        margin: 0
+      }
+      .teachers { font-style: italic }
     }
   }
 }

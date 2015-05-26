@@ -122,7 +122,9 @@ angular.module 'leapApp'
     edMom = moment(scope.event.timetable_start)
     sodMom = angular.copy(edMom)
     top = edMom.diff(sodMom.startOf('day').add(8,'hours'),'minutes')
+    length = moment(scope.event.timetable_end).diff(edMom,'minutes')
     element.css("top", (top + 36) + "px")
+    element.find('article').css("height", length + "px")
 
 .directive 'leapTimetableEvent', (LeapEvent) ->
   restrict: "E"
@@ -137,8 +139,10 @@ angular.module 'leapApp'
       edMom = moment(scope.event.eventDate)
       sodMom = angular.copy(edMom)
       top = edMom.diff(sodMom.startOf('day').add(8,'hours'),'minutes')
+      length = moment(scope.event.timetable.endDate).diff(edMom,'minutes')
       element.css("top", (top + 36) + "px")
       element.css("background: " + scope.category.color) if scope.category
+      element.find('div').css("height", length + "px")
 
 .directive 'leapChildEvent', (LeapEvent) ->
   restrict: "E"

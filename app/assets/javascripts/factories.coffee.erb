@@ -61,11 +61,9 @@ angular.module 'leapApp'
           registers = data.registers
           for register in registers
             register.timetableDay = new Date(register.timetable_start).getDay()
-            #register.timetableDay = if register.timetableDay == 0 then 7 else register.timetableDay - 1
         for event,i in events
           event.eventDate = new Date event.event_date
           event.timetableDay = event.eventDate.getDay()
-          event.timetableDay = if event.timetableDay == 0 then 7 else event.timetableDay - 1
           event.academicYear = academicYearFilter(event.eventDate)
           event.showDate = (events[i-1]?.eventDate.toDateString() != event.eventDate.toDateString())
         endDate = _.last(events).eventDate if events.length > 1
