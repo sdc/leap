@@ -1,5 +1,5 @@
-#require 'mis_connectors/no_connector'
-require 'mis_connectors/ebs_connector'
+require 'mis_connectors/no_connector'
+#require 'mis_connectors/ebs_connector'
 ActiveRecord::ConnectionAdapters::SQLServerAdapter.lowercase_schema_reflection = true if defined?(ActiveRecord::ConnectionAdapters::SQLServerAdapter)
 Ilp2::Application.config.mis_progress_codes = {
   "ACTREG"     => :current,    #  Active on Course

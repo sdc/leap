@@ -35,8 +35,9 @@ angular.module 'leapApp'
     registers = null
     viewName = null
     view = null
-    date = moment.utc().add(1,"month")
+    date = null
     setView: (v) ->
+      date = null
       if viewName != v
         viewName = v
         $rootScope.$broadcast "viewChanged"
@@ -48,7 +49,12 @@ angular.module 'leapApp'
     years: -> _.map(_.uniq(_.map(events,(e) -> academicYearFilter(e.event_date))), (y) -> {year: y,show: true})
     update: ->
       deferred = $q.defer()
-      $http.get("#{Topic.urlBase()}/timeline_views/#{viewName}?date=#{date.toISOString()}").success (data) ->
+      $http.get("#{Topic.urlBase()}/timeline_views/#{viewName}#{if date then '?date=' + date.toISOString() else ''}").success (data) ->
+        unless date
+          if data.view.view_type == "timetable"
+            date = moment()
+          else
+            date = moment().add(1,"month")
         view = data.view
         events = data.events
         if data.registers
