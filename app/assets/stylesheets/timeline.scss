@@ -22,6 +22,8 @@ $timeline-border-color: $steel;
   }
 
   leap-timeline-event {
+    &.first .timeline-event { @include side-radius(top) }
+    &.last  .timeline-event { @include side-radius(bottom) }
     .timeline-event {
       @include grid-column(12, $collapse: true);
       //@media #{$xlarge-up} { @include grid-column(6, $collapse: true) }
