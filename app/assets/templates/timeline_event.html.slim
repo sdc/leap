@@ -3,14 +3,13 @@
     time datetime="{{ event.eventDate }}"
       .date
         div ng-if="showDate || extended"
-          h3 {{ event.eventDate | date : "dd" }}
-          h3 {{ event.eventDate | date : "MMM" }}
+          h3 {{ event.eventDate | date : "dd" }} {{ event.eventDate | date : "MMM" }}
     leap-person.about-person mis-id="event.personId" ng-if="event.showPerson"
     h1.icon ng-if="event.icon": img ng-src="{{ event.icon }}"
     h1.icon.fa ng-if="event.fontIcon && !event.icon" class="{{ event.fontIcon }}" ng-style="category.styles.fg" tooltip="{{ category.title }}"
     ng-include.body src="'/assets/events/timeline/' + event.template" ng-if="event.template"
     .body ng-if="!event.template"
-      h1 {{ event.title }}
+      h3 {{ event.title }}
       p ng-if="event.body" {{ event.body }}
   .extra-info ng-click="clicked()"
     a.attachments tooltip="Attached events"

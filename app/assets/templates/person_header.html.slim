@@ -1,7 +1,7 @@
-.inner
-  .topic-and-flags
+.inner 
+  .topic-and-flags ng-class="{'show-topic': swiped}"
     h1: leap-person mis-id="person.mis_id" flags="flags"
-  .details
+  .details ng-class="{'show-topic': !swiped}"
     dl.details-tabs ng-hide="collapseTopicBar"
       dd ng-class="{active: detailsPane=='links'}"
         a ng-click="detailsPane='links'" 
@@ -36,3 +36,4 @@
           button.button ng-click="refresh()"
             i.fa.fa-refresh>
             | Refresh
+a.links-toggle ng-click="swiped = !swiped" {{ swiped ? 'Show details' : 'Show links' }}

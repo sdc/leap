@@ -1,4 +1,4 @@
-form class="create_{{ eventType }}" ng-style="category.styles.bg"
+form class="create_{{ eventType }}" ng-style="category.styles.bg" novalidate=true
   .event-form-main
     alert ng-if="errors" type="'alert radius'" 
       h4 Errors:
@@ -7,7 +7,7 @@ form class="create_{{ eventType }}" ng-style="category.styles.bg"
     .buttons
       button> ng-click="createEvent()"
         i.fa.fa-plus>
-        | Add Contact Log
+        | Add Event
       button.secondary ng-click="cancelForm()" Cancel
   .category-select
     h3 Category

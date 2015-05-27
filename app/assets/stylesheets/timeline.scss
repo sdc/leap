@@ -49,15 +49,8 @@ $timeline-border-color: $steel;
         .time,.date {min-height:1px}
         cursor: pointer;
         .date { 
-          transition: 0.5s ease all;
           @include radius;
           text-align: center;  
-          background: #a44;
-          border-bottom: 1px white solid;
-          h3 { 
-            color: $white;
-            line-height: 1;
-          }
         }
         .icon { 
           @include grid-column(2);
@@ -124,6 +117,9 @@ $timeline-border-color: $steel;
         }
         @media #{$small-up} {
           ng-pluralize { display: none }
+          .attachments { @include grid-column(4) }
+        }
+        @media #{$medium-up} {
           .attachments { @include grid-column(3, $offset:3) }
         }
         @media #{$large-up} {
@@ -140,8 +136,8 @@ $timeline-border-color: $steel;
     height: 200px;
     float: left;
     background: #8f8;
-    border-right: 1px $white solid;
-    border-top: 1px $white solid;
+    border-right: 1px $body-bg solid;
+    border-top: 1px $body-bg solid;
 
     .background {
       overflow: hidden;
@@ -218,6 +214,9 @@ $timeline-border-color: $steel;
       opacity: 0.6;
       color: $oil;
     }
+  }
+  &:not(.off-canvas) {
+    @media #{$small-only} { top: 0 }
   }
   ._720kb-datepicker-calendar { bottom: 100% }
 }

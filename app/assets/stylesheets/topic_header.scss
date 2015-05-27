@@ -1,13 +1,20 @@
+$topic-header-bg: $base;
+
 .topbar-gap { height: $topbar-height }
 
 header.topic-header {
-  background: $iron;
+  background: $topic-header-bg;
 
   leap-person-header,leap-course-header {
     @include clearfix;
     .inner { @include grid-row }
     .details{
-      @media #{$small-up}  { display: none } 
+      &.show-topic {
+        @media #{$small-only} { display: none }
+      }
+      &:not(.show-topic) {
+        @media #{$small-only}  { @include grid-column(12, $collapse: true) }
+      }
       @media #{$medium-up} { display: block; @include grid-column(7) }
       .details-tabs {
         @include sub-nav;
@@ -23,7 +30,12 @@ header.topic-header {
       }
       h1 { margin: 0 }
       .topic-and-flags{ 
-        @media #{$small-up}  { @include grid-column(12, $collapse: true) }
+        &.show-topic {
+          @media #{$small-only} { display: none }
+        }
+        &:not(.show-topic) { 
+          @media #{$small-only}  { @include grid-column(12, $collapse: true) }
+        }
         @media #{$medium-up} { @include grid-column(5,  $collapse: true) }
          leap-person {
            @include grid-row($behavior: collapse);
@@ -39,7 +51,7 @@ header.topic-header {
     }
 
     &.fixed {
-      background: $iron;
+      background: $topic-header-bg;
       top: $topbar-height;
       h1 { 
         font-size: $h3-font-size;
@@ -54,7 +66,7 @@ header.topic-header {
 
       .topic-and-flags{ 
         @media #{$large-up}  { @include grid-column(4, $collapse: true) }
-       }
+      }
 
       leap-views-menu {
         &:hover li { display: block }
@@ -66,6 +78,7 @@ header.topic-header {
           }
         }
       }
+      .links-toggle { display: none }
     }
 
     leap-views-menu {
@@ -79,5 +92,9 @@ header.topic-header {
       }
     }
 
+    .links-toggle {
+      @media #{$medium-up} { display: none }
+      @include button($padding: $button-tny)
+    }
   }
 }
