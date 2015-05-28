@@ -32,9 +32,10 @@ $timeline-border-color: $steel;
       border-style: solid;
       border-color: $timeline-border-color;
       border-width: 0 9px 0 0;
+      >.main,.extra-info { @include radius }
       &:hover { 
         * { transition: 0.5s ease background-color }
-        >.main,.extra-info { background: $vapor }
+        >.main,.extra-info { background: $white-smoke }
         .extra-info {
           a { color: $primary-color }
         }
@@ -107,6 +108,7 @@ $timeline-border-color: $steel;
           h3 { color: $oil }
         }
       }
+      leap-event-form form { border-bottom-left-radius: $global-radius }
       .extra-info {
         padding-top: 10px;
         @include grid-row;

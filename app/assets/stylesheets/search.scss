@@ -6,6 +6,7 @@
 
 #search-results {
   @include panel;
+  @include grid-row;
   .filter {
     @include button-group-container;
     li { @include button-group-style }

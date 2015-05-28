@@ -27,7 +27,7 @@ angular.module 'leapApp'
         scope.person = data
         $log.info "PersonHeader: I changed to #{scope.person.name}"
     $document.on 'scroll', ->
-      scope.collapseTopicBar = $document.scrollTop() > 200
+      scope.collapseTopicBar = $document.scrollTop() > 115
     scope.$watch 'collapseTopicBar', (newv,oldv) ->
       if newv && !oldv
         element.addClass("fixed")
