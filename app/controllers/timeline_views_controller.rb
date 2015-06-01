@@ -22,9 +22,13 @@ class TimelineViewsController < ApplicationController
   end
 
   def show
+    # Find the views
     view = TimelineView.where("url" => params[:id],
                               "aff_#{Person.affiliation}"  => true,
                               "topic_#{@topic.topic_type}" => true).first
+    
+    # Set the scope to user, course or institution level.
+    # Note: @topic will already be set on url and affiliation
     scope = if Person.user.staff? && params[:all]
       Event.all
     elsif Person.user.staff? && @topic.kind_of?(Course)
@@ -36,12 +40,16 @@ class TimelineViewsController < ApplicationController
     else
       @topic.events
     end
+
+    # Add the date to the scope (a week if it's a timetable view)
     date = params[:date] ? Date.parse(params[:date]) : ( Date.today() + 1.month )
     scope = if view.view_type == "timetable"
               scope.where(event_date: date.beginning_of_week...date.end_of_week)
             else
               scope.where("event_date < ?", date)
             end
+
+    # Add the event types from the view to the scope
     conds = []
     str = []
     view.events.each do |etype,trans|
@@ -54,7 +62,11 @@ class TimelineViewsController < ApplicationController
       end
     end
     events = scope.where(str.join(" or "), *conds)
+
+    # Add the topic's timetable from the EBS if it's a timetable page
     registers = @topic.timetable_events(from: date.beginning_of_week, to: date.end_of_week) if view.view_type == "timetable"
+
+    # Send it off!
     render json: {view: view, events: events, registers: registers}
   end
 end
