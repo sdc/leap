@@ -12,6 +12,7 @@ angular.module 'leapApp'
     $scope.registers = Timeline.registers()
     $scope.view = Timeline.getView()
     $scope.date = Timeline.getDate()
+    $scope.people = Timeline.people()
 
 .controller 'SearchController', ($scope,$http,$location,$routeParams,Topic,Timeline) ->
   $scope.working = false

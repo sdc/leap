@@ -34,6 +34,7 @@ angular.module 'leapApp'
     events = []
     registers = null
     viewName = null
+    people = null
     view = null
     date = null
     setView: (v) ->
@@ -47,6 +48,7 @@ angular.module 'leapApp'
     get: -> events
     registers: -> registers
     years: -> _.map(_.uniq(_.map(events,(e) -> academicYearFilter(e.event_date))), (y) -> {year: y,show: true})
+    people: -> people
     update: ->
       deferred = $q.defer()
       $http.get("#{Topic.urlBase()}/timeline_views/#{viewName}#{if date then '?date=' + date.toISOString() else ''}").success (data) ->
@@ -56,17 +58,20 @@ angular.module 'leapApp'
           else
             date = moment().add(1,"month")
         view = data.view
-        events = data.events
+        if data.people
+          people = data.people
         if data.registers
           registers = data.registers
           for register in registers
             register.timetableDay = new Date(register.timetable_start).getDay()
-        for event,i in events
-          event.eventDate = new Date event.event_date
-          event.timetableDay = event.eventDate.getDay()
-          event.academicYear = academicYearFilter(event.eventDate)
-          event.showDate = (events[i-1]?.eventDate.toDateString() != event.eventDate.toDateString())
-        endDate = _.last(events).eventDate if events.length > 1
+        if data.events
+          events = data.events
+          for event,i in events
+            event.eventDate = new Date event.event_date
+            event.timetableDay = event.eventDate.getDay()
+            event.academicYear = academicYearFilter(event.eventDate)
+            event.showDate = (events[i-1]?.eventDate.toDateString() != event.eventDate.toDateString())
+          endDate = _.last(events).eventDate if events.length > 1
         $rootScope.$broadcast("timelineUpdated")
         deferred.resolve events
       deferred.promise

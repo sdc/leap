@@ -26,47 +26,55 @@ class TimelineViewsController < ApplicationController
     view = TimelineView.where("url" => params[:id],
                               "aff_#{Person.affiliation}"  => true,
                               "topic_#{@topic.topic_type}" => true).first
-    
-    # Set the scope to user, course or institution level.
-    # Note: @topic will already be set on url and affiliation
-    scope = if Person.user.staff? && params[:all]
-      Event.all
-    elsif Person.user.staff? && @topic.kind_of?(Course)
-      #if @tutorgroup
-      #  Event.where(:person_id => @topic.person_courses.where(:tutorgroup => @tutorgroup).map{|p| p.person_id})
-      #else
-        Event.where(person_id: @topic.people.map(&:id))
-      #end
+
+
+    people = if view.view_type == "people"
+      @topic.person_courses.includes(person: "mdl_grade_tracks")
+            .sort_by { |pc| pc.person.name(surname_first: true) }.as_json
     else
-      @topic.events
-    end
 
-    # Add the date to the scope (a week if it's a timetable view)
-    date = params[:date] ? Date.parse(params[:date]) : ( Date.today() + 1.month )
-    scope = if view.view_type == "timetable"
-              scope.where(event_date: date.beginning_of_week...date.end_of_week)
-            else
-              scope.where("event_date < ?", date).limit(100)
-            end
-
-    # Add the event types from the view to the scope
-    conds = []
-    str = []
-    view.events.each do |etype,trans|
-      if trans
-        str.unshift "(eventable_type = ? and transition in (?))"
-        conds.unshift etype,trans
+      # Set the scope to user, course or institution level.
+      # Note: @topic will already be set on url and affiliation
+      scope = if Person.user.staff? && params[:all]
+        Event.all
+      elsif Person.user.staff? && @topic.kind_of?(Course)
+        #if @tutorgroup
+        #  Event.where(:person_id => @topic.person_courses.where(:tutorgroup => @tutorgroup).map{|p| p.person_id})
+        #else
+          Event.where(person_id: @topic.people.map(&:id))
+        #end
       else
-        str.unshift "(eventable_type = ?)"
-        conds.unshift etype
+        @topic.events
       end
-    end
-    events = scope.where(str.join(" or "), *conds)
 
-    # Add the topic's timetable from the EBS if it's a timetable page
-    registers = @topic.timetable_events(from: date.beginning_of_week, to: date.end_of_week) if view.view_type == "timetable"
+      # Add the date to the scope (a week if it's a timetable view)
+      date = params[:date] ? Date.parse(params[:date]) : ( Date.today() + 1.month )
+      scope = if view.view_type == "timetable"
+                scope.where(event_date: date.beginning_of_week...date.end_of_week)
+              else
+                scope.where("event_date < ?", date).limit(100)
+              end
+
+      # Add the event types from the view to the scope
+      conds = []
+      str = []
+      view.events.each do |etype,trans|
+        if trans
+          str.unshift "(eventable_type = ? and transition in (?))"
+          conds.unshift etype,trans
+        else
+          str.unshift "(eventable_type = ?)"
+          conds.unshift etype
+        end
+      end
+      events = scope.where(str.join(" or "), *conds)
+
+      # Add the topic's timetable from the EBS if it's a timetable page
+      registers = @topic.timetable_events(from: date.beginning_of_week, to: date.end_of_week) if view.view_type == "timetable"
+
+    end
 
     # Send it off!
-    render json: {view: view, events: events, registers: registers}
+    render json: {view: view, events: events, registers: registers, people: people}
   end
 end

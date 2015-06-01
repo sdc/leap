@@ -159,6 +159,20 @@ views:
     aff_staff: Yes
     aff_student: Yes
     admin_only: no
+  - id: 10
+    icon: fa-home
+    title: Peeps
+    topic_course: Yes
+    view_type: people
+    events: 
+      PersonCourse:
+        start
+    url: peeps 
+    aff_affiliate: Yes
+    aff_applicant: Yes
+    aff_staff: Yes
+    aff_student: No
+    admin_only: no
 
 categories:
   - id: 1

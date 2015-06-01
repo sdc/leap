@@ -68,11 +68,12 @@ angular.module 'leapApp'
       $http.get("/courses/#{scope.misId}.json").success (data) ->
         scope.course = data
 
-.directive 'leapPerson', ($http,$log) ->
+.directive 'leapPerson', ($http,$log,LeapEvent) ->
   restrict: "EA"
   templateUrl: '/assets/person.html'
   scope:
     misId: '='
+    leapId: '='
     flags: '@'
   link: (scope,element,attrs) ->
     scope.flags = scope.flags=="flags"
@@ -83,8 +84,10 @@ angular.module 'leapApp'
         $log.info "Person #{data.name}: I updated myself."
     scope.$watch 'misId', ->
       return unless scope.misId
-      $http.get("/people/#{scope.misId}.json").success (data) ->
-        scope.person = data
+      $http.get("/people/#{scope.misId}.json").success (data) -> scope.person = data
+    scope.$watch 'leapId', ->
+      return unless scope.leapId
+      $http.get("/people/#{scope.leapId}.json?id_type=leap").success (data) -> scope.person = data
 
 .directive 'leapTimelineDate', (Timeline) ->
   restrict: 'E'

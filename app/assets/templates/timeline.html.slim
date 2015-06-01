@@ -31,4 +31,11 @@
         a.scroll ng-click="show_weekend = !show_weekend"
           i.fa.fa-angle-double-right ng-hide="show_weekend"
           i.fa.fa-angle-double-left  ng-show="show_weekend"
+    #wall-of-people ng-switch-when="people"
+      ul: li ng-repeat="person in people": leap-person leap-id="person.person_id"
+    .else ng-switch-default=true
+      alert ng-if="view.view_type" type="'alert warning'"
+        | The view type 
+        b<> {{ view.view_type }}
+        | doesn't exist. You should probably tell this to your administrator!
 leap-timeline-controls ng-if="topic.topic_type == 'person'"
