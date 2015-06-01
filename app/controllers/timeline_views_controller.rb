@@ -46,7 +46,7 @@ class TimelineViewsController < ApplicationController
     scope = if view.view_type == "timetable"
               scope.where(event_date: date.beginning_of_week...date.end_of_week)
             else
-              scope.where("event_date < ?", date)
+              scope.where("event_date < ?", date).limit(100)
             end
 
     # Add the event types from the view to the scope
