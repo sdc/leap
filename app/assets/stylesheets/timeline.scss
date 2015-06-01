@@ -35,7 +35,7 @@ $timeline-border-color: $steel;
       >.main,.extra-info { @include radius }
       &:hover { 
         * { transition: 0.5s ease background-color }
-        >.main,.extra-info { background: $white-smoke }
+        >.main,.extra-info { background: $snow }
         .extra-info {
           a { color: $primary-color }
         }
