@@ -5,6 +5,7 @@
 }
 
 #search-results {
+  margin-top: 1rem;
   @include panel;
   @include grid-row;
   .filter {

@@ -42,7 +42,7 @@ class Review < Eventable
     !published
   end
 
-  def icon
+  def font-icon
     "fa-file-text"
   end
 end

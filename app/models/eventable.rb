@@ -41,9 +41,9 @@ class Eventable < ActiveRecord::Base
     false
   end
 
-  def status
-    :unknown
-  end
+  #def status
+  #  :unknown
+  #end
 
   def created_by_text
     if respond_to?(:mis) && mis

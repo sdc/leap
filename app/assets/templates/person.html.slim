@@ -12,3 +12,4 @@ a< ng-href="#/person/{{ person.mis_id }}"
       i.fa.fa-mortar-board
     .label.success tooltip="User has admin privileges" tooltip-trigger="mouseenter" ng-if="person.admin" tooltip-placement="bottom"
       i.fa.fa-key
+  .status ng-if="misStatus" ng-class="status" {{ misStatus }}

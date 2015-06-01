@@ -74,6 +74,8 @@ angular.module 'leapApp'
   scope:
     misId: '='
     leapId: '='
+    misStatus: '='
+    status: '='
     flags: '@'
   link: (scope,element,attrs) ->
     scope.flags = scope.flags=="flags"

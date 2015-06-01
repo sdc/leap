@@ -41,7 +41,7 @@ class ReviewLine < Eventable
     review ? review.staff_only? : false
   end
 
-  def icon
-    "fa-file-text"
+  def font_icon
+    "fa-file-text-o"
   end
 end

@@ -32,7 +32,7 @@
           i.fa.fa-angle-double-right ng-hide="show_weekend"
           i.fa.fa-angle-double-left  ng-show="show_weekend"
     #wall-of-people ng-switch-when="people"
-      ul: li ng-repeat="person in people": leap-person leap-id="person.person_id"
+      ul: li ng-repeat="person in people": leap-person leap-id="person.person_id" mis-status="person.mis_status" status="person.status"
     .else ng-switch-default=true
       alert ng-if="view.view_type" type="'alert warning'"
         | The view type 
