@@ -37,12 +37,14 @@ angular.module 'leapApp'
     people = null
     view = null
     date = null
+    statuses = null
     setView: (v) ->
       date = null
       if viewName != v
         viewName = v
         $rootScope.$broadcast "viewChanged"
     getView: -> view
+    statuses: -> statuses
     setDate: (d) -> date = moment(d).utc()
     getDate: -> date
     get: -> events
@@ -60,6 +62,7 @@ angular.module 'leapApp'
         view = data.view
         if data.people
           people = data.people
+          statuses = _.uniq(_.pluck(people, "mis_status"))
         if data.registers
           registers = data.registers
           for register in registers

@@ -32,7 +32,12 @@
           i.fa.fa-angle-double-right ng-hide="show_weekend"
           i.fa.fa-angle-double-left  ng-show="show_weekend"
     #wall-of-people ng-switch-when="people"
-      ul: li ng-repeat="person in people": leap-person leap-id="person.person_id" mis-status="person.mis_status" status="person.status"
+      dl.status-filter 
+        dt Filter:
+        dd ng-class="{active: !statusFilter}": a ng-click="setStatusFilter(false)" None
+        dd ng-repeat="status in statuses | orderBy " ng-class="{active: statusFilter == status }"
+          a ng-click="setStatusFilter(status)" {{ status }}
+      ul: li ng-repeat="person in people | filter: statusFilter": leap-person leap-id="person.person_id" enrolment="person"
     .else ng-switch-default=true
       alert ng-if="view.view_type" type="'alert warning'"
         | The view type 

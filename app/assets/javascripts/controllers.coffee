@@ -13,6 +13,9 @@ angular.module 'leapApp'
     $scope.view = Timeline.getView()
     $scope.date = Timeline.getDate()
     $scope.people = Timeline.people()
+    $scope.statuses = Timeline.statuses()
+    $scope.statusFilter = if _.contains($scope.statuses,'Active') then 'Active' else ''
+  $scope.setStatusFilter = (filter) -> $scope.statusFilter = (filter || '')
 
 .controller 'SearchController', ($scope,$http,$location,$routeParams,Topic,Timeline) ->
   $scope.working = false

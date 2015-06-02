@@ -56,7 +56,7 @@ $timeline-border-color: $steel;
           text-align: center;  
         }
         .icon { 
-          @include grid-column(2);
+          @include grid-column(1);
           font-size: 2.5rem;
           text-align: center;
           color: $timeline-border-color;
@@ -66,13 +66,11 @@ $timeline-border-color: $steel;
           h1 { font-size: $h3-font-size }
           p { margin-bottom: 0 }
         }
-        @media #{$small-only} {
+        @media #{$small-up} {
           .about-person{ 
-            img { @include grid-column(2) }
-            .name { 
-                @include grid-column(2,$collapse:true);
-              font-size: $h5-font-size 
-            }                  
+            @include grid-column(2);
+            .name { display: block }                  
+            img   { display: block }
           }
           .date { 
             @include grid-column(1,$collapse: true); 
@@ -82,11 +80,11 @@ $timeline-border-color: $steel;
           .body             { @include grid-column(9) }
           .about-person~.body { @include grid-column(7) }
         }
-        @media #{$medium-up} {
+        @media #{$large-up} {
           .about-person{ 
-          primary  img { @include grid-column(1) }
+            img { @include grid-column(6) }
             .name { 
-              @include grid-column(2,$collapse:true);
+              @include grid-column(6,$collapse:true);
               font-size: $h3-font-size 
             }                  
           }
@@ -96,7 +94,7 @@ $timeline-border-color: $steel;
             }
           .time             { @include grid-column(1) }
           .body             { @include grid-column(9) }
-          .about-person~.body { @include grid-column(7) }
+          .about-person~.body { @include grid-column(6) }
         }
         @media #{$large-up} {
           .icon { font-size: 3rem }

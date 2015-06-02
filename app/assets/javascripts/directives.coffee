@@ -74,11 +74,10 @@ angular.module 'leapApp'
   scope:
     misId: '='
     leapId: '='
-    misStatus: '='
-    status: '='
+    enrolment: '='
     flags: '@'
   link: (scope,element,attrs) ->
-    scope.flags = scope.flags=="flags"
+    scope.flags = scope.flags == "flags"
     scope.$on "person_#{scope.misId}_updated", ->
       $log.info "Person #{scope.name}: I need to update myself"
       $http.get("/people/#{scope.misId}.json").success (data) ->

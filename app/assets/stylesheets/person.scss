@@ -1,8 +1,10 @@
 leap-person {
   .name { display: inline }
-  .status.incomplete { @include label($bg: $alert-color)   }
-  .status.complete   { @include label($bg: $success-color) }
-  .status.current    { @include label($bg: $warning-color) }
+  .status { display: block !important }
+  .status.incomplete { @include label($bg: $alert-color)     }
+  .status.complete   { @include label($bg: $success-color)   }
+  .status.current    { @include label($bg: $warning-color)   }
+  .status.unknown    { @include label($bg: $secondary-color) }
 }
 
 .top-bar leap-person {

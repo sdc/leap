@@ -1,6 +1,10 @@
 #wall-of-people {
   margin-top: 1rem;
   @include panel;
+  .status-filter { 
+    @include sub-nav;
+    background: $gainsboro;
+  }
   ul {
     @media #{$small-up}  { @include block-grid(3) }
     @media #{$medium-up} { @include block-grid(6) }

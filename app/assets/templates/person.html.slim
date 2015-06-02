@@ -1,5 +1,6 @@
 a< ng-href="#/person/{{ person.mis_id }}"
   img ng-src="{{ person.photo_uri }}"
+  .status ng-if="enrolment" ng-class="enrolment.status" {{ enrolment.mis_status }}
   .name 
     | {{ person.forename }} {{ person.surname }}
     small.number< {{ person.mis_id }}
@@ -12,4 +13,3 @@ a< ng-href="#/person/{{ person.mis_id }}"
       i.fa.fa-mortar-board
     .label.success tooltip="User has admin privileges" tooltip-trigger="mouseenter" ng-if="person.admin" tooltip-placement="bottom"
       i.fa.fa-key
-  .status ng-if="misStatus" ng-class="status" {{ misStatus }}
