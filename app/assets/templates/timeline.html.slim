@@ -27,7 +27,7 @@
           - 12.times do |hour|
             .hour &nbsp;
           leap-timetable-event ng-repeat="event in events | filter: { timetableDay: day }" leap-event-id="event.id"
-          leap-register-event ng-repeat="event in registers | filter: {timetableDay: day }"
+          leap-register-event ng-repeat="event in registers | filter: { timetableDay: day }" 
         a.scroll ng-click="show_weekend = !show_weekend"
           i.fa.fa-angle-double-right ng-hide="show_weekend"
           i.fa.fa-angle-double-left  ng-show="show_weekend"

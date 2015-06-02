@@ -129,6 +129,7 @@ angular.module 'leapApp'
     length = moment(scope.event.timetable_end).diff(edMom,'minutes')
     element.css("top", (top + 36) + "px")
     element.find('article').css("height", length + "px")
+    element.addClass scope.event.status
 
 .directive 'leapTimetableEvent', (LeapEvent) ->
   restrict: "E"

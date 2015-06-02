@@ -39,12 +39,16 @@
   leap-timetable-event,leap-register-event {
     position: absolute;
     @include grid-column(2);
-    .box { 
-      @extend .category-background;
+    article { 
       padding: 3px;
       overflow: hidden;
       @include radius;
       font-size: 0.8;
+      &:hover {
+        z-index: 100;
+        width: 200px;
+        height: 200px;
+      }
       h4 { 
         font-size: $h4-font-size;
         font-weight: bold;
@@ -52,5 +56,14 @@
       }
       .teachers { font-style: italic }
     }
+  }
+
+  leap-timetable-event article { @extend .category-background }
+
+  leap-register-event {
+    &.incomplete article { background: $alert-color     }
+    &.complete   article { background: $success-color   }
+    &.current    article { background: $warning-color   }
+    &.unknown    article { background: $secondary-color }
   }
 }
