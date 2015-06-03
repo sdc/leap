@@ -147,7 +147,7 @@ angular.module 'leapApp'
       length = moment(scope.event.timetable.endDate).diff(edMom,'minutes')
       element.css("top", (top + 36) + "px")
       element.css("background: " + scope.category.color) if scope.category
-      element.find('div').css("height", length + "px")
+      element.find('article').css("height", length + "px")
 
 .directive 'leapChildEvent', (LeapEvent) ->
   restrict: "E"

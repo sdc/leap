@@ -39,22 +39,27 @@
   leap-timetable-event,leap-register-event {
     position: absolute;
     @include grid-column(2);
+    
     article { 
       padding: 3px;
       overflow: hidden;
       @include radius;
       font-size: 0.8;
-      &:hover {
-        z-index: 100;
-        width: 200px;
-        height: 200px;
-      }
       h4 { 
         font-size: $h4-font-size;
         font-weight: bold;
         margin: 0
       }
       .teachers { font-style: italic }
+    }
+
+    &:hover {
+      z-index: 10;
+      article {
+        width: 200px;
+        opacity: 0.9;
+        height: auto !important;
+      }
     }
   }
 
