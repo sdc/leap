@@ -4,7 +4,7 @@ class Category < ActiveRecord::Base
 
   def styles
     {fg:     {color: color},
-     bg:     {background: color},
+     bg:     {background: color, color: "#eee"},
      border: {"border-color" => color}
     }
   end

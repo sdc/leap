@@ -1,0 +1,31 @@
+.masonry-events {
+  @include panel($padding: 0);
+  padding-top: 10px;
+  margin-top: 10px;
+  leap-brick {
+    @media #{$small-up}  { @include grid-column(12); }
+    @media #{$medium-up} { @include grid-column(6); }
+    @media #{$large-up}  { @include grid-column(4); }
+    @media #{$xlarge-up} { @include grid-column(3); }
+    margin-bottom: 8px;
+    p { margin: 0 }
+    article {
+      @include radius;
+      background: $white;
+      @include side-radius(bottom);
+      header {
+        @extend .category-background;
+        @include side-radius(top);
+        h1,h3 { display: inline }
+        padding: 6px;
+      }
+      time { 
+        font-size: 80%;
+        color: $aluminum;
+      }
+      .body {
+        padding: 3px 6px;
+      }
+    }
+  }
+}

@@ -11,6 +11,8 @@
             leap-event-id="event.id" 
             show-date="event.showDate"
           ]
+    .masonry-events ng-switch-when="masonry"
+      leap-brick ng-repeat="event in events" leap-event-id="event.id"
     .tiles ng-switch-when="tiles"
       .no-events ng-if="events.length == 0" Nothing to show!
       leap-tile ng-repeat="event in events" leap-event-id="event.id"

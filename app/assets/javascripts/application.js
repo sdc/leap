@@ -1,6 +1,7 @@
 //= require modernizr/modernizr
 //= require underscore/underscore
 //= require moment
+//= require masonry/dist/masonry.pkgd
 //= require angular/angular
 //= require angular-route/angular-route
 //= require angular-sanitize/angular-sanitize

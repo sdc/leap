@@ -119,6 +119,22 @@ angular.module 'leapApp'
     scope.clicked = -> scope.extended = !scope.extended
     scope.$on "cancelEventForm", -> scope.extended = false
 
+.directive 'leapBrick', (LeapEvent) ->
+  restrict: "E"
+  templateUrl: '/assets/timeline_brick.html'
+  scope:
+    leapEventId: '='
+    showDate: '='
+  link: (scope,element,attrs) ->
+    scope.extended = false
+    LeapEvent.load(scope.leapEventId).then ->
+      scope.event = LeapEvent.get()
+      scope.category = LeapEvent.category()
+      new Masonry '.masonry-events',
+        itemSelector: 'leap-brick'
+    scope.clicked = -> scope.extended = !scope.extended
+    scope.$on "cancelEventForm", -> scope.extended = false
+
 .directive 'leapRegisterEvent', ->
   restrict: "E"
   templateUrl: "/assets/register_event.html"
