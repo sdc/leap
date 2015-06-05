@@ -3,7 +3,7 @@ views:
     icon: fa-home
     title: Home
     topic_person: Yes
-    topic_course: Yes
+    topic_course: No
     controls: null
     view_type: timeline
     events: 
@@ -41,7 +41,7 @@ views:
         null
       TtActivity:
         null
-    url: all
+    url: home
     aff_affiliate: Yes
     aff_applicant: Yes
     aff_staff: Yes
@@ -52,7 +52,7 @@ views:
     icon: fa-bullseye
     title: Targets
     topic_person: Yes
-    topic_course: Yes
+    topic_course: No
     controls: null
     view_type: timeline
     events: 
@@ -73,7 +73,7 @@ views:
     icon: fa-dot-circle-o
     title: Badges
     topic_person: Yes
-    topic_course: Yes
+    topic_course: No
     controls: null
     view_type: tiles
     events: 
@@ -90,7 +90,7 @@ views:
     icon: fa-comment
     title: Contact Logs
     topic_person: Yes
-    topic_course: Yes
+    topic_course: No
     controls:
       - name: Add a Contact Log
         templateUrl: contact_log.html
@@ -127,7 +127,7 @@ views:
     icon: fa-certificate
     title: Qualifications
     topic_person: Yes
-    topic_course: Yes
+    topic_course: No
     controls: 
       - name: Quals on Entry
         templateUrl: qoe.html
@@ -161,13 +161,13 @@ views:
     admin_only: no
   - id: 10
     icon: fa-home
-    title: Peeps
+    title: Class List
     topic_course: Yes
     view_type: people
     events: 
       PersonCourse:
         start
-    url: peeps 
+    url: home
     aff_affiliate: Yes
     aff_applicant: Yes
     aff_staff: Yes
