@@ -1,7 +1,7 @@
-article
+article class="{{ event.eventableType }}"
   header ng-style="category.styles.bg"
     h1: i.fa> ng-class="event.fontIcon"
     h3 {{ event.title }}
     time datetime="{{ event.eventDate }}" {{ event.eventDate | date : "d&nbsp;MMMM" }}
-  ng-include src="'/assets/events/bricks/' + event.template" ng-if="event.template"
-  .body ng-if="!event.template" {{ event.body }}
+  .body ng-include=true src="'/assets/events/bricks/' + event.brickTemplate" ng-if="event.brickTemplate"
+  .body ng-if="!event.brickTemplate" {{ event.body }}

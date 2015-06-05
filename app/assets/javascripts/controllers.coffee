@@ -17,7 +17,6 @@ angular.module 'leapApp'
     $scope.statuses = Timeline.statuses()
     $scope.statusFilter = if _.contains($scope.statuses,'Active') then 'Active' else ''
   $scope.$on "brickLoaded", (w) ->
-    console.log w.targetScope.leapEventId
     masonry?= new Masonry '.masonry-events',
       itemSelector: 'leap-brick'
       isInitLayout: false

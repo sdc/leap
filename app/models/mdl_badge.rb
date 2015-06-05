@@ -55,6 +55,10 @@ class MdlBadge < Eventable
     "badge"
   end
 
+  def brick_template
+    "badge"
+  end
+
   def font_icon
     "fa-dot-circle-o"
   end
@@ -64,6 +68,7 @@ class MdlBadge < Eventable
   end
 
   def timeline_attrs
-    { imageUrl: image_url }
+    { imageUrl: image_url,
+      linkUrl: link_url}
   end
 end

@@ -26,7 +26,11 @@ class ContactLog < Eventable
   end
 
   def timeline_template
-    "contact_log.html"
+    "contact_log"
+  end
+
+  def brick_template
+    "contact_log"
   end
 
   def timeline_attrs

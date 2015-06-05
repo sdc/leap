@@ -81,7 +81,7 @@ class Event < ActiveRecord::Base
   #[:title, :subtitle, :icon_url, :body, :extra_panes, :status, :staff_only?,
   # :timetable_length, :tile_bg, :tile_icon, :tile_title, :is_deleted?].each do |method|
   %w(title tile_title tile_wrap body is_deleted? icon font_icon timeline_template 
-     tile_template timeline_attrs timetable_length).map(&:to_sym).each do |method|
+     tile_template brick_template timeline_attrs timetable_length).map(&:to_sym).each do |method|
     define_method method do
       if eventable.respond_to?(method)
         m = eventable.method(method)
@@ -99,6 +99,7 @@ class Event < ActiveRecord::Base
       eventId:         id,
       template:        timeline_template,
       tileTemplate:    tile_template,
+      brickTemplate:   brick_template,
       personId:        person.mis_id,
       title:           title || eventable.humanize,
       tileTitle:       tile_title || title,
@@ -110,6 +111,7 @@ class Event < ActiveRecord::Base
       updatedAt:       eventable.updated_at,
       childrenIds:     children.ids,
       categoryId:      category.try(:id),
+      eventableType:   eventable_type.camelize(:lower),
       timetable: {
         length:    timetable_length,
         endDate:   event_date + timetable_length,

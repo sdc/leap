@@ -55,7 +55,20 @@ class PersonCourse < Eventable
   end
 
   def timeline_template
-    "person_course.html"
+    "person_course"
+  end
+
+  def brick_template
+    "person_course"
+  end
+
+  def title(tr)
+    case tr
+    when :create then "Application"
+    when :to_start then "Enrolment"
+    when :start then "Started"
+    when :complete then status == "complete" ? "Completed" : "Finished"
+    end
   end
 
   def timeline_attrs(tr)
