@@ -130,10 +130,10 @@ angular.module 'leapApp'
     LeapEvent.load(scope.leapEventId).then ->
       scope.event = LeapEvent.get()
       scope.category = LeapEvent.category()
-      new Masonry '.masonry-events',
-        itemSelector: 'leap-brick'
+      scope.$emit "brickLoaded" unless scope.event.template
     scope.clicked = -> scope.extended = !scope.extended
     scope.$on "cancelEventForm", -> scope.extended = false
+    scope.$on "$includeContentLoaded", -> scope.$emit "brickLoaded"
 
 .directive 'leapRegisterEvent', ->
   restrict: "E"

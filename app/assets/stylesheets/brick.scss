@@ -11,8 +11,8 @@
     p { margin: 0 }
     article {
       @include radius;
-      background: $white;
       @include side-radius(bottom);
+      background: $white;
       header {
         @extend .category-background;
         @include side-radius(top);
@@ -24,7 +24,7 @@
         color: $aluminum;
       }
       .body {
-        padding: 3px 6px;
+        padding: 5px;
       }
     }
   }

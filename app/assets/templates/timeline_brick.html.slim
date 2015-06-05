@@ -2,6 +2,6 @@ article
   header ng-style="category.styles.bg"
     h1: i.fa> ng-class="event.fontIcon"
     h3 {{ event.title }}
-  .body
-    time datetime="{{ event.eventDate }}" {{ event.eventDate | date : "d MMMM" }}
-    p  {{ event.body  }}
+    time datetime="{{ event.eventDate }}" {{ event.eventDate | date : "d&nbsp;MMMM" }}
+  ng-include src="'/assets/events/bricks/' + event.template" ng-if="event.template"
+  .body ng-if="!event.template" {{ event.body }}
