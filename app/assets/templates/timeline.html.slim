@@ -16,23 +16,22 @@
     .tiles ng-switch-when="tiles"
       .no-events ng-if="events.length == 0" Nothing to show!
       leap-tile ng-repeat="event in events" leap-event-id="event.id"
-    .timetable ng-switch-when="timetable"
+    #timetable ng-switch-when="timetable"
       leap-timeline-date
-      #timetable
-        .times
-          - 8.upto(20) do |hour|
-            .hour
-              = hour
-              |.00
-        .day ng-repeat="day in [1,2,3,4,5,6,0]" class="day-{{ day }}" ng-class="{ even: $even, weekend: show_weekend }"
-          h1 {{ ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][day]  }}
-          - 12.times do |hour|
-            .hour &nbsp;
-          leap-timetable-event ng-repeat="event in events | filter: { timetableDay: day }" leap-event-id="event.id"
-          leap-register-event ng-repeat="event in registers | filter: { timetableDay: day }" 
-        a.scroll ng-click="show_weekend = !show_weekend"
-          i.fa.fa-angle-double-right ng-hide="show_weekend"
-          i.fa.fa-angle-double-left  ng-show="show_weekend"
+      .times
+        - 8.upto(20) do |hour|
+          .hour
+            = hour
+            |.00
+      .day ng-repeat="day in [1,2,3,4,5,6,0]" class="day-{{ day }}" ng-class="{ even: $even, weekend: show_weekend }"
+        h1 {{ ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][day]  }}
+        - 12.times do |hour|
+          .hour &nbsp;
+        leap-timetable-event ng-repeat="event in events | filter: { timetableDay: day }" leap-event-id="event.id"
+        leap-register-event ng-repeat="event in registers | filter: { timetableDay: day }" 
+      a.scroll ng-click="show_weekend = !show_weekend"
+        i.fa.fa-angle-double-right ng-hide="show_weekend"
+        i.fa.fa-angle-double-left  ng-show="show_weekend"
     #wall-of-people ng-switch-when="people"
       dl.status-filter 
         dt Filter:
@@ -40,6 +39,36 @@
         dd ng-repeat="status in statuses | orderBy " ng-class="{active: statusFilter == status }"
           a ng-click="setStatusFilter(status)" {{ status }}
       ul: li ng-repeat="person in people | filter: statusFilter": leap-person leap-id="person.person_id" enrolment="person"
+    #plp-overview ng-switch-when="plp-overview"
+      br
+      .row:dl.status-filter 
+        dt Filter:
+        dd ng-class="{active: !statusFilter}": a ng-click="setStatusFilter(false)" None
+        dd ng-repeat="status in statuses | orderBy " ng-class="{active: statusFilter == status }"
+          a ng-click="setStatusFilter(status)" {{ status }}
+      table
+        tr
+          th colspan=4
+          th colspan=4 Core
+          th colspan=4 English
+          th colspan=4 Maths
+          th colspan=4
+        tr
+          th Name
+          th GCSE Score
+          th Goal
+          th Att
+          - 3.times do
+            th Qual
+            th Att
+            th Target
+            th Grade
+          th PI
+          th Rev
+          th WP
+          th Prog
+        tr ng-repeat="person in people | filter: statusFilter" leap-plp-row=true leap-id="person.person_id" enrolment="person"
+
     .else ng-switch-default=true
       alert ng-if="view.view_type" type="'alert warning'"
         | The view type 

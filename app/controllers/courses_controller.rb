@@ -22,45 +22,6 @@ class CoursesController < ApplicationController
   def show
     render json: @topic
   end
-    #render json:
-    #  if @tutorgroup
-    #       @topic.person_courses.includes(person: "mdl_grade_tracks").where(tutorgroup: @tutorgroup).sort_by { |pc| pc.person.name(surname_first: true) }
-    #     else
-    #       @topic.person_courses.includes(person: "mdl_grade_tracks").sort_by { |pc| pc.person.name(surname_first: true) }
-    #     end.as_json(include: {person: {only: %w(forename surname contact_allowed mis_id)}})
-
-  def next_lesson_block
-    @next_timetable_event = @topic.timetable_events(:next).first
-    render "people/next_lesson_block"
-  end
-
-  def moodle_block
-    begin
-      mcourses = ActiveResource::Connection.new(Settings.moodle_host)
-                 .get("#{Settings.moodle_path}/webservice/rest/server.php?" \
-                 "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_courses_by_idnumber&idnumber=" +
-                  @topic.code)["MULTIPLE"].try(["SINGLE"])
-      if mcourses.nil?
-        @moodle_courses = []
-      else
-        @moodle_courses = mcourses.map { |x| x.respond_to?(:last) ? x.last : x["KEY"] }.map { |a| a.map { |b| [b["name"], b["VALUE"]] } }.map { |x| Hash[x] }.select { |x| x["visible"] == "1" }
-      end
-    rescue
-      logger.error "Can't connect to Moodle: #{$ERROR_INFO}"
-      @moodle_courses = false
-    end
-    render "people/moodle_block"
-  end
-
-  def reviews_block
-    @window = Settings.current_review_window
-    @pub =   Review.where(person_id: @topic.people.map(&:id), published: true, window: @window).count
-    @unpub = Review.where(person_id: @topic.people.map(&:id), window: @window).count - @pub
-  end
-
-  def entry_reqs_block
-    @entry_reqs = @topic.entry_reqs
-  end
 
   def add
     @user.my_courses ||= []

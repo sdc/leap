@@ -1,10 +1,11 @@
+.status-filter { 
+  @include sub-nav;
+  background: $gainsboro;
+}
 #wall-of-people {
-  margin-top: 1rem;
+  @include grid-row;
   @include panel;
-  .status-filter { 
-    @include sub-nav;
-    background: $gainsboro;
-  }
+  margin-top: 1rem;
   ul {
     @media #{$small-up}  { @include block-grid(3) }
     @media #{$medium-up} { @include block-grid(6) }

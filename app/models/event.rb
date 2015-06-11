@@ -26,7 +26,6 @@
 # passed the event_date from the Event. This allows the eventable to return different information depending on when the
 # event happened. This is how Target eventables return different event information before and after their completion date,
 # for example.
-#
 
 class Event < ActiveRecord::Base
   validates :person_id,      presence: true
@@ -41,7 +40,7 @@ class Event < ActiveRecord::Base
   belongs_to :category
   has_many :children, class_name: "Event", foreign_key: "parent_id", dependent: :nullify
   belongs_to :parent, class_name: "Event", foreign_key: "parent_id"
-  has_many :targets, dependent: :nullify
+  #has_many :targets, dependent: :nullify
 
   #attr_accessible :event_date, :transition, :parent_id
 
@@ -60,26 +59,8 @@ class Event < ActiveRecord::Base
     event.created_by_id = Person.user ? Person.user.id : nil unless event.created_by_id
   end
 
-  #delegate :body,  to: :eventable
   delegate :past?, :future?, to: :event_date
 
-  #attr_accessor :first_in_past
-
-  #def self.year_start
-  #  @date = Date.today
-  #  (d, m) = Settings.year_boundary_date.split("/").map(&:to_i)
-  #  ab = @date.change(day: d, month: m)
-  #  if ab < @date
-  #    @date = ab
-  #    @end_date = ab
-  #  else
-  #    @end_date = ab
-  #    @date = ab - 1.year
-  #  end
-  #end
-
-  #[:title, :subtitle, :icon_url, :body, :extra_panes, :status, :staff_only?,
-  # :timetable_length, :tile_bg, :tile_icon, :tile_title, :is_deleted?].each do |method|
   %w(title tile_title tile_wrap body is_deleted? icon font_icon timeline_template 
      tile_template brick_template timeline_attrs timetable_length).map(&:to_sym).each do |method|
     define_method method do

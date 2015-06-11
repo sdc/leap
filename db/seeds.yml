@@ -222,6 +222,35 @@ views:
     aff_staff: Yes
     aff_student: Yes
     admin_only: no
+  - id: 12
+    parent_id: 5
+    icon: fa-bar-chart
+    title: Grades
+    topic_person: Yes
+    topic_course: No
+    controls: null
+    view_type: tile
+    aff_affiliate: Yes
+    aff_applicant: Yes
+    aff_staff: Yes
+    aff_student: Yes
+    url: grades
+    events: 
+      MdlGradeTrack:
+        null
+  - id: 13
+    parent_id: 10
+    icon: fa-table
+    title: PLP Overview
+    topic_person: No
+    topic_course: Yes
+    controls: null
+    view_type: plp-overview
+    aff_affiliate: Yes
+    aff_applicant: Yes
+    aff_staff: Yes
+    aff_student: Yes
+    url: plp-overview
 
 categories:
   - id: 1

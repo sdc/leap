@@ -28,7 +28,7 @@ class TimelineViewsController < ApplicationController
                               "topic_#{@topic.topic_type}" => true).first
 
 
-    people = if view.view_type == "people"
+    people = if ["people","plp-overview"].include? view.view_type
       @topic.person_courses.includes(person: "mdl_grade_tracks")
             .sort_by { |pc| pc.person.name(surname_first: true) }.as_json
     else

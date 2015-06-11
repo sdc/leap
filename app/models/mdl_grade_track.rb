@@ -1,10 +1,7 @@
 class MdlGradeTrack < Eventable
-  #attr_accessible :course_type, :mag, :mdl_id, :name, :tag, :total,
-  #                :completion_total, :completion_out_of, :created_at, :created_by_id
-
   belongs_to :person
 
-  after_create { |t| t.events.create(event_date: t.created_at, transition: ':create') }
+  after_create { |t| t.events.create(event_date: t.created_at, transition: :create) }
 
   scope "english", -> { where(course_type: %w(english gcse_english)) }
   scope "maths", -> { where(course_type: %w(maths gcse_maths)) }
@@ -34,7 +31,7 @@ class MdlGradeTrack < Eventable
 
   def self.import_for(person, _delete = true)
     person = person.kind_of?(Person) ? person : Person.get(person)
-    person.mdl_grade_tracks.destroy_all
+    #person.mdl_grade_tracks.destroy_all
     begin
       tracks = ActiveResource::Connection.new(Settings.moodle_host)
                .get("#{Settings.moodle_path}/webservice/rest/server.php?" \
@@ -58,13 +55,20 @@ class MdlGradeTrack < Eventable
         t.course_type       = course.xpath("KEY[@name='leapcore']/VALUE").first.content
         t.created_at        = Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i)
       end
-      puts a.attributes
+      if cat = Category.where("lower(title) = ?",a.course_type).first
+        ev = a.events.first
+        ev.update_attribute "category_id", cat.id
+      end
     end
   end
 
   def completion_percent
     return nil unless completion_total && completion_out_of
     ((completion_total.to_f / completion_out_of) * 100).round
+  end
+
+  def font_icon
+    "fa-bar-chart-o"
   end
 
   def to_tile

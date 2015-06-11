@@ -84,6 +84,27 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def attendance_data
+    Hash[Category.all.map do |c|
+      [c.title.downcase, attendance(c.title.downcase)]
+    end].merge({overall: attendance})
+  end
+
+  def grade_data
+    Hash[Category.all.map do |c|
+      #[c.title.downcase, events.where(eventable_type: "MdlGradeTrack", category_id: c.id).last]
+      [c.title.downcase, mdl_grade_tracks.where(course_type: c.title).last]
+    end]
+  end
+
+  def current_review 
+    reviews.where(window: Settings.current_review_window).first
+  end
+
+  def pi_count
+    events.where(:eventable_type => "Intervention", :transition => :create).count
+  end
+
   def self.get(mis_id, fresh = false)
     mis_id = mis_id.to_s.tr('^0-9', '') if mis_id.to_s.match(/\d{6}/)
     return import(mis_id) if fresh
@@ -168,16 +189,6 @@ class Person < ActiveRecord::Base
     end
   end
 
-  def l3va; lat_score end
-
-  def gcse_english
-    qualifications.where(qual_type: "GCSE", predicted: false).where("LOWER(title) = ?", "english language").last.try :grade
-  end
-
-  def gcse_maths
-    qualifications.where(qual_type: "GCSE", predicted: false).where("LOWER(title) LIKE ?", "math%").last.try :grade
-  end
-
   def address_text
     address.blank? ? nil : [address, town, postcode].reject(&:nil?).join(", ")
   end
@@ -189,7 +200,7 @@ class Person < ActiveRecord::Base
   def topic_type; "person" end
 
   def as_json(options = {})
-    json_methods  = %w(name staff photo_uri admin topic_type)
+    json_methods  = %w(name staff photo_uri admin topic_type lat_score attendance_data grade_data current_review pi_count)
     json_methods += %w(address_text age) if current_user? || !staff?
     json_only     = %w(forename surname contact_allowed mis_id)
     json_only    += %w(note date_of_birth mobile_number home_phone 

@@ -1,4 +1,5 @@
 #timetable {
+  @include grid-row;
   position: relative;
   .day { 
     @include grid-column(2, $collapse: true);

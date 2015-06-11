@@ -1,0 +1,13 @@
+#plp-overview {
+  table { margin: auto }
+  .status a { color: $white }
+  .status a:hover { color: $primary-color }
+  .status.incomplete { background: $alert-color     }
+  .status.complete   { background: $success-color   }
+  .status.current    { background: $warning-color   }
+  .status.unknown    { background: $secondary-color }
+  .status.unknown,.status.not_started {
+    a { color: $oil}
+    a:hover { color: $aluminum }
+  }
+}

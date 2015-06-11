@@ -26,7 +26,7 @@ class Target < Eventable
   validates :target_date, :body, presence: true
 
   belongs_to :set_by, class_name: "Person", foreign_key: "set_by_person_id"
-  belongs_to :event
+  #belongs_to :event
 
   after_create do |target|
     target.events.create(event_date: created_at, parent_id: parent_id, transition: :start)

@@ -90,6 +90,17 @@ angular.module 'leapApp'
       return unless scope.leapId
       $http.get("/people/#{scope.leapId}.json?id_type=leap").success (data) -> scope.person = data
 
+.directive 'leapPlpRow', ($http,Categories) ->
+  templateUrl: '/assets/plp_row.html'
+  scope:
+    leapId: '='
+    enrolment: '='
+  link: (scope) ->
+    scope.$watch 'leapId', ->
+      return unless scope.leapId
+      $http.get("/people/#{scope.leapId}.json?id_type=leap").success (data) -> scope.person = data
+    scope.categories = [Categories.get(1),Categories.get(2),Categories.get(3)]
+
 .directive 'leapTimelineDate', (Timeline) ->
   restrict: 'E'
   templateUrl: '/assets/timeline_date.html'
