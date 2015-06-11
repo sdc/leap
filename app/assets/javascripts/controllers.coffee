@@ -1,6 +1,6 @@
 angular.module 'leapApp'
 
-.controller 'TimelineController', ($scope,$http,$routeParams,Topic,Timeline,$rootScope,$log,$interval) ->
+.controller 'TimelineController', ($scope,$http,$routeParams,Topic,Timeline,$rootScope,$log,$interval,Categories) ->
   masonry = null
   Topic.set($routeParams.topic_id,$routeParams.topic_type).then ->
     Timeline.setView $routeParams.view_name || "home"
@@ -16,6 +16,7 @@ angular.module 'leapApp'
     $scope.people = Timeline.people()
     $scope.statuses = Timeline.statuses()
     $scope.statusFilter = if _.contains($scope.statuses,'Active') then 'Active' else ''
+    $scope.categories = [Categories.get(1),Categories.get(2),Categories.get(3)]
   $scope.$on "brickLoaded", (w) ->
     masonry?= new Masonry '.masonry-events',
       itemSelector: 'leap-brick'

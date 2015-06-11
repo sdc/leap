@@ -3,7 +3,8 @@ td.status ng-class="enrolment.status"
 td {{ person.lat_score || ""}}
 td 
 td {{ person.attendance_data.overall.att_year }}
-td ng-repeat-start="c in categories" ng-style="c.styles.bg" {{ person.grade_data[c.title.toLowerCase()].name}}
+//td ng-repeat-start="c in categories" ng-style="c.styles.bg" ng-if="c.title != 'Core'" {{ person.grade_data[c.title.toLowerCase()].name}}
+td ng-repeat-start="c in categories" ng-style="c.styles.bg" ng-if="c.title != 'Core'" {{ person.grade_data[c.title.toLowerCase()].name}}
 td ng-style="c.styles.bg" {{ person.attendance_data[c.title.toLowerCase()].att_year}}
 td ng-style="c.styles.bg" {{ person.grade_data[c.title.toLowerCase()].total}}
 td ng-repeat-end=true ng-style="c.styles.bg" {{ person.grade_data[c.title.toLowerCase()].tag}}

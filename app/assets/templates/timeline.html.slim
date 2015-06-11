@@ -49,20 +49,18 @@
       table
         tr
           th colspan=4
-          th colspan=4 Core
-          th colspan=4 English
-          th colspan=4 Maths
+          th ng-repeat="c in categories" ng-style="c.styles.bg" colspan="{{ c.title == 'Core' ? 3 : 4 }}" {{ c.title }}
           th colspan=4
         tr
           th Name
           th GCSE Score
           th Goal
           th Att
-          - 3.times do
-            th Qual
-            th Att
-            th Target
-            th Grade
+          th ng-repeat-start="c in categories" ng-style="c.styles.bg" ng-if="c.title != 'Core'" Qual
+          //th ng-repeat-start="c in categories" ng-style="c.styles.bg" ng-if="c.title != 'Core'" Qual
+          th ng-style="c.styles.bg" Att
+          th ng-style="c.styles.bg" Target
+          th ng-repeat-end=true ng-style="c.styles.bg" Grade
           th PI
           th Rev
           th WP

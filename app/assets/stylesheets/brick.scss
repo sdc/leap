@@ -1,4 +1,5 @@
 .masonry-events {
+  @include grid-row;
   @include panel($padding: 0);
   padding-top: 10px;
   margin-top: 10px;
