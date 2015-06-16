@@ -140,12 +140,12 @@ $timeline-border-color: $steel;
   }
 
   leap-tile {
+    @extend .category-background;
     overflow: hidden;
     position: relative;
     width: 200px;
     height: 200px;
     float: left;
-    background: #8f8;
     border-right: 1px $body-bg solid;
     border-top: 1px $body-bg solid;
 
@@ -156,7 +156,7 @@ $timeline-border-color: $steel;
         font-size: 125px;
         bottom: 0px;
         right: 8px;
-        color: #666666;
+        color: $white;
         opacity: 0.4;
       }
     }

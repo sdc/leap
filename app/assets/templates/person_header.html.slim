@@ -19,7 +19,10 @@
     .contact-details ng-class="{hide: detailsPane!='contacts'}"
       .alert-box ng-if="person.staff && person.mis_id != $root.user.mis_id" Personal details are hidden for staff.
       div ng-if="!person.staff || person.mis_id == $root.user.mis_id"
-        div {{ person.address_text }}
+        div 
+          | {{ person.address_text }}
+          a< ng-href="https://www.google.com/maps?hl=en&q={{ person.address_text }}" target="_BLANK"
+            i.fa.fa-map-marker
         div {{ person.home_phone }}
         div: a ng-href="mailto:{{ person.personal_email }}" {{ person.personal_email }}
         div {{ person.date_of_birth }} (Age: {{ person.age }})

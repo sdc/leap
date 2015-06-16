@@ -229,7 +229,7 @@ views:
     topic_person: Yes
     topic_course: No
     controls: null
-    view_type: tile
+    view_type: category-home
     aff_affiliate: Yes
     aff_applicant: Yes
     aff_staff: Yes
