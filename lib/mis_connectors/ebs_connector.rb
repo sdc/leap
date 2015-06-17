@@ -273,8 +273,7 @@ module MisCourse
                                tutorgroup: pu.tutorgroup,
                                status: Ilp2::Application.config.mis_progress_codes[pu.progress_code],
                                end_date: pu.progress_date,
-                               mis_status: pu.status },
-                             without_protection: true
+                               mis_status: pu.status }
                             ) unless pc.status == :not_started
       end
     end
