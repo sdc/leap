@@ -8,7 +8,7 @@ angular.module 'leapApp'
       $http.get(Topic.urlBase() + '/timeline_views.json').success (data) ->
         scope.timeline_views = data
         scope.baseUrl = "#/#{Topic.get().topic_type}/#{Topic.get().mis_id}/"
-    $rootScope.$on 'topicChanged', -> refresh()
+    $rootScope.$on 'topicChanged', -> refresh() if Topic.get()
     refresh()
 
 .directive 'leapTopBar', ($rootScope) ->

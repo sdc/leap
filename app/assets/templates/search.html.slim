@@ -5,6 +5,9 @@
   ul.filter
     li: button ng-click="filter = 'people'" People
     li: button ng-click="filter = 'courses'" Courses
+    li: a.button.warning ng-click="extend()" 
+      | Extend search to MIS
+      i.fa.fa-chevron-right<
 
   #people-results ng-class="filter"
     h1 People

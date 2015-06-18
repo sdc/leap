@@ -172,8 +172,7 @@ module MisPerson
                                start_date: pu.unit_instance_occurrence.qual_start_date,
                                application_date: pu.created_date,
                                tutorgroup: pu.tutorgroup,
-                               mis_status: pu.status },
-                             without_protection: true
+                               mis_status: pu.status }
                             )
       elsif pu.unit_type == "R"
         pc.update_attributes(enrolment_date: pu.created_date,

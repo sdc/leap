@@ -66,10 +66,14 @@ class PeopleController < ApplicationController
   end
 
   def search
+    logger.error "*" * 1000
+    logger.error params
     if params[:q]
       if params[:mis]
         @people = Person.mis_search_for(params[:q])
         @courses = Course.mis_search_for(params[:q])
+        logger.error params[:q]
+        logger.error @people
       else
         @people = Person.search_for(params[:q]).order("surname,forename").limit(50)
         @courses = Course.search_for(params[:q]).order("year DESC,title").limit(50)

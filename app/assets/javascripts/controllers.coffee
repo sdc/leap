@@ -28,11 +28,12 @@ angular.module 'leapApp'
   $scope.working = false
   $scope.filter = "people"
   $scope.search = -> $location.path("/search").search("q",$scope.q)
+  $scope.extend = -> $location.path("/search").search("q",$routeParams.q,"mis").search("mis",true)
   $scope.doSearch = ->
     Topic.reset()
     return unless $routeParams.q
     $scope.working = true
-    $http.get("/people/search.json?q=#{$routeParams.q}").success (data) ->
+    $http.get("/people/search.json?q=#{$routeParams.q}#{if $routeParams.mis then '&mis=true' else ''}").success (data) ->
       $scope.people = data.people
       $scope.courses = data.courses
       $scope.filter = "courses" if data.people.length == 0
