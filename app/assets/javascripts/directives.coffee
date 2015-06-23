@@ -127,6 +127,7 @@ angular.module 'leapApp'
     LeapEvent.load(scope.leapEventId).then ->
       scope.event = LeapEvent.get()
       scope.category = LeapEvent.category()
+      scope.style = scope.category.styles.bg
     scope.clicked = -> scope.extended = !scope.extended
     scope.$on "cancelEventForm", -> scope.extended = false
 

@@ -29,26 +29,19 @@ $timeline-border-color: $steel;
     &.first .timeline-event { @include side-radius(top) }
     &.last  .timeline-event { @include side-radius(bottom) }
     .timeline-event {
+      @extend .category-background;
       @include grid-column(12, $collapse: true);
       //@media #{$xlarge-up} { @include grid-column(6, $collapse: true) }
-      background: $white;
       transition: 0.5s ease all;
-      border-style: solid;
-      border-color: $timeline-border-color;
-      border-width: 0 9px 0 0;
+      margin-bottom: 1px;
       >.main,.extra-info { @include radius }
-      &:hover { 
-        * { transition: 0.5s ease background-color }
-        >.main,.extra-info { background: $snow }
-        .extra-info {
-          a { color: $primary-color }
-        }
-      }
+      &:hover * { transition: 0.2s ease background-color }
       &.extended {
         padding-bottom: 0;
         @include radius;
         margin: 2rem 0;
         .content { padding: 0 }
+        .tabs dd a { color: $oil }
         .tabs-content { margin-bottom: 0 }
       }
       .main { 
@@ -63,7 +56,6 @@ $timeline-border-color: $steel;
           @include grid-column(1);
           font-size: 2.5rem;
           text-align: center;
-          color: $timeline-border-color;
           img {width: 85%; height: auto}
         }
         .body {
@@ -115,7 +107,6 @@ $timeline-border-color: $steel;
         padding-top: 10px;
         @include grid-row;
         a { 
-          color: $steel;
           @include grid-column(3) 
         }
         .count {
@@ -126,7 +117,7 @@ $timeline-border-color: $steel;
           .attachments { @include grid-column(4) }
         }
         @media #{$medium-up} {
-          .attachments { @include grid-column(3, $offset:3) }
+          .attachments { @include grid-column(2, $offset:2) }
         }
         @media #{$large-up} {
           ng-pluralize { display: inline}
@@ -195,6 +186,7 @@ $timeline-border-color: $steel;
 }
 
 #timeline-controls {
+
   position:fixed;
   width: 100%;
   bottom: 0;
