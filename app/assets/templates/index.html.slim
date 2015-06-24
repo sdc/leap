@@ -10,8 +10,8 @@ html lang="en"
       h1 style="font-size: 10rem" leap
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
-    leap-top-bar
-    .topbar-gap
+    leap-top-bar ng-if="$root.user.staff"
+    .topbar-gap ng-if="$root.user.staff"
     header.topic-header ng-if="topic"
       leap-person-header ng-if="topic.topic_type=='person'" mis-id="topic.mis_id"
       leap-course-header ng-if="topic.topic_type=='course'" mis-id="topic.mis_id"

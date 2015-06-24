@@ -16,19 +16,21 @@ $timeline-border-color: $steel;
 
   h1.academic-year {
     @include grid-column(12);
-    @include radius;
     background: #44a;
     font-size: $h3-font-size;
     color: $white;
     padding: 5px 1ex;
     margin: 5px 0;
     cursor: pointer;
+    @media #{$large-up} { @include radius }
   }
 
   leap-timeline-event {
     * { transition: 0.3s ease all }
-    &.first .timeline-event { @include side-radius(top) }
-    &.last  .timeline-event { @include side-radius(bottom) }
+    @media #{$large-up} { 
+      &.first .timeline-event { @include side-radius(top) }
+      &.last  .timeline-event { @include side-radius(bottom) }
+    }
     .timeline-event {
       @extend .category-background;
       @include grid-column(12, $collapse: true);

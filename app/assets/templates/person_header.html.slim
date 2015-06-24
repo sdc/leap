@@ -11,7 +11,7 @@
         a ng-click="detailsPane='contacts'"
           i.fa.fa-envelope-o>
           | Contact
-      dd ng-class="{active: detailsPane=='admin'}"
+      dd ng-class="{active: detailsPane=='admin'}" ng-if="$root.user.admin"
         a ng-click="detailsPane='admin'" 
           i.fa.fa-cogs>
           | Admin
@@ -29,7 +29,7 @@
         div ng-if="person.mis_id == $root.user.mis_id" 
           | Are any of your details incorrect?
           a< href=Settings.notify_details_change_url Notify us...
-    .admin-details ng-class="{hide: detailsPane!='admin'}"
+    .admin-details ng-class="{hide: detailsPane!='admin'}" ng-if="$root.user.admin"
       ul.button-group.radius
         li 
           a.button ng-href="/people/{{ person.mis_id }}.json" target="_BLANK"
