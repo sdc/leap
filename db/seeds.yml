@@ -131,7 +131,7 @@ views:
     controls: 
       - name: Quals on Entry
         templateUrl: qoe.html
-    view_type: table
+    view_type: timeline
     events: 
       Qualification:
         - create
@@ -172,55 +172,6 @@ views:
     aff_applicant: Yes
     aff_staff: Yes
     aff_student: No
-    admin_only: no
-  - id: 11
-    icon: fa-soccer-ball-o
-    title: New Look Home
-    topic_person: Yes
-    topic_course: Yes
-    controls: null
-    parent_id: 5
-    view_type: masonry
-    events: 
-      Attendance:
-        null
-      MdlBadge:
-        null
-      ContactLog:
-        null
-      PersonCourse:
-        null
-      Disciplinary:
-        null
-      Note:
-        null
-      Target:
-        null
-      Review:
-        null
-      ReviewLine:
-        null
-      Qualification:
-        null
-      SupportRequest:
-        null
-      SupportHistory:
-        null
-      InitialReview:
-        null
-      Intervention:
-        null
-      SupportStrategy:
-        null
-      Absence:
-        null
-      TtActivity:
-        null
-    url: masonry
-    aff_affiliate: Yes
-    aff_applicant: Yes
-    aff_staff: Yes
-    aff_student: Yes
     admin_only: no
   - id: 12
     parent_id: 5

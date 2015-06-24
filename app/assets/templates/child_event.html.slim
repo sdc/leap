@@ -1,18 +1,35 @@
-.timeline-event.child ng-style="category.styles.border"
-  .main
+.timeline-event[
+    ng-class="{extended: extended}" ng-style="style" 
+    ng-mouseenter="style = category.styles.bgHighlight"
+    ng-mouseleave="style = category.styles.bg"
+  ]
+  .main ng-click="clicked()"
     time datetime="{{ event.eventDate }}"
       .date
-        h3 {{ event.eventDate | date : "dd" }}
-        h3 {{ event.eventDate | date : "MMM" }}
-    leap-person.about-person mis-id="event.personId" ng-if="showPerson"
+        div ng-if="showDate || extended"
+          h3 {{ event.eventDate | date : "dd" }} {{ event.eventDate | date : "MMM" }}
+    leap-person.about-person mis-id="event.personId" ng-if="event.showPerson"
     h1.icon ng-if="event.icon": img ng-src="{{ event.icon }}"
-    h1.icon.fa ng-if="event.fontIcon && !event.icon" class="{{ event.fontIcon }}" ng-style="category.styles.fg" tooltip="{{ category.title }}"
+    h1.icon.fa ng-if="event.fontIcon && !event.icon" class="{{ event.fontIcon }}"
     ng-include.body src="'/assets/events/timeline/' + event.template" ng-if="event.template"
     .body ng-if="!event.template"
-      h1 {{ event.title }}
+      h3 {{ event.title }}
       p ng-if="event.body" {{ event.body }}
-  /.extra-info
-    .attachments
-      a: ng-pluralize count="event.childrenIds.length" when="{one: '1 attached event', other: '{} attached events'}"
+  .extra-info ng-click="clicked()"
+    a.attachments tooltip="Attached events"
+      i.fa.fa-paperclip>
+      .count ng-show="event.childrenIds.length > 0"
+        | {{ event.childrenIds.length }}
+        ng-pluralize< count="event.childrenIds.length" when="{one: 'attached event', other: 'attached events'}"
+    a.category
+      i.fa.fa-tag>
+      .count
+        | {{ category.title }}
   /.extended ng-if="extended"
-    leap-timeline-child-event ng-repeat="event in event.children" leap-event-id="event.id" 
+    tabset
+      tab heading="Attached events" ng-if="event.childrenIds.length > 0"
+        leap-child-event ng-repeat="eventId in event.childrenIds" leap-event-id="eventId"
+      tab heading="Set Target"
+        leap-event-form template-url="'target'" event-type="'target'" parent-id="event.eventId"
+      tab heading="Admin Details"
+        code {{ event | json }}

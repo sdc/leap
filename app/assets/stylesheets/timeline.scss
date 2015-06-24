@@ -26,6 +26,7 @@ $timeline-border-color: $steel;
   }
 
   leap-timeline-event {
+    * { transition: 0.3s ease all }
     &.first .timeline-event { @include side-radius(top) }
     &.last  .timeline-event { @include side-radius(bottom) }
     .timeline-event {
@@ -41,7 +42,17 @@ $timeline-border-color: $steel;
         @include radius;
         margin: 2rem 0;
         .content { padding: 0 }
-        .tabs dd a { color: $oil }
+        .tabs {
+          dd a {
+            background: $white;
+            opacity: 0.8;
+            color: $oil;
+          }
+        }
+        .tabs dd.active a {
+          background: $white;
+          opacity: 0.6;
+        }
         .tabs-content { margin-bottom: 0 }
       }
       .main { 
@@ -53,7 +64,6 @@ $timeline-border-color: $steel;
           text-align: center;  
         }
         .icon { 
-          @include grid-column(1);
           font-size: 2.5rem;
           text-align: center;
           img {width: 85%; height: auto}
@@ -68,10 +78,15 @@ $timeline-border-color: $steel;
             .name { display: block }                  
             img   { display: block }
           }
-          .date { 
-            @include grid-column(1,$collapse: true); 
-              h3 { font-size: $h5-font-size }
-          }
+          .date { @include grid-column(1, $collapse: true) }
+          .icon { @include grid-column(2, $collapse: true) }
+          .time             { display: none }
+          .body             { @include grid-column(8) }
+          .about-person~.body { @include grid-column(6) }
+        }
+        @media #{$medium-up} {
+          .date { @include grid-column(1, $collapse: true) }
+          .icon { @include grid-column(1, $collapse: true) }
           .time             { display: none }
           .body             { @include grid-column(9) }
           .about-person~.body { @include grid-column(7) }
@@ -106,21 +121,16 @@ $timeline-border-color: $steel;
       .extra-info {
         padding-top: 10px;
         @include grid-row;
-        a { 
-          @include grid-column(3) 
-        }
-        .count {
-          display: inline;
-        }
-        @media #{$small-up} {
+        .count { display: inline }
+        @media #{$small-up}  { 
           ng-pluralize { display: none }
-          .attachments { @include grid-column(4) }
+          a { @include grid-column(4) }
+          a:first-child { @include grid-column(4,$offset:3) }
         }
-        @media #{$medium-up} {
-          .attachments { @include grid-column(2, $offset:2) }
-        }
-        @media #{$large-up} {
+        @media #{$medium-up} { 
           ng-pluralize { display: inline}
+          a { @include grid-column(4) }
+          a:first-child { @include grid-column(4,$offset:2) }
         }
       }
     }
@@ -186,7 +196,7 @@ $timeline-border-color: $steel;
 }
 
 #timeline-controls {
-
+  z-index: 250;
   position:fixed;
   width: 100%;
   bottom: 0;
@@ -219,6 +229,7 @@ $timeline-border-color: $steel;
   }
   &:not(.off-canvas) {
     @media #{$small-only} { top: 0 }
+    @media #{$medium-up}  { box-shadow: 0 0 3px 5px $black }
   }
   ._720kb-datepicker-calendar { bottom: 100% }
 }
