@@ -30,6 +30,6 @@
       tab heading="Attached events" ng-if="event.childrenIds.length > 0"
         leap-child-event ng-repeat="eventId in event.childrenIds" leap-event-id="eventId"
       tab heading="Set Target"
-        leap-event-form template-url="'target'" event-type="'target'" parent-id="event.eventId"
+        leap-event-form template-url="'target'" event-type="'target'" parent-id="event.eventId" init-category="category.id"
       tab heading="Admin Details"
         code {{ event | json }}

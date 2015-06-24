@@ -210,6 +210,7 @@ angular.module 'leapApp'
     templateUrl: '='
     eventType: '='
     parentId: '='
+    initCategory: '='
   templateUrl: '/assets/event_form.html'
   link: (scope) ->
     scope.newEvent = {}
@@ -227,6 +228,7 @@ angular.module 'leapApp'
         scope.$emit "categorySet", n
         scope.category = Categories.get(n)
     scope.$watch "parentId", (n,o) -> scope.newEvent.parent_id = n
+    scope.$watch "initCategory", (cid) -> scope.newEvent.category_id = cid
 
 .directive 'leapTile', ($http,Topic) ->
   restrict: "E"
