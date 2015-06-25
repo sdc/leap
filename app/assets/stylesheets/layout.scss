@@ -23,6 +23,7 @@ leap-top-bar {
   small { color: $smoke}
   a { color: $vapor }
   h1,h2,h3,h4,h5,p { color: $vapor }
+  &:hover { background: $jumbo }
 }
 
 .aa-date-input { display: inline }
