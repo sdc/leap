@@ -34,7 +34,10 @@ class ContactLog < Eventable
   end
 
   def timeline_attrs
-    { personId: created_by.try(:mis_id) }
+    { 
+      personId: created_by.try(:mis_id),
+      person: created_by
+    }
   end
 
 end

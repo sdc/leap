@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'base64' 
+
 class Person < ActiveRecord::Base
   require 'identicon'
   include MisPerson
@@ -168,8 +170,8 @@ class Person < ActiveRecord::Base
   def photo_uri
     if Settings.lorem_pictures.blank?
       if photo
-        #"data:image/jpeg;base64," + ActiveSupport::Base64.encode64(photo)
-        "/people/#{mis_id}.jpg"
+        "data:image/jpeg;base64," + Base64.encode64(photo)
+        #"/people/#{mis_id}.jpg"
       else
         Identicon.data_url_for mis_id
       end

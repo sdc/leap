@@ -209,10 +209,14 @@ categories:
     color: "#4f2170"
   - id: 2
     title: English
-    color: "#1a695e"
+    color: "#a12834"
   - id: 3
     title: Maths
-    color: "#a75d29"
+    color: "#a77a29"
   - id: 4
-    title: PPD
+    title: "Work Packages"
     color: "#a7a429"
+  - id: 5
+    title: "Skills Plus"
+    color: "#358b22"
+

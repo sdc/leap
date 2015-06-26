@@ -1,7 +1,7 @@
 .timeline-event[
     ng-class="{extended: extended}" ng-style="style" 
-    ng-mouseenter="style = category.styles.bgHighlight"
-    ng-mouseleave="style = category.styles.bg"
+    ng-mouseenter="mouseenter()"
+    ng-mouseleave="mouseleave()"
   ]
   .main ng-click="clicked()"
     time datetime="{{ event.eventDate }}"
@@ -31,5 +31,7 @@
         leap-child-event ng-repeat="eventId in event.childrenIds" leap-event-id="eventId"
       tab heading="Set Target"
         leap-event-form template-url="'target'" event-type="'target'" parent-id="event.eventId" init-category="category.id"
+      tab heading="Delete" 
+        button type="alert" ng-click="delete()" Delete
       tab heading="Admin Details"
         code {{ event | json }}

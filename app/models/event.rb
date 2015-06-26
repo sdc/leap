@@ -93,6 +93,7 @@ class Event < ActiveRecord::Base
       childrenIds:     children.ids,
       categoryId:      category.try(:id),
       eventableType:   eventable_type.camelize(:lower),
+      isDeletable:     is_deletable?,
       timetable: {
         length:    timetable_length,
         endDate:   event_date + timetable_length,
@@ -101,10 +102,10 @@ class Event < ActiveRecord::Base
     }.merge(eventable_type.camelize(:lower) => timeline_attrs)
   end
 
-  #def is_deletable?
-  #  return true if Person.user.staff? && eventable_type == "Qualification"
-  #  Person.user.admin? || (Time.now - Settings.delete_delay.to_i < eventable.created_at && Person.user == eventable.created_by)
-  #`end
+  def is_deletable?
+    return true if Person.user.staff? && eventable_type == "Qualification"
+    Person.user.admin? || (Time.now - Settings.delete_delay.to_i < eventable.created_at && Person.user == eventable.created_by)
+  end
 
   #def created_by_text(options = {})
   #  options.reverse_merge!(event: true, eventable: true)

@@ -66,10 +66,7 @@ class EventsController < ApplicationController
     else
       flash[:error] = "#{@event.eventable_type.singularize.humanize.titleize} could not be deleted"
     end
-    respond_to do |f|
-      f.html { redirect_to :back }
-      f.js   { render json: @event }
-    end
+    render json: @event
   end
 
   def set_scope

@@ -11,7 +11,7 @@ class Category < ActiveRecord::Base
     }
   end
 
-  def higlight
+  def highlight
     Color::RGB.from_html(color).adjust_brightness(25).html
   end
 

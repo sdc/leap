@@ -69,13 +69,13 @@ angular.module 'leapApp'
         scope.course = data
 
 .directive 'leapPerson', ($http,$log,LeapEvent) ->
-  restrict: "EA"
   templateUrl: '/assets/person.html'
   scope:
-    misId: '='
-    leapId: '='
-    enrolment: '='
-    flags: '@'
+    misId: '=?'
+    leapId: '=?'
+    enrolment: '=?'
+    person: '=?'
+    flags: '@?'
   link: (scope,element,attrs) ->
     scope.flags = scope.flags == "flags"
     scope.$on "person_#{scope.misId}_updated", ->
@@ -127,7 +127,10 @@ angular.module 'leapApp'
     LeapEvent.load(scope.leapEventId).then ->
       scope.event = LeapEvent.get()
       scope.category = LeapEvent.category()
-      scope.style = scope.category.styles.bg
+      scope.style = scope.category?.styles.bg
+      scope.mouseenter = -> scope.style = scope.category?.styles.bgHighlight
+      scope.mouseleave = -> scope.style = scope.category?.styles.bg
+      scope.delete = -> LeapEvent.delete()
     scope.clicked = -> scope.extended = !scope.extended
     scope.$on "cancelEventForm", -> scope.extended = false
 
