@@ -72,7 +72,7 @@ $timeline-border-color: $steel;
           img {width: 85%; height: auto}
         }
         .body {
-          h1 { font-size: $h3-font-size }
+          h1 { font-size: $h2-font-size }
           p { margin-bottom: 0 }
         }
         @media #{$small-up} {
@@ -91,8 +91,8 @@ $timeline-border-color: $steel;
           .date { @include grid-column(1, $collapse: true) }
           .icon { @include grid-column(1, $collapse: true) }
           .time             { display: none }
-          .body             { @include grid-column(9) }
-          .about-person~.body { @include grid-column(7) }
+          .body             { @include grid-column(10) }
+          .about-person~.body { @include grid-column(8) }
         }
         @media #{$large-up} {
           .about-person{ 
@@ -107,8 +107,8 @@ $timeline-border-color: $steel;
             h3 { font-size: $h3-font-size }
             }
           .time             { @include grid-column(1) }
-          .body             { @include grid-column(9) }
-          .about-person~.body { @include grid-column(6) }
+          .body             { @include grid-column(10) }
+          .about-person~.body { @include grid-column(7) }
         }
         @media #{$large-up} {
           .icon { font-size: 3rem }

@@ -131,6 +131,7 @@ angular.module 'leapApp'
       scope.mouseenter = -> scope.style = scope.category?.styles.bgHighlight
       scope.mouseleave = -> scope.style = scope.category?.styles.bg
       scope.delete = -> LeapEvent.delete()
+      element.addClass(scope.event.eventableType)
     scope.clicked = -> scope.extended = !scope.extended
     scope.$on "cancelEventForm", -> scope.extended = false
 
@@ -208,7 +209,6 @@ angular.module 'leapApp'
       view.showButton = view.controls.length > 0
 
 .directive 'leapEventForm', ($http,Topic,Timeline,Categories) ->
-  restrict: "E"
   scope:
     templateUrl: '='
     eventType: '='

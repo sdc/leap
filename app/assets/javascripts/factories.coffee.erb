@@ -28,7 +28,7 @@ angular.module 'leapApp'
   update: ->
     return unless topic
     $log.info "TopicFactory: I'm about to update the topic"
-    $http.get(urlBase() + ".json?refresh=true")
+    $http.get(urlBase() + ".json")#?refresh=true")
     .success (data) ->
       topic = data
       $rootScope.$broadcast("topicUpdated")

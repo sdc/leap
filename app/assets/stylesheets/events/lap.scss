@@ -1,0 +1,14 @@
+form.create_learning_action{
+  .row { @include grid-row($behavior: nest) }
+  .unit,.target-grade,.action,.completion { @include grid-column(12) }
+  @media #{$medium-up} {
+    .unit,.completion { @include grid-column(3) }
+    .target-grade { @include grid-column(2) }
+    .action { @include grid-column(4) }
+  }
+}
+
+leap-timeline-event.learningAction {
+  .row { @include grid-row($behavior: nest) }
+  .target-grade { font-size: 45px }
+}

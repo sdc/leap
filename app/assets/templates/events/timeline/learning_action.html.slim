@@ -1,0 +1,7 @@
+.row
+  .small-10.columns
+    h3 {{ event.title }}
+    p ng-bind-html="event.body | simpleFormat"
+  h1.target-grade.small-2.columns 
+    ' Target Grade:
+    | {{ event.learningAction.targetOutcome }}

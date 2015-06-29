@@ -202,6 +202,25 @@ views:
     aff_staff: Yes
     aff_student: Yes
     url: plp-overview
+  - id: 14
+    parent_id: 5
+    icon: fa-road
+    title: Learning Action Plan
+    topic_person: Yes
+    topic_course: No
+    aff_affiliate: Yes
+    aff_applicant: Yes
+    aff_staff: Yes
+    aff_student: Yes
+    url: lap
+    view_type: timeline
+    events: 
+      LearningAction:
+        null
+    controls: 
+      - name: Add an Action
+        templateUrl: lap.html
+        createEvent: learning_action
 
 categories:
   - id: 1

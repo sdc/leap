@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  person_id: 1
+  created_by_id: 1
+  deleted: false
+  title: MyText
+  target_outcome: MyString
+  body: MyText
+  completion: MyText
+
+two:
+  person_id: 1
+  created_by_id: 1
+  deleted: false
+  title: MyText
+  target_outcome: MyString
+  body: MyText
+  completion: MyText
