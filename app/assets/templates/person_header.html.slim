@@ -1,6 +1,6 @@
 .inner 
   .topic-and-flags ng-class="{'show-topic': swiped}"
-    h1: leap-person mis-id="person.mis_id" flags="flags"
+    h1: leap-person person="person" flags="flags"
   .details ng-class="{'show-topic': !swiped}"
     dl.details-tabs ng-hide="collapseTopicBar"
       dd ng-class="{active: detailsPane=='links'}"

@@ -10,6 +10,8 @@ angular.module 'leapApp'
   urlBase: urlBase
   set: (mis_id = "user", type = "person") ->
     deferred = $q.defer()
+    if type == "person" && $rootScope.user?.mis_id == mis_id
+      deferred.resolve topic = $rootScope.user
     if topic && topic.mis_id == mis_id && topic.topic_type == type
       deferred.resolve topic
     else
