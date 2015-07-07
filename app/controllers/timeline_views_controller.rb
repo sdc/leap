@@ -69,6 +69,8 @@ class TimelineViewsController < ApplicationController
       end
       events = scope.where(str.join(" or "), *conds)
 
+      events = events.as_json(include: "eventable") if params[:extended]
+
       # Add the topic's timetable from the EBS if it's a timetable page
       registers = @topic.timetable_events(from: date.beginning_of_week, to: date.end_of_week) if view.view_type == "timetable"
 
