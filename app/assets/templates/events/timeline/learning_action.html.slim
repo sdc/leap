@@ -1,7 +1,7 @@
 .row
-  .small-10.columns
+  .main-bit
     h3 {{ event.title }}
     p ng-bind-html="event.body | simpleFormat"
-  h1.target-grade.small-2.columns 
-    ' Target Grade:
+  h2.target-grade ng-style="category.styles.fg"
+    ' Target:
     | {{ event.learningAction.targetOutcome }}

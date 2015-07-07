@@ -1,0 +1,9 @@
+leap-timeline-event.attendance {
+  @include grid-row;
+  .att-chart { 
+    @include grid_column(10);
+    height: 100px;
+    g.axis { display: none }
+  }
+  .key { @include grid_column(2) }
+}

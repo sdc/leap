@@ -26,6 +26,7 @@
     "moment": "~2.10.3",
     "angularjs-datepicker": "~0.2.4",
     "angular-loading-bar": "~0.7.1",
-    "masonry": "~3.3.0"
+    "masonry": "~3.3.0",
+    "angular-charts": "~0.2.7"
   }
 }

@@ -26,6 +26,7 @@ $timeline-border-color: $steel;
   }
 
   leap-timeline-event {
+    position: relative;
     * { transition: 0.3s ease all }
     @media #{$large-up} { 
       &.first .timeline-event { @include side-radius(top) }
@@ -35,6 +36,7 @@ $timeline-border-color: $steel;
       @extend .category-background;
       @include grid-column(12, $collapse: true);
       //@media #{$xlarge-up} { @include grid-column(6, $collapse: true) }
+      position: relative;
       transition: 0.5s ease all;
       margin-bottom: 1px;
       >.main,.extra-info { @include radius }
@@ -208,11 +210,10 @@ $timeline-border-color: $steel;
   margin-bottom: 0;
   background: $steel;
   transition: 0.5s ease all;
+  .category-background:hover { background: inherit }
   .content { padding: 0 }
   .tabs-content { margin-bottom: 0 }
-  * {
-    transition: 0.5s ease background-color;
-  }
+  * { transition: 0.5s ease background-color }
   &.off-canvas { bottom: -100% }
   .tabbable{
     @include grid-row;

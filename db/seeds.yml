@@ -205,7 +205,7 @@ views:
   - id: 14
     parent_id: 5
     icon: fa-road
-    title: Learning Action Plan
+    title: Learning Log
     topic_person: Yes
     topic_course: No
     aff_affiliate: Yes

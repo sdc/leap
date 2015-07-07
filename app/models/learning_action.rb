@@ -11,7 +11,7 @@ class LearningAction < Eventable
   end
 
   def title
-    "Action: " + unit
+    "Learning Log: " + unit
   end
 
   def timeline_attrs(tr)

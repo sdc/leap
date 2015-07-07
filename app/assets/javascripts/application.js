@@ -9,6 +9,8 @@
 //= require angular-scroll/angular-scroll
 //= require angularjs-datepicker/src/js/angular-datepicker
 //= require angular-loading-bar
+//= require d3/d3.js
+//= require angular-charts/dist/angular-charts
 //= require app
 //= require controllers
 //= require factories

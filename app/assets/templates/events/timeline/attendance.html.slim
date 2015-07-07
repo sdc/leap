@@ -1,0 +1,4 @@
+h1 {{ event.title }}: {{ event.attendance.final.att_year }}% (This week: {{ event.attendance.final.att_week }}%)
+.att-chart ac-chart="'line'" ac-data="event.attendance.data" ac-config="{colors: event.attendance.colors, lineLegend: false }"
+.key 
+  div ng-repeat="cat in event.attendance.data.series" style="color: {{ event.attendance.colors[$index] }}" {{ cat }}

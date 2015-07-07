@@ -1,7 +1,6 @@
 angular.module 'leapApp'
 
 .directive 'leapViewsMenu', ($http,Topic,$rootScope) ->
-  restrict: "E"
   templateUrl: "/assets/views_menu.html"
   link: (scope) ->
     refresh = ->
@@ -116,7 +115,7 @@ angular.module 'leapApp'
     scope.today = ->
       scope.timelineDate = moment().toDate()
     
-.directive 'leapTimelineEvent', (LeapEvent) ->
+.directive 'leapTimelineEvent', (LeapEvent,$timeout) ->
   restrict: "E"
   templateUrl: '/assets/timeline_event.html'
   scope:
@@ -130,7 +129,11 @@ angular.module 'leapApp'
       scope.style = scope.category?.styles.bg
       scope.mouseenter = -> scope.style = scope.category?.styles.bgHighlight
       scope.mouseleave = -> scope.style = scope.category?.styles.bg
-      scope.delete = -> LeapEvent.delete()
+      scope.delete = -> LeapEvent.delete(scope.leapEventId).then ->
+        element = element.find("div")
+        element.css("position:relative")
+        element.css("opacity","0")
+        $timeout (-> element.remove()), 500
       element.addClass(scope.event.eventableType)
     scope.clicked = -> scope.extended = !scope.extended
     scope.$on "cancelEventForm", -> scope.extended = false

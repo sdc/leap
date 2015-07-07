@@ -105,6 +105,7 @@ angular.module 'leapApp'
   get: -> event
   category: -> category
   delete: (eventId) ->
-    deferred = $q.defer()
-    $http.delete("#{Topic.urlBase()}/events/#{eventId}.json").success (data) -> deferred.resolve data
-    deferred.promise
+    if confirm("Are you sure?")
+      deferred = $q.defer()
+      $http.delete("#{Topic.urlBase()}/events/#{eventId}.json").success (data) -> deferred.resolve data
+      deferred.promise

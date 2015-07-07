@@ -1,4 +1,4 @@
-angular.module 'leapApp', ['ngRoute','ngSanitize','mm.foundation','duScroll', '720kb.datepicker','angular-loading-bar']
+angular.module 'leapApp', ['ngRoute','ngSanitize','mm.foundation','duScroll', '720kb.datepicker','angular-loading-bar','angularCharts']
 
 .config(['$routeProvider', ($routeProvider) ->
   $routeProvider

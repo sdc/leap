@@ -16,7 +16,6 @@
 
 class Attendance < Eventable
   default_scope { order('week_beginning') }
-  #attr_accessible :week_beginning, :att_year, :att_week, :course_type
 
   after_create do |attendance|
     attendance.events.create!(event_date: week_beginning.end_of_week, transition: :complete) if attendance.course_type == "overall"
@@ -42,43 +41,38 @@ class Attendance < Eventable
     :default
   end
 
-  def subtitle
-    "#{att_year}%"
-  end
-
   def siblings_same_year(course_type = "overall")
     course_type = course_type.to_s
     d, m = Settings.year_boundary_date.split("/").map(&:to_i)
     bty = week_beginning.change(month: m, day: d)
     if bty > week_beginning
-      return Attendance.where(course_type: course_type, person_id: person_id, week_beginning: bty.change(year: bty.year - 1)..bty)
+      return Attendance.where(course_type: course_type, person_id: person_id, week_beginning: bty.change(year: bty.year - 1)..bty).
+        where("week_beginning <= ?",week_beginning)
     else
-      return Attendance.where(course_type: course_type, person_id: person_id, week_beginning: bty..bty.change(year: bty.year + 1))
+      return Attendance.where(course_type: course_type, person_id: person_id, week_beginning: bty..bty.change(year: bty.year + 1)).
+        where("week_beginning <= ?",week_beginning)
     end
   end
 
-  def to_tile
-    Tile.new(tile_attrs)
+  def cats_same_date
+    Attendance.where(week_beginning: week_beginning, person_id: person_id)
   end
 
-  def tile_attrs
-    begin
-      bg = if att_year < Settings.attendance_low_score.to_i
-             "a66"
-           elsif att_year < Settings.attendance_high_score.to_i
-             "da6"
-           else
-             "6a6"
-           end
-    rescue
-      bg = "6a6"
-    end
-    { icon: "fa-check-circle",
-      partial_path: "tiles/attendance",
-      subtitle: course_type.titlecase,
-      bg: bg,
-      title: "Attendance",
-      object: self
+  def timeline_attrs
+    series = ["Overall"] + Category.first(3).map(&:title)
+    {
+      colors: ["#fff"] + Category.first(3).map(&:color),
+      final: person.attendance,
+      data: {
+        series: series,
+        data: siblings_same_year.map{|a| {x: a.week_beginning.strftime('%d %m'), y: a.cats_same_date.map(&:att_year), tooltip: a.week_beginning.strftime("%d %m %y")}}
+        #data: siblings_same_year.map{|a| {x: a.week_beginning.strftime('%d %m'), y: a.att_year, tooltip: "#{a.att_year}%"}}
+      }
     }
   end
+
+  def timeline_template
+    "attendance"
+  end
+
 end
