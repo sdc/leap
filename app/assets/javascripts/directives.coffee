@@ -123,7 +123,7 @@ angular.module 'leapApp'
     showDate: '='
   link: (scope,element,attrs) ->
     scope.extended = false
-    LeapEvent.load(scope.leapEventId).then ->
+    scope.update = LeapEvent.load(scope.leapEventId).then ->
       scope.event = LeapEvent.get()
       scope.category = LeapEvent.category()
       scope.style = scope.category?.styles.bg
@@ -211,24 +211,34 @@ angular.module 'leapApp'
       view = Timeline.getView()
       view.showButton = view.controls.length > 0
 
-.directive 'leapEventForm', ($http,Topic,Timeline,Categories) ->
+.directive 'leapEventForm', ($http,Topic,Timeline,Categories,LeapEvent) ->
   scope:
     templateUrl: '='
     eventType: '='
     parentId: '='
     initCategory: '='
+    leapEventId: '='
+    action: '@'
   templateUrl: '/assets/event_form.html'
   link: (scope) ->
     scope.newEvent = {}
+    if scope.action == "update"
+      LeapEvent.load(scope.leapEventId,true).then (ev) -> scope.newEvent = ev
     scope.categories = Categories.getAll()
     scope.cancelForm = -> scope.$emit("cancelEventForm")
     scope.createEvent = ->
       toPost = {eventable_type: scope.eventType }
       toPost[scope.eventType] = scope.newEvent
-      $http.post(Topic.urlBase() + "/events.json",toPost).success (data) ->
-        Timeline.update()
-        scope.$emit("cancelEventForm")
-      .error (data) -> scope.errors = data
+      if scope.action == "create" or not scope.action?
+        $http.post(Topic.urlBase() + "/events.json",toPost).success (data) ->
+          Timeline.update()
+          scope.$emit("cancelEventForm")
+        .error (data) -> scope.errors = data
+      else if scope.action == "update"
+        $http.put(Topic.urlBase() + "/events/" + scope.leapEventId + ".json",toPost).success (data) ->
+          scope.$emit("updateEvent")
+          scope.$emit("cancelEventForm")
+        .error (data) -> scope.errors = data
     scope.$watch "newEvent.category_id", (n,o) ->
       if n?
         scope.$emit "categorySet", n

@@ -90,9 +90,9 @@ angular.module 'leapApp'
   getAll: -> _.filter(categories, (e) -> e?)
   get: (id) -> categories[id]
 
-.factory 'LeapEvent', ($http,Topic,$q,Categories) ->
+.factory 'LeapEvent', ($http,Topic,$q,Categories,Timeline) ->
   event = category = false
-  load: (eventId) ->
+  load: (eventId, returnObject) ->
     deferred = $q.defer()
     $http.get("#{Topic.urlBase()}/events/#{eventId}.json").success (data) ->
       event = data
@@ -100,6 +100,7 @@ angular.module 'leapApp'
       event.eventDate = new Date(event.eventDate)
       event.showTime = !(event.eventDate.getHours() == event.eventDate.getMinutes() == event.eventDate.getSeconds() == 0)
       event.showPerson = Topic.get().topic_type != "person"
+      event = event[event.eventableType] if returnObject?
       deferred.resolve event
     deferred.promise
   get: -> event

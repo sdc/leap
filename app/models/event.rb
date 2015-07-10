@@ -61,7 +61,7 @@ class Event < ActiveRecord::Base
 
   delegate :past?, :future?, to: :event_date
 
-  %w(title tile_title tile_wrap body is_deleted? icon font_icon timeline_template 
+  %w(title tile_title tile_wrap body is_deleted? icon font_icon timeline_template event_tabs
      tile_template brick_template timeline_attrs timetable_length).map(&:to_sym).each do |method|
     define_method method do
       if eventable.respond_to?(method)
@@ -94,12 +94,13 @@ class Event < ActiveRecord::Base
       categoryId:      category.try(:id),
       eventableType:   eventable_type.camelize(:lower),
       isDeletable:     is_deletable?,
+      tabs:            event_tabs,
       timetable: {
         length:    timetable_length,
         endDate:   event_date + timetable_length,
         startDate: event_date,
       }
-    }.merge(eventable_type.camelize(:lower) => timeline_attrs)
+    }.merge(eventable_type.camelize(:lower) => timeline_attrs.kind_of?(Array) ? Hash[timeline_attrs.map{|a| [a, eventable.send(a)]}] : timeline_attrs)
   end
 
   def is_deletable?

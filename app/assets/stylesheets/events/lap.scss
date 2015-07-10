@@ -1,10 +1,10 @@
 form.create_learning_action{
-  .row { @include grid-row($behavior: nest) }
-  .unit,.target-grade,.action,.completion { @include grid-column(12) }
-  @media #{$medium-up} {
-    .unit,.completion { @include grid-column(4) }
-    .target-grade { @include grid-column(4) }
-    .action { @include grid-column(4) }
+  .row { 
+    @include grid-row($behavior: nest);
+    div { @include grid-column(12) }
+    @media #{$medium-up} {
+      div { @include grid-column(4) }
+    }
   }
 }
 

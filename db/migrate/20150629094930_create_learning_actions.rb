@@ -6,9 +6,9 @@ class CreateLearningActions < ActiveRecord::Migration
       t.boolean :deleted
       t.text :unit
       t.string :target_outcome
+      t.string :outcome
       t.text :body
-      t.text :completion
-
+      t.text :reflection
       t.timestamps null: false
     end
   end

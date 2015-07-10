@@ -15,7 +15,11 @@ class LearningAction < Eventable
   end
 
   def timeline_attrs(tr)
-    { targetOutcome: target_outcome }
+    [:target_outcome, :unit, :body, :outcome, :reflection]
+  end
+
+  def event_tabs
+    { "Outcome" => "lap_outcome" }
   end
 
 end

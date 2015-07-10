@@ -3,11 +3,15 @@ form class="create_{{ eventType }}" ng-style="category.styles.bg" novalidate=tru
     alert ng-if="errors" type="'alert radius'" 
       h4 Errors:
       ul: li ng-repeat="error in errors" {{ error }}
-    ng-include src="'/assets/events/create/' + templateUrl"
+    ng-include src="'/assets/events/' + (action || 'create') + '/' + templateUrl"
     .buttons
       button> ng-click="createEvent()"
-        i.fa.fa-plus>
-        | Add Event
+        span ng-if="action == 'update'"
+          i.fa.floppy-o
+          | Update event
+        span ng-if="action != 'update'"
+          i.fa.fa-plus>
+          | Add Event
       button.secondary ng-click="cancelForm()" Cancel
   .category-select
     .show-for-large-up.switch.tiny.radius ng-repeat="category in categories"

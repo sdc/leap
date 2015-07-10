@@ -4,4 +4,6 @@
     p ng-bind-html="event.body | simpleFormat"
   h2.target-grade ng-style="category.styles.fg"
     ' Target:
-    | {{ event.learningAction.targetOutcome }}
+    | {{ event.learningAction.target_outcome }}
+.row ng-if="event.learningAction.outcome"
+  | {{ event.learningAction.outcome }}

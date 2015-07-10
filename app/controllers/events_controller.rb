@@ -44,14 +44,11 @@ class EventsController < ApplicationController
     @event = @topic.events.find(params[:id])
     et = @event.eventable_type.tableize
     if @affiliation == "staff" || Settings.students_update_events.split(",").include?(et)
+      params.permit!
       if @event.eventable.update_attributes(params[et.singularize])
-        flash[:success] = "#{@event.eventable_type.humanize} updated"
+        render json: @event
       else
-        flash[:error] = "#{@event.eventable_type.humanize} could not be updated!"
-      end
-      respond_to do |f|
-        f.js   { render @event }
-        f.html { redirect_to :back }
+        render json: @event.errors.full_messages, status: 442
       end
     else
       redirect_to "/404.html"

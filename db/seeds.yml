@@ -41,6 +41,8 @@ views:
         null
       TtActivity:
         null
+      LearningAction:
+        null
     url: home
     aff_affiliate: Yes
     aff_applicant: Yes
