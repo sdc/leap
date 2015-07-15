@@ -16,7 +16,7 @@
 
 class ViewsController < ApplicationController
 
-  respond_to :html, :xml, :js, :pdf
+  respond_to :html, :xml, :js, :pdf, :json
 
   before_filter :set_scope
   before_filter { |c| c.set_date(1.year) }
