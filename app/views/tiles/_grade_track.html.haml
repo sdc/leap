@@ -1,7 +1,20 @@
 .col-xs-12.text-center
   - unless grade_track.name.blank?
     .panel{:style => "opacity:0.8;border:1px solid #000;"}
-      %canvas{:height => 96, :width=>160}
+      %table.table
+        %tr 
+          - if grade_track.tag.blank? 
+            %td{colspan: 2} No target grade
+          - else
+            %td Target:
+            %td= grade_track.tag
+        %tr 
+          - if grade_track.total.blank? 
+            %td{colspan: 2} No current grade
+          - else
+            %td Working at:
+            %td= grade_track.total
+      -#%canvas{:height => 96, :width=>160}
 - if grade_track.completion_out_of
   .col-xs-12
     .progress
@@ -13,7 +26,7 @@
         out of
         = grade_track.completion_out_of
 
-:coffeescript
+-#:coffeescript
   canvas = $('##{dom_id(grade_track)} canvas')[0]
   c = canvas.getContext("2d")
   c.beginPath()
