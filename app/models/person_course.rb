@@ -61,6 +61,10 @@ class PersonCourse < Eventable
     super({:include => :course}.merge(options))
   end
 
+  def to_xml(options = {})
+    super({:include => :course}.merge(options))
+  end
+
   def status 
     if self[:status] == "current"
       if start_date
