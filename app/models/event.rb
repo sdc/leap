@@ -97,7 +97,7 @@ class Event < ActiveRecord::Base
   end
 
   def as_json(options = {}, &block)
-    super(options.reverse_merge(:include => :eventable))
+    super(options.reverse_merge(include: {eventable: {include: eventable_type == "PersonCourse" ? :course : nil}}))
   end
 
   def is_deletable?

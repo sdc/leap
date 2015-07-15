@@ -57,10 +57,6 @@ class PersonCourse < Eventable
     end]
   end
 
-  def as_json(options = {})
-    super({:include => :course}.merge(options))
-  end
-
   def to_xml(options = {})
     super({:include => :course}.merge(options))
   end
