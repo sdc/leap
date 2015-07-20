@@ -34,7 +34,7 @@
       %tr{:class => [q.lat_score.kind_of?(Fixnum) ? "current" : "",q.lat_score == "No scores for qual type" ? "incomplete" : ""]}
         %td= q.qual_type
         %td= q.grade
-        %td= q.created_at.to_date
+        %td= q.created_at.try :to_date
         %td= @topic.try(:staff) ? "##" : @topic.age_on(q.created_at)
         %td= q.lat_score or "-"
     %tr
