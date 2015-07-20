@@ -1,0 +1,23 @@
+= create_event_form WorkPackage do |f|
+  %h2 Work Package
+  .row
+    .span1= image_tag "events/work_packages.png"
+    .span4
+      %label Type
+      = f.text_field :wp_type, style: "width:100%"
+    .span4
+      %label Location
+      = f.text_field :location, style: "width:100%"
+  .row
+    .span1 &nbsp;
+    .span4
+      %label Key Strengths
+      = f.text_area :key_strengths
+    .span4
+      %label Development
+      = f.text_area :development
+  .row
+    .span1 &nbsp;
+    %label.span2 Days attended:
+    = f.select :days, 1..25, {}, class: "span2"
+  = add_event_button

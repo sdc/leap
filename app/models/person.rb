@@ -49,6 +49,7 @@ class Person < ActiveRecord::Base
   has_many :event_notes
   has_many :mdl_grade_tracks
   has_many :mdl_badges
+  has_many :work_packages
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
   serialize :middle_names
