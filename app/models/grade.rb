@@ -14,6 +14,8 @@ class Grade
                         :g]
           }
 
+  NEW_LIST = %w(A* A B C D E F G U Dist Merit Pass DD MD MM PM PP DDD DDM DMM MMM MMP MPP PPP Refer) + (100.downto 0).to_a
+
   include Comparable
 
   attr_accessor :grade, :scheme

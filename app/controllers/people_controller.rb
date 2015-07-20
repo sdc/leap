@@ -34,11 +34,12 @@ class PeopleController < ApplicationController
           @tiles.unshift(SimplePoll.where(:id => Settings.current_simple_poll).first.to_tile) unless Settings.current_simple_poll.blank?
           ppdc = Settings.moodle_badge_block_courses.try(:split,",")
           @tiles.unshift(@topic.mdl_badges.where(:mdl_course_id => ppdc).last.to_course_tile) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
-          tracks = @topic.mdl_grade_tracks.group(:course_type).order(:created_at).flatten
+          #tracks = @topic.mdl_grade_tracks #.group(:course_type).having('created_at = MAX(created_at)')
           #@tiles.unshift(["english","maths","core"].reject{|ct| tracks.detect{|t| t.course_type == ct}}.first([3 - tracks.count,0].max).map do |ct|
           #  @topic.mdl_grade_tracks.where(:course_type => ct).last.try(:to_tile) or
           #  MdlGradeTrack.new(:course_type => ct).to_tile
           #end)
+          tracks = ["core","maths","english"].map{|ct| @topic.mdl_grade_tracks.where(:course_type => ct).last}.reject{|x| x.nil?}
           @tiles.unshift(tracks.map{|x| x.to_tile})
           attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).last}.reject{|x| x.nil?}
           attendances.select!{|x| x.course_type != "overall"} if attendances.length == 2
@@ -54,7 +55,7 @@ class PeopleController < ApplicationController
         end
       end
       format.json do 
-        render :json => @topic.to_json(:methods => [:l3va,:gcse_english,:gcse_maths], :except => [:photo])
+        render :json => @topic.as_json(:methods => [:l3va,:gcse_english,:gcse_maths,:target_gcse], :except => [:photo])
       end
       format.jpg do
         if @topic.photo

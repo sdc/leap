@@ -169,6 +169,10 @@ class Person < ActiveRecord::Base
   def gcse_maths
     qualifications.where(:qual_type => "GCSE", :predicted => false).where("LOWER(title) LIKE ?", "math%").last.try :grade
   end
+ 
+  def target_english
+    mdl_grade_tracks.where(course_type: "english").where("tag is not null").try :tag
+  end
 
   def address_text
     address.blank? ? nil : [address, town, postcode].reject(&:nil?).join(", ")
