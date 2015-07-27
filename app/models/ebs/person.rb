@@ -35,6 +35,8 @@ class Ebs::Person < Ebs::Model
            :through => :people_units
   has_many :attendances,
            :foreign_key => "person_code"
+  has_many :attainments,
+           :foreign_key => "per_person_code"
   belongs_to :tutor, :class_name => "Person", :foreign_key => "student_staff_tutor"
   has_many :blobs, :foreign_key => "owner_ref"
 

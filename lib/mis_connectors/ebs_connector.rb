@@ -224,15 +224,29 @@ module MisPerson
     last_update = qualifications.order("updated_at DESC").first.try(:updated_at) or Date.today - 5.years
     mis_person.learner_aims.where("uio_id IS NOT NULL and grade IS NOT NULL and updated_date > ?",last_update).each do |la|
       next unless la.unit_instance_occurrence 
-      next unless Qualification.where(:mis_id => la.id).empty?
+      next unless Qualification.where(:mis_id => la.id, "import_type" => "la").empty?
       nq=qualifications.create(
-        :title      => la.unit_instance_occurrence.title,
-        :grade      => la.grade,
-        :person_id  => id,
-        :created_at => la.exp_end_date,
-        :predicted  => false
+        :title       => la.unit_instance_occurrence.title,
+        :grade       => la.grade,
+        :person_id   => id,
+        :created_at  => la.exp_end_date,
+        :predicted   => false,
+        :import_type => "la"
       )
       nq.update_attribute("mis_id",la.id)
+    end
+    mis_person.attainments.each do |at|
+      next unless Qualification.where(:mis_id => at.id, "import_type" => "attainment").empty?
+      nq=qualifications.create(
+        :title       => at.description,
+        :grade       => at.grade,
+        :person_id   => id,
+        :created_at  => at.date_awarded,
+        :predicted   => false,
+        :import_type => "attainment"
+      )
+      nq.update_attribute("mis_id",at.id)
+      nq.events.first.update_attribute("event_date",at.date_awarded || at.date_created)
     end
   end
 
