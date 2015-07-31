@@ -28,6 +28,10 @@
           Data for
           = @topic.name
         %li
+          = link_to params.merge(:refresh => true) do
+            %i.fa.fa-refresh.fa-fw
+            Refresh from MIS
+        %li
           = link_to MdlGradeTrack.user_url(@topic.username) do
             %i.fa.fa-file-code-o.fa-fw
             Moodle Grade Track XML
