@@ -1,4 +1,4 @@
-%h2 A review of #{@topic.forename? ? @topic.forename.split(' ')[0]+((@topic.forename.split(' ')[0][-1]) == 's' ? "'" : "'s") : 'your'} Personalised Learning Programme
+%h2 A review of #{@topic.forename? ? @topic.forename.split(' ')[0]+((@topic.forename.split(' ')[0][-1].downcase) == 's' ? "'" : "'s") : 'your'} Personalised Learning Programme
 = create_event_form ReviewLine do |f|
   .span9
     .row
@@ -10,7 +10,7 @@
           areas in the dropdown list below
         = select_tag "unitxhoose", options_for_select(Settings.one_to_one_prompts.lines.select{|l| l.start_with? "|"}.map{|l| [l[1..-1],"prompt#{l.gsub(/\W+/,"_")}"]}),:class => "span4"
         = f.hidden_field :unit
-        = f.text_area :body, :style => "height:200px", :placeholder => "#{@topic.forename? ? @topic.forename.split(' ')[0]+((@topic.forename.split(' ')[0][-1]) == 's' ? "'" : "'s") : 'Your'} target / grade is..."
+        = f.text_area :body, :style => "height:200px", :placeholder => "#{@topic.forename? ? @topic.forename.split(' ')[0]+((@topic.forename.split(' ')[0][-1].downcase) == 's' ? "'" : "'s") : 'Your'} target / grade is..."
       - Settings.one_to_one_prompts.split("|").map(&:lines).reject(&:blank?).each do |l|
         .span4.the_prompts{:id => "prompt_#{l.first.gsub(/\W+/,"_")}"}
           %h4 Questions to prompt conversation:
