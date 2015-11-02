@@ -85,7 +85,7 @@ class PeopleController < ApplicationController
 
   def select
     if params[:q]
-      @people = Person.search_for(params[:q]).order("surname,forename").limit(20)
+      @people = Person.search_for(params[:q]).where(:staff => true).order("surname,forename").limit(20)
       render :json => @people.map{|p| {:id => p.id,:name => p.name, :readonly => p==@user}}.to_json
     end
   end
