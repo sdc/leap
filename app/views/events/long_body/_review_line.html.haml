@@ -1,4 +1,4 @@
-- if review_line.quality
+- if review_line.quality or review_line.punctuality or review_line.attitude or review_line.completion or 1==1
   %h4
     = review_line.created_by.name
     = raw "(<i>#{review_line.unit}</i>)" unless review_line.unit.blank?

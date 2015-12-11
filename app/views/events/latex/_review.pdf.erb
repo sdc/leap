@@ -51,14 +51,22 @@
   \subsection*{Cumulative attendance: <%= event.eventable.attendance %> \%}
 <% end %>
 
+<% count_quality = count_punctuality = count_attitude = count_completion = 0 %>
+<% event.children.where(:eventable_type => "ReviewLine").map{|x| x.eventable}.each do |rl| %>
+  <% count_quality += 1 unless rl.quality.blank? or rl.quality.nil? %>
+  <% count_punctuality += 1 unless rl.punctuality.blank? or rl.punctuality.nil? %>
+  <% count_attitude += 1 unless rl.attitude.blank? or rl.attitude.nil? %>
+  <% count_completion += 1 unless rl.completion.blank? or rl.completion.nil? %>
+<% end %>
+
 \subsection*{Review}
-\begin{longtable}{|p{40mm}|p{3mm}|p{3mm}|p{3mm}|p{3mm}|p{112mm}|}
+\begin{longtable}{|p{40mm}<% if count_quality > 0 then %>|p{3mm}<% end %><% if count_punctuality > 0 then %>|p{3mm}<% end %><% if count_attitude > 0 then %>|p{3mm}<% end %><% if count_completion > 0 then %>|p{3mm}<% end %>|p{112mm}|}
   \hline
-  
-  &\centering\begin{sideways}<%= Settings.review_cat_quality %>\end{sideways}
-  &\centering\begin{sideways}<%= Settings.review_cat_punctuality %>\end{sideways}
-  &\centering\begin{sideways}<%= Settings.review_cat_attitude %>\end{sideways}
-  &\centering\begin{sideways}<%= Settings.review_cat_completion %>\end{sideways}
+
+  <% if count_quality > 0 then %>&\centering\begin{sideways}<%= Settings.review_cat_quality %>\end{sideways}<% end %>
+  <% if count_punctuality > 0 then %>&\centering\begin{sideways}<%= Settings.review_cat_punctuality %>\end{sideways}<% end %>
+  <% if count_attitude > 0 then %>&\centering\begin{sideways}<%= Settings.review_cat_attitude %>\end{sideways}<% end %>
+  <% if count_completion > 0 then %>&\centering\begin{sideways}<%= Settings.review_cat_completion %>\end{sideways}<% end %>
   &Comments\\
   \hline
 <% event.children.where(:eventable_type => "ReviewLine").map{|x| x.eventable}.each do |rl| %>
@@ -71,10 +79,10 @@
     \medskip
   \end{minipage}
   <% grades  = Settings.review_grades.split(",") %>
-  &\centering\begin{sideways}<%= grades[rl.quality] %>\end{sideways}
-  &\centering\begin{sideways}<%= grades[rl.punctuality] %>\end{sideways}
-  &\centering\begin{sideways}<%= grades[rl.attitude] %>\end{sideways}
-  &\centering\begin{sideways}<%= grades[rl.completion] %>\end{sideways}
+  <% unless rl.quality.blank? or rl.quality.nil? %>&\centering\begin{sideways}<%= grades[rl.quality] %>\end{sideways}<% end %>
+  <% unless rl.punctuality.blank? or rl.punctuality.nil? %>&\centering\begin{sideways}<%= grades[rl.punctuality] %>\end{sideways}<% end %>
+  <% unless rl.attitude.blank? or rl.attitude.nil? %>&\centering\begin{sideways}<%= grades[rl.attitude] %>\end{sideways}<% end %>
+  <% unless rl.completion.blank? or rl.completion.nil? %>&\centering\begin{sideways}<%= grades[rl.completion] %>\end{sideways}<% end %>
   &\begin{minipage}[t]{112mm}<%= lesc rl.body %>\end{minipage}\tabularnewline
   \hline
 <% end %>

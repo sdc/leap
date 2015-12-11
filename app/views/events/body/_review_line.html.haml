@@ -1,4 +1,4 @@
-- if review_line.quality
+- if ( review_line.quality or review_line.punctuality or review_line.attitude or review_line.completion )
   - grades  = Settings.review_grades.split(",")
   %table
     %tr 
@@ -11,6 +11,9 @@
       %td.span2= grades[review_line.attitude]
       %th.span2= Settings.review_cat_completion
       %td.span2= grades[review_line.completion]
-- else
+- elsif 1 == 2
   %h4= review_line.unit
   %p= raw event_format review_line.body
+- else
+  %h4=""
+  %p=""
