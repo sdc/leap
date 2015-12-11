@@ -5,8 +5,8 @@
       %h4 &nbsp;
       %h4.span1 Level
       = f.select :pi_type, Intervention.intervention_types.keys.map{|k| [k,k.gsub(/\W+/,"_")]}, {}, :class => "span2"
-      %h4.span2 Workshops
-      = f.select :workshops, 0..6, {}, :class => "span1"
+      -# %h4.span2 Workshops
+      -# = f.select :workshops, 0..6, {}, :class => "span1"
   .span6
     %h4 Outcome
     = f.text_area :disc_text
