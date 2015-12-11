@@ -56,7 +56,8 @@
   .control-group
     %label.control-label Controls
     .controls
-      = text_area_tag :controls, @view.controls.try(:map) {|c| c.first + ':' + c.last}.try(:join,";")
+      -# = text_area_tag :controls, @view.controls.try(:map) {|c| c.first + ':' + c.last}.try(:join,";")
+      = text_area_tag :controls, defined?(@view.controls.map) ? @view.controls.try(:map) {|c| c.first + ':' + c.last}.try(:join,";") : @view.controls
   .form-actions
     = link_to "Cancel", admin_views_path, :class => "btn"
     = link_to_submit :class => "btn btn-primary" do
