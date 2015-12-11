@@ -33,6 +33,7 @@ module MisPerson
     def resync(yr)
       count = skipcount = 0
       Ebs::Person.find_each(:include => :people_units) do |ep|
+      # Ebs::Person.where(:person_code => [30145214,30146401,30148855,30161804,30136805]).find_each(:include => :people_units) do |ep|
         begin
 	  skipcount +=1
           next unless ep.people_units.detect{|pc| pc.calocc_code == yr} if yr
@@ -194,7 +195,14 @@ module MisPerson
   end
 
   def import_attendances
-    if [Settings.attendance_table,Settings.attendance_week_column,Settings.attendance_culm_column,Settings.attendance_date_column].detect{|x| x.blank?}
+    settings_attendance_table=Settings.attendance_table
+    settings_attendance_week_column=Settings.attendance_week_column
+    settings_attendance_culm_column=Settings.attendance_culm_column
+    settings_attendance_date_column=Settings.attendance_date_column
+    settings_attendance_type_column=Settings.attendance_type_column
+    # to turn on debug output:
+    # ActiveRecord::Base.logger = Logger.new STDOUT
+    if [settings_attendance_table,settings_attendance_week_column,settings_attendance_culm_column,settings_attendance_date_column].detect{|x| x.blank?}
       logger.error "Attendance table not configured"
       return false
     end
@@ -205,17 +213,20 @@ module MisPerson
     end
     mis_person.attendances.
       where("#{Settings.attendance_date_column} > ? and #{Settings.attendance_date_column} < ?",(last_date - 2.weeks),Date.tomorrow).#strftime("%Y-%d-%m %H:%M:%S")).
+      # where("1=1").
       each do |att|
-        next unless att.send(Settings.attendance_date_column)
-        next unless att.send(Settings.attendance_culm_column)
-        course_type = Settings.attendance_type_column.blank? ? "overall" : (att.send(Settings.attendance_type_column) || "overall").downcase
-        na=Attendance.find_or_create_by_person_id_and_week_beginning_and_course_type(id,att.send(Settings.attendance_date_column),course_type)
+        next unless att.send(settings_attendance_date_column)
+        next unless att.send(settings_attendance_culm_column)
+        course_type = settings_attendance_type_column.blank? ? "overall" : (att.send(settings_attendance_type_column) || "overall").downcase
+        na=Attendance.find_or_create_by_person_id_and_week_beginning_and_course_type(id,att.send(settings_attendance_date_column),course_type)
+# =begin
         na.update_attributes(
-          :week_beginning => att.send(Settings.attendance_date_column),
-          :att_year    => att.send(Settings.attendance_culm_column),
-          :att_week    => att.send(Settings.attendance_week_column),
-          :course_type => Settings.attendance_type_column.blank? ? "overall" : (att.send(Settings.attendance_type_column) || "overall").downcase
+          :week_beginning => att.send(settings_attendance_date_column),
+          :att_year    => att.send(settings_attendance_culm_column),
+          :att_week    => att.send(settings_attendance_week_column),
+          :course_type => settings_attendance_type_column.blank? ? "overall" : (att.send(settings_attendance_type_column) || "overall").downcase
         )
+# =end
       end
     return self
   end
