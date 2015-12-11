@@ -48,7 +48,10 @@ class PeopleController < ApplicationController
           #  @tiles.unshift(@topic.attendances.where(:course_type => "overall").last.events.first.try :to_tile)
           #end
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
-          @tiles.unshift(GlobalNews.last.to_tile) if GlobalNews.any?
+          # @tiles.unshift(GlobalNews.last.to_tile) if GlobalNews.any?
+          for news_item in GlobalNews.where( :active => true, :from_time => [nil,DateTime.new(0)..DateTime.now], :to_time => [nil,DateTime.now..DateTime.new(9999)] ).order("id DESC") do
+            @tiles.unshift(news_item.to_tile)
+          end
           @tiles = @tiles.flatten.reject{|t| t.nil?} #.uniq{|t| t.object}
           @on_home_page = true
           render :action => "home"
