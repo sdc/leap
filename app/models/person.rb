@@ -182,4 +182,8 @@ class Person < ActiveRecord::Base
   def person?; true end
   def course?; false end
 
+  def possessive_name( str_if_blank='Your' )
+    defined?( forename ) && forename? ? forename.split(' ')[0]+((forename.split(' ')[0][-1].downcase) == 's' ? "'" : "'s") : str_if_blank
+  end
+
 end
