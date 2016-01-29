@@ -66,7 +66,12 @@ class Person < ActiveRecord::Base
   end
 
   def age_on(date)
-    ((date.to_date - date_of_birth.to_date)/365).to_i
+    # ((date.to_date - date_of_birth.to_date)/365).to_i
+    return nil unless defined?(date.to_date)
+    return nil unless defined?(date_of_birth.to_date)
+    day_diff = date.day - date_of_birth.day
+    month_diff = date.month - date_of_birth.month - (day_diff < 0 ? 1 : 0)
+    date.year - date_of_birth.year - (month_diff < 0 ? 1 : 0)
   end
 
   def to_param
