@@ -6,10 +6,11 @@
         %h4= topic.name
         %h4
           %small= topic.mis_id
-        - unless topic.staff?
-          - if topic.class.name == "Person"
-            %h4
-              %small{:id => "dob-#{topic.mis_id}"} DOB: #{topic.date_of_birth.try(:strftime, "%d %b %Y")}
+        - if @affiliation == "staff"
+          - unless topic.staff?
+            - if topic.class.name == "Person"
+              %h4
+                %small{:id => "dob-#{topic.mis_id}"} DOB: #{topic.date_of_birth.try(:strftime, "%d %b %Y")}
         %h5.flags
           - if topic.kind_of? PersonCourse
             .label{:class => "label-#{topic.cl_status}"}= topic.mis_status
