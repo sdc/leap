@@ -9,8 +9,9 @@
   - else
     = create_event_form SimplePollAnswer do |f|
       = hidden_field_tag "simple_poll_answer[simple_poll_id]", poll.id
-      - poll.answers.each do |ans|
-        .row
-          .col-xs-1= f.radio_button :answer, ans
-          %label.control-label.col-xs-9= ans
+      %div{:style => "line-height: 80%"}
+        - poll.answers.each do |ans|
+          .row
+            .col-xs-1= f.radio_button :answer, ans
+            %label.control-label.col-xs-9= ans
       =submit_tag "Vote!", :class => "btn btn-primary btn-sm"
