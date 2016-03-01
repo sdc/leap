@@ -1,5 +1,5 @@
 .col-xs-12
-  %h2= poll.question
+  %h2{:style => "line-height: 100%; font-size:100%"}= poll.question
   - if myans = @topic.simple_poll_answers.where(:simple_poll_id => poll.id).first
     %table.table.table-condensed{:style => "font-size:75%"}
       - poll.results.each do |ans|
@@ -9,7 +9,7 @@
   - else
     = create_event_form SimplePollAnswer do |f|
       = hidden_field_tag "simple_poll_answer[simple_poll_id]", poll.id
-      %div{:style => "line-height: 80%"}
+      %div{:style => "line-height: 80%; padding: 5px 0px 5px 0px"}
         - poll.answers.each do |ans|
           .row
             .col-xs-1= f.radio_button :answer, ans
