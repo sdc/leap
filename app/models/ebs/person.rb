@@ -38,6 +38,6 @@ class Ebs::Person < Ebs::Model
   end
 
   def address
-    Ebs::Address.where(owner_ref: "#{id}").where("end_date IS NULL").last
+    Ebs::Address.where(owner_ref: "#{id}").where( :start_date => [nil,DateTime.new(1)..DateTime.now], :end_date => [nil,DateTime.now..DateTime.new(9999)] ).order(:start_date).last
   end
 end
