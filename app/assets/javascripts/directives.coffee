@@ -209,7 +209,7 @@ angular.module 'leapApp'
       scope.category = Categories.get(id)
     $rootScope.$on "timelineUpdated", ->
       view = Timeline.getView()
-      view.showButton = view.controls.length > 0
+      view.showButton = ( view && view.controls && view.controls.length > 0 )? if view?
 
 .directive 'leapEventForm', ($http,Topic,Timeline,Categories,LeapEvent) ->
   scope:

@@ -30,4 +30,5 @@ class Admin::TestController < ApplicationController
       redirect_to :back, notice: "That person doesn't exist!"
     end
   end
+
 end

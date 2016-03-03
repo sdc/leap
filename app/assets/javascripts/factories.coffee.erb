@@ -58,7 +58,7 @@ angular.module 'leapApp'
       deferred = $q.defer()
       $http.get("#{Topic.urlBase()}/timeline_views/#{viewName}#{if date then '?date=' + date.toISOString() else ''}").success (data) ->
         unless date
-          if data.view.view_type == "timetable"
+          if date && date.view && date.view.view_type && data.view.view_type == "timetable"
             date = moment()
           else
             date = moment().add(1,"month")

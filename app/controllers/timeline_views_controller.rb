@@ -13,7 +13,6 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
-
 class TimelineViewsController < ApplicationController
   def index
     views = TimelineView.where("aff_#{Person.affiliation}"  => true,
@@ -28,7 +27,7 @@ class TimelineViewsController < ApplicationController
                               "topic_#{@topic.topic_type}" => true).first
 
 
-    people = if ["people","plp-overview"].include? view.view_type
+    people = if ( (defined? view.view_type) && (["people","plp-overview"].include? view.view_type) )
       @topic.person_courses.includes(person: "mdl_grade_tracks")
             .sort_by { |pc| pc.person.name(surname_first: true) }.as_json
     else
@@ -49,7 +48,7 @@ class TimelineViewsController < ApplicationController
 
       # Add the date to the scope (a week if it's a timetable view)
       date = params[:date] ? Date.parse(params[:date]) : ( Date.today() + 1.month )
-      scope = if view.view_type == "timetable"
+      scope = if ( (defined? view.view_type) && view.view_type == "timetable" )
                 scope.where(event_date: date.beginning_of_week...date.end_of_week)
               else
                 scope.where("event_date <= ?", date).limit(100)
@@ -58,13 +57,15 @@ class TimelineViewsController < ApplicationController
       # Add the event types from the view to the scope
       conds = []
       str = []
-      view.events.each do |etype,trans|
-        if trans
-          str.unshift "(eventable_type = ? and transition in (?))"
-          conds.unshift etype,trans
-        else
-          str.unshift "(eventable_type = ?)"
-          conds.unshift etype
+      if defined? view.events
+        view.events.each do |etype,trans|
+          if trans
+            str.unshift "(eventable_type = ? and transition in (?))"
+            conds.unshift etype,trans
+          else
+            str.unshift "(eventable_type = ?)"
+            conds.unshift etype
+          end
         end
       end
       events = scope.where(str.join(" or "), *conds)
@@ -72,7 +73,7 @@ class TimelineViewsController < ApplicationController
       events = events.as_json(include: "eventable") if params[:extended]
 
       # Add the topic's timetable from the EBS if it's a timetable page
-      registers = @topic.timetable_events(from: date.beginning_of_week, to: date.end_of_week) if view.view_type == "timetable"
+      registers = @topic.timetable_events(from: date.beginning_of_week, to: date.end_of_week) if (defined? view.view_type) && view.view_type == "timetable"
 
     end
 
