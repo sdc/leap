@@ -17,6 +17,8 @@ gem 'activeresource', require: 'active_resource'
 gem 'whenever', :require => false
 gem 'memcache-client'
 gem 'identicon'
+gem 'responders', '~> 2.0'
+gem 'modernizr-rails'
 
 platforms :ruby do
   gem 'mysql2'
@@ -42,4 +44,8 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
   gem 'unicorn'
+end
+
+group :test, :development do
+  gem 'pry-rails'
 end
