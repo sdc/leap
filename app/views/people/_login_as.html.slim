@@ -1,0 +1,8 @@
+.search-list-person style="height:auto" 
+  .person-photo= image_tag(login_as.photo_uri, :size => "130x130")
+  .details
+    h3= truncate(login_as.name, :length => 17)
+    h5.quiet= login_as.mis_id
+    - ["staff","student","affiliate","applicant"].each do |aff|
+      = link_to aff, person_url(login_as, :login_as => aff)
+      = "|"

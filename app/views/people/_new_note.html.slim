@@ -1,0 +1,11 @@
+.panel.panel-default
+  .panel-heading
+    h4.panel-title= Settings.front_page_note_prompt
+  .panel-body
+    = create_event_form Note do |f|
+      = hidden_field_tag :redirect_to, person_view_url(@topic, View.for_user.where(:name => "all").first, :anchor => "current_time_break")
+      .input-group
+        = f.text_field :body, :class => "form-control", :placeholder => "Write a note..."
+        span.input-group-btn
+          button type="submit" class=("btn btn-primary") 
+            i.fa.fa-edit

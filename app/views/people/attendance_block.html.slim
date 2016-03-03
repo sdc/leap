@@ -1,0 +1,10 @@
+h3.status-bd.status-fg class=@attendances.last.try(:status) 
+  | Attend
+  = @attendances.last.try(:att_year)
+  = "%"
+.span4
+  - unless @attendances.empty?
+    | &nbsp;
+    img src=attendance_graph(@attendances) 
+  - else
+    .alert You have no attendance data, yet.

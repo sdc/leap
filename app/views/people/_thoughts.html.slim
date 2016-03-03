@@ -1,0 +1,6 @@
+h2= Settings.front_page_note_prompt
+= create_event_form Note do |f|
+  = hidden_field_tag :redirect_to, person_view_url(@topic, View.for_user.where(:name => "all").first, :anchor => "current_time_break")
+  .input-append
+    = f.text_field :body, :class => "span9", :style => "margin-left:10px"
+    = submit_tag "Post", :class => "btn btn-primary span1"

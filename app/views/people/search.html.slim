@@ -1,0 +1,18 @@
+.row
+  .span12
+    h1 Search Results:
+    - unless @courses.empty?
+      h2 People
+.row
+  = render @people
+  - unless params[:mis]
+    = link_to params.reverse_merge :mis => true do
+      .search-list-person.incomplete.status-bd
+        .row
+          .span1=image_tag("not_found.png")
+          .span2
+            h5 Click here to extend the search to your MIS
+- unless @courses.empty?
+  .row
+    h2 Courses
+    table.table= render @courses

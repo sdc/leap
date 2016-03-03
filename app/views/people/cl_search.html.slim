@@ -1,0 +1,39 @@
+.col-md-4.col-lg-6.searchy
+  .row
+    h1
+      | People
+      span.visible-sm.visible-xs.pull-right
+        = link_to "#courses", :class => "btn btn-default btn-md" do
+          | Skip to courses
+          i.fa.fa-arrow-down
+    - if @people.any?
+      .row
+        = render :partial => "cl_person", :collection => @people
+    - else
+      .alert.alert-warning
+        i.fa.fa-warning
+        | Couldn't find any people matching that search.
+    - unless params[:mis]
+      .col-xs-12.col-sm-4.col-md-12.col-lg-6
+        .alert.alert-warning
+          b Not found who you're looking for?
+          p
+            = link_to(params.reverse_merge(:mis => true),:class => "btn btn-default") do
+              i.fa.fa-search
+              | Search Full MIS
+          p Note: This may take some time.
+.col-md-8.col-lg-6.searchy#courses
+  h1 Courses
+  - if @courses.any?
+    .panel.span-xs-12
+      .panel-body
+        table.table= render :partial => "cl_course", :collection => @courses
+        .pull-right
+          | Course not here?
+          = link_to(params.reverse_merge(:mis => true),:class => "btn btn-default btn-small") do
+            i.fa.fa-search
+            | Search Full MIS
+  - else
+    .alert.alert-warning
+      i.fa.fa-warning
+      | Couldn't find any courses matching that search.

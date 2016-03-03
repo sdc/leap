@@ -1,0 +1,9 @@
+.search-list-person.unknown.status-bd
+  .row
+    = link_to person_url(person, :refresh => true) do
+      .span1= image_tag(person.photo_uri)
+      .span2
+        h5= truncate(person.name, :length => 20)
+        h6= person.mis_id
+        - unless person.staff?
+          h6= person.date_of_birth.try(:strftime, "%d %b %Y")

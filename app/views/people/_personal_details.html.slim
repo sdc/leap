@@ -1,0 +1,44 @@
+h2
+  | Personal Details
+  - if Person.user.staff? and !@topic.note.blank?
+    .pull-right style="margin-right:20px" 
+      = link_to "#", :id => "person_note_button" do
+        .btn.btn-warning
+          i.icon-exclamation-sign.icon-white
+          | Read Me
+- if Person.user.staff? and !@topic.note.blank?
+  .alert.span9#person_note_text style="display:none" 
+    h4 This user has a note on the student records system
+    - if Person.user.admin?
+      = event_format @topic.note
+    - else
+      | Contact your student records department or Leap admin for more information
+dl.span5.dl-horizontal
+  dt Name
+  dd= @topic.name :middle_names => true
+  dt Address
+  dd
+    - if @topic.address
+      = [@topic.address, @topic.town, @topic.postcode].reject(&:nil?).join ", "
+    | &nbsp;
+  - unless @topic.home_phone.blank?
+    dt Home Phone
+    dd= @topic.home_phone
+  - unless @topic.personal_email.blank?
+    dt Personal Email
+    dd= mail_to @topic.personal_email
+dl.span5.dl-horizontal
+  dt Birth Date
+  dd
+    - if @topic.date_of_birth
+      = @topic.date_of_birth.strftime("%d %B %Y") + " (Age #{@topic.age})"
+    - else
+      | &nbsp;
+  dt Mobile
+  dd= @topic.mobile_number or "None recorded"
+  dt Next of Kin
+  dd= @topic.next_of_kin or "None recorded"
+- if @topic == @user
+  p style=("margin:10px 20px;") 
+    | Are any of your personal details incorrect?
+    = link_to "Notify us...", Settings.notify_details_change_url

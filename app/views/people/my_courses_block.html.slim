@@ -1,0 +1,18 @@
+h3
+  | My Courses
+  = image_tag PersonCourse.new.icon_url
+- begin
+  .span4
+    - if @my_courses and !@my_courses.empty?
+      .scroll-list
+        ul
+          - @my_courses.map{|c| Course.find(c)}.each do |course|
+            li= link_to course.name, course
+    - else
+      .alert You haven't added any courses, yet. You can do so on a course home page.
+- rescue
+  .span4
+    - if PersonCourse.first
+      .alert.alert-error Please report an error with this block!
+    - else
+      .alert.alert-error There aren't any enrolments in the database, yet?
