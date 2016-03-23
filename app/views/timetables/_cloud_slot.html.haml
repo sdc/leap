@@ -3,9 +3,9 @@
   %h5= cloud_slot.title
   %ul
     %li
-      = cloud_slot.timetable_start.getutc.strftime('%H.%M')
+      = cloud_slot.timetable_start.strftime('%H.%M')
       - if cloud_slot.timetable_end 
-        = "- #{cloud_slot.timetable_end.getutc.strftime('%H.%M')}"
+        = "- #{cloud_slot.timetable_end.strftime('%H.%M')}"
     - if cloud_slot.kind_of? TimetableEvent
       %li= cloud_slot.rooms.join ", "
       %li

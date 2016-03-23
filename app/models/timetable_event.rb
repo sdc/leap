@@ -49,8 +49,8 @@ class TimetableEvent
 
   def to_ics
     e = Icalendar::Event.new
-    e.dtstart = timetable_start.getutc
-    e.dtend = timetable_end.getutc
+    e.dtstart = timetable_start
+    e.dtend = timetable_end
     e.summary = "#{title} with #{teachers.join(", ")}"
     e.location = rooms.join(", ")
     return e
