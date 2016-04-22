@@ -73,6 +73,4 @@ class ViewsController < ApplicationController
     end
   end
 
-
-
 end
