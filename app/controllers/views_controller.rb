@@ -24,10 +24,19 @@ class ViewsController < ApplicationController
   def show
     if @view = View.for_user.find_by_name(params[:id])
       @subviews = @view.parent_id ? @view.parent.try(:children) : @view.children
-      @events =
-        @scope.where("event_date < ?", @date).
-        where(:transition => @view.transitions, :eventable_type => @view.events).
-        limit(request.format=="pdf" ? 20000 : 20)
+      if params[:filter]
+        @events =
+          @scope.joins("INNER JOIN interventions ON events.eventable_id = interventions.id").
+          where("interventions.pi_type = ? AND interventions.referral_category = ?", params[:pi_type], params[:pint_category]).
+          where("event_date < ?", @date).
+          where(:transition => @view.transitions, :eventable_type => @view.events).
+          limit(request.format=="pdf" ? 20000 : 20)
+      else
+        @events =
+          @scope.where("event_date < ?", @date).
+          where(:transition => @view.transitions, :eventable_type => @view.events).
+          limit(request.format=="pdf" ? 20000 : 20)
+      end
       @events = @events.select{|e| e.status.to_s == params[:status]} if params[:status]
       @events = @events.select{|e| e.title.to_s == params[:title]} if params[:title]
       @events.detect{|e| e.past? }.try("first_in_past=",true) unless @events.first.past? if @events.try(:first)
@@ -63,5 +72,7 @@ class ViewsController < ApplicationController
       @topic.events
     end
   end
+
+
 
 end
