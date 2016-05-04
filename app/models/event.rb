@@ -120,7 +120,7 @@ class Event < ActiveRecord::Base
   end
 
   def timetable_height
-    (timetable_length / 56).floor
+    (timetable_length / 50).floor
   end
 
   def timetable_end
