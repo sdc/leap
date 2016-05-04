@@ -72,7 +72,11 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = @topic.events.find(params[:id])  
+    if @affiliation == "staff"
+      @event = Event.find(params[:id])
+    else
+      @event = @topic.events.find(params[:id])
+    end
     if @event.is_deletable?
       flash[:success] = "#{@event.eventable_type.singularize.humanize.titleize} deleted"
       @event.eventable.destroy
