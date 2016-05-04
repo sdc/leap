@@ -257,7 +257,7 @@ module MisPerson
         :import_type => "attainment"
       )
       nq.update_attribute("mis_id",at.id)
-      nq.events.first.update_attribute("event_date",at.date_awarded || at.date_created)
+      nq.events.first.update_attribute("event_date",at.date_awarded || at.created_date)
     end
   end
 
