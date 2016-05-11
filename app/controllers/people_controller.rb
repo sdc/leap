@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'misc/misc_dates'
+
 class PeopleController < ApplicationController
 
   skip_before_filter :set_topic
@@ -41,7 +43,8 @@ class PeopleController < ApplicationController
           #end)
           tracks = ["core","maths","english"].map{|ct| @topic.mdl_grade_tracks.where(:course_type => ct).last}.reject{|x| x.nil?}
           @tiles.unshift(tracks.map{|x| x.to_tile})
-          attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).last}.reject{|x| x.nil?}
+          misc_dates = MISC::MiscDates.new
+          attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last}.reject{|x| x.nil?}
           attendances.select!{|x| x.course_type != "overall"} if attendances.length == 2
           @tiles.unshift(attendances.map{|x| x.to_tile})
           #if @topic.attendances.where(:course_type => "overall").any?

@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'misc/misc_dates'
+
 class Attendance < Eventable
 
   default_scope :order => 'week_beginning'
@@ -75,7 +77,8 @@ class Attendance < Eventable
     rescue
       bg = "6a6"
     end
-    acy = acyr(week_beginning)
+    misc_dates = MISC::MiscDates.new
+    acy = misc_dates.acyr(week_beginning)
     {:icon         => "fa-check-circle",
      :partial_path => "tiles/attendance",
      :subtitle     => course_type.titlecase,
@@ -83,16 +86,6 @@ class Attendance < Eventable
      :title        => "Attendance"+" "+acy,
      :object       => self
     }
-  end
-
-  def acyr(checkdate = Date.today)
-    (d,m) = Settings.year_boundary_date.split("/").map{|x| x.to_i}
-    ab = checkdate.change(:day => d,:month => m)
-    if ab < checkdate
-      return checkdate.strftime('%y')+'/'+(checkdate + 1.year).strftime('%y')
-    else
-      return (checkdate - 1.year).strftime('%y')+'/'+checkdate.strftime('%y')
-    end
   end
 
 end
