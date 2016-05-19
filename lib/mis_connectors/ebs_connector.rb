@@ -191,6 +191,26 @@ module MisPerson
                             )
       end
     end
+    # remove status of any course removed from the Student Record System, but still keep course info.
+    PersonCourse.find_all_by_person_id( Person.find_by_mis_id( mis_person.person_code ).id ).each do |pc|
+      next unless pc.course_id
+      begin
+        course = Course.find(pc.course_id)
+      rescue ActiveRecord::RecordNotFound
+        course = nil
+      end
+      next unless !course.nil? && course.mis_id
+      pu = mis_person.people_units.find_by_uio_id(course.mis_id)
+      if pu.nil?
+        if ( !( pc.status.nil? && pc.mis_status.nil? ) )
+          pc.update_attributes({:status => nil,
+                                :mis_status => nil},
+                               {:without_protection => true}
+                              )
+          pc.save
+        end
+      end
+    end
     return self
   end
 
