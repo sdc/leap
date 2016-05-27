@@ -24,40 +24,48 @@
   .control-group
     %label.control-label Home Page selector
     .controls
-      = select_tag "home_page", options_for_select(["old","new"], Settings.home_page)
-    .help-text
-      Use the old setting unless you're at South Devon College because this currently depends on the extra Moodle integration done there.
-      This stuff will me merged into main Leap with a future release. Promise!
+      = select_tag "home_page", options_for_select(["old","new","progress"], Settings.home_page)
+      .help-text
+        Use the old setting unless you're at South Devon College because this currently depends on the extra Moodle integration done there.
+        This stuff will me merged into main Leap with a future release. Promise!
+
+  - ["staff","student","applicant","affiliate"].each do |aff|
+    .control-group
+      %label.control-label Home Page for #{aff}
+      .controls
+        = select_tag "home_page_#{aff}", options_for_select([nil,"old","new","progress"], eval("Settings.home_page_#{aff}") )
+        .help-text
+          If left blank the Home Page selector setting will be used.
 
   .control-group
     %label.control-label Custom Stylesheet
     .controls
       = text_area_tag "custom_css", Settings.custom_css
-    .help-text 
-      Any CSS put in here will be dumped into a &lt;style&gt; tag in the layout head. Use it
-      sparingly to adjust the look &amp; feel to your preferences. Be carefull, you can
-      make Leap temporarily unusable with this, although you can't lose any data.
+      .help-text 
+        Any CSS put in here will be dumped into a &lt;style&gt; tag in the layout head. Use it
+        sparingly to adjust the look &amp; feel to your preferences. Be carefull, you can
+        make Leap temporarily unusable with this, although you can't lose any data.
 
   .control-group
     %label.control-label Sidebar Links
     .controls
       = text_area_tag "clidebar_links", Settings.clidebar_links
-    .help-text
-      %p
-        This controls the extra links for the new home pages (and soon to be everywhere). Each menu starts with a | 
-        and has text and an icon from
-        = link_to "Font Awesome", "http://fortawesome.github.io/Font-Awesome/icons/" 
-        separated by pipes. 
-      %p
-        Each link in that menu does not start with a pipe and has text, a url and a Font Awesome icon. Like so:
-      %pre
-        :preserve     
-          |Menu One|fa-music
-          First Item in the Menu|http://example.com|fa-music
-          Second Item in the Menu|http://example.info|fa-paw
-          |Menu Two|fa-pencil
-          An Item in the Second Menu|http://example.org|fa-money
-          You can have as many links as you like|http://example.net|fa-star
+      .help-text
+        %p
+          This controls the extra links for the new home pages (and soon to be everywhere). Each menu starts with a | 
+          and has text and an icon from
+          = link_to "Font Awesome", "http://fortawesome.github.io/Font-Awesome/icons/" 
+          separated by pipes. 
+        %p
+          Each link in that menu does not start with a pipe and has text, a url and a Font Awesome icon. Like so:
+        %pre
+          :preserve     
+            |Menu One|fa-music
+            First Item in the Menu|http://example.com|fa-music
+            Second Item in the Menu|http://example.info|fa-paw
+            |Menu Two|fa-pencil
+            An Item in the Second Menu|http://example.org|fa-money
+            You can have as many links as you like|http://example.net|fa-star
             
 
   %h2 Attendance Import
@@ -81,22 +89,25 @@
     %label.control-label Course type column
     .controls
       =text_field_tag "attendance_type_column", Settings.attendance_type_column
-    .help-text
-      %p 
-        If you put a column name in here, the attendance import will import the data from here as the course type. Overall attendances should
-        then be recorded as "overall" in this field. Extra functionality will be added, but to begin with, "maths","english" and "core" will split
-        attendances for those course types for the course-overview related to the grade tracker moodle functionality!
+      .help-text
+        %p 
+          If you put a column name in here, the attendance import will import the data from here as the course type. Overall attendances should
+          then be recorded as "overall" in this field. Extra functionality will be added, but to begin with, "maths","english" and "core" will split
+          attendances for those course types for the course-overview related to the grade tracker moodle functionality!
   .control-group
-    %label Bad - OK - Good attendance percentages
+    %label Bad - OK - Good - Exceed attendance percentages
     .controls
       %span.add-on
         = "Bad < "
-      = number_field_tag "attendance_low_score", Settings.attendance_low_score, :in => 1..99, :class => "span1 inline"
+      = number_field_tag "attendance_low_score", Settings.attendance_low_score, :in => 0..100, :class => "span1 inline"
       %span.add-on
-        = "< OK <"
-      = number_field_tag "attendance_high_score", Settings.attendance_high_score, :in => 1..99, :class => "span1 inline"
+        = " < OK < "
+      = number_field_tag "attendance_high_score", Settings.attendance_high_score, :in => 0..100, :class => "span1 inline"
       %span.add-on
-        = "< Good"
+        = " < Good < "
+      = number_field_tag "attendance_exceed_score", Settings.attendance_exceed_score, :in => 0..100, :class => "span1 inline"
+      %span.add-on
+        = " < Exceed"
 
   %h2 BKSB
   .well
@@ -354,8 +365,9 @@
                                  "review_cat_punctuality","review_cat_attitude","review_cat_completion","review_windows",
                                  "current_review_window","review_grades","reverse_scores","event_notes","moodle_user_postfix",
                                  "moodle_host","moodle_path","moodle_token","moodle_link_target","attendance_table",
-                                 "attendance_culm_column","attendance_week_column","attendance_low_score","attendance_high_score",
-                                 "attendance_date_column","custom_css","quals_editing","clidebar_links","home_page","ws_user","ws_token",
+                                 "attendance_culm_column","attendance_week_column","attendance_low_score","attendance_high_score","attendance_exceed_score",
+                                 "attendance_date_column","custom_css","quals_editing","clidebar_links","home_page",
+                                 "home_page_staff","home_page_student","home_page_applicant","home_page_affiliate","ws_user","ws_token",
                                  "moodle_grade_track_import","moodle_badge_import","moodle_badge_block_courses",
                                  "one_to_one_prompts","attendance_type_column"]
     - @settings2.each do |setting|
