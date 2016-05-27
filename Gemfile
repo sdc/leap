@@ -41,6 +41,11 @@ end
 
 group :development do
   gem 'capistrano'
-  gem 'capistrano-rails'
+  gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-rbenv'
+end
+
+group :test, :development do
+  gem 'pry-rails'
+  gem 'pry-debugger'
 end
