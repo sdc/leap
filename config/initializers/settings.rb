@@ -83,6 +83,7 @@ Settings.defaults[:attendance_type_column]       = ""
 Settings.defaults[:attendance_date_column]       = ""
 Settings.defaults[:attendance_low_score]         = 85
 Settings.defaults[:attendance_high_score]        = 90
+Settings.defaults[:attendance_exceed_score]      = 98
 
 # Stylesheets
 # This is pretty hacky but just dumps some arbitrary css into a style tag in the layout
@@ -96,6 +97,10 @@ Settings.defaults[:ebs_link_icon] = "fa-bolt"
 
 # Which home page
 Settings.defaults[:home_page] = "old"
+Settings.defaults[:home_page_staff] = "old"
+Settings.defaults[:home_page_student] = "old"
+Settings.defaults[:home_page_applicant] = "old"
+Settings.defaults[:home_page_affiliate] = "old"
 
 Settings.defaults[:ebs_no_contact] = nil
 
