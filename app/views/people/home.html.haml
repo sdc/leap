@@ -1,1 +1,71 @@
-#home.row= render @tiles
+- grades = Settings.qqoe_grade.split ","
+#home.row
+  #progress.panel.panel-default
+    .panel-body
+      .col-xs-12
+        - @progress.each do |a|
+          .course-progress
+            .row
+              .col-xs-2.course-attendance
+                %h4 Attendance
+                %h3 #{a.course_type.upcase}
+                %h3 #{a.att_year}%
+            .row
+              .col-xs-2.review-section{ :style => 'width: 15%; background-color: #5cb85c', :onClick => 'displayReview("1", "' + a.course_type.capitalize + '")'}
+                %h5 Working at
+                %h4 Merit
+                %br
+                %h4.pull-bottom.pull-right 1
+              .col-xs-2.review-section{ :style => 'width: 15%; background-color: #d9534f', :onClick => 'displayReview("2", "' + a.course_type.capitalize + '")'}
+                %h5 Working at
+                %h4 Refer
+                %br
+                %h4.pull-bottom.pull-right 2
+              .col-xs-2.review-section{ :style => 'width: 15%; background-color: #f0ad4e', :onClick => 'displayReview("3", "' + a.course_type.capitalize + '")'}
+                %h5 Working at
+                %h4 Pass
+                %br
+                %h4.pull-bottom.pull-right 3
+              .col-xs-2.review-section{ :style => 'width: 15%; background-color: #5cb85c', :onClick => 'displayReview("4", "' + a.course_type.capitalize + '")'}
+                %h5 Working at
+                %h4 Merit
+                %br
+                %h4.pull-bottom.pull-right 4
+              .col-xs-2.review-section{ :style => 'width: 15%; background-color: #4f2170; color: white', :onClick => 'displayReview("5", "' + a.course_type.capitalize + '")'}
+                %h5 Working at
+                %h4 Distinction
+                %br
+                %h4.pull-bottom.pull-right 5
+            #review-modal.modal.fade
+              .modal-dialog
+                .modal-content
+                  .modal-header
+                    %h3.modal-title Review 1 for CORE
+                  = create_event_form ReviewLine do |f|
+                    .modal-body.row
+                      .form-group.col-md-12
+                        = f.label :Unit
+                        = f.text_field :unit, :readonly => true, :label => 'test', :class => 'form-control'
+                      .form-group.col-md-12
+                        .form-group.row
+                          .col-md-3
+                            = f.label ('Review Number'), :for => :review_line_window
+                            = f.text_field :window, :readonly => true, :class => 'form-control'
+                          .col-md-4
+                            = f.label ('Working at'), :for => :review_line_working_at
+                            = f.select(:working_at, options_for_select(grades), {}, {:class => 'form-control'})
+                      .form-group.col-md-12
+                        = f.label ('Learner / Tutor Comments')
+                        = f.text_area :body, :style => "height:200px", :placeholder => "#{@topic.possessive_name('Your')} review comments...", :class => 'form-control'
+                    .modal-footer
+                      = add_event_button
+            :javascript
+              function displayReview(n, unit) {
+                $('.modal-title').text('Review ' + n + ' for ' + unit);
+                $('#review_line_unit').val(unit);
+                $('#review_line_window').val(n);
+                $('#review-modal').modal('show');
+              }
+
+
+

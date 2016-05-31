@@ -1,16 +1,18 @@
-.col-xs-12{"data-link" => person_timetables_url(@topic, :date => next_lesson.timetable_start)}
-  %h2= next_lesson.title
-  %h4
+#next-lesson.col-xs-12{"data-link" => person_timetables_url(@topic, :date => next_lesson.timetable_start)}
+  %h5{:style => "color: #eea"} 
+    %strong Next lesson:  
+    = next_lesson.title
+  %h5
     %i.fa.fa-fw.fa-calendar
     = pretty_date(next_lesson.timetable_start, day: true)
-  %h4
+    .pull-right
+      %i.fa.fa-fw.fa-mortar-board
+      %em= next_lesson.teachers.join(",")
+  %h6
     %i.fa.fa-fw.fa-clock-o
     = next_lesson.timetable_start.to_s(:time)
     &ndash;
     = next_lesson.timetable_end.to_s(:time)
-  %h5
-    %i.fa.fa-fw.fa-map-marker
-    = next_lesson.rooms.join (",")
-  %h5 
-    %i.fa.fa-fw.fa-mortar-board
-    %em= next_lesson.teachers.join(",")
+    .pull-right
+      %i.fa.fa-fw.fa-map-marker
+      = next_lesson.rooms.join (",")
