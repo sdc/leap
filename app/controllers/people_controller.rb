@@ -29,9 +29,24 @@ class PeopleController < ApplicationController
         @sidebar_links = parse_sidebar_links
         if Settings.home_page == "new"
           misc_dates = MISC::MiscDates.new
-          @progress = Array.new
-          if @topic.student_type == 'ft'
-            @progress = ["core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last}.reject{|x| x.nil?}
+
+          @progresses = @topic.progresses
+          @progress_bar = {}
+
+          @progresses.each do |progress|
+            @progress_bar[progress.course_code] = {}
+            @progress_bar[progress.course_code]['course'] = progress
+            if ["core", "english", "maths"].include? progress.course_type
+              @progress_bar[progress.course_code]['attendance'] = @topic.attendances.where(:course_type => progress.course_type).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
+            else
+              @progress_bar[progress.course_code]['attendance'] = @topic.attendances.where(:enrol_course => progress.course_code).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
+            end
+            @progress_bar[progress.course_code]['reviews'] = []
+            @progress_bar[progress.course_code]['gReviews'] = @topic.progress_reviews.where(:progress_id => progress.id).order("number ASC")
+            for i in 0..@progress_bar[progress.course_code]['gReviews'].count-1
+              key = @progress_bar[progress.course_code]['gReviews'][i].number
+              @progress_bar[progress.course_code]['reviews'][key] = @progress_bar[progress.course_code]['gReviews'][i]
+            end
           end
           #@progress += @topic.courses.where("person_courses.mis_status" => 'active')
 =begin

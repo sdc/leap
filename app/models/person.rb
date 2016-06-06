@@ -50,6 +50,9 @@ class Person < ActiveRecord::Base
   has_many :mdl_grade_tracks
   has_many :mdl_badges
   has_many :work_packages
+  has_many :progresses
+  has_many :progress_reviews
+
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
   serialize :middle_names

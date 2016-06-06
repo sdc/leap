@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 
+  person_id: 1
+  course_title: MyString
+  course_code: MyString
+  course_year: MyString
+  course_type: MyString
+  course_status: MyString
+  course_tutor: MyString
+  ir_body: MyString
+  ir_aspiration: MyString
+  ir_target_grade: MyString
+  ir_checkbox: false
+  ir_checkbox2: false
+  ir_checkbox3: false
+  ir_checkbox4: false
+  ir_completed: 2016-05-31
+
+two:
+  id: 
+  person_id: 1
+  course_title: MyString
+  course_code: MyString
+  course_year: MyString
+  course_type: MyString
+  course_status: MyString
+  course_tutor: MyString
+  ir_body: MyString
+  ir_aspiration: MyString
+  ir_target_grade: MyString
+  ir_checkbox: false
+  ir_checkbox2: false
+  ir_checkbox3: false
+  ir_checkbox4: false
+  ir_completed: 2016-05-31
