@@ -355,6 +355,16 @@
     .controls
       = text_field_tag "ws_token", Settings.ws_token
 
+  %h2 PLP Overview
+  .well
+    Select the PLP Overview layout you would like to use.  Currently there are two, Old and Progress.
+  .control-group
+    %label.control-label PLP Overview Screen
+    .controls
+      = select_tag "plp_overview", options_for_select(["old","progress"], Settings.plp_overview)
+      .help-text
+        Use the old setting unless you're at South Devon College because this currently depends on the extra integration done there.
+
   %h1 Old Settings!
   .old-settings
     .alert
@@ -369,7 +379,7 @@
                                  "attendance_date_column","custom_css","quals_editing","clidebar_links","home_page",
                                  "home_page_staff","home_page_student","home_page_applicant","home_page_affiliate","ws_user","ws_token",
                                  "moodle_grade_track_import","moodle_badge_import","moodle_badge_block_courses",
-                                 "one_to_one_prompts","attendance_type_column"]
+                                 "one_to_one_prompts","attendance_type_column","plp_overview"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize
