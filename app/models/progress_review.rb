@@ -15,18 +15,17 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class ProgressReview < Eventable
-  attr_accessible :attendance, :body, :completed_by, :completed_date, :id, :level, :number, :progress_id, :working_at
+  attr_accessible :attendance, :body, :completed_by, :created_at, :id, :level, :number, :progress_id, :working_at
 
   belongs_to :progresses, :foreign_key => "progress_id"
   before_save :set_values
 
   after_create do |line|
-    line.events.create!(:event_date => completed_date, :transition => :create)
+    #line.events.create!(:event_date => created_at, :transition => :create, :person_id => person_id)
   end
 
   def set_values
-  	self.id ||= progress_id + '_' + number.to_s
-  	self.completed_date ||= Time.now
+  	self.created_at ||= Time.now
   	self.created_by_id ||= Person.user.id
   end
 

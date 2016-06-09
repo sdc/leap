@@ -256,28 +256,30 @@ table.table td, table.table th {
   border: 1px solid #ddd;
 }
 
-.course-attendance {
+.top-section {
   background-color: yellow;
   margin-bottom: 10px;
   margin-top: 10px;
   text-align: center;
   padding: 10px;
   display: block;
+  margin-right: 10px;
 }
 .review-section {
   padding: 10px;
   text-align: center;
   margin-bottom: 20px;
   background-color: #d9edf7;
+  border-right: 1px solid rgba(86,61,124,.2);
 }
-#home h3 {
+.review-section:last-child {
+  border: 0px;
+}
+#progress h3 {
   margin: 0;
   font-weight: bold;
 }
-#home h4 {
-  margin: 0;
-}
-#home h5 {
+#progress h5, h4, h6 {
   margin: 0;
 }
 .review-section h4 {
@@ -301,9 +303,31 @@ table.table td, table.table th {
 }
 
 .amber {
-  background-color: #f0ad4e !important;
+  background-color: #F87531 !important;
 }
 
 .red {
   background-color: #d9534f !important;
+}
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+}
+.initial-author {
+  margin-top: 3px;
+}
+.target-grade {
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-left: 6px;
+  margin-right: 6px;
+  background-color: #d9edf7;
+}
+
+.target-grade h4 {
+  font-weight: bold;
 }

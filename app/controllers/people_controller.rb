@@ -32,20 +32,20 @@ class PeopleController < ApplicationController
 
           @progresses = @topic.progresses
           @progress_bar = {}
-
           @progresses.each do |progress|
-            @progress_bar[progress.course_code] = {}
-            @progress_bar[progress.course_code]['course'] = progress
+            @progress_bar[progress.uio_id] = {}
+            @progress_bar[progress.uio_id]['course'] = progress
             if ["core", "english", "maths"].include? progress.course_type
-              @progress_bar[progress.course_code]['attendance'] = @topic.attendances.where(:course_type => progress.course_type).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
+              @progress_bar[progress.uio_id]['attendance'] = @topic.attendances.where(:course_type => progress.course_type).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
             else
-              @progress_bar[progress.course_code]['attendance'] = @topic.attendances.where(:enrol_course => progress.course_code).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
+              @progress_bar[progress.uio_id]['attendance'] = @topic.attendances.where(:enrol_course => progress.course_code).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
             end
-            @progress_bar[progress.course_code]['reviews'] = []
-            @progress_bar[progress.course_code]['gReviews'] = @topic.progress_reviews.where(:progress_id => progress.id).order("number ASC")
-            for i in 0..@progress_bar[progress.course_code]['gReviews'].count-1
-              key = @progress_bar[progress.course_code]['gReviews'][i].number
-              @progress_bar[progress.course_code]['reviews'][key] = @progress_bar[progress.course_code]['gReviews'][i]
+            @progress_bar[progress.uio_id]['initial'] = @topic.initial_reviews.where(:progress_id => progress.id).last
+            @progress_bar[progress.uio_id]['reviews'] = []
+            @progress_bar[progress.uio_id]['gReviews'] = @topic.progress_reviews.where(:progress_id => progress.id).order("number ASC")
+            for i in 0..@progress_bar[progress.uio_id]['gReviews'].count-1
+              key = @progress_bar[progress.uio_id]['gReviews'][i].number
+              @progress_bar[progress.uio_id]['reviews'][key] = @progress_bar[progress.uio_id]['gReviews'][i]
             end
           end
           #@progress += @topic.courses.where("person_courses.mis_status" => 'active')
