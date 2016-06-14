@@ -272,6 +272,9 @@ table.table td, table.table th {
   background-color: #d9edf7;
   border-right: 1px solid rgba(86,61,124,.2);
 }
+.clickable {
+  cursor: pointer;
+}
 .review-section:last-child {
   border: 0px;
 }
@@ -330,4 +333,15 @@ table.table td, table.table th {
 
 .target-grade h4 {
   font-weight: bold;
+}
+
+@media (min-width: 991px) and (max-width: 1200px) {
+  .target-grade > .grade {
+    display: none;
+  }
+
+  .target-grade > .target {
+    display: block !important
+  }
+
 }
