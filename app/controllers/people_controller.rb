@@ -48,6 +48,7 @@ class PeopleController < ApplicationController
               @progress_bar[progress.uio_id]['reviews'][key] = @progress_bar[progress.uio_id]['gReviews'][i]
             end
           end
+          #abort(@progress_bar.inspect)
           #@progress += @topic.courses.where("person_courses.mis_status" => 'active')
 =begin
           @tiles = @topic.events.where(:eventable_type => "Target",:transition => :overdue).

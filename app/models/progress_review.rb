@@ -17,16 +17,30 @@
 class ProgressReview < Eventable
   attr_accessible :attendance, :body, :completed_by, :created_at, :id, :level, :number, :progress_id, :working_at
 
-  belongs_to :progresses, :foreign_key => "progress_id"
+  belongs_to :progress, :foreign_key => "progress_id"
   before_save :set_values
 
   after_create do |line|
-    #line.events.create!(:event_date => created_at, :transition => :create, :person_id => person_id)
+    line.events.create!(:event_date => created_at, :transition => :create, :person_id => person_id)
   end
 
   def set_values
   	self.created_at ||= Time.now
   	self.created_by_id ||= Person.user.id
+  end
+
+  def status
+    begin
+      if self.level == 'purple'
+        return :outstanding
+      elsif self.level == 'green'
+        return :complete
+      elsif self.level == 'amber'
+        return :current
+      elsif self.level == 'red'
+        return :incomplete
+      end
+    end
   end
 
 end
