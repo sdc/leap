@@ -285,7 +285,7 @@ table.table td, table.table th {
   margin: 0;
   font-weight: bold;
 }
-#progress h5, h4, h6 {
+#progress h5, h4, h6, h2 {
   margin: 0;
 }
 .review-section h4 {
@@ -354,6 +354,28 @@ table.table td, table.table th {
   margin-bottom: 2px;
 }
 
+.attendance-tile {
+  color: #eee;
+  font-family: 'Patua One', serif;
+}
+
+.attendance-tile h5 {
+  display: none;
+}
+
+.attendance-tile h1 {
+  font-size: 23px;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 4px 0 8px 0;
+}
+
+.attendance-text {
+  padding: 5px;
+  color: #eee;
+  text-align: center;
+}
+
 @media (min-width: 991px) and (max-width: 1199px) {
   .target-grade > .grade {
     display: none;
@@ -370,5 +392,10 @@ table.table td, table.table th {
   .target-grade > h4 {
     font-size: 13px;
   }
+}
 
+@media (min-width: 768px) {
+  .tile-modal {
+    width: 400px;
+  }
 }

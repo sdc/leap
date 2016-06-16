@@ -9,6 +9,15 @@
             %h5.aspiration I want to be a <em>"Web Developer"</em>
       .col-md-12
         - @progress_bar.each do |key, a|
+          .modal.fade{:id => "modal_" + a["attendance"].id.to_s, "tabindex" => '-1', :role => 'dialog'}
+            .tile-modal.modal-dialog
+              .modal-content{:style => "background: ##{a['course'].bg}"}
+                .modal-body.row
+                  .attendance-tile.col-md-6.col-sm-6.col-xs-6
+                    = render :partial => "tiles/attendance", :locals => {:attendance => a["attendance"]}
+                  .attendance-text.md-6.col-sm-6.col-xs-6
+                    %h4{:style => 'margin-bottom: 5px'} Your attendance for #{a["course"].course_title} is
+                    %h2 #{a["attendance"].att_year}%
           .course-progress
             .row.row-eq-height
               - if a["initial"].present?
@@ -17,17 +26,17 @@
                 .col-md-3.col-xs-12.initial-review.top-section{:onClick => 'displayInitialView("' + a['initial'].target_grade.to_s + '" , "' + a['initial'].body.squish.to_s + '")'}
                   %h4 Initial
                   %h4 Review
-                  %h3 CORE
+                  %h3 #{a["course"].course_type.upcase}
                   .pull-left.pull-bottom.initial-author
                     %h6 #{a["course"].tutor.short_name.to_s}
               - else
                 .col-md-3.col-xs-12.initial-review.top-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial("' + a["course"].uio_id.to_s + '")' if @user.staff?)}
                   %h4 Initial
                   %h4 Review
-                  %h3 Pending
+                  %br
                   .pull-left.pull-bottom.initial-author
                     %h6 #{a["course"].tutor.short_name.to_s}            
-              .col-md-3.col-xs-12.top-section
+              .col-md-3.col-xs-12.top-section.clickable{:style => "background: ##{a['course'].bg}", "data-toggle" => 'modal', 'data-target' => "#modal_" + a["attendance"].id.to_s }
                 %h4 Attendance
                 %h3 #{a["course"].course_type.upcase}
                 %h3 #{a["attendance"].att_year}%
@@ -45,7 +54,7 @@
                     - else
                       .col-md-2.hidden-xs.col-sm-6.review-section{ :style => 'width: 20%; color: grey', :onClick => ('displayReview("'+ i.to_s + '", "' + a["course"].course_code + '", "'+ a["attendance"].att_year.to_s + '", "' + a["course"].uio_id.to_s + '")' if @user.staff?)}
                         %h5 Review
-                        %h4 Pending
+                        %br
                         %br
                         %h4.pull-bottom.pull-right #{i}
               .col-md-2
@@ -61,7 +70,7 @@
                     .col-md-12.target-grade{:style => 'color: grey', :onClick => ('displayInitial("' + a["course"].uio_id.to_s + '")' if @user.staff?)}
                       %h5.grade Target Grade
                       %h5.target{:style => 'display:none'} Target
-                      %h4 Pending
+                      %br
                       %br
                       %br
 
@@ -69,6 +78,9 @@
           .modal-dialog
             .modal-content
               .modal-header
+                %button{:type => 'button', :class => 'close', "data-dismiss" => 'modal', 'aria-label' => 'Close'}
+                  %span{"aria-hidden" => 'true'}
+                    &times;
                 %h3#review-title.modal-title Review 1 for CORE
               = create_event_form ProgressReview do |f|
                 = f.text_field :topic_id, :type => 'hidden', :readonly => true, :value => @topic.id, :disabled => (true unless @user.staff?)
@@ -105,6 +117,9 @@
         .modal-dialog
           .modal-content
             .modal-header
+              %button{:type => 'button', :class => 'close', "data-dismiss" => 'modal', 'aria-label' => 'Close'}
+                %span{"aria-hidden" => 'true'}
+                  &times;
               %h3.modal-title Initial Review
             = create_event_form InitialReview do |f|
               = f.text_field :topic_id, :type => 'hidden', :readonly => true, :value => @topic.id, :disabled => (true unless @user.staff?)
