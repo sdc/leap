@@ -1,7 +1,6 @@
 class CreateProgressReviews < ActiveRecord::Migration
   def change
     create_table :progress_reviews do |t|
-      t.primary_key :id
       t.integer :person_id, :limit => 11
       t.integer :progress_id, :limit => 26
       t.integer :number, :limit => 1
