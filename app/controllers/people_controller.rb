@@ -27,9 +27,8 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.html do
         @sidebar_links = parse_sidebar_links
-        if Settings.home_page == "new"
-          misc_dates = MISC::MiscDates.new
-
+        misc_dates = MISC::MiscDates.new
+        if Settings.home_page == "progress"
           @progresses = @topic.progresses
           @progress_bar = {}
           @progresses.each do |progress|
@@ -48,9 +47,7 @@ class PeopleController < ApplicationController
               @progress_bar[progress.uio_id]['reviews'][key] = @progress_bar[progress.uio_id]['gReviews'][i]
             end
           end
-          #abort(@progress_bar.inspect)
-          #@progress += @topic.courses.where("person_courses.mis_status" => 'active')
-=begin
+        elsif Settings.home_page == "new"
           @tiles = @topic.events.where(:eventable_type => "Target",:transition => :overdue).
                    where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)
           @tiles += @topic.events.where(:eventable_type => "Note").limit(8)
@@ -62,17 +59,17 @@ class PeopleController < ApplicationController
           tracks = ["core","maths","english"].map{|ct| @topic.mdl_grade_tracks.where(:course_type => ct).last}.reject{|x| x.nil?}
           @tiles.unshift(tracks.map{|x| x.to_tile})
           misc_dates = MISC::MiscDates.new
-          attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last}.reject{|x| x.nil? }
+          attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last}.reject{|x| x.nil?}
           attendances.select!{|x| x.course_type != "overall"} if attendances.length == 2
           @tiles.unshift(attendances.map{|x| x.to_tile})
-=end
-          @nextLesson = @topic.timetable_events(:next).first.to_tile if @topic.timetable_events(:next).any?
-=begin
+          @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
           for news_item in GlobalNews.where( :active => true, :from_time => [nil,DateTime.new(0)..DateTime.now], :to_time => [nil,DateTime.now..DateTime.new(9999)] ).order("id DESC") do
             @tiles.unshift(news_item.to_tile)
           end
           @tiles = @tiles.flatten.reject{|t| t.nil?} #.uniq{|t| t.object}
-=end
+        end
+        if Settings.home_page == "new" || Settings.home_page == "progress"
+          @nextLesson = @topic.timetable_events(:next).first.to_tile if @topic.timetable_events(:next).any? 
           @on_home_page = true
           render :action => "home"
         end
@@ -103,7 +100,7 @@ class PeopleController < ApplicationController
     @people  ||= []
     @courses ||= []
     @page_title = "Search for #{params[:q]}"
-    render Settings.home_page == "new" ? "cl_search" : "search"
+    render Settings.home_page == "new" || Settings.home_page == "progress" ? "cl_search" : "search"
   end
 
   def select
@@ -172,8 +169,8 @@ class PeopleController < ApplicationController
   def set_layout
     case action_name
     when /\_block$/ then false
-    when "show" then Settings.home_page == "new" ? "cloud" : "application"
-    when "search" then Settings.home_page == "new" ? "cloud" : "application"
+    when "show" then Settings.home_page == "new" || Settings.home_page == "progress" ? "cloud" : "application"
+    when "search" then Settings.home_page == "new" || Settings.home_page == "progress" ? "cloud" : "application"
     else "application"
     end
   end
