@@ -16,7 +16,7 @@
 
 class ReviewLine < Eventable
 
-  attr_accessible :body, :quality, :attitude, :punctuality, :completion, :window, :unit, :working_at, :review_id
+  attr_accessible :body, :quality, :attitude, :punctuality, :completion, :window, :unit, :review_id
 
   belongs_to :review
 
