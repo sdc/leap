@@ -12,4 +12,133 @@
         :javascript
           var topic = #{@topic.id.to_s};
         = javascript_include_tag 'cloud.min'
+- else
+  - grades = Settings.qqoe_grade.split ","
+  #home.row
+    #progress.panel.panel-default
+      .panel-body
+        .col-md-12
+          - @progress_bar.each do |key, a|
+            .course-progress
+              .row.row-eq-height
+                - if a["initial"].present?
+                  .col-md-2.initial-review.top-section{:onClick => 'displayInitial("' + a["course"].uio_id.to_s + '")'}
+                    %h4 Initial
+                    %h4 Review
+                    %h3 CORE
+                    .pull-left.pull-bottom.initial-author
+                      %h6 #{a["course"].tutor.short_name.to_s}
+                - else
+                  .col-md-2.initial-review.top-section{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial("' + a["course"].uio_id.to_s + '")' if @user.staff?)}
+                    %h4 Initial
+                    %h4 Review
+                    %h3 Pending
+                    .pull-left.pull-bottom.initial-author
+                      %h6 #{a["course"].tutor.short_name.to_s}            
+                .col-md-2.top-section
+                  %h4 Attendance
+                  %h3 #{a["course"].course_type.upcase}
+                  %h3 #{a["attendance"].att_year}%
+              .row
+                .col-md-10
+                  .row
+                    - (1..5).each do |i|
+                      - if (a["reviews"][i].present? && a["reviews"][i].number == i)
+                        .col-md-2.review-section{:style => 'width : 20%', :class => a["reviews"][i].level}
+                          %h5 Working at
+                          %h4 #{a["reviews"][i].working_at}
+                          %br
+                          %h4.pull-bottom.pull-right #{i}
+                      - else
+                        .col-md-2.review-section{ :style => 'width: 20%; color: grey', :onClick => ('displayReview("'+ i.to_s + '", "' + a["course"].course_code + '", "'+ a["attendance"].att_year.to_s + '", "' + a["course"].uio_id.to_s + '")' if @user.staff?)}
+                          %h5 Review
+                          %h4 Pending
+                          %br
+                          %h4.pull-bottom.pull-right #{i}
+                .col-md-2
+                  .row
+                    - if a['initial'].present?
+                      .col-md-12.target-grade{:style => 'background-color: #5cb85c'}
+                        %h5 Target Grade
+                        %h4 #{a['initial'].target_grade.to_s}
+                        %br
+                        %br
+                    - else 
+                      .col-md-12.target-grade{:style => 'color: grey'}
+                        %h5 Target Grade
+                        %h4 Pending
+                        %br
+                        %br
+
+              #review-modal.modal.fade
+                .modal-dialog
+                  .modal-content
+                    .modal-header
+                      %h3#review-title.modal-title Review 1 for CORE
+                    = create_event_form ProgressReview do |f|
+                      = f.text_field :topic_id, :type => 'hidden', :readonly => true, :value => @topic.id, :disabled => (true unless @user.staff?)
+                      = f.text_field :progress_id, :type => 'hidden', :readonly => true, :disabled => (true unless @user.staff?)
+                      .modal-body.row
+                        .form-group.col-md-12
+                          .form-group.row
+                            .col-md-3
+                              = f.label ('Review Number'), :for => :progress_review_number
+                              = f.text_field :number, :readonly => true, :class => 'form-control', :disabled => (true unless @user.staff?)
+                            .col-md-4
+                              = f.label ('Working at'), :for => :progress_review_working_at
+                              = f.select(:working_at, options_for_select(grades), {}, {:class => 'form-control', :disabled => (true unless @user.staff?), :required => true})
+                            .col-md-3
+                              = f.label ('Attendance'), :for => :attendance
+                              = f.text_field :attendance, :readonly => true, :class => 'form-control', :disabled => (true unless @user.staff?)
+                        .form-group.col-md-12
+                          = f.label ('Learner / Tutor Comments')
+                          = f.text_area :body, :style => "height:200px", :placeholder => "#{@topic.possessive_name('Your')} review comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
+                        .form-group.col-md-12
+                          .form-group.row
+                            .col-md-4
+                              %label Current Level
+                              %select{ :name => "progress_review[level]", :class => 'form-control level', :id => 'progress_review_level', :required => 'required', :disabled => (true unless @user.staff?)}
+                                %option{:value => '', :selected => true, :disabled => true}= "Choose"
+                                %option{:value => 'purple', :class => 'purple'}= "PURPLE"
+                                %option{:value => 'green', :class => 'green'}= "GREEN"
+                                %option{:value => 'amber', :class => 'amber'}= "AMBER"
+                                %option{:value => 'red', :class => 'red'}= "RED"
+                      .modal-footer
+                        = add_event_button if @user.staff?
+
+              #initial-modal.modal.fade
+                .modal-dialog
+                  .modal-content
+                    .modal-header
+                      %h3.modal-title Initial Review
+                    = create_event_form InitialReview do |f|
+                      = f.text_field :topic_id, :type => 'hidden', :readonly => true, :value => @topic.id, :disabled => (true unless @user.staff?)
+                      = f.text_field :progress_id, :type => 'hidden', :readonly => true, :disabled => (true unless @user.staff?)
+                      .modal-body.row
+                        .form-group.col-md-12
+                          .form-group.row
+                            .col-md-4
+                              = f.label ('Target Grade'), :for => :initial_review_target_grade
+                              = f.select(:target_grade, options_for_select(grades), {}, {:class => 'form-control', :disabled => (true unless @user.staff?), :required => true})
+                        .form-group.col-md-12
+                          = f.label ('Learner / Tutor Comments')
+                          = f.text_area :body, :style => "height:200px", :placeholder => "#{@topic.possessive_name('Your')} review comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
+                      .modal-footer
+                        = add_event_button if @user.staff?
+
+              :javascript
+                function displayReview(n, cc, att, uid) {
+                  $('#review-title').text('Review ' + n + ' for ' + cc);
+                  $('#progress_review_number').val(n);
+                  $('#progress_review_attendance').val(att + '%');
+                  $('#progress_review_course_code').val(cc);
+                  $('#progress_review_progress_id').val('#{@topic.id.to_s}' + uid)
+                  $('#review-modal').modal('show');
+                }
+                function displayInitial(uid) {
+                  $('#initial_review_progress_id').val('#{@topic.id.to_s}' + uid)
+                  $('#initial-modal').modal('show');
+                }
+
+
 

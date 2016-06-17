@@ -109,3 +109,6 @@ Settings.defaults[:ws_user] = ""
 Settings.defaults[:ws_token] = ""
 
 Settings.defaults[:ebs_username_field] = "network_userid"
+
+#PLP Overview
+Settings.defaults[:plp_overview] = "old"

@@ -27,8 +27,9 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.html do
         @sidebar_links = parse_sidebar_links
-        misc_dates = MISC::MiscDates.new
-        if Settings.home_page == "progress"
+        if Settings.home_page == "new"
+          misc_dates = MISC::MiscDates.new
+
           @progresses = @topic.progresses
           @progress_bar = {}
           @progresses.each do |progress|
@@ -47,7 +48,8 @@ class PeopleController < ApplicationController
               @progress_bar[progress.uio_id]['reviews'][key] = @progress_bar[progress.uio_id]['gReviews'][i]
             end
           end
-        elsif Settings.home_page == "new"
+          #@progress += @topic.courses.where("person_courses.mis_status" => 'active')
+=begin
           @tiles = @topic.events.where(:eventable_type => "Target",:transition => :overdue).
                    where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)
           @tiles += @topic.events.where(:eventable_type => "Note").limit(8)
@@ -62,14 +64,14 @@ class PeopleController < ApplicationController
           attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last}.reject{|x| x.nil? }
           attendances.select!{|x| x.course_type != "overall"} if attendances.length == 2
           @tiles.unshift(attendances.map{|x| x.to_tile})
-          @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
+=end
+          @nextLesson = @topic.timetable_events(:next).first.to_tile if @topic.timetable_events(:next).any?
+=begin
           for news_item in GlobalNews.where( :active => true, :from_time => [nil,DateTime.new(0)..DateTime.now], :to_time => [nil,DateTime.now..DateTime.new(9999)] ).order("id DESC") do
             @tiles.unshift(news_item.to_tile)
           end
           @tiles = @tiles.flatten.reject{|t| t.nil?} #.uniq{|t| t.object}
-        end
-        if Settings.home_page == "new" || Settings.home_page == "progress"
-          @nextLesson = @topic.timetable_events(:next).first.to_tile if @topic.timetable_events(:next).any? 
+=end
           @on_home_page = true
           render :action => "home"
         end
