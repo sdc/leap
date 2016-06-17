@@ -5,7 +5,11 @@
 @incomplete  : #fdd;
 @unknown     : #eee;
 @not_started : #ddf;
+<<<<<<< HEAD
 @outstanding : #b298cd;
+=======
+@exceed		 : #dcf;
+>>>>>>> 5440a44... Added in additional exceed (purple) colour
 
 @fg_darken : 60%;
 @bd_darken : 60%;
@@ -17,7 +21,11 @@ h3.overdue,.overdue        {background-color: @overdue    }
 h3.incomplete,.incomplete  {background-color: @incomplete }
 h3.unknown,.unknown        {background-color: @unknown    }
 h3.not_started,.not_started{background-color: @not_started}
+<<<<<<< HEAD
 h3.outstanding,.outstanding{background-color: @outstanding}
+=======
+h3.exceed,.exceed          {background-color: @exceed    }
+>>>>>>> 5440a44... Added in additional exceed (purple) colour
 
 .status-fg.current     {color: darken(@current,     @fg_darken)}
 .status-fg.start       {color: darken(@start,       @fg_darken)}
@@ -26,6 +34,7 @@ h3.outstanding,.outstanding{background-color: @outstanding}
 .status-fg.incomplete  {color: darken(@incomplete,  @fg_darken)}
 .status-fg.unknown     {color: darken(@unknown,     @fg_darken)}
 .status-fg.not_started {color: darken(@not_started, @fg_darken)}
+.status-fg.exceed      {color: darken(@exceed,      @fg_darken)}
 
 .status-fgp.current     {color: darken(@current,     (@fg_darken/2))}
 .status-fgp.start       {color: darken(@start,       (@fg_darken/2))}
@@ -34,6 +43,7 @@ h3.outstanding,.outstanding{background-color: @outstanding}
 .status-fgp.incomplete  {color: darken(@incomplete,  (@fg_darken/2))}
 .status-fgp.unknown     {color: darken(@unknown,     (@fg_darken/2))}
 .status-fgp.not_started {color: darken(@not_started, (@fg_darken/2))}
+.status-fgp.exceed      {color: darken(@exceed,      (@fg_darken/2))}
 
 .status-bd.current     {border-color: darken(@current,     @bd_darken)}
 .status-bd.start       {border-color: darken(@start,       @bd_darken)}
@@ -42,7 +52,11 @@ h3.outstanding,.outstanding{background-color: @outstanding}
 .status-bd.incomplete  {border-color: darken(@incomplete,  @bd_darken)}
 .status-bd.unknown     {border-color: darken(@unknown,     @bd_darken)}
 .status-bd.not_started {border-color: darken(@not_started, @bd_darken)}
+<<<<<<< HEAD
 .status-bd.outstanding {border-color: darken(@outstanding, @bd_darken)}
+=======
+.status-bd.exceed      {border-color: darken(@exceed,      @bd_darken)}
+>>>>>>> 5440a44... Added in additional exceed (purple) colour
 
 //span.label.unknown    {.label-inverse;}
 //span.label.current    {.label-warning;}
@@ -51,3 +65,4 @@ h3.outstanding,.outstanding{background-color: @outstanding}
 //span.label.overdue    {.label-important;}
 //span.label.incomplete {.label-important;}
 //span.label.not_started{.label-info;}
+//span.label.exceed     {.label-important;}
