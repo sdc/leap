@@ -2,7 +2,7 @@
   - @progress_bar.each do |key, a|
     .modal.fade{:id => "modal_" + a["attendance"].id.to_s, "tabindex" => '-1', :role => 'dialog'}
       .tile-modal.modal-dialog
-        .modal-content{:style => "background: ##{a['course'].bg}"}
+        .modal-content{:style => "background: ##{a['attendance'].bg}"}
           .modal-body.row
             .attendance-tile.col-md-6.col-sm-6.col-xs-6
               = render :partial => "tiles/attendance", :locals => {:attendance => a["attendance"]}
@@ -27,7 +27,7 @@
             %br
             .pull-left.pull-bottom.initial-author
               %h6 #{a["course"].tutor.short_name.to_s}            
-        .col-md-3.col-xs-12.top-section.clickable{:style => "background: ##{a['course'].bg}", "data-toggle" => 'modal', 'data-target' => "#modal_" + a["attendance"].id.to_s }
+        .col-md-3.col-xs-12.top-section.clickable{:style => "background: ##{a['attendance'].bg}", "data-toggle" => 'modal', 'data-target' => "#modal_" + a["attendance"].id.to_s }
           %h4 Attendance
           %h3 #{a["course"].course_type.upcase}
           %h3 #{a["attendance"].att_year}%
