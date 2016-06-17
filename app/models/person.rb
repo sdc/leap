@@ -50,6 +50,10 @@ class Person < ActiveRecord::Base
   has_many :mdl_grade_tracks
   has_many :mdl_badges
   has_many :work_packages
+  has_many :progresses
+  has_many :progress_reviews
+  has_many :initial_reviews
+
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
   serialize :middle_names
@@ -102,6 +106,9 @@ class Person < ActiveRecord::Base
     names.join " "
   end
 
+  def short_name
+    forename[0,1]+' '+surname
+  end
 
   def self.user
     Thread.current[:user]

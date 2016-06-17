@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 
+  progress_id: MyString
+  number: 1
+  body: MyString
+  working_at: MyString
+  level: MyString
+  attendance: 1
+  completed_by: MyString
+  completed_date: 2016-05-31
+
+two:
+  id: 
+  progress_id: MyString
+  number: 1
+  body: MyString
+  working_at: MyString
+  level: MyString
+  attendance: 1
+  completed_by: MyString
+  completed_date: 2016-05-31

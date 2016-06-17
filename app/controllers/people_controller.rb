@@ -28,6 +28,28 @@ class PeopleController < ApplicationController
       format.html do
         @sidebar_links = parse_sidebar_links
         if Settings.home_page == "new"
+          misc_dates = MISC::MiscDates.new
+
+          @progresses = @topic.progresses
+          @progress_bar = {}
+          @progresses.each do |progress|
+            @progress_bar[progress.uio_id] = {}
+            @progress_bar[progress.uio_id]['course'] = progress
+            if ["core", "english", "maths"].include? progress.course_type
+              @progress_bar[progress.uio_id]['attendance'] = @topic.attendances.where(:course_type => progress.course_type).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
+            else
+              @progress_bar[progress.uio_id]['attendance'] = @topic.attendances.where(:enrol_course => progress.course_code).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
+            end
+            @progress_bar[progress.uio_id]['initial'] = @topic.initial_reviews.where(:progress_id => progress.id).last
+            @progress_bar[progress.uio_id]['reviews'] = []
+            @progress_bar[progress.uio_id]['gReviews'] = @topic.progress_reviews.where(:progress_id => progress.id).order("number ASC")
+            for i in 0..@progress_bar[progress.uio_id]['gReviews'].count-1
+              key = @progress_bar[progress.uio_id]['gReviews'][i].number
+              @progress_bar[progress.uio_id]['reviews'][key] = @progress_bar[progress.uio_id]['gReviews'][i]
+            end
+          end
+          #@progress += @topic.courses.where("person_courses.mis_status" => 'active')
+=begin
           @tiles = @topic.events.where(:eventable_type => "Target",:transition => :overdue).
                    where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)
           @tiles += @topic.events.where(:eventable_type => "Note").limit(8)
@@ -36,26 +58,20 @@ class PeopleController < ApplicationController
           @tiles.unshift(SimplePoll.where(:id => Settings.current_simple_poll).first.to_tile) unless Settings.current_simple_poll.blank?
           ppdc = Settings.moodle_badge_block_courses.try(:split,",")
           @tiles.unshift(@topic.mdl_badges.where(:mdl_course_id => ppdc).last.to_course_tile) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
-          #tracks = @topic.mdl_grade_tracks #.group(:course_type).having('created_at = MAX(created_at)')
-          #@tiles.unshift(["english","maths","core"].reject{|ct| tracks.detect{|t| t.course_type == ct}}.first([3 - tracks.count,0].max).map do |ct|
-          #  @topic.mdl_grade_tracks.where(:course_type => ct).last.try(:to_tile) or
-          #  MdlGradeTrack.new(:course_type => ct).to_tile
-          #end)
           tracks = ["core","maths","english"].map{|ct| @topic.mdl_grade_tracks.where(:course_type => ct).last}.reject{|x| x.nil?}
           @tiles.unshift(tracks.map{|x| x.to_tile})
           misc_dates = MISC::MiscDates.new
           attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last}.reject{|x| x.nil? }
           attendances.select!{|x| x.course_type != "overall"} if attendances.length == 2
           @tiles.unshift(attendances.map{|x| x.to_tile})
-          #if @topic.attendances.where(:course_type => "overall").any?
-          #  @tiles.unshift(@topic.attendances.where(:course_type => "overall").last.events.first.try :to_tile)
-          #end
-          @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
-          # @tiles.unshift(GlobalNews.last.to_tile) if GlobalNews.any?
+=end
+          @nextLesson = @topic.timetable_events(:next).first.to_tile if @topic.timetable_events(:next).any?
+=begin
           for news_item in GlobalNews.where( :active => true, :from_time => [nil,DateTime.new(0)..DateTime.now], :to_time => [nil,DateTime.now..DateTime.new(9999)] ).order("id DESC") do
             @tiles.unshift(news_item.to_tile)
           end
           @tiles = @tiles.flatten.reject{|t| t.nil?} #.uniq{|t| t.object}
+=end
           @on_home_page = true
           render :action => "home"
         end

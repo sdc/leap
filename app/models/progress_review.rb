@@ -14,36 +14,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class ReviewLine < Eventable
+class ProgressReview < Eventable
+  attr_accessible :attendance, :body, :completed_by, :created_at, :id, :level, :number, :progress_id, :working_at
 
-  attr_accessible :body, :quality, :attitude, :punctuality, :completion, :window, :unit, :working_at, :review_id
-
-  belongs_to :review
+  belongs_to :progresses, :foreign_key => "progress_id"
+  before_save :set_values
 
   after_create do |line|
-    line.review = Review.find_or_create_by_person_id_and_window(person_id, window) unless window.blank?
-    line.save
-    line.events.create!(:event_date => created_at, :transition => window.blank? ? :start : :create, :parent_id => review && review.events.creation.first.id)
+    #line.events.create!(:event_date => created_at, :transition => :create, :person_id => person_id)
   end
 
-  def title
-    window or "Individual Review"
-  end
-
-  def extra_panes
-    [["Edit","events/tabs/review_line"]] if Person.user.staff? and status.to_s == "current"
-  end
-
-  def status
-    review ? review.status : :complete
-  end
-
-  def staff_only?
-    review ? review.staff_only? : false
-  end
-
-  def tile_icon
-    "fa-file-text"
+  def set_values
+  	self.created_at ||= Time.now
+  	self.created_by_id ||= Person.user.id
   end
 
 end
