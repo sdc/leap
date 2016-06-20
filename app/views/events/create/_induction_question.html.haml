@@ -1,0 +1,7 @@
+%h2 Induction Checklist
+= create_event_form InductionQuestion do |f|
+  .span1= image_tag "events/induction_questions.png"
+  .span8
+    = f.select :question, Settings.induction_questions.split(";"), {}, {:style => "width:100%"}
+    = f.text_area :answer
+  = add_event_button
