@@ -1,0 +1,7 @@
+%h2 Your Aspiration
+= create_event_form Aspiration do |f|
+  .span1= image_tag "events/aspirations.png"
+  .span7
+    %h4 I want to be a
+    = f.text_field :aspiration
+  = add_event_button

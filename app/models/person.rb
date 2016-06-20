@@ -53,6 +53,8 @@ class Person < ActiveRecord::Base
   has_many :progresses
   has_many :progress_reviews
   has_many :initial_reviews
+  has_many :aspirations
+  has_many :induction_questions
 
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
