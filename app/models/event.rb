@@ -89,7 +89,7 @@ class Event < ActiveRecord::Base
       end
     end
   end
-  
+
   def first_in_past?; first_in_past; end
 
   def to_xml(options = {}, &block)
