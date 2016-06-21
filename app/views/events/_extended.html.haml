@@ -3,8 +3,9 @@
     - event.extra_panes.each do |pane|
       %li
         %a{:href => "##{dom_id event}-#{pane.first.tr(" ","-")}", "data-toggle" => "tab"}= pane.first
-  %li
-    %a{:href => "##{dom_id event}-new-target", "data-toggle" => "tab"} New Target
+  - if event.include_target?
+    %li
+      %a{:href => "##{dom_id event}-new-target", "data-toggle" => "tab"} New Target
   - if Settings.event_notes == "students" or (Settings.event_notes == "staff" and @user.staff?)
     %li
       %a{:href => "##{dom_id event}-new-event-note", "data-toggle" => "tab"} Add Note
@@ -22,8 +23,9 @@
           .alert.alert-error.block
             %b Missing Tab!
             Please notify your administrator...
-  .tab-pane{:id => "#{dom_id event}-new-target"}
-    .row= render :partial => "targets/new", :locals => {:event => event}
+  - if event.include_target?
+    .tab-pane{:id => "#{dom_id event}-new-target"}
+      .row= render :partial => "targets/new", :locals => {:event => event}
   - if Settings.event_notes == "students" or (Settings.event_notes == "staff" and @user.staff?)
     .tab-pane{:id => "#{dom_id event}-new-event-note"}
       .row

@@ -90,12 +90,8 @@ dl {
   .person-photo {
     .square(130px);
     .box-shadow(0px 10px 5px -5px @borderColour);
-    .border-radius(@borderRadius);
     margin-bottom: 10px;
     border: 1px solid @borderColour;
-    img {
-      .border-radius(@borderRadius);
-    }
   }
   li {
     list-style-type: none;
@@ -154,8 +150,7 @@ dl {
 
 .event {
   padding: 9px;
-  border: 2px @borderColour solid;
-  .border-radius(@borderRadius);
+  border: 1px @borderColour solid;
   margin-bottom: 10px;
   ul.header {
     .clearfix();

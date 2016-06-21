@@ -3,6 +3,7 @@
     #aspiration-content.col-md-6.col-md-offset-3
       %h4.aspiration-title My Aspiration
       - if @aspiration.present?
-        %h5.aspiration= raw "I want to be a &#34;#{@aspiration.to_s}&#34;"
+        %h5.aspiration= raw "I want to be a #{@aspiration.to_s}"
       - else
-        %h5.aspiration Speak to your tutor about updating your aspiration
+        %h6 Speak to your tutor about updating your aspiration
+  %hr{:style => "margin-top: 5px"}

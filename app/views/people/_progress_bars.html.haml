@@ -51,7 +51,7 @@
         .col-md-2
           .row
             - if a['initial'].present?
-              .col-md-12.target-grade{:style => 'background-color: #5cb85c', :onClick => 'displayInitialView("' + a['initial'].target_grade.to_s + '" , "' + a['initial'].body.squish.to_s + '")'}
+              .col-md-12.target-grade{:style => 'background-color: #6a6', :onClick => 'displayInitialView("' + a['initial'].target_grade.to_s + '" , "' + a['initial'].body.squish.to_s + '")'}
                 %h5.grade Target Grade
                 %h5.target{:style => 'display:none'} Target
                 %h4 #{a['initial'].target_grade.to_s}

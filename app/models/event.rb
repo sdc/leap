@@ -152,4 +152,12 @@ class Event < ActiveRecord::Base
     "info"
   end
 
+  def include_target?
+    if eventable_type == 'Intervention' || eventable_type == 'SupportHistory'
+      return true
+    end
+
+    return false
+  end
+
 end
