@@ -89,7 +89,7 @@ class Event < ActiveRecord::Base
       end
     end
   end
-
+  
   def first_in_past?; first_in_past; end
 
   def to_xml(options = {}, &block)
@@ -150,6 +150,14 @@ class Event < ActiveRecord::Base
 
   def cl_status
     "info"
+  end
+
+  def include_target?
+    if eventable_type == 'Intervention' || eventable_type == 'SupportHistory'
+      return true
+    end
+
+    return false
   end
 
 end

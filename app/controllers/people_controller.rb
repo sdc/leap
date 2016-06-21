@@ -45,6 +45,7 @@ class PeopleController < ApplicationController
             for i in 0..@progress_bar[progress.uio_id]['gReviews'].count-1
               key = @progress_bar[progress.uio_id]['gReviews'][i].number
               @progress_bar[progress.uio_id]['reviews'][key] = @progress_bar[progress.uio_id]['gReviews'][i]
+              #%i{:class => 'fa fa-bars fa-2x pull-left', :style => 'color: #4f2170'}
             end
           end
           ppdc = Settings.moodle_badge_block_courses.try(:split,",")
