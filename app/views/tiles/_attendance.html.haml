@@ -4,9 +4,8 @@
     %div{:style => "border-left:1px solid #000;border-bottom:1px solid #000;margin:8px;padding-left:5px;"}
       %span{:id => "attendance_data_#{attendance.id}"}
         = attendance.siblings_same_year(attendance.course_type).map(&:att_year).join(",")
-  %h5= "#{attendance.att_week}% attendance this week"
   %h5= "#{attendance.att_week || 0}% attendance this week"
-  %h6= attendance.siblings_same_year(attendance.course_type).map(&:week_beginning).join(",")
+  -# %h6= attendance.siblings_same_year(attendance.course_type).map(&:week_beginning).join(",")
 :coffeescript
   $('#attendance_data_#{attendance.id}').peity 'bar',
     width: "100%"

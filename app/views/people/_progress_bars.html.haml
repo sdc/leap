@@ -37,7 +37,7 @@
             - (1..5).each do |i|
               - if (a["reviews"][i].present? && a["reviews"][i].number == i)
                 - a["reviews"][i].body = 'No comments' if a["reviews"][i].body.empty?
-                .col-md-2.hidden-xs.col-sm-6.review-section{:style => 'width : 20%', :class => a["reviews"][i].level, :onClick => 'displayReviewView("' + a["reviews"][i].number.to_s + '","' + a["reviews"][i].working_at.to_s + '","' + a["reviews"][i].attendance.to_s + '","' + a["reviews"][i].body.squish.to_s + '")'}
+                .col-md-2.hidden-xs.col-sm-6.review-section{:style => 'width : 20%', :class => "ragp_#{a['reviews'][i].level}", :onClick => 'displayReviewView("' + a["reviews"][i].number.to_s + '","' + a["reviews"][i].working_at.to_s + '","' + a["reviews"][i].attendance.to_s + '","' + a["reviews"][i].body.squish.to_s + '")'}
                   %h5 Working at
                   %h4 #{a["reviews"][i].working_at}
                   %br
