@@ -5,11 +5,14 @@
   #home.row
     #progress.panel.panel-default
       .panel-body
-        #aspiration= render :partial => "people/aspiration"
+        .col-md-12
+          .row
+            #aspiration= render :partial => "people/aspiration"
+            #notifications=render :partial => "people/notifications" if @notifications.present?
+          %hr{:style => "margin-top: 5px"}
         #progress-bars= render :partial => "people/progress_bars"
         #dynamic-reviews= render :partial => "people/review_modal", :locals => { :grades => grades }
         #dynamic-initials= render :partial => "people/initial_modal", :locals => { :grades => grades }
         :javascript
           var topic = #{@topic.id.to_s};
         = javascript_include_tag 'cloud.min'
-

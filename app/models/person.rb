@@ -55,6 +55,7 @@ class Person < ActiveRecord::Base
   has_many :initial_reviews
   has_many :aspirations
   has_many :induction_questions
+  has_many :notifications
 
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   

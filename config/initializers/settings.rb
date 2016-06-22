@@ -29,6 +29,7 @@ Settings.defaults[:profile_questions]            = "My favourite subject at scho
 Settings.defaults[:application_offer_text] = "You have a guaranteed offer of a place on a course at college (in accordance with the college's admissions policy). To guarantee your place on your course of choice you will need to meet the entry requirements as per the prospectus."
 Settings.defaults[:application_title_field] = ""
 Settings.defaults[:current_simple_poll] = ""
+Settings.defaults[:notified_events] = "ContactLog;Intervention;SupportPlan;ProgressReview;InitialReview"
 
 # BKSB Import Settings
 Settings.defaults[:bksb_url] = ""
