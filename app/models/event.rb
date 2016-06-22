@@ -42,6 +42,7 @@ class Event < ActiveRecord::Base
   has_many :children, :class_name => "Event", :foreign_key => "parent_id", :dependent => :nullify
   belongs_to :parent, :class_name => "Event", :foreign_key => "parent_id"
   has_many :targets, :dependent => :nullify
+  has_many :notifications
 
   TRANSITIONS = [:create,:to_start,:start,:overdue,:complete,:drop,:hidden]
 
@@ -54,11 +55,14 @@ class Event < ActiveRecord::Base
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id) unless person_id}
   before_create do |event| 
-    if Settings.notified_events.split(";").include? event.eventable_type
-      event.read = 0
-    end 
     event.event_date = event.eventable.created_at unless event_date
     event.created_by_id = Person.user ? Person.user.id : nil unless event.created_by_id
+  end
+
+  after_create do |line|
+    if Settings.notified_events.split(";").include? eventable_type
+      line.notifications.create!(:person_id => person_id, :event_id => id)
+    end
   end
 
   delegate :body,  :to => :eventable

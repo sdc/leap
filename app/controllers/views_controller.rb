@@ -38,9 +38,12 @@ class ViewsController < ApplicationController
           where(:transition => @view.transitions, :eventable_type => @view.events).
           limit(request.format=="pdf" ? 20000 : 20)
       end
-      @notifications = @events.where(:read => false)
-      if !@notifications.empty? && @topic.id == @user.id
-        @notifications.update_all read: true
+      @notifiedEvents = @events.joins(:notifications).where(:notifications => {:notified => false, :person_id => @user.id})
+      @notifiedEvents.each do |notifiedEvent|
+        notifiedEvent.notifications.each do |notification|
+          notification.notified = true
+          notification.save
+        end
       end
       @events = @events.select{|e| e.status.to_s == params[:status]} if params[:status]
       @events = @events.select{|e| e.title.to_s == params[:title]} if params[:title]
