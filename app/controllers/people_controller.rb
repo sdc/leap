@@ -29,6 +29,7 @@ class PeopleController < ApplicationController
         @sidebar_links = parse_sidebar_links
         misc_dates = MISC::MiscDates.new
         if Settings.home_page == "progress" && !@topic.staff?
+          ## TODO - Remove this. Currently @progress_bar array is required in order to map attendance. Need a better way of doing this.
           @progresses = @topic.progresses
           @progress_bar = {}
           @progresses.each do |progress|
@@ -39,12 +40,12 @@ class PeopleController < ApplicationController
             else
               @progress_bar[progress.uio_id]['attendance'] = @topic.attendances.where(:enrol_course => progress.course_code).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
             end
-            @progress_bar[progress.uio_id]['initial'] = @topic.initial_reviews.where(:progress_id => progress.id).last
+            @progress_bar[progress.uio_id]['initial'] = progress.initial_reviews.last
             @progress_bar[progress.uio_id]['reviews'] = []
-            @progress_bar[progress.uio_id]['gReviews'] = @topic.progress_reviews.where(:progress_id => progress.id).order("number ASC")
-            for i in 0..@progress_bar[progress.uio_id]['gReviews'].count-1
-              key = @progress_bar[progress.uio_id]['gReviews'][i].number
-              @progress_bar[progress.uio_id]['reviews'][key] = @progress_bar[progress.uio_id]['gReviews'][i]
+            @reviews = progress.progress_reviews.order("number ASC")
+            @reviews.each do |review|
+              key = review.number
+              @progress_bar[progress.uio_id]['reviews'][key] = review
             end
           end
           ppdc = Settings.moodle_badge_block_courses.try(:split,",")
