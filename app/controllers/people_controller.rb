@@ -28,7 +28,7 @@ class PeopleController < ApplicationController
       format.html do
         @sidebar_links = parse_sidebar_links
         misc_dates = MISC::MiscDates.new
-        if Settings.home_page == "progress"
+        if Settings.home_page == "progress" && !@topic.staff?
           @progresses = @topic.progresses
           @progress_bar = {}
           @progresses.each do |progress|
@@ -51,7 +51,7 @@ class PeopleController < ApplicationController
           @badges = @topic.mdl_badges.where(:mdl_course_id => ppdc) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
           @aspiration = @topic.aspirations.last.aspiration if @topic.aspirations.present?
           @notifications = @topic.notifications.where(:notified => false)
-        elsif Settings.home_page == "new"
+        else
           @tiles = @topic.events.where(:eventable_type => "Target",:transition => :overdue).
                    where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)
           @tiles += @topic.events.where(:eventable_type => "Note").limit(8)

@@ -1,6 +1,4 @@
-- if Settings.home_page == "new"
-  #home.row= render @tiles
-- elsif Settings.home_page == "progress"
+- if Settings.home_page == "progress" && !@topic.staff?
   - grades = Settings.qqoe_grade.split ","
   #home.row
     #progress.panel.panel-default
@@ -16,3 +14,5 @@
         :javascript
           var topic = #{@topic.id.to_s};
         = javascript_include_tag 'cloud.min'
+- else
+  #home.row= render @tiles
