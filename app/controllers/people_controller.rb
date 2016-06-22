@@ -50,6 +50,7 @@ class PeopleController < ApplicationController
           ppdc = Settings.moodle_badge_block_courses.try(:split,",")
           @badges = @topic.mdl_badges.where(:mdl_course_id => ppdc) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
           @aspiration = @topic.aspirations.last.aspiration if @topic.aspirations.present?
+          @notifications = @topic.events.where(:read => false)
         elsif Settings.home_page == "new"
           @tiles = @topic.events.where(:eventable_type => "Target",:transition => :overdue).
                    where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)

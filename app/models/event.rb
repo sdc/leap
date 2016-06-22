@@ -54,6 +54,9 @@ class Event < ActiveRecord::Base
 
   before_validation {|event| update_attribute("person_id", event.eventable.person_id) unless person_id}
   before_create do |event| 
+    if Settings.notified_events.split(";").include? event.eventable_type
+      event.read = 0
+    end 
     event.event_date = event.eventable.created_at unless event_date
     event.created_by_id = Person.user ? Person.user.id : nil unless event.created_by_id
   end

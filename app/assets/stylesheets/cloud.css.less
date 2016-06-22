@@ -278,8 +278,13 @@ table.table td, table.table th {
   margin: 0;
   font-weight: bold;
 }
-#progress h5, h4, h6, h2 {
+#progress-bars h5, h4, h6, h2 {
   margin: 0;
+}
+
+#notifications h1 {
+  margin: 0;
+  color: red;
 }
 .review-section h4 {
   font-weight: bold;
@@ -377,6 +382,10 @@ table.table td, table.table th {
   padding: 0px;
 }
 
+#notifications {
+  margin-top: 10px;  
+}
+
 @media (min-width: 991px) and (max-width: 1199px) {
   .target-grade > .grade {
     display: none;
@@ -394,7 +403,11 @@ table.table td, table.table th {
     font-size: 13px;
   }
 }
-
+@media (min-width: 200px) and (max-width: 1199px) {
+  .aspiration {
+    font-size: 20px;
+  }
+}
 @media (min-width: 768px) {
   .tile-modal {
     width: 400px;
