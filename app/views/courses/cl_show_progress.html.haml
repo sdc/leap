@@ -24,22 +24,21 @@
       %thead
         %tr
           %th{:colspan => 2}
-          %th.bl Core
-          %th.core_hide.visible-lg{:colspan => 2}
+          %th.bl{:colspan => 2}Core
+          %th.core_hide.visible-lg{:colspan => 1}
           %th.text-right
             %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".core_hide"}
               %i.fa.fa-eye
-          %th.bl English
+          %th.bl{:colspan => 2}English
           %th.visible-lg.english_hide{:colspan => 2}
           %th.text-right
             %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".english_hide"}
               %i.fa.fa-eye
-          %th.bl Maths
+          %th.bl{:colspan => 2}Maths
           %th.visible-lg.maths_hide{:colspan => 2}
           %th.text-right
             %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".maths_hide"}
               %i.fa.fa-eye
-          %th.bl{:colspan => 2}
         %tr
           %th.text-right Name
           %th Att
@@ -48,8 +47,8 @@
             %th.visible-lg{:class => "#{ct}_hide"} Previous<br>Progress
             %th.visible-lg{:class => "#{ct}_hide"} Current<br>Progress
             %th TG
-          %th.bl{:title => @window || "No open review window"} Rev
-          %th{:title => "Positive Intervention"} PI
+            - if ["english","maths"].include? ct
+              %th.visible-lg{:class => "#{ct}_hide"} Reg
       %tbody
         - @person_courses.each do |pc|
           %tr{"data-mis-status" => pc.mis_status.downcase}
@@ -68,26 +67,28 @@
                 %td.bl.text-center.danger{:title => "Target Grade"}
 
               - found_reviews = []
-              - (5).downto(1).each { |x| found_reviews.push pc.person.progress_reviews.joins(:progress).where("progresses.id = progress_reviews.progress_id and progresses.course_year='16/17' and course_code = ?",ct).order("number desc, created_at desc, id desc").where(:number => x).first }
+              - (5).downto(1).each { |x| found_reviews.push pc.person.progress_reviews.joins(:progress).where("progresses.id = progress_reviews.progress_id and progresses.course_year=? and course_code = ?",@topic.year,ct).order("number desc, created_at desc, id desc").where(:number => x).first }
               - found_reviews.compact!
               - (1..5).each { found_reviews.push nil }
               - found_reviews[0..1].reverse.each do |g|
                 - unless g.nil?
                   %td.visible-lg{:class => "ragp_light_#{g.level}", :title => "Review #{g.number} (#{g.created_at})"}= g.working_at
                 - else
-                  %td.text-muted.visible-lg.danger.text-center{:class => ["#{ct}_hide","ragp_light_grey"], :title => "No Review"}
-                    %i.fa.fa-frown-o
+                  %td.text-muted.visible-lg.text-center{:class => ["ragp_light_grey"], :title => "No Review"}
 
-              %td.bl.text-center.danger{:title => "Target Grade"}
+              - tg = pc.person.initial_reviews.joins(:progress).where("progresses.id = initial_reviews.progress_id and progresses.course_year=? and course_code = ?",@topic.year,ct).order("created_at desc, id desc").first
+              - unless tg.nil?
+                %td.bl.text-center.success{:title => "Target Grade"}= tg.target_grade 
+              - else
+                %td.bl.text-center.success{:title => "No Target"}
 
-            %td
-              - ints = pc.person.events.where(:eventable_type => "Intervention",:transition => :create).this_year.count
-              - if ints != 0
-                = link_to(person_view_url(pc.person,"intervention")) do
-                  .label.label-danger= ints
+              - if ["english","maths"].include? ct
+                %td.bl.text-center.success{:title => "Register Marks"}
+              -# pc.person.timetable_events(:from => @date, :to => @end_date).select {|r| r.title = 'GCSE Maths' and r.timetable_start <= Time.now}.last(3).map {|r| r.mark}.to_s
+
       %tfoot
         %tr
-          %td{:colspan => 15} 
+          %td{:colspan => 16} 
           %td.text-center
             - if @rpub 
               = link_to course_view_url(@topic,View.for_user.find_by_name("reviews"), :status => "complete", :title => @window, :format => "pdf"), :class => "btn btn-default btn-xs", :title => "Print all published reviews" do
