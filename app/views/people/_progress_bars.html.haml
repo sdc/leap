@@ -1,49 +1,56 @@
 .col-md-12
   - @progress_bar.each do |key, a|
-    .modal.fade{:id => "modal_" + a["attendance"].id.to_s, "tabindex" => '-1', :role => 'dialog'}
-      .tile-modal.modal-dialog
-        .modal-content{:style => "background: ##{a['course'].bg}"}
-          .modal-body.row
-            .attendance-tile.col-md-6.col-sm-6.col-xs-6
-              = render :partial => "tiles/attendance", :locals => {:attendance => a["attendance"]}
-            .attendance-text.md-6.col-sm-6.col-xs-6
-              %h4{:style => 'margin-bottom: 5px'} Your attendance for #{a["course"].course_title} is
-              %h2 #{a["attendance"].att_year}%
+    - if !a["attendance"].nil?
+      .modal.fade{:id => "modal_" + a["attendance"].id.to_s, "tabindex" => '-1', :role => 'dialog'}
+        .tile-modal.modal-dialog
+          .modal-content{:style => "background: ##{a['attendance'].bg}"}
+            .modal-body.row
+              .attendance-tile.col-md-6.col-sm-6.col-xs-6
+                = render :partial => "tiles/attendance", :locals => {:attendance => a["attendance"]}
+              .attendance-text.md-6.col-sm-6.col-xs-6
+                %h4{:style => 'margin-bottom: 5px'} Your attendance for #{a["course"].course_title} is
+                %h2 #{a["attendance"].att_year}%
     .course-progress
       .row.row-eq-height
         - if a["initial"].present?
           - a['initial'].body = 'No comments' if a['initial'].body.empty?
           - initialBody = a['initial'].body.to_s
-          .col-md-3.col-xs-12.initial-review.top-section{:onClick => 'displayInitialView("' + a['initial'].target_grade.to_s + '" , "' + a['initial'].body.squish.to_s + '")'}
+          .col-md-6.col-xs-12.initial-review.present.top-section{:onClick => 'displayInitialView("' + a['initial'].target_grade.to_s + '" , "' + a['initial'].body.squish.to_s + '")'}
             %h4 Initial
             %h4 Review
             %h3 #{a["course"].course_type.upcase}
             .pull-left.pull-bottom.initial-author
               %h6 #{a["course"].tutor.short_name.to_s}
         - else
-          .col-md-3.col-xs-12.initial-review.top-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial("' + a["course"].uio_id.to_s + '")' if @user.staff?)}
+          .col-md-6.col-xs-12.initial-review.top-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial("' + a["course"].id.to_s + '")' if @user.staff?)}
             %h4 Initial
             %h4 Review
             %br
             .pull-left.pull-bottom.initial-author
-              %h6 #{a["course"].tutor.short_name.to_s}            
-        .col-md-3.col-xs-12.top-section.clickable{:style => "background: ##{a['course'].bg}", "data-toggle" => 'modal', 'data-target' => "#modal_" + a["attendance"].id.to_s }
-          %h4 Attendance
-          %h3 #{a["course"].course_type.upcase}
-          %h3 #{a["attendance"].att_year}%
+              %h6 #{a["course"].tutor.short_name.to_s}
+        - if !a["attendance"].nil?                    
+          .col-md-6.col-xs-12.top-section.clickable{:style => "background: ##{a['attendance'].bg}", "data-toggle" => 'modal', 'data-target' => "#modal_" + a["attendance"].id.to_s }
+            %h4 Attendance
+            %h3 #{a["course"].course_type.upcase}
+            %h3 #{a["attendance"].att_year}%
+        - else
+          .col-md-6.col-xs-12.top-section{:style => 'background-color: #d9edf7'}
+            %h4 Attendance
+            %h3 #{a["course"].course_type.upcase}
+            %h3 0%        
       .row
         .col-md-10
           .row
             - (1..5).each do |i|
               - if (a["reviews"][i].present? && a["reviews"][i].number == i)
                 - a["reviews"][i].body = 'No comments' if a["reviews"][i].body.empty?
-                .col-md-2.hidden-xs.col-sm-6.review-section{:style => 'width : 20%', :class => "ragp_#{a['reviews'][i].level}", :onClick => 'displayReviewView("' + a["reviews"][i].number.to_s + '","' + a["reviews"][i].working_at.to_s + '","' + a["reviews"][i].attendance.to_s + '","' + a["reviews"][i].body.squish.to_s + '")'}
+                .col-md-2.hidden-xs.col-sm-6.review-section{:style => 'width : 20%', :class => a["reviews"][i].level, :onClick => 'displayReviewView("' + a["reviews"][i].number.to_s + '","' + a["reviews"][i].working_at.to_s + '","' + a["reviews"][i].attendance.to_s + '","' + a["reviews"][i].body.squish.to_s + '")'}
                   %h5 Working at
                   %h4 #{a["reviews"][i].working_at}
                   %br
                   %h4.pull-bottom.pull-right #{i}
               - else
-                .col-md-2.hidden-xs.col-sm-6.review-section{ :style => 'width: 20%; color: grey', :onClick => ('displayReview("'+ i.to_s + '", "' + a["course"].course_code + '", "'+ a["attendance"].att_year.to_s + '", "' + a["course"].uio_id.to_s + '")' if @user.staff?)}
+                .col-md-2.hidden-xs.col-sm-6.review-section{ :style => 'width: 20%; color: grey', :onClick => ('displayReview("'+ i.to_s + '", "' + a["course"].course_code + '", "'+ a["attendance"].att_year.to_s + '", "' + a["course"].id.to_s + '")' if @user.staff? && !a["attendance"].nil?)}
                   %h5 Review
                   %br
                   %br
@@ -51,14 +58,14 @@
         .col-md-2
           .row
             - if a['initial'].present?
-              .col-md-12.target-grade{:style => 'background-color: #5cb85c', :onClick => 'displayInitialView("' + a['initial'].target_grade.to_s + '" , "' + a['initial'].body.squish.to_s + '")'}
+              .col-md-12.target-grade.present{:onClick => 'displayInitialView("' + a['initial'].target_grade.to_s + '" , "' + a['initial'].body.squish.to_s + '")'}
                 %h5.grade Target Grade
                 %h5.target{:style => 'display:none'} Target
                 %h4 #{a['initial'].target_grade.to_s}
                 %br
                 %br
             - else 
-              .col-md-12.target-grade{:style => 'color: grey', :onClick => ('displayInitial("' + a["course"].uio_id.to_s + '")' if @user.staff?)}
+              .col-md-12.target-grade{:style => 'color: grey', :onClick => ('displayInitial("' + a["course"].id.to_s + '")' if @user.staff?)}
                 %h5.grade Target Grade
                 %h5.target{:style => 'display:none'} Target
                 %br
