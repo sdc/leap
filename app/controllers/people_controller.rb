@@ -40,7 +40,6 @@ class PeopleController < ApplicationController
             else
               @progress_bar[progress.uio_id]['attendance'] = @topic.attendances.where(:enrol_course => progress.course_code).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
             end
-            abort(@progress_bar[progress.uio_id]['attendance'].inspect)
             @progress_bar[progress.uio_id]['initial'] = progress.initial_reviews.last
             @progress_bar[progress.uio_id]['reviews'] = []
             @reviews = progress.progress_reviews.order("number ASC")
@@ -53,7 +52,6 @@ class PeopleController < ApplicationController
           @badges = @topic.mdl_badges.where(:mdl_course_id => ppdc) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
           @aspiration = @topic.aspirations.last.aspiration if @topic.aspirations.present?
           @notifications = @topic.notifications.where(:notified => false)
-          #abort(@notifications[0].event.event_date.to_s.inspect)
         else
           @tiles = @topic.events.where(:eventable_type => "Target",:transition => :overdue).
                    where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)
