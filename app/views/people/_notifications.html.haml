@@ -15,8 +15,9 @@
             %h5= notification.event.created_by.name
             %h5=raw "#{notification.event.event_date.hour}:#{notification.event.event_date.min}"
           %div.notification-view
-            %span.view-events
-              View Events 
-              %i.fa.fa-eye
+            = link_to((send("#{@topic.class.name.underscore}_view_url",@topic,@views.first,:tutorgroup => @tutorgroup) + (params[:all] ? "?all=true" : "")), :class => "sidebar_button") do
+              %span.view-events
+                View Events 
+                %i.fa.fa-eye
         %li.divider{:role => "separator"}
 
