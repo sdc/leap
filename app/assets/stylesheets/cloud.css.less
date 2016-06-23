@@ -204,9 +204,9 @@ a.person {
 }
 
 img#person-photo {
-  transition: all 2s ease-in-out;
+  transition: all 1s ease-in-out;
   &:hover { 
-    transform: scale(2) rotate(360deg); 
+    transform: scale(2); 
   }
 }
 
@@ -278,6 +278,16 @@ table.table td, table.table th {
 .clickable {
   cursor: pointer;
 }
+.present {
+  background-color: #6D5298;
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#573D7D),to(#6F5598));
+  background-image: -webkit-linear-gradient(top,#563D7B 0,#70559A 100%);
+  background-image: -o-linear-gradient(top,#563D7B 0,#70559A 100%);
+  background-image: linear-gradient(to bottom,#563D7B 0,#70559A 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#563D7B', endColorstr='#70559A', GradientType=0);
+  background-repeat: repeat-x;
+  color: white;
+}
 .review-section:last-child {
   border: 0px;
 }
@@ -285,8 +295,13 @@ table.table td, table.table th {
   margin: 0;
   font-weight: bold;
 }
-#progress h5, h4, h6, h2 {
+#progress-bars h5, h4, h6, h2 {
   margin: 0;
+}
+
+#notifications h1{
+  margin: 0;
+  color: red;
 }
 .review-section h4 {
   font-weight: bold;
@@ -300,19 +315,23 @@ table.table td, table.table th {
 }
 
 .ragp_purple {
-  background-color: #4f2170 !important;
+  background-color: #712f9d !important;
   color: white;
 }
+
 .ragp_green {
-  background-color: #5cb85c !important;
+  background-color: #6a6 !important;
 }
+
 .ragp_amber {
   background-color: #F87531 !important;
 }
+
 .ragp_red {
   background-color: #d9534f !important;
 }
-.radp_grey {
+
+.ragp_grey {
   background-color: grey !important;  
 }
 
@@ -329,7 +348,7 @@ table.table td, table.table th {
 .ragp_light_red {
   background-color: #f2dede !important;
 }
-.radp_light_grey {
+.ragp_light_grey {
   background-color: #f5f5f5 !important;  
 }
 
@@ -362,18 +381,22 @@ table.table td, table.table th {
 
 #aspiration {
   margin-top: -15px;
+  font-family: 'Patua One', serif;
 }
 
 #aspiration-content {
   padding: 5px;
   color: #4f2170;
-  border-top: none;
   text-align: center;
 }
 
 .aspiration-title {
-  font-weight: bold;
   margin-bottom: 2px;
+  font-size: 25px;
+}
+
+.aspiration {
+  font-size: 30px;
 }
 
 .attendance-tile {
@@ -398,6 +421,86 @@ table.table td, table.table th {
   text-align: center;
 }
 
+.panel-body .ppd_badge {
+  padding: 0px;
+}
+
+#notifications {
+  margin-top: 10px;  
+}
+
+.notification-counter {   
+  position: absolute;
+  top: -4px;
+  right: 10px;
+  background-color: rgba(212, 19, 13, 1);
+  color: #fff;
+  border-radius: 3px;
+  padding: 1px 3px;
+  font: 8px Verdana;
+}
+
+.notify {
+  display: inline-block;
+  float: left;
+}
+
+.drop-scrollable {
+  height: auto;
+  max-height: 450px;
+  overflow-x: hidden;
+}
+
+.dropdown-menu>li>a {
+  display: inline-block;
+  background-color: transparent;
+  color: #333333 !important;
+}
+
+.dropdown-menu>li>a:hover {
+  background-color: transparent;
+  color: black;
+}
+
+.notification-header {
+  display: block;
+  padding: 8px 20px 0px;
+  clear: both;
+  font-weight: normal;
+  white-space: nowrap;  
+}
+
+.notification {
+  display: block;
+  padding: 8px 20px 10px;
+  clear: both;
+  font-weight: normal;
+  white-space: nowrap;}
+
+.notification:hover {
+  background-color: #bbe1f7;
+}
+
+.notification-content {
+  display: inline-block;
+  margin-right: 20px;
+  width: 200px;
+}
+
+.notification-view {
+  margin-top: 25px;
+  display:inline-block; 
+  width: 150px; 
+  vertical-align: top
+}
+
+.view-events {
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 10px;
+  color: #333333; 
+}
+
 @media (min-width: 991px) and (max-width: 1199px) {
   .target-grade > .grade {
     display: none;
@@ -415,7 +518,11 @@ table.table td, table.table th {
     font-size: 13px;
   }
 }
-
+@media (min-width: 200px) and (max-width: 1199px) {
+  .aspiration {
+    font-size: 20px;
+  }
+}
 @media (min-width: 768px) {
   .tile-modal {
     width: 400px;
