@@ -1,3 +1,4 @@
-%h4 
-  = progress_review.created_by.name
-%p= progress_review.body
+%div.has_tooltip{:title => progress_review.ragp_desc, "data-placement" => "right"}
+  %h4 
+    = progress_review.created_by.name
+  %p= progress_review.body

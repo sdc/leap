@@ -43,4 +43,18 @@ class ProgressReview < Eventable
     end
   end
 
+  def ragp_desc
+    begin
+      if self.level == 'purple'
+        return "Exceeding target grade"
+      elsif self.level == 'green'
+        return "Working at target grade"
+      elsif self.level == 'amber'
+        return "Working towards target grade"
+      elsif self.level == 'red'
+        return "Requires improvements"
+      end
+    end
+  end
+
 end
