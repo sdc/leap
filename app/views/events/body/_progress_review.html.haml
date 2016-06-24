@@ -1,6 +1,7 @@
-%h5
-  = progress_review.progress.course_title
-  = raw "| Review Number: #{progress_review.number.to_s}"
-%h5{:style => 'margin-top: 5px'}
-  = raw "Attendance: #{progress_review.attendance}% | "
-  = raw "Working at: #{progress_review.working_at.to_s}"
+%div.has_tooltip{:title => progress_review.ragp_desc, "data-placement" => "right"}
+  %h5
+    = progress_review.progress.course_title
+    = raw "| Review Number: #{progress_review.number.to_s}"
+  %h5{:style => 'margin-top: 5px'}
+    = raw "Attendance: #{progress_review.attendance}% | "
+    = raw "Working at: #{progress_review.working_at.to_s}"
