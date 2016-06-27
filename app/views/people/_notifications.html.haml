@@ -1,0 +1,23 @@
+.col-md-2.col-md-offset-1.hidden-xs.hidden-sm
+  .pull-right{:style => "text-align: center"}
+    %a{:href => '#', :type => 'button', :id => 'notification-button', "data-toggle" => 'dropdown', "aria-haspopup" => 'true', "aria-expanded" => 'true'}
+      %i.fa.fa-bell-o.fa-2x{:style => "color: #4f2170"}
+      %span{:class => "notification-counter"}
+        = @notifications.count.to_s
+    %ul.dropdown-menu.drop-scrollable{"aria-labelledby" => "notification-button"}
+      %li.notification-header
+        %p Notifications
+        %li.divider{:role => "separator"}
+      - @notifications.each do |notification|
+        %li.notification
+          %div.notification-content
+            %h4= notification.event.title
+            %h5= notification.event.created_by.name
+            %h5=raw "#{notification.event.event_date.hour}:#{notification.event.event_date.min}"
+          %div.notification-view
+            = link_to((send("#{@topic.class.name.underscore}_view_url",@topic,@views.first,:tutorgroup => @tutorgroup) + (params[:all] ? "?all=true" : "")), :class => "sidebar_button") do
+              %span.view-events
+                View Events 
+                %i.fa.fa-eye
+        %li.divider{:role => "separator"}
+

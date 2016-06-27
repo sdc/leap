@@ -203,13 +203,6 @@ a.person {
   }
 }
 
-img#person-photo {
-  transition: all 2s ease-in-out;
-  &:hover { 
-    transform: scale(2) rotate(360deg); 
-  }
-}
-
 .searchy {
   h1 {
     margin-top: 0;
@@ -246,4 +239,254 @@ table.table td, table.table th {
 
 .modal-open .datepicker {
   z-index: 1200 !important
+}
+
+#next-lesson {
+  background-color: #9aa;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.top-section {
+  background-color: yellow;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: center;
+  padding: 10px;
+  display: block;
+}
+.top-section:nth-child(2) {
+  margin-left: 10px;
+}
+
+.review-section {
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  background-color: #d9edf7;
+  border-right: 1px solid rgba(86,61,124,.2);
+}
+.clickable {
+  cursor: pointer;
+}
+.present {
+  background-color: #96cde9 !important;
+  color: #333;
+}
+.review-section:last-child {
+  border: 0px;
+}
+#progress h3 {
+  margin: 0;
+  font-weight: bold;
+}
+#progress-bars h5, h4, h6, h2 {
+  margin: 0;
+}
+
+#notifications h1{
+  margin: 0;
+  color: red;
+}
+.review-section h4 {
+  font-weight: bold;
+}
+.arrow-right {
+  width: 0; 
+  height: 0; 
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  border-left: 60px solid green;
+}
+
+.purple {
+  background-color: #6D5298;
+  color: white;
+}
+
+.green {
+  background-color: #6a6 !important;
+}
+
+.amber {
+  background-color: #ff6933 !important;
+  /*background-color: #ff8f66 !important;*/
+}
+
+.red {
+  background-color: #ff8080 !important;
+}
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+}
+.initial-author {
+  margin-top: 3px;
+}
+.target-grade {
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-left: 6px;
+  margin-right: 6px;
+  background-color: #d9edf7;
+}
+
+.target-grade h4 {
+  font-weight: bold;
+}
+
+#aspiration {
+  margin-top: -15px;
+  font-family: 'Patua One', serif;
+}
+
+#aspiration-content {
+  padding: 5px;
+  color: #4f2170;
+  text-align: center;
+}
+
+.aspiration-title {
+  margin-bottom: 2px;
+  font-size: 25px;
+}
+
+.aspiration {
+  font-size: 30px;
+}
+
+.attendance-tile {
+  color: #eee;
+  font-family: 'Patua One', serif;
+}
+
+.attendance-tile h5 {
+  display: none;
+}
+
+.attendance-tile h1 {
+  font-size: 23px;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 4px 0 8px 0;
+}
+
+.attendance-text {
+  padding: 5px;
+  color: #eee;
+  text-align: center;
+}
+
+.panel-body .ppd_badge {
+  padding: 0px;
+}
+
+#notifications {
+  margin-top: 10px;  
+}
+
+.notification-counter {   
+  position: absolute;
+  top: -4px;
+  right: 10px;
+  background-color: rgba(212, 19, 13, 1);
+  color: #fff;
+  border-radius: 3px;
+  padding: 1px 3px;
+  font: 8px Verdana;
+}
+
+.notify {
+  display: inline-block;
+  float: left;
+}
+
+.drop-scrollable {
+  height: auto;
+  max-height: 450px;
+  overflow-x: hidden;
+}
+
+.dropdown-menu>li>a {
+  display: inline-block;
+  background-color: transparent;
+  color: #333333 !important;
+}
+
+.dropdown-menu>li>a:hover {
+  background-color: transparent;
+  color: black;
+}
+
+.notification-header {
+  display: block;
+  padding: 8px 20px 0px;
+  clear: both;
+  font-weight: normal;
+  white-space: nowrap;  
+}
+
+.notification {
+  display: block;
+  padding: 8px 20px 10px;
+  clear: both;
+  font-weight: normal;
+  white-space: nowrap;}
+
+.notification:hover {
+  background-color: #bbe1f7;
+}
+
+.notification-content {
+  display: inline-block;
+  margin-right: 20px;
+  width: 200px;
+}
+
+.notification-view {
+  margin-top: 25px;
+  display:inline-block; 
+  width: 150px; 
+  vertical-align: top
+}
+
+.view-events {
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 10px;
+  color: #333333; 
+}
+
+@media (min-width: 991px) and (max-width: 1199px) {
+  .target-grade > .grade {
+    display: none;
+  }
+
+  .target-grade > .target {
+    display: block !important
+  }
+
+  .review-section > h4 {
+    font-size: 13px;
+  }
+
+  .target-grade > h4 {
+    font-size: 13px;
+  }
+}
+@media (min-width: 200px) and (max-width: 1199px) {
+  .aspiration {
+    font-size: 20px;
+  }
+}
+@media (min-width: 768px) {
+  .tile-modal {
+    width: 400px;
+  }
 }
