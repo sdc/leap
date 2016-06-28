@@ -6,6 +6,7 @@
 @unknown     : #eee;
 @not_started : #ddf;
 @outstanding : #b298cd;
+@exceed		 : #dcf;
 
 @fg_darken : 60%;
 @bd_darken : 60%;
@@ -18,6 +19,7 @@ h3.incomplete,.incomplete  {background-color: @incomplete }
 h3.unknown,.unknown        {background-color: @unknown    }
 h3.not_started,.not_started{background-color: @not_started}
 h3.outstanding,.outstanding{background-color: @outstanding}
+h3.exceed,.exceed          {background-color: @exceed    }
 
 .status-fg.current     {color: darken(@current,     @fg_darken)}
 .status-fg.start       {color: darken(@start,       @fg_darken)}
@@ -26,6 +28,7 @@ h3.outstanding,.outstanding{background-color: @outstanding}
 .status-fg.incomplete  {color: darken(@incomplete,  @fg_darken)}
 .status-fg.unknown     {color: darken(@unknown,     @fg_darken)}
 .status-fg.not_started {color: darken(@not_started, @fg_darken)}
+.status-fg.exceed      {color: darken(@exceed,      @fg_darken)}
 
 .status-fgp.current     {color: darken(@current,     (@fg_darken/2))}
 .status-fgp.start       {color: darken(@start,       (@fg_darken/2))}
@@ -34,6 +37,7 @@ h3.outstanding,.outstanding{background-color: @outstanding}
 .status-fgp.incomplete  {color: darken(@incomplete,  (@fg_darken/2))}
 .status-fgp.unknown     {color: darken(@unknown,     (@fg_darken/2))}
 .status-fgp.not_started {color: darken(@not_started, (@fg_darken/2))}
+.status-fgp.exceed      {color: darken(@exceed,      (@fg_darken/2))}
 
 .status-bd.current     {border-color: darken(@current,     @bd_darken)}
 .status-bd.start       {border-color: darken(@start,       @bd_darken)}
@@ -43,6 +47,7 @@ h3.outstanding,.outstanding{background-color: @outstanding}
 .status-bd.unknown     {border-color: darken(@unknown,     @bd_darken)}
 .status-bd.not_started {border-color: darken(@not_started, @bd_darken)}
 .status-bd.outstanding {border-color: darken(@outstanding, @bd_darken)}
+.status-bd.exceed      {border-color: darken(@exceed,      @bd_darken)}
 
 //span.label.unknown    {.label-inverse;}
 //span.label.current    {.label-warning;}
@@ -51,3 +56,4 @@ h3.outstanding,.outstanding{background-color: @outstanding}
 //span.label.overdue    {.label-important;}
 //span.label.incomplete {.label-important;}
 //span.label.not_started{.label-info;}
+//span.label.exceed     {.label-exceed;}

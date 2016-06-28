@@ -30,9 +30,9 @@
                 %label Current Level
                 %select{ :name => "progress_review[level]", :class => 'form-control level', :id => 'progress_review_level', :required => 'required', :disabled => (true unless @user.staff?)}
                   %option{:value => '', :selected => true, :disabled => true}= "Choose"
-                  %option{:value => 'purple', :class => 'purple'}= "PURPLE"
-                  %option{:value => 'green', :class => 'green'}= "GREEN"
-                  %option{:value => 'amber', :class => 'amber'}= "AMBER"
-                  %option{:value => 'red', :class => 'red'}= "RED"
+                  %option{:value => 'purple', :class => 'ragp_purple'}= "PURPLE"
+                  %option{:value => 'green', :class => 'ragp_green'}= "GREEN"
+                  %option{:value => 'amber', :class => 'ragp_amber'}= "AMBER"
+                  %option{:value => 'red', :class => 'ragp_red'}= "RED"
         .modal-footer
           = add_event_button if @user.staff?

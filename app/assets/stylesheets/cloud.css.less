@@ -203,6 +203,13 @@ a.person {
   }
 }
 
+img#person-photo {
+  transition: all 1s ease-in-out;
+  &:hover { 
+    transform: scale(2); 
+  }
+}
+
 .searchy {
   h1 {
     margin-top: 0;
@@ -301,22 +308,44 @@ table.table td, table.table th {
   border-left: 60px solid green;
 }
 
-.purple {
+.ragp_purple {
   background-color: #6D5298;
   color: white;
 }
 
-.green {
+.ragp_green {
   background-color: #6a6 !important;
 }
 
-.amber {
+.ragp_amber {
   background-color: #ff6933 !important;
   /*background-color: #ff8f66 !important;*/
 }
 
-.red {
+.ragp_red {
   background-color: #ff8080 !important;
+}
+
+.ragp_light_purple {
+  background-color: #ddccff !important;
+  color: black;
+}
+.ragp_light_green {
+  background-color: #dff0d8 !important;
+}
+.ragp_light_amber {
+  background-color: #fcf8e3 !important;
+}
+.ragp_light_red {
+  background-color: #f2dede !important;
+}
+.ragp_light_grey {
+  background-color: #f5f5f5 !important;  
+}
+
+.exceed {
+  background-color: #ddccff !important;
+  color: black;
 }
 
 .row-eq-height {
