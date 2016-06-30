@@ -20,23 +20,23 @@
             %h4 Review
             %h3 #{a["course"].course_type.upcase}
             .pull-left.pull-bottom.initial-author
-              %h6 #{a["course"].tutor.short_name.to_s}
+              //%h6 #{a["course"].tutor.short_name.to_s}
         - else
           .col-md-6.col-xs-12.initial-review.top-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial("' + a["course"].id.to_s + '")' if @user.staff?)}
             %h4 Initial
             %h4 Review
             %br
             .pull-left.pull-bottom.initial-author
-              %h6 #{a["course"].tutor.short_name.to_s}
+              //%h6 #{a["course"].tutor.short_name.to_s}
         - if !a["attendance"].nil?                    
           .col-md-6.col-xs-12.top-section.clickable{:style => "background: ##{a['attendance'].bg}", "data-toggle" => 'modal', 'data-target' => "#modal_" + a["attendance"].id.to_s }
             %h4 Attendance
-            %h3 #{a["course"].course_type.upcase}
+            %h4 #{a["course"].course_title.upcase}
             %h3 #{a["attendance"].att_year}%
         - else
           .col-md-6.col-xs-12.top-section{:style => 'background-color: #d9edf7; color: grey'}
             %h4 Attendance
-            %h3 #{a["course"].course_type.upcase}
+            %h4 #{a["course"].course_title.upcase}
             %h3 0%        
       .row
         .col-md-10

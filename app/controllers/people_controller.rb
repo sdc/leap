@@ -30,7 +30,7 @@ class PeopleController < ApplicationController
         misc_dates = MISC::MiscDates.new
         if Settings.home_page == "progress" && !@topic.staff?
           ## TODO - Remove this. Currently @progress_bar array is required in order to map attendance. Need a better way of doing this.
-          @progresses = @topic.progresses
+          @progresses = @topic.progresses.where(:course_status => 'Active')
           @progress_bar = {}
           @progresses.each do |progress|
             @progress_bar[progress.uio_id] = {}
