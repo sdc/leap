@@ -97,8 +97,7 @@ class Attendance < Eventable
     rescue
       bg = "6a6"
     end
-    misc_dates = MISC::MiscDates.new
-    acy = misc_dates.acyr(week_beginning)
+    acy = MISC::MiscDates.acyr(week_beginning)
     {:icon         => "fa-check-circle",
      :partial_path => "tiles/attendance",
      :subtitle     => course_type.titlecase,

@@ -1,7 +1,7 @@
 module MISC
    class MiscDates
 
-	  def acyr(checkdate = Date.today)
+	  def self.acyr(checkdate = Date.today)
 	    (d,m) = Settings.year_boundary_date.split("/").map{|x| x.to_i}
 	    ab = checkdate.change(:day => d,:month => m)
 	    if ab <= checkdate
@@ -11,7 +11,7 @@ module MISC
 	    end
 	  end
 
-	  def start_of_acyr(checkdate = Date.today)
+	  def self.start_of_acyr(checkdate = Date.today)
 	    (d,m) = Settings.year_boundary_date.split("/").map{|x| x.to_i}
 	    ab = checkdate.change(:day => d,:month => m)
 	    if ab <= checkdate
@@ -21,8 +21,13 @@ module MISC
 	    end
 	  end
 
-	  def years_from_start_of_acyr(checkdate = Date.today)
+	  def self.years_from_start_of_acyr(checkdate = Date.today)
 	    (start_of_acyr() - start_of_acyr(checkdate)).to_i/365
+	  end
+
+	  def self.date_in_acyr(checkdate = Date.today, acyrs)
+	  	nil if checkdate.nil? || acyrs.nil?
+	  	acyrs.flatten.join(",").split(",").include?( acyr(checkdate) ) unless acyrs.nil?
 	  end
 
    end

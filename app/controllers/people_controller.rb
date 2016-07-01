@@ -27,7 +27,6 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.html do
         @sidebar_links = parse_sidebar_links
-        misc_dates = MISC::MiscDates.new
         if Settings.home_page == "progress" && !@topic.staff?
           ## TODO - Remove this. Currently @progress_bar array is required in order to map attendance. Need a better way of doing this.
           @progresses = @topic.progresses
@@ -36,9 +35,9 @@ class PeopleController < ApplicationController
             @progress_bar[progress.uio_id] = {}
             @progress_bar[progress.uio_id]['course'] = progress
             if ["core", "english", "maths"].include? progress.course_type
-              @progress_bar[progress.uio_id]['attendance'] = @topic.attendances.where(:course_type => progress.course_type).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
+              @progress_bar[progress.uio_id]['attendance'] = @topic.attendances.where(:course_type => progress.course_type).where(["week_beginning >= ?", MISC::MiscDates.start_of_acyr] ).last
             else
-              @progress_bar[progress.uio_id]['attendance'] = @topic.attendances.where(:enrol_course => progress.course_code).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
+              @progress_bar[progress.uio_id]['attendance'] = @topic.attendances.where(:enrol_course => progress.course_code).where(["week_beginning >= ?", MISC::MiscDates.start_of_acyr] ).last
             end
             @progress_bar[progress.uio_id]['initial'] = progress.initial_reviews.last
             @progress_bar[progress.uio_id]['reviews'] = []
@@ -63,8 +62,7 @@ class PeopleController < ApplicationController
           @tiles.unshift(@topic.mdl_badges.where(:mdl_course_id => ppdc).last.to_course_tile) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
           tracks = ["core","maths","english"].map{|ct| @topic.mdl_grade_tracks.where(:course_type => ct).last}.reject{|x| x.nil?}
           @tiles.unshift(tracks.map{|x| x.to_tile})
-          misc_dates = MISC::MiscDates.new
-          attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last}.reject{|x| x.nil?}
+          attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).where(["week_beginning >= ?", MISC::MiscDates.start_of_acyr] ).last}.reject{|x| x.nil?}
           attendances.select!{|x| x.course_type != "overall"} if attendances.length == 2
           @tiles.unshift(attendances.map{|x| x.to_tile})
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
