@@ -17,4 +17,8 @@ class InitialReview < Eventable
     return :complete
   end
 
+  def icon_class
+    "fa-clipboard"
+  end
+
 end

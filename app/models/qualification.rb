@@ -51,6 +51,10 @@ class Qualification < Eventable
     end
   end
 
+  def icon_class
+    "fa-certificate"
+  end
+
   def status
     return :complete if seen?
     return :complete if !mis_id.blank?

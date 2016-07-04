@@ -38,11 +38,13 @@ class ViewsController < ApplicationController
           where(:transition => @view.transitions, :eventable_type => @view.events).
           limit(request.format=="pdf" ? 20000 : 20)
       end
-      @notifiedEvents = @events.joins(:notifications).where(:notifications => {:notified => false, :person_id => @user.id})
-      @notifiedEvents.each do |notifiedEvent|
-        notifiedEvent.notifications.each do |notification|
-          notification.notified = true
-          notification.save
+      if Settings.home_page == "progress"
+        @notifiedEvents = @events.joins(:notifications).where(:notifications => {:notified => false, :person_id => @user.id})
+        @notifiedEvents.each do |notifiedEvent|
+          notifiedEvent.notifications.each do |notification|
+            notification.notified = true
+            notification.save
+          end
         end
       end
       @events = @events.select{|e| e.status.to_s == params[:status]} if params[:status]

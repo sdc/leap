@@ -23,4 +23,7 @@ class InductionQuestion < Eventable
   validates :question, :presence => true
   validates :question, :inclusion => {:in => Settings.induction_questions.split(";")}
 
+  def icon_class
+  	"fa-question-circle-o"
+  end
 end
