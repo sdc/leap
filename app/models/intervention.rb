@@ -27,6 +27,13 @@ class Intervention < Eventable
     end
   end
 
+  def icon_class(tr)
+    case tr
+    when :create then "fa-flag"
+    when :complete then "fa-exclamation-circle"
+    end
+  end
+
   def title(tr)
     case tr
     when :create   then "Intervention Referral"

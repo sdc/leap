@@ -83,7 +83,7 @@ class Event < ActiveRecord::Base
     end
   end
 
-  [:title,:subtitle,:icon_url,:body,:extra_panes,:status,:staff_only?,
+  [:title,:subtitle,:icon_url,:icon_class,:body,:extra_panes,:status,:staff_only?,
    :timetable_length,:tile_bg,:tile_icon,:tile_title,:is_deleted?].each do |method|
     define_method method do
       if eventable.respond_to?(method) 

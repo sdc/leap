@@ -102,4 +102,8 @@ class Attendance < Eventable
     }
   end
 
+  def icon_class
+    "fa-clipboard"
+  end
+
 end

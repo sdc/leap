@@ -1,7 +1,7 @@
 %li.row[view]
   = link_to((send("#{@topic.class.name.underscore}_view_url",@topic,view,:tutorgroup => @tutorgroup) + (params[:all] ? "?all=true" : "")), :class => "sidebar_button") do
     .col-xs-2
-      - if view.icon_class.present?
+      - if Settings.home_page == "progress" && view.icon_class.present?
         %i{:class => view.icon_class.to_s + ' fa-fw fa pull-left', :style => 'font-size: 1.5em; color: #612989'}
       - else
         = image_tag(view.icon_url, :size => "30x30", :class=>"pull-left") 

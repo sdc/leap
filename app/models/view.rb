@@ -40,5 +40,4 @@ class View < ActiveRecord::Base
   def long_name
     "#{label}: #{affiliations.join ", "}"
   end
-
 end

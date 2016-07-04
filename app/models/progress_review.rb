@@ -57,4 +57,8 @@ class ProgressReview < Eventable
     end
   end
 
+  def icon_class
+    "fa-pencil-square-o"
+  end
+
 end
