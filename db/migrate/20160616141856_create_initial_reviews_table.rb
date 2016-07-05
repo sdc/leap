@@ -1,4 +1,4 @@
-class CreateInitialReviews < ActiveRecord::Migration
+class CreateInitialReviewsTable < ActiveRecord::Migration
   def change
     create_table :initial_reviews do |t|
       t.integer :progress_id, :limit => 11
