@@ -10,7 +10,7 @@
   %li.active 
     %a{:href => "#photo-list", "data-toggle" => "tab"} Photos
   %li 
-    %a{:href => "#academic-plp", "data-toggle" => "tab"} Academic
+    %a{:href => "#academic-plp", "data-toggle" => "tab"} Overview
   %li 
     %a{:href => "#course-plp", "data-toggle" => "tab"} Course
   %li 
@@ -59,14 +59,14 @@
         - @person_courses.each do |pc|
           %tr{"data-mis-status" => pc.mis_status.downcase}
             %td.text-right{ :title => "#{pc.person.mis_id}" }
-              %b= link_to pc.name, pc.person
+              %b= link_to pc.name, pc.person, :target => "_blank"
             - person_attendances = pc.person.attendances
-            - person_attendance[pc.person.id.to_s => "overall"] = person_attendances.select { |x| x.course_type == "overall" and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
-            - person_attendance[pc.person.id.to_s => "core"] = person_attendances.select { |x| x.course_type == "core" and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
-            - person_attendance[pc.person.id.to_s => "english"] = person_attendances.select { |x| x.course_type == "english" and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
-            - person_attendance[pc.person.id.to_s => "maths"] = person_attendances.select { |x| x.course_type == "maths" and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
+            - person_attendance[pc.person.id.to_s => "overall"] = person_attendances.select { |x| x.course_type.to_s.downcase == "overall" and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
+            - person_attendance[pc.person.id.to_s => "core"] = person_attendances.select { |x| x.course_type.to_s.downcase == "core" and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
+            - person_attendance[pc.person.id.to_s => "english"] = person_attendances.select { |x| x.course_type.to_s.downcase == "english" and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
+            - person_attendance[pc.person.id.to_s => "maths"] = person_attendances.select { |x| x.course_type.to_s.downcase == "maths" and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
             - if person_attendance[pc.person.id.to_s => "overall"]
-              %td{:class => person_attendance[pc.person.id.to_s => "overall"].status(true)}= "#{person_attendance[pc.person.id.to_s => 'overall'].try :att_year}%"
+              %td.text-right{:class => person_attendance[pc.person.id.to_s => "overall"].status(true)}= "#{person_attendance[pc.person.id.to_s => 'overall'].try :att_year}%"
             - else
               %td.text-center
                 -# %i.fa.fa-frown-o
@@ -75,12 +75,12 @@
               - represented_course_codes += " <br>" unless represented_course_codes.nil?
               - if person_attendance[pc.person.id.to_s => ct]
                 - title = "#{represented_course_codes} Attendance #{person_attendance[pc.person.id.to_s => ct].status(true)}"
-                %td.bl{:class => person_attendance[pc.person.id.to_s => ct].status(true), :"data-html" => "true", :title => title}= "#{person_attendance[pc.person.id.to_s => ct].try :att_year}%"
+                %td.bl.text-right{:class => person_attendance[pc.person.id.to_s => ct].status(true), :"data-html" => "true", :title => title}= "#{person_attendance[pc.person.id.to_s => ct].try :att_year}%"
               - else
                 %td.bl.text-center{:title => "No Attendance"}
 
               - found_reviews = []
-              - (npr).downto(1).each { |x| found_reviews.push pc.person.progress_reviews.joins(:progress).where("progresses.id = progress_reviews.progress_id and progresses.course_year=? and course_type = ?",@topic.year,ct).order("number desc, created_at desc, id desc").where(:number => x).first }
+              - (npr).downto(1).each { |x| found_reviews.push pc.person.progress_reviews.joins(:progress).where("progresses.id = progress_reviews.progress_id and progresses.course_year=? and UPPER(course_type) = ?",@topic.year,ct).order("number desc, created_at desc, id desc").where(:number => x).first }
               - found_reviews.compact!
               - ((found_reviews.count+1)..npr).each { found_reviews.push nil }
               - found_reviews[0..1].reverse.each do |g|
@@ -94,7 +94,7 @@
                 - else
                   %td.text-center.text-muted.visible-lg.text-center{:class => ["ragp_light_grey"], :title => "No Review"}
 
-              - tg = pc.person.initial_reviews.joins(:progress).where("progresses.id = initial_reviews.progress_id and progresses.course_year=? and course_type = ?",@topic.year,ct).order("created_at desc, id desc").first
+              - tg = pc.person.initial_reviews.joins(:progress).where("progresses.id = initial_reviews.progress_id and progresses.course_year=? and UPPER(course_type) = ?",@topic.year,ct).order("created_at desc, id desc").first
               - unless tg.nil?
                 %td.text-center.success{:title => "Target Grade"}= tg.target_grade 
               - else
@@ -103,6 +103,7 @@
               -# - if ["english","maths"].include? ct
               -#   %td.text-center{:title => "Register Marks"}
               -#   -#=pc.person.timetable_events(:from => @date, :to => @end_date).select {|r| r.title = 'GCSE Maths' and r.timetable_start <= Time.now}.last(3).map {|r| r.mark}.to_s
+
       %tfoot
         %tr
           %td{:colspan => 13} 
@@ -161,21 +162,21 @@
               - @person_courses.each do |pc|
                 %tr{"data-mis-status" => pc.mis_status.downcase}
                   %td.text-right
-                    %b= link_to pc.name, pc.person
+                    %b= link_to pc.name, pc.person, :target => "_blank"
                   - person_attendances = pc.person.attendances
-                  - person_attendance[pc.person.id.to_s => cg] = person_attendances.select { |x| x.course_type == cg and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
+                  - person_attendance[pc.person.id.to_s => cg] = person_attendances.select { |x| x.course_type.to_s.downcase == cg and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
                   - if person_attendance[pc.person.id.to_s => cg]
-                    %td{:class => person_attendance[pc.person.id.to_s => cg].status(true)}= "#{person_attendance[pc.person.id.to_s => cg].try :att_year}%"
+                    %td.text-right{:class => person_attendance[pc.person.id.to_s => cg].status(true)}= "#{person_attendance[pc.person.id.to_s => cg].try :att_year}%"
                   - else
                     %td.text-center{:title => "No Attendance"}
                   - (1..npr).each do |x|
-                    - g = pc.person.progress_reviews.joins(:progress).where("progresses.id = progress_reviews.progress_id and progresses.course_year=? and course_type = ?",@topic.year,cg).order("number desc, created_at desc, id desc").where(:number => x).first
+                    - g = pc.person.progress_reviews.joins(:progress).where("progresses.id = progress_reviews.progress_id and progresses.course_year=? and UPPER(course_type) = ?",@topic.year,cg).order("number desc, created_at desc, id desc").where(:number => x).first
                     - unless g.nil?
                       %td.text-center.visible-lg{:class => "ragp_light_#{g.level}" + (x==1 ? " bl" : ""), :title => "Review #{g.number} (#{g.created_at})"}= g.working_at
                     - else
                       %td.text-center.text-muted.visible-lg.text-center{:class => "ragp_light_grey" + (x==1 ? " bl" : ""), :title => "No Review"}
 
-                  - tg = pc.person.initial_reviews.joins(:progress).where("progresses.id = initial_reviews.progress_id and progresses.course_year=? and course_type = ?",@topic.year,cg).order("created_at desc, id desc").first
+                  - tg = pc.person.initial_reviews.joins(:progress).where("progresses.id = initial_reviews.progress_id and progresses.course_year=? and UPPER(course_type) = ?",@topic.year,cg).order("created_at desc, id desc").first
                   - unless tg.nil?
                     %td.text-center.bl.success{:title => "Target Grade"}= tg.target_grade 
                   - else
@@ -228,7 +229,7 @@
         - @person_courses.each do |pc|
           %tr{"data-mis-status" => pc.mis_status.downcase}
             %td.text-right
-              %b= link_to pc.person.name, pc.person
+              %b= link_to pc.person.name, pc.person, :target => "_blank"
             %td.bl
             %td
             %td
@@ -262,21 +263,38 @@
 
   .tab-pane.fade.panel.panel-default.row#reporting
     -# = f.select :question, Settings.induction_questions.split(";"), {}, {:style => "width:100%"}
-    %table.table.table-hover.table-condensed.table-responsive
-      %thead
-        %tr
-          %td &nbsp;
-        %tr
-          %th.text-right Name
-          - Settings.induction_questions.split(";").each.with_index do |iq, index|
-            %th{:title => "#{iq}", :class => (index == 0 ? "bl" : nil) }=iq
-        - @person_courses.each do |pc|
-          %tr{"data-mis-status" => pc.mis_status.downcase}
-            %td.text-right
-              %b= link_to pc.person.name, pc.person
-            - Settings.induction_questions.split(";").each.with_index do |iq, index|
+    - Settings.induction_questions.split(";").each.with_index do |iq, index|
+      %table.table.table-hover.table-condensed.table-responsive
+        %thead
+          %tr
+            %td &nbsp;
+          %tr
+            %th.text-right Name
+            %th.bl
+              = image_tag "events/induction_questions.png"
+              = iq
+              -# select :question, Settings.induction_questions.split(";"), {:"data-href" => "#course-report-#{index}-plp", "data-toggle" => "tab"}, {:style => "width:100%"}
+            -#  - create_event_form InductionQuestion do |f|
+
+            -# - Settings.induction_questions.split(";").each.with_index do |iq, index|
+            -#   %th{:title => "#{iq}", :class => (index == 0 ? "bl" : nil) }=iq
+          -# - @person_courses.each do |pc|
+            -# %tr{"data-mis-status" => pc.mis_status.downcase}
+            -#   %td.text-right
+            -#     %b= link_to pc.person.name, pc.person
+            -#   - Settings.induction_questions.split(";").each.with_index do |iq, index|
+            -#     - fiq = pc.person.induction_questions.find_last_by_question(iq)
+            -#     %td{ :class => "text-center" + (index == 0 ? " bl" : "") + (fiq.nil? ? "" : " success"), :"data-html" => "true", :title => (fiq.nil? ? nil : "#{fiq.question}: <br>#{fiq.answer}" ) }
+            -#       - unless fiq.nil?
+            -#         %i.fa.fa-check
+
+        %tbody
+          - @person_courses.each do |pc|
+            %tr
+              %td.text-right
+                %b= link_to pc.person.name, pc.person, :target => "_blank"
               - fiq = pc.person.induction_questions.find_last_by_question(iq)
-              %td{ :class => "text-center" + (index == 0 ? " bl" : "") + (fiq.nil? ? "" : " success"), :"data-html" => "true", :title => (fiq.nil? ? nil : "#{fiq.question}: <br>#{fiq.answer}" ) }
+              %td.bl{ :class => "text-left" + (fiq.nil? ? "" : " success"), :"data-html" => "true", :title => (fiq.nil? ? nil : "#{fiq.question}: <br>#{fiq.answer}" ) }
                 - unless fiq.nil?
                   %i.fa.fa-check
 
