@@ -152,7 +152,7 @@
         %tbody
           - @person_courses.each do |pc|
             %tr{"data-mis-status" => pc.mis_status.downcase}
-              %td.text-right
+              %td.text-right{ :title => "#{pc.person.mis_id}" }
                 %b= link_to pc.name, pc.person, :target => "_blank"
               - cem_type =  pc.person.progresses.where(:course_code => ct, :course_type => ['core','english','maths'] ).last.try(:course_type)
               - person_attendances = pc.person.attendances
@@ -220,7 +220,7 @@
             %th{:title => "Curriculum Support (LEAP)"} Support
           - @person_courses.each do |pc|
             %tr{"data-mis-status" => pc.mis_status.downcase}
-              %td.text-right
+              %td.text-right{ :title => "#{pc.person.mis_id}" }
                 %b= link_to pc.person.name, pc.person, :target => "_blank"
               %td.bl
               %td
@@ -278,7 +278,7 @@
                 - @person_courses.each do |pc|
                   %tr{"data-mis-status" => pc.mis_status.downcase}
                     - fiq = pc.person.induction_questions.find_last_by_question(iq)
-                    %td.text-right
+                    %td.text-right{ :title => "#{pc.person.mis_id}" }
                       %b= link_to pc.person.name, pc.person, :target => "_blank"
                     %td.bl.text-center= fiq.try(:created_at).try(:strftime, "%d/%m/%Y" )
                     %td.text-center{ :class => "text-left" + (fiq.nil? ? "" : " success"), :"data-html" => "true", :title => (fiq.nil? ? nil : "#{fiq.question}: <br>#{fiq.answer}" ) }
@@ -286,7 +286,7 @@
                         %i.fa.fa-check
                     %td.text-center
                       - badges_to_include = Settings.induction_question_badges.try(:split, ';')[index].try(:split,',')
-                      - pc.person.mdl_badges.where(:title => badges_to_include).each do |badge|
+                      - pc.person.mdl_badges.where(:title => badges_to_include).select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }.each do |badge|
                         .col-xs-12.plp-badge
                           = link_to badge.link_url, :"data-html" => "true", :title => badge[:title] + " <br> Date Issued: " + badge[:created_at].try(:strftime, "%d/%m/%Y" ), "data-toggle" => "popover", "data-content" => badge[:description] do
                             = image_tag badge.image_url, :class => "img-responsive"
