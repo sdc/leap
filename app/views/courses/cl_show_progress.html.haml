@@ -209,13 +209,12 @@
             %td &nbsp;
           %tr
             %th.text-right Name
-            %th.bl{:title => "Initial Advice and Guidance (LEAP)"} IAG
+            %th.bl{:title => "Initial Advice and Guidance (LEAP/HZ)"} IAG
             %th{:title => "Bursary (EBS)"} Bursary
-            %th{:title => "Bus Pass (HZ)"} Bus Pass
-            -# %th{:title => "Taxis (HZ)"} Taxis
+            %th{:title => "Travel Pass (EBS)"} Travel
             %th{:title => "Parking Permit (Estates/MD)"} P.Permit
             %th{:title => "Free College Meals (EBS/MD)"} FCM
-            %th{:title => "Vulnerable Learner (EBS)"} VL
+            %th{:title => "Vulnerable Learner (EBS/Leap)"} VL
             %th{:title => "Positive Intervention (LEAP)"} PI
             %th{:title => "Curriculum Support (LEAP)"} Support
           - @person_courses.each do |pc|
@@ -225,7 +224,6 @@
               %td.bl
               %td
               %td
-              -# %td
               %td
               %td
               %td
@@ -280,15 +278,15 @@
                     - fiq = pc.person.induction_questions.find_last_by_question(iq)
                     %td.text-right{ :title => "#{pc.person.mis_id}" }
                       %b= link_to pc.person.name, pc.person, :target => "_blank"
-                    %td.bl.text-center= fiq.try(:created_at).try(:strftime, "%d/%m/%Y" )
-                    %td.text-center{ :class => "text-left" + (fiq.nil? ? "" : " success"), :"data-html" => "true", :title => (fiq.nil? ? nil : "#{fiq.question}: <br>#{fiq.answer}" ) }
+                    %td.bl.text-center{ :class => "text-left" + (fiq.nil? ? "" : " success") }= fiq.try(:created_at).try(:strftime, "%d/%m/%Y" )
+                    %td.text-left{ :class => "text-left" + (fiq.nil? ? "" : " success"), :"data-html" => "true", :title => (fiq.nil? ? nil : "#{fiq.question}: <br>#{fiq.answer}" ) }
                       - unless fiq.nil?
-                        %i.fa.fa-check
+                        %i.fa.fa-check=fiq.answer
                     %td.text-center
                       - badges_to_include = Settings.induction_question_badges.try(:split, ';')[index].try(:split,',')
                       - pc.person.mdl_badges.where(:title => badges_to_include).select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }.each do |badge|
-                        .col-xs-12.plp-badge
-                          = link_to badge.link_url, :"data-html" => "true", :title => badge[:title] + " <br> Date Issued: " + badge[:created_at].try(:strftime, "%d/%m/%Y" ), "data-toggle" => "popover", "data-content" => badge[:description] do
+                        .col-xs-12.col-xs-offset-4.plp-badge.success
+                          = link_to badge.link_url, :"data-html" => "true", :title => badge[:title] + " <br> Date Issued: " + badge[:created_at].try(:strftime, "%d/%m/%Y" ), "data-toggle" => "popover", "data-content" => badge[:description], :target => "_blank" do
                             = image_tag badge.image_url, :class => "img-responsive"
 
 -# if @user.staff?
