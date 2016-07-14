@@ -1,6 +1,8 @@
 .panel.panel-default
   .panel-heading
-    %h4.panel-title Badges
+    %h4.panel-title 
+      %i.fa.fa-certificate.fa-fw
+      Badges
   .panel-body
     - if badges.present?
       - badges.last.all_in_course.each do |badge|
