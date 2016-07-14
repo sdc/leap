@@ -221,30 +221,34 @@
             %td &nbsp;
           %tr
             %th.text-right.nowr{ :style => "width:1px" } Name
-            %th.bl{:title => "Initial Advice and Guidance (LEAP/HZ)"} IAG
-            %th{:title => "Bursary (EBS)"} Bursary
-            %th{:title => "Travel Pass (EBS)"} Travel
-            %th{:title => "Parking Permit (Estates/MD)"} P.Permit
-            %th{:title => "Free College Meals (EBS/MD)"} FCM
-            %th{:title => "Vulnerable Learner (EBS/Leap)"} VL
-            %th{:title => "Positive Intervention (LEAP)"} PI
-            %th{:title => "Curriculum Support (LEAP)"} Support
+            %th.text-center.bl{:title => "Initial Advice and Guidance (LEAP/HZ)"} IAG
+            %th.text-center{:title => "Bursary (EBS)"} Bursary
+            %th.text-center{:title => "Travel Pass (EBS)"} Travel
+            %th.text-center{:title => "Parking Permit (Estates/MD)"} P.Permit
+            %th.text-center{:title => "Free College Meals (EBS/MD)"} FCM
+            %th.text-center{:title => "Vulnerable Learner (EBS/Leap)"} VL
+            %th.text-center{:title => "Positive Intervention (LEAP)"} PI
+            %th.text-center{:title => "Curriculum Support (LEAP)"} Support
           - @person_courses.each do |pc|
             %tr{"data-mis-status" => pc.mis_status.downcase}
               %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
                 %b= link_to pc.person.name, pc.person, :target => "_blank"
-              %td.bl
-              %td
-              %td
-              %td
-              %td
-              %td
-              %td
+              %td.text-center.bl
+                - ints = pc.person.contact_logs.select{|x| /\bIAG\b/.match(x.body.to_s).present? and MISC::MiscDates.acyr(x.created_at) == @topic.year }.count
+                - if ints != 0
+                  = link_to(person_view_url(pc.person,"contact_logs")) do
+                    .label.label-danger= ints
+              %td.text-center
+              %td.text-center
+              %td.text-center
+              %td.text-center
+              %td.text-center
+              %td.text-center
                 - ints = pc.person.events.where(:eventable_type => "Intervention",:transition => :create).this_year.count
                 - if ints != 0
                   = link_to(person_view_url(pc.person,"intervention")) do
                     .label.label-danger= ints
-              %td
+              %td.text-center
                 - ints = pc.person.events.where(:eventable_type => ["SupportHistory","SupportRequest","SupportStrategy"],:transition => :create).this_year.count
                 - if ints != 0
                   = link_to(person_view_url(pc.person,"support")) do
@@ -298,11 +302,14 @@
                     %td.bl.text-center{ :class => "text-left" + (fiq.nil? ? "" : " success") }= fiq.try(:created_at).try(:strftime, "%d/%m/%Y" )
                     %td.text-center{ :class => "text-left" + (fiq.nil? ? "" : " success"), :"data-html" => "true", :title => (fiq.nil? ? nil : "#{fiq.question}: <br>#{fiq.answer}" ) }
                       - unless fiq.nil?
-                        %i.fa.fa-check=fiq.answer
-                    %td.text-center
-                      - badges_to_include = Settings.induction_question_badges.try(:split, ';')[index].try(:split,',')
-                      - pc.person.mdl_badges.where(:title => badges_to_include).select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }.each do |badge|
-                        .col-xs-12.col-xs-offset-4.plp-badge.success
+                        %i.fa.fa-check
+                        %span=fiq.answer
+
+                    - badges_to_include = Settings.induction_question_badges.try(:split, ';')[index].try(:split,',')
+                    - badges_found = pc.person.mdl_badges.where(:title => badges_to_include).select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }
+                    %td.text-center{ :class => "" + (badges_found.count > 0 ? "success" : "") }
+                      - badges_found.each do |badge|
+                        .col-xs-12.col-xs-offset-4.plp-badge
                           = link_to badge.link_url, :"data-html" => "true", :title => badge[:title] + " <br> Date Issued: " + badge[:created_at].try(:strftime, "%d/%m/%Y" ), "data-toggle" => "popover", "data-content" => badge[:description], :target => "_blank" do
                             = image_tag badge.image_url, :class => "img-responsive"
 
