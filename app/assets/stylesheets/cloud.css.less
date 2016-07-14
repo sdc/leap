@@ -242,7 +242,7 @@ table.table td, table.table th {
 }
 
 #next-lesson {
-  background-color: #9aa;
+  background-color: #653C84;
   color: white;
   padding: 10px;
   border-radius: 4px;
@@ -256,6 +256,7 @@ table.table td, table.table th {
   text-align: center;
   padding: 10px;
   display: block;
+  height: 100px;
 }
 .top-section:nth-child(2) {
   margin-left: 10px;
@@ -263,6 +264,7 @@ table.table td, table.table th {
 
 .review-section {
   padding: 10px;
+  height: 100px;
   text-align: center;
   margin-bottom: 20px;
   background-color: #d9edf7;
@@ -278,7 +280,7 @@ table.table td, table.table th {
 .review-section:last-child {
   border: 0px;
 }
-#progress h3 {
+#progress-bars h3 {
   margin: 0;
   font-weight: bold;
 }
@@ -454,8 +456,8 @@ table.table td, table.table th {
   white-space: nowrap;}
 
 .notification:hover {
-  background-color: #bbe1f7;
-}
+  background-color: #bbe1f7
+;}
 
 .notification-content {
   display: inline-block;
@@ -477,6 +479,58 @@ table.table td, table.table th {
   color: #333333; 
 }
 
+.pull-bottom {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  margin: 0;
+  padding: 5px 3px;
+}
+
+.nav-all {
+  color: #612989;
+}
+
+.nav-courses {
+  color: #233c9a
+}
+
+.nav-contact-logs {
+  color: #9a815a;
+}
+
+.nav-intervention {
+  color: #000;
+}
+
+.nav-qualifications {
+  color: #388929;
+}
+
+.nav-reviews {
+  color: #896b29;
+}
+
+.nav-support {
+  color: #892948;
+}
+
+.nav-induction {
+  color: #a9af79
+}
+
+.nav-work-package {
+  color: #8a8e8e;
+}
+
+.title {
+  font-family: 'Patua One', serif;
+  font-weight: ;
+}
+
+.panel-heading {
+  color: #4f2170 !important;
+}
 @media (min-width: 991px) and (max-width: 1199px) {
   .target-grade > .grade {
     display: none;
@@ -503,4 +557,9 @@ table.table td, table.table th {
   .tile-modal {
     width: 400px;
   }
+}
+@media (min-width: 768px) and (max-width: 990px) {
+  .review-section > h4 {
+    font-size: 13px;
+  } 
 }
