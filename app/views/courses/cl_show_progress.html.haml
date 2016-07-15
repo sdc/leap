@@ -55,7 +55,7 @@
               %th.text-center.bl{ :title => "Attendance for #{ct}" } Att
               %th.text-center.visible-lg{:class => "#{ct}_hide"} Previous
               %th.text-center.visible-lg{:class => "#{ct}_hide"} Current
-              %th.text-center{ :title => "Target Grade" } TG
+              %th.text-center{ :title => "Target Grade for #{ct}" } TG
               -# - if ["english","maths"].include? ct
               -#   %th.text.center.visible-lg{:class => "#{ct}_hide"} Reg
         %tbody
@@ -102,7 +102,7 @@
 
                 - tg = pc.person.initial_reviews.joins(:progress).where("progresses.id = initial_reviews.progress_id and progresses.course_year=? and LOWER(course_type) = ?",@topic.year,ct).order("created_at desc, id desc").first
                 - unless tg.nil?
-                  %td.text-center.success{:title => "Target Grade for #{ct}"}= tg.target_grade 
+                  %td.text-center.success{:title => "Target Grade for #{ct} (#{tg.created_at})"}= tg.target_grade 
                 - else
                   %td.text-center{:title => "No Target"}
 
