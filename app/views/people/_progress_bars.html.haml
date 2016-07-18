@@ -4,7 +4,7 @@
       .row.row-eq-height
         - if a["initial"].present?
           - a['initial'].body = 'No comments' if a['initial'].body.empty?
-          .col-md-6.col-xs-12.initial-review.present.top-section{:onClick => 'displayInitialView("' + a['initial'].target_grade.tr(?", ?').to_s + '" , "' + a['initial'].body.squish.tr(?", ?').to_s + '")'}
+          .col-md-6.col-xs-12.initial-review.present.top-section{:onClick => 'displayInitialView("' + a['initial'].target_grade.tr(?", ?').to_s + '" , "' + a['initial'].body.squish.tr(?", ?').to_s + '","' + a["initial"].person.name.to_s + '","' + a["initial"].created_at.to_formatted_s(:long) + '")'}
             %h4{:style => "margin-bottom: 5px"} Target Grade for
             %h4 #{a["course"].course_title.upcase}
             %h3 #{a['initial'].target_grade.to_s}
@@ -28,7 +28,7 @@
         .col-md-12.col-sm-12
           .row
             - if a["initial"].present?
-              .col-md-2.hidden-xs.col-sm-2.review-section.present.clickable{:onClick => 'displayInitialView("' + a['initial'].target_grade.tr(?", ?').to_s + '" , "' + a['initial'].body.squish.tr(?", ?').to_s + '")'}
+              .col-md-2.hidden-xs.col-sm-2.review-section.present.clickable{:onClick => 'displayInitialView("' + a['initial'].target_grade.tr(?", ?').to_s + '" , "' + a['initial'].body.squish.tr(?", ?').to_s + '","' + a["initial"].person.name.to_s + '","' + a["initial"].created_at.to_formatted_s(:long) + '")'}
                 %h5 Initial Review
                 %h4 Completed
             - else
@@ -38,7 +38,7 @@
             - (1..5).each do |i|
               - if (a["reviews"][i].present? && a["reviews"][i].number == i)
                 - a["reviews"][i].body = 'No comments' if a["reviews"][i].body.empty?
-                .col-md-2.hidden-xs.col-sm-2.review-section.has_tooltip{:class => a["reviews"][i].level, :onClick => 'displayReviewView("' + a["reviews"][i].number.to_s + '","' + a["reviews"][i].working_at.tr(?", ?').to_s + '","' + a["reviews"][i].attendance.to_s + '","' + a["reviews"][i].body.squish.tr(?", ?').to_s + '")', :title => a["reviews"][i].ragp_desc, "data-placement" => "right"}
+                .col-md-2.hidden-xs.col-sm-2.review-section.has_tooltip{:class => a["reviews"][i].level, :onClick => 'displayReviewView("' + a["reviews"][i].number.to_s + '","' + a["reviews"][i].working_at.tr(?", ?').to_s + '","' + a["reviews"][i].attendance.to_s + '","' + a["reviews"][i].body.squish.tr(?", ?').to_s + '","' + a["reviews"][i].person.name.to_s + '","' + a["reviews"][i].created_at.to_formatted_s(:long) + '")', :title => a["reviews"][i].ragp_desc, "data-placement" => "right"}
                   %h5 Working at
                   %h4 #{a["reviews"][i].working_at}
                   %h6.pull-bottom.pull-right PAR #{i}
