@@ -17,6 +17,8 @@
 class ProgressReview < Eventable
   attr_accessible :attendance, :body, :completed_by, :created_at, :id, :level, :number, :progress_id, :working_at
 
+  validate :check_unique
+  belongs_to :person, :foreign_key => "created_by_id"
   belongs_to :progress, :foreign_key => "progress_id"
   before_save :set_values
 
@@ -59,6 +61,12 @@ class ProgressReview < Eventable
 
   def icon_class
     "fa-pencil-square-o"
+  end
+
+  def check_unique
+    if ProgressReview.exists? ["progress_id = ? AND number = ? AND id != ?", self.progress_id, self.number.to_i, self.id]
+      self.errors.add( :progress_id, 'Error, please contact IT')
+    end
   end
 
 end
