@@ -6,27 +6,27 @@
         Personal Details
   #personal-details.panel-collapse.collapse
     .panel-body.no-padding
-      %dl.no-margin
+      %dl#sidebar-section.no-margin
         %dt.menu-spacing-top Address
         %dd.menu-spacing-bottom= @topic.address_text
         - unless @topic.home_phone.blank?
-          %hr.no-margin.no-padding
+          %hr
           %dt.menu-spacing-top Home Phone
           %dd.menu-spacing-bottom= @topic.home_phone
         - unless @topic.mobile_number.blank?
-          %hr.no-margin.no-padding
+          %hr
           %dt.menu-spacing-top Mobile Phone
           %dd.menu-spacing-bottom= @topic.mobile_number
         - unless @topic.personal_email.blank?
-          %hr.no-margin.no-padding
+          %hr
           %dt.menu-spacing-top Personal Email
           %dd.menu-spacing-bottom= mail_to(@topic.personal_email)
         - if @topic.date_of_birth 
-          %hr.no-margin.no-padding
+          %hr
           %dt.menu-spacing-top Date of Birth
           %dd.menu-spacing-bottom= "#{@topic.date_of_birth.to_date.to_s} (Age: #{@topic.age})"
         - unless @topic.next_of_kin.blank?
-          %hr.no-margin.no-padding
+          %hr
           %dt.menu-spacing-top Next of Kin
           %dd.menu-spacing-bottom= @topic.next_of_kin
       - if @topic.current_user?
