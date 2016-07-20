@@ -19,7 +19,7 @@ class WorkPackage < Eventable
   after_create {|q| q.events.create!(:event_date => created_at, :transition => :create)}
 
   def title
-    ["Work Package", wp_type]
+    "Work Package"
   end
 
 end

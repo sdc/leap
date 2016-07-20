@@ -30,6 +30,7 @@ Settings.defaults[:application_offer_text] = "You have a guaranteed offer of a p
 Settings.defaults[:application_title_field] = ""
 Settings.defaults[:current_simple_poll] = ""
 Settings.defaults[:notified_events] = "ContactLog;Intervention;SupportPlan;ProgressReview;InitialReview"
+Settings.defaults[:work_package_types] = ""
 
 # BKSB Import Settings
 Settings.defaults[:bksb_url] = ""

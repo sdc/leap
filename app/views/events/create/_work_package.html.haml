@@ -4,18 +4,18 @@
     .span1= image_tag "events/work_packages.png"
     .span4
       %label Type
-      = f.text_field :wp_type, style: "width:100%"
+      = f.select :wp_type, options_for_select(Settings.work_package_types.split('|')), style: "width:100%"
     .span4
-      %label Location
-      = f.text_field :location, style: "width:100%"
+      %label Brief Description
+      = f.text_field :description, style: "width:100%"
   .row
     .span1 &nbsp;
     .span4
-      %label Key Strengths
-      = f.text_area :key_strengths
+      %label What have I learnt?
+      = f.text_area :learnt
     .span4
-      %label Development
-      = f.text_area :development
+      %label Next Steps
+      = f.text_area :next_steps
   .row
     .span1 &nbsp;
     %label.span2 Days attended:
