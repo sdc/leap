@@ -1,10 +1,12 @@
 - if Settings.home_page == "progress" && !@topic.staff?
   - grades = Settings.qqoe_grade.split ","
   #home.row
+
     #progress.panel.panel-default
       .panel-body
         .col-md-12
           .row
+            #news= render :partial => "people/news_modal"
             #aspiration= render :partial => "people/aspiration"
             #notifications=render :partial => "people/notifications" if @notifications.present?
           %hr{:style => "margin-top: 5px"}
