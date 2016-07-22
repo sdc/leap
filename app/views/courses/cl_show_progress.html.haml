@@ -223,14 +223,13 @@
             %th.text-right.nowr{ :style => "width:1px" } Name
             %th.text-center.bl{:title => "Initial Advice and Guidance (LEAP/HZ)"} IAG
             %th.text-center{:title => "Bursary (EBS)"} Bursary
-            %th.text-center{:title => "Travel Pass (EBS)"} Travel
-            %th.text-center{:title => "Parking Permit (Estates/MD)"} P.Permit
+            %th.text-center{:title => "Travel Pass / Parking Permit (EBS)"} Travel
             %th.text-center{:title => "Free College Meals (EBS/MD)"} FCM
             %th.text-center{:title => "Vulnerable Learner (EBS/Leap)"} VL
             %th.text-center{:title => "Positive Intervention (LEAP)"} PI
             %th.text-center{:title => "Curriculum Support (LEAP)"} Support
           - @person_courses.each do |pc|
-            - pc.person.import_support_plps
+            -# pc.person.import_support_plps if options[:support_plps]
             - sups = pc.person.support_plps.where(:active => true)
             %tr{"data-mis-status" => pc.mis_status.downcase}
               %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
@@ -249,10 +248,11 @@
                   %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Bursary Start Date","Bursary End Date"].include? sp.name }.map{|s| s.name + ": " + s.value}.join('<br>') }
               %td.text-center
                 - if sups.find{|sp| ["Bus Pass Region"].include? sp.name }.present?
-                  %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Bus Pass Region"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
-              %td.text-center
+                  %i.fa.fa-bus{:"data-html" => "true", :title => sups.select{|sp| ["Bus Pass Region"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
+                - if sups.find{|sp| ["Taxi Pass"].include? sp.name }.present?
+                  %i.fa.fa-taxi{:"data-html" => "true", :title => sups.select{|sp| ["Taxi Pass"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
                 - if sups.find{|sp| ["Car Park Permit Number"].include? sp.name }.present?
-                  %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Car Park Permit Number"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
+                  %i.fa.fa-car{:"data-html" => "true", :title => sups.select{|sp| ["Car Park Permit Number"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
               %td.text-center
                 -# - if ( ( sups.find{|sp| ["Free College Meals"].include? sp.name }.try(:value) || "N" ) != "N" || sups.find{|sp| ["FCM Funding"].include? sp.name }.present? )
                 -#   %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Free College Meals","FCM Funding"].include? sp.name }.map{|s| s.name + ": " + s.value}.join('<br>') }
