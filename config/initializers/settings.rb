@@ -77,6 +77,7 @@ Settings.defaults[:moodle_link_target]           = "_self"
 Settings.defaults[:moodle_badge_block_courses]   = ""
 Settings.defaults[:moodle_grade_track_import]    = "off"
 Settings.defaults[:moodle_badge_import]          = "off"
+Settings.defaults[:moodle_badge_plp_courses]     = ""
 
 # Attendance Import
 Settings.defaults[:attendance_table]             = ""

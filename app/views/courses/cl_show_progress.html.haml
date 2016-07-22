@@ -19,7 +19,9 @@
   %li 
     %a{:href => "#support-plp", "data-toggle" => "tab"} Support
   %li 
-    %a{:href => "#reporting", "data-toggle" => "tab"} Reporting
+    %a{:href => "#checklist", "data-toggle" => "tab"} Checklist
+  %li 
+    %a{:href => "#badges", "data-toggle" => "tab"} Badges
 
 .tab-content
   .tab-pane.fade.in.active.panel.panel-default.row#photo-list{:style => "border-top: 0"}
@@ -291,27 +293,27 @@
               -# - else
               -#   %td.bl{:title => "No Review Open"}
 
-  .tab-pane.fade.panel.panel-default.row#reporting
+  .tab-pane.fade.panel.panel-default.row#checklist
     .scroll-x
       -# = image_tag "events/induction_questions.png"
-      %table.table.table-hover.table-condensed.table-responsive{:id => "reporting-selection-table", :style => "margin:0px" }
+      %table.table.table-hover.table-condensed.table-responsive{:id => "checklist-selection-table", :style => "margin:0px" }
         %thead
           %tr
-            %td=select :reporting, :question, options_for_select(Settings.induction_questions.split(";").map.with_index{|x,index| [x, "reporting_"+index.to_s] }), {}, {:style => "width:100%", :onchange => "$('.nav-tabs a[href=#' + $(this).val() + ']').tab('show');", :with => 'Form.Element.serialize(this)' }
+            %td=select :checklist, :question, options_for_select(Settings.induction_questions.split(";").map.with_index{|x,index| [x, "checklist_"+index.to_s] }), {}, {:style => "width:100%", :onchange => "$('.nav-tabs a[href=#' + $(this).val() + ']').tab('show');", :with => 'Form.Element.serialize(this)' }
       %ul.nav.nav-tabs.hidden
         - Settings.induction_questions.split(";").each.with_index do |iq, index|
           %li{ :class => (index == 0 ? "active" : "") }
-            %a{:href => "#reporting_" + index.to_s, "data-toggle" => "tab"}= "r#{index}"
+            %a{:href => "#checklist_" + index.to_s, "data-toggle" => "tab"}= "r#{index}"
       .tab-content
         - Settings.induction_questions.split(";").each.with_index do |iq, index|
-          .tab-pane.fade.panel.panel-default{ :id => "reporting_#{index}", :class => (index == 0 ? "in active" : "") }
-            %table.table.table-hover.table-condensed.table-responsive{:id => "reporting-#{index}-table"}
+          .tab-pane.fade.panel.panel-default{ :id => "checklist_#{index}", :class => (index == 0 ? "in active" : "") }
+            %table.table.table-hover.table-condensed.table-responsive{:id => "checklist-#{index}-table"}
               %thead
                 %tr
                   %th.text-right.nowr{ :style => "width:1px" } Name
                   %th.text-center.bl Date
                   %th.text-center= iq
-                  %th.text-center Badge
+                  -# %th.text-center= Badges
 
               %tbody
                 - @person_courses.each do |pc|
@@ -325,9 +327,47 @@
                         %i.fa.fa-check
                         %span=fiq.answer
 
-                    - badges_to_include = Settings.induction_question_badges.try(:split, ';')[index].try(:split,',')
-                    - badges_found = pc.person.mdl_badges.where(:title => badges_to_include).select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }
-                    %td.text-center{ :class => "" + (badges_found.count > 0 ? "success" : "") }
+                    -# - badges_to_include = Settings.induction_question_badges.try(:split, ';')[index].try(:split,',')
+                    -# - badges_found = pc.person.mdl_badges.where(:title => badges_to_include).select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }
+                    -# %td.text-center{ :class => "" + (badges_found.count > 0 ? "success" : "") }
+                    -#   - badges_found.each do |badge|
+                    -#     .col-xs-12.col-xs-offset-4.plp-badge
+                    -#       = link_to badge.link_url, :"data-html" => "true", :title => badge[:title] + " <br> Date Issued: " + badge[:created_at].try(:strftime, "%d/%m/%Y" ), "data-toggle" => "popover", "data-content" => badge[:description], :target => "_blank" do
+                    -#         = image_tag badge.image_url, :class => "img-responsive"
+
+  .tab-pane.fade.panel.panel-default.row#badges
+    .scroll-x
+      -# = image_tag "events/induction_questions.png"
+      - badges_courses_to_include = Settings.moodle_badge_plp_courses.try(:split,',')
+      - badges_list = []
+      - @person_courses.each do |pc|
+        - badges_list |= pc.person.mdl_badges.where(:mdl_course_id => badges_courses_to_include).select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }.map{|b| { :title => b[:title], :course_id => b[:mdl_course_id] } }.uniq
+      - badges_list.sort! { |a, b|  a[:title] <=> b[:title] }
+      - badges_list = [{:title => "No badges found", :mdl_course_id => nil}] if badges_list.count == 0
+      %table.table.table-hover.table-condensed.table-responsive{:id => "badges-selection-table", :style => "margin:0px" }
+        %thead
+          %tr
+            %td=select :badges, :question, options_for_select(badges_list.map.with_index{|x,index| [x[:title], "badges_"+index.to_s] }), {}, {:style => "width:100%", :onchange => "$('.nav-tabs a[href=#' + $(this).val() + ']').tab('show');", :with => 'Form.Element.serialize(this)' }
+      %ul.nav.nav-tabs.hidden
+        - badges_list.each.with_index do |bdg, index|
+          %li{ :class => (index == 0 ? "active" : "") }
+            %a{:href => "#badges_" + index.to_s, "data-toggle" => "tab"}= "r#{index}"
+      .tab-content
+        - badges_list.each.with_index do |bdg, index|
+          .tab-pane.fade.panel.panel-default{ :id => "badges_#{index}", :class => (index == 0 ? "in active" : "") }
+            %table.table.table-hover.table-condensed.table-responsive{:id => "badges-#{index}-table"}
+              %thead
+                %tr
+                  %th.text-right.nowr{ :style => "width:1px" } Name
+                  %th.bl.text-center= bdg[:title]
+
+              %tbody
+                - @person_courses.each do |pc|
+                  %tr{"data-mis-status" => pc.mis_status.downcase}
+                    %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
+                      %b= link_to pc.person.name, pc.person, :target => "_blank"
+                    - badges_found = pc.person.mdl_badges.where(:title => bdg[:title], :mdl_course_id => bdg[:mdl_course_id]).select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }
+                    %td.bl.text-center{ :class => "" + (badges_found.count > 0 ? "success" : "") }
                       - badges_found.each do |badge|
                         .col-xs-12.col-xs-offset-4.plp-badge
                           = link_to badge.link_url, :"data-html" => "true", :title => badge[:title] + " <br> Date Issued: " + badge[:created_at].try(:strftime, "%d/%m/%Y" ), "data-toggle" => "popover", "data-content" => badge[:description], :target => "_blank" do
