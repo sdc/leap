@@ -229,7 +229,7 @@
             %th.text-center{:title => "Positive Intervention (LEAP)"} PI
             %th.text-center{:title => "Curriculum Support (LEAP)"} Support
           - @person_courses.each do |pc|
-            -# pc.person.import_support_plps if options[:support_plps]
+            - pc.person.import_support_plps if Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}][:support_plps]
             - sups = pc.person.support_plps.where(:active => true)
             %tr{"data-mis-status" => pc.mis_status.downcase}
               %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
