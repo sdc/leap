@@ -230,29 +230,49 @@
             %th.text-center{:title => "Positive Intervention (LEAP)"} PI
             %th.text-center{:title => "Curriculum Support (LEAP)"} Support
           - @person_courses.each do |pc|
+            - pc.person.import_support_plps
+            - sups = pc.person.support_plps.where(:active => true)
             %tr{"data-mis-status" => pc.mis_status.downcase}
               %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
                 %b= link_to pc.person.name, pc.person, :target => "_blank"
               %td.text-center.bl
                 - ints = pc.person.contact_logs.select{|x| /\bIAG\b/.match(x.body.to_s).present? and MISC::MiscDates.acyr(x.created_at) == @topic.year }.count
-                - if ints != 0
+                - ints_title = ints > 0 ? ( ints.to_s + (ints > 1 ? " entries " : " entry") + " in the contact logs" ) : nil
+                - iaga = sups.find{|sp| ["IAG Appointment"].include? sp.name && MISC::MiscDates.acyr(MISC::MiscDates.make_date(sp.value,'%d-%b-%Y')) == @topic.year }.present?
+                - iaga_title = iaga ? sups.select{|sp| ["IAG Appointment"].include? sp.name }.map{|s| s.name + ": " + s.value}.join('<br>') : nil
+                - if ( ints != 0 || iaga )
                   = link_to(person_view_url(pc.person,"contact_logs")) do
-                    .label.label-danger= ints
+                    -# .label.label-danger= ints
+                    %i.fa.fa-check{:"data-html" => "true", :title => [ints_title,iaga_title].compact.join('<br>') }
               %td.text-center
+                - if sups.find{|sp| ["Bursary Start Date","Bursary End Date"].include? sp.name && MISC::MiscDates.acyr(MISC::MiscDates.make_date(sp.value,'%d-%b-%Y')) == @topic.year }.present?
+                  %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Bursary Start Date","Bursary End Date"].include? sp.name }.map{|s| s.name + ": " + s.value}.join('<br>') }
               %td.text-center
+                - if sups.find{|sp| ["Bus Pass Region"].include? sp.name }.present?
+                  %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Bus Pass Region"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
               %td.text-center
+                - if sups.find{|sp| ["Car Park Permit Number"].include? sp.name }.present?
+                  %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Car Park Permit Number"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
               %td.text-center
+                -# - if ( ( sups.find{|sp| ["Free College Meals"].include? sp.name }.try(:value) || "N" ) != "N" || sups.find{|sp| ["FCM Funding"].include? sp.name }.present? )
+                -#   %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Free College Meals","FCM Funding"].include? sp.name }.map{|s| s.name + ": " + s.value}.join('<br>') }
+                - if ( ( sups.find{|sp| ["Free College Meals"].include? sp.name }.try(:value) || "N" ) != "N" )
+                  %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Free College Meals"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
               %td.text-center
+                - if sups.find{|sp| ["EHC Plan","HE Care Leaver","Special Care Guidance","Social Worker"].include? sp.name }.present?
+                  %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["EHC Plan","HE Care Leaver","Special Care Guidance","Social Worker"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
               %td.text-center
                 - ints = pc.person.events.where(:eventable_type => "Intervention",:transition => :create).this_year.count
                 - if ints != 0
                   = link_to(person_view_url(pc.person,"intervention")) do
                     .label.label-danger= ints
+                    -# %i.fa.fa-check{:title => ints.to_s}
               %td.text-center
                 - ints = pc.person.events.where(:eventable_type => ["SupportHistory","SupportRequest","SupportStrategy"],:transition => :create).this_year.count
                 - if ints != 0
                   = link_to(person_view_url(pc.person,"support")) do
-                    .label.label-danger= ints
+                    -# .label.label-danger= ints
+                    %i.fa.fa-check{:title => ints.to_s}
               -# - if @window
               -#   - if cr = pc.person.reviews.where(:window => @window).first
               -#     %td.bl.text-center{:class => cr.published ? "success"   : "warning",

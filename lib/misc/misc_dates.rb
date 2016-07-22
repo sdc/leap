@@ -2,6 +2,7 @@ module MISC
    class MiscDates
 
 	  def self.acyr(checkdate = Date.today)
+	  	return nil if checkdate.nil?
 	    (d,m) = Settings.year_boundary_date.split("/").map{|x| x.to_i}
 	    ab = checkdate.change(:day => d,:month => m)
 	    if ab <= checkdate
@@ -26,8 +27,18 @@ module MISC
 	  end
 
 	  def self.date_in_acyr(checkdate = Date.today, acyrs)
-	  	nil if checkdate.nil? || acyrs.nil?
+	  	return nil if checkdate.nil? || acyrs.nil?
 	  	acyrs.flatten.join(",").split(",").include?( acyr(checkdate) ) unless acyrs.nil?
+	  end
+
+	  def self.is_date(datestr, picstr)
+	  	return nil if datestr.nil? || picstr.nil?
+		Date.strptime(datestr, picstr).present? rescue false
+	  end
+
+	  def self.make_date(datestr, picstr)
+	  	return nil if datestr.nil? || picstr.nil?
+		Date.strptime(datestr, picstr) rescue nil
 	  end
 
    end

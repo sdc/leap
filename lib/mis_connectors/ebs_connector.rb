@@ -88,6 +88,7 @@ module MisPerson
         @person.import_attendances if options[:attendances]
         @person.import_quals if options[:quals]
         @person.import_absences if options[:absences]
+        @person.import_support_plps if options[:support_plps]
         return @person
       else
         return false
@@ -293,6 +294,39 @@ module MisPerson
         :lessons_missed => a.absence_slots_count,
         :contact_category => a.contact
       )
+    end
+  end
+
+  def import_support_plps
+    Ebs::Person.find_all_by_person_code(mis_id).each do |p|
+      [
+        # [0] field name, [1] title, [2] verifiers domain (optional), [3] exclude list (optional)
+        ["fes_user_14","Special Care Guidance","U_SPECIALCARE"],
+        ["fes_user_19","Additional Learning Sup","U_ALS_REQ",["NO"]],
+        ["fes_user_21","Car Park Permit Number"],
+        ["fes_user_26","Bus Pass Region","U_BUSPASS_REGION"], # not used - all null!
+        ["fes_user_29","Bursary Start Date"], # 1 date for 15/16 - cannot be used?
+        ["fes_user_30","Bursary End Date"], # 1 date for 15/16 - cannot be used?
+        ["fes_user_36","Free College Meals", "U_YESNO",["N"]], # not used - all N or null?
+        # ["fes_user_38","FCM Funding","U_FSM_FUNDING"], # ignore - meaningless for requirement
+        ["fes_user_39","IAG Appointment"], # 23 appointments set in EBS for 15/16 - is this correct?
+        ["fes_user_40","Social Worker"], # should we be using this?
+        ["fes_user_18","EHC Plan","U_EHCP",["N"]], # only 2 in entire EBS database! - cannot be used
+        ["fes_user_35","HE Care Leaver","U_HECARE",["05","98","99"]]
+      ].each do |f|
+        v = p.send(f[0])
+        next if support_plps.detect{ |sp| sp.name == f[1] && sp.active == true && sp.value == v }
+        support_plps.update_all( ["active = 0, updated_at = ?",DateTime.now], ["active = 1 and name = ? and ( value != ? or ? is null)", f[1], v, v ] ) unless support_plps.nil?
+        short_desc = ( f[2].present? ? Ebs::Verifier.find_by_low_value_and_rv_domain(v,f[2]).try(:fes_short_description) : nil )
+        nsp = support_plps.create(
+          :name => f[1],
+          :value => v,
+          :description => short_desc,
+          :active => 1,
+          :domain => "EBS",
+          :source => "people." + f[0]
+        ) unless v.nil? || (f[3].present? && f[3].include?(v))
+      end
     end
   end
 
