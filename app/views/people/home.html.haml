@@ -5,9 +5,15 @@
       .panel-body
         .col-md-12
           .row
-            #news= render :partial => "people/news_modal"
-            #aspiration= render :partial => "people/aspiration"
-            #notifications=render :partial => "people/notifications" if @notifications.present?
+            .col-xs-2.hidden-xs.hidden-sm
+              .row
+                #news= render :partial => "people/news_modal"
+            .col-xs-12.col-md-8
+              .row
+                #aspiration= render :partial => "people/aspiration"
+            .col-xs-2.hidden-xs.hidden-sm
+              .row
+                #notifications=render :partial => "people/notifications" if @notifications.present?
           %hr{:style => "margin-top: 5px"}
           %div{:style => "text-align: center"}
             %h3.title{:style => "color: #4f2170; margin-bottom: 10px"} Progress and Attendance Reviews (PAR)
