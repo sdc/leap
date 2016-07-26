@@ -1,24 +1,28 @@
-%i.fa.fa-info-circle.fa-2x.modal-text{"aria-hidden" => "true", "data-target" => "#newsModal", "data-toggle" => "modal", :style => "color: #4f2170"}
-#newsModal.modal.fade{:role => "dialog"}
-  .modal-dialog
-    .modal-content
-      .modal-header
-        %button.close{"data-dismiss" => "modal", :type => "button"} ×
-        %h4.modal-title.modal-text Have you organised your parking permit?
-      .modal-body
-        .row
-          .col-xs-5
-            %img.img-responsive{:src => "http://www.southdevon.ac.uk/images/about-us/facilities/parking-2.jpg"}/
-          .col-xs-7
-            %p Students must apply to park on campus if they wish to park a car at the main College site at:
-            %p
-              Vantage Point
-              %br/
-              Long Road
-              %br/
-              Paignton
-              %br/
-              TQ4 7EJ
-      .modal-footer
-        %a{:href => "http://www.southdevon.ac.uk/contact-and-travel/parking-student-parking-permits", :target => "_blank"}
-          %button.btn.btn-default.center.modal-button.width-100{:type => "button"} Click Here to find out how to apply.
+.col-xs-2.hidden-xs.hidden-sm
+  .row
+    .row
+      .col-xs-12
+        %i.fa.fa-info-circle.fa-2x.modal-text{"aria-hidden" => "true", "data-target" => "#newsModal", "data-toggle" => "modal", :style => "color: #4f2170"}
+    #newsModal.modal.fade{:role => "dialog"}
+      .modal-dialog
+        .modal-content
+          .modal-header
+            %button.close{"data-dismiss" => "modal", :type => "button"} ×
+            %h4.modal-title.modal-text Have you organised your parking permit?
+          .modal-body
+            .row
+              .col-xs-5
+                %img.img-responsive{:src => "http://www.southdevon.ac.uk/images/about-us/facilities/parking-2.jpg"}/
+              .col-xs-7
+                %p Students must apply to park on campus if they wish to park a car at the main College site at:
+                %p
+                  Vantage Point
+                  %br/
+                  Long Road
+                  %br/
+                  Paignton
+                  %br/
+                  TQ4 7EJ
+          .modal-footer
+            %a{:href => "http://www.southdevon.ac.uk/contact-and-travel/parking-student-parking-permits", :target => "_blank"}
+              %button.btn.btn-default.center.modal-button.width-100{:type => "button"} Click Here to find out how to apply.
