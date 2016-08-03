@@ -223,13 +223,15 @@
             %td &nbsp;
           %tr
             %th.text-right.nowr{ :style => "width:1px" } Name
-            %th.text-center.bl{:title => "Initial Advice and Guidance (LEAP/HZ)"} IAG
-            %th.text-center{:title => "Bursary (EBS)"} Bursary
-            %th.text-center{:title => "Travel Pass / Parking Permit (EBS)"} Travel
-            %th.text-center{:title => "Free College Meals (EBS/MD)"} FCM
-            %th.text-center{:title => "Vulnerable Learner (EBS/Leap)"} VL
-            %th.text-center{:title => "Positive Intervention (LEAP)"} PI
-            %th.text-center{:title => "Curriculum Support (LEAP)"} Support
+            %th.text-center.bl{:title => "Initial Advice and Guidance"} IAG
+            %th.text-center{:title => "Bursary"} Bursary
+            %th.text-center{:title => "Travel Pass / Parking Permit"} Travel
+            %th.text-center{:title => "Free College Meals"} FCM
+            %th.text-center{:title => "Vulnerable Learner"} VL
+            %th.text-center{:title => "Positive Intervention"} PI
+            %th.text-center{:title => "Curriculum Support"} Support
+        %tbody
+          %tr
           - @person_courses.each do |pc|
             - pc.person.import_support_plps if Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}][:support_plps]
             - sups = pc.person.support_plps.where(:active => true)
@@ -239,30 +241,30 @@
               %td.text-center.bl
                 - ints = pc.person.contact_logs.select{|x| /\bIAG\b/.match(x.body.to_s).present? and MISC::MiscDates.acyr(x.created_at) == @topic.year }.count
                 - ints_title = ints > 0 ? ( ints.to_s + (ints > 1 ? " entries " : " entry") + " in the contact logs" ) : nil
-                - iaga = sups.find{|sp| ["IAG Appointment"].include? sp.name && MISC::MiscDates.acyr(MISC::MiscDates.make_date(sp.value,'%d-%b-%Y')) == @topic.year }.present?
-                - iaga_title = iaga ? sups.select{|sp| ["IAG Appointment"].include? sp.name }.map{|s| s.name + ": " + s.value}.join('<br>') : nil
+                - iaga = sups.find{|sp| sp.domain == "EBS" && (["IAG Appointment"].include? sp.name) && MISC::MiscDates.acyr(MISC::MiscDates.make_date(sp.value,'%d-%b-%Y')) == @topic.year }.present?
+                - iaga_title = iaga ? sups.select{|sp| sp.domain == "EBS" && (["IAG Appointment"].include? sp.name) }.map{|s| s.name + ": " + s.value}.join('<br>') : nil
                 - if ( ints != 0 || iaga )
                   = link_to(person_view_url(pc.person,"contact_logs")) do
                     -# .label.label-danger= ints
                     %i.fa.fa-check{:"data-html" => "true", :title => [ints_title,iaga_title].compact.join('<br>') }
               %td.text-center
-                - if sups.find{|sp| ["Bursary Start Date","Bursary End Date"].include? sp.name && MISC::MiscDates.acyr(MISC::MiscDates.make_date(sp.value,'%d-%b-%Y')) == @topic.year }.present?
-                  %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Bursary Start Date","Bursary End Date"].include? sp.name }.map{|s| s.name + ": " + s.value}.join('<br>') }
+                - if sups.find{|sp| sp.domain == "EBS" && (["Bursary Start Date","Bursary End Date"].include? sp.name) && MISC::MiscDates.acyr(MISC::MiscDates.make_date(sp.value,'%d-%b-%Y')) == @topic.year }.present?
+                  %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["Bursary Start Date","Bursary End Date"].include? sp.name) }.map{|s| s.name + ": " + s.value}.join('<br>') }
               %td.text-center
-                - if sups.find{|sp| ["Bus Pass Region"].include? sp.name }.present?
-                  %i.fa.fa-bus{:"data-html" => "true", :title => sups.select{|sp| ["Bus Pass Region"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
-                - if sups.find{|sp| ["Taxi Pass"].include? sp.name }.present?
-                  %i.fa.fa-taxi{:"data-html" => "true", :title => sups.select{|sp| ["Taxi Pass"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
-                - if sups.find{|sp| ["Car Park Permit Number"].include? sp.name }.present?
-                  %i.fa.fa-car{:"data-html" => "true", :title => sups.select{|sp| ["Car Park Permit Number"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
+                - if sups.find{|sp| sp.domain == "EBS" && (["Bus Pass Region"].include? sp.name) }.present?
+                  %i.fa.fa-bus{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["Bus Pass Region"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
+                - if sups.find{|sp| sp.domain == "EBS" && (["Taxi Pass"].include? sp.name) }.present?
+                  %i.fa.fa-taxi{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["Taxi Pass"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
+                - if sups.find{|sp| sp.domain == "EBS" && (["Car Park Permit Number"].include? sp.name) }.present?
+                  %i.fa.fa-car{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["Car Park Permit Number"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
               %td.text-center
-                -# - if ( ( sups.find{|sp| ["Free College Meals"].include? sp.name }.try(:value) || "N" ) != "N" || sups.find{|sp| ["FCM Funding"].include? sp.name }.present? )
-                -#   %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Free College Meals","FCM Funding"].include? sp.name }.map{|s| s.name + ": " + s.value}.join('<br>') }
-                - if ( ( sups.find{|sp| ["Free College Meals"].include? sp.name }.try(:value) || "N" ) != "N" )
-                  %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Free College Meals"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
+                -# - if ( ( sups.find{|sp| ["Free College Meals"].include? sp.name) }.try(:value) || "N" ) != "N" || sups.find{|sp| ["FCM Funding"].include? sp.name) }.present? )
+                -#   %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Free College Meals","FCM Funding"].include? sp.name) }.map{|s| s.name + ": " + s.value}.join('<br>') }
+                - if ( ( sups.find{|sp| sp.domain == "EBS" && (["Free College Meals"].include? sp.name) }.try(:value) || "N" ) != "N" )
+                  %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["Free College Meals"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
               %td.text-center
-                - if sups.find{|sp| ["EHC Plan","HE Care Leaver","Special Care Guidance","Social Worker"].include? sp.name }.present?
-                  %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["EHC Plan","HE Care Leaver","Special Care Guidance","Social Worker"].include? sp.name }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
+                - if sups.find{|sp| sp.domain == "EBS" && (["EHC Plan","HE Care Leaver","Special Care Guidance","Social Worker"].include? sp.name) }.present?
+                  %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["EHC Plan","HE Care Leaver","Special Care Guidance","Social Worker"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
               %td.text-center
                 - ints = pc.person.events.where(:eventable_type => "Intervention",:transition => :create).this_year.count
                 - if ints != 0
@@ -311,7 +313,7 @@
               %thead
                 %tr
                   %th.text-right.nowr{ :style => "width:1px" } Name
-                  %th.text-center.bl Date
+                  %th.text-left.bl{ :style => "width:1px" } Date
                   %th.text-center= iq
                   -# %th.text-center= Badges
 
@@ -321,7 +323,7 @@
                     - fiq = pc.person.induction_questions.find_last_by_question(iq)
                     %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
                       %b= link_to pc.person.name, pc.person, :target => "_blank"
-                    %td.bl.text-center{ :class => "text-left" + (fiq.nil? ? "" : " success") }= fiq.try(:created_at).try(:strftime, "%d/%m/%Y" )
+                    %td.bl.text-left{ :class => "text-left" + (fiq.nil? ? "" : " success") }= fiq.try(:created_at).try(:strftime, "%d/%m/%Y" )
                     %td.text-center{ :class => "text-left" + (fiq.nil? ? "" : " success"), :"data-html" => "true", :title => (fiq.nil? ? nil : "#{fiq.question}: <br>#{fiq.answer}" ) }
                       - unless fiq.nil?
                         %i.fa.fa-check
@@ -341,8 +343,8 @@
       - badges_courses_to_include = Settings.moodle_badge_plp_courses.try(:split,',')
       - badges_list = []
       - @person_courses.each do |pc|
-        - badges_list |= pc.person.mdl_badges.where(:mdl_course_id => badges_courses_to_include).select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }.map{|b| { :title => b[:title], :course_id => b[:mdl_course_id] } }.uniq
-      - badges_list.sort! { |a, b|  a[:title] <=> b[:title] }
+        - badges_list |= pc.person.mdl_badges.where(:mdl_course_id => badges_courses_to_include).select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }.map{|b| { :title => b[:title], :mdl_course_id => b[:mdl_course_id] } }.uniq
+      - badges_list.sort! { |a, b|  a[:title].upcase <=> b[:title].upcase }
       - badges_list = [{:title => "No badges found", :mdl_course_id => nil}] if badges_list.count == 0
       %table.table.table-hover.table-condensed.table-responsive{:id => "badges-selection-table", :style => "margin:0px" }
         %thead
@@ -367,9 +369,10 @@
                     %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
                       %b= link_to pc.person.name, pc.person, :target => "_blank"
                     - badges_found = pc.person.mdl_badges.where(:title => bdg[:title], :mdl_course_id => bdg[:mdl_course_id]).select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }
+                    -# badges_found = pc.person.mdl_badges.select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }
                     %td.bl.text-center{ :class => "" + (badges_found.count > 0 ? "success" : "") }
                       - badges_found.each do |badge|
-                        .col-xs-12.col-xs-offset-4.plp-badge
+                        .col-sm-1
                           = link_to badge.link_url, :"data-html" => "true", :title => badge[:title] + " <br> Date Issued: " + badge[:created_at].try(:strftime, "%d/%m/%Y" ), "data-toggle" => "popover", "data-content" => badge[:description], :target => "_blank" do
                             = image_tag badge.image_url, :class => "img-responsive"
 
