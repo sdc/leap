@@ -310,7 +310,7 @@ module MisPerson
         # Bursary info from FAM fields in EBS - populated from spreadsheet from PayMyStudent
         ["fes_user_36","Free College Meals", "U_YESNO",["N"]], # not used - all N or null? - to be populated by MD
         # ["fes_user_38","FCM Funding","U_FSM_FUNDING"], # ignore - meaningless for requirement
-        ["fes_user_39","IAG Appointment"], # 23 appointments set in EBS for 15/16 - is this correct?
+        ["fes_user_39","IAG Appointment"], # 23 appointments set in EBS for 15/16 - will not be populated anymore
         ["fes_user_40","Social Worker"], # VL: if has social worker?
         ["fes_user_18","EHC Plan","U_EHCP",["N"]], # VL: currently Yes No Pending - will be change to type EHCP,HighNeeds,EHCPHN
         ["fes_user_35","HE Care Leaver","U_HECARE",["05","98","99"]] # VL:
