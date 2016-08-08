@@ -5,7 +5,7 @@
         %button{:type => 'button', :class => 'close', "data-dismiss" => 'modal', 'aria-label' => 'Close'}
           %span{"aria-hidden" => 'true'}
             &times;
-        %h3#review-title.modal-title Review
+        %h3#review-title.modal-title Progress & Attendance Review
       = create_event_form ProgressReview do |f|
         = f.text_field :topic_id, :type => 'hidden', :readonly => true, :value => @topic.id, :disabled => (true unless @user.staff?)
         = f.text_field :progress_id, :type => 'hidden', :readonly => true, :disabled => (true unless @user.staff?)
