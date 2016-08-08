@@ -9,8 +9,11 @@ class CreateProgresses < ActiveRecord::Migration
       t.string :course_type, :limit => 50
       t.string :course_status, :limit => 50
       t.integer :course_tutor_id, :limit => 11
-
       t.timestamps
+      t.string :bksb_maths_ia, :limit => 100
+      t.string :bksb_english_ia, :limit => 100
+      t.string :bksb_maths_ia, :limit => 100
+      t.string :bksb_english_ia, :limit => 100
     end
   end
 end
