@@ -4,14 +4,14 @@
       .row.row-eq-height
         - if a["initial"].present?
           - a['initial'].body = 'No comments' if a['initial'].body.empty?
-          .col-md-6.col-xs-12.initial-review.present.top-section{:onClick => 'displayInitialView("' + a['initial'].target_grade.tr(?", ?').to_s + '" , "' + a['initial'].body.squish.tr(?", ?').to_s + '","' + a["initial"].person.name.to_s + '","' + a["initial"].created_at.to_formatted_s(:long) + '")'}
+          .col-md-6.col-xs-12.initial-review.present.top-section{:onClick => 'displayInitialView("' + a['initial'].target_grade.tr(?", ?').to_s + '" , "' + a['initial'].body.squish.tr(?", ?').to_s + '","' + a["initial"].person.name.to_s + '","' + a["initial"].created_at.to_formatted_s(:long) + '","' + a["course"].bksb_maths_ia.to_s + '","' + a["course"].bksb_english_ia.to_s + '","' + a["course"].bksb_maths_da.to_s + '","' + a["course"].bksb_english_da.to_s + '")'}
             %h4{:style => "margin-bottom: 5px"} Target Grade for
             %h4 #{a["course"].course_title.upcase}
             %h3 #{a['initial'].target_grade.to_s}
             .pull-left.pull-bottom.initial-author
               %h6 Tutor: #{a["course"].tutor.short_name}
         - else
-          .col-md-6.col-xs-12.initial-review.top-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial("' + a["course"].id.to_s + '")' if @user.staff?)}
+          .col-md-6.col-xs-12.initial-review.top-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial("' + a["course"].id.to_s + '","' + a["course"].bksb_maths_ia.to_s + '","' + a["course"].bksb_english_ia.to_s + '","' + a["course"].bksb_maths_da.to_s + '","' + a["course"].bksb_english_da.to_s + '")' if @user.staff?)}
             %h4 Target Grade for
             %h4 #{a["course"].course_title.upcase}
             .pull-left.pull-bottom.initial-author
