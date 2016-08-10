@@ -5,7 +5,8 @@
       .panel-body
         .col-md-12
           .row
-            #news= render :partial => "people/news_modal" if @news
+            .col-xs-2.hidden-xs.hidden-sm
+              #news= render :partial => "people/news_modal" if @news
             #aspiration= render :partial => "people/aspiration"
             #notifications=render :partial => "people/notifications" if @notifications.present?
           %hr{:style => "margin-top: 5px"}
