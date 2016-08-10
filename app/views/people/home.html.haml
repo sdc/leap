@@ -5,9 +5,9 @@
       .panel-body
         .col-md-12
           .row
-            #news= render :partial => "people/news_modal" #if @news
+            #news= render :partial => "people/news_modal" if @news
             #aspiration= render :partial => "people/aspiration"
-            #notifications=render :partial => "people/notifications" #if @notifications.present?
+            #notifications=render :partial => "people/notifications" if @notifications.present?
           %hr{:style => "margin-top: 5px"}
           %div{:style => "text-align: center"}
             %h3.title{:style => "color: #4f2170; margin-bottom: 10px"} Progress and Attendance Reviews (PAR)
