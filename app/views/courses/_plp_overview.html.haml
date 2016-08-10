@@ -1,0 +1,107 @@
+-# npr = Settings.num_progress_reviews.to_i
+
+.scroll-x
+  %table#overview-plp-table.table.table-hover.table-condensed
+    %thead
+      %tr
+        %th{:colspan => 2}
+        %th.bl{:colspan => 2}Core
+        %th.core_hide.visible-lg{:colspan => 1}
+        %th.text-right
+          %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".core_hide"}
+            %i.fa.fa-eye
+        %th.bl{:colspan => 2}English
+        %th.visible-lg.english_hide{:colspan => 1}
+        %th.text-right
+          %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".english_hide"}
+            %i.fa.fa-eye
+        %th.bl{:colspan => 2}Maths
+        %th.visible-lg.maths_hide{:colspan => 1}
+        %th.text-right
+          %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".maths_hide"}
+            %i.fa.fa-eye
+      %tr
+        %th.text-right.nowr{ :style => "width:1px" } Name
+        %th.text-center{ :title => "Attendance overall"} Att
+        - ["core","english","maths"].each do |ct|
+          %th.text-center.bl{ :title => "Attendance for #{ct}" } Att
+          %th.text-center.visible-lg{:class => "#{ct}_hide"} Previous
+          %th.text-center.visible-lg{:class => "#{ct}_hide"} Current
+          %th.text-center{ :title => "Target Grade for #{ct}" } TG
+          -# - if ["english","maths"].include? ct
+          -#   %th.text.center.visible-lg{:class => "#{ct}_hide"} Reg
+    %tbody
+      -# person_attendance = Hash.new
+      - @person_courses.each do |pc|
+        %tr{"data-mis-status" => pc.mis_status.downcase}
+          %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
+            %b= link_to pc.name, pc.person, :target => "_blank"
+          - person_attendances = pc.person.attendances
+          - person_attendance[pc.person.id.to_s => "overall"] = person_attendances.select { |x| x.course_type.to_s.downcase == "overall" and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
+          - person_attendance[pc.person.id.to_s => "core"] = person_attendances.select { |x| x.course_type.to_s.downcase == "core" and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
+          - person_attendance[pc.person.id.to_s => "english"] = person_attendances.select { |x| x.course_type.to_s.downcase == "english" and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
+          - person_attendance[pc.person.id.to_s => "maths"] = person_attendances.select { |x| x.course_type.to_s.downcase == "maths" and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
+          - person_attendance[pc.person.id.to_s => @topic.code.to_s.downcase] = person_attendances.select { |x| x.enrol_course.to_s.downcase == @topic.code.to_s.downcase and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
+          - if person_attendance[pc.person.id.to_s => "overall"]
+            - title = "Attendance #{person_attendance[pc.person.id.to_s => "overall"].status(true)}"
+            %td.text-right{:class => person_attendance[pc.person.id.to_s => "overall"].status(true), :style => "width:1px", :title => title}= "#{person_attendance[pc.person.id.to_s => 'overall'].try :att_year}%"
+          - else
+            %td.text-center{ :style => "width:1px" }
+              -# %i.fa.fa-frown-o
+          - ["core","english","maths"].each do |ct|
+            - represented_course_codes = pc.person.progresses.where(:course_year => @topic.year).group_by(&:course_type)[ct].try(:map) {|x| "#{x.course_code}: #{x.course_title}" }.try(:join, " <br>")
+            - represented_course_codes += " <br>" unless represented_course_codes.nil?
+            - if person_attendance[pc.person.id.to_s => ct]
+              - title = "#{represented_course_codes} Attendance #{person_attendance[pc.person.id.to_s => ct].status(true)}"
+              %td.bl.text-right{:class => person_attendance[pc.person.id.to_s => ct].status(true), :"data-html" => "true", :title => title}= "#{person_attendance[pc.person.id.to_s => ct].try :att_year}%"
+            - else
+              %td.bl.text-center{:title => "No Attendance"}
+
+            - found_reviews = []
+            - (npr).downto(1).each { |x| found_reviews.push pc.person.progress_reviews.joins(:progress).where("progresses.id = progress_reviews.progress_id and progresses.course_year=? and LOWER(course_type) = ?",@topic.year,ct).order("number desc, created_at desc, id desc").where(:number => x).first }
+            - found_reviews.compact!
+            - ((found_reviews.count+1)..npr).each { found_reviews.push nil }
+            - found_reviews[0..1].reverse.each do |g|
+
+              - represented_course_codes = ""
+              - represented_course_codes = pc.person.progresses.where(:id => g.progress_id, :course_year => @topic.year).try(:map) {|x| "#{x.course_code}: #{x.course_title}" }.try(:join, " <br>") unless g.nil?
+              - represented_course_codes += " <br>" unless represented_course_codes.nil?
+
+              - unless g.nil?
+                %td.text-center.visible-lg{:class => "ragp_light_#{g.level}", :"data-html" => "true", :title => "#{represented_course_codes} Review #{g.number} (#{g.created_at})"}= g.working_at
+              - else
+                %td.text-center.text-muted.visible-lg.text-center{:class => ["ragp_light_grey"], :title => "No Review"}
+
+            - tg = pc.person.initial_reviews.joins(:progress).where("progresses.id = initial_reviews.progress_id and progresses.course_year=? and LOWER(course_type) = ?",@topic.year,ct).order("created_at desc, id desc").first
+            - unless tg.nil?
+              %td.text-center.success{:title => "Target Grade for #{ct} (#{tg.created_at})"}= tg.target_grade 
+            - else
+              %td.text-center{:title => "No Target"}
+
+            -# - if ["english","maths"].include? ct
+            -#   %td.text-center{:title => "Register Marks"}
+            -#   -#=pc.person.timetable_events(:from => @date, :to => @end_date).select {|r| r.title = 'GCSE Maths' and r.timetable_start <= Time.now}.last(3).map {|r| r.mark}.to_s
+
+    %tfoot
+      %tr
+        %td{:colspan => 13} 
+        %td.text-center
+          - if @rpub 
+            = link_to course_view_url(@topic,View.for_user.find_by_name("reviews"), :status => "complete", :title => @window, :format => "pdf"), :class => "btn btn-default btn-xs", :title => "Print all published reviews" do
+              %i.fa.fa-print
+%br
+.pull-right
+  .btn-group.dropup
+    %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
+      %i.fa.fa-download.fa-fw
+      Download
+      %span.caret
+    %ul.dropdown-menu.dropdown-menu-right
+      %li
+        %a{"data-download-table" => "#overview-plp-table", "data-download-type" => "excel"} 
+          %i.fa.fa-fw.fa-file-excel-o
+          Excel
+      %li
+        %a{"data-download-table" => "#overview-plp-table", "data-download-type" => "csv"} 
+          %i.fa.fa-fw.fa-file-o
+          CSV

@@ -1,0 +1,40 @@
+.scroll-x
+  -# = image_tag "events/induction_questions.png"
+  %table.table.table-hover.table-condensed.table-responsive{:id => "checklist-selection-table", :style => "margin:0px" }
+    %thead
+      %tr
+        %td=select :checklist, :question, options_for_select(Settings.induction_questions.split(";").map.with_index{|x,index| [x, "checklist_"+index.to_s] }), {}, {:style => "width:100%", :onchange => "$('.nav-tabs a[href=#' + $(this).val() + ']').tab('show');", :with => 'Form.Element.serialize(this)' }
+  %ul.nav.nav-tabs.hidden
+    - Settings.induction_questions.split(";").each.with_index do |iq, index|
+      %li{ :class => (index == 0 ? "active" : "") }
+        %a{:href => "#checklist_" + index.to_s, "data-toggle" => "tab"}= "r#{index}"
+  .tab-content
+    - Settings.induction_questions.split(";").each.with_index do |iq, index|
+      .tab-pane.fade.panel.panel-default{ :id => "checklist_#{index}", :class => (index == 0 ? "in active" : "") }
+        %table.table.table-hover.table-condensed.table-responsive{:id => "checklist-#{index}-table"}
+          %thead
+            %tr
+              %th.text-right.nowr{ :style => "width:1px" } Name
+              %th.text-left.bl{ :style => "width:1px" } Date
+              %th.text-center= iq
+              -# %th.text-center= Badges
+
+          %tbody
+            - @person_courses.each do |pc|
+              %tr{"data-mis-status" => pc.mis_status.downcase}
+                - fiq = pc.person.induction_questions.find_last_by_question(iq)
+                %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
+                  %b= link_to pc.person.name, pc.person, :target => "_blank"
+                %td.bl.text-left{ :class => "text-left" + (fiq.nil? ? "" : " success") }= fiq.try(:created_at).try(:strftime, "%d/%m/%Y" )
+                %td.text-center{ :class => "text-left" + (fiq.nil? ? "" : " success"), :"data-html" => "true", :title => (fiq.nil? ? nil : "#{fiq.question}: <br>#{fiq.answer}" ) }
+                  - unless fiq.nil?
+                    %i.fa.fa-check
+                    %span=fiq.answer
+
+                -# - badges_to_include = Settings.induction_question_badges.try(:split, ';')[index].try(:split,',')
+                -# - badges_found = pc.person.mdl_badges.where(:title => badges_to_include).select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }
+                -# %td.text-center{ :class => "" + (badges_found.count > 0 ? "success" : "") }
+                -#   - badges_found.each do |badge|
+                -#     .col-xs-12.col-xs-offset-4.plp-badge
+                -#       = link_to badge.link_url, :"data-html" => "true", :title => badge[:title] + " <br> Date Issued: " + badge[:created_at].try(:strftime, "%d/%m/%Y" ), "data-toggle" => "popover", "data-content" => badge[:description], :target => "_blank" do
+                -#         = image_tag badge.image_url, :class => "img-responsive"
