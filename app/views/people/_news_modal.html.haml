@@ -26,3 +26,8 @@
           .modal-footer
             %a{:href => "http://www.southdevon.ac.uk/contact-and-travel/parking-student-parking-permits", :target => "_blank"}
               %button.btn.btn-default.center.modal-button.width-100{:type => "button"} Click Here to find out how to apply.
+- if @notify
+  :javascript
+    $( document ).ready(function() {
+      $('#newsModal').modal('show');
+    });
