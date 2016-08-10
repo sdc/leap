@@ -301,19 +301,24 @@ module MisPerson
     Ebs::Person.find_all_by_person_code(mis_id).each do |p|
       [
         # [0] field name, [1] title, [2] verifiers domain (optional), [3] values exclude list (optional)
-        ["fes_user_14","Special Care Guidance","U_SPECIALCARE"], # VL: care leavers
-        # ["fes_user_19","Additional Learning Sup","U_ALS_REQ",["NO"]], # not used as would water down VL indicator
-        ["fes_user_21","Car Park Permit Number"], # will be cleared down and set to: FULL,AUTUMN,SPRING,SUMMER
-        ["fes_user_26","Bus Pass Region","U_BUSPASS_REGION"], # cleared out each year for ready for new acyr!
+
+        ["fes_user_39","IAG Appointment"], # 23 appointments set in EBS for 15/16 - will not be populated anymore
+
         ## ["fes_user_29","Bursary Start Date"], # 1 date for 15/16 - cannot be used? - will become Young Adult Carers currently not in EBS - MD looking at pulling in
         ## ["fes_user_30","Bursary End Date"], # 1 date for 15/16 - cannot be used?
         # Bursary info from FAM fields in EBS - populated from spreadsheet from PayMyStudent
+
+        ["fes_user_21","Car Park Permit Number"], # will be cleared down and set to: FULL,AUTUMN,SPRING,SUMMER
+        ["fes_user_26","Bus Pass Region","U_BUSPASS_REGION"], # cleared out each year for ready for new acyr!
+
         ["fes_user_36","Free College Meals", "U_YESNO",["N"]], # not used - all N or null? - to be populated by MD
         # ["fes_user_38","FCM Funding","U_FSM_FUNDING"], # ignore - meaningless for requirement
-        ["fes_user_39","IAG Appointment"], # 23 appointments set in EBS for 15/16 - will not be populated anymore
-        ["fes_user_40","Social Worker"], # VL: if has social worker?
+
+        ["fes_user_14","Special Care Guidance","U_SPECIALCARE"], # VL: care leavers
         ["fes_user_18","EHC Plan","U_EHCP",["N"]], # VL: currently Yes No Pending - will be change to type EHCP,HighNeeds,EHCPHN
-        ["fes_user_35","HE Care Leaver","U_HECARE",["05","98","99"]] # VL:
+        # ["fes_user_19","Additional Learning Sup","U_ALS_REQ",["NO"]], # not used as would water down VL indicator
+        ["fes_user_35","HE Care Leaver","U_HECARE",["05","98","99"]], # VL:
+        ["fes_user_40","Social Worker"] # VL: if has social worker?
       ].each do |f|
         v = p.send(f[0])
         next if support_plps.detect{ |sp| sp.name == f[1] && sp.active == true && sp.value == v }
