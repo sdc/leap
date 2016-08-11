@@ -28,4 +28,8 @@ class Absence < Eventable
     Ilp2::Application.config.mis_usage_codes[usage_code]
   end
 
+  def icon_class
+    "fa-ban"
+  end
+
 end

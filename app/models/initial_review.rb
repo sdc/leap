@@ -1,6 +1,8 @@
 class InitialReview < Eventable
   attr_accessible :body, :created_at, :created_by_id, :progress_id, :target_grade
 
+  validate :check_unique
+  belongs_to :person, :foreign_key => "created_by_id"
   belongs_to :progress, :foreign_key => "progress_id"
   before_save :set_values
 
@@ -15,6 +17,16 @@ class InitialReview < Eventable
 
   def status
     return :complete
+  end
+
+  def icon_class
+    "fa-clipboard"
+  end
+
+  def check_unique
+    if InitialReview.exists? ["progress_id = ? AND id != ?", self.progress_id, self.id]
+      self.errors.add(:progress_id, 'Error, please contact IT')
+    end
   end
 
 end

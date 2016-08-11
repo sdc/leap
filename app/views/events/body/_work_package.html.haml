@@ -1,5 +1,7 @@
-%h4= "#{work_package.location} for #{work_package.days} #{'day'.pluralize(work_package.days)}"
-%h4 Key Strengths
-%p= work_package.key_strengths
-%h4 Development
-%p= work_package.development
+%h5= "#{work_package.wp_type} for #{work_package.days} #{'day'.pluralize(work_package.days)}"
+%h5= work_package.description
+%br
+%h4 What have I learnt?
+%p= work_package.learnt
+%h4 Next Steps
+%p= work_package.next_steps

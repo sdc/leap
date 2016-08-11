@@ -1,8 +1,8 @@
-%li.row[view]
+%li.menu-spacing.row[view]
   = link_to((send("#{@topic.class.name.underscore}_view_url",@topic,view,:tutorgroup => @tutorgroup) + (params[:all] ? "?all=true" : "")), :class => "sidebar_button") do
     .col-xs-2
-      - if view.icon_class.present?
-        %i{:class => view.icon_class.to_s + ' fa-fw fa pull-left', :style => 'font-size: 1.5em; color: #612989'}
+      - if Settings.home_page == "progress" && view.icon_class.present?
+        %i{:class => view.icon_class.to_s + ' fa-fw fa pull-left', :style => 'font-size: 1.5em'}
       - else
         = image_tag(view.icon_url, :size => "30x30", :class=>"pull-left") 
     .col-xs-10
@@ -11,4 +11,4 @@
     %ul.subviews
       - @subviews.each do |subview|
         %li= link_to(subview.label,(send("#{@topic.class.name.underscore}_view_url",@topic,subview) + (params[:all] ? "?all=true" : "")), :class => "sidebar_sub_button")
-%hr{:Style => 'margin: 4px'}
+%hr.no-margin

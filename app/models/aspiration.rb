@@ -21,5 +21,9 @@ class Aspiration < Eventable
   after_create {|q| q.events.create!(:event_date => created_at, :transition => :create)}
 
   validates :aspiration, :presence => true
+
+  def icon_class
+  	"fa-dot-circle-o"
+  end
   
 end

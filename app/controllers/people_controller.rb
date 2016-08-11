@@ -29,7 +29,7 @@ class PeopleController < ApplicationController
         @sidebar_links = parse_sidebar_links
         if Settings.home_page == "progress" && !@topic.staff?
           ## TODO - Remove this. Currently @progress_bar array is required in order to map attendance. Need a better way of doing this.
-          @progresses = @topic.progresses
+          @progresses = @topic.progresses.where(:course_status => 'Active')
           @progress_bar = {}
           @progresses.each do |progress|
             @progress_bar[progress.uio_id] = {}
@@ -51,6 +51,10 @@ class PeopleController < ApplicationController
           @badges = @topic.mdl_badges.where(:mdl_course_id => ppdc) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
           @aspiration = @topic.aspirations.last.aspiration if @topic.aspirations.present?
           @notifications = @user.notifications.where(:notified => false)
+          @news = Settings.news_modal == 'on' ? true : false
+          @notify = @user.last_active && (@user.last_active + 2.days) < Date.today ? true : false
+          @user.last_active = Date.today
+          @user.save
         else
           @tiles = @topic.events.where(:eventable_type => "Target",:transition => :overdue).
                    where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)

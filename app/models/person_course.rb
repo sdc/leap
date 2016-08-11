@@ -48,6 +48,10 @@ class PersonCourse < Eventable
     "events/course.png"
   end
 
+  def icon_class
+    "fa-book"
+  end
+
   def title(tr)
     [course, case tr
       when :create   then "Application"

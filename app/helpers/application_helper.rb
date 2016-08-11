@@ -24,6 +24,14 @@ module ApplicationHelper
     end
   end
 
+  def fa_link(text,link="#",icon=false)
+    content_tag(:li, :class => "row") do
+      link_to link do
+        tag("i", :class => "fa fa-fw #{icon}") + text
+      end
+    end
+  end
+
   def link_to_submit(*args, &block)
     link_to_function (block_given? ? capture(&block) : args[0]), "$(this).closest('form').submit()", args.extract_options!
   end
