@@ -9,13 +9,15 @@
             %h4 #{a["course"].course_title.upcase}
             %h3 #{a['initial'].target_grade.to_s}
             .pull-left.pull-bottom.initial-author
-              %h6 Tutor: #{a["course"].tutor.short_name}
+              - if a["course"].tutor
+                %h6 Tutor: #{a["course"].tutor.short_name}
         - else
           .col-md-6.col-xs-12.initial-review.top-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial("' + a["course"].id.to_s + '","' + a["course"].bksb_maths_ia.to_s + '","' + a["course"].bksb_english_ia.to_s + '","' + a["course"].bksb_maths_da.to_s + '","' + a["course"].bksb_english_da.to_s + '")' if @user.staff?)}
             %h4 Target Grade for
             %h4 #{a["course"].course_title.upcase}
             .pull-left.pull-bottom.initial-author
-              %h6 Tutor: #{a["course"].tutor.short_name}
+              - if a["course"].tutor
+                %h6 Tutor: #{a["course"].tutor.short_name}
         - if !a["attendance"].nil?                    
           .col-md-6.col-xs-12.top-section.clickable{:style => "background: ##{a['attendance'].bg}", "data-toggle" => 'modal', 'data-target' => "#modal_" + a["attendance"].id.to_s }
             %h4 Attendance
