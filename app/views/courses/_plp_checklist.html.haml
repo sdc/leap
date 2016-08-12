@@ -26,7 +26,7 @@
                 %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
                   %b= link_to pc.person.name, pc.person, :target => "_blank"
                 %td.bl.text-left{ :class => "text-left" + (fiq.nil? ? "" : " success") }= fiq.try(:created_at).try(:strftime, "%d/%m/%Y" )
-                %td.text-center{ :class => "text-left" + (fiq.nil? ? "" : " success"), :"data-html" => "true", :title => (fiq.nil? ? nil : "#{fiq.question}: <br>#{fiq.answer}" ) }
+                %td.text-left{ :class => "text-left" + (fiq.nil? ? "" : " success"), :"data-html" => "true", :title => (fiq.nil? ? nil : "#{fiq.question}: <br>#{fiq.answer}" ) }
                   - unless fiq.nil?
                     %i.fa.fa-check
                     %span=fiq.answer

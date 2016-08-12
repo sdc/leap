@@ -21,7 +21,7 @@
           %thead
             %tr
               %th.text-right.nowr{ :style => "width:1px" } Name
-              %th.bl.text-center= bdg[:title]
+              %th.bl.text-left= bdg[:title]
 
           %tbody
             - @person_courses.each do |pc|
@@ -30,7 +30,7 @@
                   %b= link_to pc.person.name, pc.person, :target => "_blank"
                 - badges_found = pc.person.mdl_badges.where(:title => bdg[:title], :mdl_course_id => bdg[:mdl_course_id]).select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }
                 -# badges_found = pc.person.mdl_badges.select { |x| MISC::MiscDates.acyr(x.created_at) == @topic.year }
-                %td.bl.text-center{ :class => "" + (badges_found.count > 0 ? "success" : "") }
+                %td.bl.text-left{ :class => "" + (badges_found.count > 0 ? "success" : "") }
                   - badges_found.each do |badge|
                     .col-sm-1
                       = link_to badge.link_url, :"data-html" => "true", :title => badge[:title] + " <br> Date Issued: " + badge[:created_at].try(:strftime, "%d/%m/%Y" ), "data-toggle" => "popover", "data-content" => badge[:description], :target => "_blank" do
