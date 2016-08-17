@@ -29,27 +29,8 @@ class PeopleController < ApplicationController
         @sidebar_links = parse_sidebar_links
         misc_dates = MISC::MiscDates.new
         if Settings.home_page == "progress" && !@topic.staff?
-          ## TODO - Remove this. Currently @progress_bar array is required in order to map attendance. Need a better way of doing this.
-          @progresses = @topic.progresses.where(:course_status => 'Active')
-          @progress_bar = {}
-          @progresses.each do |progress|
-            @progress_bar[progress.uio_id] = {}
-            @progress_bar[progress.uio_id]['course'] = progress
-            if ["core", "english", "maths"].include? progress.course_type
-              @progress_bar[progress.uio_id]['attendance'] = @topic.attendances.where(:course_type => progress.course_type).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
-            else
-              @progress_bar[progress.uio_id]['attendance'] = @topic.attendances.where(:enrol_course => progress.course_code).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last
-            end
-            @progress_bar[progress.uio_id]['initial'] = progress.initial_reviews.last
-            @progress_bar[progress.uio_id]['reviews'] = []
-            @reviews = progress.progress_reviews.order("number ASC")
-            @reviews.each do |review|
-              key = review.number
-              @progress_bar[progress.uio_id]['reviews'][key] = review
-            end
-          end
-          ppdc = Settings.moodle_badge_block_courses.try(:split,",")
-          @badges = @topic.mdl_badges.where(:mdl_course_id => ppdc) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
+          @progress_bar = getProgressData
+          @badges = getBadges
           @aspiration = @topic.aspirations.last.aspiration if @topic.aspirations.present?
           @notifications = @user.notifications.where(:notified => false)
           @news = Settings.news_modal == 'on' ? true : false
@@ -94,6 +75,48 @@ class PeopleController < ApplicationController
         end
       end
     end
+  end
+
+  def getBadges
+    ppdc = Settings.moodle_badge_block_courses.try(:split,",")
+    return @topic.mdl_badges.where(:mdl_course_id => ppdc) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
+  end
+
+  def getProgressData
+    @progresses = @topic.progresses.where(:course_status => 'Active')
+    misc_dates = MISC::MiscDates.new
+    data = Array.new
+    key = 0;
+    @progresses.each do |progress|
+      data[key] = {}
+      data[key]['course'] = progress
+      data[key]['attendance'] = getAttendance(progress.course_type, progress.course_code)
+      data[key]['initial'] = progress.initial_reviews.last
+      data[key]['reviews'] = getReviews(progress)
+      key += 1;
+    end
+    return data    
+  end
+
+  def getAttendance(type, code)
+    misc_dates = MISC::MiscDates.new
+    if ["core", "english", "maths"].include? type
+      return @topic.attendances.where(:course_type => type).where(["week_beginning >= ?", misc_dates.start_of_acyr]).last
+    end
+
+    return @topic.attendances.where(:enrol_course => code).where(["week_beginning >= ?", misc_dates.start_of_acyr]).last    
+  end
+
+  def getReviews(progress)
+    data = Array.new
+    reviews = progress.progress_reviews.order("number ASC")
+
+    reviews.each do |review|
+      key = review.number
+      data[key] = review
+    end
+
+    return data    
   end
 
   def search
