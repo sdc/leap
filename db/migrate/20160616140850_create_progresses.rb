@@ -12,8 +12,11 @@ class CreateProgresses < ActiveRecord::Migration
       t.timestamps
       t.string :bksb_maths_ia, :limit => 100
       t.string :bksb_english_ia, :limit => 100
-      t.string :bksb_maths_ia, :limit => 100
-      t.string :bksb_english_ia, :limit => 100
+      t.string :bksb_maths_da, :limit => 100
+      t.string :bksb_english_da, :limit => 100
+      t.float :qca_score
+      t.string :nat_target_grade, :limit => 50
+      t.string :subject_grade, :limit => 100
     end
   end
 end
