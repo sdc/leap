@@ -22,7 +22,7 @@
             %b= link_to pc.person.name, pc.person, :target => "_blank"
           %td.text-center.bl
             - ints = pc.person.contact_logs.select{|x| /\bIAG\b/.match(x.body.to_s).present? and MISC::MiscDates.acyr(x.created_at) == @topic.year }.count
-            - ints_title = ints > 0 ? ( ints.to_s + (ints > 1 ? " entries " : " entry") + " in the contact logs" ) : nil
+            - ints_title = ints > 0 ? ( ints.to_s + " entry".pluralize(ints) + " in the contact logs" ) : nil
             - iaga = sups.find{|sp| sp.domain == "EBS" && (["IAG Appointment"].include? sp.name) && MISC::MiscDates.acyr(MISC::MiscDates.make_date(sp.value,'%d-%b-%Y')) == @topic.year }.present?
             - iaga_title = iaga ? sups.select{|sp| sp.domain == "EBS" && (["IAG Appointment"].include? sp.name) }.map{|s| s.name + ": " + s.value}.join('<br>') : nil
             - if ( ints != 0 || iaga )
