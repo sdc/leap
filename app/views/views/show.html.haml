@@ -13,7 +13,9 @@
           = select_tag :pi_type, options_for_select(Intervention.intervention_types.keys.map{|k| [k,k.gsub(/\W+/,"_")]}, params[:pi_type]), :class => 'span2'
         .span3
           %h4 Category
-          - Intervention.intervention_types.each_with_index do |cat, index|
+          - types = Intervention.intervention_types
+          - types.each_with_index do |cat, index|
+            - cat.last.unshift('All')
             = select_tag :pint_category, options_for_select(cat.last, params[:pint_category]), :id => "intervention_referral_category_#{cat.first.gsub(/\W+/,"_")}", :style => "display:none"
         .span3
           %h4 Intervention Text
