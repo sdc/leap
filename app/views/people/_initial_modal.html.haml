@@ -21,18 +21,22 @@
           #scores.form-group.col-md-12
             .form-group.row
               .col-md-6
-                = label :maths_ia, 'Maths Initial Assessment'
+                %label Maths Initial Assessment
                 = text_field :maths_ia, nil, :disabled => true
               .col-md-6
-                = label :english_ia, 'English Initial Assessment'
+                %label English Initial Assessment
                 = text_field(:english_ia, nil, :disabled => true)
             .form-group.row
               .col-md-6
-                = label :maths_da, 'Maths diagnostic'
+                %label Maths diagnostic
                 = text_field(:maths_da, nil, :disabled => true)
               .col-md-6
-                = label :english_da, 'English diagnostic'
+                %label English diagnostic
                 = text_field(:english_da, nil, :disabled => true)
+            .form-group.row
+              .col-md-6
+                %label GCSE Score
+                = text_field(:gcse_score, nil, :disabled => true)
         .modal-footer
           .pull-left
             %em{:style => "color: grey", :id => "initial-review-by"}
