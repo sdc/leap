@@ -3,8 +3,7 @@
     .course-progress
       .row.row-eq-height
         - if a["initial"].present?
-          - a['initial'].body = 'No comments' if a['initial'].body.empty?
-          .col-md-6.col-xs-12.initial-review.present.top-section{:onClick => 'displayInitialView("' + a['initial'].target_grade.tr(?", ?').to_s + '" , "' + a['initial'].body.squish.tr(?", ?').to_s + '","' + a["initial"].person.name.to_s + '","' + a["initial"].created_at.to_formatted_s(:long) + '","' + a["course"].bksb_maths_ia.to_s + '","' + a["course"].bksb_english_ia.to_s + '","' + a["course"].bksb_maths_da.to_s + '","' + a["course"].bksb_english_da.to_s + '")'}
+          .col-md-6.col-xs-12.initial-review.present.top-section{:onClick => 'displayInitialView(' + a["DIV"] + ')'}
             %h4{:style => "margin-bottom: 5px"} Target Grade for
             %h4 #{a["course"].course_title.upcase}
             %h3 #{a['initial'].target_grade.to_s}
@@ -12,7 +11,7 @@
               - if a["course"].tutor
                 %h6 Tutor: #{a["course"].tutor.short_name}
         - else
-          .col-md-6.col-xs-12.initial-review.top-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial("' + a["course"].id.to_s + '","' + a["course"].bksb_maths_ia.to_s + '","' + a["course"].bksb_english_ia.to_s + '","' + a["course"].bksb_maths_da.to_s + '","' + a["course"].bksb_english_da.to_s + '")' if @user.staff?)}
+          .col-md-6.col-xs-12.initial-review.top-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial(' + a["DI"] + ')' if @user.staff?)}
             %h4 Target Grade for
             %h4 #{a["course"].course_title.upcase}
             .pull-left.pull-bottom.initial-author
@@ -30,22 +29,21 @@
         .col-md-12.col-sm-12
           .row
             - if a["initial"].present?
-              .col-md-2.hidden-xs.col-sm-2.review-section.present.clickable{:onClick => 'displayInitialView("' + a['initial'].target_grade.tr(?", ?').to_s + '" , "' + a['initial'].body.squish.tr(?", ?').to_s + '","' + a["initial"].person.name.to_s + '","' + a["initial"].created_at.to_formatted_s(:long) + '")'}
+              .col-md-2.hidden-xs.col-sm-2.review-section.present.clickable{:onClick => 'displayInitialView(' + a["DIV"] + ')'}
                 %h5 Initial Review
                 %h4 Completed
             - else
-              .col-md-2.hidden-xs.col-sm-2.review-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial("' + a["course"].id.to_s + '")' if @user.staff?)}
+              .col-md-2.hidden-xs.col-sm-2.review-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial(' + a["DI"] + ')' if @user.staff?)}
                 %h5 Initial Review
                 %h4 Incomplete
-            - (1..5).each do |i|
+            - (1..5).each do |i| 
               - if (a["reviews"][i].present? && a["reviews"][i].number == i)
-                - a["reviews"][i].body = 'No comments' if a["reviews"][i].body.empty?
-                .col-md-2.hidden-xs.col-sm-2.review-section.has_tooltip{:class => a["reviews"][i].level, :onClick => 'displayReviewView("' + a["reviews"][i].number.to_s + '","' + a["reviews"][i].working_at.tr(?", ?').to_s + '","' + a["reviews"][i].attendance.to_s + '","' + a["reviews"][i].body.squish.tr(?", ?').to_s + '","' + a["reviews"][i].person.name.to_s + '","' + a["reviews"][i].created_at.to_formatted_s(:long) + '")', :title => a["reviews"][i].ragp_desc, "data-placement" => "right"}
+                .col-md-2.hidden-xs.col-sm-2.review-section.has_tooltip{:class => a["reviews"][i].level, :onClick => 'displayReviewView(' + a["reviews"][i]["DRV"] + ')', :title => a["reviews"][i].ragp_desc, "data-placement" => "right"}
                   %h5 Working at
                   %h4 #{a["reviews"][i].working_at}
                   %h6.pull-bottom.pull-right PAR #{i}
               - else
-                .col-md-2.hidden-xs.col-sm-2.review-section{ :style => 'color: grey', :onClick => ('displayReview("'+ i.to_s + '", "' + a["course"].course_code + '", "'+ a["attendance"].att_year.to_s + '", "' + a["course"].id.to_s + '")' if @user.staff? && !a["attendance"].nil?)}
+                .col-md-2.hidden-xs.col-sm-2.review-section{ :style => 'color: grey', :onClick => ("displayReview('" + i.to_s + "'" + a["DR"] + ')' if @user.staff? && !a["attendance"].nil?)}
                   %h5 Review
                   %h6.pull-bottom.pull-right PAR #{i}
     %hr
