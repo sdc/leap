@@ -95,7 +95,7 @@ class PeopleController < ApplicationController
       data[key]['DIV'] = getDIV(data[key]) if data[key]['initial'].present?
       data[key]['DI'] = getDI(progress)
       data[key]['reviews'] = getReviews(progress)
-      data[key]['DR'] = getDR(progress, data[key]['attendance'])
+      data[key]['DR'] = getDR(progress, data[key]['attendance']) unless data[key]['attendance'].nil?
       key += 1;
     end
     return data    
