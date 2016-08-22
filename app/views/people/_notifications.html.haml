@@ -14,7 +14,7 @@
             %li.notification
               %div.notification-content
                 %h4= notification.event.title
-                %h5= notification.event.created_by.name
+                %h5= notification.event.created_by.name if notification.event.created_by.present?
                 %h5=raw "#{notification.event.event_date.hour}:#{notification.event.event_date.min}"
               %div.notification-view
                 = link_to((send("#{@topic.class.name.underscore}_view_url",@topic,@views.first,:tutorgroup => @tutorgroup) + (params[:all] ? "?all=true" : "")), :class => "sidebar_button") do
