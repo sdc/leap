@@ -34,7 +34,7 @@
             - if @topic.kind_of? Person
               = render :partial => "layouts/sidebar/next_lesson", :object => @nextLesson.object if @nextLesson.present?
               = render :partial => "layouts/sidebar/person_buttons"
-              - if Settings.home_page == "progress"
+              - if Settings.home_page == "progress" && !@topic.staff?
                 = render :partial => "people/badges", :object => @badges
               - else
                 = render :partial => "people/new_note"
