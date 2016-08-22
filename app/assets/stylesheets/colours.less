@@ -5,6 +5,7 @@
 @incomplete  : #fdd;
 @unknown     : #eee;
 @not_started : #ddf;
+@outstanding : #b298cd;
 
 @fg_darken : 60%;
 @bd_darken : 60%;
@@ -16,6 +17,7 @@ h3.overdue,.overdue        {background-color: @overdue    }
 h3.incomplete,.incomplete  {background-color: @incomplete }
 h3.unknown,.unknown        {background-color: @unknown    }
 h3.not_started,.not_started{background-color: @not_started}
+h3.outstanding,.outstanding{background-color: @outstanding}
 
 .status-fg.current     {color: darken(@current,     @fg_darken)}
 .status-fg.start       {color: darken(@start,       @fg_darken)}
@@ -40,6 +42,7 @@ h3.not_started,.not_started{background-color: @not_started}
 .status-bd.incomplete  {border-color: darken(@incomplete,  @bd_darken)}
 .status-bd.unknown     {border-color: darken(@unknown,     @bd_darken)}
 .status-bd.not_started {border-color: darken(@not_started, @bd_darken)}
+.status-bd.outstanding {border-color: darken(@outstanding, @bd_darken)}
 
 //span.label.unknown    {.label-inverse;}
 //span.label.current    {.label-warning;}

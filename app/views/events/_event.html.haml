@@ -3,7 +3,11 @@
 - begin
   .row.status-bd{:class => event_classes(event)}
     %ul.span10.header
-      %li.icon= image_tag(event.icon_url, :size => "48x48")
+      - if event.icon_class.present?
+        %li.icon
+          %i{:class => "fa fa-3x #{event.icon_class}", :style => "color: "}
+      - else
+        %li.icon= image_tag(event.icon_url, :size => "48x48")
       %li.event-date.has-tooltip{"data-datetime" => event.event_date, 
                                  :title => Person.user.staff? && event.created_by_text}= event_date event
       - if @multi

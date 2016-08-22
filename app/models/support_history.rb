@@ -28,4 +28,8 @@ class SupportHistory < Eventable
     end
   end
 
+  def icon_class
+  	"fa-life-ring"
+  end
+
 end

@@ -65,6 +65,20 @@ class Attendance < Eventable
     Tile.new(tile_attrs)
   end
 
+  def bg
+    begin
+      bg = if att_year < Settings.attendance_low_score.to_i
+        "a66"
+      elsif att_year < Settings.attendance_high_score.to_i
+        "da6"
+      else
+        "6a6"
+      end
+    rescue
+      bg = "6a6"
+    end
+  end
+
   def tile_attrs
     begin
       bg = if att_year < Settings.attendance_low_score.to_i
@@ -86,6 +100,10 @@ class Attendance < Eventable
      :title        => "Attendance"+" "+acy,
      :object       => self
     }
+  end
+
+  def icon_class
+    "fa-clipboard"
   end
 
 end

@@ -54,6 +54,14 @@ class Target < Eventable
     end
   end
 
+  def icon_class
+    case status
+    when :complete   then "fa-tick"
+    when :incomplete then "fa-times"
+    else "fa-dot-circle-o"
+    end
+  end
+
   # Returns the target eventable title.
   def title(tr)
     case tr

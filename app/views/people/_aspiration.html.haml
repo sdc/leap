@@ -1,0 +1,8 @@
+.col-xs-12.col-md-8
+  .row
+    #aspiration-content.col-xs-12
+      %h4.aspiration-title My Aspiration
+      - if @aspiration.present?
+        %h5.aspiration= raw "I want to #{@aspiration.to_s}"
+      - else
+        %h6 Speak to your tutor about updating your aspiration

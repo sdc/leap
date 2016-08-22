@@ -27,7 +27,18 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.html do
         @sidebar_links = parse_sidebar_links
-        if Settings.home_page == "new"
+        misc_dates = MISC::MiscDates.new
+        if Settings.home_page == "progress" && !@topic.staff?
+          @progress_bar = getProgressData
+          ## TODO fix badges bug
+          @badges = {:moodle => getMdlBadges, :course => nil}
+          @aspiration = @topic.aspirations.last.aspiration if @topic.aspirations.present?
+          @notifications = @user.notifications.where(:notified => false)
+          @news = Settings.news_modal == 'on' ? true : false
+          @notify = @user.last_active && (@user.last_active + 2.days) < Date.today ? true : false
+          @user.last_active = Date.today
+          @user.save
+        else
           @tiles = @topic.events.where(:eventable_type => "Target",:transition => :overdue).
                    where(:event_date => (Date.today - 1.week)..(Date.today + 1.month)).limit(8)
           @tiles += @topic.events.where(:eventable_type => "Note").limit(8)
@@ -36,26 +47,20 @@ class PeopleController < ApplicationController
           @tiles.unshift(SimplePoll.where(:id => Settings.current_simple_poll).first.to_tile) unless Settings.current_simple_poll.blank?
           ppdc = Settings.moodle_badge_block_courses.try(:split,",")
           @tiles.unshift(@topic.mdl_badges.where(:mdl_course_id => ppdc).last.to_course_tile) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
-          #tracks = @topic.mdl_grade_tracks #.group(:course_type).having('created_at = MAX(created_at)')
-          #@tiles.unshift(["english","maths","core"].reject{|ct| tracks.detect{|t| t.course_type == ct}}.first([3 - tracks.count,0].max).map do |ct|
-          #  @topic.mdl_grade_tracks.where(:course_type => ct).last.try(:to_tile) or
-          #  MdlGradeTrack.new(:course_type => ct).to_tile
-          #end)
           tracks = ["core","maths","english"].map{|ct| @topic.mdl_grade_tracks.where(:course_type => ct).last}.reject{|x| x.nil?}
           @tiles.unshift(tracks.map{|x| x.to_tile})
           misc_dates = MISC::MiscDates.new
           attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last}.reject{|x| x.nil?}
           attendances.select!{|x| x.course_type != "overall"} if attendances.length == 2
           @tiles.unshift(attendances.map{|x| x.to_tile})
-          #if @topic.attendances.where(:course_type => "overall").any?
-          #  @tiles.unshift(@topic.attendances.where(:course_type => "overall").last.events.first.try :to_tile)
-          #end
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
-          # @tiles.unshift(GlobalNews.last.to_tile) if GlobalNews.any?
           for news_item in GlobalNews.where( :active => true, :from_time => [nil,DateTime.new(0)..DateTime.now], :to_time => [nil,DateTime.now..DateTime.new(9999)] ).order("id DESC") do
             @tiles.unshift(news_item.to_tile)
           end
           @tiles = @tiles.flatten.reject{|t| t.nil?} #.uniq{|t| t.object}
+        end
+        if Settings.home_page == "new" || Settings.home_page == "progress"
+          @nextLesson = @topic.timetable_events(:next).first.to_tile if @topic.timetable_events(:next).any? 
           @on_home_page = true
           render :action => "home"
         end
@@ -73,6 +78,116 @@ class PeopleController < ApplicationController
     end
   end
 
+  def getMdlBadges
+    ppdc = Settings.moodle_badge_block_courses.try(:split,",")
+    return @topic.mdl_badges.where(:mdl_course_id => ppdc) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
+  end
+
+  def getCourseBadges
+    ## TODO fix error.
+    return @topic.events.where(:eventable_type => "MdlBadge").limit(8)
+  end
+
+  def getProgressData
+    @progresses = @topic.progresses.where(:course_status => 'Active')
+    misc_dates = MISC::MiscDates.new
+    data = Array.new
+    key = 0;
+    @progresses.each do |progress|
+      data[key] = {}
+      data[key]['course'] = progress
+      data[key]['attendance'] = getAttendance(progress.course_type, progress.course_code)
+      data[key]['initial'] = progress.initial_reviews.last
+      data[key]['DIV'] = getDIV(data[key]) if data[key]['initial'].present?
+      data[key]['DI'] = getDI(progress)
+      data[key]['reviews'] = getReviews(progress)
+      data[key]['DR'] = getDR(progress, data[key]['attendance']) unless data[key]['attendance'].nil?
+      key += 1;
+    end
+    return data    
+  end
+
+  def getDIV(progress)
+    values = Array.new 
+    values[0] = progress['initial'].target_grade
+    values[1] = progress['initial'].body.empty? ? "No comments" : progress['initial'].body.squish 
+    values[2] = progress['initial'].person.name
+    values[3] = progress['initial'].created_at.to_formatted_s(:long)
+    values[4] = progress['course'].bksb_maths_ia
+    values[5] = progress['course'].bksb_english_ia
+    values[6] = progress['course'].bksb_maths_da
+    values[7] = progress['course'].bksb_english_da
+    values[8] = progress['course'].qca_score
+    values.map!{|x| x.to_s.tr(?', ?")}
+    values.collect!{|x| "'#{x}'"}
+
+    return values.join(",")
+  end
+
+  def getDI(course)
+    values = Array.new 
+    values[0] = course.id
+    values[1] = course.bksb_maths_ia 
+    values[2] = course.bksb_english_ia
+    values[3] = course.bksb_maths_da
+    values[4] = course.bksb_english_da
+    values[5] = course.qca_score
+
+    values.map!{|x| x.to_s.tr(?', ?")}
+    values.collect!{|x| "'#{x}'"}
+
+    return values.join(",")
+  end
+
+  def getAttendance(type, code)
+    misc_dates = MISC::MiscDates.new
+    if ["core", "english", "maths"].include? type
+      return @topic.attendances.where(:course_type => type).where(["week_beginning >= ?", misc_dates.start_of_acyr]).last
+    end
+
+    return @topic.attendances.where(:enrol_course => code).where(["week_beginning >= ?", misc_dates.start_of_acyr]).last    
+  end
+
+  def getReviews(progress)
+    data = Array.new
+    reviews = progress.progress_reviews.order("number ASC")
+
+    reviews.each do |review|
+      key = review.number
+      data[key] = review
+      data[key]['DRV'] = getDRV(review)
+    end
+
+    return data    
+  end
+
+  def getDRV(review)
+    values = Array.new 
+    values[0] = review.number
+    values[1] = review.working_at 
+    values[2] = review.attendance
+    values[3] = review.body.empty? ? "No comments" : review.body.squish
+    values[4] = review.person.name
+    values[5] = review.created_at.to_formatted_s(:long)
+
+    values.map!{|x| x.to_s.tr(?', ?")}
+    values.collect!{|x| "'#{x}'"}
+
+    return values.join(",")  
+  end
+
+  def getDR(course, attendance)
+    values = Array.new
+    values[0] = course.course_code
+    values[1] = attendance.att_year
+    values[2] = course.id
+
+    values.map!{|x| x.to_s.tr(?', ?")}
+    values.collect!{|x| ",'#{x}'"}
+
+    return values.join("")
+  end
+
   def search
     if params[:q]
       if params[:mis]
@@ -86,7 +201,7 @@ class PeopleController < ApplicationController
     @people  ||= []
     @courses ||= []
     @page_title = "Search for #{params[:q]}"
-    render Settings.home_page == "new" ? "cl_search" : "search"
+    render Settings.home_page == "new" || Settings.home_page == "progress" ? "cl_search" : "search"
   end
 
   def select
@@ -155,8 +270,8 @@ class PeopleController < ApplicationController
   def set_layout
     case action_name
     when /\_block$/ then false
-    when "show" then Settings.home_page == "new" ? "cloud" : "application"
-    when "search" then Settings.home_page == "new" ? "cloud" : "application"
+    when "show" then Settings.home_page == "new" || Settings.home_page == "progress" ? "cloud" : "application"
+    when "search" then Settings.home_page == "new" || Settings.home_page == "progress" ? "cloud" : "application"
     else "application"
     end
   end

@@ -41,7 +41,7 @@ class TimetablesController < ApplicationController
       []
     end
     respond_to do |format|
-      format.html { render :action => Settings.home_page == "new" ? :cloud_index : :index }
+      format.html { render :action => Settings.home_page == "new" || Settings.home_page == "progress" ? :cloud_index : :index }
       format.xml { render :xml => @topic }
       format.ics do
         cal = Icalendar::Calendar.new
@@ -53,7 +53,7 @@ class TimetablesController < ApplicationController
 
   def set_layout
     return "application" unless @topic.kind_of?(Person)
-    Settings.home_page == "new" ? "cloud" : "application"
+    Settings.home_page == "new" || Settings.home_page == "progress" ? "cloud" : "application"
   end
 
 

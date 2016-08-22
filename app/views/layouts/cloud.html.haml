@@ -32,8 +32,12 @@
           #clidebar.col-lg-3.col-md-4.visible-lg.visible-md
             = render :partial => "#{@topic.class.name.downcase.pluralize}/namebox", :object => @topic, :as => :topic
             - if @topic.kind_of? Person
+              = render :partial => "layouts/sidebar/next_lesson", :object => @nextLesson.object if @nextLesson.present?
               = render :partial => "layouts/sidebar/person_buttons"
-              = render :partial => "people/new_note"
+              - if Settings.home_page == "progress" && !@topic.staff?
+                = render :partial => "people/badges", :object => @badges
+              - else
+                = render :partial => "people/new_note"
             - elsif @topic.kind_of? Course
               = render :partial => "layouts/sidebar/course_buttons"
             #sidebar-accordion.panel-group

@@ -90,12 +90,8 @@ dl {
   .person-photo {
     .square(130px);
     .box-shadow(0px 10px 5px -5px @borderColour);
-    .border-radius(@borderRadius);
     margin-bottom: 10px;
     border: 1px solid @borderColour;
-    img {
-      .border-radius(@borderRadius);
-    }
   }
   li {
     list-style-type: none;
@@ -127,13 +123,11 @@ dl {
   position:relative;
   background: #eee;
   border: 2px @borderColour solid;
-  .border-radius(@borderRadius);
   margin-bottom: 10px;
   background: #f0f0ff;
   .clearfix;
   padding-bottom: 10px;
   h2 {
-    .border-radius(@borderRadius, 0, 0, @borderRadius);
     background: #eee;
     border-bottom:1px #ccc solid;
     padding-left: 10px;
@@ -154,8 +148,6 @@ dl {
 
 .event {
   padding: 9px;
-  border: 2px @borderColour solid;
-  .border-radius(@borderRadius);
   margin-bottom: 10px;
   ul.header {
     .clearfix();
