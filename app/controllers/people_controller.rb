@@ -30,7 +30,8 @@ class PeopleController < ApplicationController
         misc_dates = MISC::MiscDates.new
         if Settings.home_page == "progress" && !@topic.staff?
           @progress_bar = getProgressData
-          @badges = getBadges
+          ## TODO fix badges bug
+          @badges = {:moodle => getMdlBadges, :course => nil}
           @aspiration = @topic.aspirations.last.aspiration if @topic.aspirations.present?
           @notifications = @user.notifications.where(:notified => false)
           @news = Settings.news_modal == 'on' ? true : false
@@ -77,9 +78,14 @@ class PeopleController < ApplicationController
     end
   end
 
-  def getBadges
+  def getMdlBadges
     ppdc = Settings.moodle_badge_block_courses.try(:split,",")
     return @topic.mdl_badges.where(:mdl_course_id => ppdc) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
+  end
+
+  def getCourseBadges
+    ## TODO fix error.
+    return @topic.events.where(:eventable_type => "MdlBadge").limit(8)
   end
 
   def getProgressData

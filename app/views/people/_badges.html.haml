@@ -4,13 +4,19 @@
       %i.fa.fa-certificate.fa-fw
       Badges
   .panel-body
-    - if badges.present?
-      - badges.last.all_in_course.each do |badge|
+    - if badges[:moodle].present?
+      - badges[:moodle].last.all_in_course.each do |badge|
         .col-xs-2.ppd_badge
           = link_to badge.link_url, :title => badge[:title], "data-toggle" => "popover", "data-content" => badge[:description] do
             = image_tag badge.image_url, :class => "img-responsive"
+    - if badges[:course].present?
+      - badges[:course].all_in_course.each do |badge|
+        .col-xs-2.ppd_badge
+          = link_to badge.link_url, :title => badge[:title], "data-toggle" => "popover", "data-content" => badge[:description] do
+            = image_tag badge.image_url, :class => "img-responsive"
+    - if !badges[:moodle].present? && !badges[:course].present?
+      Once achieved, your badges will appear here
+    - else
       :coffeescript
         $('.ppd_badge').mouseover ->
           $('#current_badge').html($(this).find('a').attr("title"))
-    - else
-      Once achieved, your badges will appear here
