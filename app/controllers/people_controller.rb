@@ -33,7 +33,7 @@ class PeopleController < ApplicationController
           ## TODO fix badges bug
           @badges = {:moodle => getMdlBadges, :course => nil}
           @aspiration = @topic.aspirations.last.aspiration if @topic.aspirations.present?
-          @notifications = @user.notifications.where(:notified => false)
+          @notifications = @topic.notifications.where(:notified => false) if @topic.id == @user.id
           @news = Settings.news_modal == 'on' ? true : false
           @notify = @user.last_active && (@user.last_active + 2.days) < Date.today ? true : false
           @user.last_active = Date.today
