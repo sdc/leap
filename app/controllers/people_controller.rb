@@ -28,7 +28,12 @@ class PeopleController < ApplicationController
       format.html do
         @sidebar_links = parse_sidebar_links
         misc_dates = MISC::MiscDates.new
-        if Settings.home_page == "progress" && !@topic.staff?
+        if Settings.home_page == "progress"
+          if @topic.staff?
+            ## Redirecting to route fails - Needs to use route instead of string eventually.
+            redirect_to "/people/#{@topic.mis_id}/timetables"
+            return
+          end
           @progress_bar = getProgressData
           ## TODO fix badges bug
           @badges = {:moodle => getMdlBadges, :course => nil}

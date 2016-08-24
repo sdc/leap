@@ -36,8 +36,6 @@
               = render :partial => "layouts/sidebar/person_buttons"
               - if Settings.home_page == "progress" && !@topic.staff?
                 = render :partial => "people/badges", :object => @badges if @badges.present?
-              - else
-                = render :partial => "people/new_note"
             - elsif @topic.kind_of? Course
               = render :partial => "layouts/sidebar/course_buttons"
             #sidebar-accordion.panel-group
