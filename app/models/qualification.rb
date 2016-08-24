@@ -56,6 +56,7 @@ class Qualification < Eventable
   end
 
   def status
+    return :outstanding if import_type == 'la' || import_type == 'attainment'
     return :complete if seen?
     return :complete if !mis_id.blank?
     return :not_started if predicted?
@@ -63,10 +64,15 @@ class Qualification < Eventable
   end
 
   def title
-    return "Qualification" if seen?
-    return "Qualification" if !mis_id.blank?
-    return ["Predicted","Grade"] if predicted?
-    return ["Qualification","(not_seen)"] 
+    return ["Qualification", importedTitle] if seen?
+    return ["Qualification", importedTitle] if !mis_id.blank?
+    return ["Predicted","Grade", importedTitle] if predicted?
+    return ["Qualification","(not_seen)", importedTitle] 
+  end
+
+  def importedTitle
+    return 'EBS import' if import_type == 'la' || import_type == 'attainment'
+    return ''
   end
 
   def lat_score
