@@ -123,6 +123,7 @@ class PeopleController < ApplicationController
     values[6] = progress['course'].bksb_maths_da
     values[7] = progress['course'].bksb_english_da
     values[8] = progress['course'].qca_score
+    values[9] = progress['course'].subject_grade
     values.map!{|x| x.to_s.tr(?', ?")}
     values.collect!{|x| "'#{x}'"}
 
@@ -137,7 +138,7 @@ class PeopleController < ApplicationController
     values[3] = course.bksb_maths_da
     values[4] = course.bksb_english_da
     values[5] = course.qca_score
-
+    values[6] = course.subject_grade
     values.map!{|x| x.to_s.tr(?', ?")}
     values.collect!{|x| "'#{x}'"}
 
