@@ -94,7 +94,7 @@ class PeopleController < ApplicationController
   end
 
   def getProgressData
-    @progresses = @topic.progresses.where(:course_status => 'Active')
+    @progresses = @topic.progresses.where(:course_status => 'Active').order("course_type DESC")
     misc_dates = MISC::MiscDates.new
     data = Array.new
     key = 0;
