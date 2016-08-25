@@ -1,5 +1,5 @@
 - if person_course.mis_status
-  %span.label.pull-right{:class => person_course.status}
+  %span.label.pull-right{:class => person_course.status, :style => 'color: #333'}
     = person_course.mis_status
 - if event.transition == :create and !person_course.entry_reqs.blank?
   .pull-right.icon.icon-tasks{:title => "This course has entry requirements", :style => "margin-right:7px"}
