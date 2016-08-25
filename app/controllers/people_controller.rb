@@ -27,7 +27,6 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.html do
         @sidebar_links = parse_sidebar_links
-        misc_dates = MISC::MiscDates.new
         @progress_bar = getProgressData
         if Settings.home_page == "progress"
           if @topic.staff? && @progress_bar.empty?
@@ -95,7 +94,6 @@ class PeopleController < ApplicationController
 
   def getProgressData
     @progresses = @topic.progresses.where(:course_status => 'Active').order("course_type DESC")
-    misc_dates = MISC::MiscDates.new
     data = Array.new
     key = 0;
     @progresses.each do |progress|
