@@ -30,7 +30,9 @@ module MisPerson
       "EBS connector"
     end
 
-    def resync(yr)
+    def resync(yr=nil)
+      yr = yr || Ebs::CalendarOccurrences.acyr
+      puts "Started for #{yr}"
       count = skipcount = 0
       Ebs::Person.find_each(:include => :people_units) do |ep|
       # Ebs::Person.where(:person_code => [30145214,30146401,30148855,30161804,30136805]).find_each(:include => :people_units) do |ep|
@@ -254,7 +256,7 @@ module MisPerson
 
   def import_quals
     last_update = qualifications.order("updated_at DESC").first.try(:updated_at) or Date.today - 5.years
-    mis_person.learner_aims.where("uio_id IS NOT NULL and grade IS NOT NULL and updated_date > ?",last_update).each do |la|
+    mis_person.learner_aims.where("uio_id IS NOT NULL and grade IS NOT NULL and updated_date > ? and upper(learning_aim) not like 'Z%%' and upper(learning_aim) != 'ENRICH'",last_update).each do |la|
       next unless la.unit_instance_occurrence 
       next unless Qualification.where(:mis_id => la.id, "import_type" => "la").empty?
       nq=qualifications.create(
@@ -267,7 +269,7 @@ module MisPerson
       )
       nq.update_attribute("mis_id",la.id)
     end
-    mis_person.attainments.each do |at|
+    mis_person.attainments.where("NOT (upper(description) LIKE '%%NOT APPLICABLE%%' and source = 'PLR data') and upper(grade) NOT LIKE 'NA%%' and upper(grade) NOT LIKE 'OTH%%' and upper(grade) NOT LIKE '%%UNCLASSIFIED%%' and upper(grade) NOT LIKE '%%NO SHOW%%' and upper(grade) NOT LIKE '%%P ALPHA-NUMERIC VALUE%%' and upper(grade) != '01' and not regexp_like(trim(fes_qualification_aim), '^[0-9]')").each do |at|
       next unless Qualification.where(:mis_id => at.id, "import_type" => "attainment").empty?
       nq=qualifications.create(
         :title       => at.description,
@@ -311,7 +313,7 @@ module MisPerson
         ["fes_user_21","Car Park Permit Number"], # will be cleared down and set to: FULL,AUTUMN,SPRING,SUMMER
         ["fes_user_26","Bus Pass Region","U_BUSPASS_REGION"], # cleared out each year for ready for new acyr!
 
-        ["fes_user_36","Free College Meals", "U_YESNO",["N"]], # not used - all N or null? - to be populated by MD
+        ["fes_user_36","Free College Meals", "U_YESNO",["N"]], # populated by MD
         # ["fes_user_38","FCM Funding","U_FSM_FUNDING"], # ignore - meaningless for requirement
 
         ["fes_user_14","Special Care Guidance","U_SPECIALCARE"], # VL: care leavers
