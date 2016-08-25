@@ -1,4 +1,6 @@
 .col-md-12
+  - if @progress_bar.empty?
+    %p{:style => 'text-align: center'}It looks like you are not currently enrolled on any courses at South Devon College. If you feel this is a mistake, please speak to your Personal Tutor or visit Helpzone on Level 3.
   - @progress_bar.each do |a|
     .course-progress
       .row.row-eq-height
