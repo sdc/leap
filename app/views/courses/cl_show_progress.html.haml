@@ -26,6 +26,8 @@
       %a{:href => "#checklist", "data-toggle" => "tab"} Checklist
     %li 
       %a{:href => "#badges", "data-toggle" => "tab"} Badges
+    %li 
+      %a{:href => "#achieve", "data-toggle" => "tab"} Achievement
 
 .tab-content
   .tab-pane.fade.in.active.panel.panel-default.row#photo-list{:style => "border-top: 0"}
@@ -48,6 +50,9 @@
 
   .tab-pane.fade.panel.panel-default.row#badges
     = render :partial => "courses/plp_badges"
+
+  .tab-pane.fade.panel.panel-default.row#achieve
+    = render :partial => "courses/plp_achieve"
 
 -# if @user.staff?
   .row
