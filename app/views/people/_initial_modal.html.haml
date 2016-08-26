@@ -47,7 +47,7 @@
                   .input-group-addon.ir-score L3 Alps Target Grade
                   = text_field(:l3_alps, nil, :disabled => true, :class => "form-control")
         .modal-footer.no-padding
-          .pull-left
+          #initial-author.pull-left{:style => "padding: 15px"}
             %em{:style => "color: grey", :id => "initial-review-by"}
           .submit-review
             - if @user.staff
