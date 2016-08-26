@@ -29,7 +29,7 @@
           = render :partial => "layouts/alerts"
           = yield
       #footer
-        = link_to_if @affiliation == "staff", raw("leap &mdash; electronic individual learning plans &mdash; &copy; 2011 - 2014"), "http://leap-ilp.com"
+        = link_to_if @affiliation == "staff", raw("leap &mdash; electronic individual learning plans &mdash; &copy; 2011 - #{Date.today.year}"), "http://leap-ilp.com"
     - if @affiliation == "affiliate"
       = image_tag "parent_mode.png", :style => "position:fixed;right:0;bottom:0;font-size:0"
     - if Rails.env == "development"

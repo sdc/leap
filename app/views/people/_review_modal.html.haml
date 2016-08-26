@@ -7,35 +7,39 @@
             &times;
         %h3#review-title.modal-title Progress & Attendance Review
       = create_event_form ProgressReview do |f|
-        = f.text_field :topic_id, :type => 'hidden', :readonly => true, :value => @topic.id, :disabled => (true unless @user.staff?)
-        = f.text_field :progress_id, :type => 'hidden', :readonly => true, :disabled => (true unless @user.staff?)
+        = (f.text_field :topic_id, :type => 'hidden', :readonly => true, :value => @topic.id) if @user.staff?
+        = (f.text_field :progress_id, :type => 'hidden', :readonly => true) if @user.staff?
         .modal-body.row
           .form-group.col-md-12
             .form-group.row
-              .col-md-3
-                = f.label ('Review Number'), :for => :progress_review_number
-                = f.text_field :number, :readonly => true, :class => 'form-control', :disabled => (true unless @user.staff?)
+              .col-md-3                
+                .input-group
+                  .input-group-addon Number
+                  = f.text_field :number, :readonly => true, :class => 'form-control', :disabled => (true unless @user.staff?)
+              .col-md-5
+                .input-group
+                  .input-group-addon Working at
+                  = f.select(:working_at, options_for_select(grades), {}, {:class => 'form-control', :disabled => (true unless @user.staff?), :required => true})
               .col-md-4
-                = f.label ('Working at'), :for => :progress_review_working_at
-                = f.select(:working_at, options_for_select(grades), {}, {:class => 'form-control', :disabled => (true unless @user.staff?), :required => true})
-              .col-md-3
-                = f.label ('Attendance'), :for => :attendance
-                = f.text_field :attendance, :readonly => true, :class => 'form-control', :disabled => (true unless @user.staff?)
+                .input-group
+                  .input-group-addon Attendance
+                  = f.text_field :attendance, :readonly => true, :class => 'form-control', :disabled => (true unless @user.staff?)
           .form-group.col-md-12
-            = f.label ('Learner / Tutor Comments')
-            = f.text_area :body, :style => "height:200px", :placeholder => "#{@topic.possessive_name('Your')} review comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
+            = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
           #current-level.form-group.col-md-12
             .form-group.row
               .col-md-6
-                %label Current Level
-                %select{ :name => "progress_review[level]", :class => 'form-control level', :id => 'progress_review_level', :required => 'required', :disabled => (true unless @user.staff?)}
-                  %option{:value => '', :selected => true, :disabled => true}= "Choose"
-                  %option{:value => 'purple', :class => 'purple'}= "PURPLE (Exceeding target grade)"
-                  %option{:value => 'green', :class => 'green'}= "GREEN (Working at target grade)"
-                  %option{:value => 'amber', :class => 'amber'}= "AMBER (Working towards target grade)"
-                  %option{:value => 'red', :class => 'red'}= "RED (Requires improvements)"
-        .modal-footer
-          .pull-left
+                .input-group
+                  .input-group-addon Current Level
+                  %select{ :name => "progress_review[level]", :class => 'form-control level', :id => 'progress_review_level', :required => 'required', :disabled => (true unless @user.staff?)}
+                    %option{:value => '', :selected => true, :disabled => true}= "Choose"
+                    %option{:value => 'purple', :class => 'purple'}= "PURPLE (Exceeding target grade)"
+                    %option{:value => 'green', :class => 'green'}= "GREEN (Working at target grade)"
+                    %option{:value => 'amber', :class => 'amber'}= "AMBER (Working towards target grade)"
+                    %option{:value => 'red', :class => 'red'}= "RED (Requires improvements)"
+        .modal-footer.no-padding
+          #review-author.pull-left{:style => "padding: 15px"}
             %em{:style => "color: grey", :id => "review-by"}
-          .submit-review
-            = add_event_button if @user.staff?
+          #review-submit.submit-review
+            - if @user.staff
+              %input{:class => "btn btn-primary pull-right full-button", :name => "commit", :type => "submit", :value => "Submit review"}
