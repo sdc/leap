@@ -168,7 +168,7 @@ module MisPerson
 
   def import_courses
     return self unless mis.people_units.any?
-    last_update = (person_courses.order("updated_at DESC").first.try(:updated_at) or Date.today - 5.years)
+    last_update = ( (person_courses.order("updated_at DESC").first.try(:updated_at) ) || ( Date.today - 5.years) )
     #mis_person.people_units.where("updated_date > ?",last_update).order("progress_date").each do |pu|
     mis_person.people_units.order("progress_date").each do |pu|
       next unless pu.uio_id
@@ -255,7 +255,7 @@ module MisPerson
   end
 
   def import_quals
-    last_update = qualifications.order("updated_at DESC").first.try(:updated_at) or Date.today - 5.years
+    last_update = ( qualifications.order("updated_at DESC").first.try(:updated_at) ) || ( Date.today - 5.years )
     mis_person.learner_aims.where("uio_id IS NOT NULL and grade IS NOT NULL and updated_date > ? and upper(learning_aim) not like 'Z%%' and upper(learning_aim) != 'ENRICH'",last_update).each do |la|
       next unless la.unit_instance_occurrence 
       next unless Qualification.where(:mis_id => la.id, "import_type" => "la").empty?
@@ -321,15 +321,16 @@ module MisPerson
         # ["fes_user_19","Additional Learning Sup","U_ALS_REQ",["NO"]], # not used as would water down VL indicator
         ["fes_user_35","HE Care Leaver","U_HECARE",["05","98","99"]], # VL:
         ["fes_user_40","Social Worker"] # VL: if has social worker?
-      ].each do |f|
+      ].each do |f|r
         v = p.send(f[0])
         next if support_plps.detect{ |sp| sp.name == f[1] && sp.active == true && sp.value == v }
         support_plps.update_all( ["active = 0, updated_at = ?",DateTime.now], ["active = 1 and name = ? and ( value != ? or ? is null)", f[1], v, v ] ) unless support_plps.nil?
-        short_desc = ( f[2].present? ? Ebs::Verifier.find_by_low_value_and_rv_domain(v,f[2]).try(:fes_short_description) : nil )
+        ver_info = ( f[2].present? ? Ebs::Verifier.find_by_low_value_and_rv_domain(v,f[2]) : nil )
         nsp = support_plps.create(
           :name => f[1],
           :value => v,
-          :description => short_desc,
+          :description => ( ver_info.present? ? ver_info.try(:fes_long_description) : nil ),
+          :short_description => ( ver_info.present? ? ver_info.try(:fes_short_description) : nil ),
           :active => 1,
           :domain => "EBS",
           :source => "people." + f[0]
@@ -349,7 +350,7 @@ module MisCourse
   end
 
   def import_people
-    last_update = person_courses.order("updated_at DESC").first.try(:updated_at) or Date.today - 5.years
+    last_update = ( person_courses.order("updated_at DESC").first.try(:updated_at) ) || ( Date.today - 5.years )
     mis_course.people_units.order("progress_date").each do |pu|
     #mis_course.people_units.where("updated_date > ?",last_update).order("progress_date").each do |pu|
       person = Person.import(pu.person_code, {:courses => false})
