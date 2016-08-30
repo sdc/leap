@@ -6,7 +6,7 @@
 %ul.sidebar
   = icon_link @user.staff? ? "#{@topic.class.name.humanize} Home" : "Home", @topic, "home"
   = icon_link "Timetable", send("#{@topic.class.name.underscore}_timetables_url", @topic)
-  - if @affiliation == "staff" and !Settings.ebs_person_base_url.blank?
+  - if @affiliation == "staff" and !Settings.ebs_person_base_url.blank? and Settings.ebs_link_name.present?
     = icon_link Settings.ebs_link_name, Settings.ebs_person_base_url + @topic.mis_id.to_s, "sparke"
 %h3 Events
 %ul= render @views
