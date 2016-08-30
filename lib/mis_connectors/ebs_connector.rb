@@ -252,7 +252,7 @@ module MisPerson
   end
 
   def import_quals
-    last_update = qualifications.order("updated_at DESC").first.try(:updated_at) or Date.today - 5.years
+    last_update = ( qualifications.order("updated_at DESC").first.try(:updated_at) ) || ( Date.today - 5.years )
     mis_person.learner_aims.where("uio_id IS NOT NULL and grade IS NOT NULL and updated_date > ? and upper(learning_aim) not like 'Z%%' and upper(learning_aim) != 'ENRICH'",last_update).each do |la|
       next unless la.unit_instance_occurrence 
       next unless Qualification.where(:mis_id => la.id, "import_type" => "la").empty?
