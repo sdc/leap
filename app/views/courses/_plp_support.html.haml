@@ -36,7 +36,7 @@
               %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["Bursary Start Date","Bursary End Date"].include? sp.name) }.map{|s| s.name + ": " + s.value}.join('<br>') }
           %td.text-center
             - if (bpr = sups.find{|sp| sp.domain == "EBS" && (["Bus Pass Region"].include? sp.name) }).present?
-              %i{:"data-html" => "true", :class => ((bpr_icon.include? bpr.value) ? bpr_icon[bpr.value] : "fa fa-bus"), :title => sups.select{|sp| sp.domain == "EBS" && (["Bus Pass Region"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }X
+              %i{:"data-html" => "true", :class => ((bpr_icon.include? bpr.value) ? bpr_icon[bpr.value] : "fa fa-bus"), :title => sups.select{|sp| sp.domain == "EBS" && (["Bus Pass Region"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
             - if sups.find{|sp| sp.domain == "EBS" && (["Car Park Permit Number"].include? sp.name) }.present?
               %i.fa.fa-car{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["Car Park Permit Number"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
           %td.text-center
