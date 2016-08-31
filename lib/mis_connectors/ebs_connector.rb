@@ -321,7 +321,7 @@ module MisPerson
         # ["fes_user_19","Additional Learning Sup","U_ALS_REQ",["NO"]], # not used as would water down VL indicator
         ["fes_user_35","HE Care Leaver","U_HECARE",["05","98","99"]], # VL:
         ["fes_user_40","Social Worker"] # VL: if has social worker?
-      ].each do |f|r
+      ].each do |f|
         v = p.send(f[0])
         next if support_plps.detect{ |sp| sp.name == f[1] && sp.active == true && sp.value == v }
         support_plps.update_all( ["active = 0, updated_at = ?",DateTime.now], ["active = 1 and name = ? and ( value != ? or ? is null)", f[1], v, v ] ) unless support_plps.nil?
