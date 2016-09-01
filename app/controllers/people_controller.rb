@@ -93,7 +93,7 @@ class PeopleController < ApplicationController
   end
 
   def getProgressData
-    @progresses = @topic.progresses.where(:course_status => 'Active').order("course_type DESC")
+    @progresses = @topic.progresses.where(:course_status => 'Active').order("course_type ASC")
     data = Array.new
     key = 0;
     @progresses.each do |progress|
