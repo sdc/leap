@@ -39,7 +39,7 @@ class PeopleController < ApplicationController
           @aspiration = @topic.aspirations.last.aspiration if @topic.aspirations.present?
           @notifications = @topic.notifications.where(:notified => false) if @topic.id == @user.id
           @news = Settings.news_modal == 'on' ? true : false
-          @notify = @user.last_active && (@user.last_active + 2.days) < Date.today ? true : false
+          @notify = @user.last_active && (@user.last_active + 2.days) < Date.today && @user.id == @topic.id ? true : false
           @user.last_active = Date.today
           @user.save
         else
