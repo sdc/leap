@@ -143,12 +143,11 @@ class PeopleController < ApplicationController
   end
 
   def getAttendance(type, code)
-    misc_dates = MISC::MiscDates.new
     if ["core", "english", "maths"].include? type
-      return @topic.attendances.where(:course_type => type).where(["week_beginning >= ?", misc_dates.start_of_acyr]).last
+      return @topic.attendances.where(:course_type => type).where(["week_beginning >= ?", MISC::MiscDates.start_of_acyr]).last
     end
 
-    return @topic.attendances.where(:enrol_course => code).where(["week_beginning >= ?", misc_dates.start_of_acyr]).last    
+    return @topic.attendances.where(:enrol_course => code).where(["week_beginning >= ?", MISC::MiscDates.start_of_acyr]).last    
   end
 
   def getReviews(progress)
