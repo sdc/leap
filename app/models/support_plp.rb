@@ -24,8 +24,8 @@ class SupportPlp < ActiveRecord::Base
   belongs_to :person
   belongs_to :created_by, :class_name => "Person", :foreign_key => "created_by_id"
 
-  scope :this_year, lambda {where("event_date > ?",year_start)}
-  default_scope order("id DESC")
+  # scope :this_year, lambda {where("event_date > ?",year_start)}
+  # default_scope order("id DESC")
 
   before_create do |sp| 
     sp.created_at = DateTime.now unless sp.created_at
