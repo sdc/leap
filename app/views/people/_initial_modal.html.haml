@@ -12,29 +12,43 @@
         .modal-body.row
           .form-group.col-md-12
             .form-group.row
-              .col-md-4
-                = f.label ('Target Grade'), :for => :initial_review_target_grade
-                = f.select(:target_grade, options_for_select(grades), {}, {:class => 'form-control', :disabled => (true unless @user.staff?), :required => true})
+              .col-md-6
+                .input-group
+                  .input-group-addon Target Grade
+                  = f.select(:target_grade, options_for_select(grades), {}, {:class => 'form-control', :disabled => (true unless @user.staff?), :required => true, :selected => 'Target Grade'})
           .form-group.col-md-12
-            = f.label ('Learner / Tutor Comments')
-            = f.text_area :body, :style => "height:200px", :placeholder => "#{@topic.possessive_name('Your')} review comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
+            = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
           #scores.form-group.col-md-12
             .form-group.row
               .col-md-6
-                = label :maths_ia, 'Maths Initial Assessment'
-                = text_field :maths_ia, nil, :disabled => true
+                .input-group
+                  .input-group-addon.ir-score Maths Initial Assessment
+                  = text_field :maths_ia, nil, :disabled => true, :class => "form-control"
               .col-md-6
-                = label :english_ia, 'English Initial Assessment'
-                = text_field(:english_ia, nil, :disabled => true)
+                .input-group
+                  .input-group-addon.ir-score{:style => "width: 188px"} English Initial Assessment
+                  = text_field(:english_ia, nil, :disabled => true, :class => "form-control")
             .form-group.row
               .col-md-6
-                = label :maths_da, 'Maths diagnostic'
-                = text_field(:maths_da, nil, :disabled => true)
+                .input-group
+                  .input-group-addon.ir-score Maths Diagnostic
+                  = text_field(:maths_da, nil, :disabled => true, :class => "form-control")
               .col-md-6
-                = label :english_da, 'English diagnostic'
-                = text_field(:english_da, nil, :disabled => true)
-        .modal-footer
-          .pull-left
+                .input-group
+                  .input-group-addon.ir-score English Diagnostic
+                  = text_field(:english_da, nil, :disabled => true, :class => "form-control")
+            .form-group.row
+              .col-md-6
+                .input-group
+                  .input-group-addon.ir-score GCSE Score
+                  = text_field(:gcse_score, nil, :disabled => true, :class => "form-control")
+              .col-md-6
+                .input-group
+                  .input-group-addon.ir-score L3 Alps Target Grade
+                  = text_field(:l3_alps, nil, :disabled => true, :class => "form-control")
+        .modal-footer.no-padding
+          #initial-author.pull-left{:style => "padding: 15px"}
             %em{:style => "color: grey", :id => "initial-review-by"}
           .submit-review
-            = add_event_button if @user.staff?
+            - if @user.staff
+              %input{:class => "full-button btn btn-primary pull-right", :name => "commit", :type => "submit", :value => "Submit review"}

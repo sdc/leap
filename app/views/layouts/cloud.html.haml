@@ -34,10 +34,8 @@
             - if @topic.kind_of? Person
               = render :partial => "layouts/sidebar/next_lesson", :object => @nextLesson.object if @nextLesson.present?
               = render :partial => "layouts/sidebar/person_buttons"
-              - if Settings.home_page == "progress"
-                = render :partial => "people/badges", :object => @badges
-              - else
-                = render :partial => "people/new_note"
+              - if Settings.home_page == "progress" && !@topic.staff?
+                = render :partial => "people/badges", :object => @badges if @badges.present?
             - elsif @topic.kind_of? Course
               = render :partial => "layouts/sidebar/course_buttons"
             #sidebar-accordion.panel-group

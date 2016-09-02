@@ -5,7 +5,7 @@ body {
   margin:0;
 }
 .no-padding {
-  padding:0;
+  padding:0 !important;
 }
 #sidebar-section>hr {
   padding:0;
@@ -83,7 +83,6 @@ body {
 
 #home {
   border-radius: 4px;
-  overflow: hidden;
   .tile {
     input,select {color: #333}
     border-left:1px #eee solid;
@@ -428,6 +427,9 @@ table.table td, table.table th {
 .initial-author {
   margin-top: 3px;
 }
+.initial-review {
+  overflow-y:hidden;
+}
 .target-grade {
   padding: 10px;
   text-align: center;
@@ -615,6 +617,33 @@ table.table td, table.table th {
 .panel-heading {
   color: #4f2170 !important;
 }
+
+.ir-score {
+  width: 188px;
+}
+
+.full-button {
+  width: 100%;
+  height: 100%;
+  padding: 25px;
+  border-radius: 0px;
+  background: #8e5fb7;
+  background: -moz-linear-gradient(top,  #8e5fb7 0%, #4f2170 100%);
+  background: -webkit-linear-gradient(top,  #8e5fb7 0%,#4f2170 100%);
+  background: linear-gradient(to bottom,  #8e5fb7 0%,#4f2170 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8e5fb7', endColorstr='#4f2170',GradientType=0 );
+  border: 0px;
+  font-size: 20px;
+}
+
+.full-button:hover {
+  background: #9c72c0;
+  background: -moz-linear-gradient(top,  #9c72c0 0%, #532376 100%);
+  background: -webkit-linear-gradient(top,  #9c72c0 0%,#532376 100%);
+  background: linear-gradient(to bottom,  #9c72c0 0%,#532376 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c72c0', endColorstr='#532376',GradientType=0 );
+}
+
 @media (min-width: 991px) and (max-width: 1199px) {
   .target-grade > .grade {
     display: none;

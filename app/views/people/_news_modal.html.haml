@@ -6,24 +6,13 @@
     .modal-content
       .modal-header
         %button.close{"data-dismiss" => "modal", :type => "button"} ×
-        %h4.modal-title.modal-text Have you organised your parking permit?
+        %h4.modal-title.modal-text Welcome to South Devon College, 2016/17!
       .modal-body
-        .row
-          .col-xs-5
-            %img.img-responsive{:src => "http://www.southdevon.ac.uk/images/about-us/facilities/parking-2.jpg"}/
-          .col-xs-7
-            %p Students must apply to park on campus if they wish to park a car at the main College site at:
-            %p
-              Vantage Point
-              %br/
-              Long Road
-              %br/
-              Paignton
-              %br/
-              TQ4 7EJ
+        %p You can use LEAP to support your learning throughout this year. You can look at your <strong>timetable</strong>, check the <strong>progress</strong> of your studies and be updated on the <strong>latest news</strong> and <strong>upcoming events</strong>.
+        %p <i>Remember to also check Moodle regularly, this is where you will find lots of information and support materials about your programme of study; including English, maths and tutorial.</i>
       .modal-footer
-        %a{:href => "http://www.southdevon.ac.uk/contact-and-travel/parking-student-parking-permits", :target => "_blank"}
-          %button.btn.btn-default.center.modal-button.width-100{:type => "button"} Click Here to find out how to apply.
+        %a{:href => "http://moodle.southdevon.ac.uk", :target => "_blank"}
+          %button.btn.btn-default.center.modal-button.width-100{:type => "button"} Click Here to go to Moodle
 - if @notify
   :javascript
     $( document ).ready(function() {

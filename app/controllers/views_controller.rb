@@ -27,11 +27,12 @@ class ViewsController < ApplicationController
       if params[:filter]
         @events =
           @scope.joins("INNER JOIN interventions ON events.eventable_id = interventions.id").
-          where("interventions.pi_type = ? AND interventions.referral_category = ?", params[:pi_type], params[:pint_category]).
+          where("interventions.pi_type = ?", params[:pi_type]).
           where("interventions.referral_text LIKE (?)", "%#{params[:int_text]}%").
           where("event_date < ?", @date).
           where(:transition => @view.transitions, :eventable_type => @view.events).
           limit(request.format=="pdf" ? 20000 : 20)
+        @events = @events.where("interventions.referral_category = ?", params[:pint_category]) unless params[:pint_category] == 'All';
       else
         @events =
           @scope.where("event_date < ?", @date).
