@@ -83,6 +83,9 @@ class PeopleController < ApplicationController
   end
 
   def getNotifications
+    if @topic.id != @user.id
+      return nil
+    end
 
     notifications = 
       @topic.notifications.where(:notified => false).
