@@ -323,8 +323,8 @@ module MisPerson
         ["fes_user_40","Social Worker"] # VL: if has social worker?
       ].each do |f|
         v = p.send(f[0])
-        next if support_plps.find{ |sp| sp.name == f[1] && sp.active == 1 && sp.value == v }
-        support_plps.update_all( ["active = 0, updated_at = ?",DateTime.now], ["active = 1 and name = ? and ( value != ? or ? is null)", f[1], v, v ] ) unless support_plps.nil?
+        next if support_plps.find{ |sp| sp.name == f[1] && sp.active != 0 && sp.value == v }
+        support_plps.update_all( ["active = 0, updated_at = ?",DateTime.now], ["active != 0 and name = ? and ( value != ? or ? is null)", f[1], v, v ] ) unless support_plps.nil?
         ver_info = ( f[2].present? ? Ebs::Verifier.find_by_low_value_and_rv_domain(v,f[2]) : nil )
         nsp = support_plps.create(
           :name => f[1],
