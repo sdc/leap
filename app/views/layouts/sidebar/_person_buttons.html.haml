@@ -1,5 +1,10 @@
 .btn-group.btn-group-justified.panel
-  - if !@topic.staff?
+  - if @topic.staff?
+    - if controller_name == "people" && !@progress_bar.empty?
+      = link_to(person_timetables_url(@topic), :class => "btn btn-default") do
+        %i.fa.fa-fw.fa-calendar
+        Timetable
+  - else     
     - if controller_name == "timetables"
       = link_to(person_url(@topic), :class => "btn btn-default") do
         %i.fa.fa-fw.fa-home
