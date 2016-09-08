@@ -266,7 +266,7 @@ module MisPerson
       )
       nq.update_attribute("mis_id",la.id)
     end
-    mis_person.attainments.where("NOT (upper(description) LIKE '%%NOT APPLICABLE%%' and source = 'PLR data') and upper(grade) NOT LIKE 'NA%%' and upper(grade) NOT LIKE 'OTH%%' and upper(grade) NOT LIKE '%%UNCLASSIFIED%%' and upper(grade) NOT LIKE '%%NO SHOW%%' and upper(grade) NOT LIKE '%%P ALPHA-NUMERIC VALUE%%' and upper(grade) != '01' and not regexp_like(trim(fes_qualification_aim), '^[0-9]')").each do |at|
+    mis_person.attainments.where("NOT (upper(description) LIKE '%%NOT APPLICABLE%%' and source = 'PLR data') and upper(grade) NOT LIKE 'NA%%' and upper(grade) NOT LIKE 'OTH%%' and upper(grade) NOT LIKE '%%UNCLASSIFIED%%' and upper(grade) NOT LIKE '%%NO SHOW%%' and upper(grade) NOT LIKE '%%P ALPHA-NUMERIC VALUE%%' and upper(grade) != '01' and regexp_like(trim(fes_qualification_aim), '^[0-9]')").each do |at|
       next unless Qualification.where(:mis_id => at.id, "import_type" => "attainment").empty?
       nq=qualifications.create(
         :title       => at.description,
