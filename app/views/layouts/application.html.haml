@@ -12,6 +12,7 @@
         /* Here begins the custom CSS ======================================== */
         #{Settings.custom_css}
     = javascript_include_tag "application"
+    = javascript_include_tag "custom"
     = javascript_include_tag "https://use.fontawesome.com/511134c719.js"
     = csrf_meta_tag
     = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty?
