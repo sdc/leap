@@ -57,6 +57,7 @@ class Person < ActiveRecord::Base
   has_many :induction_questions
   has_many :notifications
   has_many :support_plps
+  has_many :lsf_bursary_funds
 
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   

@@ -32,8 +32,10 @@
           -#       -# .label.label-danger= ints
           -#       %i.fa.fa-check{:"data-html" => "true", :title => [ints_title,iaga_title].compact.join('<br>') }
           %td.text-center.bl
-            - if sups.find{|sp| sp.domain == "EBS" && (["Bursary Start Date","Bursary End Date"].include? sp.name) && MISC::MiscDates.acyr(MISC::MiscDates.make_date(sp.value,'%d-%b-%Y')) == @topic.year }.present?
-              %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["Bursary Start Date","Bursary End Date"].include? sp.name) }.map{|s| s.name + ": " + s.value}.join('<br>') }
+            -# - if sups.find{|sp| sp.domain == "EBS" && (["Bursary Start Date","Bursary End Date"].include? sp.name) && MISC::MiscDates.acyr(MISC::MiscDates.make_date(sp.value,'%d-%b-%Y')) == @topic.year }.present?
+            -#   %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["Bursary Start Date","Bursary End Date"].include? sp.name) }.map{|s| s.name + ": " + s.value}.join('<br>') }
+            - if ( pc.person.lsf_bursary_funds.select{|x| x.year == @topic.year }.count  > 0 )
+              %i.fa.fa-check{:title => "Bursary"}
           %td.text-center
             - if (bpr = sups.find{|sp| sp.domain == "EBS" && (["Bus Pass Region"].include? sp.name) }).present?
               %i{:"data-html" => "true", :class => ((bpr_icon.include? bpr.value) ? bpr_icon[bpr.value] : "fa fa-bus"), :title => sups.select{|sp| sp.domain == "EBS" && (["Bus Pass Region"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
