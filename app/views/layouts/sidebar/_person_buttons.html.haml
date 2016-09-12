@@ -9,7 +9,7 @@
         %i.fa.fa-fw.fa-calendar
         Timetable
   - if @user.staff? && Settings.ebs_link_name.present?
-    = link_to(Settings.ebs_person_base_url + @topic.mis_id.to_s, :class => "btn btn-default slchk", :id => "ebs-btn") do
+    = link_to(Settings.ebs_person_base_url + @topic.mis_id.to_s, :class => "btn btn-default slchk") do
       %i.fa.fa-fw{:class => Settings.ebs_link_icon}
       = Settings.ebs_link_name
 
