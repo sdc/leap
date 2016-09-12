@@ -8,7 +8,7 @@
       %i.fa.fa-fw.fa-plus
       My courses
   - if Settings.ebs_link_name.present?
-    = link_to(Settings.ebs_course_base_url + @topic.mis_id.to_s, :class => "btn btn-default") do
+    = link_to(Settings.ebs_course_base_url + @topic.mis_id.to_s, :class => "btn btn-default slchk") do
       %i.fa.fa-fw{:class => Settings.ebs_link_icon}
       = Settings.ebs_link_name
 

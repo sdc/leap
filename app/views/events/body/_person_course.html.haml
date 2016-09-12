@@ -8,7 +8,7 @@
   = "(aiming for #{person_course.offer_code})" unless  person_course.offer_code.blank?
     
 - else
-  = link_to_if @user.staff? && !Settings.ebs_course_base_url.blank? && Settings.ebs_link_name.present?, person_course.course.name, (Settings.ebs_course_base_url + person_course.course.mis_id), :id => 'ebs-btn'
+  = link_to_if @user.staff? && !Settings.ebs_course_base_url.blank? && Settings.ebs_link_name.present?, person_course.course.name, (Settings.ebs_course_base_url + person_course.course.mis_id), :class => 'slchk'
   - unless person_course.tutorgroup.blank?
     %span.label= person_course.tutorgroup
 
