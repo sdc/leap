@@ -20,10 +20,9 @@ function isSilverlightInstalled(){
  return isSilverlightInstalled;
 }
 if (isSilverlightInstalled() == false){
-  var ebs = document.getElementById('ebs-btn');
-    ebs.setAttribute('readonly', 'readonly');
-    ebs.onclick=function(){
-      alert('Please note that your browser currently is not compatible with SPARKE (EBS Reports); therefore if you would like to make use of the EBS link you will need to ensure you are using the Staff Pages with Internet Explorer (IE).\n\nWe are currently investigating compatibility for your browser with SPARKE for future developments.');
-      return false;
-    }
+  $('a[href*="ebs4agent"]').click(function(){
+    $(this).attr('readonly', 'readonly');
+    alert('Please note that your browser currently is not compatible with SPARKE (EBS Reports); therefore if you would like to make use of the EBS link you will need to ensure you are using the Staff Pages with Internet Explorer (IE).\n\nWe are currently investigating compatibility for your browser with SPARKE for future developments.');
+    return false;
+  });
 }
