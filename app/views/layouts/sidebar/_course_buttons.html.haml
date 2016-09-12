@@ -7,7 +7,8 @@
     = link_to add_course_url(@topic), :class => "btn btn-default", :title => "Add to My Courses", :method => :post do
       %i.fa.fa-fw.fa-plus
       My courses
-  = link_to(Settings.ebs_course_base_url + @topic.mis_id.to_s, :class => "btn btn-default") do
-    %i.fa.fa-fw{:class => Settings.ebs_link_icon}
-    = Settings.ebs_link_name
+  - if Settings.ebs_link_name.present?
+    = link_to(Settings.ebs_course_base_url + @topic.mis_id.to_s, :class => "btn btn-default slchk") do
+      %i.fa.fa-fw{:class => Settings.ebs_link_icon}
+      = Settings.ebs_link_name
 

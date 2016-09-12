@@ -21,7 +21,7 @@ gem 'whenever', :require => false
 gem 'memcache-client'
 
 platforms :ruby do
-  gem 'mysql2'
+  gem 'mysql2', '0.3.17'
   gem 'therubyracer'
   gem 'activerecord-sqlserver-adapter'
   gem 'activerecord-oracle_enhanced-adapter', '~> 1.4.0'
@@ -43,4 +43,9 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
+
+  gem 'pry'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'pry-debugger'
 end

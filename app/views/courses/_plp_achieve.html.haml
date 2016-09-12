@@ -1,0 +1,61 @@
+-# npr = Settings.num_progress_reviews.to_i
+-#new pids = @person_courses.map(&:person_id)
+-#new pr_with_newest_ids = ProgressReview.where(:person_id => pids).where(:number => 1..npr).joins(:progress).where("progresses.id = progress_reviews.progress_id and progresses.course_year=? and LOWER(progresses.course_type) in('core','english','maths')",@topic.year).select("max(progress_reviews.id) as max_id").group("progress_reviews.person_id, progress_reviews.progress_id, progress_reviews.number").map(&:max_id)
+-# pr = ProgressReview.where(:id => pr_with_newest_ids)
+-#new pr = ProgressReview.find(:all, :conditions => { :id => pr_with_newest_ids }, :select => "progress_reviews.*, progresses.course_type", :joins => "join progresses on progresses.id = progress_reviews.progress_id").map{|x| {:review => x, :type => x.course_type} }
+-#new irs_with_newest_ids = InitialReview.where(:person_id => pids).joins(:progress).where("progresses.id = initial_reviews.progress_id and progresses.course_year=? and LOWER(progresses.course_type) in('core','english','maths')",@topic.year).select("max(initial_reviews.id) as max_id").group("initial_reviews.person_id, initial_reviews.progress_id").map(&:max_id)
+-#new tgs = InitialReview.find(:all, :conditions => { :id => irs_with_newest_ids }, :select => "initial_reviews.*, progresses.course_type", :joins => "join progresses on progresses.id = initial_reviews.progress_id").map{|x| {:review => x, :type => x.course_type} }
+-# binding.pry
+-# atts = Attendance.find(:all, :conditions => { :person_id => pids, :week_beginning => MISC::MiscDates.startdate_from_acyr('15/16')..MISC::MiscDates.enddate_from_acyr('15/16') })
+-# atts_with_newest_ids = Attendance.where(:person_id => pids).select("max(initial_reviews.id) as max_id").group("initial_reviews.person_id, initial_reviews.progress_id").map(&:max_id)
+-#new atts = Attendance.where(:person_id => pids).order(:week_beginning).find(:all, :conditions => { :week_beginning => MISC::MiscDates.startdate_from_acyr(@topic.year)..MISC::MiscDates.enddate_from_acyr(@topic.year) })
+
+.scroll-x
+  %table#achieve-plp-table.table.table-hover.table-condensed
+    %thead
+      %tr
+        %th.bl{:colspan => 9}="#{@topic.name} (#{@topic.code})"
+      %tr
+        %th.text-right.nowr{ :style => "width:1px", :title => "Hybrid End Year" } End Year
+        %th.text-right.bl{ :title => "Section"} Section
+        %th.text-right{ :title => "NVQ Level"} NVQ Level
+        %th.text-right.bl{ :title => "Starts"} Starts
+        %th.text-right{ :title => "Completes"} Completes
+        %th.text-right{ :title => "Achieves"} Achieves
+        %th.text-right.bl{ :title => "Retention"} Retention
+        %th.text-right{ :title => "Achievement"} Achievement
+        %th.text-right{ :title => "Success"} Success
+    %tbody
+      - ProachieveData.where( ' course = ? and hybrid_end_year > ? ',@topic.code , (MISC::MiscDates.acyr[0,2].to_i - 6) ).order("hybrid_end_year desc").each do |pa|
+        %tr
+          %td.text-right{ :title => "Hybrid End Year", :style => "width:1px" }
+            %b= pa.hybrid_end_year
+          %td.text-right.bl{ :title => "Section" }= pa.section
+          %td.text-right{ :title => "NVQ Level" }= pa.nvq_level
+          %td.text-right.bl{ :title => "Starts" }= pa.starts
+          %td.text-right{ :title => "Completes" }= pa.completes
+          %td.text-right{ :title => "Achieves" }= pa.achieves
+          %td.text-right.bl{ :title => "Retention" }= pa.retention
+          %td.text-right{ :title => "Achievement" }= pa.achievement
+          %td.text-right{ :title => "Success" }= pa.success
+
+    %tfoot
+      %tr
+        %td{:colspan => 8} 
+        %td.text-center
+%br
+.pull-right
+  .btn-group.dropup
+    %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
+      %i.fa.fa-download.fa-fw
+      Download
+      %span.caret
+    %ul.dropdown-menu.dropdown-menu-right
+      %li
+        %a{"data-download-table" => "#achieve-plp-table", "data-download-type" => "excel"} 
+          %i.fa.fa-fw.fa-file-excel-o
+          Excel
+      %li
+        %a{"data-download-table" => "#achieve-plp-table", "data-download-type" => "csv"} 
+          %i.fa.fa-fw.fa-file-o
+          CSV

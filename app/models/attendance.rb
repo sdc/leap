@@ -38,6 +38,8 @@ class Attendance < Eventable
         bs ? :danger : :overdue
       elsif att_year < Settings.attendance_high_score.to_i
         bs ? :warning : :start
+      elsif ( !Settings.attendance_exceed_score.nil? && att_year >= Settings.attendance_exceed_score.to_i )
+        bs ? :exceed : :exceed
       else
         bs ? :success : :complete
       end
@@ -71,6 +73,8 @@ class Attendance < Eventable
         "a66"
       elsif att_year < Settings.attendance_high_score.to_i
         "da6"
+      elsif ( !Settings.attendance_exceed_score.nil? && att_year >= Settings.attendance_exceed_score.to_i )
+        "64a"
       else
         "6a6"
       end
@@ -85,14 +89,15 @@ class Attendance < Eventable
         "a66"
       elsif att_year < Settings.attendance_high_score.to_i
         "da6"
+      elsif ( !Settings.attendance_exceed_score.nil? && att_year >= Settings.attendance_exceed_score.to_i )
+        "64a"
       else
         "6a6"
       end
     rescue
       bg = "6a6"
     end
-    misc_dates = MISC::MiscDates.new
-    acy = misc_dates.acyr(week_beginning)
+    acy = MISC::MiscDates.acyr(week_beginning)
     {:icon         => "fa-check-circle",
      :partial_path => "tiles/attendance",
      :subtitle     => course_type.titlecase,

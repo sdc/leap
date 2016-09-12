@@ -56,6 +56,8 @@ class Person < ActiveRecord::Base
   has_many :aspirations
   has_many :induction_questions
   has_many :notifications
+  has_many :support_plps
+  has_many :lsf_bursary_funds
 
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
@@ -89,6 +91,13 @@ class Person < ActiveRecord::Base
     course_type = course_type.to_s
     Rails.cache.fetch("#{mis_id}_#{course_type}_attendance", :expires_in => 8.hours) do
       attendances.where(:course_type => course_type).last
+    end
+  end
+
+  def attendance_acyr(course_type = "overall", ay)
+    course_type = course_type.to_s
+    Rails.cache.fetch("#{mis_id}_#{course_type}_attendance", :expires_in => 8.hours) do
+      attendances.where( :course_type => course_type, MISC::MiscDates.date_in_acyr(:created_at,ay) => true ).last
     end
   end
 

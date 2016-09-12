@@ -1,0 +1,81 @@
+- bpr_icon = { "TT" => "fa fa-taxi", "DT" => "fa fa-taxi", "Train" => "fa fa-train", "FD" => "fa fa-ship" }
+
+.scroll-x
+  %table.table.table-hover.table-condensed.table-responsive
+    %thead
+      %tr
+        %td &nbsp;
+      %tr
+        %th.text-right.nowr{ :style => "width:1px" } Name
+        -# %th.text-center.bl{:title => "Initial Advice and Guidance"} IAG
+        %th.text-center.bl{:title => "Bursary"} Bursary
+        %th.text-center{:title => "Travel Pass / Parking Permit"} Travel
+        %th.text-center{:title => "Free College Meals"} FCM
+        %th.text-center{:title => "Vulnerable Learner: EHCP, High Needs, Care Leaver or Social Worker.<br>For further information contact the PI Team", :"data-html" => "true"} VL
+        %th.text-center{:title => "Positive Intervention"} PI
+        %th.text-center{:title => "Curriculum Support"} Support
+    %tbody
+      %tr
+      - @person_courses.each do |pc|
+        - pc.person.import_support_plps if Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}][:support_plps]
+        - sups = pc.person.support_plps.where(:active => true)
+        %tr{"data-mis-status" => pc.mis_status.downcase}
+          %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
+            %b= link_to pc.person.name, pc.person, :target => "_blank"
+          -# %td.text-center.bl
+          -#   - ints = pc.person.contact_logs.select{|x| /\bIAG\b/.match(x.body.to_s).present? and MISC::MiscDates.acyr(x.created_at) == @topic.year }.count
+          -#   - ints_title = ints > 0 ? ( ints.to_s + " entry".pluralize(ints) + " in the contact logs" ) : nil
+          -#   - iaga = sups.find{|sp| sp.domain == "EBS" && (["IAG Appointment"].include? sp.name) && MISC::MiscDates.acyr(MISC::MiscDates.make_date(sp.value,'%d-%b-%Y')) == @topic.year }.present?
+          -#   - iaga_title = iaga ? sups.select{|sp| sp.domain == "EBS" && (["IAG Appointment"].include? sp.name) }.map{|s| s.name + ": " + s.value}.join('<br>') : nil
+          -#   - if ( ints != 0 || iaga )
+          -#     = link_to(person_view_url(pc.person,"contact_logs")) do
+          -#       -# .label.label-danger= ints
+          -#       %i.fa.fa-check{:"data-html" => "true", :title => [ints_title,iaga_title].compact.join('<br>') }
+          %td.text-center.bl
+            -# - if sups.find{|sp| sp.domain == "EBS" && (["Bursary Start Date","Bursary End Date"].include? sp.name) && MISC::MiscDates.acyr(MISC::MiscDates.make_date(sp.value,'%d-%b-%Y')) == @topic.year }.present?
+            -#   %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["Bursary Start Date","Bursary End Date"].include? sp.name) }.map{|s| s.name + ": " + s.value}.join('<br>') }
+            - if ( pc.person.lsf_bursary_funds.select{|x| x.year == @topic.year }.count  > 0 )
+              %i.fa.fa-check{:title => "Bursary"}
+          %td.text-center
+            - if (bpr = sups.find{|sp| sp.domain == "EBS" && (["Bus Pass Region"].include? sp.name) }).present?
+              %i{:"data-html" => "true", :class => ((bpr_icon.include? bpr.value) ? bpr_icon[bpr.value] : "fa fa-bus"), :title => sups.select{|sp| sp.domain == "EBS" && (["Bus Pass Region"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
+            - if sups.find{|sp| sp.domain == "EBS" && (["Car Park Permit Number"].include? sp.name) }.present?
+              %i.fa.fa-car{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["Car Park Permit Number"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
+          %td.text-center
+            -# - if ( ( sups.find{|sp| ["Free College Meals"].include? sp.name) }.try(:value) || "N" ) != "N" || sups.find{|sp| ["FCM Funding"].include? sp.name) }.present? )
+            -#   %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| ["Free College Meals","FCM Funding"].include? sp.name) }.map{|s| s.name + ": " + s.value}.join('<br>') }
+            - if ( ( sups.find{|sp| sp.domain == "EBS" && (["Free College Meals"].include? sp.name) }.try(:value) || "N" ) != "N" )
+              %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["Free College Meals"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
+          %td.text-center
+            - if sups.find{|sp| sp.domain == "EBS" && (["EHC Plan","HE Care Leaver","Special Care Guidance","Social Worker"].include? sp.name) }.present?
+              -# %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["EHC Plan","HE Care Leaver","Special Care Guidance","Social Worker"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
+              %i.fa.fa-check{:title => "VL"}
+          %td.text-center
+            - ints = pc.person.events.where(:eventable_type => "Intervention",:transition => :create).this_year.count
+            - if ints != 0
+              = link_to(person_view_url(pc.person,"intervention")) do
+                .label.label-danger{:title => "PI"}= ints
+                -# %i.fa.fa-check{:title => ints.to_s}
+          %td.text-center
+            - ints = pc.person.events.where(:eventable_type => ["SupportHistory","SupportRequest","SupportStrategy"],:transition => :create).this_year.count
+            - if ints != 0
+              = link_to(person_view_url(pc.person,"support")) do
+                -# .label.label-danger= ints
+                %i.fa.fa-check{:title => ints.to_s}
+          -# - if @window
+          -#   - if cr = pc.person.reviews.where(:window => @window).first
+          -#     %td.bl.text-center{:class => cr.published ? "success"   : "warning",
+          -#                        :title => cr.published ? "Published" : "Started"}
+          -#       = link_to person_event_url(cr.person, cr.events.creation.first) do
+          -#         - if cr.published
+          -#           %i.fa.fa-star
+          -#           .hide Complete
+          -#         - else
+          -#           %i.fa.fa-star-half-full
+          -#           .hide Started
+          -#   - else
+          -#     %td.bl.text-center.danger{:title => "Not Started"}
+          -#       = link_to(person_view_url(pc.person,View.where(:name => "reviews").for_user.first)) do
+          -#         %i.fa.fa-star-o
+          -# - else
+          -#   %td.bl{:title => "No Review Open"}

@@ -1,3 +1,4 @@
+- npr = Settings.num_progress_reviews.to_i
 .col-md-12
   - if @progress_bar.empty?
     %p{:style => 'text-align: center'}It looks like you are not currently enrolled on any courses at South Devon College. If you feel this is a mistake, please speak to your Personal Tutor or visit Helpzone on Level 3.
@@ -38,7 +39,7 @@
               .col-md-2.hidden-xs.col-sm-2.review-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial(' + a["DI"] + ')' if @user.staff?)}
                 %h5 Initial Review
                 %h4 Incomplete
-            - (1..5).each do |i| 
+            - (1..npr).each do |i|
               - if (a["reviews"][i].present? && a["reviews"][i].number == i)
                 .col-md-2.hidden-xs.col-sm-2.review-section.has_tooltip{:class => a["reviews"][i].level, :onClick => 'displayReviewView(' + a["reviews"][i]["DRV"] + ')', :title => a["reviews"][i].ragp_desc, "data-placement" => "right"}
                   %h5 Working at

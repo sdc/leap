@@ -25,6 +25,7 @@ Settings.defaults[:hide_staff_personal_details]  = 0
 Settings.defaults[:ebs_import_options]           = "save,courses,quals"
 Settings.defaults[:review_grades]                = "0,1,2,3,4,5,6,7,8,9,10"
 Settings.defaults[:induction_questions]          = "Study Programme including progression plan and English and Maths;Attendance;Behaviour;British Values;Progress and attendance reviews including Target Grades;Study Skills;Work Related Opportunities;Safeguarding;Prevent"
+Settings.defaults[:induction_question_badges]    = ""
 Settings.defaults[:profile_questions]            = "My favourite subject at school and why;My work experience;My long term ambitions;My hobbies and interests;My course feedback;My Night feedback;Welcome Day feedback"
 Settings.defaults[:application_offer_text] 	= "You have a guaranteed offer of a place on a course at college (in accordance with the college's admissions policy). To guarantee your place on your course of choice you will need to meet the entry requirements as per the prospectus."
 Settings.defaults[:application_title_field] = ""
@@ -78,6 +79,7 @@ Settings.defaults[:moodle_link_target]           = "_self"
 Settings.defaults[:moodle_badge_block_courses]   = ""
 Settings.defaults[:moodle_grade_track_import]    = "off"
 Settings.defaults[:moodle_badge_import]          = "off"
+Settings.defaults[:moodle_badge_plp_courses]     = ""
 
 # Attendance Import
 Settings.defaults[:attendance_table]             = ""
@@ -87,6 +89,7 @@ Settings.defaults[:attendance_type_column]       = ""
 Settings.defaults[:attendance_date_column]       = ""
 Settings.defaults[:attendance_low_score]         = 85
 Settings.defaults[:attendance_high_score]        = 90
+Settings.defaults[:attendance_exceed_score]      = 98
 
 # Stylesheets
 # This is pretty hacky but just dumps some arbitrary css into a style tag in the layout
@@ -100,6 +103,10 @@ Settings.defaults[:ebs_link_icon] = "fa-bolt"
 
 # Which home page
 Settings.defaults[:home_page] = "old"
+Settings.defaults[:home_page_staff] = "old"
+Settings.defaults[:home_page_student] = "old"
+Settings.defaults[:home_page_applicant] = "old"
+Settings.defaults[:home_page_affiliate] = "old"
 
 Settings.defaults[:ebs_no_contact] = nil
 
@@ -108,3 +115,9 @@ Settings.defaults[:ws_user] = ""
 Settings.defaults[:ws_token] = ""
 
 Settings.defaults[:ebs_username_field] = "network_userid"
+
+#PLP Overview
+Settings.defaults[:plp_overview] = "old"
+
+#Progress Reviews settings
+Settings.defaults[:num_progress_reviews] = 5

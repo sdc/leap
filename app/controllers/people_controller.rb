@@ -53,8 +53,7 @@ class PeopleController < ApplicationController
           @tiles.unshift(@topic.mdl_badges.where(:mdl_course_id => ppdc).last.to_course_tile) if ppdc && @topic.mdl_badges.where(:mdl_course_id => ppdc).any?
           tracks = ["core","maths","english"].map{|ct| @topic.mdl_grade_tracks.where(:course_type => ct).last}.reject{|x| x.nil?}
           @tiles.unshift(tracks.map{|x| x.to_tile})
-          misc_dates = MISC::MiscDates.new
-          attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).where(["week_beginning >= ?", misc_dates.start_of_acyr] ).last}.reject{|x| x.nil?}
+          attendances = ["overall","core","maths","english"].map{|ct| @topic.attendances.where(:course_type => ct).where(["week_beginning >= ?", MISC::MiscDates.start_of_acyr] ).last}.reject{|x| x.nil?}
           attendances.select!{|x| x.course_type != "overall"} if attendances.length == 2
           @tiles.unshift(attendances.map{|x| x.to_tile})
           @tiles.unshift(@topic.timetable_events(:next).first.to_tile) if @topic.timetable_events(:next).any?
@@ -156,12 +155,11 @@ class PeopleController < ApplicationController
   end
 
   def getAttendance(type, code)
-    misc_dates = MISC::MiscDates.new
     if ["core", "english", "maths"].include? type
-      return @topic.attendances.where(:course_type => type).where(["week_beginning >= ?", misc_dates.start_of_acyr]).last
+      return @topic.attendances.where(:course_type => type).where(["week_beginning >= ?", MISC::MiscDates.start_of_acyr]).last
     end
 
-    return @topic.attendances.where(:enrol_course => code).where(["week_beginning >= ?", misc_dates.start_of_acyr]).last    
+    return @topic.attendances.where(:enrol_course => code).where(["week_beginning >= ?", MISC::MiscDates.start_of_acyr]).last    
   end
 
   def getReviews(progress)

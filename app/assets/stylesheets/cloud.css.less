@@ -235,6 +235,13 @@ a.person {
   }
 }
 
+img#person-photo {
+  transition: all 0.3s ease-in-out;
+  &:hover { 
+    transform: scale(2); 
+  }
+}
+
 .searchy {
   h1 {
     margin-top: 0;
@@ -339,6 +346,24 @@ table.table td, table.table th {
   border-left: 60px solid green;
 }
 
+.ragp_purple {
+  background-color: #6D5298;
+  color: white;
+}
+
+.ragp_green {
+  background-color: #6a6 !important;
+}
+
+.ragp_amber {
+  background-color: #ff6933 !important;
+  /*background-color: #ff8f66 !important;*/
+}
+
+.ragp_red {
+  background-color: #ff8080 !important;
+}
+
 .purple {
   background: #d9edf7;
   background: -moz-linear-gradient(top,  #d9edf7 0%, #d9edf7 29%, #797599 100%);
@@ -369,6 +394,28 @@ table.table td, table.table th {
   background: -webkit-linear-gradient(top,  #d9edf7 0%,#d9edf7 25%,#fe8e8e 100%);
   background: linear-gradient(to bottom,  #d9edf7 0%,#d9edf7 25%,#fe8e8e 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d9edf7', endColorstr='#fe8e8e',GradientType=0 );
+}
+
+.ragp_light_purple {
+  background-color: #ddccff !important;
+  color: black;
+}
+.ragp_light_green {
+  background-color: #dff0d8 !important;
+}
+.ragp_light_amber {
+  background-color: #fcf8e3 !important;
+}
+.ragp_light_red {
+  background-color: #f2dede !important;
+}
+.ragp_light_grey {
+  background-color: #f5f5f5 !important;  
+}
+
+.exceed {
+  background-color: #ddccff !important;
+  color: black;
 }
 
 .row-eq-height {
@@ -624,6 +671,24 @@ table.table td, table.table th {
     width: 400px;
   }
 }
+
+.scroll-x {
+  overflow-x:auto;
+}
+
+.plp-badge {
+max-width: 30px; /* or to whatever you want here */
+max-height: auto; /* or to whatever you want here */
+}
+
+/*
+@media (max-width: 768px) {
+.plp-badge {
+   max-width: 60px;
+ }
+}
+*/
+
 @media (min-width: 768px) and (max-width: 990px) {
   .review-section > h4 {
     font-size: 13px;
