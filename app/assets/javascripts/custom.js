@@ -31,4 +31,4 @@ window.onload = function() {
             }
         }
     }
-};
+}
