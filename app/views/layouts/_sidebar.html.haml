@@ -2,7 +2,8 @@
 %h1= @topic.name
 - if @topic.kind_of? Course and @topic.person_courses.detect{|pu| !pu.tutorgroup.blank?}
   = select_tag :tutorgroup_id, options_for_select([["Tutorgroups",url_for(:tutorgroup => nil)]] + @topic.tutorgroups.map{|tg| [tg,url_for(:tutorgroup => tg)]},url_for(:tutorgroup => @tutorgroup)), :class => "span2"
-%h6#ebs-btn= link_to_if @affiliation == "staff", @topic.mis_code, Settings.ebs_person_base_url + @topic.mis_id.to_s
+%h6#ebs-btn
+	= link_to_if @affiliation == "staff", @topic.mis_code, Settings.ebs_person_base_url + @topic.mis_id.to_s
 %ul.sidebar
   = icon_link @user.staff? ? "#{@topic.class.name.humanize} Home" : "Home", @topic, "home"
   = icon_link "Timetable", send("#{@topic.class.name.underscore}_timetables_url", @topic)
