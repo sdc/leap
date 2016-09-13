@@ -19,10 +19,11 @@ function isSilverlightInstalled(){
  }
  return isSilverlightInstalled;
 }
+;
 window.onload = function() {
     if (isSilverlightInstalled() == false){
       var ebs = document.getElementsByClassName('slchk');
-      var no_silverlight_msg = 'Please note that your browser currently is not compatible with SPARKE (EBS Reports); therefore if you would like to make use of the EBS link you will need to ensure you are using the Staff Pages with Internet Explorer (IE).\n\nWe are currently investigating compatibility for your browser with SPARKE for future developments.';
+      var no_silverlight_msg = 'Please note that your browser currently is not compatible with SPARKE (EBS Reports); therefore if you would like to make use of the EBS link you will need to ensure you are using Leap with Internet Explorer (IE).\n\nWe are currently investigating compatibility for your browser with SPARKE for future developments.';
         for (var i = 0; i < ebs.length; ++i) {
             ebs[i].setAttribute('readonly', 'readonly');
             ebs[i].onclick=function(){
@@ -32,3 +33,4 @@ window.onload = function() {
         }
     }
 }
+;
