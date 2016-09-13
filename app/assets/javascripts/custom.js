@@ -19,6 +19,7 @@ function isSilverlightInstalled(){
  }
  return isSilverlightInstalled;
 }
+;
 window.onload = function() {
     if (isSilverlightInstalled() == false){
       var ebs = document.getElementsByClassName('slchk');
@@ -32,3 +33,4 @@ window.onload = function() {
         }
     }
 }
+;
