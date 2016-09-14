@@ -1,57 +1,58 @@
-%h2 Prior Attainment Score
+- if @topic.respond_to?(:lat_score)
+  %h2 Prior Attainment Score
 
-%h3.span10
-  Prior Attainment Score:
-  = @topic.lat_score or "n/a"
+  %h3.span10
+    Prior Attainment Score:
+    = ( @topic.respond_to?(:lat_score) && @topic.try(:lat_score) ) or "n/a"
 
-- if @topic.qualifications.detect{|x| x.lat_score == "No scores for qual type"}
-  .span9.alert.alert-danger
-    There are qualifications which are not automatically included in this calculation; it is advised to click the "See calculation" button
-    and check the result.
+  - if @topic.respond_to?(:qualifications) && @topic.qualifications.detect{|x| x.respond_to?(:lat_score) && x.try(:lat_score) == "No scores for qual type"}
+    .span9.alert.alert-danger
+      There are qualifications which are not automatically included in this calculation; it is advised to click the "See calculation" button
+      and check the result.
 
-.span10= link_to_function "See calculation.","$('.lat-calc').show('slow');$(this).hide()", :class => "btn"
+  .span10= link_to_function "See calculation.","$('.lat-calc').show('slow');$(this).hide()", :class => "btn"
 
 
-.lat-calc.hide.span9
+  .lat-calc.hide.span9
 
-  .span4
-    %b Age:
-    = @topic.try(:staff) ? "##" : @topic.age
-  .span4
-    %b Age on Sep 1st:
-    = @topic.try(:staff) ? "##" : @topic.age_on(Date.civil(2014,9,1))
+    .span4
+      %b Age:
+      = @topic.try(:staff) ? "##" : @topic.age
+    .span4
+      %b Age on Sep 1st:
+      = @topic.try(:staff) ? "##" : @topic.age_on(Date.civil(2014,9,1))
 
-  %p &nbsp;
+    %p &nbsp;
 
-  %table.table.table-condensed
-    %tr
-      %th Qual
-      %th Grade
-      %th Date
-      %th Age at
-      %th QCA
-    - @topic.qualifications.each do |q|
-      %tr{:class => [q.lat_score.kind_of?(Fixnum) ? "current" : "",q.lat_score == "No scores for qual type" ? "incomplete" : ""]}
-        %td= q.qual_type
-        %td= q.grade
-        %td= q.created_at.try :to_date
-        %td= @topic.try(:staff) ? "##" : @topic.age_on(q.created_at)
-        %td= q.lat_score or "-"
-    %tr
-      %td
-      %td
-      %td
-      %th Total:
-      %th= @topic.qualifications.select{|q| q.lat_score.kind_of? Fixnum}.sum{|q| q.lat_score}
-    %tr
-      %td
-      %td
-      %td
-      %th Eligible Quals:
-      %th= @topic.qualifications.select{|q| q.lat_score.kind_of? Fixnum}.count
-    %tr.complete
-      %td
-      %td
-      %td
-      %th Score:
-      %th= @topic.lat_score
+    %table.table.table-condensed
+      %tr
+        %th Qual
+        %th Grade
+        %th Date
+        %th Age at
+        %th QCA
+      - @topic.qualifications.each do |q|
+        %tr{:class => [q.lat_score.kind_of?(Fixnum) ? "current" : "",q.lat_score == "No scores for qual type" ? "incomplete" : ""]}
+          %td= q.qual_type
+          %td= q.grade
+          %td= q.created_at.try :to_date
+          %td= @topic.try(:staff) ? "##" : @topic.age_on(q.created_at)
+          %td= q.lat_score or "-"
+      %tr
+        %td
+        %td
+        %td
+        %th Total:
+        %th= @topic.qualifications.select{|q| q.lat_score.kind_of? Fixnum}.sum{|q| q.lat_score}
+      %tr
+        %td
+        %td
+        %td
+        %th Eligible Quals:
+        %th= @topic.qualifications.select{|q| q.lat_score.kind_of? Fixnum}.count
+      %tr.complete
+        %td
+        %td
+        %td
+        %th Score:
+        %th= @topic.lat_score
