@@ -34,8 +34,7 @@ class PeopleController < ApplicationController
             redirect_to "/people/#{@topic.mis_id}/timetables"
             return
           end
-          ## TODO fix badges bug
-          @badges = {:moodle => getMdlBadges, :course => nil}
+          @badges = {:moodle => getMdlBadges, :course => getCourseBadges}
           @aspiration = @topic.aspirations.last.aspiration if @topic.aspirations.present?
           @notifications = getNotifications
           @news = Settings.news_modal == 'on' ? true : false
@@ -99,7 +98,6 @@ class PeopleController < ApplicationController
   end
 
   def getCourseBadges
-    ## TODO fix error.
     return @topic.events.where(:eventable_type => "MdlBadge").limit(8)
   end
 
