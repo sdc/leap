@@ -35,7 +35,7 @@ class PeopleController < ApplicationController
             return
           end
           ## TODO fix badges bug
-          @badges = {:moodle => getMdlBadges, :course => nil}
+          @badges = { :moodle => getBadges, :course => nil}
           @aspiration = @topic.aspirations.last.aspiration if @topic.aspirations.present?
           @notifications = @topic.notifications.where(:notified => false) if @topic.id == @user.id
           @news = Settings.news_modal == 'on' ? true : false
@@ -89,6 +89,10 @@ class PeopleController < ApplicationController
   def getCourseBadges
     ## TODO fix error.
     return @topic.events.where(:eventable_type => "MdlBadge").limit(8)
+  end
+
+  def getBadges
+    return @topic.mdl_badges
   end
 
   def getProgressData
