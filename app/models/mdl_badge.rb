@@ -5,9 +5,9 @@ class MdlBadge < Eventable
 
   def self.import_all
     if Settings.moodle_badge_import == "on"
-      puts "\n\n****************************************"
-      puts "* Stating Moodle Badge Imports *"
-      puts "****************************************\n"
+      puts "\n\n*********************************"
+      puts "* Starting Moodle Badge Imports *"
+      puts "*********************************\n"
       peeps = ActiveResource::Connection.new(Settings.moodle_host).
                 get("#{Settings.moodle_path}/webservice/rest/server.php?" +
                 "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_users_with_badges").body

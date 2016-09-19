@@ -19,9 +19,9 @@ class MdlGradeTrack < Eventable
 
   def self.import_all 
     if Settings.moodle_grade_track_import == "on"
-      puts "\n\n****************************************"
-      puts "* Stating Moodle Grade Tracker Imports *"
-      puts "****************************************\n"
+      puts "\n\n*****************************************"
+      puts "* Starting Moodle Grade Tracker Imports *"
+      puts "*****************************************\n"
       peeps = ActiveResource::Connection.new(Settings.moodle_host).
                 get("#{Settings.moodle_path}/webservice/rest/server.php?" +
                 "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_users_with_mag").body
@@ -35,31 +35,33 @@ class MdlGradeTrack < Eventable
 
   def self.import_for(person,delete = true)
     person = person.kind_of?(Person) ? person : Person.get(person) 
-    person.mdl_grade_tracks.destroy_all
-    begin
-      tracks = ActiveResource::Connection.new(Settings.moodle_host).
-                   get("#{Settings.moodle_path}/webservice/rest/server.php?" +
-                   "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_targets_by_username&username=" +
-                   person.username + Settings.moodle_user_postfix).body
-    rescue
-      # Almost certainly the user doesn't exist on Moodle yet
-      return nil
-    end
-    Nokogiri::XML(tracks).xpath('//MULTIPLE/SINGLE').each do |course|
-      next if person.mdl_grade_tracks.where(:created_at  => Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i),
-                                            :course_type => course.xpath("KEY[@name='leapcore']/VALUE").first.content).any?
-      a=person.mdl_grade_tracks.create do |t|
-        t.name              = course.xpath("KEY[@name='course_fullname']/VALUE").first.content
-        t.mdl_id            = course.xpath("KEY[@name='course_id']/VALUE").first.content
-        t.tag               = course.xpath("KEY[@name='tag_display']/VALUE").first.content
-        t.mag               = course.xpath("KEY[@name='mag_display']/VALUE").first.content
-        t.total             = course.xpath("KEY[@name='course_total_display']/VALUE").first.content
-        t.completion_total  = course.xpath("KEY[@name='course_completion_completed']/VALUE").first.content
-        t.completion_out_of = course.xpath("KEY[@name='course_completion_total']/VALUE").first.content
-        t.course_type       = course.xpath("KEY[@name='leapcore']/VALUE").first.content
-        t.created_at        = Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i)
+    if person.kind_of?(Person)
+      person.try(:mdl_grade_tracks).try(:destroy_all)
+      begin
+        tracks = ActiveResource::Connection.new(Settings.moodle_host).
+                     get("#{Settings.moodle_path}/webservice/rest/server.php?" +
+                     "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_targets_by_username&username=" +
+                     person.username + Settings.moodle_user_postfix).body
+      rescue
+        # Almost certainly the user doesn't exist on Moodle yet
+        return nil
       end
-      puts a.attributes
+      Nokogiri::XML(tracks).xpath('//MULTIPLE/SINGLE').each do |course|
+        next if person.mdl_grade_tracks.where(:created_at  => Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i),
+                                              :course_type => course.xpath("KEY[@name='leapcore']/VALUE").first.content).any?
+        a=person.mdl_grade_tracks.create do |t|
+          t.name              = course.xpath("KEY[@name='course_fullname']/VALUE").first.content
+          t.mdl_id            = course.xpath("KEY[@name='course_id']/VALUE").first.content
+          t.tag               = course.xpath("KEY[@name='tag_display']/VALUE").first.content
+          t.mag               = course.xpath("KEY[@name='mag_display']/VALUE").first.content
+          t.total             = course.xpath("KEY[@name='course_total_display']/VALUE").first.content
+          t.completion_total  = course.xpath("KEY[@name='course_completion_completed']/VALUE").first.content
+          t.completion_out_of = course.xpath("KEY[@name='course_completion_total']/VALUE").first.content
+          t.course_type       = course.xpath("KEY[@name='leapcore']/VALUE").first.content
+          t.created_at        = Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i)
+        end
+        puts a.attributes
+      end
     end
   end
 
