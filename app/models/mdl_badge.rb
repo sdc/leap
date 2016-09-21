@@ -21,25 +21,31 @@ class MdlBadge < Eventable
 
   def MdlBadge.import_for(person)
     person = person.kind_of?(Person) ? person : Person.get(person)
-    begin
-      badges = ActiveResource::Connection.new(Settings.moodle_host).
-                   get("#{Settings.moodle_path}/webservice/rest/server.php?" +
-                   "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_badges_by_username&username=" +
-                   person.username + Settings.moodle_user_postfix).body
-    rescue
-      # Almost certainly the user doesn't exist on Moodle yet
-      return nil
-    end
-    badges = Nokogiri::XML(badges).xpath('//MULTIPLE/SINGLE').each do |badge|
-      image_url = badge.xpath("KEY[@name='image_url']/VALUE").first.content
-      next if person.mdl_badges.where(:image_url => image_url).any?
-      person.mdl_badges.create do |t|
-        t.title       = badge.xpath("KEY[@name='name']/VALUE").first.content
-        t.created_at  = Time.at(badge.xpath("KEY[@name='date_issued']/VALUE").first.content.to_i)
-        t.body        = badge.xpath("KEY[@name='description']/VALUE").first.content
-        t.image_url   = image_url
-        t.link_url    = badge.xpath("KEY[@name='details_link']/VALUE").first.content
-        t.mdl_course_id=badge.xpath("KEY[@name='course_id']/VALUE").first.content
+    if person.kind_of?(Person)
+      begin
+        badges = ActiveResource::Connection.new(Settings.moodle_host).
+                     get("#{Settings.moodle_path}/webservice/rest/server.php?" +
+                     "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_badges_by_username&username=" +
+                     person.username + Settings.moodle_user_postfix).body
+      rescue
+        # Almost certainly the user doesn't exist on Moodle yet
+        return nil
+      end
+      badges = Nokogiri::XML(badges).xpath('//MULTIPLE/SINGLE').each do |badge|
+        image_url = badge.xpath("KEY[@name='image_url']/VALUE").first.content
+        next if person.mdl_badges.where(:image_url => image_url).any?
+
+        begin
+          person.mdl_badges.create do |t|
+            t.title       = badge.xpath("KEY[@name='name']/VALUE").first.try(:content)
+            t.created_at  = Time.at(badge.xpath("KEY[@name='date_issued']/VALUE").first.try(:content).to_i)
+            t.body        = badge.xpath("KEY[@name='description']/VALUE").first.try(:content)
+            t.image_url   = image_url
+            t.link_url    = badge.xpath("KEY[@name='details_link']/VALUE").first.try(:content)
+            t.mdl_course_id=badge.xpath("KEY[@name='course_id']/VALUE").first.try(:content)
+          end
+        rescue
+        end
       end
     end
   end

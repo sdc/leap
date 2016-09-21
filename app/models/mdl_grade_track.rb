@@ -36,7 +36,7 @@ class MdlGradeTrack < Eventable
   def self.import_for(person,delete = true)
     person = person.kind_of?(Person) ? person : Person.get(person) 
     if person.kind_of?(Person)
-      person.try(:mdl_grade_tracks).try(:destroy_all)
+      person.try(:mdl_grade_tracks).destroy_all if person.try(:mdl_grade_tracks).count > 0 && person.try(:mdl_grade_tracks).respond_to?(:destroy_all)
       begin
         tracks = ActiveResource::Connection.new(Settings.moodle_host).
                      get("#{Settings.moodle_path}/webservice/rest/server.php?" +
@@ -49,18 +49,21 @@ class MdlGradeTrack < Eventable
       Nokogiri::XML(tracks).xpath('//MULTIPLE/SINGLE').each do |course|
         next if person.mdl_grade_tracks.where(:created_at  => Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i),
                                               :course_type => course.xpath("KEY[@name='leapcore']/VALUE").first.content).any?
-        a=person.mdl_grade_tracks.create do |t|
-          t.name              = course.xpath("KEY[@name='course_fullname']/VALUE").first.content
-          t.mdl_id            = course.xpath("KEY[@name='course_id']/VALUE").first.content
-          t.tag               = course.xpath("KEY[@name='tag_display']/VALUE").first.content
-          t.mag               = course.xpath("KEY[@name='mag_display']/VALUE").first.content
-          t.total             = course.xpath("KEY[@name='course_total_display']/VALUE").first.content
-          t.completion_total  = course.xpath("KEY[@name='course_completion_completed']/VALUE").first.content
-          t.completion_out_of = course.xpath("KEY[@name='course_completion_total']/VALUE").first.content
-          t.course_type       = course.xpath("KEY[@name='leapcore']/VALUE").first.content
-          t.created_at        = Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i)
+        begin
+          a=person.mdl_grade_tracks.create do |t|
+            t.name              = course.xpath("KEY[@name='course_fullname']/VALUE").first.try(:content)
+            t.mdl_id            = course.xpath("KEY[@name='course_id']/VALUE").first.try(:content)
+            t.tag               = course.xpath("KEY[@name='tag_display']/VALUE").first.try(:content)
+            t.mag               = course.xpath("KEY[@name='mag_display']/VALUE").first.try(:content)
+            t.total             = course.xpath("KEY[@name='course_total_display']/VALUE").first.try(:content)
+            t.completion_total  = course.xpath("KEY[@name='course_completion_completed']/VALUE").first.try(:content)
+            t.completion_out_of = course.xpath("KEY[@name='course_completion_total']/VALUE").first.try(:content)
+            t.course_type       = course.xpath("KEY[@name='leapcore']/VALUE").first.try(:content)
+            t.created_at        = Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.try(:content).to_i)
+          end
+          puts a.attributes
+        rescue
         end
-        puts a.attributes
       end
     end
   end
