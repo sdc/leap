@@ -48,4 +48,6 @@ group :development do
   gem 'pry-remote'
   gem 'pry-stack_explorer'
   gem 'pry-debugger'
+
+  # gem 'rack-mini-profiler'
 end
