@@ -1,3 +1,4 @@
+- require 'misc/misc_dates'
 - ct = @topic.code.to_s.downcase
 
 .scroll-x
@@ -15,7 +16,6 @@
       - (1..npr).each do |x|
         %th.text-center.visible-lg{:class => "#{ct}_hide" + (x==1 ? " bl" : ""), :title => "Progress and Attendance Review #{x}" }= x
       %th.text-center.bl{ :title => "Target Grade"} TG
-      -# %th.visible-lg{:class => "#{ct}_hide"} Reg
   %tbody
     - @person_courses.each do |pc|
       %tr{"data-mis-status" => pc.mis_status.downcase}
@@ -24,14 +24,9 @@
             %b= link_to pc.name, pc.person, :target => "_blank"
           - else
             %b= pc.name
-        - person_attendances = pc.person.attendances
-        -# cem_type =  pc.person.progresses.where(:course_code => ct, :course_type => ['core','english','maths'] ).last.try(:course_type)
-        -# person_attendance[pc.person.id.to_s => cem_type] = person_attendances.select { |x| x.course_type.to_s.downcase == cem_type and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
-        -# if person_attendance[pc.person.id.to_s => cem_type]
-        -#  %td.text-right{:class => person_attendance[pc.person.id.to_s => cem_type].status(true), :style => "width:1px" }= "#{person_attendance[pc.person.id.to_s => cem_type].try :att_year}%"
-        -# person_attendance[pc.person.id.to_s => ct] = person_attendances.select { |x| x.enrol_course.to_s.downcase == ct and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
+        - person_attendances = pc.person.attendances.where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", MISC::MiscDates.startdate_from_acyr(@topic.year), MISC::MiscDates.enddate_from_acyr(@topic.year) )
         - cem_type = pc.person.progresses.where(:course_code => ct, :course_type => ['core','english','maths'], :course_year => @topic.year ).last.try(:course_type) || "course"
-        - person_attendance[pc.person.id.to_s => ct] = person_attendances.select { |x| ( cem_type == 'course' ? (x.enrol_course.to_s.downcase == ct) : (x.course_type.to_s.downcase == cem_type.downcase) ) and MISC::MiscDates.acyr(x.week_beginning) == @topic.year }.last
+        - person_attendance[pc.person.id.to_s => ct] = person_attendances.select { |x| ( cem_type == 'course' ? (x.enrol_course.to_s.downcase == ct) : (x.course_type.to_s.downcase == cem_type.downcase) ) }.last
         - if person_attendance[pc.person.id.to_s => ct]
           - title = "Attendance for #{cem_type}: #{person_attendance[pc.person.id.to_s => ct].status(true)}"
           %td.text-right{:class => person_attendance[pc.person.id.to_s => ct].status(true), :style => "width:1px", :title => title }= "#{person_attendance[pc.person.id.to_s => ct].try :att_year}%"
@@ -50,8 +45,6 @@
         - else
           %td.text-center.bl{:title => "No Target"}
 
-        -# %td.text-center{:title => "Register Marks"}
-        -# -#=pc.person.timetable_events(:from => @date, :to => @end_date).select {|r| r.title = 'GCSE Maths' and r.timetable_start <= Time.now}.last(3).map {|r| r.mark}.to_s
   %tfoot
     %tr
       %td{:colspan => npr+2} 
