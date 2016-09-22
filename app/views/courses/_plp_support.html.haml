@@ -17,7 +17,7 @@
     %tbody
       %tr
       - @person_courses.each do |pc|
-        - pc.person.import_support_plps if Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}][:support_plps]
+        -# - pc.person.import_support_plps if Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}][:support_plps]
         - sups = pc.person.support_plps.where(:active => true)
         %tr{"data-mis-status" => pc.mis_status.downcase}
           %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
@@ -34,7 +34,8 @@
           %td.text-center.bl
             -# - if sups.find{|sp| sp.domain == "EBS" && (["Bursary Start Date","Bursary End Date"].include? sp.name) && MISC::MiscDates.acyr(MISC::MiscDates.make_date(sp.value,'%d-%b-%Y')) == @topic.year }.present?
             -#   %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["Bursary Start Date","Bursary End Date"].include? sp.name) }.map{|s| s.name + ": " + s.value}.join('<br>') }
-            - if ( pc.person.lsf_bursary_funds.select{|x| x.year == @topic.year }.count  > 0 )
+            -# if ( pc.person.lsf_bursary_funds.select{|x| x.year == @topic.year }.count  > 0 )
+            - if ( pc.person.lsf_bursary_funds.exists?( :year => @topic.year ) )
               %i.fa.fa-check{:title => "Bursary"}
           %td.text-center
             - if (bpr = sups.find{|sp| sp.domain == "EBS" && (["Bus Pass Region"].include? sp.name) }).present?
