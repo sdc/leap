@@ -20,21 +20,21 @@
             = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
           #scores.form-group.col-md-12
             .form-group.row
-              .col-md-6
-                .input-group
+              .col-md-12.margin-bottom
+                .input-group.width-100
                   .input-group-addon.ir-score Maths Initial Assessment
                   = text_field :maths_ia, nil, :disabled => true, :class => "form-control"
-              .col-md-6
-                .input-group
+              .col-md-12
+                .input-group.width-100
                   .input-group-addon.ir-score{:style => "width: 188px"} English Initial Assessment
                   = text_field(:english_ia, nil, :disabled => true, :class => "form-control")
             .form-group.row
-              .col-md-6
-                .input-group
+              .col-md-12.margin-bottom
+                .input-group.width-100
                   .input-group-addon.ir-score Maths Diagnostic
                   = text_field(:maths_da, nil, :disabled => true, :class => "form-control")
-              .col-md-6
-                .input-group
+              .col-md-12
+                .input-group.width-100
                   .input-group-addon.ir-score English Diagnostic
                   = text_field(:english_da, nil, :disabled => true, :class => "form-control")
             .form-group.row
