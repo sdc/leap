@@ -14,11 +14,10 @@
           = link_to badge.link_url, :title => badge[:title], "data-toggle" => "popover", "data-content" => badge[:description] do
             = image_tag badge.image_url, :class => "img-responsive"
     - if badges[:course].present?
-      - badges[:course].all_in_course.each do |badge|
-        - next if badge_list.detect{|bl| bl.id == badge.id}      
+      - badges[:course].each do |badge|
         .col-xs-2.ppd_badge
-          = link_to badge.link_url, :title => badge[:title], "data-toggle" => "popover", "data-content" => badge[:description] do
-            = image_tag badge.image_url, :class => "img-responsive"
+          = link_to badge.eventable.link_url, :title => badge.eventable[:title], "data-toggle" => "popover", "data-content" => badge.eventable[:description] do
+            = image_tag badge.eventable.image_url, :class => "img-responsive"
     - if !badges[:moodle].present? && !badges[:course].present?
       Once achieved, your badges will appear here
     - else
