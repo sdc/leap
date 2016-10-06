@@ -32,22 +32,23 @@ module MisPerson
 
     def resync(yr=nil)
       yr = yr || Ebs::CalendarOccurrences.acyr
-      puts "Started for #{yr}"
+      puts Time.zone.now.strftime("%Y-%m-%d %T") + " Started for #{yr}"
       count = skipcount = 0
       Ebs::Person.find_each(:include => :people_units) do |ep|
       # Ebs::Person.where(:person_code => [30145214,30146401,30148855,30161804,30136805]).find_each(:include => :people_units) do |ep|
         begin
 	  skipcount +=1
           next unless ep.people_units.detect{|pc| pc.calocc_code == yr} if yr
-          puts "#{count}:\tskip #{skipcount}\timport #{import(ep).name}"
-          MdlGradeTrack.import_for ep
           count += 1
+          imported_ep = import(ep)
+          puts Time.zone.now.strftime("%Y-%m-%d %T") + " #{count}:\tskip #{skipcount-1}\timport [#{imported_ep.mis_id}] #{imported_ep.name}"
+          MdlGradeTrack.import_for ep
 	  skipcount = 0
         rescue
-          logger.error "Person #{ep.id} failed for some reason!"
+          logger.error Time.zone.now.strftime("%Y-%m-%d %T") + " Person #{ep.id} failed for some reason!"
         end
       end
-      puts "Finished!"
+      puts Time.zone.now.strftime("%Y-%m-%d %T") + " Finished!"
     end
           
 
@@ -84,7 +85,7 @@ module MisPerson
           @person.update_attribute("contact_allowed", Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
           @person.save if options[:save] 
         else
-          puts "Update not needed since #{@person.updated_at} < #{ep.updated_date}"
+          puts Time.zone.now.strftime("%Y-%m-%d %T") + " Update not needed since #{@person.updated_at} < #{ep.updated_date}"
         end
         @person.import_courses if options[:courses]
         @person.import_attendances if options[:attendances]
@@ -130,7 +131,7 @@ module MisPerson
           a = model.new(hsh)
           a.id = hsh[model.primary_key]
 	  a.save
-	  puts "Added #{a.class.name} ##{a.id}"
+	  puts Time.zone.now.strftime("%Y-%m-%d %T") + " Added #{a.class.name} ##{a.id}"
         end
       end
     end

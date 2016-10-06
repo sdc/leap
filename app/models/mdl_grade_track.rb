@@ -19,24 +19,31 @@ class MdlGradeTrack < Eventable
 
   def self.import_all 
     if Settings.moodle_grade_track_import == "on"
-      puts "\n\n*****************************************"
-      puts "* Starting Moodle Grade Tracker Imports *"
-      puts "*****************************************\n"
+      puts "\n\n*************************************************************"
+      puts "* " + Time.zone.now.strftime("%Y-%m-%d %T") + " Starting Moodle Grade Tracker Imports *"
+      puts "*************************************************************\n"
       peeps = ActiveResource::Connection.new(Settings.moodle_host).
                 get("#{Settings.moodle_path}/webservice/rest/server.php?" +
                 "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_users_with_mag").body
       Nokogiri::XML(peeps).xpath('//MULTIPLE/SINGLE').each do |peep|
-        import_for(peep.xpath("KEY[@name='username']/VALUE").first.content)
+        begin
+          import_for(peep.xpath("KEY[@name='username']/VALUE").first.content)
+        rescue
+          puts Time.zone.now.strftime("%Y-%m-%d %T") + " Grade content not found. "
+        end
       end
+      puts "\n\n*************************************************************"
+      puts "* " + Time.zone.now.strftime("%Y-%m-%d %T") + " Finished Moodle Grade Tracker Imports *"
+      puts "*************************************************************\n"
     else 
-      puts "Grade Track Import turned off."
+      puts Time.zone.now.strftime("%Y-%m-%d %T") + " Grade Track Import turned off."
     end
   end
 
   def self.import_for(person,delete = true)
-    person = person.kind_of?(Person) ? person : Person.get(person) 
+    person = ( person.kind_of?(Person) ? person : Person.get(person.person_code) )
     if person.kind_of?(Person)
-      person.try(:mdl_grade_tracks).destroy_all if person.try(:mdl_grade_tracks).count > 0 && person.try(:mdl_grade_tracks).respond_to?(:destroy_all)
+      # person.try(:mdl_grade_tracks).destroy_all if person.try(:mdl_grade_tracks).count > 0 && person.try(:mdl_grade_tracks).respond_to?(:destroy_all)
       begin
         tracks = ActiveResource::Connection.new(Settings.moodle_host).
                      get("#{Settings.moodle_path}/webservice/rest/server.php?" +
@@ -61,10 +68,18 @@ class MdlGradeTrack < Eventable
             t.course_type       = course.xpath("KEY[@name='leapcore']/VALUE").first.try(:content)
             t.created_at        = Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.try(:content).to_i)
           end
-          puts a.attributes
+          puts Time.zone.now.strftime("%Y-%m-%d %T") + " " + a.attributes.inspect
         rescue
         end
       end
+
+      person.mdl_grade_tracks.each do |mgt|
+        if Nokogiri::XML(tracks).xpath('//MULTIPLE/SINGLE').select{|n| n.xpath("KEY[@name='leapcore']/VALUE").first.try(:content) == mgt.course_type and Time.at(n.course.xpath("KEY[@name='course_total_modified']/VALUE").first.try(:content).to_i) == mgt.created_at }.none?
+          puts Time.zone.now.strftime("%Y-%m-%d %T") + " Removing " + mgt.inspect
+          mgt.destroy
+        end
+      end
+
     end
   end
 

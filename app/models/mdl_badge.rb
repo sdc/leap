@@ -5,22 +5,29 @@ class MdlBadge < Eventable
 
   def self.import_all
     if Settings.moodle_badge_import == "on"
-      puts "\n\n*********************************"
-      puts "* Starting Moodle Badge Imports *"
-      puts "*********************************\n"
+      puts "\n\n*****************************************************"
+      puts "* " + Time.zone.now.strftime("%Y-%m-%d %T") + " Starting Moodle Badge Imports *"
+      puts "*****************************************************\n"
       peeps = ActiveResource::Connection.new(Settings.moodle_host).
                 get("#{Settings.moodle_path}/webservice/rest/server.php?" +
                 "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_users_with_badges").body
       Nokogiri::XML(peeps).xpath('//MULTIPLE/SINGLE').each do |peep|
-        import_for(peep.xpath("KEY[@name='username']/VALUE").first.content)
+        begin
+          import_for(peep.xpath("KEY[@name='username']/VALUE").first.content)
+        rescue
+          puts Time.zone.now.strftime("%Y-%m-%d %T") + " Badge content not found. "
+        end
       end
+      puts "\n\n*****************************************************"
+      puts "* " + Time.zone.now.strftime("%Y-%m-%d %T") + " Finished Moodle Badge Imports *"
+      puts "*****************************************************\n"
     else
-      puts "Grade Track Import turned off."
+      puts Time.zone.now.strftime("%Y-%m-%d %T") + " Grade Track Import turned off."
     end
   end
 
   def MdlBadge.import_for(person)
-    person = person.kind_of?(Person) ? person : Person.get(person)
+    person = person.kind_of?(Person) ? person : Person.get(person.person_code)
     if person.kind_of?(Person)
       begin
         badges = ActiveResource::Connection.new(Settings.moodle_host).
@@ -44,6 +51,7 @@ class MdlBadge < Eventable
             t.link_url    = badge.xpath("KEY[@name='details_link']/VALUE").first.try(:content)
             t.mdl_course_id=badge.xpath("KEY[@name='course_id']/VALUE").first.try(:content)
           end
+          puts Time.zone.now.strftime("%Y-%m-%d %T") + " " + a.attributes.inspect
         rescue
         end
       end
