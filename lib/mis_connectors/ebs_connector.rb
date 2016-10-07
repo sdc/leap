@@ -42,7 +42,7 @@ module MisPerson
           count += 1
           imported_ep = import(ep)
           puts Time.zone.now.strftime("%Y-%m-%d %T") + " #{count}:\tskip #{skipcount-1}\timport [#{imported_ep.mis_id}] #{imported_ep.name}"
-          MdlGradeTrack.import_for ep
+          # MdlGradeTrack.import_for ep
 	  skipcount = 0
         rescue
           logger.error Time.zone.now.strftime("%Y-%m-%d %T") + " Person #{ep.id} failed for some reason!"

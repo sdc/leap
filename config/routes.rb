@@ -6,7 +6,7 @@ Ilp2::Application.routes.draw do
     match 'test'       => 'test#index', :as => :test
     match 'stats'      => 'stats#index'
     match 'test/login' => 'test#login', :as => :test_login
-    match 'sync_grade_tracks' => 'data#sync_grade_tracks'
+    # match 'sync_grade_tracks' => 'data#sync_grade_tracks'
   end
   resources :views
   resources :events do
@@ -35,6 +35,7 @@ Ilp2::Application.routes.draw do
       get :next_lesson_block, :moodle_block, :reviews_block, :entry_reqs_block
       post :add
     end
+    resources :plps, :only => [:show]
   end
 
 

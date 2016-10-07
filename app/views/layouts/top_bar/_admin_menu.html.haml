@@ -31,11 +31,11 @@
           = link_to params.merge(:refresh => true) do
             %i.fa.fa-refresh.fa-fw
             Refresh from MIS
-        %li
-          = link_to MdlGradeTrack.user_url(@topic.username) do
-            %i.fa.fa-file-code-o.fa-fw
-            Moodle Grade Track XML
-        %li 
-          = link_to admin_sync_grade_tracks_url(:person_id => @topic.mis_id) do
-            %i.fa.fa-bar-chart.fa-fw
-            Sync Moodle Grade Tracks
+        -# %li
+        -#   = link_to MdlGradeTrack.user_url(@topic.username) do
+        -#     %i.fa.fa-file-code-o.fa-fw
+        -#     Moodle Grade Track XML
+        -# %li 
+        -#   = link_to admin_sync_grade_tracks_url(:person_id => @topic.mis_id) do
+        -#     %i.fa.fa-bar-chart.fa-fw
+        -#     Sync Moodle Grade Tracks
