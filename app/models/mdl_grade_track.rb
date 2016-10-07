@@ -54,8 +54,27 @@ class MdlGradeTrack < Eventable
         return nil
       end
       Nokogiri::XML(tracks).xpath('//MULTIPLE/SINGLE').each do |course|
-        next if person.mdl_grade_tracks.where(:created_at  => Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.content.to_i),
-                                              :course_type => course.xpath("KEY[@name='leapcore']/VALUE").first.content).any?
+      next if person.mdl_grade_tracks.where("
+                created_at = ? and
+                ifnull(course_type,'') = ? and
+                ifnull(name,'') = ? and
+                ifnull(mdl_id,'') = ? and
+                ifnull(tag,'') = ? and
+                ifnull(mag,'') = ? and
+                ifnull(total,'') = ? and
+                ifnull(completion_total,'') = ? and
+                ifnull(completion_out_of,'') = ?
+                ",
+                Time.at(course.xpath("KEY[@name='course_total_modified']/VALUE").first.try(:content).to_i),
+                course.xpath("KEY[@name='leapcore']/VALUE").first.try(:content).to_s,
+                course.xpath("KEY[@name='course_fullname']/VALUE").first.try(:content).to_s,
+                course.xpath("KEY[@name='course_id']/VALUE").first.try(:content).to_s,
+                course.xpath("KEY[@name='tag_display']/VALUE").first.try(:content).to_s,
+                course.xpath("KEY[@name='mag_display']/VALUE").first.try(:content).to_s,
+                course.xpath("KEY[@name='course_total_display']/VALUE").first.try(:content).to_s,
+                course.xpath("KEY[@name='course_completion_completed']/VALUE").first.try(:content).to_s,
+                course.xpath("KEY[@name='course_completion_total']/VALUE").first.try(:content).to_s
+               ).any?
         begin
           a=person.mdl_grade_tracks.create do |t|
             t.name              = course.xpath("KEY[@name='course_fullname']/VALUE").first.try(:content)
@@ -74,9 +93,22 @@ class MdlGradeTrack < Eventable
       end
 
       person.mdl_grade_tracks.each do |mgt|
-        if Nokogiri::XML(tracks).xpath('//MULTIPLE/SINGLE').select{|n| n.xpath("KEY[@name='leapcore']/VALUE").first.try(:content) == mgt.course_type and Time.at(n.course.xpath("KEY[@name='course_total_modified']/VALUE").first.try(:content).to_i) == mgt.created_at }.none?
-          puts Time.zone.now.strftime("%Y-%m-%d %T") + " Removing " + mgt.inspect
-          mgt.destroy
+        begin
+          if Nokogiri::XML(tracks).xpath('//MULTIPLE/SINGLE').select{|n| \
+                  n.xpath("KEY[@name='leapcore']/VALUE").first.try(:content) == mgt.course_type \
+              and Time.at(n.xpath("KEY[@name='course_total_modified']/VALUE").first.try(:content).to_i) == mgt.created_at \
+              and n.xpath("KEY[@name='course_fullname']/VALUE").first.try(:content) == mgt.name \
+              and n.xpath("KEY[@name='course_id']/VALUE").first.try(:content) == mgt.mdl_id.to_s \
+              and n.xpath("KEY[@name='tag_display']/VALUE").first.try(:content) == mgt.tag \
+              and n.xpath("KEY[@name='mag_display']/VALUE").first.try(:content) == mgt.mag \
+              and n.xpath("KEY[@name='course_total_display']/VALUE").first.try(:content) == mgt.total \
+              and n.xpath("KEY[@name='course_completion_completed']/VALUE").first.try(:content) == mgt.completion_total.to_s \
+              and n.xpath("KEY[@name='course_completion_total']/VALUE").first.try(:content) == mgt.completion_out_of.to_s \
+              }.none?
+            puts Time.zone.now.strftime("%Y-%m-%d %T") + " Removing " + mgt.inspect
+            mgt.destroy
+          end
+        rescue
         end
       end
 
