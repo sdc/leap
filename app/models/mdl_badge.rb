@@ -27,7 +27,7 @@ class MdlBadge < Eventable
   end
 
   def MdlBadge.import_for(person)
-    person = person.kind_of?(Person) ? person : Person.get(person.person_code)
+    person = person.kind_of?(Person) ? person : Person.get(person)
     if person.kind_of?(Person)
       begin
         badges = ActiveResource::Connection.new(Settings.moodle_host).
