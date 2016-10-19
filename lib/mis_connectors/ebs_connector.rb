@@ -404,7 +404,7 @@ module MisCourse
   module ClassMethods
 
     def mis_search_for(query)
-      Ebs::UnitInstanceOccurrence.search_for(query).limit(50).map{|p| import(p,:save => false, :courses => false)}
+      Ebs::UnitInstanceOccurrence.search_for(query).order( "calocc_occurrence_code desc, long_description" ).limit(50).map{|p| import(p,:save => false, :courses => false)}
     end 
 
     def import(mis_id, options = {})
