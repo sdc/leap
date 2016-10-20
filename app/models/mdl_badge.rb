@@ -5,7 +5,7 @@ class MdlBadge < Eventable
 
   def self.import_all
     if Settings.moodle_badge_import == "on"
-      puts "\n\n*****************************************************"
+      puts "\n*****************************************************"
       puts "* " + Time.zone.now.strftime("%Y-%m-%d %T") + " Starting Moodle Badge Imports *"
       puts "*****************************************************\n"
       peeps = ActiveResource::Connection.new(Settings.moodle_host).
@@ -18,7 +18,7 @@ class MdlBadge < Eventable
           puts Time.zone.now.strftime("%Y-%m-%d %T") + " Badge content not found. "
         end
       end
-      puts "\n\n*****************************************************"
+      puts "\n*****************************************************"
       puts "* " + Time.zone.now.strftime("%Y-%m-%d %T") + " Finished Moodle Badge Imports *"
       puts "*****************************************************\n"
     else
@@ -29,32 +29,38 @@ class MdlBadge < Eventable
   def MdlBadge.import_for(person)
     person = person.kind_of?(Person) ? person : Person.get(person)
     if person.kind_of?(Person)
-      begin
-        badges = ActiveResource::Connection.new(Settings.moodle_host).
-                     get("#{Settings.moodle_path}/webservice/rest/server.php?" +
-                     "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_badges_by_username&username=" +
-                     person.username + Settings.moodle_user_postfix).body
-      rescue
-        # Almost certainly the user doesn't exist on Moodle yet
-        return nil
-      end
-      badges = Nokogiri::XML(badges).xpath('//MULTIPLE/SINGLE').each do |badge|
-        image_url = badge.xpath("KEY[@name='image_url']/VALUE").first.content
-        next if person.mdl_badges.where(:image_url => image_url).any?
 
+      [person.username, person.mis_id].uniq.reject{ |c| c.nil? || c.empty? }.each do |passid|
         begin
-          person.mdl_badges.create do |t|
-            t.title       = badge.xpath("KEY[@name='name']/VALUE").first.try(:content)
-            t.created_at  = Time.at(badge.xpath("KEY[@name='date_issued']/VALUE").first.try(:content).to_i)
-            t.body        = badge.xpath("KEY[@name='description']/VALUE").first.try(:content)
-            t.image_url   = image_url
-            t.link_url    = badge.xpath("KEY[@name='details_link']/VALUE").first.try(:content)
-            t.mdl_course_id=badge.xpath("KEY[@name='course_id']/VALUE").first.try(:content)
-          end
-          puts Time.zone.now.strftime("%Y-%m-%d %T") + " " + a.attributes.inspect
+          badges = ActiveResource::Connection.new(Settings.moodle_host).
+                       get("#{Settings.moodle_path}/webservice/rest/server.php?" +
+                       "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_badges_by_username&username=" +
+                       passid + Settings.moodle_user_postfix).body
         rescue
+          # Almost certainly the user doesn't exist on Moodle yet
+          # puts Time.zone.now.strftime("%Y-%m-%d %T") + " [#{person.mis_id}] #{person.forename} #{person.surname} (#{passid}) - Badge person not in Moodle?"
+          return nil
+        end
+        badges = Nokogiri::XML(badges).xpath('//MULTIPLE/SINGLE').each do |badge|
+          image_url = badge.xpath("KEY[@name='image_url']/VALUE").first.content
+          next if person.mdl_badges.where(:image_url => image_url).any?
+
+          begin
+            person.mdl_badges.create do |t|
+              t.title       = badge.xpath("KEY[@name='name']/VALUE").first.try(:content)
+              t.created_at  = Time.at(badge.xpath("KEY[@name='date_issued']/VALUE").first.try(:content).to_i)
+              t.body        = badge.xpath("KEY[@name='description']/VALUE").first.try(:content)
+              t.image_url   = image_url
+              t.link_url    = badge.xpath("KEY[@name='details_link']/VALUE").first.try(:content)
+              t.mdl_course_id=badge.xpath("KEY[@name='course_id']/VALUE").first.try(:content)
+            end
+            puts Time.zone.now.strftime("%Y-%m-%d %T") + " [#{person.mis_id}] #{person.forename} #{person.surname} (#{passid})" + " - Badge: " + badge.xpath("KEY[@name='name']/VALUE").first.try(:content)
+          rescue
+            puts Time.zone.now.strftime("%Y-%m-%d %T") + " [#{person.mis_id}] #{person.forename} #{person.surname} (#{passid}) - Badge import error."
+          end
         end
       end
+
     end
   end
 
