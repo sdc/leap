@@ -11,6 +11,7 @@ class MdlBadge < Eventable
       peeps = ActiveResource::Connection.new(Settings.moodle_host).
                 get("#{Settings.moodle_path}/webservice/rest/server.php?" +
                 "wstoken=#{Settings.moodle_token}&wsfunction=local_leapwebservices_get_users_with_badges").body
+
       Nokogiri::XML(peeps).xpath('//MULTIPLE/SINGLE').each do |peep|
         begin
           import_for(peep.xpath("KEY[@name='username']/VALUE").first.content)
@@ -41,8 +42,9 @@ class MdlBadge < Eventable
           # puts Time.zone.now.strftime("%Y-%m-%d %T") + " [#{person.mis_id}] #{person.forename} #{person.surname} (#{passid}) - Badge person not in Moodle?"
           return nil
         end
+
         badges = Nokogiri::XML(badges).xpath('//MULTIPLE/SINGLE').each do |badge|
-          image_url = badge.xpath("KEY[@name='image_url']/VALUE").first.content
+          image_url = badge.xpath("KEY[@name='image_url']/VALUE").first.try(:content)
           next if person.mdl_badges.where(:image_url => image_url).any?
 
           begin
