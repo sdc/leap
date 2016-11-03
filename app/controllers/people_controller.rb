@@ -34,7 +34,7 @@ class PeopleController < ApplicationController
             redirect_to "/people/#{@topic.mis_id}/timetables"
             return
           end
-          @badges = {:moodle => getMdlBadges, :course => getCourseBadges}
+          @badges = {:moodle => getMdlBadges, :course => getCourseBadges, :all => getBadges}
           @aspiration = @topic.aspirations.last.aspiration if @topic.aspirations.present?
           @notifications = getNotifications
           @news = Settings.news_modal == 'on' ? true : false

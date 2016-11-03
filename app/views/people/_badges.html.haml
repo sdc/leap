@@ -6,7 +6,7 @@
   .panel-body
     - if badges[:moodle].present?
       - if Settings.home_page == "progress"
-        - badge_list = nil # badges[:moodle]
+        - badge_list = badges[:all]
       - else
         - badge_list = badges[:moodle].last.all_in_course      
       - if badge_list.present?
@@ -14,11 +14,12 @@
           .col-xs-2.ppd_badge
             = link_to badge.link_url, :title => badge[:title], "data-toggle" => "popover", "data-content" => badge[:description] do
               = image_tag badge.image_url, :class => "img-responsive"
-    - if badges[:course].present?
-      - badges[:course].each do |badge|
-        .col-xs-2.ppd_badge
-          = link_to badge.eventable.link_url, :title => badge.eventable[:title], "data-toggle" => "popover", "data-content" => badge.eventable[:description] do
-            = image_tag badge.eventable.image_url, :class => "img-responsive"
+    - if Settings.home_page != "progress"
+      - if badges[:course].present?
+        - badges[:course].each do |badge|
+          .col-xs-2.ppd_badge
+            = link_to badge.eventable.link_url, :title => badge.eventable[:title], "data-toggle" => "popover", "data-content" => badge.eventable[:description] do
+              = image_tag badge.eventable.image_url, :class => "img-responsive"
     - if !badges[:moodle].present? && !badges[:course].present?
       Once achieved, your badges will appear here
     - else
