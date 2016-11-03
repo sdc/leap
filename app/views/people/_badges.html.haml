@@ -6,13 +6,14 @@
   .panel-body
     - if badges[:moodle].present?
       - if Settings.home_page == "progress"
-        - badge_list = badges[:moodle]
+        - badge_list = nil # badges[:moodle]
       - else
         - badge_list = badges[:moodle].last.all_in_course      
-      - badge_list.each do |badge|
-        .col-xs-2.ppd_badge
-          = link_to badge.link_url, :title => badge[:title], "data-toggle" => "popover", "data-content" => badge[:description] do
-            = image_tag badge.image_url, :class => "img-responsive"
+      - if badge_list.present?
+        - badge_list.each do |badge|
+          .col-xs-2.ppd_badge
+            = link_to badge.link_url, :title => badge[:title], "data-toggle" => "popover", "data-content" => badge[:description] do
+              = image_tag badge.image_url, :class => "img-responsive"
     - if badges[:course].present?
       - badges[:course].each do |badge|
         .col-xs-2.ppd_badge
