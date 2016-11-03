@@ -98,7 +98,7 @@ class PeopleController < ApplicationController
   end
 
   def getCourseBadges
-    return @topic.events.where(:eventable_type => "MdlBadge").limit(8)
+    return @topic.events.where(:eventable_type => "MdlBadge") # .limit(8)
   end
 
   def getBadges
