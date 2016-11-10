@@ -62,15 +62,13 @@ module MisPerson
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
       options.reverse_merge! Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}]
       logger.info "Importing user #{mis_id}"
-      update_or_assign_attributes = ( options[:save] ? 'update_attributes' : 'assign_attributes' )
-      update_or_assign_attribute = ( options[:save] ? 'update_attribute' : 'assign_attribute' )
       if (ep = (Ebs::Person.find_by_person_code((mis_id.to_s.match(/\d{3}/) ? mis_id.to_s.tr('^0-9','') : mis_id)) or 
                 Ebs::Person.where(Settings.ebs_username_field => mis_id.to_s).first
           ))
         @person = Person.find_by_mis_id(ep.id) || Person.new(:mis_id => ep.id)
         #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
         if @person.new_record? or ep.updated_date.nil? or (@person.updated_at < ep.updated_date)
-          @person.send(update_or_assign_attributes,
+          @person.update_attributes(
             :forename      => ep.known_as.blank? ? ep.forename : ep.known_as,
             :surname       => ep.surname,
             :middle_names  => ep.middle_names && ep.middle_names.split,
@@ -88,11 +86,13 @@ module MisPerson
             :username      => (ep.send(Settings.ebs_username_field) or ep.id.to_s),
             :personal_email=> ep.personal_email,
             :home_phone    => ep.address && ep.address.telephone,
-            :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil
-            # :contact_allowed => (Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
+            :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil,
+            :contact_allowed => (Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
           )
-          @person.send(update_or_assign_attribute, "contact_allowed", Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
-          # @person.save if options[:save] 
+          if @person.contact_allowed != (Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
+            @person.update_attribute("contact_allowed", Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
+            @person.save if options[:save] 
+          end
         else
           puts Time.zone.now.strftime("%Y-%m-%d %T") + " [#{@person.mis_id}] #{@person.name} - Update not needed since #{@person.updated_at} >= #{ep.updated_date}"
         end
@@ -423,18 +423,19 @@ module MisCourse
 
     def import(mis_id, options = {})
       options.reverse_merge! :save => true, :people => false
-      update_or_assign_attributes = ( options[:save] ? 'update_attributes' : 'assign_attributes' )
-      update_or_assign_attribute = ( options[:save] ? 'update_attribute' : 'assign_attribute' )
       if (ec = Ebs::UnitInstanceOccurrence.find_by_uio_id(mis_id))
         @course = Course.find_or_create_by_mis_id(mis_id)
-        @course.send(update_or_assign_attributes,
+        @course.update_attributes(
           :title  => ec.title,
           :code   => ec.fes_uins_instance_code,
           :year   => ec.calocc_occurrence_code,
-          :mis_id => mis_id
+          :mis_id => mis_id,
+          :vague_title => ec.send(Settings.application_title_field)
         )
-        @course.send(update_or_assign_attribute, "vague_title",ec.send(Settings.application_title_field)) unless Settings.application_title_field.blank?
-        # @course.save if options[:save]
+        if @course.vague_title != (ec.send(Settings.application_title_field))
+          @course.update_attribute("vague_title",ec.send(Settings.application_title_field)) # unless Settings.application_title_field.blank?
+          @course.save if options[:save]
+        end
         @course.import_people if options[:people]
         return @course
       else
