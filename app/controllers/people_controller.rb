@@ -23,14 +23,13 @@ class PeopleController < ApplicationController
   before_filter      :staff_only, :only => [:search,:select]
   layout :set_layout
 
-  def show
+  def show 
     respond_to do |format|
       format.html do
         @sidebar_links = parse_sidebar_links
         @progress_bar = getProgressData
         if Settings.home_page == "progress"
           if @topic.staff? && @progress_bar.empty?
-            ## Redirecting to route fails - Needs to use route instead of string eventually.
             redirect_to "/people/#{@topic.mis_id}/timetables"
             return
           end
@@ -106,54 +105,14 @@ class PeopleController < ApplicationController
   end
 
   def getProgressData
-    @progresses = @topic.progresses.where(:course_status => 'Active').order("course_type ASC")
-    data = Array.new
-    key = 0;
-    @progresses.each do |progress|
-      data[key] = {}
-      data[key]['course'] = progress
-      data[key]['attendance'] = getAttendance(progress.course_type, progress.course_code)
-      data[key]['initial'] = progress.initial_reviews.last
-      data[key]['DIV'] = getDIV(data[key]) if data[key]['initial'].present?
-      data[key]['DI'] = getDI(progress)
-      data[key]['reviews'] = getReviews(progress)
-      data[key]['DR'] = getDR(progress, data[key]['attendance']) unless data[key]['attendance'].nil?
-      key += 1;
-    end
-    return data    
-  end
+    progresses = @topic.progresses.where(:course_status => 'Active').order("course_type ASC")
+    progresses.map.with_index {|progress, key|
+      progresses[key].initial = progress.initial_reviews.last
+      progresses[key].attendance = getAttendance(progress.course_type, progress.course_code)
+      progresses[key].reviews = getReviews(progress)
+    }
 
-  def getDIV(progress)
-    values = Array.new 
-    values[0] = progress['initial'].target_grade
-    values[1] = progress['initial'].body.empty? ? "No comments" : progress['initial'].body.squish 
-    values[2] = progress['initial'].person.name
-    values[3] = progress['initial'].created_at.to_formatted_s(:long)
-    values[4] = progress['course'].bksb_maths_ia
-    values[5] = progress['course'].bksb_english_ia
-    values[6] = progress['course'].bksb_maths_da
-    values[7] = progress['course'].bksb_english_da
-    values[8] = progress['course'].qca_score
-    values[9] = progress['course'].subject_grade
-    values.map!{|x| x.to_s.tr(?', ?")}
-    values.collect!{|x| "'#{x}'"}
-
-    return values.join(",")
-  end
-
-  def getDI(course)
-    values = Array.new 
-    values[0] = course.id
-    values[1] = course.bksb_maths_ia 
-    values[2] = course.bksb_english_ia
-    values[3] = course.bksb_maths_da
-    values[4] = course.bksb_english_da
-    values[5] = course.qca_score
-    values[6] = course.subject_grade
-    values.map!{|x| x.to_s.tr(?', ?")}
-    values.collect!{|x| "'#{x}'"}
-
-    return values.join(",")
+    return progresses    
   end
 
   def getAttendance(type, code)
@@ -171,37 +130,9 @@ class PeopleController < ApplicationController
     reviews.each do |review|
       key = review.number
       data[key] = review
-      data[key]['DRV'] = getDRV(review)
     end
 
     return data    
-  end
-
-  def getDRV(review)
-    values = Array.new 
-    values[0] = review.number
-    values[1] = review.working_at 
-    values[2] = review.attendance
-    values[3] = review.body.empty? ? "No comments" : review.body.squish
-    values[4] = review.person.name
-    values[5] = review.created_at.to_formatted_s(:long)
-
-    values.map!{|x| x.to_s.tr(?', ?")}
-    values.collect!{|x| "'#{x}'"}
-
-    return values.join(",")  
-  end
-
-  def getDR(course, attendance)
-    values = Array.new
-    values[0] = course.course_code
-    values[1] = attendance.att_year
-    values[2] = course.id
-
-    values.map!{|x| x.to_s.tr(?', ?")}
-    values.collect!{|x| ",'#{x}'"}
-
-    return values.join("")
   end
 
   def search
@@ -274,8 +205,6 @@ class PeopleController < ApplicationController
     @myans = @topic.simple_poll_answers.where(:simple_poll_id => @poll.id).first
   end
 
-
-
   private
 
   def person_set_topic
@@ -297,5 +226,4 @@ class PeopleController < ApplicationController
             .map{|menu| menu.split("\n").reject(&:blank?).map(&:chomp)}
             .map{|menu| menu.first.split("|") + [menu.drop(1).map{|item| item.split("|")}]}
   end
-
 end

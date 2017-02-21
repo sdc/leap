@@ -120,4 +120,5 @@ Settings.defaults[:ebs_username_field] = "network_userid"
 Settings.defaults[:plp_overview] = "old"
 
 #Progress Reviews settings
-Settings.defaults[:num_progress_reviews] = 5
+Settings.defaults[:num_progress_reviews] = 5 # This shouldn't really be a setting.
+Settings.defaults[:base] = 'http://0.0.0.0:3000/'
