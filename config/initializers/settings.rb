@@ -121,3 +121,9 @@ Settings.defaults[:plp_overview] = "old"
 
 #Progress Reviews settings
 Settings.defaults[:num_progress_reviews] = 5
+
+# e-laaf settings
+Settings.defaults[:elaaf_link_icon]          			= "fa-random"
+Settings.defaults[:elaaf_link_name]          			= "e-LAAF"
+Settings.defaults[:elaaf_base_url]          			= "http://elaaf.shapps.southdevon.ac.uk/elaaf/pages/default.aspx?SN=@sn"
+Settings.defaults[:elaaf_student_number_place_holder]   = "@sn"
