@@ -6,6 +6,7 @@
           %span{"aria-hidden" => 'true'}
             &times;
         %h3#review-title.modal-title Progress & Attendance Review
+      %input{:type => 'hidden', :disabled => true, :value => false, :id => 'open-id'}
       = create_event_form ProgressReview do |f|
         = (f.text_field :topic_id, :type => 'hidden', :readonly => true, :value => @topic.id) if @user.staff?
         = (f.text_field :progress_id, :type => 'hidden', :readonly => true) if @user.staff?
@@ -37,8 +38,13 @@
                   %option{:value => 'amber', :class => 'amber'}= "AMBER (Working towards target grade)"
                   %option{:value => 'red', :class => 'red'}= "RED (Requires improvements)"
         .modal-footer.no-padding
-          #review-author.pull-left.review-author
-            %em{:id => "review-by"}
+          #submitted
+            .pull-left.review-author
+              %em{:id => "review-by"}
+            - if @user.staff?
+              .pull-right.action-button
+                %button#edit-review{:class => "btn btn-primary", :type => "button"} Edit
+                %button#save-review{:class => "btn btn-success", :type => "button"} Save
           #review-submit.submit-review
             - if @user.staff
               %input{:class => "btn btn-primary pull-right full-button", :name => "commit", :type => "submit", :value => "Submit review"}

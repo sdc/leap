@@ -47,8 +47,13 @@
                   .input-group-addon.ir-score L3 Alps Target Grade
                   = text_field(nil, nil, :disabled => true, :class => "form-control", :name => 'nat_target')
         .modal-footer.no-padding
-          #initial-author.pull-left.review-author
-            %em{:id => "initial-review-by"}
+          #submitted
+            .pull-left.review-author
+              %em{:id => "initial-review-by"}
+            - if @user.staff?
+              .pull-right.action-button
+                %button#edit-initial-review{:class => "btn btn-primary", :type => "button"} Edit
+                %button#save-initial-review{:class => "btn btn-success", :type => "button"} Save
           #initial-review-submission
             - if @user.staff
               %input{:class => "full-button btn btn-primary pull-right", :name => "commit", :type => "submit", :value => "Submit review"}

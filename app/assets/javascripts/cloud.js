@@ -5,18 +5,67 @@ var REVIEW_TYPES = {
 
 var SYSTEM_ERROR_TEXT = 'System error, please try again or contact Computer Services';
 
-$(".initial-review, .progress-review").click(function() {
+$(".initial-review, .progress-review").click(function() 
+{
     var id = $(this).data('id');
-    if (!id && !authorisation) {
-        throw new AuthorisationFailureException();
+    if (!id) {
+        requireAuthorisation();
     }
 
+    $("#open-id").val(id);
     if ($(this).hasClass('initial-review')) {
         return initialReviewRequest(this, id);
     }
 
     return progressReviewRequest(this, id);
 })
+
+$("#edit-review").click(function() 
+{
+    $("[name='progress_review[body]']").prop("disabled", false);
+    $(this).hide();
+    $("#save-review").show();
+})
+
+$("#save-review").click(function() 
+{
+    requireAuthorisation();
+
+    var id = getValidOpenId();
+    var url = base + REVIEW_TYPES['progress'] + '/' + id;
+    var data = {'body': $("[name='progress_review[body]']").val()};
+
+    ajaxRequest(url, 'PUT', data, function(review) {
+        $("[name='progress_review[body]']").prop("disabled", true);
+        $("[name='progress_review[body]']").val(review.progress_review.pretty_body);
+        $("#save-review").hide();
+        $("#edit-review").show();
+    })
+})
+
+$("#edit-initial-review").click(function() 
+{
+    $("[name='initial_review[body]']").prop("disabled", false);
+    $(this).hide();
+    $("#save-initial-review").show();
+})
+
+$("#save-initial-review").click(function() 
+{
+    requireAuthorisation();
+
+    var id = getValidOpenId();
+    var url = base + REVIEW_TYPES['initial'] + '/' + id;
+    var data = {'body': $("[name='initial_review[body]']").val()};
+
+    ajaxRequest(url, 'PUT', data, function(review) {
+        $("[name='initial_review[body]']").prop("disabled", true);
+        $("[name='initial_review[body]']").val(review.initial_review.pretty_body);
+        $("#save-initial-review").hide();
+        $("#edit-initial-review").show();
+    })
+})
+
 
 function initialReviewRequest(request, id)
 {
@@ -53,8 +102,6 @@ function progressReviewRequest(request, id)
 
 function reviewRequest(type, request, callback)
 {
-    $("#spinner").modal("show")
-
     if (!REVIEW_TYPES.hasOwnProperty(type)) {
         throw new UnknownReviewTypeException('Unknown review type ' + type);
     }
@@ -62,11 +109,22 @@ function reviewRequest(type, request, callback)
     var id = $(request).data('id');
     var progress_id = $(request).data('progress-id');
     var url = base + REVIEW_TYPES[type] + '/';
+    url += !id ? 'new?progress_id=' + progress_id : id
+
+    ajaxRequest(url, 'GET', null, function(data) {
+        callback(data);
+    })
+}
+
+function ajaxRequest(url, type, data = [], callback)
+{
+    $("#spinner").modal("show")
 
     $.ajax({
-        url: url + (!id ? 'new?progress_id=' + progress_id : id),
-        type: 'GET',
+        url: url,
+        type: type,
         dataType: 'json',
+        data: data,
 
         success: function(json) {
             callback(json);
@@ -83,7 +141,7 @@ function reviewRequest(type, request, callback)
         },
 
         timeout: 30000
-    })
+    })    
 }
 
 function displayProgressForm(progress, attendance, reviewNumber)
@@ -97,7 +155,7 @@ function displayProgressForm(progress, attendance, reviewNumber)
     $("[name='progress_review[level]']").val("");
 
     $("#current-level").show();
-    $("#review-author").hide();
+    $("#submitted").hide();
     $("#review-submit").show();
     $("#review-modal").modal("show");
 }
@@ -115,7 +173,13 @@ function displayProgressReview(review)
 
     $("#current-level").hide();
     $("#review-submit").hide();
-    $("#review-author").show();
+
+    if (authorisation) {
+        $("#save-review").hide();
+        $("#edit-review").show();
+    }
+
+    $("#submitted").show();
     $("#review-modal").modal("show");
 }
 
@@ -127,7 +191,7 @@ function displayInitialForm(progress)
     $("[name='initial_review[body]']").val("");
     $("[name='initial_review[progress_id]']").val(progress.id);
 
-    $("#initial-author").hide();
+    $("#submitted").hide();
     $("#initial-review-submission").show();
     $("#initial-modal").modal("show");
 }
@@ -142,7 +206,13 @@ function displayInitialReview(review)
         By ' + escapeHtml(review.person.name) + ' on ' + escapeHtml(review.pretty_created_at)
     )
 
-    $("#initial-author").show();
+    $("#submitted").show();
+
+    if (authorisation) {
+        $("#save-initial-review").hide();
+        $("#edit-initial-review").show();        
+    }
+
     $("#initial-review-submission").hide();
     $("#initial-modal").modal("show");
 }
@@ -157,6 +227,23 @@ function fillScores(scores)
     $("[name=nat_target]").val(scores.nat_target_grade);
 
     disableInputs("#scores");
+}
+
+function getValidOpenId()
+{
+    var id = $("#open-id").val();
+    if (!id || !(Math.floor(id) == id && $.isNumeric(id))) {
+        throw new MissingReviewNumberException();
+    }
+
+    return id;    
+}
+
+function requireAuthorisation()
+{
+    if (!authorisation) {
+        throw new AuthorisationFailureException();
+    }
 }
 
 function setValueAndReadOnly(element, value)

@@ -16,7 +16,7 @@
 
 class ReviewsController < ApplicationController
 
-  before_filter      :staff_only, :only => [:index,:new]
+  before_filter      :staff_only, :only => [:new,:update]
 
   def show
     respond_to do |format|
@@ -30,11 +30,17 @@ class ReviewsController < ApplicationController
     end
   end
 
-  def index
+  def update
     respond_to do |format|
-      format.json do 
-        @progresses = @topic.progresses.where(:course_status => 'Active').order("course_type ASC")
-        render :json => @progresses.as_json()
+      format.json do
+        review = getReview(getKnownReviewType, params[:id])
+        review.body = params[:body]
+        if !review.save
+          raise "Failed to update review"
+        end
+
+        review = getReview(getKnownReviewType, params[:id])
+        render :json => review.as_json(:methods => [:pretty_body])
       end
     end
   end

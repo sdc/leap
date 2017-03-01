@@ -30,13 +30,19 @@ module MisPerson
       "EBS connector"
     end
 
-    def resync(yr=nil)
+    def resync(yr=nil, starting_mis_id=0, do_count=-1)
       yr = yr || Ebs::CalendarOccurrences.acyr
+      starting_mis_id = starting_mis_id || 0
+      do_count = do_count || -1
       puts Time.zone.now.strftime("%Y-%m-%d %T") + " Started for #{yr}"
       count = skipcount = 0
-      Ebs::Person.find_each(:include => :people_units) do |ep|
+      # Ebs::Person.find_each(:include => :people_units) do |ep|
       # Ebs::Person.where(:person_code => [30145214,30146401,30148855,30161804,30136805]).find_each(:include => :people_units) do |ep|
+      # Ebs::Person.where(:person_code => [30145214,30146401,30148855,30161804,30136805]).includes(:people_units).find_each(:conditions => "people_units.calocc_code = '#{yr}'") do |ep|
+      # Ebs::Person.includes(:people_units).find_each(:conditions => "people_units.calocc_code = '#{yr}' and people.person_code >= '30135368' ") do |ep|
+      Ebs::Person.includes(:people_units).find_each(:conditions => "people_units.calocc_code = '#{yr}' and people.person_code >= #{starting_mis_id}") do |ep|
         begin
+        break if do_count >= 0 && count >= do_count   # for testing 
 	  skipcount +=1
           next unless ep.people_units.detect{|pc| pc.calocc_code == yr} if yr
           count += 1
@@ -80,12 +86,15 @@ module MisPerson
             :username      => (ep.send(Settings.ebs_username_field) or ep.id.to_s),
             :personal_email=> ep.personal_email,
             :home_phone    => ep.address && ep.address.telephone,
-            :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil
+            :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil,
+            :contact_allowed => (Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
           )
-          @person.update_attribute("contact_allowed", Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
-          @person.save if options[:save] 
+          if @person.contact_allowed != (Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
+            @person.update_attribute("contact_allowed", Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
+            @person.save if options[:save] 
+          end
         else
-          puts Time.zone.now.strftime("%Y-%m-%d %T") + " Update not needed since #{@person.updated_at} < #{ep.updated_date}"
+          puts Time.zone.now.strftime("%Y-%m-%d %T") + " [#{@person.mis_id}] #{@person.name} - Update not needed since #{@person.updated_at} >= #{ep.updated_date}"
         end
         @person.import_courses if options[:courses]
         @person.import_attendances if options[:attendances]
@@ -324,18 +333,23 @@ module MisPerson
         ["fes_user_40","Social Worker"] # VL: if has social worker?
       ].each do |f|
         v = p.send(f[0])
-        next if support_plps.find{ |sp| sp.name == f[1] && sp.active != 0 && sp.value == v }
-        support_plps.update_all( ["active = 0, updated_at = ?",DateTime.now], ["active != 0 and name = ? and ( value != ? or ? is null)", f[1], v, v ] ) unless support_plps.nil?
-        ver_info = ( f[2].present? ? Ebs::Verifier.find_by_low_value_and_rv_domain(v,f[2]) : nil )
-        nsp = support_plps.create(
-          :name => f[1],
-          :value => v,
-          :description => ( ver_info.present? ? ver_info.try(:fes_long_description) : nil ),
-          :short_description => ( ver_info.present? ? ver_info.try(:fes_short_description) : nil ),
-          :active => 1,
-          :domain => "EBS",
-          :source => "people." + f[0]
-        ) unless v.nil? || (f[3].present? && f[3].include?(v))
+        # next if support_plps.find{ |sp| sp.name == f[1] && sp.active != 0 && sp.value == v }
+        # next if support_plps.exists?( :name => f[1], :active => 1, :value => v )
+        support_plps_for_name = support_plps.find{ |sp| sp.name == f[1] && sp.active == true }
+        if support_plps_for_name.present?
+          next if support_plps_for_name.try(:value) == v
+          support_plps.update_all( ["active = 0, updated_at = ?",DateTime.now], ["active != 0 and name = ? and ( value != ? or ? is null)", f[1], v, v ] ) unless support_plps.nil?
+          ver_info = ( f[2].present? ? Ebs::Verifier.find_by_low_value_and_rv_domain(v,f[2]) : nil )
+          nsp = support_plps.create(
+            :name => f[1],
+            :value => v,
+            :description => ( ver_info.present? ? ver_info.try(:fes_long_description) : nil ),
+            :short_description => ( ver_info.present? ? ver_info.try(:fes_short_description) : nil ),
+            :active => 1,
+            :domain => "EBS",
+            :source => "people." + f[0]
+          ) unless v.nil? || (f[3].present? && f[3].include?(v))
+        end
       end
     end
   end
@@ -404,7 +418,7 @@ module MisCourse
   module ClassMethods
 
     def mis_search_for(query)
-      Ebs::UnitInstanceOccurrence.search_for(query).limit(50).map{|p| import(p,:save => false, :courses => false)}
+      Ebs::UnitInstanceOccurrence.search_for(query).order( "calocc_occurrence_code desc, long_description" ).limit(50).map{|p| import(p.uio_id,:save => false, :courses => false)}
     end 
 
     def import(mis_id, options = {})
@@ -415,10 +429,13 @@ module MisCourse
           :title  => ec.title,
           :code   => ec.fes_uins_instance_code,
           :year   => ec.calocc_occurrence_code,
-          :mis_id => mis_id
+          :mis_id => mis_id,
+          :vague_title => ec.send(Settings.application_title_field)
         )
-        @course.update_attribute("vague_title",ec.send(Settings.application_title_field)) unless Settings.application_title_field.blank?
-        @course.save if options[:save]
+        if @course.vague_title != (ec.send(Settings.application_title_field))
+          @course.update_attribute("vague_title",ec.send(Settings.application_title_field)) # unless Settings.application_title_field.blank?
+          @course.save if options[:save]
+        end
         @course.import_people if options[:people]
         return @course
       else

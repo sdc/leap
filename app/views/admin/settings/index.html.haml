@@ -392,6 +392,34 @@
       .help-text
         Seperate each induction question badge list with a ; (semi-colon).  Seperate the list of badges for each question with a , (comma).  The ordering of the badge groups must match the ordering of the questions names above.
 
+  %h2 e-LAAF
+  .well
+    e-LAAF link settings.
+  .control-group
+    %label.control-label e-LAAF link icon
+    .controls
+      = text_field_tag "elaaf_link_icon", Settings.elaaf_link_icon, :style => "width: 100%"
+      .help-text
+        Suggested default: fa-random
+  .control-group
+    %label.control-label e-LAAF link name
+    .controls
+      = text_field_tag "elaaf_link_name", Settings.elaaf_link_name, :style => "width: 100%"
+      .help-text
+        As it should appear on screen to the user.  Suggested default: e-LAAF
+  .control-group
+    %label.control-label e-LAAF base url
+    .controls
+      = text_field_tag "elaaf_base_url", Settings.elaaf_base_url, :style => "width: 100%"
+      .help-text
+        Fully qualified path to the e-LAAF site.  Optionally drop in the place holder defined below to have it exchanged for the Student Number.
+  .control-group
+    %label.control-label e-LAAF Student Number place holder
+    .controls
+      = text_field_tag "elaaf_student_number_place_holder", Settings.elaaf_student_number_place_holder, :style => "width: 100%"
+      .help-text
+        Optional place holder value to represent the Student Number.  Place in e-LAAF base url above.  Suggested default: @sn
+
   %h1 Old Settings!
   .old-settings
     .alert
@@ -406,7 +434,8 @@
                                  "attendance_date_column","custom_css","quals_editing","clidebar_links","home_page",
                                  "home_page_staff","home_page_student","home_page_applicant","home_page_affiliate","ws_user","ws_token",
                                  "moodle_grade_track_import","moodle_badge_import","moodle_badge_block_courses","moodle_badge_plp_courses",
-                                 "one_to_one_prompts","attendance_type_column","plp_overview","num_progress_reviews","induction_questions","induction_question_badges"]
+                                 "one_to_one_prompts","attendance_type_column","plp_overview","num_progress_reviews","induction_questions","induction_question_badges",
+                                 "elaaf_link_icon","elaaf_link_name","elaaf_base_url","elaaf_student_number_place_holder"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize
