@@ -109,7 +109,7 @@ function reviewRequest(type, request, callback)
     var id = $(request).data('id');
     var progress_id = $(request).data('progress-id');
     var url = base + REVIEW_TYPES[type] + '/';
-    url += !id ? 'new?progress_id=' + progress_id : id
+    url += !id ? 'new?progress_id=' + progress_id : id;
 
     ajaxRequest(url, 'GET', null, function(data) {
         callback(data);
