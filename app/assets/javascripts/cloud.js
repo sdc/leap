@@ -116,7 +116,7 @@ function reviewRequest(type, request, callback)
     })
 }
 
-function ajaxRequest(url, type, data = [], callback)
+function ajaxRequest(url, type, data, callback)
 {
     $("#spinner").modal("show")
 
@@ -266,27 +266,27 @@ function disableInputs(form)
     })   
 }
 
-function AuthorisationFailureException(message = 'Authorisation Failure')
+function AuthorisationFailureException(message)
 {
-    this.message = message;
+    this.message = message || 'Authorisation Failure';
     this.name = 'AuthorisationFailureException';
 }
 
-function UnknownReviewTypeException(message = 'Unknown review type')
+function UnknownReviewTypeException(message)
 {
-    this.message = message;
+    this.message = message || 'Unknown review type';
     this.name = 'UnknownReviewTypeException';
 }
 
-function MissingAttendanceDataException(message = 'Attendance data missing')
+function MissingAttendanceDataException(message)
 {
-    this.message = message;
+    this.message = message || 'Attendance data missing';
     this.name = MissingAttendanceDataException;
 }
 
-function MissingReviewNumberException(message = 'Review number missing')
+function MissingReviewNumberException(message)
 {
-    this.message = message;
+    this.message = message || 'Review number missing';
     this.name = MissingReviewNumberException;
 }
 
