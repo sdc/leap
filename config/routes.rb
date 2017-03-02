@@ -14,6 +14,7 @@ Ilp2::Application.routes.draw do
     get "open_extended", :on => :member
   end
   resources :people do
+    resources :initial_reviews, :progress_reviews, controller: 'reviews'
     resources :events, :timetables
     resources :views, :only => [:show] do
       get "header", :on => :member

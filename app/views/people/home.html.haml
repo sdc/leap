@@ -17,6 +17,7 @@
         #dynamic-initials= render :partial => "people/initial_modal", :locals => { :grades => grades }
         :javascript
           var topic = #{@topic.id.to_s};
-        = javascript_include_tag 'cloud.min'
+        = javascript_include_tag 'notify'
+        = javascript_include_tag 'cloud'
 - else
   #home.row= render @tiles

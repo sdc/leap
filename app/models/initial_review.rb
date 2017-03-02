@@ -29,4 +29,12 @@ class InitialReview < Eventable
     end
   end
 
+  def pretty_created_at
+    return self.created_at.to_formatted_s(:long)
+  end
+
+  def pretty_body
+    return self[:body].empty? ? 'No comments' : self[:body]
+  end
+
 end

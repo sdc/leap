@@ -60,3 +60,11 @@
                 .modal-footer
                   %button.btn.btn-default{"data-dismiss" => "modal"}Close
         = render :partial => "layouts/footer"
+      .spinner
+        #spinner.modal.fade{:tabindex => -1, :role => 'dialog', "aria-labelledby" => 'myModalLabel'}
+          .v-align
+            .modal-dialog.v-align-center{:role => 'document'}
+              .spinner-content
+                .modal-body
+                  %i.fa.fa-spinner.fa-spin.fa-5x
+                  %p.ajax-load-text Loading...

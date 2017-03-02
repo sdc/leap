@@ -1,5 +1,5 @@
 #initial-modal.modal.fade
-  .modal-dialog
+  .modal-dialog.modal-lg
     .modal-content
       .modal-header
         %button{:type => 'button', :class => 'close', "data-dismiss" => 'modal', 'aria-label' => 'Close'}
@@ -7,48 +7,53 @@
             &times;
         %h3.modal-title Initial Review
       = create_event_form InitialReview do |f|
-        = f.text_field :topic_id, :type => 'hidden', :readonly => true, :value => @topic.id, :disabled => (true unless @user.staff?)
-        = f.text_field :progress_id, :type => 'hidden', :readonly => true, :disabled => (true unless @user.staff?)
-        .modal-body.row
-          .form-group.col-md-12
+        = (f.text_field :topic_id, :type => 'hidden', :readonly => true, :value => @topic.id) if @user.staff?
+        = (f.text_field :progress_id, :type => 'hidden', :readonly => true) if @user.staff?
+        .modal-body.col-md-12
+          .form-group.row
+            .col-md-4
+              .input-group
+                .input-group-addon Target Grade
+                = f.select(:target_grade, options_for_select(grades), {}, {:class => 'form-control', :disabled => (true unless @user.staff?), :required => true, :selected => 'Target Grade'})
+          .form-group.row
+            .col-md-12
+              = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
+          #scores
             .form-group.row
               .col-md-6
-                .input-group
-                  .input-group-addon Target Grade
-                  = f.select(:target_grade, options_for_select(grades), {}, {:class => 'form-control', :disabled => (true unless @user.staff?), :required => true, :selected => 'Target Grade'})
-          .form-group.col-md-12
-            = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
-          #scores.form-group.col-md-12
-            .form-group.row
-              .col-md-12.margin-bottom
                 .input-group.width-100
                   .input-group-addon.ir-score Maths Initial Assessment
-                  = text_field :maths_ia, nil, :disabled => true, :class => "form-control"
-              .col-md-12
+                  = text_field(nil, nil, :disabled => true, :class => "form-control", :name => 'maths_ia')
+              .col-md-6
                 .input-group.width-100
                   .input-group-addon.ir-score{:style => "width: 188px"} English Initial Assessment
-                  = text_field(:english_ia, nil, :disabled => true, :class => "form-control")
+                  = text_field(nil, nil, :disabled => true, :class => "form-control", :name => 'english_ia')
             .form-group.row
-              .col-md-12.margin-bottom
+              .col-md-6
                 .input-group.width-100
                   .input-group-addon.ir-score Maths Diagnostic
-                  = text_field(:maths_da, nil, :disabled => true, :class => "form-control")
-              .col-md-12
+                  = text_field(:nil, nil, :disabled => true, :class => "form-control", :name => 'maths_da')
+              .col-md-6
                 .input-group.width-100
                   .input-group-addon.ir-score English Diagnostic
-                  = text_field(:english_da, nil, :disabled => true, :class => "form-control")
+                  = text_field(nil, nil, :disabled => true, :class => "form-control", :name => 'english_da')
             .form-group.row
               .col-md-6
-                .input-group
+                .input-group.width-100
                   .input-group-addon.ir-score GCSE Score
-                  = text_field(:gcse_score, nil, :disabled => true, :class => "form-control")
+                  = text_field(nil, nil, :disabled => true, :class => "form-control", :name => 'qca_score')
               .col-md-6
-                .input-group
+                .input-group.width-100
                   .input-group-addon.ir-score L3 Alps Target Grade
-                  = text_field(:l3_alps, nil, :disabled => true, :class => "form-control")
+                  = text_field(nil, nil, :disabled => true, :class => "form-control", :name => 'nat_target')
         .modal-footer.no-padding
-          #initial-author.pull-left{:style => "padding: 15px"}
-            %em{:style => "color: grey", :id => "initial-review-by"}
-          .submit-review
+          #submitted
+            .pull-left.review-author
+              %em{:id => "initial-review-by"}
+            - if @user.staff?
+              .pull-right.action-button
+                %button#edit-initial-review{:class => "btn btn-primary", :type => "button"} Edit
+                %button#save-initial-review{:class => "btn btn-success", :type => "button"} Save
+          #initial-review-submission
             - if @user.staff
               %input{:class => "full-button btn btn-primary pull-right", :name => "commit", :type => "submit", :value => "Submit review"}

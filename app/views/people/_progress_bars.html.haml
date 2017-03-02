@@ -1,56 +1,52 @@
-- npr = Settings.num_progress_reviews.to_i
 .col-md-12
   - if @progress_bar.empty?
     %p{:style => 'text-align: center'}It looks like you are not currently enrolled on any courses at South Devon College. If you feel this is a mistake, please speak to your Personal Tutor or visit Helpzone on Level 3.
-  - @progress_bar.each do |a|
+  - @progress_bar.each do |progress|
     .course-progress
       .row.row-eq-height
-        - if a["initial"].present?
-          .col-md-6.col-xs-12.initial-review.present.top-section{:onClick => 'displayInitialView(' + a["DIV"] + ')'}
-            %h4{:style => "margin-bottom: 5px"} Target Grade for
-            %h4 #{a["course"].course_title.upcase}
-            %h3 #{a['initial'].target_grade.to_s}
-        - else
-          .col-md-6.col-xs-12.initial-review.top-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial(' + a["DI"] + ')' if @user.staff?)}
-            %h4 Target Grade for
-            %h4 #{a["course"].course_title.upcase}
-        - if !a["attendance"].nil?                    
-          .col-md-6.col-xs-12.top-section.clickable{:style => "background: ##{a['attendance'].bg}", "data-toggle" => 'modal', 'data-target' => "#modal_" + a["attendance"].id.to_s }
-            %h4 Attendance
-            %h3 #{a["attendance"].att_year}%
-        - else
-          .col-md-6.col-xs-12.top-section{:style => 'background-color: #d9edf7; color: grey'}
-            %h4 Attendance
-            %h3 0%        
+        .initial-review.col-md-6.col-xs-12.top-section{:class => ('present' if progress.initial.present?), "data-id" => (h(progress.initial.id) if progress.initial.present?), "data-progress-id" => h(progress.id)}
+          %h4{:style => "margin-bottom: 5px"} Target Grade for
+          %h4 #{ h(progress.course_title.upcase) }
+          - if progress.initial.present?
+            %h3 #{ h(progress.initial.target_grade.to_s) }
+
+        .col-md-6.col-xs-12.top-section.attendance-block{:style => ("background: ##{h(progress.attendance.bg)}" unless progress.attendance.nil?), "data-toggle" => 'modal', 'data-target' => ("#modal_" + h(progress.attendance.id.to_s) unless progress.attendance.nil?)}
+          %h4 Attendance
+          - if progress.attendance.nil?
+            %h3 0%
+          - else
+            %h3 #{ h(progress.attendance.att_year) }%
+
       .row
-        .col-md-12.col-sm-12
-          .row
-            - if a["initial"].present?
-              .col-md-2.hidden-xs.col-sm-2.review-section.present.clickable{:onClick => 'displayInitialView(' + a["DIV"] + ')'}
-                %h5 Initial Review
-                %h4 Completed
-            - else
-              .col-md-2.hidden-xs.col-sm-2.review-section.clickable{:style => 'background-color: #d9edf7; color:grey', :onClick => ('displayInitial(' + a["DI"] + ')' if @user.staff?)}
-                %h5 Initial Review
-                %h4 Incomplete
-            - (1..npr).each do |i|
-              - if (a["reviews"][i].present? && a["reviews"][i].number == i)
-                .col-md-2.hidden-xs.col-sm-2.review-section.has_tooltip{:class => a["reviews"][i].level, :onClick => 'displayReviewView(' + a["reviews"][i]["DRV"] + ')', :title => a["reviews"][i].ragp_desc, "data-placement" => "right"}
-                  %h5 Working at
-                  %h4 #{a["reviews"][i].working_at}
-                  %h6.pull-bottom.pull-right PAR #{i}
-              - else
-                .col-md-2.hidden-xs.col-sm-2.review-section{ :style => 'color: grey', :onClick => ("displayReview('" + i.to_s + "'" + a["DR"] + ')' if @user.staff? && !a["attendance"].nil?)}
-                  %h5 Review
-                  %h6.pull-bottom.pull-right PAR #{i}
+        .initial-review.col-md-2.hidden-xs.col-sm-2.review-section.clickable{:class => ('present' if progress.initial.present?), "data-id" => (h(progress.initial.id) if progress.initial.present?), "data-progress-id" => h(progress.id)}
+          %h5 Initial Review
+          - if progress.initial.present?
+            %h4 Completed
+          - else
+            Incomplete
+
+        - (1..5).each do |i|
+          - review = progress.reviews[i]; # readability
+          - if (review.present? && review.number == i)
+            .col-md-2.hidden-xs.col-sm-2.review-section.has_tooltip.progress-review.clickable{:class => h(review.level), :title => h(review.ragp_desc), "data-placement" => "right", :style => 'color: black', "data-id" => h(review.id), "data-att" => h(progress.attendance.att_year), "data-number" => i}
+              %h5 Working at
+              %h4 #{h(review.working_at)}
+              %h6.pull-bottom.pull-right PAR #{i}          
+          - else
+            .col-md-2.hidden-xs.col-sm-2.review-section{:class => ("progress-review clickable" if @user.staff?), "data-progress-id" => h(progress.id), "data-att" => h(progress.attendance.att_year), "data-number" => i}
+              %h5 Review
+              %h6.pull-bottom.pull-right PAR #{i}
     %hr
-    - if !a["attendance"].nil?
-      .modal.fade{:id => "modal_" + a["attendance"].id.to_s, "tabindex" => '-1', :role => 'dialog'}
+    - if !progress.attendance.nil?
+      .modal.fade{:id => "modal_" + h(progress.attendance.id.to_s), "tabindex" => '-1', :role => 'dialog'}
         .tile-modal.modal-dialog
-          .modal-content{:style => "background: ##{a['attendance'].bg}"}
+          .modal-content{:style => "background: ##{h(progress.attendance.bg)}"}
             .modal-body.row
               .attendance-tile.col-md-6.col-sm-6.col-xs-6
-                = render :partial => "tiles/attendance", :locals => {:attendance => a["attendance"]}
+                = render :partial => "tiles/attendance", :locals => {:attendance => progress.attendance}
               .attendance-text.md-6.col-sm-6.col-xs-6
-                %h4{:style => 'margin-bottom: 5px'} Your attendance for #{a["course"].course_title} is
-                %h2 #{a["attendance"].att_year}% 
+                %h4{:style => 'margin-bottom: 5px'} Your attendance for #{h(progress.course_title)} is
+                %h2 #{h(progress.attendance.att_year)}% 
+:javascript
+  var authorisation = #{@user.staff? ? 'true' : 'false'};
+  var base = "#{ h(Settings.base) }people/#{ h(@topic.mis_id) }/";
