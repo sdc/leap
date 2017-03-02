@@ -33,7 +33,7 @@
               %h4 #{h(review.working_at)}
               %h6.pull-bottom.pull-right PAR #{i}          
           - else
-            .col-md-2.hidden-xs.col-sm-2.review-section{:class => ("progress-review clickable" if @user.staff?), "data-progress-id" => h(progress.id), "data-att" => h(progress.attendance.att_year), "data-number" => i}
+            .col-md-2.hidden-xs.col-sm-2.review-section{:class => ("progress-review clickable" if @user.staff? && !progress.attendance.nil?), "data-progress-id" => h(progress.id), "data-att" => (h(progress.attendance.att_year) if !progress.attendance.nil?), "data-number" => i}
               %h5 Review
               %h6.pull-bottom.pull-right PAR #{i}
     %hr
