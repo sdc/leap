@@ -1,0 +1,31 @@
+.panel.panel-default
+  .panel-heading
+    %h4.panel-title
+      %a{"data-toggle" => "collapse", "data-parent" => "#sidebar-accordion", :href => "#timeline-links"}
+        %i.fa.fa-clock-o.fa-fw
+        Navigation
+  #timeline-links.panel-collapse.collapse.in
+    .panel-body.no-padding
+      %ul.no-padding.no-margin
+        %li.menu-spacing.row
+          = link_to('/A', :class => "sidebar_button") do
+            .col-xs-2
+              %i{:class => 'fa-warning nav-warning fa-fw fa pull-left', :style => 'font-size: 1.5em'}
+            .col-xs-10
+              Awaiting Outcome
+        %hr.no-margin
+        %li.menu-spacing.row
+          = link_to('/test', :class => "sidebar_button") do
+            .col-xs-2
+              %i{:class => 'fa-clock-o nav-all fa-fw fa pull-left', :style => 'font-size: 1.5em'}
+            .col-xs-10
+              Testing
+        %hr.no-margin
+        %li.menu-spacing.row
+          = link_to('/test', :class => "sidebar_button") do
+            .col-xs-2
+              %i{:class => 'fa-clock-o nav-all fa-fw fa pull-left', :style => 'font-size: 1.5em'}
+            .col-xs-10
+              Testing
+        %hr.no-margin
+
