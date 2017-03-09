@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'ipaddr'
+
 module ApplicationHelper
 
   def icon_link(text,link="#",icon=false)
@@ -36,4 +38,17 @@ module ApplicationHelper
     link_to_function (block_given? ? capture(&block) : args[0]), "$(this).closest('form').submit()", args.extract_options!
   end
 
+  def client_ip_address_is_internal
+    client_ip = IPAddr.new(request.remote_ip).to_i
+
+    ip_ranges = []
+    Settings.network_ip_ranges.split("|").each{|x| b=x.split(';'); ip_ranges << { :internal => (b[0] == "1"), :from => b[1], :to => b[2], :note => b[3] } }
+
+    ip_ranges.each do |range| if ( (IPAddr.new(range[:from]).to_i .. IPAddr.new(range[:to]).to_i).include? client_ip ) then return range[:internal] end end
+
+    return false
+  end
+
 end
+
+

@@ -396,6 +396,12 @@
   .well
     e-LAAF link settings.
   .control-group
+    %label.control-label e-LAAF link enabled
+    .controls
+      = text_field_tag "elaaf_link_enabled", Settings.elaaf_link_enabled
+      .help-text
+        0 is disabled, 1 is enabled
+  .control-group
     %label.control-label e-LAAF link icon
     .controls
       = text_field_tag "elaaf_link_icon", Settings.elaaf_link_icon, :style => "width: 100%"
@@ -420,6 +426,53 @@
       .help-text
         Optional place holder value to represent the Student Number.  Place in e-LAAF base url above.  Suggested default: @sn
 
+  %h2 Continuing Learning
+  .well
+    Continuing Learning settings.
+  .control-group
+    %label.control-label Review column enabled
+    .controls
+      = text_field_tag "continuing_learning_rev_enabled", Settings.continuing_learning_rev_enabled
+      .help-text
+        0 is disabled, 1 is enabled
+  .control-group
+    %label.control-label Colour mapping
+    .controls
+      = text_field_tag "continuing_learning_colours", Settings.continuing_learning_colours, :style => "width: 100%"
+      .help-text
+        Database to screen colour mappings.  Example: red;red|amber;amber|green;green|purple;purple
+  .control-group
+    %label.control-label Categories and icons
+    .controls
+      = text_field_tag "continuing_learning_icons", Settings.continuing_learning_icons, :style => "width: 100%"
+      .help-text
+        Example: Cat1;fa-icon1|Cat2;fa-icon2|CatX;fa-iconx
+  .control-group
+    %label.control-label Default colour
+    .controls
+      = text_field_tag "continuing_learning_default_colour", Settings.continuing_learning_default_colour, :style => "width: 100%"
+      .help-text
+        Suggested default: grey
+  .control-group
+    %label.control-label Default icon
+    .controls
+      = text_field_tag "continuing_learning_default_icon", Settings.continuing_learning_default_icon, :style => "width: 100%"
+      .help-text
+        Suggested default: fa-question
+
+  %h2 Network
+  .well
+    Network settings.
+  .control-group
+    %label.control-label IP address ranges
+    .controls
+      = text_field_tag "network_ip_ranges", Settings.network_ip_ranges, :style => "width: 100%"
+      .help-text
+        Define network ranges that are treated as internal.  First match is evaluated.  Format: internal_0_or_1;ip_from;ip_to;comment  Multiple ranges can be seperated by |  Example:
+        %pre
+          :preserve     
+            1;192.168.0.1;192.168.255.254;Private network Class C|1;172.16.0.1;172.31.255.254;Private network Class B|1;10.0.0.1;10.255.255.254;Private network Class A|1;127.0.0.1;127.255.255.254;localhost
+
   %h1 Old Settings!
   .old-settings
     .alert
@@ -435,7 +488,9 @@
                                  "home_page_staff","home_page_student","home_page_applicant","home_page_affiliate","ws_user","ws_token",
                                  "moodle_grade_track_import","moodle_badge_import","moodle_badge_block_courses","moodle_badge_plp_courses",
                                  "one_to_one_prompts","attendance_type_column","plp_overview","num_progress_reviews","induction_questions","induction_question_badges",
-                                 "elaaf_link_icon","elaaf_link_name","elaaf_base_url","elaaf_student_number_place_holder"]
+                                 "elaaf_link_enabled","elaaf_link_icon","elaaf_link_name","elaaf_base_url","elaaf_student_number_place_holder",
+                                 "continuing_learning_rev_enabled","continuing_learning_colours","continuing_learning_icons","continuing_learning_default_colour","continuing_learning_default_icon",
+                                 "network_ip_ranges"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

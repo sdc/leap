@@ -1,4 +1,4 @@
-class LsfBursaryFunds < ActiveRecord::Migration
+class CreateLsfBursaryFunds < ActiveRecord::Migration
   def up
    create_table     :lsf_bursary_funds do |t|
       t.integer     :mis_id, :limit => 11

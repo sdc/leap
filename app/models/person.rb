@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'misc/misc_dates'
+
 class Person < ActiveRecord::Base
 
   include MisPerson
@@ -58,6 +60,8 @@ class Person < ActiveRecord::Base
   has_many :notifications
   has_many :support_plps
   has_many :lsf_bursary_funds
+
+  has_one  :continuing_learnings, :class_name => "ContinuingLearning", :foreign_key => "leap_person_id"
 
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
@@ -208,6 +212,22 @@ class Person < ActiveRecord::Base
 
   def possessive_name( str_if_blank='Your' )
     defined?( forename ) && forename? ? forename.split(' ')[0]+((forename.split(' ')[0][-1].downcase) == 's' ? "'" : "'s") : str_if_blank
+  end
+
+  def can_add_intervention_stage( new_stage )
+    return true if !( (new_stage =~ /^Stage_[123]_Attendance_Disc/).present? || (new_stage =~ /^Stage_[123]_Behaviour_Disc/).present? ) 
+
+    stage_left = new_stage[0..5]
+    stage_right = new_stage[7..255]
+    try_stage = new_stage[6].to_i
+    previous_stage = ((try_stage-1) .. (try_stage-1)).to_a.to_s
+    next_stages = try_stage.upto( 3 ).to_a.to_s.gsub(', ','')
+
+    return true  if (new_stage =~ /^Stage_3_Behaviour_Disc/).present?  # always allow Stage 3 disciplinary selection
+    return false if interventions.map{ |x| x.pi_type if x.status == :current && MISC::MiscDates.acyr(x.created_at) == MISC::MiscDates.acyr }.select{ |y| /^#{stage_left}[123]#{stage_right}/ =~ y }.present?  # do not allow if there is an open Stage 1 2 or 3
+    return false if try_stage > 1 && !(interventions.map{ |x| x.pi_type if MISC::MiscDates.acyr(x.created_at) == MISC::MiscDates.acyr }.select{ |y| /^#{stage_left}#{previous_stage}#{stage_right}/ =~ y }.present?) # do not allow if want Stage 2 or 3 but there is no Stage 1 or 2 repectively
+    return false if interventions.map{ |x| x.pi_type if MISC::MiscDates.acyr(x.created_at) == MISC::MiscDates.acyr }.select{ |y| /^#{stage_left}#{next_stages}#{stage_right}/ =~ y }.present?   # do not allow if want Stage x but already Stage x or higher exists
+    return true
   end
 
 end

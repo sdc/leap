@@ -18,10 +18,10 @@
       %i.fa.fa-fw{:class => Settings.ebs_link_icon}
       = Settings.ebs_link_name
 
-- #if @user.staff? && Settings.elaaf_base_url.present?
--#  .btn-group.btn-group-justified.panel
-  -#  - elaaf_url = Settings.elaaf_base_url
-  -#  - elaaf_url[Settings.elaaf_student_number_place_holder] = @topic.mis_id.to_s if Settings.elaaf_student_number_place_holder.present?
-  -#  = link_to(elaaf_url, :class => "btn btn-default", :target => '_blank') do
-  -#    %i.fa.fa-fw{:class => Settings.elaaf_link_icon}
-  -#    = Settings.elaaf_link_name
+- if client_ip_address_is_internal && @user.staff? && Settings.elaaf_link_enabled == "1" && Settings.elaaf_base_url.present?
+  .btn-group.btn-group-justified.panel
+    - elaaf_url = Settings.elaaf_base_url.to_s.dup
+    - elaaf_url[Settings.elaaf_student_number_place_holder] = @topic.mis_id.to_s if Settings.elaaf_student_number_place_holder.present?
+    = link_to(elaaf_url, :class => "btn btn-default", :target => '_blank') do
+      %i.fa.fa-fw{:class => Settings.elaaf_link_icon}
+      = Settings.elaaf_link_name

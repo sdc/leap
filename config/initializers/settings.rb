@@ -125,7 +125,18 @@ Settings.defaults[:base] = 'http://0.0.0.0:3000/'
 Settings.defaults[:num_progress_reviews] = 5
 
 # e-laaf settings
+Settings.defaults[:elaaf_link_enabled]          		= 1
 Settings.defaults[:elaaf_link_icon]          			= "fa-random"
 Settings.defaults[:elaaf_link_name]          			= "e-LAAF"
 Settings.defaults[:elaaf_base_url]          			= "http://elaaf.shapps.southdevon.ac.uk/elaaf/pages/default.aspx?SN=@sn"
 Settings.defaults[:elaaf_student_number_place_holder]   = "@sn"
+
+# Continuing Learning categories
+Settings.defaults[:continuing_learning_rev_enabled]  	= 1
+Settings.defaults[:continuing_learning_colours] 		= "red;red|amber;amber|green;green|purple;purple"
+Settings.defaults[:continuing_learning_icons] 			= "Higher Education Elsewhere;fa-sign-out|College Further Education/Apprenticeship;fa-book|Looking for Work/Apprenticeship/Self Employed;fa-binoculars|College Higher Education;fa-graduation-cap|Want to stay at college not applied;fa-anchor|Not Sure;fa-arrows-h"
+Settings.defaults[:continuing_learning_default_colour]	= "grey"
+Settings.defaults[:continuing_learning_default_icon]	= "fa-question"
+
+# Network Miscellaneous
+Settings.defaults[:network_ip_ranges] = "1;192.168.0.1;192.168.255.254;Private network Class C|1;172.16.0.1;172.31.255.254;Private network Class B|1;10.0.0.1;10.255.255.254;Private network Class A|1;127.0.0.1;127.255.255.254;localhost"

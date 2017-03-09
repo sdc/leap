@@ -5,7 +5,7 @@
       .span1= image_tag "events/intervention_referral.png"
       .span2
         %h4 Intervention Type
-        = f.select :pi_type, Intervention.intervention_types.keys.map{|k| [k,k.gsub(/\W+/,"_")]}, {}, :class => "span2"
+        = f.select :pi_type, Intervention.intervention_types.keys.map{|k| [k,k.gsub(/\W+/,"_")] if ( @user.admin? && 1==1 ) || @topic.can_add_intervention_stage(k.gsub(/\W+/,"_")) }.compact, {}, :class => "span2"
       .span3
         %h4 Category
         - Intervention.intervention_types.each do |cat|
