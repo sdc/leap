@@ -58,5 +58,15 @@ module MISC
 		Date.strptime(datestr, picstr) rescue nil
 	  end
 
+	  def self.acyr_next(acyr, numyears = 1)
+	  	return nil if acyr.nil? || acyr.length != 5 || acyr[2] != '/'
+	  	return acyr.split("/").map{|x| (100 + x.to_i + numyears).to_s[-2,2] }.join("/")
+	  end
+
+	  def self.acyr_previous(acyr, numyears = 1)
+	  	return nil if acyr.nil? || acyr.length != 5 || acyr[2] != '/'
+	  	return acyr.split("/").map{|x| (100 + x.to_i - numyears).to_s[-2,2] }.join("/")
+	  end
+
    end
 end
