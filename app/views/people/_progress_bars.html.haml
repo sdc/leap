@@ -49,4 +49,4 @@
                 %h2 #{h(progress.attendance.att_year)}% 
 :javascript
   var authorisation = #{@user.staff? ? 'true' : 'false'};
-  var base = "#{ h(Settings.base) }people/#{ h(@topic.mis_id) }/";
+  var base = "#{ h(request.base_url) }/people/#{ h(@topic.mis_id) }/";
