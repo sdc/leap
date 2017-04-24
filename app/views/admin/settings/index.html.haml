@@ -473,6 +473,17 @@
           :preserve     
             1;192.168.0.1;192.168.255.254;Private network Class C|1;172.16.0.1;172.31.255.254;Private network Class B|1;10.0.0.1;10.255.255.254;Private network Class A|1;127.0.0.1;127.255.255.254;localhost
 
+  %h2 Timetable Registers
+  .well
+    Optionally restrict the viewing of timetabled register events to the current academic year.  Do this by setting a threshold day/month which has to be passed before staff can view the new academic year's registers.  This is so that staff do not see registers that are still being configured for the new academic year.
+  .control-group
+    %label.control-label Threshold date
+    .controls
+      = text_field_tag "timetable_registers_threshold", Settings.timetable_registers_threshold
+      .help-text
+        Suggested default: 01/08
+
+
   %h1 Old Settings!
   .old-settings
     .alert
@@ -490,7 +501,7 @@
                                  "one_to_one_prompts","attendance_type_column","plp_overview","num_progress_reviews","induction_questions","induction_question_badges",
                                  "elaaf_link_enabled","elaaf_link_icon","elaaf_link_name","elaaf_base_url","elaaf_student_number_place_holder",
                                  "continuing_learning_rev_enabled","continuing_learning_colours","continuing_learning_icons","continuing_learning_default_colour","continuing_learning_default_icon",
-                                 "network_ip_ranges"]
+                                 "network_ip_ranges","timetable_registers_threshold"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

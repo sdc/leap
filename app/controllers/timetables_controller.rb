@@ -33,7 +33,25 @@ class TimetablesController < ApplicationController
         @date = ab - 1.year
       end
     end
-    @registers = @topic.timetable_events(:from => @date, :to => @end_date)
+
+    registers_from_date = @date
+    registers_to_date = @end_date
+
+    if Settings.timetable_registers_threshold.present?
+      (d,m) = Settings.year_boundary_date.split("/").map{|x| x.to_i}
+      boundary_date = Date.today.change(:day => d,:month => m)
+      (trt_d,trt_m) = Settings.timetable_registers_threshold.split("/").map{|x| x.to_i}
+      threshold_date = Date.today.change(:day => trt_d,:month => trt_m)
+      if threshold_date < Date.today
+        max_registers_date = boundary_date + 1.year - 1.day
+      else
+        max_registers_date = boundary_date - 1.day
+      end
+      registers_from_date = [@date, max_registers_date].min
+      registers_to_date = [@end_date, max_registers_date].min
+    end
+    
+    @registers = @topic.timetable_events(:from => registers_from_date, :to => registers_to_date)
     @view = View.for_user.find_by_name("timetable")
     @events = if @topic.kind_of? Person
       @topic.events.where(:event_date => (@date.to_time + 1.hour + 1.second)..@end_date, :transition => @view.transitions, :eventable_type => @view.events) 

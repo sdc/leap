@@ -120,8 +120,6 @@ Settings.defaults[:ebs_username_field] = "network_userid"
 Settings.defaults[:plp_overview] = "old"
 
 #Progress Reviews settings
-Settings.defaults[:num_progress_reviews] = 5 # This shouldn't really be a setting.
-Settings.defaults[:base] = 'http://0.0.0.0:3000/'
 Settings.defaults[:num_progress_reviews] = 5
 
 # e-laaf settings
@@ -140,3 +138,6 @@ Settings.defaults[:continuing_learning_default_icon]	= "fa-question"
 
 # Network Miscellaneous
 Settings.defaults[:network_ip_ranges] = "1;192.168.0.1;192.168.255.254;Private network Class C|1;172.16.0.1;172.31.255.254;Private network Class B|1;10.0.0.1;10.255.255.254;Private network Class A|1;127.0.0.1;127.255.255.254;localhost"
+
+# Registers Threshold
+Settings.defaults[:timetable_registers_threshold]       = "01/08"
