@@ -4,7 +4,7 @@
   - @progress_bar.each do |progress|
     .course-progress
       .row.row-eq-height
-        .initial-review.col-md-6.col-xs-12.top-section{:class => ('present' if progress.initial.present?), "data-id" => (h(progress.initial.id) if progress.initial.present?), "data-progress-id" => h(progress.id)}
+        .initial-review.col-md-6.col-xs-12.top-section{:class => ('present' if progress.initial.present?), "data-id" => (h(progress.initial.id) if progress.initial.present?), "data-progress-id" => h(progress.id), :title => ( @user.staff? ? h(progress.course_code.upcase) : '' ) }
           %h4{:style => "margin-bottom: 5px"} Target Grade for
           %h4 #{ h(progress.course_title.upcase) }
           - if progress.initial.present?
