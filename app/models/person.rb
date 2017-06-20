@@ -158,6 +158,11 @@ class Person < ActiveRecord::Base
     Settings.admin_users.map{|x| x.to_i}.include? id
   end
 
+  def superuser?
+    return true if ["owenwiddicombe"].include? Person.user.username
+    return false
+  end
+
   def mis_code
     mis_id
   end

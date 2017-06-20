@@ -32,11 +32,11 @@
               .input-group
                 .input-group-addon Current Level
                 %select{ :name => "progress_review[level]", :class => 'form-control level', :id => 'progress_review_level', :required => 'required', :disabled => (true unless @user.staff?)}
-                  %option{:value => '', :selected => true, :disabled => true}= "Choose"
-                  %option{:value => 'purple', :class => 'purple'}= "PURPLE (Exceeding target grade)"
-                  %option{:value => 'green', :class => 'green'}= "GREEN (Working at target grade)"
-                  %option{:value => 'amber', :class => 'amber'}= "AMBER (Working towards target grade)"
-                  %option{:value => 'red', :class => 'red'}= "RED (Requires improvements)"
+                  %option{:value => '', :selected => (not ["purple","green","amber","red"].include? :level), :disabled => true}= "Choose"
+                  %option{:value => 'purple', :class => 'purple', :selected => (:level == "purple")}= "PURPLE (Exceeding target grade)"
+                  %option{:value => 'green', :class => 'green', :selected => (:level == "green")}= "GREEN (Working at target grade)"
+                  %option{:value => 'amber', :class => 'amber', :selected => (:level == "amber")}= "AMBER (Working towards target grade)"
+                  %option{:value => 'red', :class => 'red', :selected => (:level == "red")}= "RED (Requires improvements)"
         .modal-footer.no-padding
           #submitted
             .pull-left.review-author
