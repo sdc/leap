@@ -23,11 +23,12 @@ $(".initial-review, .progress-review").click(function()
 $("#edit-review").click(function() 
 {
     $("[name='progress_review[body]']").prop("disabled", false);
-    <% if Person.user.superuser? %>
+    /*
+    // if Person.user.superuser?
     $("[name='progress_review[working_at]']").prop("disabled", false);
     $("div#current-level").css('display','block');
     $("#progress_review_level").prop("disabled", false);
-    <% end %>
+    */
     $(this).hide();
     $("#save-review").show();
 })
@@ -39,16 +40,18 @@ $("#save-review").click(function()
     var id = getValidOpenId();
     var url = base + REVIEW_TYPES['progress'] + '/' + id;
     var data = {'body': $("[name='progress_review[body]']").val()
-                <% if Person.user.superuser? %>
+                /*
+                // if Person.user.superuser?
 		, 'working_at': $("[name='progress_review[working_at]']").val()
                 , 'level': $("[name='progress_review[level]']").val()
-                <% end %>
+                */
                };
 
     ajaxRequest(url, 'PUT', data, function(review) {
         $("[name='progress_review[body]']").prop("disabled", true);
         $("[name='progress_review[body]']").val(review.progress_review.pretty_body);
-        <% if Person.user.superuser? %>
+        /*
+        // if Person.user.superuser?
         $("[name='progress_review[working_at]']").prop("disabled", true);
         $("[name='progress_review[working_at]']").val(review.progress_review.working_at);
         $('div[data-id="' + id + '"] > h4').text(review.progress_review.working_at);
@@ -62,7 +65,7 @@ $("#save-review").click(function()
         } else {
             $('div[data-id="' + id + '"]').removeClass("purple green amber red");
         }
-        <% end %>
+        */
         $("#save-review").hide();
         $("#edit-review").show();
     })
@@ -71,9 +74,10 @@ $("#save-review").click(function()
 $("#edit-initial-review").click(function() 
 {
     $("[name='initial_review[body]']").prop("disabled", false);
-    <% if Person.user.superuser? %>
+    /*
+    // if Person.user.superuser?
     $("[name='initial_review[target_grade]']").prop("disabled", false);
-    <% end %>
+    */
     $(this).hide();
     $("#save-initial-review").show();
 })
@@ -85,19 +89,21 @@ $("#save-initial-review").click(function()
     var id = getValidOpenId();
     var url = base + REVIEW_TYPES['initial'] + '/' + id;
     var data = {'body': $("[name='initial_review[body]']").val()
-                <% if Person.user.superuser? %>
+                /*
+                // if Person.user.superuser?
                 , 'target_grade': $("[name='initial_review[target_grade]']").val()
-                <% end %>
+                */
                };
 
     ajaxRequest(url, 'PUT', data, function(review) {
         $("[name='initial_review[body]']").prop("disabled", true);
         $("[name='initial_review[body]']").val(review.initial_review.pretty_body);
-        <% if Person.user.superuser? %>
+        /*
+        // if Person.user.superuser?
         $("[name='initial_review[target_grade]']").prop("disabled", true);
         $("[name='initial_review[target_grade]']").val(review.initial_review.target_grade);
         $('div[data-id="' + id + '"] > h3').text(review.initial_review.target_grade);
-        <% end %>
+        */
         $("#save-initial-review").hide();
         $("#edit-initial-review").show();
     })
@@ -205,14 +211,15 @@ function displayProgressReview(review)
     $("[name='progress_review[number]']").val(review.number);
     $("[name='progress_review[body]']").val(review.pretty_body);
 
-    <% if Person.user.superuser? %>
+    /*
+    // if Person.user.superuser?
     if ( ["purple", "green", "amber", "red"].indexOf(review.level) >= 0 ) {
         $("[name='progress_review[level]'] > option").prop("selected",false);
         $("[name='progress_review[level]'] > option." + review.level).prop("selected",true);
     } else {
         $("[name='progress_review[level]'] > option").prop("selected",true);
     }
-    <% end %>
+    */
 
     $("#review-by").text('\
         By ' + escapeHtml(review.person.name) + ' on ' + escapeHtml(review.pretty_created_at)

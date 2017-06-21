@@ -159,8 +159,7 @@ class Person < ActiveRecord::Base
   end
 
   def superuser?
-    return true if ["owenwiddicombe"].include? Person.user.username
-    return false
+    ["owenwiddicombe"].include? Person.user.username
   end
 
   def mis_code

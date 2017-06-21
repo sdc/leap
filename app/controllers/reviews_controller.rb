@@ -35,11 +35,13 @@ class ReviewsController < ApplicationController
       format.json do
         review = getReview(getKnownReviewType, params[:id])
         review.body = params[:body]
+=begin
         if Person.user.superuser?
             review.working_at = params[:working_at] if params.has_key?(:working_at)
             review.target_grade = params[:target_grade] if params.has_key?(:target_grade)
             review.level = params[:level] if params.has_key?(:level)
         end
+=end
         if !review.save
           raise "Failed to update review"
         end
