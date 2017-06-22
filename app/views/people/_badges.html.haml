@@ -1,3 +1,4 @@
+- require 'net/http'
 .panel.panel-default
   .panel-heading
     %h4.panel-title 
@@ -11,10 +12,12 @@
       - badge_list = badges[:moodle].last.all_in_course      
     - if badge_list.present?
       - badge_list.each do |badge|
-        - badges_shown += 1
-        .col-xs-2.ppd_badge
-          = link_to badge.link_url, :title => badge[:title], "data-toggle" => "popover", "data-content" => badge[:description] do
-            = image_tag badge.image_url, :class => "img-responsive"
+        - res = Net::HTTP.get_response(URI.parse(badge.image_url))
+        - if res.code.to_i != 404 && ( res.header['Content-Type'].starts_with? 'image' )
+          - badges_shown += 1
+          .col-xs-2.ppd_badge
+            = link_to badge.link_url, :title => badge[:title], "data-toggle" => "popover", "data-content" => badge[:description] do
+              = image_tag badge.image_url, :class => "img-responsive"
     - if Settings.home_page != "progress"
       - if badges[:course].present?
         - badges[:course].each do |badge|
