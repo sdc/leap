@@ -11,7 +11,7 @@ gem 'rails-settings', :require => 'settings'
 gem 'rails_autolink', '1.0.9'
 gem 'uglifier', "1.0.3"
 gem 'rails-latex'
-gem 'nokogiri', "1.5.10"
+gem 'nokogiri', "1.6.7.2"
 gem 'coffee-filter'
 gem 'yui-compressor'
 gem 'icalendar'
@@ -26,7 +26,7 @@ platforms :ruby do
   gem 'activerecord-sqlserver-adapter'
   gem 'activerecord-oracle_enhanced-adapter', '~> 1.4.0'
   gem 'activerecord-mysql-adapter'
-  gem 'ruby-oci8'#, "2.1.0"
+  gem 'ruby-oci8', "2.2.4.1"
   gem 'tiny_tds', "0.5.1"
   gem 'sqlite3'
 end
@@ -47,7 +47,7 @@ group :development do
   gem 'pry'
   gem 'pry-remote'
   gem 'pry-stack_explorer'
-  gem 'pry-debugger'
+  gem 'pry-byebug'
 
   # gem 'rack-mini-profiler'
 end

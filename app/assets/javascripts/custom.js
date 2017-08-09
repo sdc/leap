@@ -34,3 +34,27 @@ window.onload = function() {
     }
 }
 ;
+
+/**
+ * Ruby already truncates aspirations > 255 characters
+ * 
+ * This script prevents users from entering more than 255 in the first place 
+ * and counts down from 255 to 0
+ *
+ */
+$(function(){
+	$(window).load(function() {
+		var max = 255;
+		$('#aspiration_aspiration').on('keypress keyup', function(e){
+			var chars_remaining = 255 - $('#aspiration_aspiration').val().length;
+			if (chars_remaining >= 0) {
+				$('#chars').html(chars_remaining);
+			}           
+			if (this.value.length == max) {
+					e.preventDefault();
+			} else if (this.value.length > max) {
+					this.value = this.value.substring(0, max);
+			}
+		});
+	});
+});
