@@ -336,10 +336,10 @@ module MisPerson
         # next if support_plps.find{ |sp| sp.name == f[1] && sp.active != 0 && sp.value == v }
         # next if support_plps.exists?( :name => f[1], :active => 1, :value => v )
         support_plps_for_name = support_plps.find{ |sp| sp.name == f[1] && sp.active == true }
-        if support_plps_for_name.present?
-          next if support_plps_for_name.try(:value) == v
-          support_plps.update_all( ["active = 0, updated_at = ?",DateTime.now], ["active != 0 and name = ? and ( value != ? or ? is null)", f[1], v, v ] ) unless support_plps.nil?
-          ver_info = ( f[2].present? ? Ebs::Verifier.find_by_low_value_and_rv_domain(v,f[2]) : nil )
+        next if support_plps_for_name.present? && support_plps_for_name.try(:value) == v
+        support_plps.update_all( ["active = 0, updated_at = ?",DateTime.now], ["active != 0 and name = ? and ( value != ? or ? is null)", f[1], v, v ] ) unless support_plps.nil?
+        ver_info = ( f[2].present? ? Ebs::Verifier.find_by_low_value_and_rv_domain(v,f[2]) : nil )
+	if v.present?
           nsp = support_plps.create(
             :name => f[1],
             :value => v,
