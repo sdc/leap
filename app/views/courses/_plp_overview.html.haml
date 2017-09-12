@@ -50,7 +50,7 @@
           - else
             %td.bl.text-center{ :style => "width:1px" }
           - gcse_ps = pc.person.progresses.where(:course_year => @topic.year).order("case when course_status = 'Active' then 0 else 1 end, created_at desc").first.try(:qca_score)
-          - if gcse_ps
+          - if defined?(gcse_ps) && gcse_ps.respond_to?(:round) && gcse_ps.round(0) > 0
             %td.bl.text-right.visible-lg{:title => "GCSE Point Score"}= gcse_ps.round(0)
           - else
             %td.bl.visible-lg{:title => "No GCSE Point Score"}
