@@ -22,7 +22,7 @@
           %tbody
             - @person_courses.each do |pc|
               %tr{"data-mis-status" => pc.mis_status.downcase}
-                - fiq = pc.person.induction_questions.find_last_by_question(iq)
+                - fiq = pc.person.induction_questions.where("created_at between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", MISC::MiscDates.startdate_from_acyr(@topic.year), MISC::MiscDates.enddate_from_acyr(@topic.year) ).find_last_by_question(iq)
                 %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
                   %b= link_to pc.person.name, pc.person, :target => "_blank"
                 %td.bl.text-left{ :class => "text-left" + (fiq.nil? ? "" : " success") }= fiq.try(:created_at).try(:strftime, "%d/%m/%Y" )
