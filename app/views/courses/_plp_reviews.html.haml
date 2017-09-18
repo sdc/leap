@@ -47,8 +47,9 @@
           - else
             %td.text-center.text-muted.visible-lg.text-center{:class => "ragp_light_grey" + (x==1 ? " bl" : ""), :title => "No Review"}
           - if x == 3  && cl_rev_enabled
-            - cl = pc.person.continuing_learnings
-            - unless cl.nil?
+            - cl_all = pc.person.continuing_learnings
+            - cl = cl_all.select{ |x| MISC::MiscDates.acyr(x.created_date) == @topic.year }.sort_by{ |r| r.created_date }.last
+            - if pc.person.present? && !cl_all.nil? && !cl.nil?
               - cl_colour = cl_mapped_colours[cl.answer_colour] || cl_default_colour || "grey"
               - cl_icon = cl_category_icons[cl.answer_cat] || cl_default_icon || nil
               %td.text-center.visible-lg{:class => "ragp_light_#{cl_colour}", :title => "#{cl.answer_desc}"}

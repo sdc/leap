@@ -61,7 +61,7 @@ class Person < ActiveRecord::Base
   has_many :support_plps
   has_many :lsf_bursary_funds
 
-  has_one  :continuing_learnings, :class_name => "ContinuingLearning", :foreign_key => "leap_person_id"
+  has_many  :continuing_learnings, :class_name => "ContinuingLearning", :foreign_key => "leap_person_id"
 
   belongs_to :tutor, :class_name => "Person", :foreign_key => "tutor_id"
   
