@@ -7,7 +7,7 @@
         %li.icon
           %i{:class => "fa fa-3x #{event.icon_class}", :style => "color: "}
       - else
-        %li.icon= image_tag(event.icon_url, :size => "48x48")
+        %li.icon= image_tag(event.icon_url, :size => "48x48", onerror: 'this.onerror=null;this.src="'+image_path('events/badge_default.png')+'";this.alt="";' )
       %li.event-date.has-tooltip{"data-datetime" => event.event_date, 
                                  :title => Person.user.staff? && event.created_by_text}= event_date event
       - if @multi
@@ -52,4 +52,4 @@
           %h3= raw e.message
           %p= raw e.backtrace.join "<br />"
 
-= render :partial => "layouts/alerts" if request.xhr?
+-# = render :partial => "layouts/alerts" if request.xhr?

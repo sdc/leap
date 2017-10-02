@@ -56,7 +56,7 @@ class Target < Eventable
 
   def icon_class
     case status
-    when :complete   then "fa-tick"
+    when :complete   then "fa-check-circle-o"
     when :incomplete then "fa-times"
     else "fa-dot-circle-o"
     end
