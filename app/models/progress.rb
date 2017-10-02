@@ -32,4 +32,8 @@ class Progress < ActiveRecord::Base
     self[:nat_target_grade] || 'N/A'
   end
 
+  def subject_grade
+    self[:subject_grade] || 'N/A'
+  end
+
 end

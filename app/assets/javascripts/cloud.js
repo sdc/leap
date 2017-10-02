@@ -278,7 +278,7 @@ function fillScores(scores)
     $("[name=english_ia]").val(scores.bksb_english_ia);
     $("[name=english_da]").val(scores.bksb_english_da);
     $("[name=qca_score]").val(scores.qca_score);
-    $("[name=nat_target]").val(scores.nat_target_grade);
+    $("[name=subject_grade]").val(scores.subject_grade);
 
     disableInputs("#scores");
 }
