@@ -178,9 +178,9 @@ module MisPerson
 
   def import_courses
     return self unless mis.people_units.any?
-    last_update = ( (person_courses.order("updated_at DESC").first.try(:updated_at) ) || ( Date.today - 5.years) )
+    #last_update = ( (person_courses.order("updated_at DESC").first.try(:updated_at) ) || ( Date.today - 5.years) )
     #mis_person.people_units.where("updated_date > ?",last_update).order("progress_date").each do |pu|
-    mis_person.people_units.order("progress_date").each do |pu|
+    mis_person.people_units.order("unit_type, progress_date").each do |pu|
       next unless pu.uio_id
       course = Course.import(pu.uio_id,{:people => false})
       next unless course
