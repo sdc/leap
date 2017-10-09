@@ -26,7 +26,7 @@ class Ebs::RegisterEventDetailsSlot < Ebs::Model
     begin
       case object_type 
       when "R" then Ebs::Room.find_by_id(object_id)
-      when "T" then ( Ebs::Person.find(object_id).reject?{ |x| x.forename.nil? } )
+      when "T" then Ebs::Person.where("not ( forename is null and surname in ('Staff Not Required','Recruiting') )").find(object_id)
       when "L" then Ebs::Person.find(object_id)
       else throw "Not a known object"
       end
