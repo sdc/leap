@@ -1,7 +1,10 @@
 %div{:class => event_classes(event, true)}
   %ul
     %li.icon= image_tag(event.icon_url, :size => "24x24", :alt => event.title, :title => event.title)
-    %li.title= event.title
+    %li.title
+      .title_m1= event.title
+      - if event.respond_to?(:title_2ndline) && event.title_2ndline
+        .title_m2= event.title_2ndline
     %li.body.short= event.body.truncate(90,:separator => " ")
     %li.body.long.hide
       = event.body
