@@ -323,7 +323,11 @@
     .controls
       = number_field_tag "num_progress_reviews", Settings.num_progress_reviews, :in => 0..10, :class => "span1 inline"
       .help-text The number of Progress Reviews conducted in a year.
-
+  .control-group
+    %label.control-label PARs Active
+    .controls
+      = text_field_tag "par_active", Settings.par_active
+      .help-text List of the active PAR reviews.  i.e. 1,2,3,4,5
 
   %h2 Simple Poll
   .well
@@ -430,7 +434,7 @@
   .well
     Continuing Learning settings.
   .control-group
-    %label.control-label Review column enabled
+    %label.control-label Show
     .controls
       = text_field_tag "continuing_learning_rev_enabled", Settings.continuing_learning_rev_enabled
       .help-text
@@ -501,7 +505,7 @@
                                  "one_to_one_prompts","attendance_type_column","plp_overview","num_progress_reviews","induction_questions","induction_question_badges",
                                  "elaaf_link_enabled","elaaf_link_icon","elaaf_link_name","elaaf_base_url","elaaf_student_number_place_holder",
                                  "continuing_learning_rev_enabled","continuing_learning_colours","continuing_learning_icons","continuing_learning_default_colour","continuing_learning_default_icon",
-                                 "network_ip_ranges","timetable_registers_threshold"]
+                                 "network_ip_ranges","timetable_registers_threshold","par_active"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

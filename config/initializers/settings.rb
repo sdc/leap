@@ -121,6 +121,7 @@ Settings.defaults[:plp_overview] = "old"
 
 #Progress Reviews settings
 Settings.defaults[:num_progress_reviews] = 5
+Settings.defaults[:par_active]           = "1,2,3,4,5"
 
 # e-laaf settings
 Settings.defaults[:elaaf_link_enabled]          		= 1
