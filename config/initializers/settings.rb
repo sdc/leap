@@ -118,6 +118,7 @@ Settings.defaults[:ebs_username_field] = "network_userid"
 
 #PLP Overview
 Settings.defaults[:plp_overview] = "old"
+Settings.defaults[:plp_tabs] = "photos,overview,reviews,support,checklist,badges,achievement"
 
 #Progress Reviews settings
 Settings.defaults[:num_progress_reviews] = 5

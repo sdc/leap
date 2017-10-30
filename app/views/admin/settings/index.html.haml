@@ -379,6 +379,11 @@
     .controls
       = text_field_tag "moodle_badge_plp_courses", Settings.moodle_badge_plp_courses
       .help-text List moodle course ids here and badges earned on those courses will be shown on the PLP Badges overview
+  .control-group
+    %label.control-label Active Tabs
+    .controls
+      = text_field_tag "plp_tabs", Settings.plp_tabs
+      .help-text List active tabs.  i.e. photos,overview,reviews,support,checklist,badges,achievement
 
   %h2 Induction
   .well
@@ -505,7 +510,7 @@
                                  "one_to_one_prompts","attendance_type_column","plp_overview","num_progress_reviews","induction_questions","induction_question_badges",
                                  "elaaf_link_enabled","elaaf_link_icon","elaaf_link_name","elaaf_base_url","elaaf_student_number_place_holder",
                                  "continuing_learning_rev_enabled","continuing_learning_colours","continuing_learning_icons","continuing_learning_default_colour","continuing_learning_default_icon",
-                                 "network_ip_ranges","timetable_registers_threshold","par_active"]
+                                 "network_ip_ranges","timetable_registers_threshold","par_active","plp_tabs"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

@@ -1,6 +1,7 @@
 - npr = Settings.num_progress_reviews.to_i
 - show_reviews = Progress.find(:all, :conditions => ["course_code = ? and course_year = ?", @topic.code, @topic.year] ).present?
 - person_attendance = Hash.new
+- show_plp_tabs = Settings.plp_tabs.split(',')
 
 .pull-right.btn-group
   %a.btn.btn-primary.btn-sm.active{"data-course-person-filter" => "show-all"}
@@ -11,48 +12,60 @@
 
 .btn-group
   %ul.row.nav.nav-tabs#reviews-home-tabs
-    %li.active 
-      %a{:href => "#photo-list", "data-toggle" => "tab"} Photos
-    %li 
-      -# %a{:href => "#overview-plp", "data-toggle" => "tab"} Overview
-      -# = link_to "Overview" , "#overview-plp", html_options = { "data-toggle" => "tab" }, :remote => true
-      %a{:href => "#overview-plp", "data-toggle" => "tab"} Overview
-    - if show_reviews
+    - if show_plp_tabs.include?("photos")
+      %li.active 
+        %a{:href => "#photo-list", "data-toggle" => "tab"} Photos
+    - if show_plp_tabs.include?("overview")
+      %li 
+        -# %a{:href => "#overview-plp", "data-toggle" => "tab"} Overview
+        -# = link_to "Overview" , "#overview-plp", html_options = { "data-toggle" => "tab" }, :remote => true
+        %a{:href => "#overview-plp", "data-toggle" => "tab"} Overview
+    - if show_reviews && show_plp_tabs.include?("reviews")
       %li 
         %a{:href => "#reviews-plp", "data-toggle" => "tab"} Reviews
-    %li 
-      %a{:href => "#support-plp", "data-toggle" => "tab"} Support
-    %li 
-      %a{:href => "#checklist", "data-toggle" => "tab"} Checklist
-    %li 
-      %a{:href => "#badges", "data-toggle" => "tab"} Badges
-    %li 
-      %a{:href => "#achieve", "data-toggle" => "tab"} Achievement
+    - if show_plp_tabs.include?("support")
+      %li 
+        %a{:href => "#support-plp", "data-toggle" => "tab"} Support
+    - if show_plp_tabs.include?("checklist")
+      %li 
+        %a{:href => "#checklist", "data-toggle" => "tab"} Checklist
+    - if show_plp_tabs.include?("badges")
+      %li 
+        %a{:href => "#badges", "data-toggle" => "tab"} Badges
+    - if show_plp_tabs.include?("achievement")
+      %li 
+        %a{:href => "#achieve", "data-toggle" => "tab"} Achievement
 
 .tab-content
-  .tab-pane.fade.in.active.panel.panel-default.row#photo-list{:style => "border-top: 0"}
-    %br
-    .col-xs-12
-    = render :partial => "people/enrolment", :collection => @person_courses
+  - if show_plp_tabs.include?("photos")
+    .tab-pane.fade.in.active.panel.panel-default.row#photo-list{:style => "border-top: 0"}
+      %br
+      .col-xs-12
+      = render :partial => "people/enrolment", :collection => @person_courses
 
-  .tab-pane.fade.panel.panel-default.row.table-responsive#overview-plp
-    = render :partial => "courses/plp_overview", :locals => { :npr => npr, :person_attendance => person_attendance }
+  - if show_plp_tabs.include?("overview")
+    .tab-pane.fade.panel.panel-default.row.table-responsive#overview-plp
+      = render :partial => "courses/plp_overview", :locals => { :npr => npr, :person_attendance => person_attendance }
 
-  - if show_reviews
+  - if show_reviews && show_plp_tabs.include?("reviews")
     .tab-pane.fade.panel.panel-default.row.table-responsive#reviews-plp
       = render :partial => "courses/plp_reviews", :locals => { :npr => npr, :person_attendance => person_attendance }
 
-  .tab-pane.fade.panel.panel-default.row#support-plp
-    = render :partial => "courses/plp_support"
+  - if show_plp_tabs.include?("support")
+    .tab-pane.fade.panel.panel-default.row#support-plp
+      = render :partial => "courses/plp_support"
 
-  .tab-pane.fade.panel.panel-default.row#checklist
-    = render :partial => "courses/plp_checklist"
+  - if show_plp_tabs.include?("checklist")
+    .tab-pane.fade.panel.panel-default.row#checklist
+      = render :partial => "courses/plp_checklist"
 
-  .tab-pane.fade.panel.panel-default.row#badges
-    = render :partial => "courses/plp_badges"
+  - if show_plp_tabs.include?("badges")
+    .tab-pane.fade.panel.panel-default.row#badges
+      = render :partial => "courses/plp_badges"
 
-  .tab-pane.fade.panel.panel-default.row#achieve
-    = render :partial => "courses/plp_achieve"
+  - if show_plp_tabs.include?("achievement")
+    .tab-pane.fade.panel.panel-default.row#achieve
+      = render :partial => "courses/plp_achieve"
 
 -# if @user.staff?
   .row
