@@ -36,7 +36,7 @@
                   %option{:value => 'purple', :class => 'purple', :selected => (:level == "purple")}= "PURPLE (Exceeding target grade)"
                   %option{:value => 'green', :class => 'green', :selected => (:level == "green")}= "GREEN (Working at target grade)"
                   %option{:value => 'amber', :class => 'amber', :selected => (:level == "amber")}= "AMBER (Working towards target grade)"
-                  %option{:value => 'red', :class => 'red', :selected => (:level == "red")}= "RED (Requires improvements)"
+                  %option{:value => 'red', :class => 'red', :selected => (:level == "red")}= "RED (Working well below target grade)"
         .modal-footer.no-padding
           #submitted
             .pull-left.review-author
@@ -48,3 +48,6 @@
           #review-submit.submit-review
             - if @user.staff
               %input{:class => "btn btn-primary pull-right full-button", :name => "commit", :type => "submit", :value => "Submit review"}
+%script{ :type => "text/javascript" }
+  :plain
+    var Person_user_superuser = "#{Person.user.superuser?}";

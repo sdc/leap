@@ -5,6 +5,14 @@ var REVIEW_TYPES = {
 
 var SYSTEM_ERROR_TEXT = 'System error, please try again or contact Computer Services';
 
+function is_Person_user_superuser()
+{
+    if ( typeof Person_user_superuser !== 'undefined' )
+        return ( Person_user_superuser == 'true' ) ;
+    else
+        return false;
+}
+
 $(".initial-review, .progress-review").click(function() 
 {
     var id = $(this).data('id');
@@ -23,12 +31,14 @@ $(".initial-review, .progress-review").click(function()
 $("#edit-review").click(function() 
 {
     $("[name='progress_review[body]']").prop("disabled", false);
-    /*
-    // if Person.user.superuser?
-    $("[name='progress_review[working_at]']").prop("disabled", false);
+
+    if ( is_Person_user_superuser() )
+        {
+        $("[name='progress_review[working_at]']").prop("disabled", false);
+        }
     $("div#current-level").css('display','block');
     $("#progress_review_level").prop("disabled", false);
-    */
+
     $(this).hide();
     $("#save-review").show();
 })
@@ -39,22 +49,22 @@ $("#save-review").click(function()
 
     var id = getValidOpenId();
     var url = base + REVIEW_TYPES['progress'] + '/' + id;
-    var data = {'body': $("[name='progress_review[body]']").val()
-                /*
-                // if Person.user.superuser?
-		, 'working_at': $("[name='progress_review[working_at]']").val()
+    var data = $.extend({}, {
+                'body': $("[name='progress_review[body]']").val()
+                , 'working_at': ( is_Person_user_superuser() ) ? $("[name='progress_review[working_at]']").val() : undefined
                 , 'level': $("[name='progress_review[level]']").val()
-                */
-               };
+               });
 
     ajaxRequest(url, 'PUT', data, function(review) {
         $("[name='progress_review[body]']").prop("disabled", true);
         $("[name='progress_review[body]']").val(review.progress_review.pretty_body);
-        /*
-        // if Person.user.superuser?
-        $("[name='progress_review[working_at]']").prop("disabled", true);
-        $("[name='progress_review[working_at]']").val(review.progress_review.working_at);
-        $('div[data-id="' + id + '"] > h4').text(review.progress_review.working_at);
+
+        if ( is_Person_user_superuser() )
+            {
+            $("[name='progress_review[working_at]']").prop("disabled", true);
+            $("[name='progress_review[working_at]']").val(review.progress_review.working_at);
+            $('div[data-id="' + id + '"] > h4').text(review.progress_review.working_at);
+            }
         $("div#current-level").css('display','none');
         $("#progress_review_level").prop("disabled", true);
         if ( ["purple", "green", "amber", "red"].indexOf(review.progress_review.level) >= 0 ) {
@@ -65,7 +75,7 @@ $("#save-review").click(function()
         } else {
             $('div[data-id="' + id + '"]').removeClass("purple green amber red");
         }
-        */
+
         $("#save-review").hide();
         $("#edit-review").show();
     })
@@ -74,10 +84,12 @@ $("#save-review").click(function()
 $("#edit-initial-review").click(function() 
 {
     $("[name='initial_review[body]']").prop("disabled", false);
-    /*
-    // if Person.user.superuser?
-    $("[name='initial_review[target_grade]']").prop("disabled", false);
-    */
+
+    if ( is_Person_user_superuser() )
+        {
+        $("[name='initial_review[target_grade]']").prop("disabled", false);
+        }
+
     $(this).hide();
     $("#save-initial-review").show();
 })
@@ -88,22 +100,22 @@ $("#save-initial-review").click(function()
 
     var id = getValidOpenId();
     var url = base + REVIEW_TYPES['initial'] + '/' + id;
-    var data = {'body': $("[name='initial_review[body]']").val()
-                /*
-                // if Person.user.superuser?
-                , 'target_grade': $("[name='initial_review[target_grade]']").val()
-                */
-               };
+    var data = $.extend({}, {
+                'body': $("[name='initial_review[body]']").val()
+                , 'target_grade': ( is_Person_user_superuser() ) ? $("[name='initial_review[target_grade]']").val() : undefined
+               });
 
     ajaxRequest(url, 'PUT', data, function(review) {
         $("[name='initial_review[body]']").prop("disabled", true);
         $("[name='initial_review[body]']").val(review.initial_review.pretty_body);
-        /*
-        // if Person.user.superuser?
-        $("[name='initial_review[target_grade]']").prop("disabled", true);
-        $("[name='initial_review[target_grade]']").val(review.initial_review.target_grade);
-        $('div[data-id="' + id + '"] > h3').text(review.initial_review.target_grade);
-        */
+
+        if ( is_Person_user_superuser() )
+            {
+            $("[name='initial_review[target_grade]']").prop("disabled", true);
+            $("[name='initial_review[target_grade]']").val(review.initial_review.target_grade);
+            $('div[data-id="' + id + '"] > h3').text(review.initial_review.target_grade);
+            }
+
         $("#save-initial-review").hide();
         $("#edit-initial-review").show();
     })
@@ -211,15 +223,12 @@ function displayProgressReview(review)
     $("[name='progress_review[number]']").val(review.number);
     $("[name='progress_review[body]']").val(review.pretty_body);
 
-    /*
-    // if Person.user.superuser?
     if ( ["purple", "green", "amber", "red"].indexOf(review.level) >= 0 ) {
         $("[name='progress_review[level]'] > option").prop("selected",false);
         $("[name='progress_review[level]'] > option." + review.level).prop("selected",true);
     } else {
         $("[name='progress_review[level]'] > option").prop("selected",true);
     }
-    */
 
     $("#review-by").text('\
         By ' + escapeHtml(review.person.name) + ' on ' + escapeHtml(review.pretty_created_at)
