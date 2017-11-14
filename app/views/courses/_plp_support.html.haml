@@ -7,6 +7,7 @@
         %td &nbsp;
       %tr
         %th.text-right.nowr{ :style => "width:1px" } Name
+        %th.text-center.bl{ :title => "Attendance overall"} Att
         -# %th.text-center.bl{:title => "Initial Advice and Guidance"} IAG
         %th.text-center.bl{:title => "Bursary"} Bursary
         %th.text-center{:title => "Travel Pass / Parking Permit"} Travel
@@ -22,6 +23,14 @@
         %tr{"data-mis-status" => pc.mis_status.downcase}
           %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
             %b= link_to pc.person.name, pc.person, :target => "_blank"
+          - person_attendances = pc.person.attendances.where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", MISC::MiscDates.startdate_from_acyr(@topic.year), MISC::MiscDates.enddate_from_acyr(@topic.year) )
+          - person_attendance = {}
+          - person_attendance[pc.person.id.to_s => "overall"] = person_attendances.select { |x| x.course_type.to_s.downcase == "overall" }.last
+          - if person_attendance[pc.person.id.to_s => "overall"]
+            - title = "Attendance #{person_attendance[pc.person.id.to_s => "overall"].status(true)}"
+            %td.bl.text-right{:class => person_attendance[pc.person.id.to_s => "overall"].status(true), :style => "width:1px", :title => title}= "#{person_attendance[pc.person.id.to_s => 'overall'].try :att_year}%"
+          - else
+            %td.bl.text-center{ :style => "width:1px" }
           -# %td.text-center.bl
           -#   - ints = pc.person.contact_logs.select{|x| /\bIAG\b/.match(x.body.to_s).present? and MISC::MiscDates.acyr(x.created_at) == @topic.year }.count
           -#   - ints_title = ints > 0 ? ( ints.to_s + " entry".pluralize(ints) + " in the contact logs" ) : nil
