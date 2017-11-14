@@ -18,7 +18,7 @@
           %i.fa.fa-eye
     %tr
       %th.text-right.nowr{ :style => "width:1px" } Name
-      %th.text-center{ :style => "width:1px", :title => "Attendance for course" } Att
+      %th.text-center.bl{ :style => "width:1px", :title => "Attendance for course" } Att
       - (1..npr).each do |x|
         %th.text-center.visible-lg{:class => "#{ct}_hide" + (x==1 ? " bl" : ""), :title => "Progress and Attendance Review #{x}" }= x
         - if x == 3 && cl_rev_enabled
@@ -37,9 +37,9 @@
         - person_attendance[pc.person.id.to_s => ct] = person_attendances.select { |x| ( cem_type == 'course' ? (x.enrol_course.to_s.downcase == ct) : (x.course_type.to_s.downcase == cem_type.downcase) ) }.last
         - if person_attendance[pc.person.id.to_s => ct]
           - title = "Attendance for #{cem_type}: #{person_attendance[pc.person.id.to_s => ct].status(true)}"
-          %td.text-right{:class => person_attendance[pc.person.id.to_s => ct].status(true), :style => "width:1px", :title => title }= "#{person_attendance[pc.person.id.to_s => ct].try :att_year}%"
+          %td.text-right.bl{:class => person_attendance[pc.person.id.to_s => ct].status(true), :style => "width:1px", :title => title }= "#{person_attendance[pc.person.id.to_s => ct].try :att_year}%"
         - else
-          %td.text-center{:title => "Attendance Not Available", :style => "width:1px" }
+          %td.text-center.bl{:title => "Attendance Not Available", :style => "width:1px" }
         - (1..npr).each do |x|
           - g = pc.person.progress_reviews.joins(:progress).where("progresses.id = progress_reviews.progress_id and progresses.course_year=? and LOWER(course_code) = ?",@topic.year,ct).order("number desc, created_at desc, id desc").where(:number => x).first
           - unless g.nil?
