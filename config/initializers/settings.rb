@@ -123,6 +123,7 @@ Settings.defaults[:plp_tabs] = "photos,overview,reviews,support,checklist,badges
 #Progress Reviews settings
 Settings.defaults[:num_progress_reviews] = 5
 Settings.defaults[:par_active]           = "1,2,3,4,5"
+Settings.defaults[:par_date_ranges]      = "I;02/10/2017;13/10/2017|1;30/10/2017;17/11/2017|2;01/01/2018;26/01/2018|3;19/02/2018;09/03/2018|4;16/04/2018;04/05/2018|5;04/06/2018;29/06/2018"
 
 # e-laaf settings
 Settings.defaults[:elaaf_link_enabled]          		= 1

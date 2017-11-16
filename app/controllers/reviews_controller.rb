@@ -39,7 +39,7 @@ class ReviewsController < ApplicationController
         if Person.user.superuser?
           review.working_at = params[:working_at] if params.has_key?(:working_at)
           review.target_grade = params[:target_grade] if params.has_key?(:target_grade)
-          # if superuser changing existing record, keep original author
+          # if superuser changing existing record, keep original author and date time
         else
           review.created_at = Time.now # if not superuser, change entry date time
           review.created_by_id = Person.user.id # if not superuser, change author

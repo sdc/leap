@@ -37,4 +37,14 @@ class InitialReview < Eventable
     return self[:body].empty? ? 'No comments' : self[:body]
   end
 
+  private
+
+  def self.par_is_enabled?
+    return false if !Settings.par_active.split(',').reject(&:empty?).include?('I')
+
+    par_dates = []
+    Settings.par_date_ranges.split("|").each{|x| b=x.split(';'); par_dates << { :rev => b[0], :from => b[1], :to => b[2] } if b[0] == 'I' }
+    par_dates.select{ |rv| rv[:rev] == 'I' && ( ( rv[:from].present? && Date.strptime(rv[:from], '%d/%m/%Y') > Date.today ) || ( rv[:to].present? && Date.strptime(rv[:to], '%d/%m/%Y') < Date.today ) ) }.blank?
+  end
+
 end

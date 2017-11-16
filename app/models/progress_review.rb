@@ -77,4 +77,14 @@ class ProgressReview < Eventable
     return self[:body].empty? ? 'No comments' : self[:body]
   end
 
+  private
+
+  def self.par_is_enabled?( revno )
+    return false if !Settings.par_active.split(',').reject(&:empty?).include?(revno.to_s)
+
+    par_dates = []
+    Settings.par_date_ranges.split("|").each{|x| b=x.split(';'); par_dates << { :rev => b[0], :from => b[1], :to => b[2] } if b[0] == revno.to_s }
+    par_dates.select{ |rv| rv[:rev] == revno.to_s && ( ( rv[:from].present? && Date.strptime(rv[:from], '%d/%m/%Y') > Date.today ) || ( rv[:to].present? && Date.strptime(rv[:to], '%d/%m/%Y') < Date.today ) ) }.blank?
+  end
+
 end

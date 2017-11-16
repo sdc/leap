@@ -328,6 +328,15 @@
     .controls
       = text_field_tag "par_active", Settings.par_active
       .help-text List of the active PAR reviews.  i.e. I,1,2,3,4,5
+  .control-group
+    %label.control-label PAR Date Ranges
+    .controls
+      = text_field_tag "par_date_ranges", Settings.par_date_ranges, :style => "width: 100%"
+      .help-text
+        Optional date ranges for each PAR.  Format: review;start_date;end_date  Multiple ranges can be seperated by |  Example:
+        %pre
+          :preserve     
+            I;02/10/2017;13/10/2017|1;30/10/2017;17/11/2017|2;01/01/2018;26/01/2018|3;19/02/2018;09/03/2018|4;16/04/2018;04/05/2018|5;04/06/2018;29/06/2018
 
   %h2 Simple Poll
   .well
@@ -510,7 +519,7 @@
                                  "one_to_one_prompts","attendance_type_column","plp_overview","num_progress_reviews","induction_questions","induction_question_badges",
                                  "elaaf_link_enabled","elaaf_link_icon","elaaf_link_name","elaaf_base_url","elaaf_student_number_place_holder",
                                  "continuing_learning_rev_enabled","continuing_learning_colours","continuing_learning_icons","continuing_learning_default_colour","continuing_learning_default_icon",
-                                 "network_ip_ranges","timetable_registers_threshold","par_active","plp_tabs"]
+                                 "network_ip_ranges","timetable_registers_threshold","par_active","plp_tabs","par_date_ranges"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize
