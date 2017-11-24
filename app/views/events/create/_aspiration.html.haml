@@ -3,10 +3,10 @@
   .span1= image_tag "events/aspirations.png"
   .span7
     %h4 I want to
-    = f.text_field :aspiration
+    = f.text_field :aspiration, :class => "charcount", "data-maxchars" => "255"
     %span{:id => "id_test"} 
       %h5
-        You have <span id="chars">255</span> / 255 characters remaining 
+        You have <span id="aspiration_aspiration_chars" class="charcount_chars">255</span> / 255 characters remaining 
   = add_event_button
  
 

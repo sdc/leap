@@ -38,23 +38,72 @@ window.onload = function() {
 /**
  * Ruby already truncates aspirations > 255 characters
  * 
- * This script prevents users from entering more than 255 in the first place 
- * and counts down from 255 to 0
+ * This script prevents users from entering more than data-maxchars in the first place 
+ * and counts down from max to 0
  *
  */
-$(function(){
-	$(window).load(function() {
-		var max = 255;
-		$('#aspiration_aspiration').on('keypress keyup', function(e){
-			var chars_remaining = 255 - $('#aspiration_aspiration').val().length;
-			if (chars_remaining >= 0) {
-				$('#chars').html(chars_remaining);
-			}           
-			if (this.value.length == max) {
-					e.preventDefault();
-			} else if (this.value.length > max) {
-					this.value = this.value.substring(0, max);
-			}
-		});
-	});
-});
+// $(function(){
+//     $(window).load(function() {
+//         $( ".charcount" ).each(function( index ) {
+
+//             $(this).on('keypress keyup', function(e){
+//                 var max = $(this).data('maxchars');
+//                 var id = $(this).attr('id');
+
+//                 var chars_remaining = max - $(this).val().length;
+//                 if (chars_remaining >= 0) {
+//                     $(".charcount").next('span').find('span.charcount_chars#' + id + '_chars').html(chars_remaining);
+//                 }           
+//                 if (this.value.length == max) {
+//                         e.preventDefault();
+//                 } else if (this.value.length > max) {
+//                         this.value = this.value.substring(0, max);
+//                 }
+//             });
+
+//         });
+//     });
+// });
+
+/**
+ * Ruby already truncates aspirations > 255 characters
+ * 
+ * This script prevents users from entering more than data-maxchars in the first place 
+ * and counts down from max to 0
+ *
+ */
+var charcount_keypress_assigned = [];
+
+var onload_setup_charcount = function() {
+    $( ".charcount" ).each(function( index ) {
+        var id = $(this).attr('id');
+
+        if ( charcount_keypress_assigned.indexOf( id ) < 0 )
+            {
+            charcount_keypress_assigned.push(id);
+            $(this).on('keypress keyup', function(e){
+                var max = $(this).data('maxchars');
+                var id = $(this).attr('id');
+
+                var chars_remaining = max - $(this).val().length;
+                if (chars_remaining >= 0) {
+                    $(".charcount").next('span').find('span.charcount_chars#' + id + '_chars').html(chars_remaining);
+                }           
+                if (this.value.length == max) {
+                        e.preventDefault();
+                } else if (this.value.length > max) {
+                        this.value = this.value.substring(0, max);
+                }
+            });
+        }
+
+    });
+};
+
+// belt and braces onload...
+$(document).ready( onload_setup_charcount );
+$(document).on('page:load', onload_setup_charcount);
+$(document).on("page:load ready", onload_setup_charcount);
+$(function() { onload_setup_charcount(); } );
+$(window).load( onload_setup_charcount );
+window.onload = onload_setup_charcount;
