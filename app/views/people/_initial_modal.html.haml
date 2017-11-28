@@ -48,12 +48,14 @@
                   = text_field(nil, nil, :disabled => true, :class => "form-control", :name => 'subject_grade')
         .modal-footer.no-padding
           #submitted
-            .pull-left.review-author
-              %em{:id => "initial-review-by"}
+            .pull-left.review-author.col-md-6
+              %em.pull-left{:id => "initial-review-by"}
             - if @user.staff?
-              .pull-right.action-button
+              .edit_countdown_timer.col-md-4
+                %small#initial_edit_countdown
+              .pull-right.action-button.col-md-2
                 %button#edit-initial-review{:class => "btn btn-primary", :type => "button"} Edit
                 %button#save-initial-review{:class => "btn btn-success", :type => "button"} Save
-          #initial-review-submission
+          #initial-review-submission.no-padding
             - if @user.staff
               %input{:class => "full-button btn btn-primary pull-right", :name => "commit", :type => "submit", :value => "Submit review"}

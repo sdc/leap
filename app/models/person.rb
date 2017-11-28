@@ -159,7 +159,14 @@ class Person < ActiveRecord::Base
   end
 
   def superuser?
-    ["owenwiddicombe"].include? Person.user.username
+    ["owenwiddicombe","jameskamradcliffe"].include? Person.user.username
+  end
+
+  def can_edit_grade?
+    return true if Person.user.superuser?
+    return true if Person.user.admin? && Settings.par_window_type.present?
+    return true if Person.user.staff? && Settings.par_window_type.present?
+    return false
   end
 
   def mis_code

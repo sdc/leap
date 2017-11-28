@@ -24,7 +24,7 @@ class ReviewsController < ApplicationController
         review = getReview(getKnownReviewType, params[:id])
         render :json => review.as_json(
           :include => [:progress, :person => {:methods => :name, :except => [:photo]}],
-          :methods => [:pretty_created_at, :pretty_body]
+          :methods => [:pretty_created_at, :pretty_body, :is_editable, :countdown_enddate]
         )
       end
     end
@@ -36,13 +36,19 @@ class ReviewsController < ApplicationController
         review = getReview(getKnownReviewType, params[:id])
         review.body = params[:body]
 
-        if Person.user.superuser?
+        if Person.user.can_edit_grade?
           review.working_at = params[:working_at] if params.has_key?(:working_at)
           review.target_grade = params[:target_grade] if params.has_key?(:target_grade)
-          # if superuser changing existing record, keep original author and date time
+        end
+        if Person.user.superuser?
+          # if superuser changing existing record, keep original author
+          review.created_at = Time.now # if superuser, change entry date time
+        elsif Person.user.admin?
+          review.created_at = Time.now # if not superuser but is admin, change entry date time
+          review.created_by_id = Person.user.id # if not superuser but is admin, change author
         else
-          review.created_at = Time.now # if not superuser, change entry date time
-          review.created_by_id = Person.user.id # if not superuser, change author
+          review.created_at = Time.now # if not superuser or admin, change entry date time
+          review.created_by_id = Person.user.id # if not superuser or admin, change author
         end
         review.level = params[:level] if params.has_key?(:level)
 

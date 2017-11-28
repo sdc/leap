@@ -329,6 +329,10 @@
       = text_field_tag "par_active", Settings.par_active
       .help-text List of the active PAR reviews.  i.e. I,1,2,3,4,5
   .control-group
+    %label.control-label Restrict by PARs Active
+    .controls
+      = select_tag "par_restrict_active", options_for_select(["off","on"], Settings.par_restrict_active)
+  .control-group
     %label.control-label PAR Date Ranges
     .controls
       = text_field_tag "par_date_ranges", Settings.par_date_ranges, :style => "width: 100%"
@@ -337,6 +341,22 @@
         %pre
           :preserve     
             I;02/10/2017;13/10/2017|1;30/10/2017;17/11/2017|2;01/01/2018;26/01/2018|3;19/02/2018;09/03/2018|4;16/04/2018;04/05/2018|5;04/06/2018;29/06/2018
+  .control-group
+    %label.control-label Restrict by Date Ranges
+    .controls
+      = text_field_tag "par_restrict_date_ranges", Settings.par_restrict_date_ranges
+      .help-text Restrict PAR by Date Ranges if PAR is listed here.  i.e. I,1,2,3,4,5
+  .control-group
+    %label.control-label Edit Window
+    .controls
+      = number_field_tag "par_edit_window", Settings.par_edit_window, :in => 0..31.days, :class => "span1 inline", :style => "width: 100px"
+      .help-text Duration where review can be edited (in seconds) after last update time.  1 day is: 86400
+  .control-group
+    %label.control-label Restrict Edit By
+    .controls
+      = select_tag "par_window_type", options_for_select([nil,"Date Range","Edit Window"],Settings.par_window_type)
+      .help-text Restrict the period PARs are allowed to be edited by either PAR Date Range or by the Edit Window setting.
+ 
 
   %h2 Simple Poll
   .well
@@ -519,7 +539,7 @@
                                  "one_to_one_prompts","attendance_type_column","plp_overview","num_progress_reviews","induction_questions","induction_question_badges",
                                  "elaaf_link_enabled","elaaf_link_icon","elaaf_link_name","elaaf_base_url","elaaf_student_number_place_holder",
                                  "continuing_learning_rev_enabled","continuing_learning_colours","continuing_learning_icons","continuing_learning_default_colour","continuing_learning_default_icon",
-                                 "network_ip_ranges","timetable_registers_threshold","par_active","plp_tabs","par_date_ranges"]
+                                 "network_ip_ranges","timetable_registers_threshold","par_active","plp_tabs","par_date_ranges","par_edit_window","par_window_type","par_restrict_active","par_restrict_date_ranges"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

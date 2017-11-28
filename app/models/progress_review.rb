@@ -77,14 +77,45 @@ class ProgressReview < Eventable
     return self[:body].empty? ? 'No comments' : self[:body]
   end
 
+  def countdown_enddate
+    enddate = self.updated_at + Settings.par_edit_window.to_i if Settings.par_window_type == "Edit Window"
+    enddate = DateTime.strptime( ProgressReview::par_date_range( self.number )[:to] + ' 23:59:59', '%d/%m/%Y %T' ) if Settings.par_window_type == "Date Range" && ProgressReview::par_date_range( self.number ).present? && ProgressReview::par_date_range( self.number )[:to].present?
+    return enddate.strftime('%b, %d, %Y, %H:%M') if enddate.present?
+    return nil
+  end
+
+  def is_editable
+    return true if ( Person.user.superuser? or Person.user.admin? )
+    # return false if ( Person.user.id != self.created_by_id && Settings.par_window_type.present? )
+    return ( (Time.now - Settings.par_edit_window.to_i) < self.updated_at ) if Settings.par_window_type == "Edit Window"
+    return ( ProgressReview::par_date_range_active( self.number ) ) if Settings.par_window_type == "Date Range"
+    return true
+  end
+
   private
 
-  def self.par_is_enabled?( revno )
-    return false if !Settings.par_active.split(',').reject(&:empty?).include?(revno.to_s)
+  def self.par_is_active?( revno )
+    return false if ( Settings.par_restrict_active == 'on' && !Settings.par_active.split(',').reject(&:empty?).include?(revno.to_s) )
+    return true
+  end
 
+  def self.par_is_enabled?( revno )
+    return true if Person.user.superuser?
+    return false if !Person.user.staff?
+    return false if !par_is_active?( revno )
+    par_date_range_active( revno )
+  end
+
+  def self.par_date_range_active( revno )
+    return true if !Settings.par_restrict_date_ranges.split(',').reject(&:empty?).include?(revno.to_s)
+    par_date_range(revno).present?
+  end
+
+  def self.par_date_range( revno )
     par_dates = []
-    Settings.par_date_ranges.split("|").each{|x| b=x.split(';'); par_dates << { :rev => b[0], :from => b[1], :to => b[2] } if b[0] == revno.to_s }
-    par_dates.select{ |rv| rv[:rev] == revno.to_s && ( ( rv[:from].present? && Date.strptime(rv[:from], '%d/%m/%Y') > Date.today ) || ( rv[:to].present? && Date.strptime(rv[:to], '%d/%m/%Y') < Date.today ) ) }.blank?
+    Settings.par_date_ranges.split("|").each{|x| b=x.split(';'); par_dates << { :rev => b[0], :from => b[1], :to => b[2] } if b[0] == revno.to_s && ( b[1].blank? || Date.strptime(b[1], '%d/%m/%Y') <= Date.today ) && ( b[2].blank? || Date.strptime(b[2], '%d/%m/%Y') >= Date.today ) }
+    par_dates.sort_by! { | d | [d[:from], d[:to]] }
+    par_dates.last if par_dates.last.present?
   end
 
 end

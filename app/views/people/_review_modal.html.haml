@@ -39,10 +39,12 @@
                   %option{:value => 'red', :class => 'red', :selected => (:level == "red")}= "RED (Two grades below target)"
         .modal-footer.no-padding
           #submitted
-            .pull-left.review-author
-              %em{:id => "review-by"}
+            .pull-left.review-author.col-md-6
+              %em.pull-left{:id => "review-by"}
             - if @user.staff?
-              .pull-right.action-button
+              .edit_countdown_timer.col-md-4
+                %small#review_edit_countdown
+              .pull-right.action-button.col-md-2
                 %button#edit-review{:class => "btn btn-primary", :type => "button"} Edit
                 %button#save-review{:class => "btn btn-success", :type => "button"} Save
           #review-submit.submit-review
@@ -50,4 +52,4 @@
               %input{:class => "btn btn-primary pull-right full-button", :name => "commit", :type => "submit", :value => "Submit review"}
 %script{ :type => "text/javascript" }
   :plain
-    var Person_user_superuser = "#{Person.user.superuser?}";
+    var can_edit_grade = "#{Person.user.can_edit_grade?}";
