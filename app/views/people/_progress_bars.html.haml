@@ -5,11 +5,16 @@
   - @progress_bar.each do |progress|
     .course-progress
       .row.row-eq-height
-        .col-md-6.col-xs-12.top-section{:class => '' + (progress.initial.present? ? ' present' : '') + ( ( progress.initial.present? || ( !progress.initial.present? && ( InitialReview::par_is_enabled? ) ) ) ? ' initial-review clickable' : ''  ), "data-id" => (h(progress.initial.id) if progress.initial.present?), "data-progress-id" => h(progress.id), :title => ( @user.staff? ? h(progress.course_code.upcase) : '' ), "data-editable" => (progress.initial.present? ? "#{progress.initial.try(:is_editable)}" || 'false' : 'false')}
-          %h4{:style => "margin-bottom: 5px"} Target Grade for
-          %h4 #{ h(progress.course_title.upcase) }
-          - if progress.initial.present?
-            %h3 #{ h(progress.initial.target_grade.to_s) }
+
+        - if progress.show_par_reviews
+          .col-md-6.col-xs-12.top-section{:class => '' + (progress.initial.present? ? ' present' : '') + ( ( progress.initial.present? || ( !progress.initial.present? && ( InitialReview::par_is_enabled? ) ) ) ? ' initial-review clickable' : ''  ), "data-id" => (h(progress.initial.id) if progress.initial.present?), "data-progress-id" => h(progress.id), :title => ( @user.staff? ? h(progress.course_code.upcase) : '' ), "data-editable" => (progress.initial.present? ? "#{progress.initial.try(:is_editable)}" || 'false' : 'false')}
+            %h4{:style => "margin-bottom: 5px"} Target Grade for
+            %h4 #{ h(progress.course_title.upcase) }
+            - if progress.initial.present? && progress.show_par_reviews
+              %h3 #{ h(progress.initial.target_grade.to_s) }
+        - else
+          .col-md-6.col-xs-12.top-section{:class => '', :title => ( @user.staff? ? h(progress.course_code.upcase) : '' )}
+            %h4 #{ h(progress.course_title.upcase) }
 
         .col-md-6.col-xs-12.top-section.attendance-block.clickable{:style => ("background: ##{h(progress.attendance.bg)}" unless progress.attendance.nil?), "data-toggle" => 'modal', 'data-target' => ("#modal_" + h(progress.attendance.id.to_s) unless progress.attendance.nil?)}
           %h4 Attendance
@@ -18,28 +23,29 @@
           - else
             %h3 #{ h(progress.attendance.att_year) }%
 
-      .row
-        .col-md-2.hidden-xs.col-sm-2.review-section{:class => '' + (progress.initial.present? ? ' present' : '') + ( ( progress.initial.present? || ( !progress.initial.present? && ( InitialReview::par_is_enabled? ) ) ) ? ' initial-review clickable' : '' ), "data-id" => (h(progress.initial.id) if progress.initial.present?), "data-progress-id" => h(progress.id), "data-editable" => (progress.initial.present? ? "#{progress.initial.try(:is_editable)}" || 'false' : 'false')}
-          %h5 Initial Review
-          - if progress.initial.present?
-            %h4 Completed
-          - else
-            Incomplete
+      - if progress.show_par_reviews
+        .row
+          .col-md-2.hidden-xs.col-sm-2.review-section{:class => '' + (progress.initial.present? ? ' present' : '') + ( ( progress.initial.present? || ( !progress.initial.present? && ( InitialReview::par_is_enabled? ) ) ) ? ' initial-review clickable' : '' ), "data-id" => (h(progress.initial.id) if progress.initial.present?), "data-progress-id" => h(progress.id), "data-editable" => (progress.initial.present? ? "#{progress.initial.try(:is_editable)}" || 'false' : 'false')}
+            %h5 Initial Review
+            - if progress.initial.present?
+              %h4 Completed
+            - else
+              Incomplete
 
-        - (1..npr).each do |i|
-          - review = progress.reviews[i]; # readability
-          - if (review.present? && review.number == i)
-            .col-md-2.hidden-xs.col-sm-2.review-section.has_tooltip.progress-review.clickable{:class => h(review.level), :title => h(review.ragp_desc), "data-placement" => "right", :style => 'color: black', "data-id" => h(review.id), "data-att" => (h(progress.attendance.att_year) if !progress.attendance.nil?), "data-number" => i, "data-editable" => "#{review.try(:is_editable)}" || 'false'}
-              - if i == npr
-                %h5 Achieved
-              - else
-                %h5 Working at
-              %h4 #{h(review.working_at)}
-              %h6.pull-bottom.pull-right PAR #{i}          
-          - else
-            .col-md-2.hidden-xs.col-sm-2.review-section{:class => ("progress-review clickable" if @user.staff? && !progress.attendance.nil? && ( ProgressReview::par_is_enabled?(i) ) ), "data-progress-id" => h(progress.id), "data-att" => (h(progress.attendance.att_year) if !progress.attendance.nil?), "data-number" => i, "data-editable" => 'false'}
-              %h5 Review
-              %h6.pull-bottom.pull-right PAR #{i}
+          - (1..npr).each do |i|
+            - review = progress.reviews[i]; # readability
+            - if (review.present? && review.number == i)
+              .col-md-2.hidden-xs.col-sm-2.review-section.has_tooltip.progress-review.clickable{:class => h(review.level), :title => h(review.ragp_desc), "data-placement" => "right", :style => 'color: black', "data-id" => h(review.id), "data-att" => (h(progress.attendance.att_year) if !progress.attendance.nil?), "data-number" => i, "data-editable" => "#{review.try(:is_editable)}" || 'false'}
+                - if i == npr
+                  %h5 Achieved
+                - else
+                  %h5 Working at
+                %h4 #{h(review.working_at)}
+                %h6.pull-bottom.pull-right PAR #{i}
+            - else
+              .col-md-2.hidden-xs.col-sm-2.review-section{:class => ("progress-review clickable" if @user.staff? && !progress.attendance.nil? && ( ProgressReview::par_is_enabled?(i) ) ), "data-progress-id" => h(progress.id), "data-att" => (h(progress.attendance.att_year) if !progress.attendance.nil?), "data-number" => i, "data-editable" => 'false'}
+                %h5 Review
+                %h6.pull-bottom.pull-right PAR #{i}
     %hr
     - if !progress.attendance.nil?
       .modal.fade{:id => "modal_" + h(progress.attendance.id.to_s), "tabindex" => '-1', :role => 'dialog'}

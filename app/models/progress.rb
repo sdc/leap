@@ -8,6 +8,8 @@ class Progress < ActiveRecord::Base
   has_many :initial_reviews
   belongs_to :tutor, :class_name => "Person", :foreign_key => "course_tutor_id"
 
+  scope :only_par_type, -> (type) { where par_type: type }
+
   def bksb_english_da
     self[:bksb_english_da] || 'N/A'
   end
@@ -34,6 +36,10 @@ class Progress < ActiveRecord::Base
 
   def subject_grade
     self[:subject_grade] || 'N/A'
+  end
+
+  def show_par_reviews
+    ["FULLTIME",nil].include? self[:par_type] || nil
   end
 
 end
