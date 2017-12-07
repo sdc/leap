@@ -39,7 +39,7 @@ class Progress < ActiveRecord::Base
   end
 
   def show_par_reviews
-    ["FULLTIME",nil].include? self[:par_type] || nil
+    ["FE",nil].include? self[:par_type] || nil
   end
 
 end
