@@ -204,6 +204,18 @@ function ajaxRequest(url, type, data, callback)
 
 function displayProgressForm(progress, attendance, reviewNumber)
 {
+    $("#par-guidance").show();
+    if ( reviewNumber == 1) {
+        $("#par-guidance-previous").hide();
+    } else {
+        $("#par-guidance-previous").show();
+    }
+    if ( reviewNumber == 5) {
+        $("#par-guidance-next").hide();
+    } else {
+        $("#par-guidance-next").show();
+    }
+
     enableInputs("#new_progress_review");
     setValueAndReadOnly("[name='progress_review[attendance]']", attendance);
     setValueAndReadOnly("[name='progress_review[number]']", reviewNumber);
@@ -223,6 +235,8 @@ function displayProgressForm(progress, attendance, reviewNumber)
 
 function displayProgressReview(review, editable)
 {
+    $("#par-guidance").hide();
+
     disableInputs("#new_progress_review");
     $("[name='progress_review[attendance]']").val(review.attendance);
     $("[name='progress_review[working_at]']").val(review.working_at);

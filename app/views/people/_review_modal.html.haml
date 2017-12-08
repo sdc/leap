@@ -24,6 +24,13 @@
               .input-group
                 .input-group-addon Attendance
                 = f.text_field :attendance, :readonly => true, :class => 'form-control', :disabled => (true unless @user.staff?)
+          - if @user.staff?
+            #par-guidance.guidance.row
+              %h2 Guidance:
+              %ul
+                %li Overall Learner/Tutor Comments
+                %li#par-guidance-previous Review improvement targets from previous PAR – have these been met? How has this been evidenced?
+                %li#par-guidance-next Improvement targets for next PAR (including any carried over from previous PAR)
           .form-group.row
             .col-md-12
               = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
