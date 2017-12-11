@@ -12,12 +12,13 @@
   %thead
     %tr
       %th{:colspan => 2}
-      %th.bl{:colspan => (npr+(cl_rev_enabled ? 1 : 0))}="#{@topic.name} (#{@topic.code})"
+      %th.bl{:colspan => (npr+1+(cl_rev_enabled ? 1 : 0))}="#{@topic.name} (#{@topic.code})"
       %th.text-right
         %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".#{ct}_hide"}
           %i.fa.fa-eye
     %tr
       %th.text-right.nowr{ :style => "width:1px" } Name
+      %th.text-center.bl{ :style => "width:1px", :title => "Attendance overall" } Att
       %th.text-center.bl{ :style => "width:1px", :title => "Attendance for course" } Att
       - (1..npr).each do |x|
         %th.text-center.visible-lg{:class => "#{ct}_hide" + (x==1 ? " bl" : ""), :title => "Progress and Attendance Review #{x}" }= x
@@ -32,7 +33,17 @@
             %b= link_to pc.name, pc.person, :target => "_blank"
           - else
             %b= pc.name
+
         - person_attendances = pc.person.attendances.where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", MISC::MiscDates.startdate_from_acyr(@topic.year), MISC::MiscDates.enddate_from_acyr(@topic.year) )
+        - person_attendance = {}
+        - person_attendance[pc.person.id.to_s => "overall"] = person_attendances.select { |x| x.course_type.to_s.downcase == "overall" }.last
+        - if person_attendance[pc.person.id.to_s => "overall"]
+          - title = "Attendance #{person_attendance[pc.person.id.to_s => "overall"].status(true)}"
+          %td.bl.text-right{:class => person_attendance[pc.person.id.to_s => "overall"].status(true), :style => "width:1px", :title => title}= "#{person_attendance[pc.person.id.to_s => 'overall'].try :att_year}%"
+        - else
+          %td.bl.text-center{ :style => "width:1px" }
+
+        -# - person_attendances = pc.person.attendances.where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", MISC::MiscDates.startdate_from_acyr(@topic.year), MISC::MiscDates.enddate_from_acyr(@topic.year) )
         - cem_type = pc.person.progresses.where(:course_code => ct, :course_type => ['core','english','maths'], :course_year => @topic.year ).last.try(:course_type) || "course"
         - person_attendance[pc.person.id.to_s => ct] = person_attendances.select { |x| ( cem_type == 'course' ? (x.enrol_course.to_s.downcase == ct) : (x.course_type.to_s.downcase == cem_type.downcase) ) }.last
         - if person_attendance[pc.person.id.to_s => ct]
