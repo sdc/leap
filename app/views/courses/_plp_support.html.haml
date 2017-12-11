@@ -13,7 +13,11 @@
         %th.text-center{:title => "Travel Pass / Parking Permit"} Travel
         %th.text-center{:title => "Free College Meals"} FCM
         %th.text-center{:title => "Vulnerable Learner: EHCP, High Needs, Care Leaver or Social Worker.<br>For further information contact the PI Team", :"data-html" => "true"} VL
-        %th.text-center{:title => "Positive Intervention"} PI
+        - if Settings.plp_pi_groups_breakdown == 'on'
+          - Settings.plp_pi_groups.split(',').each do |pi|
+            %th.text-center{:title => Intervention::intervention_group_title(pi)}= pi
+        - else
+          %th.text-center{:title => "Positive Intervention"} PI
         %th.text-center{:title => "Curriculum Support"} Support
     %tbody
       %tr
@@ -60,12 +64,21 @@
             - if sups.find{|sp| sp.domain == "EBS" && (["EHC Plan","HE Care Leaver","Special Care Guidance","Social Worker"].include? sp.name) }.present?
               -# %i.fa.fa-check{:"data-html" => "true", :title => sups.select{|sp| sp.domain == "EBS" && (["EHC Plan","HE Care Leaver","Special Care Guidance","Social Worker"].include? sp.name) }.map{|s| s.name + ": " + (s.description || s.value)}.join('<br>') }
               %i.fa.fa-check{:title => "VL"}
-          %td.text-center
-            - ints = pc.person.events.where(:eventable_type => "Intervention",:transition => :create).this_year.count
-            - if ints != 0
-              = link_to(person_view_url(pc.person,"intervention")) do
-                .label.label-danger{:title => "PI"}= ints
-                -# %i.fa.fa-check{:title => ints.to_s}
+          - if Settings.plp_pi_groups_breakdown == 'on'
+            - Settings.plp_pi_groups.split(',').each do |pi|
+              %td.text-center
+                - ints = pc.person.interventions.this_year.where( :pi_type => Intervention::intervention_group_types( pi ) ).count
+                - if ints != 0
+                  = link_to(person_view_url(pc.person,"intervention")) do
+                    .label.label-danger{:title => pi }= ints
+                    -# %i.fa.fa-check{:title => ints.to_s}
+          - else
+            %td.text-center
+              - ints = pc.person.events.where(:eventable_type => "Intervention",:transition => :create).this_year.count
+              - if ints != 0
+                = link_to(person_view_url(pc.person,"intervention")) do
+                  .label.label-danger{:title => "PI"}= ints
+                  -# %i.fa.fa-check{:title => ints.to_s}
           %td.text-center
             - ints = pc.person.events.where(:eventable_type => ["SupportHistory","SupportRequest","SupportStrategy"],:transition => :create).this_year.count
             - if ints != 0

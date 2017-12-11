@@ -33,6 +33,7 @@ Settings.defaults[:current_simple_poll] = ""
 Settings.defaults[:notified_events] = "ContactLog;Intervention;SupportPlan;ProgressReview;InitialReview"
 Settings.defaults[:work_package_types] = ""
 Settings.defaults[:news_modal] = "off"
+Settings.defaults[:intervention_groups]           = "PII:Positive Intervention Pastoral:Pastoral;Advice & Guidance;Alleged Bullying|PIB:Positive Intervention Behaviour:Amber Alert Disciplinary;Amber Alert Behaviour;Stage 1 Behaviour Disc;Stage 2 Behaviour Disc;Stage 3 Behaviour Disc|PIA:Positive Intervention Attendance:Amber Alert Attendance;Stage 1 Attendance Disc;Stage 2 Attendance Disc;Stage 3 Attendance Disc|PIP:Positive Intervention Progress:Stage 1 Progress Disc;Stage 2 Progress Disc;Stage 3 Progress Disc"
 
 # BKSB Import Settings
 Settings.defaults[:bksb_url] = ""
@@ -117,8 +118,10 @@ Settings.defaults[:ws_token] = ""
 Settings.defaults[:ebs_username_field] = "network_userid"
 
 #PLP Overview
-Settings.defaults[:plp_overview] = "old"
-Settings.defaults[:plp_tabs] = "photos,overview,reviews,support,checklist,badges,achievement"
+Settings.defaults[:plp_overview] 				= "old"
+Settings.defaults[:plp_tabs] 					= "photos,overview,reviews,support,checklist,badges,achievement"
+Settings.defaults[:plp_pi_groups] 				= "PIA,PIB,PII,PIP"
+Settings.defaults[:plp_pi_groups_breakdown] 	= "off"
 
 #Progress Reviews settings
 Settings.defaults[:num_progress_reviews] = 5

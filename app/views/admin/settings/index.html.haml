@@ -413,6 +413,16 @@
     .controls
       = text_field_tag "plp_tabs", Settings.plp_tabs
       .help-text List active tabs.  i.e. photos,overview,reviews,support,checklist,badges,achievement
+  .control-group
+    %label.control-label PI Groups
+    .controls
+      = text_field_tag "plp_pi_groups", Settings.plp_pi_groups
+      .help-text PI group types to show on PLP Support tab.  i.e. PIA,PIB,PII,PIP
+  .control-group
+    %label.control-label PI Group breakdown
+    .controls
+      = select_tag "plp_pi_groups_breakdown", options_for_select(["off","on"], Settings.plp_pi_groups_breakdown)
+      .help-text Enable/disable seperate PI totals on PLP Support tab for each of the groups named above.
 
   %h2 Induction
   .well
@@ -521,6 +531,25 @@
       .help-text
         Suggested default: 01/08
 
+  %h3 Positive Intervention
+  .control-group
+    %label.control-label Intervention Types
+    .controls
+      = text_field_tag "intervention_types", Settings.intervention_types, :style => "width: 100%"
+      .help-text
+        Positive Intervention lookups.  Format: type,optional_guidance_text:category1,category2,...  Multiple groups can be seperated by ;  Example:
+        %pre
+          :preserve     
+            Pastoral:Personal Issues;Advice & Guidance:Careers & employability Advice,possible course transfer or withdrawal,Progression Guidance;Alleged Bullying:Investigation;Amber Alert Behaviour,Personal Tutor to process – select 'No' under refer.:Inappropriate work production,Academic related Conduct,Theft,Bullying,Violent or Threatening,Substance misuse,Classroom conduct & Behaviour,Damage to College Property,Other;Stage 1 Behaviour Disc,If you would like to refer to the Positive Intervention Team please select 'Yes' under 'Refer.' Learners can only be referred for one Stage 1 Behaviour Disciplinary per year.:Continuation from AAD,Inappropriate work production,Academic related Conduct,Theft,Bullying,Violent or Threatening,Substance misuse,Classroom conduct & Behaviour,Damage to College Property,Other;Stage 2 Behaviour Disc,Email your section head to action. Learners can only be referred for one Stage 2 Behaviour Disciplinary per year.:Continuation from Stage 1, Inappropriate work production,Academic related Conduct,Theft,Bullying,Violent or Threatening,Substance misuse,Classroom conduct & Behaviour,Damage to College Property,Other;Stage 3 Behaviour Disc,Email your section head and Assistant Principal to action – select 'Yes' under refer. Learners can only be referred for one Stage 3 Behaviour Disciplinary per year.:Continuation from Stage 2,Inappropriate work production,Academic related Conduct,Theft,Bullying,Violent or Threatening,Substance misuse,Classroom conduct & Behaviour,Damage to College Property,Other;Amber Alert Attendance,Personal Tutor to process – select 'No' under refer.:Erratic Attendance,Punctuality,Decreasing Attendance;Stage 1 Attendance Disc,Personal Tutor to process – select 'No' under refer.  Learners can only be referred for one Stage 1 Attendance Disciplinary per year.:Continuation from AAA,Erratic Attendance,Punctuality,Decreasing Attendance,Core Programme,Maths,English;Stage 2 Attendance Disc,Email section Head to action – select 'No' under refer. Learners can only be referred for one Stage 2 Attendance Disciplinary per year.:Continuation from Stage 1,Erratic Attendance,Punctuality,Decreasing Attendance,Core Programme,Maths,English;Stage 3 Attendance Disc,Email your section head and Assistant Principal to action. Learners can only be referred for one Stage 3 Attendance Disciplinary per year.:Continuation from Stage 2,Erratic Attendance,Punctuality,Decreasing Attendance,Core Programme,Maths,English;Stage 1 Progress Disc,Stage 1 Red PAR rating:Core Programme,Maths,English,More than one;Stage 2 Progress Disc,Stage 2 Red PAR rating:Core Programme,Maths,English,More than one;Stage 3 Progress Disc,Stage 3 Red PAR rating:Core Programme,Maths,English,More than one
+  .control-group
+    %label.control-label Intervention Groups
+    .controls
+      = text_field_tag "intervention_groups", Settings.intervention_groups, :style => "width: 100%"
+      .help-text
+        Positive Intervention Groups.  Format: Group name:Group title:entry1;entry2;...  Multiple groups can be seperated by |  Example:
+        %pre
+          :preserve     
+            PII:Positive Intervention Pastoral:Pastoral;Advice & Guidance;Alleged Bullying|PIB:Positive Intervention Behaviour:Amber Alert Disciplinary;Amber Alert Behaviour;Stage 1 Behaviour Disc;Stage 2 Behaviour Disc;Stage 3 Behaviour Disc|PIA:Positive Intervention Attendance:Amber Alert Attendance;Stage 1 Attendance Disc;Stage 2 Attendance Disc;Stage 3 Attendance Disc|PIP:Positive Intervention Progress:Stage 1 Progress Disc;Stage 2 Progress Disc;Stage 3 Progress Disc
 
   %h1 Old Settings!
   .old-settings
@@ -539,7 +568,8 @@
                                  "one_to_one_prompts","attendance_type_column","plp_overview","num_progress_reviews","induction_questions","induction_question_badges",
                                  "elaaf_link_enabled","elaaf_link_icon","elaaf_link_name","elaaf_base_url","elaaf_student_number_place_holder",
                                  "continuing_learning_rev_enabled","continuing_learning_colours","continuing_learning_icons","continuing_learning_default_colour","continuing_learning_default_icon",
-                                 "network_ip_ranges","timetable_registers_threshold","par_active","plp_tabs","par_date_ranges","par_edit_window","par_window_type","par_restrict_active","par_restrict_date_ranges"]
+                                 "network_ip_ranges","timetable_registers_threshold","par_active","plp_tabs","par_date_ranges","par_edit_window","par_window_type","par_restrict_active","par_restrict_date_ranges",
+                                 "intervention_types","intervention_groups","plp_pi_groups","plp_pi_groups_breakdown"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

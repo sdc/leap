@@ -1,5 +1,7 @@
 class Intervention < Eventable
 
+  scope :this_year, lambda {where("updated_at > ?", MISC::MiscDates.start_of_acyr )}
+
   attr_accessible :disc_text, :incident_date, :pi_type, :referral, :referral_category, :referral_text, :workshops
 
   after_create {|i| i.events.create!(:event_date => created_at, :transition => :create)}
@@ -12,7 +14,7 @@ class Intervention < Eventable
 
   def self.intervention_types
     its = {}
-    Settings.intervention_types.split(";").each{|x| b=x.split(':'); its[b.first.split(",").first] = b.last.split(",")}
+    Settings.intervention_types.split(";").each{|x| b=x.split(':'); its[b.first.split(",").first] = b[1].split(",")}
     return its
   end
 
@@ -50,11 +52,31 @@ class Intervention < Eventable
   end
 
   def status
-    disc_text ? :incomplete : :current
+    disc_text ? :complete : :incomplete
   end
 
   def body
-    disc_text if status == :incomplete
+    disc_text if status == :complete
+  end
+
+  private
+
+  def self.intervention_group_types(group)
+    its = []
+    Settings.intervention_groups.split("|").each{|x| b=x.split(':'); its = b[2].tr(" ","_").split(";") if b[0] == group}
+    return its
+  end
+
+  def self.intervention_group_title(group)
+    its = []
+    Settings.intervention_groups.split("|").each{|x| b=x.split(':'); its = b[1] if b[0] == group}
+    return its
+  end
+
+  def self.intervention_groups
+    its = {}
+    Settings.intervention_groups.split("|").each{|x| b=x.split(':'); b[2].split(";").each{|t| its[t] = b[0] } }
+    return its
   end
 
 end
