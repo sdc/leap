@@ -1,6 +1,6 @@
 class Intervention < Eventable
 
-  scope :this_year, lambda {where("updated_at > ?", MISC::MiscDates.start_of_acyr )}
+  scope :this_year, lambda {where("interventions.updated_at > ?", MISC::MiscDates.start_of_acyr )}
 
   attr_accessible :disc_text, :incident_date, :pi_type, :referral, :referral_category, :referral_text, :workshops
 

@@ -68,10 +68,14 @@
             - Settings.plp_pi_groups.split(',').each do |pi|
               %td.text-center
                 - ints = pc.person.interventions.this_year.where( :pi_type => Intervention::intervention_group_types( pi ) ).count
+                - complete = pc.person.interventions.this_year.joins(:events).where(:interventions => {:pi_type => Intervention::intervention_group_types( pi )}, :events => {:transition => "complete"}).count
                 - if ints != 0
                   = link_to(person_view_url(pc.person,"intervention")) do
-                    .label.label-danger{:title => pi }= ints
-                    -# %i.fa.fa-check{:title => ints.to_s}
+                    - if ints == complete
+                      .label.label-danger{:title => pi, :style => "background-color: green" }= ints
+                      -# %i.fa.fa-check{:title => ints.to_s}
+                    - else
+                      .label.label-danger{:title => pi}= ints
           - else
             %td.text-center
               - ints = pc.person.events.where(:eventable_type => "Intervention",:transition => :create).this_year.count
