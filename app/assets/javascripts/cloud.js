@@ -141,6 +141,7 @@ function progressReviewRequest(request, id, editable)
 {
     var attendance = $(request).data('att');
     var number = $(request).data('number');
+    var max_number = $(request).data('max-number');
 
     if (!attendance) {
         throw new MissingAttendanceDataException();
@@ -152,7 +153,7 @@ function progressReviewRequest(request, id, editable)
 
     reviewRequest('progress', $(request), function(data) {
         if (!id) {
-            return displayProgressForm(data.progress, attendance, number);
+            return displayProgressForm(data.progress, attendance, number, max_number);
         }
         displayProgressReview(data.progress_review, editable );
     })
@@ -202,7 +203,7 @@ function ajaxRequest(url, type, data, callback)
     });
 }
 
-function displayProgressForm(progress, attendance, reviewNumber)
+function displayProgressForm(progress, attendance, reviewNumber, maxNumber)
 {
     $("#par-guidance").show();
     if ( reviewNumber == 1) {
@@ -210,7 +211,7 @@ function displayProgressForm(progress, attendance, reviewNumber)
     } else {
         $("#par-guidance-previous").show();
     }
-    if ( reviewNumber == 5) {
+    if ( reviewNumber == maxNumber) {
         $("#par-guidance-next").hide();
     } else {
         $("#par-guidance-next").show();
