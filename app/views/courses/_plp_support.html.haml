@@ -4,7 +4,8 @@
   %table.table.table-hover.table-condensed.table-responsive
     %thead
       %tr
-        %td &nbsp;
+        %th{:colspan => 11}
+        %th.text-center{:colspan => 3, :class => "he-support-fields"}="HE Only"
       %tr
         %th.text-right.nowr{ :style => "width:1px" } Name
         %th.text-center.bl{ :title => "Attendance overall"} Att
@@ -19,6 +20,9 @@
         - else
           %th.text-center{:title => "Positive Intervention"} PI
         %th.text-center{:title => "Curriculum Support"} Support
+        %th.text-center{:title => "Polar 3", :class => "he-support-fields"} Polar
+        %th.text-center{:title => "First in Family", :class => "he-support-fields"} FiF
+        %th.text-center{:title => "Disability Allowance", :class => "he-support-fields"} DSA        
     %tbody
       %tr
       - @person_courses.each do |pc|
@@ -89,6 +93,21 @@
               = link_to(person_view_url(pc.person,"support")) do
                 -# .label.label-danger= ints
                 %i.fa.fa-check{:title => ints.to_s}
+          - plp = pc.person.support_plps.where(:active => true)
+          %td.text-center{:class => "he-support-fields"}
+            - p3 = plp.where(:name => "POLAR3 CODE").first
+            - unless p3.nil?  
+              %span{:title => "Polar 3"}= p3.value          
+          %td.text-center{:class => "he-support-fields"}
+            - fif = plp.where(:name => "FIRST IN FAMILY").first
+            - unless fif.nil?
+              - if fif.value == 'Y'
+                %i.fa.fa-check{:title => "First in Family"}        
+          %td.text-center{:class => "he-support-fields"}
+            - hesa = plp.where(:name => "HESA DISABILITY ALLOWANCE").first
+            - unless hesa.nil?
+              - if hesa.value == 'Y'
+                %i.fa.fa-check{:title => "DSA"}                 
           -# - if @window
           -#   - if cr = pc.person.reviews.where(:window => @window).first
           -#     %td.bl.text-center{:class => cr.published ? "success"   : "warning",
