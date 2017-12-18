@@ -72,10 +72,33 @@ $(document).ready ->
         $('#more_events').attr('href',url).show()
       $('#more_events_loading').hide()
 
+
   # Trigger the "more events" if you scroll to the bottom of the page    
   $(window).scroll ->
     if ($(window).scrollTop() == $(document).height() - $(window).height())
       $('#more_events').click() unless $('#more_events').first().css('display') == "none"
+    $('.extend-button')
+      .on 'ajax:complete', (event,data) ->
+        e = $(event.target).closest('.event')
+        e.find('.event-spinner').show()
+        e.find('.extended').html data.responseText
+        e.find('.extended').slideDown()
+        e.find('.close-extend-button').show()
+        e.find('.event-spinner').hide()
+        e.find('.nav-tabs a:first').tab('show')
+        setupDatePickers e
+      .on 'click', (event) ->
+        e = $(event.target).closest('.event')
+        e.find('.event-spinner').show()
+        e.find('.extend-button').hide()   
+    close_event = (e) ->
+      e.find('.extended').slideUp()
+      e.find('.extend-button').show()
+      e.find('.close-extend-button').hide()
+    $('.close-extend-button').on 'click', (event) ->
+      e = $(event.target).closest('.event')
+      close_event(e)            
+
 
   $('.expand-mini').on 'click',  -> 
     ul = $(this).closest("ul")
