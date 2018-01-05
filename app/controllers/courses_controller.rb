@@ -20,6 +20,13 @@ class CoursesController < ApplicationController
   skip_before_filter  :set_topic
   before_filter       :course_set_topic
 
+  def populate_pi_types
+    pi_types = Intervention.intervention_types.keys.map{|k| [k,k.gsub(/\W+/,"_")] if ( @user.admin? && 1==1 ) || @topic.can_add_intervention_stage(k.gsub(/\W+/,"_")) }.compact
+    respond_to do |format|
+      format.json { render json: pi_types.to_json }
+    end
+  end   
+
   def show
     @person_courses = if @tutorgroup
       @topic.person_courses.includes(:person => "mdl_grade_tracks").where(:tutorgroup => @tutorgroup).sort_by{|pc| pc.person.name(:surname_first => true)}

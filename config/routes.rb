@@ -39,6 +39,7 @@ Ilp2::Application.routes.draw do
     resources :plps, :only => [:show]
   end
 
+  get 'populate_pi_types' => 'courses#populate_pi_types'
 
   root :to => "people#index"
 end

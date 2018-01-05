@@ -5,7 +5,11 @@
       .span1= image_tag "events/intervention_referral.png"
       .span2
         %h4 Intervention Type
-        = f.select :pi_type, Intervention.intervention_types.keys.map{|k| [k,k.gsub(/\W+/,"_")] if ( @user.admin? && 1==1 ) || @topic.can_add_intervention_stage(k.gsub(/\W+/,"_")) }.compact, {}, :class => "span2"
+        - if @topic.kind_of? Person
+          = f.select :pi_type, Intervention.intervention_types.keys.map{|k| [k,k.gsub(/\W+/,"_")] if ( @user.admin? && 1==1 ) || @topic.can_add_intervention_stage(k.gsub(/\W+/,"_")) }.compact, {}, :class => "span2"
+        - else
+          /= If @topic is Course (ie. no person is selected), show all pi types
+          = f.select :pi_type, Intervention.intervention_types.keys.map{|k| [k,k.gsub(/\W+/,"_")] if ( 1==1 ) || @topic.can_add_intervention_stage(k.gsub(/\W+/,"_")) }.compact, {}, :class => "span2"  
       .span3
         %h4 Category
         - Intervention.intervention_types.each do |cat|
@@ -35,3 +39,21 @@
     $('#alert_'  + $('#intervention_pi_type').val()).show()
     $("#intervention_referral_category_" + $('#intervention_pi_type').val()).removeAttr("disabled").show()
   $('#intervention_pi_type').change()
+
+  # The following AJAX call repopulates PI type dropdown when user is selected from course view
+  $(document).ready ->
+    $('#person_id').on 'change', ->
+      $.ajax
+        url: '/populate_pi_types'
+        type: 'GET'
+        data: person_id: $(this).val()
+        success: (data) ->
+          console.log data
+          $('#intervention_pi_type').empty()
+          i = 0
+          while i < data.length
+            $('#intervention_pi_type').append '<option value="' + data[i][1] + '">' + data[i][0] + '</option>'
+            i++
+          return
+      return
+    return
