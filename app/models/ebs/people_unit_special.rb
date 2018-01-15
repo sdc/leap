@@ -16,8 +16,8 @@
 
 class Ebs::PeopleUnitSpecial < Ebs::Model
 
-  set_table_name "people_units_special"
+  self.table_name= "people_units_special"
   belongs_to :people_unit, :foreign_key => "people_units_id"
-  set_primary_key :id
+  self.primary_key= :id
 
 end

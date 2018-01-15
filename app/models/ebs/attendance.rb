@@ -16,7 +16,7 @@
 
 class Ebs::Attendance < Ebs::Model
 
-  set_table_name Settings.attendance_table
+  self.table_name= Settings.attendance_table
 
   default_scope :order => Settings.attendance_date_column
 

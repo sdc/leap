@@ -184,7 +184,9 @@ module MisPerson
       next unless pu.uio_id
       course = Course.import(pu.uio_id,{:people => false})
       next unless course
-      pc= PersonCourse.find_or_create_by_person_id_and_course_id(id,course.id)
+      # pc= PersonCourse.find_or_create_by_person_id_and_course_id(id,course.id)
+      pc= PersonCourse.find_or_create_by(:person_id => id, :course_id => course.id)
+      # pc = PersonCourse.where(:person_id => id, :course_id => course.id).first_or_create
       if pu.unit_type == "A" 
         pc.update_attributes({:status => :not_started,
                               :start_date       => pu.unit_instance_occurrence.qual_start_date,
@@ -431,16 +433,19 @@ module MisCourse
           :year   => ec.calocc_occurrence_code,
           :mis_id => mis_id,
           :vague_title => ec.send(Settings.application_title_field)
+          # :vague_title => Settings.application_title_field
         )
         if @course.vague_title != (ec.send(Settings.application_title_field))
+        # if @course.vague_title != Settings.application_title_field
           @course.update_attribute("vague_title",ec.send(Settings.application_title_field)) # unless Settings.application_title_field.blank?
+          # @course.update_attribute("vague_title", Settings.application_title_field)
           @course.save if options[:save]
         end
         @course.import_people if options[:people]
         return @course
       else
-        return false
-      end
+         return false
+       end
     end
   end
 end

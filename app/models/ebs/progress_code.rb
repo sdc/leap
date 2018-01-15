@@ -16,6 +16,6 @@
 
 class Ebs::ProgressCode < Ebs::Model
 
-  set_primary_key "type_name"
+  self.primary_key= "type_name"
 
 end

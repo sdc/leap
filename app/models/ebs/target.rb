@@ -16,8 +16,8 @@
 
 class Ebs::Target < Ebs::Model
 
-  set_table_name "sdc_ilp_targets"
-  set_primary_key :id
+  self.table_name= "sdc_ilp_targets"
+  self.primary_key= :id
 
   belongs_to :person
 
