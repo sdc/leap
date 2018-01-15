@@ -18,10 +18,13 @@ class Course < ActiveRecord::Base
 
   include MisCourse
 
-  has_many :person_courses, :conditions => "enrolment_date is not null"
+  # has_many :person_courses, :conditions => "enrolment_date is not null"
+  has_many :person_courses
   has_many :people, :through => :person_courses
 
   scoped_search :on => [:title,:code]
+
+  attr_accessible :title, :id
 
   def Course.get(mis_id,fresh=false)
     (fresh ? import(mis_id, :people => true) : find_by_mis_id(mis_id)) or import(mis_id, :people => true)

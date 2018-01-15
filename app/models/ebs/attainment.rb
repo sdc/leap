@@ -16,7 +16,7 @@
 
 class Ebs::Attainment < Ebs::Model
 
-  set_primary_key :attainment_code
+  self.primary_key= :attainment_code
 
   belongs_to :person, :foreign_key => "per_person_code"
 

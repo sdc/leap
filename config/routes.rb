@@ -3,9 +3,9 @@ Ilp2::Application.routes.draw do
   namespace :admin do
     resources :settings
     resources :views
-    match 'test'       => 'test#index', :as => :test
-    match 'stats'      => 'stats#index'
-    match 'test/login' => 'test#login', :as => :test_login
+    match 'test'       => 'test#index', via: [:get, :post], :as => :test
+    match 'stats'      => 'stats#index', via: [:get, :post]
+    match 'test/login' => 'test#login', via: [:get, :post], :as => :test_login
     # match 'sync_grade_tracks' => 'data#sync_grade_tracks'
   end
   resources :views

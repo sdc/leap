@@ -16,7 +16,8 @@
 
 class Ebs::Person < Ebs::Model
 
-  set_primary_key :person_code
+  # self.primary_key= :person_code
+  self.primary_key= :person_code
 
   #default_scope where("date_of_birth is not null")#.where("fes_user_25 = 1")
 

@@ -16,7 +16,7 @@
 
 class Ebs::Tutorgroup < Ebs::Model
 
-  self.primary_key = :id
+  self.primary_key= :id
   has_many :people_unit_tutorgroups
 
 end

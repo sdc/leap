@@ -18,8 +18,8 @@ class Ebs::CalendarOccurrences < Ebs::Model
 
   default_scope where("? between start_date and end_date", DateTime.now.to_date)
 
-  set_table_name "calendar_occurrences"
-  set_primary_key :occurrence_code
+  self.table_name= "calendar_occurrences"
+  self.primary_key= :occurrence_code
 
   def self.acyr
     first.occurrence_code
