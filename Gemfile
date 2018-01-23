@@ -13,7 +13,7 @@ gem 'rails-settings', :require => 'settings' # DEPRECATED
 gem 'rails_autolink'
 gem 'uglifier', '>= 1.3.0'
 gem 'rails-latex'
-gem 'nokogiri', "1.6.7.2"
+gem 'nokogiri', "~> 1.8.1"
 gem 'coffee-filter'
 gem 'yui-compressor'
 gem 'icalendar'
