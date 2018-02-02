@@ -52,11 +52,11 @@ class Intervention < Eventable
   end
 
   def status
-    disc_text ? :complete : :incomplete
+    disc_text ? :incomplete : :current
   end
 
   def body
-    disc_text if status == :complete
+    disc_text if status == :incomplete
   end
 
   private
