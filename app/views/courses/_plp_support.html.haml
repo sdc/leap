@@ -88,7 +88,7 @@
                   .label.label-danger{:title => "PI"}= ints
                   -# %i.fa.fa-check{:title => ints.to_s}
           %td.text-center
-            - ints = pc.person.events.where(:eventable_type => ["SupportHistory","SupportRequest","SupportStrategy"],:transition => :create).this_year.count
+            - ints = pc.person.events.where(:eventable_type => ["SupportHistory","SupportRequest","SupportStrategy"],:transition => :create).count  # to restrict to current year only do .this_year.count instead of .count
             - if ints != 0
               = link_to(person_view_url(pc.person,"support")) do
                 -# .label.label-danger= ints
