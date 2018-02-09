@@ -105,7 +105,7 @@ class PeopleController < ApplicationController
   end
 
   def getProgressData
-    progresses = @topic.progresses.where(:course_status => 'Active').order("course_type ASC")
+    progresses = @topic.progresses.where(:course_status => 'Active').order("course_type ASC, course_title ASC")
     progresses.map.with_index {|progress, key|
       progresses[key].initial = progress.initial_reviews.last
       progresses[key].attendance = getAttendance(progress.course_type, progress.course_code)
