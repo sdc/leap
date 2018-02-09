@@ -226,7 +226,7 @@ class Person < ActiveRecord::Base
   end
 
   def can_add_intervention_stage( new_stage )
-    return true if !( (new_stage =~ /^Stage_[123]_Attendance_Disc/).present? || (new_stage =~ /^Stage_[123]_Behaviour_Disc/).present? ) 
+    return true if !( (new_stage =~ /^Stage_[123]_Attendance_Disc/).present? || (new_stage =~ /^Stage_[123]_Behaviour_Disc/).present? || (new_stage =~ /^Stage_[123]_Progress_Intervention/).present? )
 
     stage_left = new_stage[0..5]
     stage_right = new_stage[7..255]
