@@ -68,6 +68,7 @@ GEM
     coffee-script-source (1.12.2)
     commonjs (0.2.7)
     concurrent-ruby (1.0.5)
+    dalli (2.7.6)
     debug_inspector (0.0.3)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -194,6 +195,7 @@ DEPENDENCIES
   capistrano-rbenv
   coffee-filter
   coffee-rails (~> 4.0.0)
+  dalli
   haml
   icalendar
   jquery-rails

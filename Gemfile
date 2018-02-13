@@ -17,6 +17,7 @@ gem 'nokogiri', "~> 1.8.1"
 gem 'coffee-filter'
 gem 'yui-compressor'
 gem 'icalendar'
+gem 'dalli'
 
 gem 'whenever', :require => false
 
