@@ -17,11 +17,12 @@
 class Ebs::Room < Ebs::Model
 
   self.primary_key= :id
-  has_many "register_event_details",
-           :conditions  => "object_type = 'R'",
-           :foreign_key => "object_id"
-  has_many "register_event_details_slots",
-           :conditions  => "object_type = 'R'",
-           :foreign_key => "object_id"
+  has_many :register_event_details, -> { where(object_type: 'R')}, :foreign_key => :object_id
+#           :conditions  => "object_type = 'R'",
+#           :foreign_key => "object_id"
+  has_many :register_event_details_slots, -> { where(object_type: 'R')}, :foreign_key => :object_id
+#           :conditions  => "object_type = 'R'",
+#           :foreign_key => "object_id"
 
 end
+
