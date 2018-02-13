@@ -18,6 +18,7 @@ gem 'coffee-filter'
 gem 'yui-compressor'
 gem 'icalendar'
 gem 'dalli'
+gem 'activeresource'
 
 gem 'whenever', :require => false
 
