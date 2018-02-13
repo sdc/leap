@@ -18,8 +18,7 @@ class Course < ActiveRecord::Base
 
   include MisCourse
 
-  # has_many :person_courses, :conditions => "enrolment_date is not null"
-  has_many :person_courses, -> { where(enrolment_date: 'not null') }
+  has_many :person_courses, -> { where.not(enrolment_date: nil) }
   has_many :people, :through => :person_courses
 
   scoped_search :on => [:title,:code]
