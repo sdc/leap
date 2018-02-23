@@ -28,9 +28,9 @@
             #par-guidance.guidance.row
               %h2 Guidance:
               %ul
-                %li Overall Learner/Tutor Comments
+                %li Overall Learner/Tutor Comments.
                 %li#par-guidance-previous Review improvement targets from previous PAR – have these been met? How has this been evidenced?
-                %li#par-guidance-next Improvement targets for next PAR (including any carried over from previous PAR)
+                %li#par-guidance-next Improvement targets for next PAR (including any carried over from previous PAR). Please focus on skills and knowledge for improvement targets.
           .form-group.row
             .col-md-12
               = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
