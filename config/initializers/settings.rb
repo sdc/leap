@@ -131,6 +131,8 @@ Settings.defaults[:par_date_ranges]      = "I;02/10/2017;13/10/2017|1;30/10/2017
 Settings.defaults[:par_restrict_date_ranges] = "I,1,2,3,4,5"
 Settings.defaults[:par_edit_window]      = 1.day
 Settings.defaults[:par_window_type]      = ""
+Settings.defaults[:par_guidance]         = "1,2,4,5#Guidance:||Overall Learner/Tutor Comments|Review improvement targets from previous PAR – have these been met? How has this been evidenced?#par-guidance-previous|Improvement targets for next PAR (including any carried over from previous PAR)#par-guidance-next|||3#Guidance:||Overall Learner/Tutor Comments|Review improvement targets from previous PAR – have these been met? How has this been evidenced?#par-guidance-previous|Improvement targets for next PAR (including any carried over from previous PAR). Please focus on skills and knowledge for improvement targets#par-guidance-next"
+Settings.defaults[:par_guidance_active]  = "off"
 
 # e-laaf settings
 Settings.defaults[:elaaf_link_enabled]          		= 1

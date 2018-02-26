@@ -1,3 +1,5 @@
+- npr = Settings.num_progress_reviews.to_i
+
 #review-modal.modal.fade
   .modal-dialog.modal-lg
     .modal-content
@@ -25,12 +27,24 @@
                 .input-group-addon Attendance
                 = f.text_field :attendance, :readonly => true, :class => 'form-control', :disabled => (true unless @user.staff?)
           - if @user.staff?
-            #par-guidance.guidance.row
-              %h2 Guidance:
-              %ul
-                %li Overall Learner/Tutor Comments
-                %li#par-guidance-previous Review improvement targets from previous PAR – have these been met? How has this been evidenced?
-                %li#par-guidance-next Improvement targets for next PAR (including any carried over from previous PAR)
+            - if Settings.par_guidance_active == "on"
+              #par-guidance-section
+                #par-guidance.guidance.row
+                  - (1..npr).each do |i|
+                    .guidance-text-class{:id => "guidance-text-#{i}"}
+                      - if ProgressReview::par_guidance_title( i ).present?
+                        %h2= "#{ProgressReview::par_guidance_title( i )}"
+                      - else
+                        %h2 Guidance:
+                      - if ProgressReview::par_guidance_text( i ).present?
+                        %ul
+                          - ProgressReview::par_guidance_text( i ).each do |pth|
+                            %li{:class => "#{pth[:class]}"}="#{pth[:text]}"
+                      - else
+                        %ul
+                          %li Overall Learner/Tutor Comments.
+                          %li.par-guidance-previous Review improvement targets from previous PAR – have these been met? How has this been evidenced?
+                          %li.par-guidance-next Improvement targets for next PAR (including any carried over from previous PAR). Please focus on skills and knowledge for improvement targets.
           .form-group.row
             .col-md-12
               = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
