@@ -30,6 +30,8 @@
 
 class Event < ActiveRecord::Base
 
+  attr_accessible :person_id, :event_id, :event_date, :transition, :parent_id
+
   validates :person_id,      :presence => true
   validates :event_date,     :presence => true
   validates :eventable_id,   :presence => true

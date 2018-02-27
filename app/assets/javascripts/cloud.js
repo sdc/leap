@@ -61,18 +61,18 @@ $("#save-review").click(function()
 
     ajaxRequest(url, 'PUT', data, function(review) {
         $("[name='progress_review[body]']").prop("disabled", true);
-        $("[name='progress_review[body]']").val(review.progress_review.pretty_body);
+        $("[name='progress_review[body]']").val(review.pretty_body);
 
         if ( person_can_edit_grade() )
             {
             $("[name='progress_review[working_at]']").prop("disabled", true);
-            $("[name='progress_review[working_at]']").val(review.progress_review.working_at);
-            $('div[data-id="' + id + '"] > h4').text(review.progress_review.working_at);
+            $("[name='progress_review[working_at]']").val(review.working_at);
+            $('div[data-id="' + id + '"] > h4').text(review.working_at);
             }
         $("div#current-level").css('display','none');
         $("#progress_review_level").prop("disabled", true);
-        if ( ["purple", "green", "amber", "red"].indexOf(review.progress_review.level) >= 0 ) {
-            if ( ! $('div[data-id="' + id + '"]').hasClass(review.progress_review.level) ) {
+        if ( ["purple", "green", "amber", "red"].indexOf(review.level) >= 0 ) {
+            if ( ! $('div[data-id="' + id + '"]').hasClass(review.level) ) {
                 $('div[data-id="' + id + '"]').removeClass("purple green amber red");
                 $('div[data-id="' + id + '"]').addClass(review.progress_review.level);
                 }
@@ -111,13 +111,13 @@ $("#save-initial-review").click(function()
 
     ajaxRequest(url, 'PUT', data, function(review) {
         $("[name='initial_review[body]']").prop("disabled", true);
-        $("[name='initial_review[body]']").val(review.initial_review.pretty_body);
+        $("[name='initial_review[body]']").val(review.pretty_body);
 
         if ( person_can_edit_grade() )
             {
             $("[name='initial_review[target_grade]']").prop("disabled", true);
-            $("[name='initial_review[target_grade]']").val(review.initial_review.target_grade);
-            $('div[data-id="' + id + '"] > h3').text(review.initial_review.target_grade);
+            $("[name='initial_review[target_grade]']").val(review.target_grade);
+            $('div[data-id="' + id + '"] > h3').text(review.target_grade);
             }
 
         $("#save-initial-review").hide();
@@ -133,7 +133,7 @@ function initialReviewRequest(request, id, editable)
             return displayInitialForm(data.progress);
         }
 
-        displayInitialReview(data.initial_review, editable );
+        displayInitialReview(data, editable );
     })
 }
 
@@ -153,9 +153,9 @@ function progressReviewRequest(request, id, editable)
 
     reviewRequest('progress', $(request), function(data) {
         if (!id) {
-            return displayProgressForm(data.progress, attendance, number, max_number);
+            return displayProgressForm(data, attendance, number, max_number);
         }
-        displayProgressReview(data.progress_review, editable );
+        displayProgressReview(data, editable );
     })
 }
 

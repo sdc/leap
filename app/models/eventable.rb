@@ -16,6 +16,8 @@
 
 class Eventable < ActiveRecord::Base
 
+  # attr_accessible :event_date, :transition
+
   self.abstract_class = true
 
   belongs_to :person

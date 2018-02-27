@@ -16,6 +16,9 @@
 
 class Notification < ActiveRecord::Base
 
+
+  attr_accessible :person_id, :event_id, :event_date, :transition
+
   validates :person_id,      :presence => true
   validates :event_id,       :presence => true
 
