@@ -205,16 +205,22 @@ function ajaxRequest(url, type, data, callback)
 
 function displayProgressForm(progress, attendance, reviewNumber, maxNumber)
 {
-    $("#par-guidance").show();
-    if ( reviewNumber == 1) {
-        $("#par-guidance-previous").hide();
-    } else {
-        $("#par-guidance-previous").show();
-    }
-    if ( reviewNumber == maxNumber) {
-        $("#par-guidance-next").hide();
-    } else {
-        $("#par-guidance-next").show();
+
+    if( $("#par-guidance-section").length )
+    {
+        $("#par-guidance").show();
+        $(".guidance-text-class").hide();
+        $("#guidance-text-"+reviewNumber).show();
+        if ( reviewNumber == 1) {
+            $(".par-guidance-previous").hide();
+        } else {
+            $(".par-guidance-previous").show();
+        }
+        if ( reviewNumber == maxNumber) {
+            $(".par-guidance-next").hide();
+        } else {
+            $(".par-guidance-next").show();
+        }
     }
 
     enableInputs("#new_progress_review");
@@ -236,7 +242,10 @@ function displayProgressForm(progress, attendance, reviewNumber, maxNumber)
 
 function displayProgressReview(review, editable)
 {
-    $("#par-guidance").hide();
+    if( $("#par-guidance-section").length )
+    {
+        $("#par-guidance").hide();
+    }
 
     disableInputs("#new_progress_review");
     $("[name='progress_review[attendance]']").val(review.attendance);

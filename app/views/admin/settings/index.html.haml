@@ -356,6 +356,21 @@
     .controls
       = select_tag "par_window_type", options_for_select([nil,"Date Range","Edit Window"],Settings.par_window_type)
       .help-text Restrict the period PARs are allowed to be edited by either PAR Date Range or by the Edit Window setting.
+  .control-group
+    %label.control-label Guidance Text Enabled
+    .controls
+      = select_tag "par_guidance_active", options_for_select(["off","on"], Settings.par_guidance_active)
+      .help-text Enable/disable the guidance text.
+  .control-group
+    %label.control-label Guidance Text
+    .controls
+      -# = text_field_tag "par_guidance", Settings.par_guidance, :style => "width: 100%"
+      = text_area_tag "par_guidance", Settings.par_guidance
+      .help-text
+        Guidance text for each par.  Individual PARs can be given their own text.  Format: list_of_par_numbers#optional_heading||text1#optional_class|text2|text3  Multiple guidance blocks can be seperated by |||  Example:
+        %pre
+          :preserve
+            1,2,4,5#Guidance:||Overall Learner/Tutor Comments|Review improvement targets from previous PAR – have these been met? How has this been evidenced?#par-guidance-previous|Improvement targets for next PAR (including any carried over from previous PAR)#par-guidance-next|||3#Guidance:||Overall Learner/Tutor Comments|Review improvement targets from previous PAR – have these been met? How has this been evidenced?#par-guidance-previous|Improvement targets for next PAR (including any carried over from previous PAR). Please focus on skills and knowledge for improvement targets#par-guidance-next
  
 
   %h2 Simple Poll
@@ -569,7 +584,7 @@
                                  "elaaf_link_enabled","elaaf_link_icon","elaaf_link_name","elaaf_base_url","elaaf_student_number_place_holder",
                                  "continuing_learning_rev_enabled","continuing_learning_colours","continuing_learning_icons","continuing_learning_default_colour","continuing_learning_default_icon",
                                  "network_ip_ranges","timetable_registers_threshold","par_active","plp_tabs","par_date_ranges","par_edit_window","par_window_type","par_restrict_active","par_restrict_date_ranges",
-                                 "intervention_types","intervention_groups","plp_pi_groups","plp_pi_groups_breakdown"]
+                                 "intervention_types","intervention_groups","plp_pi_groups","plp_pi_groups_breakdown","par_guidance_active","par_guidance"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

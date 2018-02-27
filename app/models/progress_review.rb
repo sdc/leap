@@ -119,4 +119,17 @@ class ProgressReview < Eventable
     par_dates.last if par_dates.last.present?
   end
 
+  def self.par_guidance_title( revno )
+    t = []
+    Settings.par_guidance.split("|||").each{|x| b=x.split('||'); t = b[0].split('#')[1] if b[0].split('#')[0].split(',').include? revno.to_s}
+    return t if t.present?
+    return 'Guidance:'
+  end
+
+  def self.par_guidance_text( revno )
+    gt = []
+    Settings.par_guidance.split("|||").each{|x| b=x.split('||'); gt = b[1].split('|').map{|y| { :text => y.split('#')[0], :class => y.split('#')[1]} } if b[0].split('#')[0].split(',').include? revno.to_s}
+    return gt
+  end
+
 end
