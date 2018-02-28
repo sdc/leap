@@ -11,7 +11,8 @@ gem 'scoped_search'
 gem 'rails-settings', :require => 'settings' # DEPRECATED
 # gem 'rails-settings-cached', '0.4.1' # NEW
 gem 'rails_autolink'
-gem 'uglifier', '>= 1.3.0'
+# gem 'uglifier', '>= 1.3.0'
+gem 'uglifier'
 gem 'rails-latex'
 gem 'nokogiri', "~> 1.8.1"
 gem 'coffee-filter'

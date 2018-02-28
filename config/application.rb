@@ -41,6 +41,6 @@ module Ilp2
 
     # Enable the asset pipeline
     config.assets.enabled = true
-    config.active_record.whitelist_attributes = false
+    # config.active_record.whitelist_attributes = false
   end
 end
