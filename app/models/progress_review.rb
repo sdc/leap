@@ -75,7 +75,7 @@ class ProgressReview < Eventable
   end
 
   def pretty_body
-    return self[:body].empty? ? 'No comments' : self[:body]
+    return self[:body].blank? ? 'No comments' : self[:body]
   end
 
   def countdown_enddate
