@@ -27,7 +27,7 @@ class PersonCourse < Eventable
   has_one :application_event, :as => :eventable, :class_name => "Event", :conditions => {:transition => :create}
   has_one :complete_event,    :as => :eventable, :class_name => "Event", :conditions => {:transition => :complete}
 
-  attr_accessible :offer_code, :status, :start_date, :application_date, :mis_status
+  attr_accessible :offer_code, :status, :start_date, :application_date, :mis_status, :person_id, :course_id
 
   after_save do |person_course|
     if person_course.application_date_changed? and person_course.application_date_was == nil

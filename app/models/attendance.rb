@@ -18,6 +18,8 @@ require 'misc/misc_dates'
 
 class Attendance < Eventable
 
+  attr_accessible :week_beginning, :att_year, :att_week, :course_type
+
   default_scope :order => 'week_beginning'
 
   after_create do |attendance|

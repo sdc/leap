@@ -78,6 +78,7 @@ class EventsController < ApplicationController
       @event = @topic.events.find(params[:id])
     end
     if @event.is_deletable?
+      binding.pry
       @event.delete
       @event.eventable.delete
       flash[:success] = "#{@event.eventable_type.singularize.humanize.titleize} deleted"

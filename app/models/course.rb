@@ -23,7 +23,7 @@ class Course < ActiveRecord::Base
 
   scoped_search :on => [:title,:code]
 
-  attr_accessible :title, :id
+  attr_accessible :title, :id, :code, :year, :mis_id, :vague_title
 
   def Course.get(mis_id,fresh=false)
     (fresh ? import(mis_id, :people => true) : find_by_mis_id(mis_id)) or import(mis_id, :people => true)

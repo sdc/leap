@@ -69,6 +69,8 @@ class Person < ActiveRecord::Base
   serialize :address
   serialize :my_courses
 
+  attr_accessible :mis_id
+
   def self.me
     # Convinience method to get Kev at SDC
     Person.get(10083332)
