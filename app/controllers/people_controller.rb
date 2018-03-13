@@ -138,7 +138,6 @@ class PeopleController < ApplicationController
   def search
     if params[:q]
       if params[:mis]
-        binding.pry
          @people = Person.mis_search_for(params[:q])
          @courses = Course.mis_search_for(params[:q])
       else
