@@ -69,7 +69,7 @@ class Person < ActiveRecord::Base
   serialize :address
   serialize :my_courses
 
-  attr_accessible :mis_id
+  attr_accessible :mis_id, :forename, :surname, :middle_names, :address, :town, :postcode, :mobile_number, :photo, :next_of_kin, :date_of_birth, :staff, :username, :personal_email, :home_phone, :note, :contact_allowed
 
   def self.me
     # Convinience method to get Kev at SDC
@@ -182,7 +182,8 @@ class Person < ActiveRecord::Base
   def photo_uri
     if Settings.lorem_pictures.blank?
       if photo
-        "data:image/jpeg;base64," + ::Base64.encode64(photo)
+        # "data:image/jpeg;base64," + ::Base64.encode64(photo)
+        "data:image/jpeg;base64," + ActiveSupport::Base64.encode64(photo)
       else
         "noone.png"
       end
