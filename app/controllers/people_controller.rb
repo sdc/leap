@@ -71,7 +71,7 @@ class PeopleController < ApplicationController
       end
       format.jpg do
         if @topic.photo
-          send_data @topic.photo, :disposition => 'inline', :type => "image/jpg"
+          send_data @topic.photo, :disposition => 'inline', :type => "image/jpeg"
         else
           redirect_to "/assets/noone.png"
         end
