@@ -38,8 +38,9 @@
         -#long_body 
     - unless defined? no_attachments
       - event.children.each do |child|
-        .row
-          .span10= render :partial => "events/mini", :object => child, :as => "event"
+        - if child.person_id == event.person_id
+          .row
+            .span10= render :partial => "events/mini", :object => child, :as => "event"
     .row
       .extended.span10{:style => "display:none"}
 - rescue Exception => e
