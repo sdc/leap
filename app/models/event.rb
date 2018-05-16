@@ -111,8 +111,10 @@ class Event < ActiveRecord::Base
 
   def is_deletable?
     return true if Person.user.staff? && ["Qualification"].include?(eventable_type)
-    return true if Person.user.staff? && Person.user == eventable.created_by && ["TtActivity"].include?(eventable_type)
-    Person.user.admin? or (Time.now - Settings.delete_delay.to_i < eventable.created_at and Person.user == eventable.created_by)
+    if eventable != nil
+      return true if Person.user.staff? && Person.user == eventable.created_by && ["TtActivity"].include?(eventable_type)
+      Person.user.admin? or (Time.now - Settings.delete_delay.to_i < eventable.created_at and Person.user == eventable.created_by)
+    end
   end
 
   def created_by_text(options = {})
@@ -130,11 +132,15 @@ class Event < ActiveRecord::Base
   end
 
   def timetable_height
-    (timetable_length / 50).floor
+    if timetable_length != nil
+      (timetable_length / 50).floor
+    end
   end
 
   def timetable_end
-    event_date + timetable_length
+    if timetable_length != nil
+      event_date + timetable_length
+    end
   end
 
   def to_tile
