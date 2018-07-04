@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-gem 'rails', "4.0.5"
+gem 'rails', "4.0.13"
 gem 'coffee-rails', '~> 4.0.0'
 gem 'haml'
 gem "less-rails"
@@ -15,7 +15,7 @@ gem 'rails_autolink'
 gem 'uglifier'
 gem 'rails-latex'
 gem 'nokogiri', "~> 1.8.1"
-gem 'coffee-filter'
+gem 'coffee-filter', "0.1.3"
 gem 'yui-compressor'
 gem 'icalendar'
 gem 'dalli'
@@ -27,15 +27,17 @@ gem 'memcache-client'
 
 gem 'protected_attributes', '1.0.5' # NEW
 
+gem 'sprockets', "2.12.5"
+gem 'sprockets-rails', "2.3.3"
 
 platforms :ruby do
-  gem 'mysql2', '0.3.17'
+  gem 'mysql2', '0.3.21'
   gem 'therubyracer'
   gem 'activerecord-sqlserver-adapter'
-  gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.0'
+  gem 'activerecord-oracle_enhanced-adapter', '1.5.6'
   gem 'activerecord-mysql-adapter'
-  gem 'ruby-oci8', "2.2.4.1"
-  gem 'tiny_tds', "0.5.1"
+  gem 'ruby-oci8', "2.2.5.1"
+  gem 'tiny_tds', "1.3.0"
   gem 'sqlite3'
 end
   
@@ -59,3 +61,4 @@ group :development do
 
   # gem 'rack-mini-profiler'
 end
+
