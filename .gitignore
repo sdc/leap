@@ -12,3 +12,4 @@ config/initializers/error_mail.rb
 config/deploy.rb
 config/deploy/*
 .capistrano
+config/initializers/secret_token.rb
