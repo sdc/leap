@@ -12,8 +12,8 @@
       - badge_list = badges[:moodle].last.all_in_course      
     - if badge_list.present?
       - badge_list.each do |badge|
-        - res = Net::HTTP.get_response(URI.parse(badge.image_url))
-        - if res.code.to_i != 404 && ( res.header['Content-Type'].starts_with? 'image' )
+        - res = get_uri_mime_type(badge.image_url)
+        - if res.present? && ( res.starts_with? 'image' )
           - badges_shown += 1
           .col-xs-2.ppd_badge
             = link_to badge.link_url, :title => badge[:title], "data-toggle" => "popover", "data-content" => badge[:description] do

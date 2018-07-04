@@ -49,6 +49,29 @@ module ApplicationHelper
     return false
   end
 
+  def get_uri_mime_type(uri_str, limit = 10)
+    return nil if limit == 0
+
+    uri = URI.parse(uri_str) rescue nil
+
+    return nil if uri.nil?
+
+    http = Net::HTTP.new( uri.host, uri.port )
+    http.open_timeout = 2
+    http.read_timeout = 2
+    http.use_ssl = (uri.scheme.casecmp("https") == 0)
+
+    response = http.start() { |http| http.head(uri.request_uri) } rescue nil
+
+    if response.kind_of? Net::HTTPSuccess
+      response.header['Content-Type']
+    elsif response.kind_of? Net::HTTPRedirection
+      location = response['location']
+      get_uri_mime_type(location, limit - 1)
+    else
+      nil
+    end
+
+  end
+
 end
-
-
