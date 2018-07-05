@@ -217,7 +217,7 @@ DEPENDENCIES
   rails-latex
   rails-settings
   rails_autolink
-  ruby-oci8
+  ruby-oci8 (= 2.2.5.1)
   scoped_search
   sprockets (= 2.12.5)
   sprockets-rails (= 2.3.3)
