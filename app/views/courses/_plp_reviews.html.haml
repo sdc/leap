@@ -12,7 +12,7 @@
   %thead
     %tr
       %th{:colspan => 2}
-      %th.bl{:colspan => (npr+1+(cl_rev_enabled ? 1 : 0))}="#{@topic.name} (#{@topic.code})"
+      %th.bl{:colspan => (npr+2+(cl_rev_enabled ? 1 : 0))}="#{@topic.name} (#{@topic.code})"
       %th.text-right
         %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".#{ct}_hide"}
           %i.fa.fa-eye
@@ -20,6 +20,7 @@
       %th.text-right.nowr{ :style => "width:1px" } Name
       %th.text-center.bl{ :style => "width:1px", :title => "Attendance overall" } Att
       %th.text-center.bl{ :style => "width:1px", :title => "Attendance for course" } Att
+      %th.text-center{ :title => "Last 6 week attendance for #{ct}" } 6&nbsp;Week
       - (1..npr).each do |x|
         %th.text-center.visible-lg{:class => "#{ct}_hide" + (x==1 ? " bl" : ""), :title => "Progress and Attendance Review #{x}" }= x
         - if x == 3 && cl_rev_enabled
@@ -46,11 +47,19 @@
         -# - person_attendances = pc.person.attendances.where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", MISC::MiscDates.startdate_from_acyr(@topic.year), MISC::MiscDates.enddate_from_acyr(@topic.year) )
         - cem_type = pc.person.progresses.where(:course_code => ct, :course_type => ['core','english','maths'], :course_year => @topic.year ).last.try(:course_type) || "course"
         - person_attendance[pc.person.id.to_s => ct] = person_attendances.select { |x| ( cem_type == 'course' ? (x.enrol_course.to_s.downcase == ct) : (x.course_type.to_s.downcase == cem_type.downcase) ) }.last
+        - person_attendance[pc.person.id.to_s => ct + "_6week"] = person_attendance[pc.person.id.to_s => ct].try(:att_6_week)
         - if person_attendance[pc.person.id.to_s => ct]
           - title = "Attendance for #{cem_type}: #{person_attendance[pc.person.id.to_s => ct].status(true)}"
           %td.text-right.bl{:class => person_attendance[pc.person.id.to_s => ct].status(true), :style => "width:1px", :title => title }= "#{person_attendance[pc.person.id.to_s => ct].try :att_year}%"
         - else
-          %td.text-center.bl{:title => "Attendance Not Available", :style => "width:1px" }
+          %td.text-center.bl{:title => "No Attendance", :style => "width:1px" }
+
+        - if person_attendance[pc.person.id.to_s => ct + "_6week"].present?
+          - title = "Last 6 weeks attendance for #{cem_type}: #{person_attendance[pc.person.id.to_s => ct].status_6week(true)}"
+          %td.text-right{:class => person_attendance[pc.person.id.to_s => ct].status_6week(true), :style => "width:1px", :"data-html" => "true", :title => title}= "#{person_attendance[pc.person.id.to_s => ct + "_6week"]}%"
+        - else
+          %td.text-center{:title => "No Attendance", :style => "width:1px"}
+
         - (1..npr).each do |x|
           - g = pc.person.progress_reviews.joins(:progress).where("progresses.id = progress_reviews.progress_id and progresses.course_year=? and LOWER(course_code) = ?",@topic.year,ct).order("number desc, created_at desc, id desc").where(:number => x).first
           - unless g.nil?
@@ -76,7 +85,7 @@
 
   %tfoot
     %tr
-      %td{:colspan => (npr+2+(cl_rev_enabled ? 1 : 0))}
+      %td{:colspan => (npr+4+(cl_rev_enabled ? 1 : 0))}
       %td.text-center
         - if @rpub 
           = link_to course_view_url(@topic,View.for_user.find_by_name("reviews"), :status => "complete", :title => @window, :format => "pdf"), :class => "btn btn-default btn-xs", :title => "Print all published reviews" do

@@ -1,12 +1,12 @@
 .col-xs-12
-  %h1.col-xs-12{:style => "position:absolute;top:30px;left:0;text-align:center;z-index:100;opacity:0.8"}= "#{attendance.att_year}%"
+  %h1.col-xs-12{:style => "position:absolute;top:30px;left:0;text-align:center;z-index:100;opacity:0.8"}= "#{attendance.att_6_week}%"
   %div.panel{:style => "opacity:0.6;border:1px solid #000;margin-bottom:0"}
     %div{:style => "border-left:1px solid #000;border-bottom:1px solid #000;margin:8px;padding-left:5px;"}
-      %span{:id => "attendance_data_#{attendance.id}"}
-        = attendance.siblings_same_year(attendance.course_type,attendance.enrol_course).map(&:att_year).join(",")
+      %span{:id => "attendance_data_6_week_#{attendance.id}"}
+        = attendance.siblings_same_year(attendance.course_type,attendance.enrol_course).where( week_beginning: 6.weeks.ago..Date.today ).all.collect(&:att_week).compact.join(",")
   %h5= "#{attendance.att_week || 0}% attendance this week"
 :coffeescript
-  $('#attendance_data_#{attendance.id}').peity 'bar',
+  $('#attendance_data_6_week_#{attendance.id}').peity 'bar',
     width: "100%"
     height: 80
     min: 0
