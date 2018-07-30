@@ -93,7 +93,7 @@
       - unless @topic.entry_reqs.empty?
         .row.home-page-block.right{:load_block => entry_reqs_block_course_url(@topic)}= image_tag "ajax-loader.gif"
 
-- [['overview','overview-plp'], ['reviews','reviews-plp'], ['support','support-plp'], ['checklist','checklist-plp'], ['badges', 'badges'], ['achievement', 'achieve']].each do |plp|
+- [['overview','overview-plp'], ['reviews','reviews-plp'], ['support','support-plp'], ['checklist','checklist'], ['badges', 'badges'], ['achievement', 'achieve']].each do |plp|
   - if show_plp_tabs.include?(plp[0])
     :coffeescript
       #{plp[0]}_tab_clickcount=0
