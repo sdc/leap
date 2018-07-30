@@ -21,7 +21,7 @@ class PlpsController < ApplicationController
   def show
     show_plp_tabs = Settings.plp_tabs.split(',')
 
-    render :file => "#{Rails.root}/public/404.html", :status => 404 and return if !['overview','reviews','support','checklist','badges','achievement'].include? params[:id] or !show_plp_tabs.include? params[:id]
+    render :file => "#{Rails.root}/public/404.html", layout: false, status: :not_found and return if !['overview','reviews','support','checklist','badges','achievement'].include? params[:id] or !show_plp_tabs.include? params[:id]
 
     @person_courses = if @tutorgroup
       @topic.person_courses.includes(:person => "mdl_grade_tracks").where(:tutorgroup => @tutorgroup).sort_by{|pc| pc.person.name(:surname_first => true)}
