@@ -14,27 +14,27 @@
   %ul.row.nav.nav-tabs#reviews-home-tabs
     - if show_plp_tabs.include?("photos")
       %li.active 
-        %a{:href => "#photo-list", "data-toggle" => "tab"} Photos
+        %a{:href => "#photo-list", "data-toggle" => "tab", :id => "photos_tab"} Photos
     - if show_plp_tabs.include?("overview")
       %li 
         -# %a{:href => "#overview-plp", "data-toggle" => "tab"} Overview
         -# = link_to "Overview" , "#overview-plp", html_options = { "data-toggle" => "tab" }, :remote => true
-        %a{:href => "#overview-plp", "data-toggle" => "tab"} Overview
+        %a{:href => "#overview-plp", "data-toggle" => "tab", :id => "overview_tab"} Overview
     - if show_reviews && show_plp_tabs.include?("reviews")
       %li 
-        %a{:href => "#reviews-plp", "data-toggle" => "tab"} Reviews
+        %a{:href => "#reviews-plp", "data-toggle" => "tab", :id => "reviews_tab"} Reviews
     - if show_plp_tabs.include?("support")
       %li 
-        %a{:href => "#support-plp", "data-toggle" => "tab"} Support
+        %a{:href => "#support-plp", "data-toggle" => "tab", :id => "support_tab"} Support
     - if show_plp_tabs.include?("checklist")
       %li 
-        %a{:href => "#checklist", "data-toggle" => "tab"} Checklist
+        %a{:href => "#checklist", "data-toggle" => "tab", :id => "checklist_tab"} Checklist
     - if show_plp_tabs.include?("badges")
       %li 
-        %a{:href => "#badges", "data-toggle" => "tab"} Badges
+        %a{:href => "#badges", "data-toggle" => "tab", :id => "badges_tab"} Badges
     - if show_plp_tabs.include?("achievement")
       %li 
-        %a{:href => "#achieve", "data-toggle" => "tab"} Achievement
+        %a{:href => "#achieve", "data-toggle" => "tab", :id => "achievement_tab"} Achievement
 
 .tab-content
   - if show_plp_tabs.include?("photos")
@@ -45,27 +45,45 @@
 
   - if show_plp_tabs.include?("overview")
     .tab-pane.fade.panel.panel-default.row.table-responsive#overview-plp
-      = render :partial => "courses/plp_overview", :locals => { :npr => npr, :person_attendance => person_attendance }
+      -# = render :partial => "courses/plp_overview", :locals => { :npr => npr, :person_attendance => person_attendance }
+      .waitgif
+        = image_tag "ajax-loader.gif"
+        Loading overview ...
 
   - if show_reviews && show_plp_tabs.include?("reviews")
     .tab-pane.fade.panel.panel-default.row.table-responsive#reviews-plp
-      = render :partial => "courses/plp_reviews", :locals => { :npr => npr, :person_attendance => person_attendance }
+      -# = render :partial => "courses/plp_reviews", :locals => { :npr => npr, :person_attendance => person_attendance }
+      .waitgif
+        = image_tag "ajax-loader.gif"
+        Loading reviews ...
 
   - if show_plp_tabs.include?("support")
     .tab-pane.fade.panel.panel-default.row#support-plp
-      = render :partial => "courses/plp_support"
+      -# = render :partial => "courses/plp_support"
+      .waitgif
+        = image_tag "ajax-loader.gif"
+        Loading support ...
 
   - if show_plp_tabs.include?("checklist")
     .tab-pane.fade.panel.panel-default.row#checklist
-      = render :partial => "courses/plp_checklist"
+      -# = render :partial => "courses/plp_checklist"
+      .waitgif
+        = image_tag "ajax-loader.gif"
+        Loading checklist ...
 
   - if show_plp_tabs.include?("badges")
     .tab-pane.fade.panel.panel-default.row#badges
-      = render :partial => "courses/plp_badges"
+      -# = render :partial => "courses/plp_badges"
+      .waitgif
+        = image_tag "ajax-loader.gif"
+        Loading badges ...
 
   - if show_plp_tabs.include?("achievement")
     .tab-pane.fade.panel.panel-default.row#achieve
-      = render :partial => "courses/plp_achieve"
+      -# = render :partial => "courses/plp_achieve"
+      .waitgif
+        = image_tag "ajax-loader.gif"
+        Loading achievement ...
 
 -# if @user.staff?
   .row
@@ -75,4 +93,21 @@
       - unless @topic.entry_reqs.empty?
         .row.home-page-block.right{:load_block => entry_reqs_block_course_url(@topic)}= image_tag "ajax-loader.gif"
 
-
+- [['overview','overview-plp'], ['reviews','reviews-plp'], ['support','support-plp'], ['checklist','checklist-plp'], ['badges', 'badges'], ['achievement', 'achieve']].each do |plp|
+  - if show_plp_tabs.include?(plp[0])
+    :coffeescript
+      #{plp[0]}_tab_clickcount=0
+      $('#' + '#{plp[0]}' + '_tab').click ->
+        if #{plp[0]}_tab_clickcount++ == 0
+          $.ajax "#{@topic.mis_id}/plps/#{plp[0]}",
+            type: 'GET'
+            dataType: 'html'
+            error: (jqXHR, textStatus, errorThrown) ->
+              $('#' + '#{plp[1]}').html('').append "Error: " + errorThrown
+              #{plp[0]}_tab_clickcount=0
+            success: (html, textStatus, jqXHR) ->
+              $('#' + '#{plp[0]}' + '_tab').unbind("click")
+              $('#' + '#{plp[0]}' + '_tab > .waitgif').remove()
+              $('#' + '#{plp[1]}').html('').append html
+              $('.btn-group > a.btn.active').click()                                # reapply page filters
+              $('#' + '#{plp[1]}').find('[title]').tooltip({container: 'body'})     # reapply tooltip formatting

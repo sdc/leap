@@ -1,4 +1,4 @@
--# npr = Settings.num_progress_reviews.to_i
+- npr = Settings.num_progress_reviews.to_i
 
 - require 'misc/misc_dates'
 
@@ -40,6 +40,7 @@
           %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
             %b= link_to pc.name, pc.person, :target => "_blank"
           - person_attendances = pc.person.attendances.where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", MISC::MiscDates.startdate_from_acyr(@topic.year), MISC::MiscDates.enddate_from_acyr(@topic.year) )
+          - person_attendance = {}
           - person_attendance[pc.person.id.to_s => "overall"] = person_attendances.select { |x| x.course_type.to_s.downcase == "overall" }.last
           - person_attendance[pc.person.id.to_s => "core"] = person_attendances.select { |x| x.course_type.to_s.downcase == "core" }.last
           - person_attendance[pc.person.id.to_s => "english"] = person_attendances.select { |x| x.course_type.to_s.downcase == "english" }.last
