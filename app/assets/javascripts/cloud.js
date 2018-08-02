@@ -130,7 +130,7 @@ function initialReviewRequest(request, id, editable)
 {
     reviewRequest('initial', $(request), function(data) {
         if (!id) {
-            return displayInitialForm(data.progress);
+            return displayInitialForm(data);
         }
 
         displayInitialReview(data, editable );
