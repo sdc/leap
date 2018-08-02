@@ -5,5 +5,6 @@ class ChangeAbsenceColumnNames < ActiveRecord::Migration
   		t.rename :category, :reason
   		t.rename :body, :reason_extra
   		t.rename :contact_category, :contact
+  	end	
   end
 end
