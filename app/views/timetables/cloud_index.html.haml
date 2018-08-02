@@ -1,5 +1,5 @@
 .row
-  %ul.col-xs-9.text-left.pager{:style => "margin-top:0;padding-right:0;"}
+  %ul.col-xs-8.text-left.pager{:style => "margin-top:0;padding-right:0;"}
     = form_tag person_timetables_url, :method => :get, :class => "form-inline" do
       %li
         = link_to person_timetables_url(@topic,:date => @date - 1.week), :class => "btn" do
@@ -12,10 +12,16 @@
       %li
         = link_to person_timetables_url(@topic,:date => @date + 1.week), :class => "btn" do
           Next
-          %i.fa.fa-arrow-right
-  %button.btn.btn-primary.pull-right{"data-toggle" => "modal", "data-target" => "#add-tt-act-modal"}
+          %i.fa.fa-arrow-right  
+  %button.btn.btn-primary{"data-toggle" => "modal", "data-target" => "#add-tt-act-modal"}
     %i.fa.fa-fw.fa-plus
-    Add Event
+    Add Event   
+  / %button.btn.btn-primary.pull-right{:onclick => "countSlots()", "data-toggle" => "modal", "data-target" => "#add-absence-modal"}
+  /   %i.fa.fa-fw.fa-plus
+  /   Report Absence    
+  %button.btn.btn-primary.pull-right{:onclick => "countSlots()"}
+    %i.fa.fa-fw.fa-plus
+    Report Absence         
 .row#timetable.panel.panel-default
   .col-xs-1
     .hour{:style => "height:37px"}
@@ -29,7 +35,7 @@
     %button.btn.btn-primary#show_weekend{:style => "width:100%"}
       %i.fa.fa-angle-double-right
     %button.btn.btn-primary#hide_weekend{:style => "width:100%;display:none"}
-      %i.fa.fa-angle-double-left
+      %i.fa.fa-angle-double-left     
 .row
   .pull-right
     .btn-group.dropup
@@ -45,8 +51,7 @@
         %li
           = link_to :format => :ics, :year => true do
             %i.fa.fa-fw.fa-calendar-o
-            Year
-
+            Year        
 .modal.fade#add-tt-act-modal
   .modal-dialog
     .modal-content
@@ -86,3 +91,94 @@
         .modal-footer
           %button.btn.btn-default{"data-dismiss" => "modal"} Close
           %button.btn.btn-primary Add
+.modal.fade#add-absence-modal  
+  .modal-dialog
+    .modal-content  
+      = form_for Absence.new do |f|     
+        .modal-header
+          %button.close{"data-dismiss" => "modal"}
+            %span &times;
+          %h4 Report New Absence
+        .modal-body
+          .row
+            .form-group.col-xs-6   
+              = f.label :reason, "Reason"
+              = f.select :reason, Absence::REASONS, {:include_blank => "Choose one"}, :class => "form-control"
+            .form-group.col-xs-6   
+              = f.label :usage_code, "Mark"
+              = f.select :usage_code, ["K","L","E","O","A"], {:include_blank => "Choose one"}, :class => "form-control"
+          .row    
+            .form-group.col-xs-6   
+              = f.label :notified_at, "Notified at" 
+              = f.text_field :notified_at, :class => "form-control", "data-provide" => "datepicker", :value => Time.now.to_date, "data-date-format" => "d MM yyyy"
+              / = f.date_select :notified_at
+            .form-group.col-xs-6
+              = f.label :notified_at, "Time"
+              / = f.time_select :notified_at, {:minute_step => 5}, :class => "form-control time-select", :style => "width: 40%"
+              .row
+                .form-group.col-xs-5
+                  = f.select :hours, 00..23, {}, :class => "form-control", :style => "width: 100%"
+                .form-group.col-xs-1 :  
+                .form-group.col-xs-5
+                  = f.select :mins, 00..55, {}, :class => "form-control", :style => "width: 100%"
+          .row
+            .form-group.col-xs-6   
+              = f.label :contact, "Method of Contact"
+              = f.select :contact, Absence::CONTACT, {:include_blank => "Choose one"}, :class => "form-control"
+          .row
+            .form-group.col-xs-12   
+              = f.label :reason_extra, "Extra Details"
+              = f.text_area :reason_extra, :class => "form-control", :rows => 5   
+
+          %input{:type => "hidden", :id => "reg-ids", :name => "reg_ids"}
+          = f.hidden_field(:person_id, :value => @topic.mis_id)
+          = f.submit :class => "btn btn-primary", :onclick => "getRegEventIds()"
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal"} Close
+        %button.btn.btn-primary{:onclick => "getRegEventIds()"} Add  
+.modal.fade#no-slots-modal  
+  .modal-dialog
+    .modal-content   
+      .modal-header   
+        %h4 No Slots Selected
+      .modal-body
+        %p Please select slots from the timetable.    
+
+%script{:type=>"text/javascript"}
+  :plain
+    function getRegEventIds() {
+
+      var ids = $('.checked').map(function(){
+        return $(this).attr('id');
+      }).get();
+
+      var dates = $('.checked').map(function(){
+        return $(this).attr('value');
+      }).get();
+
+      var event_vars = [];
+      event_vars.push(ids);
+      event_vars.push(dates);
+
+
+
+      var regIds = document.getElementById('reg-ids');
+
+      regIds.value = JSON.stringify(event_vars);
+
+
+      console.log(event_vars);    
+      
+    }       
+
+    function countSlots() {
+
+      var ids = $('.checked').map(function(){
+        return $(this).attr('id');
+      }).get();
+
+      ids.length == 0 ? $('#no-slots-modal').modal('show') : $('#add-absence-modal').modal('show');
+
+      console.log(ids.length);    
+
+    }

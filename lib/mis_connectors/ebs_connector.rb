@@ -101,6 +101,7 @@ module MisPerson
         @person.import_attendances if options[:attendances]
         @person.import_quals if options[:quals]
         @person.import_absences if options[:absences]
+        # @person.import_absences
         @person.import_support_plps if options[:support_plps]
         return @person
       else
@@ -299,15 +300,28 @@ module MisPerson
 
   def import_absences
     Ebs::Absence.find_all_by_person_id(mis_id).each do |a|
-      next if absences.detect{|ab| a.notified_at == ab.created_at}
+      register_event_details_slot_ids = []
+      register_event_details_slot_dates = []      
+      a.absence_slots.each do |as|
+        register_event_details_slot_ids << as.register_event_details_slot_id
+      end
+      register_event_details_slot_ids.each do |redsi|
+        register_event_details_slot_dates << Ebs::RegisterEventDetailsSlot.where(id: redsi)[0].planned_start_date
+      end
+      start_date = register_event_details_slot_dates.min.nil? ? '' : register_event_details_slot_dates.min
+      end_date = register_event_details_slot_dates.max.nil? ? '' : register_event_details_slot_dates.max
+      next if absences.detect{|ab| a.created_at == ab.created_at}
       next unless a.notified_at
       na = absences.create(
-        :body => a.reason_extra,
-        :category => a.reason,
+        :reason_extra => a.reason_extra,
+        :reason => a.reason,
         :usage_code => a.usage_code,
-        :created_at => a.notified_at,
+        :created_at => a.created_at,
         :lessons_missed => a.absence_slots_count,
-        :contact_category => a.contact
+        :contact => a.contact,
+        :notified_at => a.notified_at,
+        :start_date => start_date,
+        :end_date => end_date
       )
     end
   end

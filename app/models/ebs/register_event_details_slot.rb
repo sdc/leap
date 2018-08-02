@@ -15,13 +15,19 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ebs::RegisterEventDetailsSlot < Ebs::Model
+
+  attr_accessible :usage_code
   
+  self.table_name= "register_event_details_slots"  
   # self.primary_key= :id
   self.primary_key= :id
+  belongs_to :register_event_detail
   belongs_to :register_event
   belongs_to :register_event_slot
   delegate   :description, :to => :register_event
   delegate   :rooms, :teachers, :to => :register_event_slot
+  has_one    :absence_slot
+  has_one    :absence, :through => :absence_slot  
 
   def the_object
     begin

@@ -50,7 +50,6 @@ class TimetablesController < ApplicationController
       registers_from_date = [@date, max_registers_date].min
       registers_to_date = [@end_date, max_registers_date].min
     end
-    
     @registers = @topic.timetable_events(:from => registers_from_date, :to => registers_to_date)
     @view = View.for_user.find_by_name("timetable")
     @events = if @topic.kind_of? Person

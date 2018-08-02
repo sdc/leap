@@ -9,6 +9,8 @@ doc/app
 config/database.yml
 public/photos
 config/initializers/error_mail.rb
+config/initializers/secret_token.rb
 config/deploy.rb
 config/deploy/*
 .capistrano
+.rvmrc
