@@ -102,8 +102,8 @@
         .modal-body
           .row
             .form-group.col-xs-6   
-              = f.label :reason, "Reason"
-              = f.select :reason, Absence::REASONS, {:include_blank => "Choose one"}, :class => "form-control"
+              = f.label :category, "Reason"
+              = f.select :category, Absence::REASONS, {:include_blank => "Choose one"}, :class => "form-control"
             .form-group.col-xs-6   
               = f.label :usage_code, "Mark"
               = f.select :usage_code, ["K","L","E","O","A"], {:include_blank => "Choose one"}, :class => "form-control"
@@ -117,18 +117,18 @@
               / = f.time_select :notified_at, {:minute_step => 5}, :class => "form-control time-select", :style => "width: 40%"
               .row
                 .form-group.col-xs-5
-                  = f.select :hours, 00..23, {}, :class => "form-control", :style => "width: 100%"
+                  = f.select :hours, '00'..'23', {}, :class => "form-control", :style => "width: 100%"
                 .form-group.col-xs-1 :  
                 .form-group.col-xs-5
-                  = f.select :mins, 00..55, {}, :class => "form-control", :style => "width: 100%"
+                  = f.select :mins, '00'..'55', {}, :class => "form-control", :style => "width: 100%"
           .row
             .form-group.col-xs-6   
-              = f.label :contact, "Method of Contact"
-              = f.select :contact, Absence::CONTACT, {:include_blank => "Choose one"}, :class => "form-control"
+              = f.label :contact_category, "Method of Contact"
+              = f.select :contact_category, Absence::CONTACT, {:include_blank => "Choose one"}, :class => "form-control"
           .row
             .form-group.col-xs-12   
-              = f.label :reason_extra, "Extra Details"
-              = f.text_area :reason_extra, :class => "form-control", :rows => 5   
+              = f.label :body, "Extra Details"
+              = f.text_area :body, :class => "form-control", :rows => 5   
 
           %input{:type => "hidden", :id => "reg-ids", :name => "reg_ids"}
           = f.hidden_field(:person_id, :value => @topic.mis_id)

@@ -313,12 +313,12 @@ module MisPerson
       next if absences.detect{|ab| a.created_at == ab.created_at}
       next unless a.notified_at
       na = absences.create(
-        :reason_extra => a.reason_extra,
-        :reason => a.reason,
+        :body => a.reason_extra,
+        :category => a.reason,
         :usage_code => a.usage_code,
         :created_at => a.created_at,
         :lessons_missed => a.absence_slots_count,
-        :contact => a.contact,
+        :contact_category => a.contact,
         :notified_at => a.notified_at,
         :start_date => start_date,
         :end_date => end_date

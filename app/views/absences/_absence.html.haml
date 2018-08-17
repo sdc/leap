@@ -1,12 +1,12 @@
 - begin
   %tr
-    - binding.pry
+    / - binding.pry
     %td{:style => "text-align: center"}= absence.usage_code
-    %td= absence.reason
-    %td{:style => "max-width:250px"}= absence.reason_extra
+    %td= absence.category
+    %td{:style => "max-width:250px"}= absence.body
     %td{:style => "text-align: center"}= absence.lessons_missed
     %td= absence.notified_at.strftime("%d-%m-%Y %H.%M")
-    %td= absence.contact
+    %td= absence.contact_category
     %td= absence.start_date.strftime("%d-%m-%Y")
     %td= absence.end_date.strftime("%d-%m-%Y")
     %td= check_box_tag(dom_id(absence) + "_cb", 1, false, :disabled => !(params[:validate]))

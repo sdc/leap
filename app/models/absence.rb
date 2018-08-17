@@ -30,7 +30,10 @@ class Absence < ActiveRecord::Base
              "Unable to Contact"
             ]
 
-  attr_accessible :lessons_missed, :reason, :reason_extra, :usage_code, :notified_at, :contact, :created_at, :deleted, :from_date, :person_id, :created_by_id, :updated_at, :start_date, :end_date
+  attr_accessible :lessons_missed, :category, :body, :usage_code, :notified_at, :contact_category, :created_at, :deleted, :from_date, :person_id, :created_by_id, :updated_at, :start_date, :end_date
+  # alias_attribute :reason, :category
+
+
   belongs_to :person
   has_many   :absence_slots, :dependent => :destroy
   has_many   :register_event_details_slots, :through => :absence_slots, :order => "planned_start_date"
