@@ -1,1 +1,19 @@
-TEST
+Dear #{@teacher.forename},
+%br
+%br
+Learner #{@learner.forename} #{@learner.surname}(#{@learner.person_code}) will be absent from your session, 
+%br
+%br
+#{@register_event.event_code} - #{@register_event.description}
+%br
+%br
+taking place between
+%br
+%br
+#{@slot.planned_start_date.strftime("%d-%m-%Y %H.%M")} and #{@slot.planned_end_date.strftime("%d-%m-%Y %H.%M")}.
+%br
+%br
+Kind regards,
+%br
+%br
+Absence Team
