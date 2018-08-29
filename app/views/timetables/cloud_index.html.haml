@@ -13,15 +13,13 @@
         = link_to person_timetables_url(@topic,:date => @date + 1.week), :class => "btn" do
           Next
           %i.fa.fa-arrow-right  
-  %button.btn.btn-primary{"data-toggle" => "modal", "data-target" => "#add-tt-act-modal"}
+  %button.btn.btn-primary.pull-right{"data-toggle" => "modal", "data-target" => "#add-tt-act-modal"}
     %i.fa.fa-fw.fa-plus
-    Add Event   
-  / %button.btn.btn-primary.pull-right{:onclick => "countSlots()", "data-toggle" => "modal", "data-target" => "#add-absence-modal"}
-  /   %i.fa.fa-fw.fa-plus
-  /   Report Absence    
-  %button.btn.btn-primary.pull-right{:onclick => "countSlots()"}
-    %i.fa.fa-fw.fa-plus
-    Report Absence         
+    Add Event  
+  - if Person.user.admin?  
+    %button.btn.btn-primary{:onclick => "countSlots()"}
+      %i.fa.fa-fw.fa-plus
+      Report Absence         
 .row#timetable.panel.panel-default
   .col-xs-1
     .hour{:style => "height:37px"}
@@ -133,9 +131,6 @@
           %input{:type => "hidden", :id => "reg-ids", :name => "reg_ids"}
           = f.hidden_field(:person_id, :value => @topic.mis_id)
           = f.submit :class => "btn btn-primary", :onclick => "getRegEventIds()"
-      .modal-footer
-        %button.btn.btn-default{"data-dismiss" => "modal"} Close
-        %button.btn.btn-primary{:onclick => "getRegEventIds()"} Add  
 .modal.fade#no-slots-modal  
   .modal-dialog
     .modal-content   
@@ -160,12 +155,9 @@
       event_vars.push(ids);
       event_vars.push(dates);
 
-
-
       var regIds = document.getElementById('reg-ids');
 
       regIds.value = JSON.stringify(event_vars);
-
 
       console.log(event_vars);    
       
