@@ -32,7 +32,6 @@ class AbsencesController < ApplicationController
       else
         teacher = Ebs::Person.find(Ebs::RegisterEventDetailsSlot.where(planned_start_date: slot.planned_start_date, register_event_id: slot.register_event_id, object_type: 'T')[0].object_id)
       end
-      binding.pry
       register_event = Ebs::RegisterEvent.find(slot.register_event_id)
       learner = Ebs::Person.find(slot.object_id)
       TeacherMailer.email_teacher(teacher, learner, register_event, slot).deliver
