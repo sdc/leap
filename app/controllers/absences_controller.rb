@@ -27,9 +27,12 @@ class AbsencesController < ApplicationController
       slot = Ebs::RegisterEventDetailsSlot.where(id: si)[0]
       slot.usage_code = @absence.usage_code
       slot.save!
-
-      teacher = Ebs::Person.find(Ebs::RegisterEventDetailsSlot.where(planned_start_date: slot.planned_start_date, register_event_id: slot.register_event_id, object_type: 'T')[0].object_id)
-      # teacher = Ebs::Person.find(30141843)
+      if Rails.env == "development"
+        teacher = Ebs::Person.find(30141843)
+      else
+        teacher = Ebs::Person.find(Ebs::RegisterEventDetailsSlot.where(planned_start_date: slot.planned_start_date, register_event_id: slot.register_event_id, object_type: 'T')[0].object_id)
+      end
+      binding.pry
       register_event = Ebs::RegisterEvent.find(slot.register_event_id)
       learner = Ebs::Person.find(slot.object_id)
       TeacherMailer.email_teacher(teacher, learner, register_event, slot).deliver
