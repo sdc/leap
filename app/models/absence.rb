@@ -1,22 +1,39 @@
 # class Absence < ActiveRecord::Base
 class Absence < Eventable
 
-  REASONS = ["Work",
-             "Transport Problems",
-             "Medical Appointment",
-             "Sickness",
-             "Holiday",
-             "Personal Reasons",
-             "Family Issues",
-             "Job Interview",
-             "Bereavement/Funeral",
-             "Adverse Weather",
-             "Bad Timekeeping",
-             "Requires Attention",
-	           "Unable to Contact",
-	           "Suspended",
+  # REASONS = ["Work",
+  #            "Transport Problems",
+  #            "Medical Appointment",
+  #            "Sickness",
+  #            "Holiday",
+  #            "Personal Reasons",
+  #            "Family Issues",
+  #            "Job Interview",
+  #            "Bereavement/Funeral",
+  #            "Adverse Weather",
+  #            "Bad Timekeeping",
+  #            "Requires Attention",
+	 #           "Unable to Contact",
+	 #           "Suspended",
+  #            "Other"
+  #           ]
+
+  REASONS = ["Medical appt that cannot be rearranged outside of college hours (acceptable)",
+             "Recognised Religious holidays (acceptable)",
+             "University Open Day or career related interview or audition (acceptable)",
+             "Attendance at a funeral (acceptable)",
+             "A Driving test (acceptable)",
+             "A course reps meeting (acceptable)",
+             "Sickness (acceptable)",
+             "Family emergency / bereavement (acceptable)",
+             "Holiday (unacceptable)",
+             "Paid or unpaid work that is not part of the course (unacceptable)",
+             "Non-urgent medical appointments that could be arranged outside of lessons (unacceptable)",
+             "Birthdays or similar celebrations (unacceptable)",
+             "Babysitting younger siblings (unacceptable)",
+             "Driving Lessons (unacceptable)",
              "Other"
-            ]
+            ]            
 
   CONTACT = ["Phone call from student",
              "Phone call from parent",
