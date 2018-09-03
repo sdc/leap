@@ -44,13 +44,13 @@ class Absence < Eventable
 
   validates_presence_of "person_id"
 
-  # def self.icon
-  #   "http://eilp.southdevon.ac.uk/images/absence.png"
-  # end
+  def subtitle
+    usage_code
+  end
 
-  # def icon
-  #   "http://eilp.southdevon.ac.uk/images/#{(usage_code or "k").downcase}.png"
-  # end
+  def status
+    Ilp2::Application.config.mis_usage_codes[usage_code]
+  end  
 
   def send_message
     register_event_details_slots.map{|s| s.register_event.teachers}.flatten.uniq.each do |to|
@@ -64,53 +64,3 @@ class Absence < Eventable
   end
 
 end
-
-# class Absence < Ebs::Model
-
-#   REASONS = ["Work",
-#              "Transport Problems",
-#              "Medical Appointment",
-#              "Sickness",
-#              "Holiday",
-#              "Personal Reasons",
-#              "Family Issues",
-#              "Job Interview",
-#              "Bereavement/Funeral",
-#              "Adverse Weather",
-#              "Bad Timekeeping",
-#              "Requires Attention",
-#              "Unable to Contact",
-#              "Suspended",
-#              "Other"
-#             ]
-
-#   CONTACT = ["Phone call from student",
-#              "Phone call from parent",
-#              "Email",
-#              "Signed in late",
-#              "Signed out early",
-#              "Informed by tutor",
-#              "SDC Contacted - Parent",
-#              "SDC Contacted - Student",
-#              "SDC Contacted - Other",
-#              "College Staff",
-#              "Unable to Contact"
-#             ]
-
-#   belongs_to :person
-#   attr_accessible :lessons_missed, :reason, :reason_extra, :usage_code, :contact, :created_at, :deleted, :from_date, :person_id
-
-#   validates_presence_of "person_id"
-#   # self.table_name= "addresses"
-#   self.table_name= "sdc_ilp_absences"
-
-#   # default_scope where(:owner_type => "P")
-#   # self.primary_key= "owner_ref"
-
-#   # belongs_to :person,  :foreign_key => "owner_ref"
-
-#   # def postcode
-#   #   (uk_post_code_pt1 || "") + " " + (uk_post_code_pt2 || "")
-#   # end
-
-# end
