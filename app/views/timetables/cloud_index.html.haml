@@ -101,10 +101,10 @@
           .row
             .form-group.col-xs-6   
               = f.label :category, "Reason"
-              = f.select :category, Absence::REASONS, {:include_blank => "Choose one"}, :class => "form-control"
+              = f.select :category, Absence::REASONS, {:include_blank => "Choose one"}, :class => "form-control", :required => "required"
             .form-group.col-xs-6   
               = f.label :usage_code, "Mark"
-              = f.select :usage_code, ["K","L","E","O","A"], {:include_blank => "Choose one"}, :class => "form-control"
+              = f.select :usage_code, ["K","L","E","O","A"], {:include_blank => "Choose one"}, :class => "form-control", :required => "required"
           .row    
             .form-group.col-xs-6   
               = f.label :notified_at, "Notified at" 
@@ -117,12 +117,13 @@
                 .form-group.col-xs-5
                   = f.select :hours, '00'..'23', {}, :class => "form-control", :style => "width: 100%"
                 .form-group.col-xs-1 :  
+                - mins = ['00','05','10','15','20','25','30','35','40','45','50','55']
                 .form-group.col-xs-5
-                  = f.select :mins, '00'..'55', {}, :class => "form-control", :style => "width: 100%"
+                  = f.select :mins, mins, {}, :class => "form-control", :style => "width: 100%"
           .row
             .form-group.col-xs-6   
               = f.label :contact_category, "Method of Contact"
-              = f.select :contact_category, Absence::CONTACT, {:include_blank => "Choose one"}, :class => "form-control"
+              = f.select :contact_category, Absence::CONTACT, {:include_blank => "Choose one"}, :class => "form-control", :required => "required"
           .row
             .form-group.col-xs-12   
               = f.label :body, "Extra Details"
