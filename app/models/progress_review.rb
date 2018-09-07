@@ -113,7 +113,7 @@ class ProgressReview < Eventable
 
   def self.par_date_range( revno )
     par_dates = []
-    Settings.par_date_ranges.split("|").each{|x| b=x.split(';'); par_dates << { :rev => b[0], :from => b[1], :to => b[2] } if b[0] == revno.to_s && ( b[1].blank? || Date.strptime(b[1], '%d/%m/%Y') <= Date.today ) && ( b[2].blank? || Date.strptime(b[2], '%d/%m/%Y') >= Date.today ) }
+    Settings.par_date_ranges.split("|").each{|x| b=x.split(';'); par_dates << { :rev => b[0], :from => b[1], :to => b[2] } if b[0] == revno.to_s && ( b[1].blank? || Date.strptime(b[1], '%d/%m/%Y') <= Date.today ) && ( b[2].blank? || Date.strptime(b[2], '%d/%m/%Y') >= Date.today ) && ( b[3].blank? || b[3] == MISC::MiscDates.acyr ) }
     par_dates.sort_by! { | d | [d[:from], d[:to]] }
     par_dates.last if par_dates.last.present?
   end
