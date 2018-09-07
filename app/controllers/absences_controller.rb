@@ -37,8 +37,7 @@ class AbsencesController < ApplicationController
         learner = Ebs::Person.find(slot.object_id)
         TeacherMailer.email_teacher(teacher, learner, register_event, slot).deliver
       end
-
-      redirect_to "/people/#{@absence.person_id}/timetables?refresh=true"
+      redirect_to "#{params[:absence][:return_url]}?&refresh=true"
     end
   end
 

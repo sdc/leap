@@ -131,6 +131,7 @@
 
           %input{:type => "hidden", :id => "reg-ids", :name => "reg_ids"}
           = f.hidden_field(:person_id, :value => @topic.mis_id)
+          = f.hidden_field(:return_url, :value => request.original_url)
           = f.submit :class => "btn btn-primary", :onclick => "getRegEventIds()"
 .modal.fade#no-slots-modal  
   .modal-dialog
