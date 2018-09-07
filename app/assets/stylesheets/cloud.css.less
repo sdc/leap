@@ -800,3 +800,45 @@ max-height: auto; /* or to whatever you want here */
   margin-bottom: 0px
 }
 
+.table-scroll {
+  position:relative;
+  margin:auto;
+  overflow:hidden;
+
+  table {
+    width:100%;
+    margin:auto;
+  }
+
+  th,td {
+    /* white-space:nowrap; */
+    vertical-align:top;
+  }
+}
+.table-scroll-wrap {
+  width:100%;
+  overflow:auto;
+}
+.table-scroll-clone {
+  position:absolute;
+  top:0;
+  left:0;
+  pointer-events:none;
+
+  th,td {
+    visibility:hidden;
+    border-color:transparent;
+  }
+
+  tbody th {
+    visibility:visible;
+  }
+
+  thead,tfoot {
+    background:transparent;
+  }
+}
+.table-scroll-clone .table-scroll-fixed-side {
+  background:#fff;
+  visibility:visible;
+}
