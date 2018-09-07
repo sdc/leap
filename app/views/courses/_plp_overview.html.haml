@@ -3,117 +3,120 @@
 - require 'misc/misc_dates'
 
 .scroll-x
-  %table#overview-plp-table.table.table-hover.table-condensed
-    %thead
-      %tr
-        %th{:colspan => 3}
-        %th.bl{:colspan => 3}Core
-        %th.core_hide.visible-lg{:colspan => 1}
-        %th.text-right
-          %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".core_hide"}
-            %i.fa.fa-eye
-        %th.bl{:colspan => 4}English
-        %th.visible-lg.english_hide{:colspan => 1}
-        %th.text-right
-          %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".english_hide"}
-            %i.fa.fa-eye
-        %th.bl{:colspan => 4}Maths
-        %th.visible-lg.maths_hide{:colspan => 1}
-        %th.text-right
-          %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".maths_hide"}
-            %i.fa.fa-eye
-      %tr
-        %th.text-right.nowr{ :style => "width:1px" } Name
-        %th.text-center.bl{ :title => "Attendance overall"} Att
-        %th.text-right.bl.visible-lg.nowr{ :style => "width:1px", :title => "GCSE Point Score" } PS
-        - ["core","english","maths"].each do |ct|
-          %th.text-center.bl{ :title => "Attendance for #{ct}" } Att
-          %th.text-center{ :title => "Last 6 week attendance for #{ct}" } 6&nbsp;Week
-          %th.text-center.visible-lg.bl{:class => "#{ct}_hide"} Previous
-          %th.text-center.visible-lg{:class => "#{ct}_hide"} Current
-          %th.text-center{ :title => "Target Grade for #{ct}" } TG
-          - if ["english","maths"].include? ct
-            %th.text-right.bl.visible-lg.nowr{ :style => "width:1px", :title => "Last three Attendance Marks for #{ct}" } Marks
-    %tbody
-      - @person_courses.each do |pc|
-        %tr{"data-mis-status" => pc.mis_status.downcase}
-          %td.text-right.nowr{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
-            %b= link_to pc.name, pc.person, :target => "_blank"
-          - person_attendances = pc.person.attendances.where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", MISC::MiscDates.startdate_from_acyr(@topic.year), MISC::MiscDates.enddate_from_acyr(@topic.year) )
-          - person_attendance = {}
-          - person_attendance[pc.person.id.to_s => "overall"] = person_attendances.select { |x| x.course_type.to_s.downcase == "overall" }.last
-          - person_attendance[pc.person.id.to_s => "core"] = person_attendances.select { |x| x.course_type.to_s.downcase == "core" }.last
-          - person_attendance[pc.person.id.to_s => "english"] = person_attendances.select { |x| x.course_type.to_s.downcase == "english" }.last
-          - person_attendance[pc.person.id.to_s => "maths"] = person_attendances.select { |x| x.course_type.to_s.downcase == "maths" }.last
-          - person_attendance[pc.person.id.to_s => @topic.code.to_s.downcase] = person_attendances.select { |x| x.enrol_course.to_s.downcase == @topic.code.to_s.downcase }.last
+  #scroll-overview-plp-table.table-scroll
+    .table-scroll-wrap
+      %table#overview-plp-table.table.table-hover.table-condensed.table-scroll-main
+        %thead
+          %tr
+            %th.table-scroll-fixed-side{:colspan => 1, :scope =>"col", :style => "width:1px"}
+            %th{:colspan => 2}
+            %th.bl{:colspan => 3}Core
+            %th.core_hide.visible-lg{:colspan => 1}
+            %th.text-right
+              %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".core_hide"}
+                %i.fa.fa-eye
+            %th.bl{:colspan => 4}English
+            %th.visible-lg.english_hide{:colspan => 1}
+            %th.text-right
+              %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".english_hide"}
+                %i.fa.fa-eye
+            %th.bl{:colspan => 4}Maths
+            %th.visible-lg.maths_hide{:colspan => 1}
+            %th.text-right
+              %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".maths_hide"}
+                %i.fa.fa-eye
+          %tr
+            %th.text-right.nowr.table-scroll-fixed-side{:scope =>"col", :style => "width:1px"} Name
+            %th.text-center.bl{ :title => "Attendance overall"} Att
+            %th.text-right.bl.visible-lg.nowr{ :style => "width:1px", :title => "GCSE Point Score" } PS
+            - ["core","english","maths"].each do |ct|
+              %th.text-center.bl{ :title => "Attendance for #{ct}" } Att
+              %th.text-center{ :title => "Last 6 week attendance for #{ct}" } 6&nbsp;Week
+              %th.text-center.visible-lg.bl{:class => "#{ct}_hide"} Previous
+              %th.text-center.visible-lg{:class => "#{ct}_hide"} Current
+              %th.text-center{ :title => "Target Grade for #{ct}" } TG
+              - if ["english","maths"].include? ct
+                %th.text-right.bl.visible-lg.nowr{ :style => "width:1px", :title => "Last three Attendance Marks for #{ct}" } Marks
+        %tbody
+          - @person_courses.each do |pc|
+            %tr{"data-mis-status" => pc.mis_status.downcase}
+              %th.text-right.nowr.table-scroll-fixed-side{ :title => "#{pc.person.mis_id}", :style => "width:1px" }
+                %b= link_to pc.name, pc.person, :target => "_blank"
+              - person_attendances = pc.person.attendances.where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", MISC::MiscDates.startdate_from_acyr(@topic.year), MISC::MiscDates.enddate_from_acyr(@topic.year) )
+              - person_attendance = {}
+              - person_attendance[pc.person.id.to_s => "overall"] = person_attendances.select { |x| x.course_type.to_s.downcase == "overall" }.last
+              - person_attendance[pc.person.id.to_s => "core"] = person_attendances.select { |x| x.course_type.to_s.downcase == "core" }.last
+              - person_attendance[pc.person.id.to_s => "english"] = person_attendances.select { |x| x.course_type.to_s.downcase == "english" }.last
+              - person_attendance[pc.person.id.to_s => "maths"] = person_attendances.select { |x| x.course_type.to_s.downcase == "maths" }.last
+              - person_attendance[pc.person.id.to_s => @topic.code.to_s.downcase] = person_attendances.select { |x| x.enrol_course.to_s.downcase == @topic.code.to_s.downcase }.last
 
-          - person_attendance[pc.person.id.to_s => "overall_6week"] = person_attendance[pc.person.id.to_s => "overall"].try(:att_6_week)
-          - person_attendance[pc.person.id.to_s => "core_6week"] = person_attendance[pc.person.id.to_s => "core"].try(:att_6_week)
-          - person_attendance[pc.person.id.to_s => "english_6week"] = person_attendance[pc.person.id.to_s => "english"].try(:att_6_week)
-          - person_attendance[pc.person.id.to_s => "maths_6week"] = person_attendance[pc.person.id.to_s => "maths"].try(:att_6_week)
-          - person_attendance[pc.person.id.to_s => @topic.code.to_s.downcase + "_6week"] = person_attendance[pc.person.id.to_s => @topic.code.to_s.downcase].try(:att_6_week)
+              - person_attendance[pc.person.id.to_s => "overall_6week"] = person_attendance[pc.person.id.to_s => "overall"].try(:att_6_week)
+              - person_attendance[pc.person.id.to_s => "core_6week"] = person_attendance[pc.person.id.to_s => "core"].try(:att_6_week)
+              - person_attendance[pc.person.id.to_s => "english_6week"] = person_attendance[pc.person.id.to_s => "english"].try(:att_6_week)
+              - person_attendance[pc.person.id.to_s => "maths_6week"] = person_attendance[pc.person.id.to_s => "maths"].try(:att_6_week)
+              - person_attendance[pc.person.id.to_s => @topic.code.to_s.downcase + "_6week"] = person_attendance[pc.person.id.to_s => @topic.code.to_s.downcase].try(:att_6_week)
 
-          - if person_attendance[pc.person.id.to_s => "overall"]
-            - title = "Attendance #{person_attendance[pc.person.id.to_s => "overall"].status(true)}"
-            %td.bl.text-right{:class => person_attendance[pc.person.id.to_s => "overall"].status(true), :style => "width:1px", :title => title}= "#{person_attendance[pc.person.id.to_s => 'overall'].try :att_year}%"
-          - else
-            %td.bl.text-center{ :style => "width:1px" }
-          - gcse_ps = pc.person.progresses.where(:course_year => @topic.year).order("case when course_status = 'Active' then 0 else 1 end, created_at desc").first.try(:qca_score)
-          - if defined?(gcse_ps) && gcse_ps.respond_to?(:round) && gcse_ps.round(0) > 0
-            %td.bl.text-right.visible-lg{:title => "GCSE Point Score"}= gcse_ps.round(0)
-          - else
-            %td.bl.visible-lg{:title => "No GCSE Point Score"}
-          - ["core","english","maths"].each do |ct|
-            - represented_course_codes = pc.person.progresses.where(:course_year => @topic.year, :course_status => 'Active', :course_type => ct).try(:map) {|x| "#{x.course_code}: #{x.course_title}" }.try(:join, " <br>")
-            - represented_course_codes += " <br>" unless represented_course_codes.nil?
-            - if person_attendance[pc.person.id.to_s => ct]
-              - title = "#{represented_course_codes} Attendance #{person_attendance[pc.person.id.to_s => ct].status(true)}"
-              %td.bl.text-right{:class => person_attendance[pc.person.id.to_s => ct].status(true), :"data-html" => "true", :title => title}= "#{person_attendance[pc.person.id.to_s => ct].try :att_year}%"
-            - else
-              %td.bl.text-center{:title => "No Attendance"}
-
-            - if person_attendance[pc.person.id.to_s => ct + "_6week"].present?
-              - title = "#{represented_course_codes} Last 6 weeks attendance #{person_attendance[pc.person.id.to_s => ct].status_6week(true)}"
-              %td.text-right{:class => person_attendance[pc.person.id.to_s => ct].status_6week(true), :"data-html" => "true", :title => title}= "#{person_attendance[pc.person.id.to_s => ct + "_6week"]}%"
-            - else
-              %td.text-center{:title => "No Attendance"}
-
-            - found_reviews = []
-            - (npr).downto(1).each { |x| found_reviews.push pc.person.progress_reviews.joins(:progress).where("progresses.id = progress_reviews.progress_id and progresses.course_year=? and LOWER(course_type) = ?",@topic.year,ct).order("number desc, created_at desc, id desc").where(:number => x).first }
-            - found_reviews.compact!
-            - ((found_reviews.count+1)..npr).each { found_reviews.push nil }
-            - found_reviews[0..1].reverse.each_with_index do |g, pc_index|
-
-              - represented_course_codes = ""
-              - represented_course_codes = pc.person.progresses.where(:id => g.progress_id, :course_status => 'Active', :course_year => @topic.year).try(:map) {|x| "#{x.course_code}: #{x.course_title}" }.try(:join, " <br>") unless g.nil?
-              - represented_course_codes += " <br>" unless represented_course_codes.nil?
-
-              - unless g.nil?
-                %td.text-center.visible-lg{:class => ["ragp_light_#{g.level}" + (pc_index==0 ? " bl" : "")], :"data-html" => "true", :title => "#{represented_course_codes} Review #{g.number} (#{g.created_at})"}= g.working_at
+              - if person_attendance[pc.person.id.to_s => "overall"]
+                - title = "Attendance #{person_attendance[pc.person.id.to_s => "overall"].status(true)}"
+                %td.bl.text-right{:class => person_attendance[pc.person.id.to_s => "overall"].status(true), :style => "width:1px", :title => title}= "#{person_attendance[pc.person.id.to_s => 'overall'].try :att_year}%"
               - else
-                %td.text-center.text-muted.visible-lg.text-center{:class => ["ragp_light_grey" + (pc_index==0 ? " bl" : "")], :title => "No Review"}
-
-            - tg = pc.person.initial_reviews.joins(:progress).where("progresses.id = initial_reviews.progress_id and progresses.course_year=? and LOWER(course_type) = ?",@topic.year,ct).order("created_at desc, id desc").first
-            - unless tg.nil?
-              %td.text-center.success{:title => "Target Grade for #{ct} (#{tg.created_at})"}= tg.target_grade 
-            - else
-              %td.text-center{:title => "No Target"}
-
-            - if ["english","maths"].include? ct
-              - represented_course_code = pc.person.progresses.where(:course_year => @topic.year, :course_status => 'Active', :course_type => ct).first.try(:course_code)
-              - ematt = EngMathAttendance.find_by_person_id_and_course_and_year( pc.person.id, represented_course_code, @topic.year )
-              - unless ematt.nil?
-                %td.bl.text-center{:title => "Last Date Of Attendance for #{ct}: #{ematt.last_date_att}"}= ematt.last_three_att
+                %td.bl.text-center{ :style => "width:1px" }
+              - gcse_ps = pc.person.progresses.where(:course_year => @topic.year).order("case when course_status = 'Active' then 0 else 1 end, created_at desc").first.try(:qca_score)
+              - if defined?(gcse_ps) && gcse_ps.respond_to?(:round) && gcse_ps.round(0) > 0
+                %td.bl.text-right.visible-lg{:title => "GCSE Point Score"}= gcse_ps.round(0)
               - else
-                %td.bl.text-center{:title => "No Attendance Marks"}
+                %td.bl.visible-lg{:title => "No GCSE Point Score"}
+              - ["core","english","maths"].each do |ct|
+                - represented_course_codes = pc.person.progresses.where(:course_year => @topic.year, :course_status => 'Active', :course_type => ct).try(:map) {|x| "#{x.course_code}: #{x.course_title}" }.try(:join, " <br>")
+                - represented_course_codes += " <br>" unless represented_course_codes.nil?
+                - if person_attendance[pc.person.id.to_s => ct]
+                  - title = "#{represented_course_codes} Attendance #{person_attendance[pc.person.id.to_s => ct].status(true)}"
+                  %td.bl.text-right{:class => person_attendance[pc.person.id.to_s => ct].status(true), :"data-html" => "true", :title => title}= "#{person_attendance[pc.person.id.to_s => ct].try :att_year}%"
+                - else
+                  %td.bl.text-center{:title => "No Attendance"}
 
-    %tfoot
-      %tr
-        %td{:colspan => 19} 
-        %td.text-center
-          - if @rpub 
-            = link_to course_view_url(@topic,View.for_user.find_by_name("reviews"), :status => "complete", :title => @window, :format => "pdf"), :class => "btn btn-default btn-xs", :title => "Print all published reviews" do
-              %i.fa.fa-print
+                - if person_attendance[pc.person.id.to_s => ct + "_6week"].present?
+                  - title = "#{represented_course_codes} Last 6 weeks attendance #{person_attendance[pc.person.id.to_s => ct].status_6week(true)}"
+                  %td.text-right{:class => person_attendance[pc.person.id.to_s => ct].status_6week(true), :"data-html" => "true", :title => title}= "#{person_attendance[pc.person.id.to_s => ct + "_6week"]}%"
+                - else
+                  %td.text-center{:title => "No Attendance"}
+
+                - found_reviews = []
+                - (npr).downto(1).each { |x| found_reviews.push pc.person.progress_reviews.joins(:progress).where("progresses.id = progress_reviews.progress_id and progresses.course_year=? and LOWER(course_type) = ?",@topic.year,ct).order("number desc, created_at desc, id desc").where(:number => x).first }
+                - found_reviews.compact!
+                - ((found_reviews.count+1)..npr).each { found_reviews.push nil }
+                - found_reviews[0..1].reverse.each_with_index do |g, pc_index|
+
+                  - represented_course_codes = ""
+                  - represented_course_codes = pc.person.progresses.where(:id => g.progress_id, :course_status => 'Active', :course_year => @topic.year).try(:map) {|x| "#{x.course_code}: #{x.course_title}" }.try(:join, " <br>") unless g.nil?
+                  - represented_course_codes += " <br>" unless represented_course_codes.nil?
+
+                  - unless g.nil?
+                    %td.text-center.visible-lg{:class => ["ragp_light_#{g.level}" + (pc_index==0 ? " bl" : "")], :"data-html" => "true", :title => "#{represented_course_codes} Review #{g.number} (#{g.created_at})"}= g.working_at
+                  - else
+                    %td.text-center.text-muted.visible-lg.text-center{:class => ["ragp_light_grey" + (pc_index==0 ? " bl" : "")], :title => "No Review"}
+
+                - tg = pc.person.initial_reviews.joins(:progress).where("progresses.id = initial_reviews.progress_id and progresses.course_year=? and LOWER(course_type) = ?",@topic.year,ct).order("created_at desc, id desc").first
+                - unless tg.nil?
+                  %td.text-center.success{:title => "Target Grade for #{ct} (#{tg.created_at})"}= tg.target_grade
+                - else
+                  %td.text-center{:title => "No Target"}
+
+                - if ["english","maths"].include? ct
+                  - represented_course_code = pc.person.progresses.where(:course_year => @topic.year, :course_status => 'Active', :course_type => ct).first.try(:course_code)
+                  - ematt = EngMathAttendance.find_by_person_id_and_course_and_year( pc.person.id, represented_course_code, @topic.year )
+                  - unless ematt.nil?
+                    %td.bl.text-center{:title => "Last Date Of Attendance for #{ct}: #{ematt.last_date_att}"}= ematt.last_three_att
+                  - else
+                    %td.bl.text-center{:title => "No Attendance Marks"}
+
+        %tfoot
+          %tr
+            %td{:colspan => 19}
+            %td.text-center
+              - if @rpub
+                = link_to course_view_url(@topic,View.for_user.find_by_name("reviews"), :status => "complete", :title => @window, :format => "pdf"), :class => "btn btn-default btn-xs", :title => "Print all published reviews" do
+                  %i.fa.fa-print
 %br
 .pull-right
   .btn-group.dropup
@@ -130,3 +133,7 @@
         %a{"data-download-table" => "#overview-plp-table", "data-download-type" => "csv"} 
           %i.fa.fa-fw.fa-file-o
           CSV
+
+:coffeescript
+  jQuery(document).ready ->
+    fixCol1("overview-plp-table")
