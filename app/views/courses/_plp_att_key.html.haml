@@ -1,0 +1,14 @@
+%table.plp_key.table-condensed.table-borderless
+  %tbody
+    %tr.ragp_light_purple
+      %td PURPLE
+      %td above&nbsp#{Settings.attendance_exceed_score.to_i}%
+    %tr.ragp_light_green
+      %td GREEN
+      %td #{Settings.attendance_high_score}%-#{Settings.attendance_exceed_score.to_i-1}%
+    %tr.ragp_light_amber
+      %td AMBER
+      %td #{Settings.attendance_low_score}%-#{Settings.attendance_high_score.to_i-1}%
+    %tr.ragp_light_red
+      %td RED
+      %td below&nbsp;#{Settings.attendance_low_score.to_i}%

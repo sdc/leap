@@ -39,6 +39,9 @@
     - if show_plp_tabs.include?("achievement")
       %li
         %a{:href => "#achieve", "data-toggle" => "tab", :id => "achievement_tab"} Achievement
+    - if show_plp_tabs.include?("progress")
+      %li
+        %a{:href => "#progress", "data-toggle" => "tab", :id => "progress_tab"} Progress
 
 .tab-content
   - if show_plp_tabs.include?("photos")
@@ -71,6 +74,10 @@
     .tab-pane.fade.panel.panel-default.row#achieve
       -# = render :partial => "courses/plp_achieve"
 
+  - if show_plp_tabs.include?("progress")
+    .tab-pane.fade.panel.panel-default.row#progress
+      -# = render :partial => "courses/plp_progress"
+
 -# if @user.staff?
   .row
     .span5
@@ -79,7 +86,7 @@
       - unless @topic.entry_reqs.empty?
         .row.home-page-block.right{:load_block => entry_reqs_block_course_url(@topic)}= image_tag "ajax-loader.gif"
 
-- [['overview','overview-plp'], ['reviews','reviews-plp'], ['support','support-plp'], ['checklist','checklist'], ['badges', 'badges'], ['achievement', 'achieve']].each do |plp|
+- [['overview','overview-plp'], ['reviews','reviews-plp'], ['support','support-plp'], ['checklist','checklist'], ['badges', 'badges'], ['achievement', 'achieve'], ['progress', 'progress']].each do |plp|
   - if show_plp_tabs.include?(plp[0])
     :coffeescript
       #{plp[0]}_tab_clickcount=0
