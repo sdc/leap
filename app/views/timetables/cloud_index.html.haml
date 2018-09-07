@@ -112,14 +112,13 @@
               / = f.date_select :notified_at
             .form-group.col-xs-6
               = f.label :notified_at, "Time"
-              / = f.time_select :notified_at, {:minute_step => 5}, :class => "form-control time-select", :style => "width: 40%"
               .row
                 .form-group.col-xs-5
-                  = f.select :hours, '00'..'23', {}, :class => "form-control", :style => "width: 100%"
+                  = f.select :hours, '00'..'23', {:selected => Time.now.strftime("%H")}, :class => "form-control", :style => "width: 100%"
                 .form-group.col-xs-1 :  
                 - mins = ['00','05','10','15','20','25','30','35','40','45','50','55']
                 .form-group.col-xs-5
-                  = f.select :mins, mins, {}, :class => "form-control", :style => "width: 100%"
+                  = f.select :mins, mins, {:selected => ((Time.now.strftime("%M").to_i/5)*5).to_s}, :class => "form-control", :style => "width: 100%"
           .row
             .form-group.col-xs-6   
               = f.label :contact_category, "Method of Contact"
