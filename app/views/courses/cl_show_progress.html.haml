@@ -103,3 +103,9 @@
               $('.btn-group > a.btn.active').click()                                # reapply page filters
               $('#' + '#{plp[1]}').find('[title]').tooltip({container: 'body'})     # reapply tooltip formatting
 
+              # reapply export table buttons
+              $('[data-download-table]').click ->
+                $($(this).attr('data-download-table')).tableExport
+                  type: $(this).attr('data-download-type')
+                  escape: $(this).attr('data-download-escape') or false
+                  htmlContent: true
