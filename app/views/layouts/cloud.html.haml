@@ -79,3 +79,15 @@
                 .modal-body
                   %i.fa.fa-spinner.fa-spin.fa-5x
                   %p.ajax-load-text Loading...
+
+.modal.fade#leap-test 
+  .modal-dialog
+    .modal-content   
+      .modal-header   
+        %h4 TEST SYSTEM
+      .modal-body
+        %p This is not a live system. Please don't enter any data here. 
+
+%script{:type=>"text/javascript"}
+  :plain
+    $('#leap-test').modal('show');
