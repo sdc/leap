@@ -15,12 +15,22 @@
           .col-md-6.col-xs-12.top-section{:class => '', :title => ( @user.staff? ? h(progress.course_code.upcase) : '' )}
             %h4 #{ h(progress.course_title.upcase) }
 
-        .col-md-6.col-xs-12.top-section.attendance-block.clickable{:style => ("background: ##{h(progress.attendance.bg)}" unless progress.attendance.nil?), "data-toggle" => 'modal', 'data-target' => ("#modal_" + h(progress.attendance.id.to_s) unless progress.attendance.nil?)}
+        .col-md-3.col-xs-12.top-section.attendance-block.clickable{:style => ("background: ##{h(progress.attendance.bg_6_week)}" unless progress.attendance.nil?), "data-toggle" => 'modal', 'data-target' => ("#modal_6week_" + h(progress.attendance.id.to_s) unless progress.attendance.nil?)}
+          %h4 Attendance 
+          - attendance_6_weeks = progress.attendance.try(:att_6_week) || nil
+          - if attendance_6_weeks.nil?
+            %h3 N/A
+          - else
+            %h3 #{ h(attendance_6_weeks) }%
+          (last 6 weeks)
+
+        .col-md-3.col-xs-12.top-section.attendance-block.clickable{:style => ("background: ##{h(progress.attendance.bg)}" unless progress.attendance.nil?), "data-toggle" => 'modal', 'data-target' => ("#modal_" + h(progress.attendance.id.to_s) unless progress.attendance.nil?)}
           %h4 Attendance
           - if progress.attendance.nil?
             %h3 0%
           - else
             %h3 #{ h(progress.attendance.att_year) }%
+          (overall)
 
       - if progress.show_par_reviews
         .row
@@ -56,6 +66,18 @@
               .attendance-text.md-6.col-sm-6.col-xs-6
                 %h4{:style => 'margin-bottom: 5px'} Your attendance for #{h(progress.course_title)} is
                 %h2 #{h(progress.attendance.att_year)}% 
+      .modal.fade{:id => "modal_6week_" + h(progress.attendance.id.to_s), "tabindex" => '-1', :role => 'dialog'}
+        .tile-modal.modal-dialog
+          .modal-content{:style => "background: ##{h(progress.attendance.bg_6_week)}"}
+            .modal-body.row
+              .attendance-tile.col-md-6.col-sm-6.col-xs-6
+                = render :partial => "tiles/attendance_6week", :locals => {:attendance => progress.attendance}
+              .attendance-text.md-6.col-sm-6.col-xs-6
+                %h4{:style => 'margin-bottom: 5px'} Your attendance for #{h(progress.course_title)} for the last 6 weeks is
+                - if (a6w = progress.attendance.try(:att_6_week)).nil?
+                  %h2 N/A
+                - else
+                  %h2 #{h(a6w)}%
 :javascript
   var authorisation = #{@user.staff? ? 'true' : 'false'};
   var base = "#{ h(request.base_url) }/people/#{ h(@topic.mis_id) }/";

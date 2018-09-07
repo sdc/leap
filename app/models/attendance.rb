@@ -36,17 +36,13 @@ class Attendance < Eventable
 
   def status(bs = false)
     begin
-      if att_year < Settings.attendance_low_score.to_i
-        bs ? :danger : :overdue
-      elsif att_year < Settings.attendance_high_score.to_i
-        bs ? :warning : :start
-      elsif ( !Settings.attendance_exceed_score.nil? && att_year >= Settings.attendance_exceed_score.to_i )
-        bs ? :exceed : :exceed
-      else
-        bs ? :success : :complete
-      end
-    rescue
-      :default
+      Attendance.get_status(att_year, bs)
+    end
+  end
+
+  def status_6week(bs = false)
+    begin
+      Attendance.get_status(att_6_week, bs)
     end
   end
 
@@ -54,15 +50,14 @@ class Attendance < Eventable
     "#{att_year}%"
   end
 
-  def siblings_same_year(course_type = "overall")
-    course_type = course_type.to_s
+  def siblings_same_year(course_type = "overall", enrol_course = nil)
     d,m = Settings.year_boundary_date.split("/").map{|x| x.to_i}
     bty = week_beginning.change(:month => m, :day => d)
-    if bty > week_beginning
-      return Attendance.where(:course_type => course_type, :person_id => person_id, :week_beginning => bty.change(:year => bty.year - 1)..bty)
-    else
-      return Attendance.where(:course_type => course_type, :person_id => person_id, :week_beginning => bty..bty.change(:year => bty.year + 1))
-    end
+
+    return Attendance.where(:course_type => course_type.to_s, :person_id => person_id, :week_beginning => bty.change(:year => bty.year - 1)..bty) if course_type.present? && bty > week_beginning
+    return Attendance.where(:course_type => course_type.to_s, :person_id => person_id, :week_beginning => bty..bty.change(:year => bty.year + 1)) if course_type.present?
+    return Attendance.where(:enrol_course => enrol_course.to_s, :person_id => person_id, :week_beginning => bty.change(:year => bty.year - 1)..bty) if enrol_course.present? && bty > week_beginning
+    return Attendance.where(:enrol_course => enrol_course.to_s, :person_id => person_id, :week_beginning => bty..bty.change(:year => bty.year + 1)) if enrol_course.present?
   end
 
   def to_tile
@@ -82,6 +77,31 @@ class Attendance < Eventable
       end
     rescue
       bg = "6a6"
+    end
+  end
+
+  def att_6_week
+    begin
+      # arr = Attendance.where( :person_id=> person_id, :course_type => course_type, week_beginning: 6.weeks.ago..Date.today  ).all.collect(&:att_week).compact if course_type.present?
+      # arr = Attendance.where( :person_id=> person_id, :enrol_course => enrol_course, week_beginning: 6.weeks.ago..Date.today  ).all.collect(&:att_week).compact if enrol_course.present?
+      arr = siblings_same_year(course_type, enrol_course).where( week_beginning: 6.weeks.ago..Date.today  ).all.collect(&:att_week).compact
+      return ( arr.map{|x| x.to_i}.sum / arr.length ) if arr.present? and arr.length > 0
+    end
+  end
+
+  def bg_6_week
+    begin
+      bg = if att_6_week < Settings.attendance_low_score.to_i
+        "a66"
+      elsif att_6_week < Settings.attendance_high_score.to_i
+        "da6"
+      elsif ( !Settings.attendance_exceed_score.nil? && att_6_week >= Settings.attendance_exceed_score.to_i )
+        "64a; color: white"
+      else
+        "6a6"
+      end
+    rescue
+      bg = "a66"
     end
   end
 
@@ -111,6 +131,22 @@ class Attendance < Eventable
 
   def icon_class
     "fa-clipboard"
+  end
+
+  def self.get_status(att_value = nil, bs = false)
+    begin
+      if att_value < Settings.attendance_low_score.to_i
+        bs ? :danger : :overdue
+      elsif att_value < Settings.attendance_high_score.to_i
+        bs ? :warning : :start
+      elsif ( !Settings.attendance_exceed_score.nil? && att_value >= Settings.attendance_exceed_score.to_i )
+        bs ? :exceed : :exceed
+      else
+        bs ? :success : :complete
+      end
+    rescue
+      :default
+    end
   end
 
 end

@@ -4,3 +4,4 @@
 //= require 'tableExport'
 //= require 'jquery.base64'
 //= require 'cloud_events'
+//= require 'fixcol1.js.coffee'

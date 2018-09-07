@@ -37,7 +37,7 @@ Ilp2::Application.routes.draw do
       get :next_lesson_block, :moodle_block, :reviews_block, :entry_reqs_block
       post :add
     end
-    resources :plps, :only => [:show]
+    resources :plps, :only => [:show], constraint: { id: /overview|reviews|support|checklist|badges|achievement|progress/ }
   end
 
   get 'populate_pi_types' => 'courses#populate_pi_types'

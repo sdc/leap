@@ -313,7 +313,7 @@ table.table td, table.table th {
   height: 100px;
   overflow-y:hidden;
 }
-.top-section:nth-child(2) {
+.top-section:nth-child(n+2) {
   margin-left: 10px;
 }
 
@@ -821,3 +821,63 @@ max-height: auto; /* or to whatever you want here */
   // border-bottom: 1px solid grey
 }
 
+.plp_key {
+  font-size: 10px;
+  font-weight: normal;
+  tr td{
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+.plp_progress_row_title {
+  font-weight: bold;
+}
+
+.plp_progress_row_dates {
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.table-scroll {
+  position:relative;
+  margin:auto;
+  overflow:hidden;
+
+  table {
+    width:100%;
+    margin:auto;
+  }
+
+  th,td {
+    /* white-space:nowrap; */
+    vertical-align:top;
+  }
+}
+.table-scroll-wrap {
+  width:100%;
+  overflow:auto;
+}
+.table-scroll-clone {
+  position:absolute;
+  top:0;
+  left:0;
+  pointer-events:none;
+
+  th,td {
+    visibility:hidden;
+    border-color:transparent;
+  }
+
+  tbody th {
+    visibility:visible;
+  }
+
+  thead,tfoot {
+    background:transparent;
+  }
+}
+.table-scroll-clone .table-scroll-fixed-side {
+  background:#fff;
+  visibility:visible;
+}
