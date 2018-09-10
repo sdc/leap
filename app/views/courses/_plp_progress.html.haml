@@ -4,7 +4,7 @@
 - Settings.par_date_ranges.split("|").each{|x| b=x.split(';'); par_dates << { :rev => b[0], :from => b[1], :to => b[2] } if ( b[3].blank? || b[3] == @topic.year ) }
 
 -# Look at only 'Active, CompNoResult, CompNotAch, CompAch, CompPart, CompNoResult, CompAchNoFund'
-- per_ids = @person_courses.map{ |x| (["active", "compnoresult", "compnotach", "compach", "comppart", "compnoresult", "compachnofund"].include? x[:mis_status].downcase) ? x[:person_id] : nil }.compact
+- per_ids = @person_courses.map{ |x| (["active", "compnoresult", "compnotach", "compach", "comppart", "compnoresult", "compachnofund"].include? x[:mis_status].try(:downcase)) ? x[:person_id] : nil }.compact
 
 - d_par_from = Date.strptime(par_dates.min_by{ |f| f[:from].to_date }[:from],"%d/%m/%Y").strftime("%Y-%m-%d") || MISC::MiscDates.startdate_from_acyr(@topic.year)
 - d_par_to = Date.strptime(par_dates.max_by{ |f| f[:to].to_date }[:to],"%d/%m/%Y").strftime("%Y-%m-%d") || MISC::MiscDates.enddate_from_acyr(@topic.year)
