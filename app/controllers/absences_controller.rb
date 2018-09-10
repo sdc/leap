@@ -24,14 +24,11 @@ class AbsencesController < ApplicationController
         end
       end
 
-      binding.pry
-
       slot_ids.each do |si|
         @absence_slot = Ebs::AbsenceSlot.new(absence_id: @absence.id, register_event_details_slot_id: si)
         @absence_slot.save!
         slot = Ebs::RegisterEventDetailsSlot.where(id: si)[0]
         slot.usage_code = @absence.usage_code
-        binding.pry
         slot.save!
         if Rails.env == "development"
           teacher = Ebs::Person.find(30141843)
