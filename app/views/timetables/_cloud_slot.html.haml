@@ -1,4 +1,4 @@
-.timetable-event{:id => cloud_slot.mis_id, :style => "top:#{cloud_slot.timetable_margin + 37}px;height:#{cloud_slot.timetable_height}px", :value => cloud_slot.timetable_start.strftime("%Y-%m-%d %H:%M:%S"),
+.timetable-event{:id => cloud_slot.respond_to?(:mis_id) ? cloud_slot.mis_id : '', :style => "top:#{cloud_slot.timetable_margin + 37}px;height:#{cloud_slot.timetable_height}px", :value => cloud_slot.timetable_start.strftime("%Y-%m-%d %H:%M:%S"),
   :class => "bg-#{cloud_slot.cl_status}", :onclick => "selectRegEvent(this.id)"}
   %h5= cloud_slot.title
   %ul

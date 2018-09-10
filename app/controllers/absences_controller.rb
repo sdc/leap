@@ -19,14 +19,19 @@ class AbsencesController < ApplicationController
         index = params[:reg_ids][0].index(ri)
         slot_date = params[:reg_ids][1][index]
         slot = Ebs::RegisterEventDetailsSlot.where(planned_start_date: slot_date, object_id: @absence.person_id, register_event_id: ri)[0]
-        slot_ids << slot.id
+        if slot.respond_to?(:id)
+          slot_ids << slot.id
+        end
       end
+
+      binding.pry
 
       slot_ids.each do |si|
         @absence_slot = Ebs::AbsenceSlot.new(absence_id: @absence.id, register_event_details_slot_id: si)
         @absence_slot.save!
         slot = Ebs::RegisterEventDetailsSlot.where(id: si)[0]
         slot.usage_code = @absence.usage_code
+        binding.pry
         slot.save!
         if Rails.env == "development"
           teacher = Ebs::Person.find(30141843)
