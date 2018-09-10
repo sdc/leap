@@ -6,8 +6,10 @@
 -# Look at only 'Active, CompNoResult, CompNotAch, CompAch, CompPart, CompNoResult, CompAchNoFund'
 - per_ids = @person_courses.map{ |x| (["active", "compnoresult", "compnotach", "compach", "comppart", "compnoresult", "compachnofund"].include? x[:mis_status].try(:downcase)) ? x[:person_id] : nil }.compact
 
-- d_par_from = Date.strptime(par_dates.min_by{ |f| f[:from].to_date }[:from],"%d/%m/%Y").strftime("%Y-%m-%d") || MISC::MiscDates.startdate_from_acyr(@topic.year)
-- d_par_to = Date.strptime(par_dates.max_by{ |f| f[:to].to_date }[:to],"%d/%m/%Y").strftime("%Y-%m-%d") || MISC::MiscDates.enddate_from_acyr(@topic.year)
+- min_par_from = par_dates.min_by{ |f| f[:from].to_date }.try(:from)
+- d_par_from = (min_par_from.present?) ? Date.strptime(min_par_from,"%d/%m/%Y").strftime("%Y-%m-%d") : MISC::MiscDates.startdate_from_acyr(@topic.year)
+- max_par_to = par_dates.max_by{ |f| f[:to].to_date }.try(:to)
+- d_par_to = (max_par_to.present?) ? Date.strptime(max_par_to,"%d/%m/%Y").strftime("%Y-%m-%d") : MISC::MiscDates.enddate_from_acyr(@topic.year)
 - att_overall_count = Attendance.where( :person_id => per_ids ).where(:course_type => "overall").where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", d_par_from, d_par_to ).count
 - att_overall_count = 1 if att_overall_count == 0
 - att_core_count = Attendance.where( :person_id => per_ids ).where(:course_type => "core").where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", d_par_from, d_par_to ).count
