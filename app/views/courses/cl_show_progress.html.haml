@@ -119,7 +119,7 @@
                   htmlContent: true
 
               # reapply eye hiding
-              $('[data-row-hide]').click ->
+              $('##{plp[1]} [data-row-hide]').click ->
                 $($(this).attr('data-row-hide')).toggleClass("visible-lg")
 
               return
