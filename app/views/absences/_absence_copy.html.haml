@@ -1,0 +1,17 @@
+- begin
+  %tr{:class => [params[:validate] ? 'not_clicky' : 'clicky_tr',absence.usage_code,cycle('rowodd','roweven')].join(' '), :title => "Absence: #{absence.id}"}[absence]
+    - unless @person
+      %td= link_to_unless params[:validate], absence.person.display_name, absence
+    %td= absence.usage_code
+    %td= absence.reason
+    %td= absence.reason_extra
+    %td= absence.absence_slots_count
+    %td= absence.notified_at ? absence.notified_at.strftime("%d-%m-%Y %H.%M") : absence.created_at.strftime("%d-%m-%Y %H.%M")
+    %td= absence.contact
+    %td= absence.register_event_details_slots.first.planned_start_date.strftime("%d-%m-%Y")
+    %td= absence.register_event_details_slots.last.planned_end_date.strftime("%d-%m-%Y")
+    %td= check_box_tag(dom_id(absence) + "_cb", 1, absence.valid_reason, :disabled => !(params[:validate]))
+    - if params[:validate]
+      = observe_field dom_id(absence) + "_cb", :url => {:controller => "absences", :action => "set_valid", :id => absence.id}, :with => "q"
+- rescue
+  %td= "ERROR in abs#{absence.id}"

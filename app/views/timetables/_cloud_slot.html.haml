@@ -1,5 +1,5 @@
-.timetable-event{:style => "top:#{cloud_slot.timetable_margin + 37}px;height:#{cloud_slot.timetable_height}px", 
-  :class => "bg-#{cloud_slot.cl_status}"}
+.timetable-event{:id => cloud_slot.respond_to?(:mis_id) ? cloud_slot.mis_id : '', :style => "top:#{cloud_slot.timetable_margin + 37}px;height:#{cloud_slot.timetable_height}px", :value => cloud_slot.timetable_start.strftime("%Y-%m-%d %H:%M:%S"),
+  :class => "bg-#{cloud_slot.cl_status}", :onclick => "selectRegEvent(this.id)"}
   %h5= cloud_slot.title
   %ul
     %li
@@ -17,4 +17,23 @@
     = link_to cloud_slot, :method => :delete, :class => "btn btn-danger btn-xs pull-right", :confirm => "Are you sure?" do
       %i.fa.fa-trash
       Delete
+%script{:type=>"text/javascript"}
+  :plain
+    function selectRegEvent(regEventId) {
+
+      console.log(regEventId);
+
+      regEvent = document.getElementById(regEventId);
+
+      if(regEvent.classList.contains('checked')) {
+        regEvent.style.border = '1px solid #ccc';
+        regEvent.classList.remove('checked');
+      }
+      else {
+        regEvent.style.border = '2px solid red';
+        regEvent.classList.add('checked');  
+      }
+    
+
+    }      
       

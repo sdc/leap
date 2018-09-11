@@ -1,24 +1,65 @@
-# Leap - Electronic Individual Learning Plan Software
-# Copyright (C) 2011 South Devon College
-
-# Leap is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-
-# Leap is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-
-# You should have received a copy of the GNU Affero General Public License
-# along with Leap.  If not, see <http://www.gnu.org/licenses/>.
-
+# class Absence < ActiveRecord::Base
 class Absence < Eventable
 
-  attr_accessible :lessons_missed, :category, :body, :usage_code, :contact_category, :created_at, :deleted
+  # REASONS = ["Work",
+  #            "Transport Problems",
+  #            "Medical Appointment",
+  #            "Sickness",
+  #            "Holiday",
+  #            "Personal Reasons",
+  #            "Family Issues",
+  #            "Job Interview",
+  #            "Bereavement/Funeral",
+  #            "Adverse Weather",
+  #            "Bad Timekeeping",
+  #            "Requires Attention",
+	 #           "Unable to Contact",
+	 #           "Suspended",
+  #            "Other"
+  #           ]
+
+  REASONS = ["Medical appt that cannot be rearranged outside of college hours (acceptable)",
+             "Recognised Religious holidays (acceptable)",
+             "University Open Day or career related interview or audition (acceptable)",
+             "Attendance at a funeral (acceptable)",
+             "A Driving test (acceptable)",
+             "A course reps meeting (acceptable)",
+             "Sickness (acceptable)",
+             "Family emergency / bereavement (acceptable)",
+             "Holiday (unacceptable)",
+             "Paid or unpaid work that is not part of the course (unacceptable)",
+             "Non-urgent medical appointments that could be arranged outside of lessons (unacceptable)",
+             "Birthdays or similar celebrations (unacceptable)",
+             "Babysitting younger siblings (unacceptable)",
+             "Driving Lessons (unacceptable)",
+             "Other"
+            ]            
+
+  CONTACT = ["Phone call from student",
+             "Phone call from parent",
+             "Email",
+             "Signed in late",
+             "Signed out early",
+             "Informed by tutor",
+      	     "SDC Contacted - Parent",
+      	     "SDC Contacted - Student",
+      	     "SDC Contacted - Other",
+      	     "College Staff",
+             "Unable to Contact"
+            ]
+
+  attr_accessible :lessons_missed, :category, :body, :usage_code, :notified_at, :contact_category, :created_at, :deleted, :from_date, :person_id, :created_by_id, :updated_at, :start_date, :end_date
+  # alias_attribute :reason, :category
 
   after_create {|ab| ab.events.create!(:event_date => created_at, :transition => :create)}
+
+
+  belongs_to :person
+  has_many   :absence_slots, :dependent => :destroy
+  has_many   :register_event_details_slots, :through => :absence_slots, :order => "planned_start_date"
+  has_many   :messages, :as => :attachment
+
+  validates_presence_of "person_id"
 
   def subtitle
     usage_code
@@ -26,10 +67,17 @@ class Absence < Eventable
 
   def status
     Ilp2::Application.config.mis_usage_codes[usage_code]
-  end
+  end  
 
-  def icon_class
-    "fa-ban"
+  def send_message
+    register_event_details_slots.map{|s| s.register_event.teachers}.flatten.uniq.each do |to|
+        Message.create(:attachment_type => "Absence",
+                       :attachment_id   => id,
+                       :title           => "Learner reported absence",
+                       :person_from     => person,
+                       :person_to       => to
+                      )
+    end
   end
 
 end

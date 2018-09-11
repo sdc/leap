@@ -9,6 +9,7 @@ Ilp2::Application.routes.draw do
     # match 'sync_grade_tracks' => 'data#sync_grade_tracks'
   end
   resources :views
+  resources :absences
   resources :events do
     get "more", :on => :collection
     get "open_extended", :on => :member

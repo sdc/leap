@@ -50,7 +50,8 @@ platforms :jruby do
 end
 
 group :development do
-  gem 'capistrano', '3.6.0'
+  # gem 'capistrano', '3.6.0'
+  gem 'capistrano', '3.10.1'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
 
