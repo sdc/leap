@@ -112,7 +112,7 @@
               $('#' + '#{plp[1]}').find('[title]').tooltip({container: 'body'})     # reapply tooltip formatting
 
               # reapply export table buttons
-              $('[data-download-table]').click ->
+              $('##{plp[1]} [data-download-table]').click ->
                 $($(this).attr('data-download-table')).tableExport
                   type: $(this).attr('data-download-type')
                   escape: $(this).attr('data-download-escape') or false
