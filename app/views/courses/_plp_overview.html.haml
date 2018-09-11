@@ -9,19 +9,25 @@
         %thead
           %tr
             %th.table-scroll-fixed-side{:colspan => 1, :scope =>"col", :style => "width:1px"}
-            %th{:colspan => 2}
-            %th.bl{:colspan => 3}Core
+            %th{:colspan => 1}
+            %th.visible-lg{:colspan => 1}
+            %th.bl{:colspan => 2}Core
+            %th.core_hide.visible-lg{:colspan => 1}
             %th.core_hide.visible-lg{:colspan => 1}
             %th.text-right
               %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".core_hide"}
                 %i.fa.fa-eye
-            %th.bl{:colspan => 4}English
+            %th.bl{:colspan => 2}English
             %th.visible-lg.english_hide{:colspan => 1}
+            %th.visible-lg.english_hide{:colspan => 1}
+            %th.text-center.visible-lg.english_hide
             %th.text-right
               %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".english_hide"}
                 %i.fa.fa-eye
-            %th.bl{:colspan => 4}Maths
+            %th.bl{:colspan => 2}Maths
             %th.visible-lg.maths_hide{:colspan => 1}
+            %th.visible-lg.maths_hide{:colspan => 1}
+            %th.text-center.visible-lg.maths_hide
             %th.text-right
               %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".maths_hide"}
                 %i.fa.fa-eye
@@ -36,7 +42,7 @@
               %th.text-center.visible-lg{:class => "#{ct}_hide"} Current
               %th.text-center{ :title => "Target Grade for #{ct}" } TG
               - if ["english","maths"].include? ct
-                %th.text-right.bl.visible-lg.nowr{ :style => "width:1px", :title => "Last three Attendance Marks for #{ct}" } Marks
+                %th.text-left.bl.visible-lg.nowr{ :class => "#{ct}_hide", :style => "width:1px", :title => "Last three Attendance Marks for #{ct}" } Marks
         %tbody
           - @person_courses.each do |pc|
             %tr{"data-mis-status" => pc.mis_status.downcase}
@@ -92,9 +98,9 @@
                   - represented_course_codes += " <br>" unless represented_course_codes.nil?
 
                   - unless g.nil?
-                    %td.text-center.visible-lg{:class => ["ragp_light_#{g.level}" + (pc_index==0 ? " bl" : "")], :"data-html" => "true", :title => "#{represented_course_codes} Review #{g.number} (#{g.created_at})"}= g.working_at
+                    %td.text-center.visible-lg{:class => ["ragp_light_#{g.level} #{ct}_hide" + (pc_index==0 ? " bl" : "")], :"data-html" => "true", :title => "#{represented_course_codes} Review #{g.number} (#{g.created_at})"}= g.working_at
                   - else
-                    %td.text-center.text-muted.visible-lg.text-center{:class => ["ragp_light_grey" + (pc_index==0 ? " bl" : "")], :title => "No Review"}
+                    %td.text-center.text-muted.visible-lg.text-center{:class => ["ragp_light_grey #{ct}_hide" + (pc_index==0 ? " bl" : "")], :title => "No Review"}
 
                 - tg = pc.person.initial_reviews.joins(:progress).where("progresses.id = initial_reviews.progress_id and progresses.course_year=? and LOWER(course_type) = ?",@topic.year,ct).order("created_at desc, id desc").first
                 - unless tg.nil?
@@ -106,13 +112,14 @@
                   - represented_course_code = pc.person.progresses.where(:course_year => @topic.year, :course_status => 'Active', :course_type => ct).first.try(:course_code)
                   - ematt = EngMathAttendance.find_by_person_id_and_course_and_year( pc.person.id, represented_course_code, @topic.year )
                   - unless ematt.nil?
-                    %td.bl.text-center{:title => "Last Date Of Attendance for #{ct}: #{ematt.last_date_att}"}= ematt.last_three_att
+                    %td.bl.text-center.visible-lg{:class => ["#{ct}_hide"], :title => "Last Date Of Attendance for #{ct}: #{ematt.last_date_att}"}= ematt.last_three_att
                   - else
-                    %td.bl.text-center{:title => "No Attendance Marks"}
+                    %td.bl.text-center.visible-lg{:class => ["#{ct}_hide"], :title => "No Attendance Marks"}
 
         %tfoot
           %tr
-            %td{:colspan => 19}
+            %td{:colspan => 10}
+            %td.visible-lg{:colspan => 9}
             %td.text-center
               - if @rpub
                 = link_to course_view_url(@topic,View.for_user.find_by_name("reviews"), :status => "complete", :title => @window, :format => "pdf"), :class => "btn btn-default btn-xs", :title => "Print all published reviews" do
