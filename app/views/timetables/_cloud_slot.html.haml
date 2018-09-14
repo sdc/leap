@@ -11,6 +11,10 @@
       %li
         %i= cloud_slot.teachers.join ", "
       .mark{:class => "text-#{cloud_slot.cl_status}", :style => "background:transparent"}= cloud_slot.mark
+      - if Person.user.staff?
+        %li
+          Learner count: 
+          = Ebs::RegisterEventDetailsSlot.where(register_event_id: cloud_slot.mis_id, object_type: 'L', planned_start_date: cloud_slot.timetable_start).count
     - elsif cloud_slot.kind_of? Event
       .body= cloud_slot.body
   - if cloud_slot.is_deletable?
