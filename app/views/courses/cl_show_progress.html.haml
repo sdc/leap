@@ -107,6 +107,7 @@
               # $('#' + '#{plp[0]}' + '_tab').unbind("click")
               $('#' + '#{plp[1]}').html('').append html
               #{plp[0]}_tab_loading=false
+
               $('.btn-group > a.btn.active').click()                                # reapply page filters
               $('#' + '#{plp[1]}').find('[title]').tooltip({container: 'body'})     # reapply tooltip formatting
 
@@ -116,3 +117,9 @@
                   type: $(this).attr('data-download-type')
                   escape: $(this).attr('data-download-escape') or false
                   htmlContent: true
+
+              # reapply eye hiding
+              $('##{plp[1]} [data-row-hide]').click ->
+                $($(this).attr('data-row-hide')).toggleClass("visible-lg")
+
+              return

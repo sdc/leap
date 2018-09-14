@@ -9,18 +9,17 @@
   - cl_default_colour = Settings.continuing_learning_default_colour
   - cl_default_icon = Settings.continuing_learning_default_icon
 
+%table.table.table-hover.table-condensed.table-scroll-main{:id => "reviews-plp-title"}
+  %thead
+    %th.text-center
+      = "#{@topic.name} (#{@topic.code})"
+      %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".#{ct}_hide"}
+        %i.fa.fa-eye
 .scroll-x
   #scroll-reviews-plp-table.table-scroll
     .table-scroll-wrap
       %table.table.table-hover.table-condensed.table-scroll-main{:id => "reviews-plp-table"}
         %thead
-          %tr
-            %th.table-scroll-fixed-side{:colspan => 1, :scope =>"col", :style => "width:1px"}
-            %th{:colspan => 1}
-            %th.bl{:colspan => (npr+2+(cl_rev_enabled ? 1 : 0))}="#{@topic.name} (#{@topic.code})"
-            %th.text-right
-              %button.btn.btn-link.btn-xs.hidden-lg{"data-row-hide" => ".#{ct}_hide"}
-                %i.fa.fa-eye
           %tr
             %th.text-right.nowr.table-scroll-fixed-side{:scope =>"col", :style => "width:1px"} Name
             %th.text-center.bl{ :style => "width:1px", :title => "Attendance overall" } Att
@@ -68,19 +67,19 @@
               - (1..npr).each do |x|
                 - g = pc.person.progress_reviews.joins(:progress).where("progresses.id = progress_reviews.progress_id and progresses.course_year=? and LOWER(course_code) = ?",@topic.year,ct).order("number desc, created_at desc, id desc").where(:number => x).first
                 - unless g.nil?
-                  %td.text-center.visible-lg{:class => "ragp_light_#{g.level}" + (x==1 ? " bl" : ""), :title => "Review #{g.number} (#{g.created_at})"}= g.working_at
+                  %td.text-center.visible-lg{:class => "#{ct}_hide ragp_light_#{g.level}" + (x==1 ? " bl" : ""), :title => "Review #{g.number} (#{g.created_at})"}= g.working_at
                 - else
-                  %td.text-center.text-muted.visible-lg.text-center{:class => "ragp_light_grey" + (x==1 ? " bl" : ""), :title => "No Review"}
+                  %td.text-center.text-muted.visible-lg.text-center{:class => "#{ct}_hide ragp_light_grey" + (x==1 ? " bl" : ""), :title => "No Review"}
                 - if x == 3  && cl_rev_enabled
                   - cl_all = pc.person.continuing_learnings
                   - cl = cl_all.select{ |x| MISC::MiscDates.acyr(x.created_date) == @topic.year }.sort_by{ |r| r.created_date }.last
                   - if pc.person.present? && !cl_all.nil? && !cl.nil?
                     - cl_colour = cl_mapped_colours[cl.answer_colour] || cl_default_colour || "grey"
                     - cl_icon = cl_category_icons[cl.answer_cat] || cl_default_icon || nil
-                    %td.text-center.visible-lg{:class => "ragp_light_#{cl_colour}", :title => "#{cl.answer_desc}"}
+                    %td.text-center.visible-lg{:class => "#{ct}_hide ragp_light_#{cl_colour}", :title => "#{cl.answer_desc}"}
                       %i.fa{ :class => "#{cl_icon}" }
                   - else
-                    %td.text-center.text-muted.visible-lg.text-center{:class => "ragp_light_grey", :title => "Not Known"}
+                    %td.text-center.text-muted.visible-lg.text-center{:class => "#{ct}_hide ragp_light_grey", :title => "Not Known"}
 
               - tg = pc.person.initial_reviews.joins(:progress).where("progresses.id = initial_reviews.progress_id and progresses.course_year=? and LOWER(course_code) = ?",@topic.year,ct).order("created_at desc, id desc").first
               - unless tg.nil?
@@ -90,7 +89,8 @@
 
         %tfoot
           %tr
-            %td{:colspan => (npr+4+(cl_rev_enabled ? 1 : 0))}
+            %td{:colspan => (4)}
+            %td.visible-lg{:class =>"#{ct}_hide", :colspan => (npr+(cl_rev_enabled ? 1 : 0))}
             %td.text-center
               - if @rpub
                 = link_to course_view_url(@topic,View.for_user.find_by_name("reviews"), :status => "complete", :title => @window, :format => "pdf"), :class => "btn btn-default btn-xs", :title => "Print all published reviews" do
