@@ -155,3 +155,5 @@ Settings.defaults[:network_ip_ranges] = "1;192.168.0.1;192.168.255.254;Private n
 
 # Registers Threshold
 Settings.defaults[:timetable_registers_threshold]       = "01/08"
+
+Settings.defaults[:absence_line_email] = "helpzone@southdevon.ac.uk"
