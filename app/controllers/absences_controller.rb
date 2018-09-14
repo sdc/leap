@@ -30,14 +30,24 @@ class AbsencesController < ApplicationController
         slot = Ebs::RegisterEventDetailsSlot.where(id: si)[0]
         slot.usage_code = @absence.usage_code
         slot.save!
-        if Rails.env == "development"
+        if Rails.env != "development"
+          teachers = []
           teacher = Ebs::Person.find(30141843)
+          teachers << teacher
         else
-          teacher = Ebs::Person.find(Ebs::RegisterEventDetailsSlot.where(planned_start_date: slot.planned_start_date, register_event_id: slot.register_event_id, object_type: 'T')[0].object_id)
+          teachers = []
+          teacher_slots = Ebs::RegisterEventDetailsSlot.where(planned_start_date: slot.planned_start_date, register_event_id: slot.register_event_id, object_type: 'T')
+          teacher_slots.each do |ts|
+            teacher = Ebs::Person.find(ts.object_id)
+            teachers << teacher
+          end
+          # teacher = Ebs::Person.find(Ebs::RegisterEventDetailsSlot.where(planned_start_date: slot.planned_start_date, register_event_id: slot.register_event_id, object_type: 'T')[0].object_id)
         end
         register_event = Ebs::RegisterEvent.find(slot.register_event_id)
         learner = Ebs::Person.find(slot.object_id)
-        TeacherMailer.email_teacher(teacher, learner, register_event, slot).deliver
+        teachers.each do |t|
+          TeacherMailer.email_teacher(t, learner, register_event, slot).deliver
+        end
       end
       redirect_to "#{params[:absence][:return_url]}?&refresh=true"
     end
