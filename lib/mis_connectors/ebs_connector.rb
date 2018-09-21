@@ -306,10 +306,19 @@ module MisPerson
         register_event_details_slot_ids << as.register_event_details_slot_id
       end
       register_event_details_slot_ids.each do |redsi|
-        register_event_details_slot_dates << Ebs::RegisterEventDetailsSlot.where(id: redsi)[0].planned_start_date
+        if Ebs::RegisterEventDetailsSlot.where(id: redsi).exists?
+          register_event_details_slot_dates << Ebs::RegisterEventDetailsSlot.where(id: redsi)[0].planned_start_date
+        end
       end
-      start_date = register_event_details_slot_dates.min.nil? ? '' : register_event_details_slot_dates.min
-      end_date = register_event_details_slot_dates.max.nil? ? '' : register_event_details_slot_dates.max
+      register_event_details_slot_dates.compact!
+      start_date = ''
+      end_date = ''
+      if (register_event_details_slot_dates.size > 0)
+        # start_date = register_event_details_slot_dates.min.nil? ? '' : register_event_details_slot_dates.min
+        # end_date = register_event_details_slot_dates.max.nil? ? '' : register_event_details_slot_dates.max
+        start_date = register_event_details_slot_dates.min
+        end_date = register_event_details_slot_dates.max        
+      end
       next if absences.detect{|ab| a.created_at == ab.created_at}
       next unless a.notified_at
       na = absences.create(
