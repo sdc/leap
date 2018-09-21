@@ -37,7 +37,7 @@ class ViewsController < ApplicationController
         @events =
           @scope.where("event_date < ?", @date).
           where(:transition => @view.transitions, :eventable_type => @view.events).
-          limit(request.format=="pdf" ? 20000 : 20)
+          limit( (request.format=="pdf" ? 20000 : (request.format=="json" ? 2000 : 20)) )
       end
       if Settings.home_page == "progress"
         @notifiedEvents = @events.joins(:notifications).where(:notifications => {:notified => false, :person_id => @user.id})
