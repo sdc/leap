@@ -10,6 +10,9 @@
       There are qualifications which are not automatically included in this calculation; it is advised to click the "See calculation" button
       and check the result.
 
+  %p.span10 (Calculated from Quals On Entry)
+
+
   .span10= link_to_function "See calculation.","$('.lat-calc').show('slow');$(this).hide()", :class => "btn"
 
 
@@ -19,8 +22,8 @@
       %b Age:
       = @topic.try(:staff) ? "##" : @topic.age
     .span4
-      %b Age on Sep 1st:
-      = @topic.try(:staff) ? "##" : @topic.age_on(Date.civil(2014,9,1))
+      %b Age on Sep 1st #{MISC::MiscDates.start_of_acyr.year}:
+      = @topic.try(:staff) ? "##" : @topic.age_on(Date.civil(MISC::MiscDates.start_of_acyr.year,9,1))
 
     %p &nbsp;
 
@@ -32,7 +35,7 @@
         %th Age at
         %th QCA
       - @topic.qualifications.each do |q|
-        %tr{:class => [q.lat_score.kind_of?(Fixnum) ? "current" : "",q.lat_score == "No scores for qual type" ? "incomplete" : ""]}
+        %tr{:class => [(q.lat_score.kind_of?(Fixnum) || q.lat_score.kind_of?(Float)) ? "current" : "",q.lat_score == "No scores for qual type" ? "incomplete" : ""]}
           %td= q.qual_type
           %td= q.grade
           %td= q.created_at.try :to_date
@@ -43,16 +46,16 @@
         %td
         %td
         %th Total:
-        %th= @topic.qualifications.select{|q| q.lat_score.kind_of? Fixnum}.sum{|q| q.lat_score}
+        %th= @topic.qualifications.select{|q| (q.lat_score.kind_of?(Fixnum) || q.lat_score.kind_of?(Float))}.sum{|q| q.lat_score}
       %tr
         %td
         %td
         %td
         %th Eligible Quals:
-        %th= @topic.qualifications.select{|q| q.lat_score.kind_of? Fixnum}.count
+        %th= @topic.qualifications.select{|q| (q.lat_score.kind_of?(Fixnum) || q.lat_score.kind_of?(Float))}.count
       %tr.complete
         %td
         %td
         %td
         %th Score:
-        %th= @topic.lat_score
+        %th= @topic.lat_score or "-"
