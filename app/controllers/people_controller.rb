@@ -66,7 +66,7 @@ class PeopleController < ApplicationController
           render :action => "home"
         end
       end
-      format.json do 
+      format.json do
         render :json => @topic.as_json(:methods => [:l3va,:gcse_english,:gcse_maths,:target_gcse], :except => [:photo])
       end
       format.jpg do
