@@ -58,11 +58,11 @@
                 %table.plp_key.table-condensed.table-borderless
                   %tbody
                     %tr.ragp_light_green
-                      %td GREEN
-                      %td at or above 75%
+                      %td{ "data-tableexport-display" => "none" } GREEN
+                      %td{ "data-tableexport-display" => "none" } at or above 75%
                     %tr.ragp_light_red
-                      %td RED
-                      %td below 75%
+                      %td{ "data-tableexport-display" => "none" } RED
+                      %td{ "data-tableexport-display" => "none" } below 75%
             %th.text-left.bl{ :title => "Function Skills Attendance", :style => 'vertical-align: top' }
               %p{:style => 'font-weight: normal'}
                 Target: 90%
@@ -74,11 +74,11 @@
                 %table.plp_key.table-condensed.table-borderless
                   %tbody
                     %tr.ragp_light_green
-                      %td GREEN
-                      %td at or above 50%
+                      %td{ "data-tableexport-display" => "none" } GREEN
+                      %td{ "data-tableexport-display" => "none" } at or above 50%
                     %tr.ragp_light_red
-                      %td RED
-                      %td below 50%
+                      %td{ "data-tableexport-display" => "none" } RED
+                      %td{ "data-tableexport-display" => "none" } below 50%
 
         %tbody
           - ["I", *("1"..npr.to_s)].each do |x|
@@ -171,11 +171,11 @@
       %span.caret
     %ul.dropdown-menu.dropdown-menu-right
       %li
-        %a{"data-download-table" => "#progress-plp-table", "data-download-type" => "excel"} 
+        %a{"data-download-table" => "#progress-plp-table", "data-download-type" => "excel", "data-download-ignorerows" => "[1]"}
           %i.fa.fa-fw.fa-file-excel-o
           Excel
       %li
-        %a{"data-download-table" => "#progress-plp-table", "data-download-type" => "csv"} 
+        %a{"data-download-table" => "#progress-plp-table", "data-download-type" => "csv", "data-download-ignorerows" => "[1]"}
           %i.fa.fa-fw.fa-file-o
           CSV
 
