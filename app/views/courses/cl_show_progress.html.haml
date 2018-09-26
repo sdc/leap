@@ -116,7 +116,8 @@
                 $($(this).attr('data-download-table')).tableExport
                   type: $(this).attr('data-download-type')
                   escape: $(this).attr('data-download-escape') or false
-                  htmlContent: true
+                  htmlContent: true,
+                  ignoreRow: $(this).attr('data-download-ignorerows') or []
 
               # reapply eye hiding
               $('##{plp[1]} [data-row-hide]').click ->
