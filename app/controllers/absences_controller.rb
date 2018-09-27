@@ -30,7 +30,7 @@ class AbsencesController < ApplicationController
         slot = Ebs::RegisterEventDetailsSlot.where(id: si)[0]
         slot.usage_code = @absence.usage_code
         slot.save!
-        if Rails.env != "development"
+        if Rails.env == "development"
           teachers = []
           teacher = Ebs::Person.find(30141843)
           teachers << teacher
@@ -45,8 +45,10 @@ class AbsencesController < ApplicationController
         end
         register_event = Ebs::RegisterEvent.find(slot.register_event_id)
         learner = Ebs::Person.find(slot.object_id)
-        teachers.each do |t|
-          TeacherMailer.email_teacher(t, learner, register_event, slot).deliver
+        if teachers.count > 0
+          teachers.each do |t|
+            TeacherMailer.email_teacher(t, learner, register_event, slot).deliver
+          end
         end
       end
       redirect_to "#{params[:absence][:return_url]}?&refresh=true"
