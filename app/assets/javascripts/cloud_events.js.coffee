@@ -44,7 +44,8 @@ $ ->
     $($(this).attr('data-download-table')).tableExport
       type: $(this).attr('data-download-type')
       escape: $(this).attr('data-download-escape') or false
-      htmlContent: true
+      htmlContent: true,
+      ignoreRow: $(this).attr('data-download-ignorerows') or []
 
  filterCourseList = (status) ->
     $("[data-course-person-filter]").removeClass("active")
