@@ -30,7 +30,7 @@ class AbsencesController < ApplicationController
         slot = Ebs::RegisterEventDetailsSlot.where(id: si)[0]
         slot.usage_code = @absence.usage_code
         slot.save!
-        if Rails.env != "development"
+        if Rails.env == "development"
           teachers = []
           teacher = Ebs::Person.find(30141843)
           teachers << teacher
