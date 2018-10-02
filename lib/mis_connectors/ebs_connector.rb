@@ -62,10 +62,10 @@ module MisPerson
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
       options.reverse_merge! Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}]
       logger.info "Importing user #{mis_id}"
-      if (ep = (Ebs::Person.find_by_person_code((mis_id.to_s.match(/\d{3}/) ? mis_id.to_s.tr('^0-9','') : mis_id)) or 
+      if (ep = (Ebs::Person.find_by( person_code: (mis_id.to_s.match(/\d{3}/) ? mis_id.to_s.tr('^0-9','') : mis_id) ) or
                 Ebs::Person.where(Settings.ebs_username_field => mis_id.to_s).first
           ))
-        @person = Person.find_by_mis_id(ep.id) || Person.new(:mis_id => ep.id)
+        @person = Person.find_by(mis_id: ep.id) || Person.new(:mis_id => ep.id)
         #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
         if @person.new_record? or ep.updated_date.nil? or (@person.updated_at < ep.updated_date)
           @person.update_attributes(
@@ -77,7 +77,7 @@ module MisPerson
             :town          => ep.address ? ep.address.town : "",
             :postcode      => ep.address ? [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" ") : "",
             # :photo         => Ebs::Blob.table_exists? && ep.blobs.photos.first.try(:binary_object),
-            :photo         => Ebs::Blob.find_by_owner_ref(mis_id.to_s).try(:binary_object), 
+            :photo         => Ebs::Blob.find_by( owner_ref: mis_id.to_s ).try(:binary_object),
             :mobile_number => ep.mobile_phone_number,
             :next_of_kin   => [ep.fes_next_of_kin, ep.fes_nok_contact_no].join(" "),
             :date_of_birth => ep.date_of_birth,
@@ -209,7 +209,7 @@ module MisPerson
       end
     end
     # remove status of any course removed from the Student Record System, but still keep course info.
-    PersonCourse.find_all_by_person_id( Person.find_by_mis_id( mis_person.person_code ).id ).each do |pc|
+    PersonCourse.where( person_id: ( Person.find_by( mis_id: mis_person.person_code ).id ) ).load.each do |pc|
       next unless pc.course_id
       begin
         course = Course.find(pc.course_id)
@@ -217,7 +217,7 @@ module MisPerson
         course = nil
       end
       next unless !course.nil? && course.mis_id
-      pu = mis_person.people_units.find_by_uio_id(course.mis_id)
+      pu = mis_person.people_units.find_by( uio_id: course.mis_id )
       if pu.nil?
         if ( !( pc.status.nil? && pc.mis_status.nil? ) )
           pc.update_attributes({:status => nil,
@@ -255,7 +255,7 @@ module MisPerson
         next unless att.send(settings_attendance_date_column)
         next unless att.send(settings_attendance_culm_column)
         course_type = settings_attendance_type_column.blank? ? "overall" : (att.send(settings_attendance_type_column) || "overall").downcase
-        na=Attendance.find_or_create_by_person_id_and_week_beginning_and_course_type(id,att.send(settings_attendance_date_column),course_type)
+        na=Attendance.find_or_create_by( person_id: id, week_beginning: att.send(settings_attendance_date_column), course_type: course_type )
 # =begin
         na.update_attributes(
           :week_beginning => att.send(settings_attendance_date_column),
@@ -299,7 +299,7 @@ module MisPerson
   end
 
   def import_absences
-    Ebs::Absence.find_all_by_person_id(mis_id).each do |a|
+    Ebs::Absence.where(person_id: mis_id).load.each do |a|
       register_event_details_slot_ids = []
       register_event_details_slot_dates = []      
       a.absence_slots.each do |as|
@@ -336,7 +336,7 @@ module MisPerson
   end
 
   def import_support_plps
-    Ebs::Person.find_all_by_person_code(mis_id).each do |p|
+    Ebs::Person.where(person_code: mis_id).load.each do |p|
       [
         # [0] field name, [1] title, [2] verifiers domain (optional), [3] values exclude list (optional)
 
@@ -363,8 +363,8 @@ module MisPerson
         # next if support_plps.exists?( :name => f[1], :active => 1, :value => v )
         support_plps_for_name = support_plps.find{ |sp| sp.name == f[1] && sp.active == true }
         next if support_plps_for_name.present? && support_plps_for_name.try(:value) == v
-        support_plps.update_all( ["active = 0, updated_at = ?",DateTime.now], ["active != 0 and name = ? and ( value != ? or ? is null)", f[1], v, v ] ) unless support_plps.nil?
-        ver_info = ( f[2].present? ? Ebs::Verifier.find_by_low_value_and_rv_domain(v,f[2]) : nil )
+        support_plps.where( ["active != 0 and name = ? and ( value != ? or ? is null)", f[1], v, v ] ).update_all( ["active = 0, updated_at = ?",DateTime.now] ) unless support_plps.nil?
+        ver_info = ( f[2].present? ? Ebs::Verifier.find_by( low_value: v, rv_domain: f[2] ) : nil )
         if v.present?
           nsp = support_plps.create(
             :name => f[1],
@@ -395,7 +395,7 @@ module MisCourse
     mis_course.people_units.order("progress_date").each do |pu|
     #mis_course.people_units.where("updated_date > ?",last_update).order("progress_date").each do |pu|
       person = Person.import(pu.person_code, {:courses => false})
-      pc= PersonCourse.find_or_create_by_person_id_and_course_id(person.id,id)
+      pc= PersonCourse.find_or_create_by( person_id: person.id, course_id: id )
       if pu.unit_type == "A" 
         pc.update_attributes({:status => :not_started,
                               :start_date       => pu.unit_instance_occurrence.qual_start_date,
@@ -449,8 +449,8 @@ module MisCourse
 
     def import(mis_id, options = {})
       options.reverse_merge! :save => true, :people => false
-      if (ec = Ebs::UnitInstanceOccurrence.find_by_uio_id(mis_id))
-        @course = Course.find_or_create_by_mis_id(mis_id)
+      if (ec = Ebs::UnitInstanceOccurrence.find_by( uio_id: mis_id ) )
+        @course = Course.find_or_create_by( mis_id: mis_id )
         @course.update_attributes(
           :title  => ec.title,
           :code   => ec.fes_uins_instance_code,
@@ -482,6 +482,6 @@ end
 
 module MisPersonCourse
   def mis
-    Ebs::PeopleUnit.find_by_uio_id_and_person_code(course.mis_id,person.mis_id)
+    Ebs::PeopleUnit.find_by( uio_id: course.mis_id, person_code: person.mis_id )
   end
 end

@@ -8,7 +8,7 @@ class MdlGradeTrack < Eventable
 
   scope "english", -> { where(:course_type => ["english","gcse_english"]) }
   scope "maths", -> { where(:course_type => ["maths","gcse_maths"]) }
-  scope "core", ->{ where("course_type NOT IN (?)",["maths","gcse_maths","english","gcse_english"]) }
+  scope "core", -> { where("course_type NOT IN (?)",["maths","gcse_maths","english","gcse_english"]) }
 
   def self.user_url(username)
     "#{Settings.moodle_host}#{Settings.moodle_path}/webservice/rest/server.php?" +

@@ -20,7 +20,7 @@ class EngMathAttendance < Eventable
 
   self.table_name = "eng_math_attendance"
 
-  default_scope order('year DESC')
+  default_scope { order('year DESC') }
 
   def status(bs = false)
     begin
