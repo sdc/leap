@@ -4,7 +4,7 @@
     %td= absence.category
     %td{:style => "max-width:250px"}= absence.body
     %td{:style => "text-align: center"}= absence.lessons_missed
-    %td= absence.notified_at.strftime("%d-%m-%Y %H.%M")
+    %td{ :title => (Person.user.superuser? ? "Created on #{absence.created_at.strftime("%d-%m-%Y %H.%M")} by #{Person::find_by( id: absence.created_by_id ).name}" : "" ) }= absence.notified_at.strftime("%d-%m-%Y %H.%M")
     %td= absence.contact_category
     %td= absence.start_date.strftime("%d-%m-%Y")
     %td= absence.end_date.strftime("%d-%m-%Y")
