@@ -17,7 +17,7 @@
                 = f.select(:target_grade, options_for_select(grades), {}, {:class => 'form-control', :disabled => (true unless @user.staff?), :required => true, :selected => 'Target Grade'})
           .form-group.row
             .col-md-12
-              = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
+              = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?), :required => true
           #scores
             .form-group.row
               .col-md-6

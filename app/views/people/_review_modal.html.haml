@@ -47,7 +47,7 @@
                           %li.par-guidance-next Improvement targets for next PAR (including any carried over from previous PAR). Please focus on skills and knowledge for improvement targets.
           .form-group.row
             .col-md-12
-              = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
+              = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?), :required => true
           #current-level.form-group.row
             .col-md-6
               .input-group
