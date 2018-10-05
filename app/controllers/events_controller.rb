@@ -79,8 +79,12 @@ class EventsController < ApplicationController
     end
     if @event.is_deletable?
       @event.delete
-      @event.eventable.delete
-      flash[:success] = "#{@event.eventable_type.singularize.humanize.titleize} deleted"
+      if Event::where.not( id: @event.id ).where( eventable_type: @event.eventable_type, eventable_id: @event.eventable_id, person_id: @event.person_id ).empty?
+        @event.eventable.delete
+        flash[:success] = "#{@event.eventable_type.singularize.humanize.titleize} deleted"
+      else
+        flash[:success] = "#{@event.eventable_type.singularize.humanize.titleize} partially deleted"
+      end
     else
       flash[:error] = "#{@event.eventable_type.singularize.humanize.titleize} could not be deleted"
     end
