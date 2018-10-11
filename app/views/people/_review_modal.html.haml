@@ -69,7 +69,7 @@
                 %button#edit-review{:class => "btn btn-primary", :type => "button"} Edit
                 %button#save-review{:class => "btn btn-success", :type => "button"} Save
           #review-submit.submit-review
-            - if @user.staff
+            - if @user.staff?
               %input{:class => "btn btn-primary pull-right full-button", :name => "commit", :type => "submit", :value => "Submit review"}
 %script{ :type => "text/javascript" }
   :plain

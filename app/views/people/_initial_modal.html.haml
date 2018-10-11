@@ -57,5 +57,5 @@
                 %button#edit-initial-review{:class => "btn btn-primary", :type => "button"} Edit
                 %button#save-initial-review{:class => "btn btn-success", :type => "button"} Save
           #initial-review-submission.no-padding
-            - if @user.staff
+            - if @user.staff?
               %input{:class => "full-button btn btn-primary pull-right", :name => "commit", :type => "submit", :value => "Submit review"}
