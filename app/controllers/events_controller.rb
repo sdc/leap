@@ -83,6 +83,10 @@ class EventsController < ApplicationController
         @event.eventable.delete
         flash[:success] = "#{@event.eventable_type.singularize.humanize.titleize} deleted"
       else
+        if params[:eventtype] == 'Outcome' && @event.eventable_type == 'Intervention' && @event.eventable.is_a?(Intervention) && @event.eventable.respond_to?(:disc_text) && !@event.eventable.disc_text.nil?
+          @event.eventable.disc_text = nil
+          @event.eventable.save
+        end
         flash[:success] = "#{@event.eventable_type.singularize.humanize.titleize} partially deleted"
       end
     else
