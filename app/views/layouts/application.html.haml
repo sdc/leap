@@ -5,7 +5,7 @@
       %title= "#{@topic.name} : Leap"
     - else
       %title Leap
-    = favicon_link_tag
+    = favicon_link_tag asset_path('favicon.ico')
     = stylesheet_link_tag 'application'
     - unless Settings.custom_css.blank?
       :css
