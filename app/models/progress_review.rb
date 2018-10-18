@@ -21,6 +21,7 @@ class ProgressReview < Eventable
   belongs_to :person, :foreign_key => "created_by_id"
   belongs_to :progress, :foreign_key => "progress_id"
   before_save :set_values
+  validates :body, :presence => true
 
   after_create do |line|
     line.events.create!(:event_date => created_at, :transition => :create, :person_id => person_id)

@@ -56,7 +56,7 @@ class Absence < Eventable
 
   belongs_to :person
   has_many   :absence_slots, :dependent => :destroy
-  has_many   :register_event_details_slots, :through => :absence_slots, :order => "planned_start_date"
+  has_many   :register_event_details_slots, -> { order(:planned_start_date) }, :through => :absence_slots
   has_many   :messages, :as => :attachment
 
   validates_presence_of "person_id"

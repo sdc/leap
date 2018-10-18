@@ -130,7 +130,8 @@
 
           %input{:type => "hidden", :id => "reg-ids", :name => "reg_ids"}
           = f.hidden_field(:person_id, :value => @topic.mis_id)
-          = f.hidden_field(:return_url, :value => request.original_url)
+          - if params[:date] && params[:date].to_date.is_a?(Date)
+            = f.hidden_field(:date, :value => params[:date])
           = f.submit :class => "btn btn-primary", :onclick => "getRegEventIds()"
 .modal.fade#no-slots-modal  
   .modal-dialog

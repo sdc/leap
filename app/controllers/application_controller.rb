@@ -103,6 +103,11 @@ class ApplicationController < ActionController::Base
     @topic = nil
   end
 
+  def superuser_page
+    ( @user.superuser? or Rails.env == "development" ) or redirect_to "/404.html"
+    @topic = nil
+  end
+
   def staff_only
     redirect_to "/404.html" unless @affiliation == "staff"
   end

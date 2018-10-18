@@ -3,7 +3,7 @@
   %div.panel{:style => "opacity:0.6;border:1px solid #000;margin-bottom:0"}
     %div{:style => "border-left:1px solid #000;border-bottom:1px solid #000;margin:8px;padding-left:5px;"}
       %span{:id => "attendance_data_6_week_#{attendance.id}"}
-        = attendance.siblings_same_year(attendance.course_type,attendance.enrol_course).where( week_beginning: 6.weeks.ago..Date.today ).all.collect(&:att_week).compact.join(",")
+        = attendance.siblings_same_year(attendance.course_type,attendance.enrol_course).where( week_beginning: 6.weeks.ago..Date.today ).to_a.collect(&:att_week).compact.join(",")
   %h5= "#{attendance.att_week || 0}% attendance this week"
 :coffeescript
   $('#attendance_data_6_week_#{attendance.id}').peity 'bar',

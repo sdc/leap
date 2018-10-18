@@ -48,7 +48,7 @@
     .row
       %br
       .span9.alert.alert-error= "There is an error with event #{event.id}. Please contact your administrator."
-      - if @user.admin? or Rails.env == "development"
+      - if @user.superuser? or Rails.env == "development"
         %pre.span9.alert.alert-info
           %h3= raw e.message
           %p= raw e.backtrace.join "<br />"

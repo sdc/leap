@@ -17,7 +17,7 @@
 class Admin::SettingsController < ApplicationController
 
   skip_before_filter :maintenance_mode
-  before_filter :admin_page
+  before_filter :superuser_page
 
   def index
     @settings = Settings.defaults.keys.sort

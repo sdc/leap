@@ -3,13 +3,14 @@
   - if @progress_bar.empty?
     %p{:style => 'text-align: center'}It looks like you are not currently enrolled on any courses at South Devon College. If you feel this is a mistake, please speak to your Personal Tutor or visit Helpzone on Level 3.
   - @progress_bar.each do |progress|
+    - next if ! progress.show_par_course?
     .course-progress
       .row.row-eq-height
-        - if progress.show_par_reviews
+        - if progress.show_par_reviews?
           .col-md-6.col-xs-12.top-section{:class => '' + (progress.initial.present? ? ' present' : '') + ( ( progress.initial.present? || ( !progress.initial.present? && ( InitialReview::par_is_enabled? ) ) ) ? ' initial-review clickable' : ''  ), "data-id" => (h(progress.initial.id) if progress.initial.present?), "data-progress-id" => h(progress.id), :title => ( @user.staff? ? h(progress.course_code.upcase) : '' ), "data-editable" => (progress.initial.present? ? "#{progress.initial.try(:is_editable)}" || 'false' : 'false')}
             %h4{:style => "margin-bottom: 5px"} Target Grade for
             %h4 #{ h(progress.course_title.upcase) }
-            - if progress.initial.present? && progress.show_par_reviews
+            - if progress.initial.present? && progress.show_par_reviews?
               %h3 #{ h(progress.initial.target_grade.to_s) }
         - else
           .col-md-6.col-xs-12.top-section{:class => '', :title => ( @user.staff? ? h(progress.course_code.upcase) : '' )}
@@ -32,7 +33,7 @@
             %h3 #{ h(progress.attendance.att_year) }%
           (overall)
 
-      - if progress.show_par_reviews
+      - if progress.show_par_reviews?
         .row
           .col-md-2.hidden-xs.col-sm-2.review-section{:class => '' + (progress.initial.present? ? ' present' : '') + ( ( progress.initial.present? || ( !progress.initial.present? && ( InitialReview::par_is_enabled? ) ) ) ? ' initial-review clickable' : '' ), "data-id" => (h(progress.initial.id) if progress.initial.present?), "data-progress-id" => h(progress.id), "data-editable" => (progress.initial.present? ? "#{progress.initial.try(:is_editable)}" || 'false' : 'false')}
             %h5 Initial Review

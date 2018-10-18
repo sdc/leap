@@ -20,7 +20,7 @@ class Attendance < Eventable
 
   attr_accessible :week_beginning, :att_year, :att_week, :course_type
 
-  default_scope :order => 'week_beginning'
+  default_scope { order(:week_beginning) }
 
   after_create do |attendance|
     attendance.events.create!(:event_date => week_beginning.end_of_week, :transition => :complete) if attendance.course_type == "overall"
@@ -84,7 +84,7 @@ class Attendance < Eventable
     begin
       # arr = Attendance.where( :person_id=> person_id, :course_type => course_type, week_beginning: 6.weeks.ago..Date.today  ).all.collect(&:att_week).compact if course_type.present?
       # arr = Attendance.where( :person_id=> person_id, :enrol_course => enrol_course, week_beginning: 6.weeks.ago..Date.today  ).all.collect(&:att_week).compact if enrol_course.present?
-      arr = siblings_same_year(course_type, enrol_course).where( week_beginning: 6.weeks.ago..Date.today  ).all.collect(&:att_week).compact
+      arr = siblings_same_year(course_type, enrol_course).where( week_beginning: 6.weeks.ago..Date.today  ).to_a.collect(&:att_week).compact
       return ( arr.map{|x| x.to_i}.sum / arr.length ) if arr.present? and arr.length > 0
     end
   end

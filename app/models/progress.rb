@@ -38,8 +38,12 @@ class Progress < ActiveRecord::Base
     self[:subject_grade] || 'N/A'
   end
 
-  def show_par_reviews
-    ["FE",nil].include? self[:par_type] || nil
+  def show_par_reviews?
+    ["FE",nil].include? ( self[:par_type] || nil )
+  end
+
+  def show_par_course?
+    ! ( ( self[:par_type] =~ /IGNORE$/i ) || false )
   end
 
 end

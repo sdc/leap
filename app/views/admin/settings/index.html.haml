@@ -565,14 +565,17 @@
         %pre
           :preserve     
             PII:Positive Intervention Pastoral:Pastoral;Advice & Guidance;Alleged Bullying|PIB:Positive Intervention Behaviour:Amber Alert Disciplinary;Amber Alert Behaviour;Stage 1 Behaviour Disc;Stage 2 Behaviour Disc;Stage 3 Behaviour Disc|PIA:Positive Intervention Attendance:Amber Alert Attendance;Stage 1 Attendance Disc;Stage 2 Attendance Disc;Stage 3 Attendance Disc|PIP:Positive Intervention Progress:Stage 1 Progress Intervention;Stage 2 Progress Intervention;Stage 3 Progress Intervention
+
   %h3 Absences
   .control-group
     %label.control-label Absence Line Email Address
     .controls
       = text_field_tag "absence_line_email", Settings.absence_line_email, :style => "width: 100%"   
-      %pre
-        :preserve
-          helpzone@southdevon.ac.uk
+      .help-text
+        Example:
+        %pre
+          :preserve
+            helpzone@southdevon.ac.uk
 
   %h1 Old Settings!
   .old-settings

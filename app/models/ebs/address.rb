@@ -19,7 +19,7 @@ class Ebs::Address < Ebs::Model
   # self.table_name= "addresses"
   self.table_name= "addresses"
 
-  default_scope where(:owner_type => "P")
+  default_scope { where(:owner_type => "P") }
   self.primary_key= "owner_ref"
 
   belongs_to :person,  :foreign_key => "owner_ref"

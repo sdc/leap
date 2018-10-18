@@ -47,7 +47,7 @@
                           %li.par-guidance-next Improvement targets for next PAR (including any carried over from previous PAR). Please focus on skills and knowledge for improvement targets.
           .form-group.row
             .col-md-12
-              = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?)
+              = f.text_area :body, :style => "height:200px", :placeholder => "Learner / Tutor Comments...", :class => 'form-control', :disabled => (true unless @user.staff?), :required => true
           #current-level.form-group.row
             .col-md-6
               .input-group
@@ -69,7 +69,7 @@
                 %button#edit-review{:class => "btn btn-primary", :type => "button"} Edit
                 %button#save-review{:class => "btn btn-success", :type => "button"} Save
           #review-submit.submit-review
-            - if @user.staff
+            - if @user.staff?
               %input{:class => "btn btn-primary pull-right full-button", :name => "commit", :type => "submit", :value => "Submit review"}
 %script{ :type => "text/javascript" }
   :plain

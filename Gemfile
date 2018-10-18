@@ -9,6 +9,7 @@ gem 'jquery-ui-rails' # NEW
 gem 'symbolize'
 gem 'scoped_search'
 gem 'rails-settings', :require => 'settings' # DEPRECATED
+# gem 'ledermann-rails-settings'
 # gem 'rails-settings-cached', '0.4.1' # NEW
 gem 'rails_autolink'
 # gem 'uglifier', '>= 1.3.0'

@@ -52,7 +52,7 @@ class AbsencesController < ApplicationController
           end
         end
       end
-      redirect_to "#{params[:absence][:return_url]}?&refresh=true"
+      redirect_to person_timetables_url person_id: @absence.person_id, date: (params[:absence] && params[:absence][:date] && params[:absence][:date].to_date.is_a?(Date) == true) ? (params[:absence][:date]) : (nil), refresh: true
     end
   end
 

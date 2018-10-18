@@ -51,6 +51,11 @@ $("#save-review").click(function()
 {
     requireAuthorisation();
 
+    if ( !$("[name='progress_review[body]']").val() ) {
+        alert('Please complete the comment field')
+        return false;
+    }
+
     var id = getValidOpenId();
     var url = base + REVIEW_TYPES['progress'] + '/' + id;
     var data = $.extend({}, {
@@ -101,6 +106,11 @@ $("#edit-initial-review").click(function()
 $("#save-initial-review").click(function() 
 {
     requireAuthorisation();
+
+    if ( !$("[name='initial_review[body]']").val() ) {
+        alert('Please complete the comment field')
+        return false;
+    }
 
     var id = getValidOpenId();
     var url = base + REVIEW_TYPES['initial'] + '/' + id;
