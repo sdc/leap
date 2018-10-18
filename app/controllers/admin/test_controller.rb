@@ -17,7 +17,7 @@
 class Admin::TestController < ApplicationController
 
   skip_before_filter :set_user  , :except => [:stats]
-  before_filter      :admin_page, :only   => [:stats]
+  before_filter      :superuser_page, :only   => [:stats]
 
   def index
   end

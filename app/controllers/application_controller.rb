@@ -99,6 +99,11 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_page
+    @user.admin? or redirect_to "/404.html"
+    @topic = nil
+  end
+
+  def superuser_page
     ( @user.superuser? or Rails.env == "development" ) or redirect_to "/404.html"
     @topic = nil
   end
