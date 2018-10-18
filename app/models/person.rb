@@ -161,7 +161,7 @@ class Person < ActiveRecord::Base
   end
 
   def superuser?
-    ["owenwiddicombe","jameskamradcliffe"].include? Person.user.username
+    (ENV['LEAP_SUPERUSERS'].try(:split, ',') || []).include? Person.user.username
   end
 
   def can_edit_grade?

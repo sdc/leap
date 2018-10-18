@@ -5,18 +5,19 @@
       %i.fa.fa-caret-down
     %ul.dropdown-menu
       %li.dropdown-header Settings
-      %li
-        = link_to admin_settings_url do
-          %i.fa.fa-cog.fa-fw
-          Edit Settings
-      %li
-        = link_to admin_views_url do
-          %i.fa.fa-th-list.fa-fw
-          Setup Views
-      %li
-        = link_to admin_stats_url do
-          %i.fa.fa-bar-chart-o.fa-fw
-          Statistics
+      - if @user.superuser? or Rails.env == "development"
+        %li
+          = link_to admin_settings_url do
+            %i.fa.fa-cog.fa-fw
+            Edit Settings
+        %li
+          = link_to admin_views_url do
+            %i.fa.fa-th-list.fa-fw
+            Setup Views
+        %li
+          = link_to admin_stats_url do
+            %i.fa.fa-bar-chart-o.fa-fw
+            Statistics
       - if Rails.env == "development"
         %li
           = link_to admin_test_login_url, :title => "Click to change user" do
@@ -24,7 +25,7 @@
             Change User
       - if @topic.kind_of? Person
         %li.divider
-        %li.dropdown-header 
+        %li.dropdown-header
           Data for
           = @topic.name
         %li
