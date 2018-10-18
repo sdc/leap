@@ -1,4 +1,5 @@
 class AbsencesController < ApplicationController
+
   def create
     if @user.admin?
       params[:reg_ids] = JSON.parse params[:reg_ids]

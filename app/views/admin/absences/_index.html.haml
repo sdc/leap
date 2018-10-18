@@ -1,0 +1,18 @@
+- if @user.admin?
+	.absences_container
+		.row{ style: 'margin-left: 0px' }
+			.col-xs-4
+				.row{ style: 'margin-left: 0px' }
+					.col-xs-3
+						%h4
+							Absences on
+					.col-xs-9		
+						= form_tag do
+							.row{ style: 'margin-left: 0px' }
+								.col-xs-8
+									= text_field_tag(:absence_date, @date, "data-date-format" => "d MM yyyy", "data-provide" => "datepicker", "style" => "float: left")
+								.col-xs-4
+									= submit_tag "Go!", "style" => "width: 100px; float: left; margin: 2px"
+			%table{:class => "table-striped", :id => "absence-table", :style => "width:100%;"}
+				%thead= render "thead" 
+				%tbody= render @absences.where("notified_at > '#{@date.strftime("%Y-%m-%d 00:00:00")}' AND notified_at < '#{(@date + 1).strftime("%Y-%m-%d 00:00:00")}'")

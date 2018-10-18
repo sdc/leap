@@ -5,10 +5,6 @@
     %i.icon-chevron-down
   %ul.dropdown-menu
     %li
-      = link_to admin_stats_url do
-        %i.icon-signal
-        Stats
-    %li
       = link_to admin_settings_url do
         %i.icon-wrench
         Settings
@@ -16,3 +12,11 @@
       = link_to admin_views_url do
         %i.icon-th-list 
         Views
+    %li
+      = link_to admin_stats_url do
+        %i.icon-signal
+        Stats        
+    %li
+      = link_to admin_absences_url do
+        %i.fa.fa-align-justify.fa-fw
+        Absence Report          

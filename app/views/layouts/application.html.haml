@@ -11,29 +11,36 @@
       :css
         /* Here begins the custom CSS ======================================== */
         #{Settings.custom_css}
+    = stylesheet_link_tag '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css'
     = javascript_include_tag "application"
     = javascript_include_tag "custom"
     = javascript_include_tag "https://use.fontawesome.com/511134c719.js"
+    = javascript_include_tag '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js'    
     = csrf_meta_tag
     = render :partial => "layouts/ganalytics" unless Settings.google_analytics_code.empty?
   %body{:class => Person.affiliation}
     = render :partial => "layouts/top_bar" if @user.try(:staff?)
-    #main-container.container
-      .row
-        - if @topic
-          #side-pane
-            - if params[:all] and @user.staff?
-              = render :partial => "layouts/all_sidebar"
-            - else
-              = render :partial => "layouts/sidebar"
-        #main-pane{:class => @topic ? nil : "no-sidebar"}
-          = render :partial => "layouts/alerts"
-          = yield
-      #footer
-        = link_to_if @affiliation == "staff", raw("leap &mdash; electronic individual learning plans &mdash; &copy; 2011 - #{Date.today.year}"), "http://leap-ilp.com"
-    - if @affiliation == "affiliate"
-      = image_tag "parent_mode.png", :style => "position:fixed;right:0;bottom:0;font-size:0"
-    - if Rails.env == "development"
-      = link_to admin_test_login_url do
-        = image_tag "dev_mode.png", :style => "position:fixed;right:0;bottom:0;font-size:0"
-    #help{:style => "display:none"}
+    - if (request.fullpath == '/admin/absences')
+      - if @user.admin?
+        = render "index"
+    - else    
+      #main-container.container
+        .row
+          - if @topic
+            #side-pane
+              - if params[:all] and @user.staff?
+                = render :partial => "layouts/all_sidebar"
+              - else
+                = render :partial => "layouts/sidebar"
+          #main-pane{:class => @topic ? nil : "no-sidebar"}
+            = render :partial => "layouts/alerts"
+            = yield
+        #footer
+          = link_to_if @affiliation == "staff", raw("leap &mdash; electronic individual learning plans &mdash; &copy; 2011 - #{Date.today.year}"), "http://leap-ilp.com"
+      - if @affiliation == "affiliate"
+        = image_tag "parent_mode.png", :style => "position:fixed;right:0;bottom:0;font-size:0"
+      - if Rails.env == "development"
+        = link_to admin_test_login_url do
+          = image_tag "dev_mode.png", :style => "position:fixed;right:0;bottom:0;font-size:0"
+      #help{:style => "display:none"}

@@ -8,6 +8,10 @@ Ilp2::Application.routes.draw do
     match 'test/login' => 'test#login', via: [:get, :post], :as => :test_login
     # match 'sync_grade_tracks' => 'data#sync_grade_tracks'
   end
+
+  match 'admin/absences' => 'admin/absences#index', via: [:get]
+  match 'admin/absences' => 'admin/absences#change_date', via: [:post]
+
   resources :views
   resources :absences
   resources :events do

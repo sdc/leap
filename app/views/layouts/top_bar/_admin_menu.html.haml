@@ -17,6 +17,10 @@
         = link_to admin_stats_url do
           %i.fa.fa-bar-chart-o.fa-fw
           Statistics
+      %li
+        = link_to admin_absences_url do
+          %i.fa.fa-align-justify.fa-fw
+          Absence Report          
       - if Rails.env == "development"
         %li
           = link_to admin_test_login_url, :title => "Click to change user" do
