@@ -577,6 +577,13 @@
           :preserve
             helpzone@southdevon.ac.uk
 
+  %h3 Superuser
+  .control-group
+    %label.control-label Send Emails
+    .controls
+      = select_tag "su_send_emails", options_for_select(["off","on"], Settings.su_send_emails)
+      .help-text Enable/disable sending of Emails.  Set to off when testing as a Superuser.
+
   %h1 Old Settings!
   .old-settings
     .alert
@@ -595,7 +602,8 @@
                                  "elaaf_link_enabled","elaaf_link_icon","elaaf_link_name","elaaf_base_url","elaaf_student_number_place_holder",
                                  "continuing_learning_rev_enabled","continuing_learning_colours","continuing_learning_icons","continuing_learning_default_colour","continuing_learning_default_icon",
                                  "network_ip_ranges","timetable_registers_threshold","par_active","plp_tabs","par_date_ranges","par_edit_window","par_window_type","par_restrict_active","par_restrict_date_ranges",
-                                 "intervention_types","intervention_groups","plp_pi_groups","plp_pi_groups_breakdown","par_guidance_active","par_guidance","absence_line_email"]
+                                 "intervention_types","intervention_groups","plp_pi_groups","plp_pi_groups_breakdown","par_guidance_active","par_guidance","absence_line_email",
+                                 "su_send_emails"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize

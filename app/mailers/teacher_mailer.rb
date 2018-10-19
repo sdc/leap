@@ -7,7 +7,7 @@ class TeacherMailer < ActionMailer::Base
 	    @learner = learner
 	    @register_event = register_event
 	    @slot = slot
-	    mail(to: @teacher.college_email, subject: 'Student Absence') if Rails.env != 'development'
+	    mail(to: @teacher.college_email, subject: 'Student Absence') if !( Rails.env == 'development' or ( Person.user.superuser? and Settings.su_send_emails != 'on' ) )
 	  end
   end 
     

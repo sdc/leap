@@ -157,3 +157,6 @@ Settings.defaults[:network_ip_ranges] = "1;192.168.0.1;192.168.255.254;Private n
 Settings.defaults[:timetable_registers_threshold]       = "01/08"
 
 Settings.defaults[:absence_line_email] = "helpzone@southdevon.ac.uk"
+
+# Superuser Settings - applicable only to Superusers
+Settings.defaults[:su_send_emails]  = "off"
