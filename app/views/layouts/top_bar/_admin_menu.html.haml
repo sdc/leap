@@ -1,11 +1,11 @@
-- if @user.admin? or @user.superuser? or Rails.env == "development"
+- if @user.admin? or @user.superuser?
   %li.dropdown
     %button.btn.navbar-btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown"}
       Admin
       %i.fa.fa-caret-down
     %ul.dropdown-menu
       %li.dropdown-header Settings
-      - if @user.superuser? or Rails.env == "development"
+      - if @user.superuser?
         %li
           = link_to admin_settings_url do
             %i.fa.fa-cog.fa-fw
