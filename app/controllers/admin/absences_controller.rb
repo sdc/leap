@@ -1,5 +1,7 @@
 class Admin::AbsencesController < ApplicationController
 
+	before_filter :admin_page
+
 	def index
 		@date = Date.today
 		@absences = Absence.all
