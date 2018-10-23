@@ -119,22 +119,24 @@ Settings.defaults[:ws_token] = ""
 
 Settings.defaults[:ebs_username_field] = "network_userid"
 
-#PLP Overview
-Settings.defaults[:plp_overview] 				= "old"
-Settings.defaults[:plp_tabs] 					= "photos,overview,reviews,support,checklist,badges,achievement"
-Settings.defaults[:plp_pi_groups] 				= "PIA,PIB,PII,PIP"
-Settings.defaults[:plp_pi_groups_breakdown] 	= "off"
+#PLP Tabs
+Settings.defaults[:plp_overview] 						= "old"
+Settings.defaults[:plp_tabs] 							= "photos,overview,reviews,support,checklist,badges,achievement"
+Settings.defaults[:plp_pi_groups] 						= "PIA,PIB,PII,PIP"
+Settings.defaults[:plp_pi_groups_breakdown] 			= "off"
+Settings.defaults[:plp_attendance_bm_date_ranges]      	= "I;03/09/2018;01/10/2018;18/19|1;03/09/2018;19/10/2018;18/19|2;29/10/2018;21/12/2018;18/19|3;08/01/2019;15/02/2019;18/19|4;25/02/2019;05/04/2019;18/19|5;23/04/2019;24/05/2019;18/19"
+Settings.defaults[:plp_progress_bm_date_ranges]      	= "I;01/10/2018;12/10/2018;18/19|1;13/10/2018;16/11/2018;18/19|2;17/11/2018;25/01/2019;18/19|3;26/01/2019;15/03/2019;18/19|4;16/03/2019;10/05/2019;18/19|5;11/05/2019;21/06/2019;18/19"
 
 #Progress Reviews settings
-Settings.defaults[:num_progress_reviews] = 5
-Settings.defaults[:par_active]           = "I,1,2,3,4,5"
-Settings.defaults[:par_restrict_active]  = "off"
-Settings.defaults[:par_date_ranges]      = "I;02/10/2017;13/10/2017;17/18|1;30/10/2017;17/11/2017;17/18|2;30/11/2017;26/01/2018;17/18|3;19/02/2018;09/03/2018;17/18|4;16/04/2018;04/05/2018;17/18|5;04/06/2018;29/06/2018;17/18|I;03/09/2018;01/10/2018;18/19|1;03/09/2018;19/10/2018;18/19|2;29/10/2018;21/12/2018;18/19|3;08/01/2019;15/02/2019;18/19|4;25/02/2019;05/04/2019;18/19|5;23/04/2019;24/05/2019;18/19"
-Settings.defaults[:par_restrict_date_ranges] = "I,1,2,3,4,5"
-Settings.defaults[:par_edit_window]      = 1.day
-Settings.defaults[:par_window_type]      = ""
-Settings.defaults[:par_guidance]         = "1,2,4,5#Guidance:||Overall Learner/Tutor Comments|Review improvement targets from previous PAR – have these been met? How has this been evidenced?#par-guidance-previous|Improvement targets for next PAR (including any carried over from previous PAR)#par-guidance-next|||3#Guidance:||Overall Learner/Tutor Comments|Review improvement targets from previous PAR – have these been met? How has this been evidenced?#par-guidance-previous|Improvement targets for next PAR (including any carried over from previous PAR). Please focus on skills and knowledge for improvement targets#par-guidance-next"
-Settings.defaults[:par_guidance_active]  = "off"
+Settings.defaults[:num_progress_reviews] 		= 5
+Settings.defaults[:par_active]           		= "I,1,2,3,4,5"
+Settings.defaults[:par_restrict_active]  		= "off"
+Settings.defaults[:par_date_ranges]      		= "I;02/10/2017;13/10/2017;17/18|1;30/10/2017;17/11/2017;17/18|2;30/11/2017;26/01/2018;17/18|3;19/02/2018;09/03/2018;17/18|4;16/04/2018;04/05/2018;17/18|5;04/06/2018;29/06/2018;17/18|I;01/10/2018;12/10/2018;18/19|1;29/10/2018;23/11/2018;18/19|2;07/01/2019;25/01/2019;18/19|3;25/02/2019;15/03/2019;18/19|4;22/04/2019;10/05/2019;18/19|5;10/06/2019;28/06/2019;18/19"
+Settings.defaults[:par_restrict_date_ranges] 	= "I,1,2,3,4,5"
+Settings.defaults[:par_edit_window]      		= 1.day
+Settings.defaults[:par_window_type]      		= ""
+Settings.defaults[:par_guidance]         		= "1,2,4,5#Guidance:||Overall Learner/Tutor Comments|Review improvement targets from previous PAR – have these been met? How has this been evidenced?#par-guidance-previous|Improvement targets for next PAR (including any carried over from previous PAR)#par-guidance-next|||3#Guidance:||Overall Learner/Tutor Comments|Review improvement targets from previous PAR – have these been met? How has this been evidenced?#par-guidance-previous|Improvement targets for next PAR (including any carried over from previous PAR). Please focus on skills and knowledge for improvement targets#par-guidance-next"
+Settings.defaults[:par_guidance_active]  		= "off"
 
 # e-laaf settings
 Settings.defaults[:elaaf_link_enabled]          		= 1

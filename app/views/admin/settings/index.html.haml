@@ -340,7 +340,7 @@
         Optional date ranges for each PAR.  Format: review;start_date;end_date;acyr  Multiple ranges can be seperated by |  Example:
         %pre
           :preserve     
-            I;02/10/2017;13/10/2017;17/18|1;30/10/2017;17/11/2017;17/18|2;30/11/2017;26/01/2018;17/18|3;19/02/2018;09/03/2018;17/18|4;16/04/2018;04/05/2018;17/18|5;04/06/2018;29/06/2018;17/18|I;03/09/2018;01/10/2018;18/19|1;03/09/2018;19/10/2018;18/19|2;29/10/2018;21/12/2018;18/19|3;08/01/2019;15/02/2019;18/19|4;25/02/2019;05/04/2019;18/19|5;23/04/2019;24/05/2019;18/19
+            I;02/10/2017;13/10/2017;17/18|1;30/10/2017;17/11/2017;17/18|2;30/11/2017;26/01/2018;17/18|3;19/02/2018;09/03/2018;17/18|4;16/04/2018;04/05/2018;17/18|5;04/06/2018;29/06/2018;17/18|I;01/10/2018;12/10/2018;18/19|1;29/10/2018;23/11/2018;18/19|2;07/01/2019;25/01/2019;18/19|3;25/02/2019;15/03/2019;18/19|4;22/04/2019;10/05/2019;18/19|5;10/06/2019;28/06/2019;18/19
   .control-group
     %label.control-label Restrict by Date Ranges
     .controls
@@ -409,7 +409,7 @@
     .controls
       = text_field_tag "ws_token", Settings.ws_token
 
-  %h2 PLP Overview
+  %h2 PLP Tabs
   .well
     Select the PLP Overview layout you would like to use.  Currently there are two, Old and Progress.
   .control-group
@@ -438,6 +438,24 @@
     .controls
       = select_tag "plp_pi_groups_breakdown", options_for_select(["off","on"], Settings.plp_pi_groups_breakdown)
       .help-text Enable/disable seperate PI totals on PLP Support tab for each of the groups named above.
+  .control-group
+    %label.control-label Attendance Benchmark Date Ranges
+    .controls
+      = text_field_tag "plp_attendance_bm_date_ranges", Settings.plp_attendance_bm_date_ranges, :style => "width: 100%"
+      .help-text
+        Progress tab date ranges for each attendance benchmark period.  Format: review;start_date;end_date;acyr  Multiple ranges can be seperated by |  Example:
+        %pre
+          :preserve     
+            I;03/09/2018;01/10/2018;18/19|1;03/09/2018;19/10/2018;18/19|2;29/10/2018;21/12/2018;18/19|3;08/01/2019;15/02/2019;18/19|4;25/02/2019;05/04/2019;18/19|5;23/04/2019;24/05/2019;18/19
+  .control-group
+    %label.control-label Progress Benchmark Date Ranges
+    .controls
+      = text_field_tag "plp_progress_bm_date_ranges", Settings.plp_progress_bm_date_ranges, :style => "width: 100%"
+      .help-text
+        Progress tab date ranges for each progress benchmark period.  Format: review;start_date;end_date;acyr  Multiple ranges can be seperated by |  Example:
+        %pre
+          :preserve     
+            I;01/10/2018;12/10/2018;18/19|1;13/10/2018;16/11/2018;18/19|2;17/11/2018;25/01/2019;18/19|3;26/01/2019;15/03/2019;18/19|4;16/03/2019;10/05/2019;18/19|5;11/05/2019;21/06/2019;18/19
 
   %h2 Induction
   .well
@@ -602,7 +620,7 @@
                                  "elaaf_link_enabled","elaaf_link_icon","elaaf_link_name","elaaf_base_url","elaaf_student_number_place_holder",
                                  "continuing_learning_rev_enabled","continuing_learning_colours","continuing_learning_icons","continuing_learning_default_colour","continuing_learning_default_icon",
                                  "network_ip_ranges","timetable_registers_threshold","par_active","plp_tabs","par_date_ranges","par_edit_window","par_window_type","par_restrict_active","par_restrict_date_ranges",
-                                 "intervention_types","intervention_groups","plp_pi_groups","plp_pi_groups_breakdown","par_guidance_active","par_guidance","absence_line_email",
+                                 "intervention_types","intervention_groups","plp_pi_groups","plp_pi_groups_breakdown","par_guidance_active","par_guidance","absence_line_email","plp_attendance_bm_date_ranges","plp_progress_bm_date_ranges",
                                  "su_send_emails"]
     - @settings2.each do |setting|
       .control-group

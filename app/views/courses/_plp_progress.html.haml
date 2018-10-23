@@ -2,6 +2,10 @@
 
 - par_dates = []
 - Settings.par_date_ranges.split("|").each{|x| b=x.split(';'); par_dates << { :rev => b[0], :from => b[1], :to => b[2] } if ( b[3].blank? || b[3] == @topic.year ) }
+- attendance_bm_dates = []
+- Settings.plp_attendance_bm_date_ranges.split("|").each{|x| b=x.split(';'); attendance_bm_dates << { :rev => b[0], :from => b[1], :to => b[2] } if ( b[3].blank? || b[3] == @topic.year ) }
+- progress_bm_dates = []
+- Settings.plp_progress_bm_date_ranges.split("|").each{|x| b=x.split(';'); progress_bm_dates << { :rev => b[0], :from => b[1], :to => b[2] } if ( b[3].blank? || b[3] == @topic.year ) }
 
 -# Look at only 'Active, CompNoResult, CompNotAch, CompAch, CompPart, CompNoResult, CompAchNoFund'
 - per_ids = @person_courses.map{ |x| (["active", "compnoresult", "compnotach", "compach", "comppart", "compnoresult", "compachnofund"].include? x[:mis_status].try(:downcase)) ? x[:person_id] : nil }.compact
@@ -83,8 +87,9 @@
         %tbody
           - ["I", *("1"..npr.to_s)].each do |x|
             - d = par_dates.detect { |dt| dt[:rev] == x }
-            - d_from = (d.present? && d[:from].present? && Date.strptime(d[:from],"%d/%m/%Y").strftime("%Y-%m-%d")) ? Date.strptime(d[:from],"%d/%m/%Y").strftime("%Y-%m-%d") : MISC::MiscDates.startdate_from_acyr(@topic.year)
-            - d_to = (d.present? && d[:to].present? && Date.strptime(d[:to],"%d/%m/%Y").strftime("%Y-%m-%d")) ? Date.strptime(d[:to],"%d/%m/%Y").strftime("%Y-%m-%d") : MISC::MiscDates.enddate_from_acyr(@topic.year)
+            - bma_d = attendance_bm_dates.detect { |dt| dt[:rev] == x }
+            - bma_d_from = (bma_d.present? && bma_d[:from].present? && Date.strptime(bma_d[:from],"%d/%m/%Y").strftime("%Y-%m-%d")) ? Date.strptime(bma_d[:from],"%d/%m/%Y").strftime("%Y-%m-%d") : MISC::MiscDates.startdate_from_acyr(@topic.year)
+            - bma_d_to = (bma_d.present? && bma_d[:to].present? && Date.strptime(bma_d[:to],"%d/%m/%Y").strftime("%Y-%m-%d")) ? Date.strptime(bma_d[:to],"%d/%m/%Y").strftime("%Y-%m-%d") : MISC::MiscDates.enddate_from_acyr(@topic.year)
             %tr
               %th.table-scroll-fixed-side.text-left{ :style => "width:1px" }
                 .plp_progress_row_title
@@ -98,34 +103,40 @@
                   - if d.present? && d[:to].present?
                     to #{d[:to]}
 
+              - att_bm_tooltip = ""
+              - att_bm_tooltip << "#{bma_d[:from]}" if bma_d.present? && bma_d[:from].present?
+              - att_bm_tooltip << " " if bma_d.present? && ( bma_d[:from].present? || bma_d[:to].present?)
+              - att_bm_tooltip << "to #{bma_d[:to]}" if bma_d.present? && bma_d[:to].present?
+              - att_bm_tooltip = "(#{att_bm_tooltip})" if att_bm_tooltip.present?
+
               - if att_overall_count > 0
                 -# [Attendance (Overall)] Average of 'Overall' attendance. Should this be x[:course_type] => "overall" or "core" or "english" or "maths" or x.enrol_course.to_s.downcase == @topic.code.to_s.downcase
-                - num_att_week_overall = Attendance.where( :person_id => per_ids ).where(:course_type => "overall").where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", d_from, d_to ).select("sum(attendances.att_week) as sum_att_week, count(*) as num").first
+                - num_att_week_overall = Attendance.where( :person_id => per_ids ).where(:course_type => "overall").where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", bma_d_from, bma_d_to ).select("sum(attendances.att_week) as sum_att_week, count(*) as num").first
                 - att_week_overall_avg = (num_att_week_overall[:num] > 0) ? (num_att_week_overall[:sum_att_week]/num_att_week_overall[:num]) : 0
 
-                %td.text-right.bl{ :title => "Attendance overall from #{num_att_week_overall[:num]} entries", :class => Attendance.get_status(att_week_overall_avg,true) }
+                %td.text-right.bl{ :title => "Attendance overall from #{num_att_week_overall[:num]} entries #{att_bm_tooltip}", :class => Attendance.get_status(att_week_overall_avg,true) }
                   #{att_week_overall_avg}%
 
               - if att_core_count > 0
                 -# [Attendance (Core)] Average of 'Core' attendance. Should this be x[:course_type] => "overall" or "core" or "english" or "maths" or x.enrol_course.to_s.downcase == @topic.code.to_s.downcase
-                - num_att_week_core = Attendance.where( :person_id => per_ids ).where(:course_type => "core").where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", d_from, d_to ).select("sum(attendances.att_week) as sum_att_week, count(*) as num").first
+                - num_att_week_core = Attendance.where( :person_id => per_ids ).where(:course_type => "core").where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", bma_d_from, bma_d_to ).select("sum(attendances.att_week) as sum_att_week, count(*) as num").first
                 - att_week_core_avg = (num_att_week_core[:num] > 0) ? (num_att_week_core[:sum_att_week]/num_att_week_core[:num]) : 0
 
-                %td.text-right.bl{ :title => "Attendance for core from #{num_att_week_core[:num]} entries", :class => Attendance.get_status(att_week_core_avg,true) }
+                %td.text-right.bl{ :title => "Attendance for core from #{num_att_week_core[:num]} entries #{att_bm_tooltip}", :class => Attendance.get_status(att_week_core_avg,true) }
                   #{att_week_core_avg}%
 
               - if att_course_count > 0
                 -# [Attendance (Course)] Average of 'Course' attendance. Should this be x[:course_type] => "overall" or "core" or "english" or "maths" or x.enrol_course.to_s.downcase == @topic.code.to_s.downcase
-                - num_att_week_course = Attendance.where( :person_id => per_ids ).where( "lower(attendances.enrol_course) = ? ", @topic.code.to_s.downcase).where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", d_from, d_to ).select("sum(attendances.att_week) as sum_att_week, count(*) as num").first
+                - num_att_week_course = Attendance.where( :person_id => per_ids ).where( "lower(attendances.enrol_course) = ? ", @topic.code.to_s.downcase).where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", bma_d_from, bma_d_to ).select("sum(attendances.att_week) as sum_att_week, count(*) as num").first
                 - att_week_course_avg = (num_att_week_course[:num] > 0) ? (num_att_week_course[:sum_att_week]/num_att_week_course[:num]) : 0
 
-                %td.text-right.bl{ :title => "Attendance for course from #{num_att_week_course[:num]} entries", :class => Attendance.get_status(att_week_course_avg,true) }
+                %td.text-right.bl{ :title => "Attendance for course from #{num_att_week_course[:num]} entries #{att_bm_tooltip}", :class => Attendance.get_status(att_week_course_avg,true) }
                   #{att_week_course_avg}%
 
               -# [Progress]
               - if x != "I"
                 - pr_ids_progress = ProgressReview.where( :person_id => per_ids ).select( "progress_reviews.person_id", "progress_reviews.progress_id", "max(progress_reviews.id) as newest_id").where("progress_reviews.number = ?",x.to_i).joins(:progress).where("progresses.course_year=?",@topic.year).where("LOWER(course_code) = ?",@topic.code.to_s.downcase).group(["progress_reviews.person_id", "progress_reviews.progress_id"])
-                -# .where("progress_reviews.created_at between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", d_from, d_to)
+                -# .where("progress_reviews.created_at between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", bma_d_from, bma_d_to)
                 -# .where("LOWER(course_type) = ?",'core')
                 - pr_ids_max = ProgressReview.all.joins("INNER JOIN (#{pr_ids_progress.to_sql}) newest ON newest.newest_id = progress_reviews.id").select(" count(*) as num, count( case when lower(progress_reviews.level) in('purple','green') then 1 else null end ) as mettarget ").first
                 - progress_avg = (pr_ids_max[:num] > 0) ? (100.0 / pr_ids_max[:num] * pr_ids_max[:mettarget] ).round : 0
@@ -137,11 +148,11 @@
                   #{progress_avg}%
 
               -# [Functional Skills Attendance]
-              - num_att_week_fs = Attendance.where( :person_id => per_ids ).where( "course_type in ('fs english','fs maths')" ).where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", d_from, d_to ).select("sum(attendances.att_week) as sum_att_week, count(*) as num").first
+              - num_att_week_fs = Attendance.where( :person_id => per_ids ).where( "course_type in ('fs english','fs maths')" ).where("week_beginning between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')", bma_d_from, bma_d_to ).select("sum(attendances.att_week) as sum_att_week, count(*) as num").first
               - att_week_avg_fs = (num_att_week_fs[:num] > 0) ? (num_att_week_fs[:sum_att_week]/num_att_week_fs[:num]) : 0
 
               -# %td.text-right.bl{ :title => "Function Skills Attendance", :class => (att_week_avg_fs >= 90) ? "ragp_light_green" : "ragp_light_red" }
-              %td.text-right.bl{ :title => "Function Skills Attendance", :class => Attendance.get_status(att_week_avg_fs,true) }
+              %td.text-right.bl{ :title => "Function Skills Attendance #{att_bm_tooltip}", :class => Attendance.get_status(att_week_avg_fs,true) }
                 #{att_week_avg_fs}%
 
               -# [Functional Skills Achievement]
