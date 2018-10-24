@@ -50,7 +50,7 @@ module EventsHelper
   end
 
   def delete_event_button(event)
-    link_to image_tag("events/delete_event.png"), person_event_url(event.person, event), 
+    link_to image_tag("events/delete_event.png"), person_event_url(event.person, event, :eventtype => event.title),
     :method => :delete, :remote => true,
     :class => "delete-event-button",
     :confirm => "This will delete the entire #{event.eventable_type.singularize.humanize.titleize}.\nAre you sure?"
