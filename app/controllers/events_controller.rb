@@ -94,7 +94,7 @@ class EventsController < ApplicationController
     end
     respond_to do |f|
       f.html {redirect_to :back}
-      f.js 
+      f.js { head :no_content }
     end
   end
 end
