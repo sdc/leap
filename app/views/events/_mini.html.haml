@@ -12,7 +12,7 @@
     %li.controls
       %i.expand-mini.icon-chevron-right.clicky
       - if event.is_deletable?
-        = link_to event_url(event, :eventtype => event.title), :method => :delete, :class => "delete-mini hide", 
+        = link_to event_url(event, :eventtype => (event.title == 'Outcome' ? event.title : nil) ), :method => :delete, :class => "delete-mini hide", 
                                     :confirm => "Delete this note?" do
           %i.icon-trash.clicky
 
