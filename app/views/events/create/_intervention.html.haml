@@ -16,7 +16,8 @@
           = f.select :referral_category, cat.last, {}, :id => "intervention_referral_category_#{cat.first.gsub(/\W+/,"_")}", :style => "display:none"
       .span2
         %h4 Incident Date
-        = f.text_field :incident_date, :class => "datepicker span2"
+        / = f.text_field :incident_date, :class => "datepicker span2"
+        = f.text_field(:incident_date, {"data-date-format" => "dd M yyyy", "data-provide" => "datepicker", :class => "datepicker span2"})
       .span1
         %h4 Refer
         = f.select :referral, {"No" => false, "Yes" => true}, {}, :class => "span1"
