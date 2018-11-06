@@ -162,6 +162,7 @@ module MisPerson
     else
       from = (options[:from] || Date.today.beginning_of_week)#.strftime("%Y-%d-%m %H:%M:%S")
       to   = (options[:to  ] || from.end_of_week)#.strftime("%Y-%d-%m %H:%M:%S")
+      # binding.pry
       Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T'], :planned_start_date => from..to)
     end
     reds.map do |s| 

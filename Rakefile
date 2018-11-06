@@ -5,3 +5,4 @@ require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
 Ilp2::Application.load_tasks
+# Ilp2.application.load_tasks

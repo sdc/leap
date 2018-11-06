@@ -1,5 +1,6 @@
 - npr = Settings.num_progress_reviews.to_i
-- show_reviews = Progress.find(:all, :conditions => ["course_code = ? and course_year = ?", @topic.code, @topic.year] ).present?
+/ - show_reviews = Progress.find(:all, :conditions => ["course_code = ? and course_year = ?", @topic.code, @topic.year] ).present?
+- show_reviews = Progress.where("course_code = ? and course_year = ?", @topic.code, @topic.year ).present?
 - person_attendance = Hash.new
 - show_plp_tabs = Settings.plp_tabs.split(',')
 
