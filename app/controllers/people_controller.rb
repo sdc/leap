@@ -205,25 +205,36 @@ class PeopleController < ApplicationController
     @myans = @topic.simple_poll_answers.where(:simple_poll_id => @poll.id).first
   end
 
+  def mis_update(person_id, params_passed)
+    @person = Person.find(person_id)
+    @person.update_attributes(person_params(params_passed))
+  end
+
   private
 
-  def person_set_topic
-    params[:person_id] = params[:id]
-    set_topic
-  end
-
-  def set_layout
-    case action_name
-    when /\_block$/ then false
-    when "show" then Settings.home_page == "new" || Settings.home_page == "progress" ? "cloud" : "application"
-    when "search" then Settings.home_page == "new" || Settings.home_page == "progress" ? "cloud" : "application"
-    else "application"
+    def person_set_topic
+      params[:person_id] = params[:id]
+      set_topic
     end
-  end
 
-  def parse_sidebar_links
-    Settings.clidebar_links.split(/^\|/).drop(1)
-            .map{|menu| menu.split("\n").reject(&:blank?).map(&:chomp)}
-            .map{|menu| menu.first.split("|") + [menu.drop(1).map{|item| item.split("|")}]}
-  end
+    def set_layout
+      case action_name
+      when /\_block$/ then false
+      when "show" then Settings.home_page == "new" || Settings.home_page == "progress" ? "cloud" : "application"
+      when "search" then Settings.home_page == "new" || Settings.home_page == "progress" ? "cloud" : "application"
+      else "application"
+      end
+    end
+
+    def parse_sidebar_links
+      Settings.clidebar_links.split(/^\|/).drop(1)
+              .map{|menu| menu.split("\n").reject(&:blank?).map(&:chomp)}
+              .map{|menu| menu.first.split("|") + [menu.drop(1).map{|item| item.split("|")}]}
+    end
+
+    def person_params(params_passed)
+      params = ActionController::Parameters.new(person: params_passed)
+      params.require(:person).permit(:mis_id, :forename, :surname, {:middle_names => []}, {:address => []}, :town, :postcode, :mobile_number, :photo, :next_of_kin, :date_of_birth, :staff, :username, :personal_email, :home_phone, :note, :contact_allowed)
+    end
+
 end

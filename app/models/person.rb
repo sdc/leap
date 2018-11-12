@@ -18,6 +18,9 @@ require 'misc/misc_dates'
 
 class Person < ActiveRecord::Base
 
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection
+
   include MisPerson
 
   scoped_search :on => [:forename, :surname, :mis_id]
@@ -69,7 +72,7 @@ class Person < ActiveRecord::Base
   serialize :address
   serialize :my_courses
 
-  attr_accessible :mis_id, :forename, :surname, :middle_names, :address, :town, :postcode, :mobile_number, :photo, :next_of_kin, :date_of_birth, :staff, :username, :personal_email, :home_phone, :note, :contact_allowed
+  # attr_accessible :mis_id, :forename, :surname, :middle_names, :address, :town, :postcode, :mobile_number, :photo, :next_of_kin, :date_of_birth, :staff, :username, :personal_email, :home_phone, :note, :contact_allowed
 
   def self.me
     # Convinience method to get Kev at SDC
