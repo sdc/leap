@@ -15,7 +15,7 @@
     - else
       %h2 Complete Date
     - unless target.complete_date or target.drop_date
-      = f.text_field :complete_date, :value => Date.today, :class => "datepicker"
+      = f.text_field(:complete_date, {"data-date-format" => "d MM, yyyy", "data-provide" => "datepicker", :value => Date.today})
       = submit_tag "Complete", :value => "Complete", :class => "btn btn-primary pull-right"
     - else
       = pretty_date(target.complete_date || target.drop_date)

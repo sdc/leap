@@ -5,7 +5,7 @@
     .row
       .span2
         %h4 Date
-        = f.text_field :tmp_date, :class => "datepicker span2", :value => Time.now.to_date
+        = f.text_field(:tmp_date, {"data-date-format" => "d MM, yyyy", "data-provide" => "datepicker", :class => "datepicker span2", :value => Time.now.to_date})
       .span2
         %h4 Time
         = f.time_select :tmp_time, {:minute_step => 10}, :class => "span1"

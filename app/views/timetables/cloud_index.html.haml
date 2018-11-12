@@ -6,7 +6,7 @@
           %i.fa.fa-arrow-left
           Previous 
       .hidden-xs.input-group
-        = text_field_tag(:date, @date.strftime("%d %B %Y"), :class => "form-control", "data-provide" => "datepicker", "data-date-format" => 'd MM yyyy')
+        = text_field_tag(:date, @date.strftime("%e %B, %Y"), :class => "form-control", "data-provide" => "datepicker", "data-date-format" => 'd MM, yyyy')
         %span.input-group-btn
           %button.btn.btn-primary Go!
       %li
@@ -62,7 +62,7 @@
           .row
             .form-group.col-xs-6
               = f.label :tmp_date, "Date"
-              = f.text_field :tmp_date, :class => "form-control", "data-provide" => "datepicker", "data-date-format" => "d MM yyyy",:value => Time.now.to_date
+              = f.text_field :tmp_date, :class => "form-control", "data-provide" => "datepicker", "data-date-format" => "d MM, yyyy",:value => Time.now.to_date
             .form-group.col-xs-6
               = f.label :tmp_time, "Time"
               .form_control
@@ -108,7 +108,7 @@
           .row    
             .form-group.col-xs-6   
               = f.label :notified_at, "Notified at" 
-              = f.text_field :notified_at, :class => "form-control", "data-provide" => "datepicker", :value => Time.now.to_date, "data-date-format" => "d MM yyyy"
+              = f.text_field :notified_at, :class => "form-control", "data-provide" => "datepicker", :value => Time.now.to_date, "data-date-format" => "d MM, yyyy"
               / = f.date_select :notified_at
             .form-group.col-xs-6
               = f.label :notified_at, "Time"

@@ -10,5 +10,5 @@
     = f.text_area :actions
   .span3
     %h2 Target Date
-    = f.text_field :target_date, :class => "datepicker", :value => (Time.now + Settings.target_default_length.to_i).to_date
+    = f.text_field(:target_date, {"data-date-format" => "d MM, yyyy", "data-provide" => "datepicker", :class => "datepicker", :value => (Time.now + Settings.target_default_length.to_i).to_date } )
     = submit_tag "Set", :class => "pull-right btn btn-primary"

@@ -10,7 +10,7 @@
 						= form_tag do
 							.row{ style: 'margin-left: 0px' }
 								.col-xs-8
-									= text_field_tag(:absence_date, @date, "data-date-format" => "d MM yyyy", "data-provide" => "datepicker", "style" => "float: left")
+									= text_field_tag(:absence_date, @date, "data-date-format" => "d MM, yyyy", "data-provide" => "datepicker", "style" => "float: left")
 								.col-xs-4
 									= submit_tag "Go!", "style" => "width: 100px; float: left; margin: 2px"
 			%table{:class => "table-striped", :id => "absence-table", :style => "width:100%;"}
