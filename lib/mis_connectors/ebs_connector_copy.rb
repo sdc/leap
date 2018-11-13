@@ -94,6 +94,29 @@ module MisPerson
             }
 
           )
+
+          # @person.update_attributes(people_controller.person_params(
+          #   :forename      => ep.known_as.blank? ? ep.forename : ep.known_as,
+          #   :surname       => ep.surname,
+          #   :middle_names  => ep.middle_names && ep.middle_names.split,
+          #   :address       => ep.address ? [ep.address.address_line_1,ep.address.address_line_2,
+          #                     ep.address.address_line_3,ep.address.address_line_4].reject{|a| a.blank?} : [],
+          #   :town          => ep.address ? ep.address.town : "",
+          #   :postcode      => ep.address ? [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" ") : "",
+          #   # :photo         => Ebs::Blob.table_exists? && ep.blobs.photos.first.try(:binary_object),
+          #   :photo         => Ebs::Blob.find_by( owner_ref: mis_id.to_s ).try(:binary_object),
+          #   :mobile_number => ep.mobile_phone_number,
+          #   :next_of_kin   => [ep.fes_next_of_kin, ep.fes_nok_contact_no].join(" "),
+          #   :date_of_birth => ep.date_of_birth,
+          #   #:uln           => ep.unique_learn_no,
+          #   :mis_id        => ep.person_code,
+          #   :staff         => ep.fes_staff_code?,
+          #   :username      => (ep.send(Settings.ebs_username_field) or ep.id.to_s),
+          #   :personal_email=> ep.personal_email,
+          #   :home_phone    => ep.address && ep.address.telephone,
+          #   :note          => (ep.note and ep.note.notes) ? (ep.note.notes + "\nLast updated by #{ep.note.updated_by or ep.note.created_by} on #{ep.note.updated_date or ep.note.created_date}") : nil,
+          #   :contact_allowed => (Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
+          # ))
           if @person.contact_allowed != (Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
             @person.update_attribute("contact_allowed", Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
             @person.save if options[:save] 
@@ -304,7 +327,6 @@ module MisPerson
   end
 
   def import_absences
-    absences_controller = AbsencesController.new
     Ebs::Absence.where(person_id: mis_id).load.each do |a|
       register_event_details_slot_ids = []
       register_event_details_slot_dates = []      
@@ -327,7 +349,7 @@ module MisPerson
       end
       next if absences.detect{|ab| a.created_at == ab.created_at}
       next unless a.notified_at
-      na = absences.create(absences_controller.create_leap_absence(
+      na = absences.create(
         :body => a.reason_extra,
         :category => a.reason,
         :usage_code => a.usage_code,
@@ -337,7 +359,7 @@ module MisPerson
         :notified_at => a.notified_at,
         :start_date => start_date,
         :end_date => end_date
-      ))
+      )
     end
   end
 

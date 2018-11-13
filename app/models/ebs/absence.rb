@@ -61,6 +61,9 @@
 
 class Ebs::Absence < Ebs::Model
 
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection    
+
   REASONS = ["Work",
              "Transport Problems",
              "Medical Appointment",
@@ -98,7 +101,7 @@ class Ebs::Absence < Ebs::Model
 
   validates_presence_of "person_id"
 
-  attr_accessible :lessons_missed, :reason, :reason_extra, :usage_code, :contact, :created_at, :deleted, :from_date, :person_id, :notified_at, :created_by, :absence_slots_count, :register_event_details_slot_id
+  # attr_accessible :lessons_missed, :reason, :reason_extra, :usage_code, :contact, :created_at, :deleted, :from_date, :person_id, :notified_at, :created_by, :absence_slots_count, :register_event_details_slot_id
   # alias_attribute :reason, :category
   # self.table_name= "addresses"
   self.table_name= "sdc_ilp_absences"

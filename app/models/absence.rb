@@ -1,5 +1,8 @@
 # class Absence < ActiveRecord::Base
-class Absence < Eventable
+class Absence < Eventable  
+
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection
 
   # REASONS = ["Work",
   #            "Transport Problems",
@@ -48,7 +51,7 @@ class Absence < Eventable
              "Unable to Contact"
             ]
 
-  attr_accessible :lessons_missed, :category, :body, :usage_code, :notified_at, :contact_category, :created_at, :deleted, :from_date, :person_id, :created_by_id, :updated_at, :start_date, :end_date
+  # attr_accessible :lessons_missed, :category, :body, :usage_code, :notified_at, :contact_category, :created_at, :deleted, :from_date, :person_id, :created_by_id, :updated_at, :start_date, :end_date
   # alias_attribute :reason, :category
 
   after_create {|ab| ab.events.create!(:event_date => created_at, :transition => :create)}
