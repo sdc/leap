@@ -16,6 +16,9 @@
 
 class Course < ActiveRecord::Base
 
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection  
+
   include MisCourse
 
   has_many :person_courses, -> { where.not(enrolment_date: nil) }
@@ -23,7 +26,7 @@ class Course < ActiveRecord::Base
 
   scoped_search :on => [:title,:code]
 
-  attr_accessible :title, :id, :code, :year, :mis_id, :vague_title
+  # attr_accessible :title, :id, :code, :year, :mis_id, :vague_title
 
   def Course.get(mis_id,fresh=false)
     (fresh ? import(mis_id, :people => true) : find_by_mis_id(mis_id)) or import(mis_id, :people => true)

@@ -28,7 +28,8 @@ class EventsController < ApplicationController
   def create
     et = params.delete(:eventable_type).tableize
     if @affiliation == "staff" or Settings.students_create_events.split(",").include? et
-      @event = @topic.send(et).build(params[et.singularize])
+      # @event = @topic.send(et).build(params[et.singularize])
+      @event = @topic.send(et).build(method("#{et.singularize}_params").call)
       if @event.save
         flash[:success] = "New #{et.singularize.humanize.titleize} created"
       else
@@ -57,7 +58,8 @@ class EventsController < ApplicationController
     @event = @topic.events.find(params[:id])
     et = @event.eventable_type.tableize
     if @affiliation == "staff" or Settings.students_update_events.split(",").include? et
-      if @event.eventable.update_attributes(params[et.singularize])
+      if @event.eventable.update_attributes(method("#{et.singularize}_params").call)
+      # if @event.eventable.update_attributes(params[et.singularize])
         flash[:success] = "#{@event.eventable_type.humanize} updated"
       else
         flash[:error] = "#{@event.eventable_type.humanize} could not be updated!"
@@ -97,4 +99,126 @@ class EventsController < ApplicationController
       f.js { head :no_content }
     end
   end
+
+  private
+
+    def event_params
+      params.require(:event).permit(:person_id, :event_id, :event_date, :transition, :parent_id)
+    end
+
+    def aspiration_params
+      params.require(:aspiration).permit(:aspiration)
+    end
+
+    def achievement_params
+      params.require(:achievement).permit(:body, :year)
+    end
+
+    def attendance_params
+      params.require(:attendance).permit(:week_beginning, :att_year, :att_week, :course_type)
+    end  
+
+    def contact_log_params
+      params.require(:contact_log).permit(:body)
+    end   
+
+    def disciplinary_params
+      params.require(:disciplinary).permit(:level, :body)
+    end  
+
+    def entry_req_met_params
+      params.require(:entry_req_met).permit(:met, :entry_req_id, :no_but)
+    end   
+
+    def event_note_params
+      params.require(:event_note).permit(:body, :parent_event_id, :parent_id)
+    end   
+
+    def goal_params
+      params.require(:goal).permit(:body)
+    end 
+
+    def induction_question_params
+      params.require(:induction_question).permit(:question, :answer)
+    end  
+
+    def initial_review_params
+      params.require(:initial_review).permit(:body, :created_at, :created_by_id, :progress_id, :target_grade)
+    end 
+
+    def intervention_params
+      params.require(:intervention).permit(:disc_text, :incident_date, :pi_type, :referral, :referral_category, :referral_text, :workshops)
+    end  
+
+    def mdl_badge_params
+      params.require(:mdl_badge).permit(:body, :image_url, :mdl_course_id, :person_id, :title, :created_at)
+    end  
+
+    def mdl_grade_track_params
+      params.require(:mdl_grade_track).permit(:course_type, :mag, :mdl_id, :name, :tag, :total, :completion_total, :completion_out_of, :created_at, :created_by_id)
+    end  
+
+    def meeting_outcome_params
+      params.require(:meeting_outcome).permit(:body, :created_by_id, :person_id, :title)
+    end                         
+
+    def note_params
+      params.require(:note).permit(:body)
+    end    
+
+    def pathway_params
+      params.require(:pathway).permit(:pathway,:subject)
+    end  
+
+    def profile_question_params
+      params.require(:profile_question).permit(:question, :answer)
+    end  
+
+    def progress_review_params
+      params.require(:progress_review).permit(:attendance, :body, :completed_by, :created_at, :id, :level, :number, :progress_id, :working_at)
+    end  
+
+    def progression_review_params
+      params.require(:progression_review).permit(:approved, :reason)
+    end  
+
+    def qualification_params
+      params.require(:qualification).permit(:awarding_body, :grade, :predicted, :qual_type, :seen, :title, :created_at, :import_type)
+    end  
+
+    def review_params
+      params.require(:review).permit(:attendance, :published, :body, :window)
+    end                         
+
+    def review_line_params
+      params.require(:review_line).permit(:body, :quality, :attitude, :punctuality, :completion, :window, :unit, :review_id)
+    end    
+
+    def simple_poll_answer_params
+      params.require(:simple_poll_answer).permit(:answer, :created_by, :person_id, :simple_poll_id)
+    end  
+
+    def support_history_params
+      params.require(:support_history).permit(:body, :category)
+    end   
+
+    def support_request_params
+      params.require(:support_request).permit(:difficulties, :sessions, :workshop)
+    end      
+
+    def support_strategy_params
+      params.require(:support_strategy).permit(:body, :agreed_date, :completed_date, :declined_date, :event_id)
+    end 
+
+    def target_params
+      params.require(:target).permit(:body, :actions, :reflection, :target_date, :complete_date, :drop_date, :event, :event_id)
+    end   
+
+    def tt_activity_params
+      params.require(:tt_activity).permit(:body, :start_time, :category, :repeat_type, :repeat_number, :timetable_length, :tmp_time, :tmp_date)
+    end      
+
+    def work_package_params
+      params.require(:work_package).permit(:wp_type, :description, :learnt, :next_steps, :days)
+    end                            
 end

@@ -16,7 +16,10 @@
 
 class Disciplinary < Eventable
 
-  attr_accessible :level, :body
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection		
+
+  # attr_accessible :level, :body
 
   validates :body, :presence => true
   validates :level, :presence => true, :numericality => true

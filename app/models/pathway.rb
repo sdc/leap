@@ -16,7 +16,10 @@
 
 class Pathway < Eventable
 
-  attr_accessible :pathway,:subject
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection	
+
+  # attr_accessible :pathway,:subject
 
   after_create {|q| q.events.create!(:event_date => created_at, :transition => :create)}
 

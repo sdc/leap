@@ -1,5 +1,9 @@
 class InitialReview < Eventable
-  attr_accessible :body, :created_at, :created_by_id, :progress_id, :target_grade
+
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection
+  
+  # attr_accessible :body, :created_at, :created_by_id, :progress_id, :target_grade
 
   validate :check_unique
   belongs_to :person, :foreign_key => "created_by_id"

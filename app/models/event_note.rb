@@ -16,7 +16,10 @@
 
 class EventNote < Eventable
 
-  attr_accessible :body, :parent_event_id, :parent_id
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection	
+
+  # attr_accessible :body, :parent_event_id, :parent_id
 
   after_create {|note| note.events.create!(:event_date => created_at, :transition => :create, :parent_id => parent_event_id)}
 

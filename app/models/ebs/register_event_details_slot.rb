@@ -16,7 +16,9 @@
 
 class Ebs::RegisterEventDetailsSlot < Ebs::Model
 
-  attr_accessible :usage_code
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection
+  # attr_accessible :usage_code
   
   self.table_name= "register_event_details_slots"  
   # self.primary_key= :id

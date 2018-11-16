@@ -16,6 +16,9 @@
 
 class Qualification < Eventable
 
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection  
+
   include MisQualification
 
   after_create  {|qual| qual.events.create!(:event_date => created_at, :transition => qual.predicted? ? :create : :complete)}
@@ -26,7 +29,7 @@ class Qualification < Eventable
 
   validates :title, :presence => true 
   
-  attr_accessible :awarding_body, :grade, :predicted, :qual_type, :seen, :title, :created_at, :import_type
+  # attr_accessible :awarding_body, :grade, :predicted, :qual_type, :seen, :title, :created_at, :import_type
 
   belongs_to :person
 

@@ -24,7 +24,10 @@
 #
 class Target < Eventable
 
-  attr_accessible :body, :actions, :reflection, :target_date, :complete_date, :drop_date, :event, :event_id
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection  
+
+  # attr_accessible :body, :actions, :reflection, :target_date, :complete_date, :drop_date, :event, :event_id
 
   validates :target_date, :body, :presence => true
 

@@ -16,7 +16,9 @@
 
 class Aspiration < Eventable
 
-  attr_accessible :aspiration
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection
+  # attr_accessible :aspiration
 
   after_create {|q| q.events.create!(:event_date => created_at, :transition => :create)}
 

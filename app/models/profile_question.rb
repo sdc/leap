@@ -16,7 +16,10 @@
 
 class ProfileQuestion < Eventable
 
-  attr_accessible :question, :answer
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection	
+
+  # attr_accessible :question, :answer
 
   after_create {|q| q.events.create!(:event_date => created_at, :transition => :create)}
 

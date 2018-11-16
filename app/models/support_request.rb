@@ -16,7 +16,10 @@
 
 class SupportRequest < Eventable
 
-  attr_accessible :difficulties, :sessions, :workshop
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection  
+
+  # attr_accessible :difficulties, :sessions, :workshop
 
   serialize :sessions
   serialize :difficulties

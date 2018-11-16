@@ -454,17 +454,28 @@ module MisCourse
     end 
 
     def import(mis_id, options = {})
+      course_controller = CoursesController.new
       options.reverse_merge! :save => true, :people => false
       if (ec = Ebs::UnitInstanceOccurrence.find_by( uio_id: mis_id ) )
         @course = Course.find_or_create_by( mis_id: mis_id )
-        @course.update_attributes(
-          :title  => ec.title,
-          :code   => ec.fes_uins_instance_code,
-          :year   => ec.calocc_occurrence_code,
-          :mis_id => mis_id,
-          :vague_title => ec.send(Settings.application_title_field)
-          # :vague_title => Settings.application_title_field
+        course_controller.mis_update(@course.id,
+          {
+            :title  => ec.title,
+            :code   => ec.fes_uins_instance_code,
+            :year   => ec.calocc_occurrence_code,
+            :mis_id => mis_id,
+            :vague_title => ec.send(Settings.application_title_field)
+            # :vague_title => Settings.application_title_field
+          }
         )
+        # @course.update_attributes(
+        #   :title  => ec.title,
+        #   :code   => ec.fes_uins_instance_code,
+        #   :year   => ec.calocc_occurrence_code,
+        #   :mis_id => mis_id,
+        #   :vague_title => ec.send(Settings.application_title_field)
+        #   # :vague_title => Settings.application_title_field
+        # )
         if @course.vague_title != (ec.send(Settings.application_title_field))
         # if @course.vague_title != Settings.application_title_field
           @course.update_attribute("vague_title",ec.send(Settings.application_title_field)) # unless Settings.application_title_field.blank?

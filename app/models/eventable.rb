@@ -16,7 +16,7 @@
 
 class Eventable < ActiveRecord::Base
 
-  # attr_accessible :event_date, :transition
+  attr_accessible :event_date, :transition
 
   self.abstract_class = true
 

@@ -87,12 +87,22 @@ class CoursesController < ApplicationController
     @user.save
     redirect_to @topic
   end
+
+  def mis_update(course_id, params_passed)
+    @course = Course.find(course_id)
+    @course.update_attributes(course_params(params_passed))
+  end  
   
   private
   
-  def course_set_topic
-    params[:course_id] = params[:id]
-    set_topic
-  end
+    def course_set_topic
+      params[:course_id] = params[:id]
+      set_topic
+    end
+
+    def course_params(params_passed)
+      params = ActionController::Parameters.new(course: params_passed)
+      params.require(:course).permit(:title, :id, :code, :year, :mis_id, :vague_title)
+    end    
 
 end

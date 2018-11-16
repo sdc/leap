@@ -15,7 +15,11 @@
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
 class ProgressReview < Eventable
-  attr_accessible :attendance, :body, :completed_by, :created_at, :id, :level, :number, :progress_id, :working_at
+
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection
+  
+  # attr_accessible :attendance, :body, :completed_by, :created_at, :id, :level, :number, :progress_id, :working_at
 
   validate :check_unique
   belongs_to :person, :foreign_key => "created_by_id"

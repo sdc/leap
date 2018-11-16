@@ -1,7 +1,11 @@
 require "csv"
 
 class EntryReq < ActiveRecord::Base
-  attr_accessible :body, :category
+
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection  
+  
+  # attr_accessible :body, :category
 
   belongs_to :course
 

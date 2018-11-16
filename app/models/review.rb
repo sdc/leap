@@ -16,7 +16,10 @@
 
 class Review < Eventable
 
-  attr_accessible :attendance, :published, :body, :window
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection  
+
+  # attr_accessible :attendance, :published, :body, :window
 
   has_many :review_lines, :dependent => :destroy
 

@@ -16,12 +16,14 @@
 
 class TtActivity < Eventable
 
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection
 
   REPEAT_TYPES = ["No repeat","Weekly","Monthly"]
 
   TIME_SELECT = (0..600).step(15).map{|x| ["#{x.divmod(60).join(" hours ")} mins",x*60]}.drop 1
 
-  attr_accessible :body, :start_time, :category, :repeat_type, :repeat_number, :timetable_length, :tmp_time, :tmp_date
+  # attr_accessible :body, :start_time, :category, :repeat_type, :repeat_number, :timetable_length, :tmp_time, :tmp_date
 
   before_save :fix_start_time
 

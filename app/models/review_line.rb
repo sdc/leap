@@ -16,6 +16,9 @@
 
 class ReviewLine < Eventable
 
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection  
+
   attr_accessible :body, :quality, :attitude, :punctuality, :completion, :window, :unit, :review_id
 
   belongs_to :review

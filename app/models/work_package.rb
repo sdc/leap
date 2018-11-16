@@ -16,7 +16,10 @@
 
 class WorkPackage < Eventable
 
-  attr_accessible :wp_type, :description, :learnt, :next_steps, :days
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection	
+
+  # attr_accessible :wp_type, :description, :learnt, :next_steps, :days
 
   after_create {|q| q.events.create!(:event_date => created_at, :transition => :create)}
 

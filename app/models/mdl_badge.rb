@@ -1,5 +1,9 @@
 class MdlBadge < Eventable
-  attr_accessible :body, :image_url, :mdl_course_id, :person_id, :title, :created_at
+
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection
+  
+  # attr_accessible :body, :image_url, :mdl_course_id, :person_id, :title, :created_at
   after_create {|badge| badge.events.create!(:event_date => created_at, :transition => :create)}
   belongs_to :person
 

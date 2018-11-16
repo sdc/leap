@@ -16,7 +16,10 @@
 
 class ProgressionReview < Eventable
 
-  attr_accessible :approved, :reason
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection  
+
+  # attr_accessible :approved, :reason
 
   serialize :reason
 
