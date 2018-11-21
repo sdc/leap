@@ -16,7 +16,10 @@
 
 class Eventable < ActiveRecord::Base
 
-  attr_accessible :event_date, :transition
+  # attr_protected
+  # include ActiveModel::ForbiddenAttributesProtection   
+
+  # attr_accessible :event_date, :transition
 
   self.abstract_class = true
 
@@ -83,5 +86,11 @@ class Eventable < ActiveRecord::Base
  def is_deleted?
    respond_to? :deleted and deleted
  end
+
+ private
+
+  def eventable_params
+    params.require(:eventable).permit(:event_date, :transition)
+  end 
 
 end

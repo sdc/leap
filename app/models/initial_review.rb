@@ -1,9 +1,7 @@
 class InitialReview < Eventable
 
   attr_protected
-  include ActiveModel::ForbiddenAttributesProtection
-  
-  # attr_accessible :body, :created_at, :created_by_id, :progress_id, :target_grade
+  include ActiveModel::ForbiddenAttributesProtection    
 
   validate :check_unique
   belongs_to :person, :foreign_key => "created_by_id"
@@ -11,9 +9,13 @@ class InitialReview < Eventable
   before_save :set_values
   validates :body, :presence => true
 
-  after_create do |line|
-    line.events.create!(:event_date => created_at, :transition => :create, :person_id => person_id)
-  end
+  # after_create do |line|
+  #   line.events.create!(:event_date => created_at, :transition => :create, :person_id => person_id)
+  # end
+
+  def strong_params_validate
+    [{:event_date => self.created_at, :transition => :create, :person_id => self.person_id}]
+  end    
 
   def set_values
   	self.created_at ||= Time.now

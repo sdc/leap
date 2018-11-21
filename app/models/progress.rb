@@ -1,5 +1,4 @@
 class Progress < ActiveRecord::Base
-  attr_accessible :course_code, :course_status, :course_title, :course_tutor, :course_type, :course_year, :id, :person_id, :uio_id
   attr_accessor :initial, :attendance, :reviews
 
   belongs_to :person, :foreign_key => "person_id"

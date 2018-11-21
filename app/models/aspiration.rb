@@ -17,10 +17,13 @@
 class Aspiration < Eventable
 
   attr_protected
-  include ActiveModel::ForbiddenAttributesProtection
-  # attr_accessible :aspiration
+  include ActiveModel::ForbiddenAttributesProtection 	
 
-  after_create {|q| q.events.create!(:event_date => created_at, :transition => :create)}
+  # after_create {|q| q.events.create!(:event_date => created_at, :transition => :create)}
+
+  def strong_params_validate
+  	[{:event_date => self.created_at, :transition => :create}]
+  end
 
   validates :aspiration, :presence => true
 

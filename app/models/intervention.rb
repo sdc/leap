@@ -5,9 +5,11 @@ class Intervention < Eventable
 
   scope :this_year, lambda {where("interventions.updated_at > ?", MISC::MiscDates.start_of_acyr )}
 
-  # attr_accessible :disc_text, :incident_date, :pi_type, :referral, :referral_category, :referral_text, :workshops
+  # after_create {|i| i.events.create!(:event_date => created_at, :transition => :create)}
 
-  after_create {|i| i.events.create!(:event_date => created_at, :transition => :create)}
+  def strong_params_validate
+    [{:event_date => self.created_at, :transition => :create}]
+  end  
 
   after_save do |i|
     if i.disc_text_changed? and i.disc_text_was.nil?

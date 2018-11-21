@@ -19,15 +19,17 @@ require 'misc/misc_dates'
 class Attendance < Eventable
 
   attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
-
-  # attr_accessible :week_beginning, :att_year, :att_week, :course_type
+  include ActiveModel::ForbiddenAttributesProtection    
 
   default_scope { order(:week_beginning) }
 
-  after_create do |attendance|
-    attendance.events.create!(:event_date => week_beginning.end_of_week, :transition => :complete) if attendance.course_type == "overall"
-  end
+  # after_create do |attendance|
+  #   attendance.events.create!(:event_date => week_beginning.end_of_week, :transition => :complete) if attendance.course_type == "overall"
+  # end
+
+  def strong_params_validate
+    [{:event_date => self.week_beginning.end_of_week, :transition => :complete}] if self.attendance.course_type == "overall"
+  end  
 
   def title
     if (week_beginning.end_of_week).future?

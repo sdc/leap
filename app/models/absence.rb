@@ -2,7 +2,7 @@
 class Absence < Eventable  
 
   attr_protected
-  include ActiveModel::ForbiddenAttributesProtection
+  include ActiveModel::ForbiddenAttributesProtection  
 
   # REASONS = ["Work",
   #            "Transport Problems",
@@ -51,11 +51,11 @@ class Absence < Eventable
              "Unable to Contact"
             ]
 
-  # attr_accessible :lessons_missed, :category, :body, :usage_code, :notified_at, :contact_category, :created_at, :deleted, :from_date, :person_id, :created_by_id, :updated_at, :start_date, :end_date
-  # alias_attribute :reason, :category
+  # after_create {|ab| ab.events.create!(:event_date => created_at, :transition => :create)}
 
-  after_create {|ab| ab.events.create!(:event_date => created_at, :transition => :create)}
-
+  def strong_params_validate
+    [{:event_date => self.created_at, :transition => :create}]
+  end  
 
   belongs_to :person
   has_many   :absence_slots, :dependent => :destroy

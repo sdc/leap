@@ -1,5 +1,5 @@
 class GlobalNews < ActiveRecord::Base
-  attr_accessible :body, :title, :subtitle
+  # attr_accessible :body, :title, :subtitle
 
   def to_tile
     Tile.new({

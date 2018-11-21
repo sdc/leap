@@ -19,11 +19,13 @@ class Review < Eventable
   attr_protected
   include ActiveModel::ForbiddenAttributesProtection  
 
-  # attr_accessible :attendance, :published, :body, :window
-
   has_many :review_lines, :dependent => :destroy
 
-  after_create {|req| req.events.create!(:event_date => created_at - 10, :transition => :create)}
+  # after_create {|req| req.events.create!(:event_date => created_at - 10, :transition => :create)}
+
+  def strong_params_validate
+    [{:event_date => self.created_at - 10, :transition => :create}]
+  end  
 
   before_save do |rev|
     #rev.attendance = person.attendance.att_year

@@ -42,4 +42,15 @@ class PlpsController < ApplicationController
     end
   end
 
+  def mis_create( params_passed)
+    support_plp = SupportPlp.create(support_plp_params(params_passed))
+  end  
+
+  private
+
+    def support_plp_params(params_passed)
+      params = ActionController::Parameters.new(support_plp: params_passed)
+      params.require(:support_plp).permit(:person_id, :name, :value, :description, :short_description, :end_date, :start_date, :active, :domain, :source, :created_at, :deleted)
+    end   
+
 end

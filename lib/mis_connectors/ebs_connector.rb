@@ -342,6 +342,7 @@ module MisPerson
   end
 
   def import_support_plps
+    plps_controller = PlpsController.new
     Ebs::Person.where(person_code: mis_id).load.each do |p|
       [
         # [0] field name, [1] title, [2] verifiers domain (optional), [3] values exclude list (optional)
@@ -372,7 +373,8 @@ module MisPerson
         support_plps.where( ["active != 0 and name = ? and ( value != ? or ? is null)", f[1], v, v ] ).update_all( ["active = 0, updated_at = ?",DateTime.now] ) unless support_plps.nil?
         ver_info = ( f[2].present? ? Ebs::Verifier.find_by( low_value: v, rv_domain: f[2] ) : nil )
         if v.present?
-          nsp = support_plps.create(
+          nsp = plps_controller.mis_create(
+            :person_id => id,
             :name => f[1],
             :value => v,
             :description => ( ver_info.present? ? ver_info.try(:fes_long_description) : nil ),
@@ -380,7 +382,7 @@ module MisPerson
             :active => 1,
             :domain => "EBS",
             :source => "people." + f[0]
-          ) unless v.nil? || (f[3].present? && f[3].include?(v))
+          ) unless v.nil? || (f[3].present? && f[3].include?(v))       
         end
       end
     end
@@ -465,17 +467,8 @@ module MisCourse
             :year   => ec.calocc_occurrence_code,
             :mis_id => mis_id,
             :vague_title => ec.send(Settings.application_title_field)
-            # :vague_title => Settings.application_title_field
           }
         )
-        # @course.update_attributes(
-        #   :title  => ec.title,
-        #   :code   => ec.fes_uins_instance_code,
-        #   :year   => ec.calocc_occurrence_code,
-        #   :mis_id => mis_id,
-        #   :vague_title => ec.send(Settings.application_title_field)
-        #   # :vague_title => Settings.application_title_field
-        # )
         if @course.vague_title != (ec.send(Settings.application_title_field))
         # if @course.vague_title != Settings.application_title_field
           @course.update_attribute("vague_title",ec.send(Settings.application_title_field)) # unless Settings.application_title_field.blank?

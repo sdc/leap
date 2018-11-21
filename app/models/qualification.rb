@@ -17,19 +17,21 @@
 class Qualification < Eventable
 
   attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
+  include ActiveModel::ForbiddenAttributesProtection   
 
   include MisQualification
 
   after_create  {|qual| qual.events.create!(:event_date => created_at, :transition => qual.predicted? ? :create : :complete)}
+
+  def strong_params_validate
+    [{:event_date => self.created_at, :transition => self.predicted? ? :create : :complete}]
+  end
 
   before_save   {|q| q.predicted=true if (Person.user and !Person.user.staff?) }
                
   before_update {|q| q.events.first.update_attribute("event_date", q.created_at) }
 
   validates :title, :presence => true 
-  
-  # attr_accessible :awarding_body, :grade, :predicted, :qual_type, :seen, :title, :created_at, :import_type
 
   belongs_to :person
 

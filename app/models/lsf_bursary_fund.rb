@@ -16,7 +16,7 @@
 
 class LsfBursaryFund < ActiveRecord::Base
 
-  attr_accessible :mis_id, :person_id, :fund, :support_category, :support_type, :year
+  # attr_accessible :mis_id, :person_id, :fund, :support_category, :support_type, :year
 
   validates :mis_id,      :presence => true
   validates :person_id,      :presence => true

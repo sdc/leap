@@ -17,14 +17,16 @@
 class Disciplinary < Eventable
 
   attr_protected
-  include ActiveModel::ForbiddenAttributesProtection		
-
-  # attr_accessible :level, :body
+  include ActiveModel::ForbiddenAttributesProtection	
 
   validates :body, :presence => true
   validates :level, :presence => true, :numericality => true
 
-  after_create {|disciplinary| disciplinary.events.create!(:event_date => created_at, :transition => :complete)}
+  # after_create {|disciplinary| disciplinary.events.create!(:event_date => created_at, :transition => :complete)}
+
+  def strong_params_validate
+  	[{:event_date => self.created_at, :transition => :complete}]
+  end  
 
   def title
     Hash[*Settings.disciplinary_levels.split(",")][level.to_s]

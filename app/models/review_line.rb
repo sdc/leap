@@ -19,15 +19,17 @@ class ReviewLine < Eventable
   attr_protected
   include ActiveModel::ForbiddenAttributesProtection  
 
-  attr_accessible :body, :quality, :attitude, :punctuality, :completion, :window, :unit, :review_id
-
   belongs_to :review
 
   after_create do |line|
     line.review = Review.find_or_create_by_person_id_and_window(person_id, window) unless window.blank?
     line.save
-    line.events.create!(:event_date => created_at, :transition => window.blank? ? :start : :create, :parent_id => review && review.events.creation.first.id)
+    # line.events.create!(:event_date => created_at, :transition => window.blank? ? :start : :create, :parent_id => review && review.events.creation.first.id)
   end
+
+  def strong_params_validate
+    [{:event_date => self.created_at, :transition => self.window.blank? ? :start : :create, :parent_id => self.review && self.review.events.creation.first.id}]
+  end  
 
   def title
     window or "Individual Review"

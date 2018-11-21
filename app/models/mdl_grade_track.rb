@@ -2,13 +2,14 @@ class MdlGradeTrack < Eventable
 
   attr_protected
   include ActiveModel::ForbiddenAttributesProtection
-  
-  # attr_accessible :course_type, :mag, :mdl_id, :name, :tag, :total, 
-  #                 :completion_total, :completion_out_of, :created_at, :created_by_id
 
   belongs_to :person
 
-  after_create {|t| t.events.create(:event_date => t.created_at, :transition => ':create')}
+  # after_create {|t| t.events.create(:event_date => t.created_at, :transition => ':create')}
+
+  def strong_params_validate
+    [{:event_date => self.created_at, :transition => :create}]
+  end  
 
   scope "english", -> { where(:course_type => ["english","gcse_english"]) }
   scope "maths", -> { where(:course_type => ["maths","gcse_maths"]) }

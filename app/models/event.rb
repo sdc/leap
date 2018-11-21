@@ -30,10 +30,10 @@
 
 class Event < ActiveRecord::Base
 
-  # attr_protected
-  # include ActiveModel::ForbiddenAttributesProtection   
+  attr_protected
+  include ActiveModel::ForbiddenAttributesProtection   
 
-  # attr_accessible :person_id, :event_id, :event_date, :transition, :parent_id
+  # attr_accessible :person_id, :event_date, :transition, :parent_id
 
   validates :person_id,      :presence => true
   validates :event_date,     :presence => true
@@ -64,11 +64,18 @@ class Event < ActiveRecord::Base
     event.created_by_id = Person.user ? Person.user.id : nil unless event.created_by_id
   end
 
-  after_create do |line|
+  # after_create do |line|
+  #   binding.pry
+  #   if Settings.notified_events.split(";").include? eventable_type
+  #     line.notifications.create!(:person_id => person_id, :event_id => id)
+  #   end
+  # end
+
+  def notification_params_validate
     if Settings.notified_events.split(";").include? eventable_type
-      line.notifications.create!(:person_id => person_id, :event_id => id)
-    end
-  end
+      return {:person_id => self.person_id, :event_id => self.id}
+    end    
+  end  
 
   delegate :body,  :to => :eventable
   delegate :past?, :to => :event_date

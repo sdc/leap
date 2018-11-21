@@ -1,10 +1,5 @@
 class EntryReqMet < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
-
-  # attr_accessible :met, :entry_req_id, :no_but
-
   belongs_to  :entry_req
 
   after_save do |erm|

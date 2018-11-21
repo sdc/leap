@@ -16,8 +16,6 @@
 
 class SupportPlp < ActiveRecord::Base
 
-  attr_accessible :name, :value, :description, :short_description, :end_date, :start_date, :active, :domain, :source, :created_at, :deleted
-
   validates :person_id,      :presence => true
   validates :name,      :presence => true
 

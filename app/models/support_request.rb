@@ -17,14 +17,16 @@
 class SupportRequest < Eventable
 
   attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
-
-  # attr_accessible :difficulties, :sessions, :workshop
+  include ActiveModel::ForbiddenAttributesProtection   
 
   serialize :sessions
   serialize :difficulties
 
-  after_create {|req| req.events.create!(:event_date => created_at, :transition => :create)}
+  # after_create {|req| req.events.create!(:event_date => created_at, :transition => :create)}
+
+  def strong_params_validate
+    [{:event_date => self.created_at, :transition => :create}]
+  end  
 
   def extra_panes
     if Person.affiliation == "staff"

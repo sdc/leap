@@ -27,16 +27,21 @@ class Target < Eventable
   attr_protected
   include ActiveModel::ForbiddenAttributesProtection  
 
-  # attr_accessible :body, :actions, :reflection, :target_date, :complete_date, :drop_date, :event, :event_id
-
   validates :target_date, :body, :presence => true
 
   belongs_to :set_by, :class_name => "Person", :foreign_key => "set_by_person_id"
   belongs_to :event
 
-  after_create do |target| 
-    target.events.create(:event_date => created_at, :parent_id => event_id, :transition => :start)
-    target.events.create(:event_date => target_date, :transition => :overdue)
+  # after_create do |target| 
+  #   binding.pry
+  #   target.events.create(:event_date => created_at, :parent_id => event_id, :transition => :start)
+  #   target.events.create(:event_date => target_date, :transition => :overdue)
+  # end
+
+  def strong_params_validate
+    params = []
+    params.push({:event_date => self.created_at, :parent_id => self.event_id, :transition => :start})
+    params.push({:event_date => self.target_date, :transition => :overdue})
   end
 
   after_save do |target|

@@ -17,27 +17,27 @@
 class TtActivity < Eventable
 
   attr_protected
-  include ActiveModel::ForbiddenAttributesProtection
+  include ActiveModel::ForbiddenAttributesProtection  
 
   REPEAT_TYPES = ["No repeat","Weekly","Monthly"]
 
   TIME_SELECT = (0..600).step(15).map{|x| ["#{x.divmod(60).join(" hours ")} mins",x*60]}.drop 1
 
-  # attr_accessible :body, :start_time, :category, :repeat_type, :repeat_number, :timetable_length, :tmp_time, :tmp_date
-
   before_save :fix_start_time
 
-  after_create do |act| 
-    act.repeat_number = 1 if act.repeat_type == "No repeat"
-    this_start = act.start_time
-    1.upto(act.repeat_number) do |i|
-      act.events.create!(:event_date => this_start, :transition => :start)
-      this_start = case act.repeat_type.downcase
+  def strong_params_validate
+    params = []
+    self.repeat_number = 1 if self.repeat_type == "No repeat"
+    this_start = self.start_time
+    1.upto(self.repeat_number) do |i|
+      params.push(:event_date => this_start, :transition => :start)
+      this_start = case self.repeat_type.downcase
       when "weekly" then this_start + 1.week
       when "monthly" then this_start + 1.month
       else this_start
       end
-    end
+    end   
+    return params
   end
 
   def title; category end

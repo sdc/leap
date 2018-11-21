@@ -1,9 +1,7 @@
 class SimplePollAnswer < Eventable
 
   attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
-
-  # attr_accessible :answer, :created_by, :person_id, :simple_poll_id
+  include ActiveModel::ForbiddenAttributesProtection
 
   belongs_to :person
   belongs_to :simple_poll
@@ -13,7 +11,11 @@ class SimplePollAnswer < Eventable
 
   delegate :question, :results, :to => :simple_poll
 
-  after_create {|ans| ans.events.create!(:event_date => created_at, :transition => :create)}
+  # after_create {|ans| ans.events.create!(:event_date => created_at, :transition => :create)}
+
+  def strong_params_validate
+  	[{:event_date => self.created_at, :transition => :create}]
+  end  
 
   def extra_panes
     [["Results","events/tabs/simple_poll_answer"]]

@@ -28,9 +28,14 @@ class EventsController < ApplicationController
   def create
     et = params.delete(:eventable_type).tableize
     if @affiliation == "staff" or Settings.students_create_events.split(",").include? et
-      # @event = @topic.send(et).build(params[et.singularize])
       @event = @topic.send(et).build(method("#{et.singularize}_params").call)
       if @event.save
+        @event.strong_params_validate.each do |sp|
+          event_event = @event.events.create!(event_params(sp))
+          binding.pry
+          event_event.notifications.create!(notification_params(event_event.notification_params_validate))
+        end
+        @event.after_events_create if @event.respond_to? :after_events_create
         flash[:success] = "New #{et.singularize.humanize.titleize} created"
       else
         logger.error "*" * 1000
@@ -55,6 +60,7 @@ class EventsController < ApplicationController
   end
 
   def update
+    binding.pry
     @event = @topic.events.find(params[:id])
     et = @event.eventable_type.tableize
     if @affiliation == "staff" or Settings.students_update_events.split(",").include? et
@@ -102,8 +108,13 @@ class EventsController < ApplicationController
 
   private
 
-    def event_params
-      params.require(:event).permit(:person_id, :event_id, :event_date, :transition, :parent_id)
+    def event_params(params_passed)
+      params = ActionController::Parameters.new(event: params_passed)
+      params.require(:event).permit(:person_id, :event_date, :transition, :parent_id)
+    end
+
+    def eventable_params
+      params.require(:eventable).permit(:event_date, :transition)
     end
 
     def aspiration_params
@@ -220,5 +231,10 @@ class EventsController < ApplicationController
 
     def work_package_params
       params.require(:work_package).permit(:wp_type, :description, :learnt, :next_steps, :days)
-    end                            
+    end 
+
+    def notification_params(params_passed)
+      params = ActionController::Parameters.new(notification: params_passed)
+      params.require(:notification).permit(:person_id, :event_id, :event_date, :transition)
+    end                                
 end

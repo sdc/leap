@@ -85,5 +85,4 @@ class ViewsController < ApplicationController
       @topic.events
     end
   end
-
 end

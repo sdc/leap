@@ -17,11 +17,14 @@
 class EventNote < Eventable
 
   attr_protected
-  include ActiveModel::ForbiddenAttributesProtection	
+  include ActiveModel::ForbiddenAttributesProtection 		
 
-  # attr_accessible :body, :parent_event_id, :parent_id
+  # after_create {|note| note.events.create!(:event_date => created_at, :transition => :create, :parent_id => parent_event_id)}
 
-  after_create {|note| note.events.create!(:event_date => created_at, :transition => :create, :parent_id => parent_event_id)}
+  def strong_params_validate
+  	binding.pry
+  	[{:event_date => self.created_at, :transition => :create, :parent_id => self.parent_event_id}]
+  end  
 
   validates :body, :presence => true, :length => {:in => 5..500}
 

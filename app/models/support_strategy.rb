@@ -17,11 +17,13 @@
 class SupportStrategy < Eventable
 
   attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
+  include ActiveModel::ForbiddenAttributesProtection   
 
-  # attr_accessible :body, :agreed_date, :completed_date, :declined_date, :event_id
+  # after_create {|req| req.events.create!(:event_date => created_at, :transition => :create, :parent_id => event_id)}
 
-  after_create {|req| req.events.create!(:event_date => created_at, :transition => :create, :parent_id => event_id)}
+  def strong_params_validate
+    [{:event_date => self.created_at, :transition => :create, :parent_id => self.event_id}]
+  end  
 
   after_save do |ss|
     if ss.agreed_date_changed? and ss.agreed_date_was == nil

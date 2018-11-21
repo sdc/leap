@@ -2,9 +2,13 @@ class MdlBadge < Eventable
 
   attr_protected
   include ActiveModel::ForbiddenAttributesProtection
+
+  # after_create {|badge| badge.events.create!(:event_date => created_at, :transition => :create)}
+
+  def strong_params_validate
+    [{:event_date => self.created_at, :transition => :create}]
+  end
   
-  # attr_accessible :body, :image_url, :mdl_course_id, :person_id, :title, :created_at
-  after_create {|badge| badge.events.create!(:event_date => created_at, :transition => :create)}
   belongs_to :person
 
   def self.import_all

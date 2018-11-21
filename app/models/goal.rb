@@ -18,11 +18,13 @@ class Goal < Eventable
 
   attr_protected
   include ActiveModel::ForbiddenAttributesProtection	
- 
-  # attr_accessible :body
 
-  after_create do |target| 
-    target.events.create!(:event_date => created_at)
-  end
+  # after_create do |target| 
+  #   target.events.create!(:event_date => created_at)
+  # end
+
+  def strong_params_validate
+  	[{:event_date => self.created_at}]
+  end  
 
 end

@@ -17,11 +17,13 @@
 class ProfileQuestion < Eventable
 
   attr_protected
-  include ActiveModel::ForbiddenAttributesProtection	
+  include ActiveModel::ForbiddenAttributesProtection
 
-  # attr_accessible :question, :answer
+  # after_create {|q| q.events.create!(:event_date => created_at, :transition => :create)}
 
-  after_create {|q| q.events.create!(:event_date => created_at, :transition => :create)}
+  def strong_params_validate
+  	[{:event_date => self.created_at, :transition => :create}]
+  end  
 
   validates :question, :answer, :presence => true
   validates :question, :inclusion => {:in => Settings.profile_questions.split(";")}

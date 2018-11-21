@@ -1,9 +1,6 @@
 require "csv"
 
 class EntryReq < ActiveRecord::Base
-
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
   
   # attr_accessible :body, :category
 
