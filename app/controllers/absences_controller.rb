@@ -31,11 +31,12 @@ class AbsencesController < ApplicationController
         @absence_slot = Ebs::AbsenceSlot.new(absence_slot_params(absence_id: @absence.id, register_event_details_slot_id: si))
         @absence_slot.save!
         slot = Ebs::RegisterEventDetailsSlot.where(id: si)[0]
-        slot.usage_code = @absence.usage_code
+        # slot.usage_code = @absence.usage_code
+        slot.update(register_event_details_slot_params(usage_code: @absence.usage_code))
         slot.save!
         if Rails.env == "development"
           teachers = []
-          teacher = Ebs::Person.find(30141843)
+          teacher = Ebs::Person.find(@topic.mis_id)
           teachers << teacher
         else
           teachers = []
@@ -78,4 +79,8 @@ class AbsencesController < ApplicationController
       params.require(:absence_slot).permit(:absence_id, :register_event_details_slot_id)
     end
 
+    def register_event_details_slot_params(usage_code)
+      params = ActionController::Parameters.new(register_event_details_slot: usage_code)
+      params.require(:register_event_details_slot).permit(:usage_code)
+    end
 end

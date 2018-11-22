@@ -32,7 +32,6 @@ class EventsController < ApplicationController
       if @event.save
         @event.strong_params_validate.each do |sp|
           event_event = @event.events.create!(event_params(sp))
-          binding.pry
           event_event.notifications.create!(notification_params(event_event.notification_params_validate))
         end
         @event.after_events_create if @event.respond_to? :after_events_create
@@ -60,7 +59,6 @@ class EventsController < ApplicationController
   end
 
   def update
-    binding.pry
     @event = @topic.events.find(params[:id])
     et = @event.eventable_type.tableize
     if @affiliation == "staff" or Settings.students_update_events.split(",").include? et
@@ -235,6 +233,6 @@ class EventsController < ApplicationController
 
     def notification_params(params_passed)
       params = ActionController::Parameters.new(notification: params_passed)
-      params.require(:notification).permit(:person_id, :event_id, :event_date, :transition)
+      params.require(:notification).permit(:person_id, :event_id, :notified)
     end                                
 end
