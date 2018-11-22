@@ -2,8 +2,6 @@ require "csv"
 
 class EntryReq < ActiveRecord::Base
   
-  # attr_accessible :body, :category
-
   belongs_to :course
 
   def self.import(file)

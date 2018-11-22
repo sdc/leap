@@ -14,10 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class SupportRequest < Eventable
-
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection   
+class SupportRequest < Eventable 
 
   serialize :sessions
   serialize :difficulties

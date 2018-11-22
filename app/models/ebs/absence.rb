@@ -59,10 +59,7 @@
 
 # end
 
-class Ebs::Absence < Ebs::Model
-
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection    
+class Ebs::Absence < Ebs::Model   
 
   REASONS = ["Work",
              "Transport Problems",

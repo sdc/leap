@@ -16,9 +16,6 @@
 
 class TtActivity < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
-
   REPEAT_TYPES = ["No repeat","Weekly","Monthly"]
 
   TIME_SELECT = (0..600).step(15).map{|x| ["#{x.divmod(60).join(" hours ")} mins",x*60]}.drop 1

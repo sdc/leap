@@ -16,9 +16,6 @@
 
 class ProgressReview < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection
-
   validate :check_unique
   belongs_to :person, :foreign_key => "created_by_id"
   belongs_to :progress, :foreign_key => "progress_id"

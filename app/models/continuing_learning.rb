@@ -16,8 +16,6 @@
 
 class ContinuingLearning < ActiveRecord::Base
 
-  # attr_accessible :person_code, :leap_person_id, :dept, :section, :course_code, :uio_id, :course_desc, :group, :answer_desc, :answer_colour, :answer_cat
-
   validates :person_code,    :presence => true
   validates :leap_person_id, :presence => true
 

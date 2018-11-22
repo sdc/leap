@@ -1,8 +1,5 @@
 class MdlBadge < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection
-
   # after_create {|badge| badge.events.create!(:event_date => created_at, :transition => :create)}
 
   def strong_params_validate

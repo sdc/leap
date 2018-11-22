@@ -14,10 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class Qualification < Eventable
-
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection   
+class Qualification < Eventable 
 
   include MisQualification
 

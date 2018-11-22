@@ -14,10 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class EventNote < Eventable
-
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection 		
+class EventNote < Eventable	
 
   # after_create {|note| note.events.create!(:event_date => created_at, :transition => :create, :parent_id => parent_event_id)}
 

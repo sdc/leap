@@ -24,9 +24,6 @@
 #
 class Target < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
-
   validates :target_date, :body, :presence => true
 
   belongs_to :set_by, :class_name => "Person", :foreign_key => "set_by_person_id"

@@ -1,7 +1,4 @@
-class InitialReview < Eventable
-
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection    
+class InitialReview < Eventable 
 
   validate :check_unique
   belongs_to :person, :foreign_key => "created_by_id"

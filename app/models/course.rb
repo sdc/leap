@@ -16,9 +16,6 @@
 
 class Course < ActiveRecord::Base
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
-
   include MisCourse
 
   has_many :person_courses, -> { where.not(enrolment_date: nil) }

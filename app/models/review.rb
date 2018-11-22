@@ -16,9 +16,6 @@
 
 class Review < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
-
   has_many :review_lines, :dependent => :destroy
 
   # after_create {|req| req.events.create!(:event_date => created_at - 10, :transition => :create)}

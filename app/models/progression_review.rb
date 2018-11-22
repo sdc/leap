@@ -16,9 +16,6 @@
 
 class ProgressionReview < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
-
   serialize :reason
 
   validates :reason, :presence => true, :unless => :approved?

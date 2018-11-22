@@ -1,9 +1,6 @@
 # class Absence < ActiveRecord::Base
 class Absence < Eventable  
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
-
   # REASONS = ["Work",
   #            "Transport Problems",
   #            "Medical Appointment",

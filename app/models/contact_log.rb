@@ -16,9 +16,6 @@
 
 class ContactLog < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection	
-
   # after_create {|contact_log| contact_log.events.create!(:event_date => created_at, :transition => :create)}
 
   def strong_params_validate

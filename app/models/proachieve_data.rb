@@ -16,6 +16,4 @@
 
 class ProachieveData < ActiveRecord::Base
 
-  # attr_accessible :hybrid_end_year, :course, :course_title, :nvq_level, :starts, :completes, :achieves, :retention, :achievement, :success
-
 end

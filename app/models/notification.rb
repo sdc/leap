@@ -16,9 +16,6 @@
 
 class Notification < ActiveRecord::Base
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection 
-
   validates :person_id,      :presence => true
   validates :event_id,       :presence => true
 

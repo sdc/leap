@@ -16,9 +16,6 @@
 
 class Disciplinary < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection	
-
   validates :body, :presence => true
   validates :level, :presence => true, :numericality => true
 

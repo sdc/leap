@@ -16,11 +16,6 @@
 
 class Eventable < ActiveRecord::Base
 
-  # attr_protected
-  # include ActiveModel::ForbiddenAttributesProtection   
-
-  # attr_accessible :event_date, :transition
-
   self.abstract_class = true
 
   belongs_to :person

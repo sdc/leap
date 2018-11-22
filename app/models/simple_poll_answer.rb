@@ -1,8 +1,5 @@
 class SimplePollAnswer < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection
-
   belongs_to :person
   belongs_to :simple_poll
 

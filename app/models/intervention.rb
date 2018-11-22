@@ -1,8 +1,5 @@
 class Intervention < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
-
   scope :this_year, lambda {where("interventions.updated_at > ?", MISC::MiscDates.start_of_acyr )}
 
   # after_create {|i| i.events.create!(:event_date => created_at, :transition => :create)}

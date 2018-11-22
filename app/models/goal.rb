@@ -16,9 +16,6 @@
 
 class Goal < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection	
-
   # after_create do |target| 
   #   target.events.create!(:event_date => created_at)
   # end

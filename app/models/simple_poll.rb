@@ -1,5 +1,5 @@
 class SimplePoll < ActiveRecord::Base
-  # attr_accessible :answers, :question
+
   serialize :answers
   has_many :simple_poll_answers
 

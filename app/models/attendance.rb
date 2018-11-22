@@ -16,10 +16,7 @@
 
 require 'misc/misc_dates'
 
-class Attendance < Eventable
-
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection    
+class Attendance < Eventable 
 
   default_scope { order(:week_beginning) }
 

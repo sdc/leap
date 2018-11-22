@@ -14,10 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Leap.  If not, see <http://www.gnu.org/licenses/>.
 
-class SupportStrategy < Eventable
-
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection   
+class SupportStrategy < Eventable 
 
   # after_create {|req| req.events.create!(:event_date => created_at, :transition => :create, :parent_id => event_id)}
 

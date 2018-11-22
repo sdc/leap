@@ -1,8 +1,5 @@
 class MdlGradeTrack < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection
-
   belongs_to :person
 
   # after_create {|t| t.events.create(:event_date => t.created_at, :transition => ':create')}

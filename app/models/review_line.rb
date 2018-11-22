@@ -16,9 +16,6 @@
 
 class ReviewLine < Eventable
 
-  attr_protected
-  include ActiveModel::ForbiddenAttributesProtection  
-
   belongs_to :review
 
   after_create do |line|
