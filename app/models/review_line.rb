@@ -48,4 +48,8 @@ class ReviewLine < Eventable
     "fa-file-text"
   end
 
+  def accessible_attributes
+    return ['body', 'quality', 'attitude', 'punctuality', 'completion', 'window', 'unit', 'review_id']
+  end      
+
 end

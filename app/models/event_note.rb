@@ -29,4 +29,8 @@ class EventNote < Eventable
     created_at.strftime("%d %b %y")
   end
 
+  def accessible_attributes
+    return ['body', 'parent_event_id', 'parent_id']
+  end  
+
 end

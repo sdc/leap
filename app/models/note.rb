@@ -36,4 +36,8 @@ class Note < Eventable
      :partial_path => "tiles/note"}
   end
 
+  def accessible_attributes
+    return ['body']
+  end  
+
 end

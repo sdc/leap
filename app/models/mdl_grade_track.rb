@@ -157,4 +157,8 @@ class MdlGradeTrack < Eventable
     return :danger
   end
 
+  def accessible_attributes
+    return ['course_type', 'mag', 'mdl_id', 'name', 'tag', 'total', 'completion_total', 'completion_out_of', 'created_at', 'created_by_id']
+  end  
+
 end

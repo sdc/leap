@@ -161,12 +161,13 @@ module MisPerson
   def timetable_events(options = {})
     reds = if options == :next
       Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T']).
-        where("planned_start_date > ?",Time.now).
+        # where("planned_start_date > ?",Time.now).
+        where(:planned_start_date => Time.now..(Time.now + 999.year)).
         order(:planned_start_date).limit(1)
     else
       from = (options[:from] || Date.today.beginning_of_week)#.strftime("%Y-%d-%m %H:%M:%S")
       to   = (options[:to  ] || from.end_of_week)#.strftime("%Y-%d-%m %H:%M:%S")
-      # binding.pry
+      binding.pry
       Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T'], :planned_start_date => from..to)
     end
     reds.map do |s| 
@@ -199,8 +200,8 @@ module MisPerson
                               :start_date       => pu.unit_instance_occurrence.qual_start_date,
                               :application_date => pu.created_date,
                               :tutorgroup => pu.tutorgroup,
-                              :mis_status => pu.status},
-                             {:without_protection => true}
+                              :mis_status => pu.status}
+                             # {:without_protection => true}
                             )
       elsif pu.unit_type == "R"
         pc.update_attributes({:enrolment_date => pu.created_date,
@@ -208,8 +209,8 @@ module MisPerson
                               :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
                               :tutorgroup => pu.tutorgroup,
                               :mis_status => pu.status,
-                              :end_date => [:complete,:incomplete].include?(Ilp2::Application.config.mis_progress_codes[pu.progress_code]) ? pu.progress_date : pu.unit_instance_occurrence.qual_end_date},
-                             {:without_protection => true}
+                              :end_date => [:complete,:incomplete].include?(Ilp2::Application.config.mis_progress_codes[pu.progress_code]) ? pu.progress_date : pu.unit_instance_occurrence.qual_end_date}
+                             # {:without_protection => true}
                             )
       end
     end

@@ -121,4 +121,8 @@ class Target < Eventable
      :partial_path => "tiles/target"}
   end
 
+  def accessible_attributes
+    return ['body', 'actions', 'reflection', 'target_date', 'complete_date', 'drop_date', 'event', 'event_id']
+  end   
+
 end

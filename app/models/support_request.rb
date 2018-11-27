@@ -38,4 +38,8 @@ class SupportRequest < Eventable
     s << "Workshop" if workshop
   end
 
+  def accessible_attributes
+    return ['difficulties', 'sessions', 'workshop']
+  end    
+
 end

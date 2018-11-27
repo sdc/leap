@@ -41,7 +41,9 @@ module Ilp2
 
     # Enable the asset pipeline
     config.assets.enabled = true
-    config.active_record.whitelist_attributes = false
+
+    config.less.compress = true
+    # config.active_record.whitelist_attributes = false
     # config.active_record.mass_assignment_sanitizer = true
   end
 end

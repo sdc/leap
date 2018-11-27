@@ -1,0 +1,5 @@
+Rails.application.config.assets.precompile += %w( cl.js )
+Rails.application.config.assets.precompile += %w( custom.js )
+Rails.application.config.assets.precompile += %w( notify.js )
+Rails.application.config.assets.precompile += %w( cloud.js )
+Rails.application.config.assets.precompile += %w( cloud.css.less )

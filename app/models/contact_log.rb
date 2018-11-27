@@ -30,4 +30,8 @@ class ContactLog < Eventable
     created_by.photo_uri
   end
 
+  def accessible_attributes
+    return ['body']
+  end  
+
 end

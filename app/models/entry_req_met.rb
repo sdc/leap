@@ -18,4 +18,8 @@ class EntryReqMet < Eventable
     ["Entry Req.", met ? "Met" : "Not Met"]
   end
 
+  def accessible_attributes
+    return ['met', 'entry_req_id', 'no_but']
+  end  
+
 end

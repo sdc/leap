@@ -151,4 +151,8 @@ class Attendance < Eventable
     end
   end
 
+  def accessible_attributes
+    return ['week_beginning', 'att_year', 'att_week', 'course_type']
+  end
+
 end

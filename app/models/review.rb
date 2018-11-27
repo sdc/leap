@@ -49,4 +49,8 @@ class Review < Eventable
     "fa-file-text"
   end
 
+  def accessible_attributes
+    return ['attendance', 'published', 'body', 'window']
+  end     
+
 end

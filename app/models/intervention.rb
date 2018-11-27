@@ -81,4 +81,8 @@ class Intervention < Eventable
     return its
   end
 
+  def accessible_attributes
+    return ['disc_text', 'incident_date', 'pi_type', 'referral', 'referral_category', 'referral_text', 'workshops']
+  end  
+
 end

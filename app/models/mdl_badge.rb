@@ -100,5 +100,9 @@ class MdlBadge < Eventable
      :object => self}
   end
 
+  def accessible_attributes
+    return ['body', 'image_url', 'mdl_course_id', 'person_id', 'title', 'created_at']
+  end  
+
  
 end

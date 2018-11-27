@@ -26,4 +26,8 @@ class WorkPackage < Eventable
     "Work Package"
   end
 
+  def accessible_attributes
+    return ['wp_type', 'description', 'learnt', 'next_steps', 'days']
+  end    
+
 end

@@ -33,7 +33,7 @@
           Data for
           = @topic.name
         %li
-          = link_to params.merge(:refresh => true) do
+          = link_to params.merge(:refresh => true).permit(:refresh) do
             %i.fa.fa-refresh.fa-fw
             Refresh from MIS
         -# %li

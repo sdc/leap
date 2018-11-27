@@ -18,4 +18,8 @@ class SimplePollAnswer < Eventable
     [["Results","events/tabs/simple_poll_answer"]]
   end
 
+  def accessible_attributes
+    return ['answer', 'created_by', 'person_id', 'simple_poll_id']
+  end    
+
 end

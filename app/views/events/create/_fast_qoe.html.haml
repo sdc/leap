@@ -59,9 +59,12 @@
     .row
       - if Person.user.staff?
         .span2.offset6{:style => "margin-top:10px"}
-          = button_to_function "Add Predicted Grade", "$('#qualification_predicted').val(1);$('form#new_qualification').submit()", :class => "btn btn-warning"
+          %input.btn.btn-warning{:type => "button", :value => "Add Predicted Grade", :onclick => "$('#qualification_predicted').val(1);$('form#new_qualification').submit()"}
+          / = button_to_function "Add Predicted Grade", "$('#qualification_predicted').val(1);$('form#new_qualification').submit()", :class => "btn btn-warning"
+        }
         .span2{:style => "margin-top:10px"}
-          = button_to_function "Add Result", "$('#qualification_predicted').val(0);$('form#new_qualification').submit()", :class => "btn btn-primary"
+          %input.btn.btn-primary{:type => "button", :value => "Add Result", :onclick => "$('#qualification_predicted').val(0);$('form#new_qualification').submit()"}        
+          / = button_to_function "Add Result", "$('#qualification_predicted').val(0);$('form#new_qualification').submit()", :class => "btn btn-primary"
       - else
         = add_event_button
 

@@ -80,4 +80,8 @@ class Absence < Eventable
     end
   end
 
+  def accessible_attributes
+    return ['lessons_missed', 'category', 'body', 'usage_code', 'notified_at', 'contact_category', 'created_at', 'deleted', 'from_date', 'person_id', 'created_by_id', 'updated_at', 'start_date', 'end_date']
+  end  
+
 end

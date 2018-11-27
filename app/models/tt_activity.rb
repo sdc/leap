@@ -52,4 +52,8 @@ class TtActivity < Eventable
     self[:timetable_length]
   end
 
+  def accessible_attributes
+    return ['body', 'start_time', 'category', 'repeat_type', 'repeat_number', 'timetable_length', 'tmp_time', 'tmp_date']
+  end    
+
 end

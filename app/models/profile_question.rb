@@ -25,4 +25,8 @@ class ProfileQuestion < Eventable
   validates :question, :answer, :presence => true
   validates :question, :inclusion => {:in => Settings.profile_questions.split(";")}
 
+  def accessible_attributes
+    return ['question', 'answer']
+  end   
+
 end

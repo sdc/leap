@@ -96,6 +96,10 @@ class ProgressReview < Eventable
     return true
   end
 
+  def accessible_attributes
+    return ['attendance', 'body', 'completed_by', 'created_at', 'id', 'level', 'number', 'progress_id', 'working_at']
+  end   
+
   private
 
   def self.par_is_active?( revno )
@@ -133,6 +137,6 @@ class ProgressReview < Eventable
     gt = []
     Settings.par_guidance.split("|||").each{|x| b=x.split('||'); gt = b[1].split('|').map{|y| { :text => y.split('#')[0], :class => y.split('#')[1]} } if b[0].split('#')[0].split(',').include? revno.to_s}
     return gt
-  end
+  end  
 
 end

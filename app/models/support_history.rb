@@ -34,4 +34,8 @@ class SupportHistory < Eventable
   	"fa-life-ring"
   end
 
+  def accessible_attributes
+    return ['body', 'category']
+  end     
+
 end

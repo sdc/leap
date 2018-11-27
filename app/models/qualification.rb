@@ -120,4 +120,8 @@ class Qualification < Eventable
     Person.user.admin? or (Time.now - Settings.delete_delay.to_i < eventable.updated_at and Person.user == eventable.updated_by)
   end
 
+  def accessible_attributes
+    return ['awarding_body', 'grade', 'predicted', 'qual_type', 'seen', 'title', 'created_at', 'import_type']
+  end   
+
 end

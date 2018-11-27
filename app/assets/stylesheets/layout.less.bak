@@ -1,8 +1,3 @@
-// @import "twitter/bootstrap/bootstrap";
-// @import "variables";
-// @import "colours";
-
-
 body {
   padding-top: 10px;
   &.staff {
@@ -15,7 +10,7 @@ body {
   padding:8px;
   border: 1px solid @borderColour;
   display:none;
-  // .border-radius(4px);
+  .border-radius(4px);
   .ui-datepicker-current-day {
     border: 1px solid @borderColour;
   }
@@ -84,7 +79,7 @@ dl {
 }
 
 #side-pane {
-  .make-md-column(2);
+  .makeColumn(2);
   h1 {
     font-size: 16px;
     line-height: 20px;
@@ -107,7 +102,7 @@ dl {
     a {
       color: inherit;
       &:hover {
-//        color: @linkColor
+        color: @linkColor
       }
     }
   }
@@ -118,9 +113,9 @@ dl {
 }
 
 #main-pane {
-  .make-md-column(10);
+  .makeColumn(10);
   &.no-sidebar {
-    .make-md-column(12);
+    .makeColumn(12);
   }
 }
 
@@ -184,7 +179,7 @@ dl {
         font-size: 11px;
         img {
           margin-right: 5px;
-          // .border-radius(4px);
+          .border-radius(4px);
         }
       }
       &.body {
@@ -226,11 +221,11 @@ dl {
   }
   .child-event {
     .clearfix();
-    // .border-radius(@borderRadius);
+    .border-radius(@borderRadius);
     margin-top: 10px;
     ul {
       list-style-type: none;
-      .make-md-column(10);
+      .makeColumn(10);
       margin-left: 0;
       li {
         .pull-left;
@@ -260,7 +255,7 @@ dl {
 
 .home-page-block {
   border: 2px @borderColour solid;
-  // .border-radius(@borderRadius);
+  .border-radius(@borderRadius);
   background: #f0f0ff;
   margin-right: -4px;
   margin-bottom: 10px;
@@ -272,7 +267,7 @@ dl {
     height: 120px;
   }
   h2 {
-    // .border-radius(@borderRadius, 0, 0, @borderRadius);
+    .border-radius(@borderRadius, 0, 0, @borderRadius);
     background: #eee;
     border-bottom:1px #ccc solid;
     padding: 5px 10px 5px 10px;
@@ -280,11 +275,11 @@ dl {
     line-height:24px;
   }
   h3 {
-    .make-md-column(1);
+    .makeColumn(1);
     margin-left: 0px;
     padding-left: 10px;
     padding-right: 10px;
-    // .border-radius(0,0,@borderRadius, @borderRadius);
+    .border-radius(0,0,@borderRadius, @borderRadius);
     background: #eee;
     border-right:1px #ccc solid;
     height:100%;
@@ -322,17 +317,17 @@ dl {
 
 .class-list-person,.search-list-person {
   margin-bottom: 10px;
-  .make-md-column(3);
+  .makeColumn(3);
   height: 57px;
   .clearfix();
   border: 1px solid @borderColour;
   padding: 5px 5px 10px 5px;
-  // .border-radius(4px);
+  .border-radius(4px);
   &:hover {
     .box-shadow(1px 1px 1px 1px @borderColour);
   }
   img {
-    // .border-radius(4px);
+    .border-radius(4px);
     max-height:100%;
   }
 }
@@ -346,7 +341,7 @@ dl {
 
 .timetable {
   .day{
-    .make-md-column(1);
+    .makeColumn(1);
     position:relative;
     width:104px;
     margin-left:10px;
@@ -363,14 +358,14 @@ dl {
       margin-bottom: 45px;
     }
     h4{
-      // .border-radius(4px, 0, 0, 4px);
+      .border-radius(4px, 0, 0, 4px);
       background: #eee;
       border-bottom:1px #ccc solid;
       text-align: center;
       margin-bottom: 10px;
     }
     .timetable-event {
-      // .border-radius(6px);
+      .border-radius(6px);
       .box-shadow(1px 1px 1px 1px @borderColour);
       padding: 4px;
       position:absolute;

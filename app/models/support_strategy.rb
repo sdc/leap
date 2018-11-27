@@ -55,4 +55,8 @@ class SupportStrategy < Eventable
     end
   end
 
+  def accessible_attributes
+    return ['body', 'agreed_date', 'completed_date', 'declined_date', 'event_id']
+  end    
+
 end

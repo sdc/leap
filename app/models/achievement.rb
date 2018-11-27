@@ -28,4 +28,8 @@ class Achievement < Eventable
     ["Achievement",year.year.to_s]
   end
 
+  def accessible_attributes
+    return ['body', 'year']
+  end  
+
 end

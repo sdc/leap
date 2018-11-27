@@ -24,4 +24,8 @@ class Goal < Eventable
   	[{:event_date => self.created_at}]
   end  
 
+  def accessible_attributes
+    return ['body']
+  end  
+
 end

@@ -49,4 +49,8 @@ class ProgressionReview < Eventable
     "#{approved ? 'fa-ban' : 'fa-check'} on fa-fast-forward"
   end
 
+  def accessible_attributes
+    return ['approved', 'reason']
+  end     
+
 end

@@ -16,7 +16,7 @@
           %li.has-popover{"data-title" => "Refresh Data.",
                           "data-content" => "Load current data from MIS. This may take some time, especially on course pages",
                           "data-placement" => "bottom"}
-            = link_to params.merge(:refresh => true) do
+            = link_to params.merge(:refresh => true).permit(:refresh) do
               %i.icon-refresh
               Refresh
       %ul.nav.pull-right

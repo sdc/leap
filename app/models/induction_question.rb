@@ -28,4 +28,8 @@ class InductionQuestion < Eventable
   def icon_class
   	"fa-question-circle-o"
   end
+
+  def accessible_attributes
+    return ['question', 'answer']
+  end  
 end

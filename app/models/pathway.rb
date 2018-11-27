@@ -30,4 +30,8 @@ class Pathway < Eventable
 
   def body; pathway end
 
+  def accessible_attributes
+    return ['pathway', 'subject']
+  end  
+
 end

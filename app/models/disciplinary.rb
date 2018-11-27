@@ -29,4 +29,8 @@ class Disciplinary < Eventable
     Hash[*Settings.disciplinary_levels.split(",")][level.to_s]
   end
 
+  def accessible_attributes
+    return ['level', 'body']
+  end  
+
 end
