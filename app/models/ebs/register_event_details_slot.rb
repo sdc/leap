@@ -27,6 +27,11 @@ class Ebs::RegisterEventDetailsSlot < Ebs::Model
   has_one    :absence_slot
   has_one    :absence, :through => :absence_slot  
 
+  attribute :planned_start_date, :datetime
+  attribute :actual_start_date, :datetime
+  attribute :planned_end_date, :datetime
+  attribute :actual_end_date, :datetime  
+
   def the_object
     begin
       case object_type 

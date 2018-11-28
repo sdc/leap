@@ -29,6 +29,7 @@
         .hidden-xs= "#{hour}.00"
   - @date.upto(@date.end_of_week) do |day|
     = render :partial => "cloud_day", :object => day, :locals => {:slots => (@registers + @events).select {|r| r.timetable_start > day and r.timetable_start < day.tomorrow.midnight }}
+    / = render :partial => "cloud_day", :object => day, :locals => {:slots => (@registers + @events)}
   .col-xs-1.day
     %button.btn.btn-primary#show_weekend{:style => "width:100%"}
       %i.fa.fa-angle-double-right

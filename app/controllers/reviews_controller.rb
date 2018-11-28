@@ -16,7 +16,7 @@
 
 class ReviewsController < ApplicationController
 
-  before_filter      :staff_only, :only => [:new,:update]
+  before_action      :staff_only, :only => [:new,:update]
 
   def show
     respond_to do |format|

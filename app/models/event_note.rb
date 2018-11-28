@@ -19,7 +19,6 @@ class EventNote < Eventable
   # after_create {|note| note.events.create!(:event_date => created_at, :transition => :create, :parent_id => parent_event_id)}
 
   def strong_params_validate
-  	binding.pry
   	[{:event_date => self.created_at, :transition => :create, :parent_id => self.parent_event_id}]
   end  
 

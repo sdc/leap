@@ -18,9 +18,9 @@ require 'misc/misc_dates'
 
 class PeopleController < ApplicationController
 
-  skip_before_filter :set_topic
-  before_filter      :person_set_topic, :except => [:search]
-  before_filter      :staff_only, :only => [:search,:select]
+  skip_before_action :set_topic
+  before_action      :person_set_topic, :except => [:search]
+  before_action      :staff_only, :only => [:search,:select]
   layout :set_layout
 
   def show 

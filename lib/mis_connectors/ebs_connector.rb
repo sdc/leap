@@ -162,12 +162,13 @@ module MisPerson
     reds = if options == :next
       Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T']).
         # where("planned_start_date > ?",Time.now).
-        where(:planned_start_date => Time.now..(Time.now + 999.year)).
+        # where(:planned_start_date => Time.now..(Time.now + 999.year)).
+        where(:planned_start_date => Time.now.strftime("%Y-%d-%m %H:%M:%S")..(Time.now + 999.year).strftime("%Y-%d-%m %H:%M:%S")).
+        # where(:planned_start_date => "2018-11-28 11:12:24".."3017-11-28 11:12:24").
         order(:planned_start_date).limit(1)
     else
       from = (options[:from] || Date.today.beginning_of_week)#.strftime("%Y-%d-%m %H:%M:%S")
       to   = (options[:to  ] || from.end_of_week)#.strftime("%Y-%d-%m %H:%M:%S")
-      binding.pry
       Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T'], :planned_start_date => from..to)
     end
     reds.map do |s| 

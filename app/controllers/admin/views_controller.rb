@@ -16,7 +16,7 @@
 
 class Admin::ViewsController < ApplicationController
 
-  before_filter :superuser_page
+  before_action :superuser_page
 
   def index
     @views = View.all

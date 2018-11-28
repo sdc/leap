@@ -20,10 +20,10 @@ class ApplicationController < ActionController::Base
 
   layout proc{ |c| c.request.xhr? ? false : "application" }
 
-  before_filter :maintenance_mode
-  before_filter :set_user
-  before_filter :set_topic
-  before_filter :get_views
+  before_action :maintenance_mode
+  before_action :set_user
+  before_action :set_topic
+  before_action :get_views
 
   def set_date(default_offset = 0)
     begin

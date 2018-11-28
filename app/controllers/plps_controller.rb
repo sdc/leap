@@ -16,7 +16,7 @@
 
 class PlpsController < ApplicationController
   
-  before_filter       :staff_only
+  before_action       :staff_only
 
   def show
     show_plp_tabs = Settings.plp_tabs.split(',')

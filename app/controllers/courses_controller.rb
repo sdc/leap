@@ -16,9 +16,9 @@
 
 class CoursesController < ApplicationController
   
-  before_filter       :staff_only
-  skip_before_filter  :set_topic
-  before_filter       :course_set_topic
+  before_action       :staff_only
+  skip_before_action  :set_topic
+  before_action       :course_set_topic
 
   def populate_pi_types
     pi_types = Intervention.intervention_types.keys.map{|k| [k,k.gsub(/\W+/,"_")] if ( @user.admin? && 1==1 ) || @topic.can_add_intervention_stage(k.gsub(/\W+/,"_")) }.compact

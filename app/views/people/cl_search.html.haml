@@ -18,7 +18,7 @@
         .alert.alert-warning
           %b Not found who you're looking for?
           %p
-            = link_to(params.reverse_merge(:mis => true),:class => "btn btn-default") do
+            = link_to(params.reverse_merge(:mis => true).permit(:mis),:class => "btn btn-default") do
               %i.fa.fa-search
               Search Full MIS
           %p Note: This may take some time.
