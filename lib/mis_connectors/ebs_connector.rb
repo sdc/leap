@@ -229,7 +229,7 @@ module MisPerson
         if ( !( pc.status.nil? && pc.mis_status.nil? ) )
           pc.update_attributes({:status => nil,
                                 :mis_status => nil},
-                               {:without_protection => true}
+                               # {:without_protection => true}
                               )
           pc.save
         end
@@ -412,7 +412,7 @@ module MisCourse
                               :application_date => pu.created_date,
                               :tutorgroup => pu.tutorgroup,
                               :mis_status => pu.status},
-                             {:without_protection => true}
+                             # {:without_protection => true}
                             )
       elsif pu.unit_type == "R"
         pc.update_attributes({:enrolment_date => pu.created_date,
@@ -421,7 +421,7 @@ module MisCourse
                               :status => Ilp2::Application.config.mis_progress_codes[pu.progress_code],
                               :end_date => pu.progress_date,
                               :mis_status => pu.status},
-                             {:without_protection => true}
+                             # {:without_protection => true}
                             ) unless pc.status == :not_started
       end
     end

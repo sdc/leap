@@ -32,7 +32,9 @@ class EventsController < ApplicationController
       if @event.save
         @event.strong_params_validate.each do |sp|
           event_event = @event.events.create!(event_params(sp))
-          event_event.notifications.create!(notification_params(event_event.notification_params_validate))
+          if !event_event.notification_params_validate.nil?
+            event_event.notifications.create!(notification_params(event_event.notification_params_validate))
+          end
         end
         @event.after_events_create if @event.respond_to? :after_events_create
         flash[:success] = "New #{et.singularize.humanize.titleize} created"
@@ -50,7 +52,8 @@ class EventsController < ApplicationController
         begin
           render @event 
         rescue
-          redirect_to :back
+          # redirect_to :back
+          redirect_back fallback_location: root_path
         end
       end
     else
@@ -70,7 +73,7 @@ class EventsController < ApplicationController
       end
       respond_to do |f|
         f.js   {render @event}
-        f.html {redirect_to :back}
+        f.html {redirect_back fallback_location: root_path}
       end
     else
       redirect_to "/404.html"

@@ -104,4 +104,8 @@ class PersonCourse < Eventable
     self[:mis_status] || ""
   end
 
+  def accessible_attributes
+    return []
+  end    
+
 end

@@ -10,14 +10,14 @@
                           "data-content" => "Change event timeline to show all learners at the institution", 
                           "data-placement" => "bottom"}
             = link_to :all => true, :date => @date do
-              %i.icon-user
+              %i.fa.fa-user.fa-fw{:style => "width: 10px; height: 10px"}
               Everyone
         - if @topic
           %li.has-popover{"data-title" => "Refresh Data.",
                           "data-content" => "Load current data from MIS. This may take some time, especially on course pages",
                           "data-placement" => "bottom"}
             = link_to params.merge(:refresh => true).permit(:refresh) do
-              %i.icon-refresh
+              %i.fa.fa-refresh.fa-fw
               Refresh
       %ul.nav.pull-right
         - if Person.user.admin?
@@ -27,7 +27,7 @@
                         "data-content" => "Go to your own home page.",
                         "data-placement" => "bottom"}
           = link_to @user do
-            %i.icon-home
+            %i.fa.fa-home
             =@user.name
     -#help_button{:title => "Help for this page"}
       = image_tag "actions/help.png"

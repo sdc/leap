@@ -61,6 +61,10 @@ class Intervention < Eventable
     disc_text if status == :incomplete
   end
 
+  def accessible_attributes
+    return ['disc_text', 'incident_date', 'pi_type', 'referral', 'referral_category', 'referral_text', 'workshops']
+  end 
+
   private
 
   def self.intervention_group_types(group)
@@ -80,9 +84,5 @@ class Intervention < Eventable
     Settings.intervention_groups.split("|").each{|x| b=x.split(':'); b[2].split(";").each{|t| its[t] = b[0] } }
     return its
   end
-
-  def accessible_attributes
-    return ['disc_text', 'incident_date', 'pi_type', 'referral', 'referral_category', 'referral_text', 'workshops']
-  end  
 
 end

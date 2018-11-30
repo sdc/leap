@@ -27,5 +27,9 @@ class Aspiration < Eventable
   def icon_class
   	"fa-dot-circle-o"
   end
+
+  def accessible_attributes
+    return ['aspiration']
+  end  
   
 end

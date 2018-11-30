@@ -1,9 +1,9 @@
 - if @user.admin? or @user.superuser?
   %li.dropdown
     %a{:href => "#", :class => "dropdown-toggle", "data-toggle" => "dropdown"}
-      %i.icon-cog
+      %i.fa.fa-cog
       Admin
-      %i.icon-chevron-down
+      %i.fa.fa-caret-down
     %ul.dropdown-menu
       - if @user.superuser?
         %li

@@ -56,6 +56,10 @@ class InitialReview < Eventable
     return true
   end
 
+  def accessible_attributes
+    return ['body', 'created_at', 'created_by_id', 'progress_id', 'target_grade']
+  end
+
   private
 
   def self.par_is_active?
@@ -81,9 +85,5 @@ class InitialReview < Eventable
     par_dates.sort_by! { | d | [d[:from], d[:to]] }
     par_dates.last if par_dates.last.present?
   end
-
-  def accessible_attributes
-    return ['body', 'created_at', 'created_by_id', 'progress_id', 'target_grade']
-  end  
 
 end

@@ -72,7 +72,8 @@ class ViewsController < ApplicationController
   def set_scope
     @scope = if (@affiliation == "staff" and params[:all])
       @multi = true
-      Event.scoped
+      # Event.scoped
+      Event.all
     elsif (@affiliation == "staff" and @topic.kind_of? Course)
       @multi = true
       if @tutorgroup
