@@ -1070,3 +1070,7 @@ li a.sidebar_button div.col-xs-2 {
 input#q, input#intervention_incident_date, input#login {
     height: 30px !important;
 }
+
+.event {
+		padding-bottom: 0px !important;
+}

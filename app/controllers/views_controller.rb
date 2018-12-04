@@ -20,6 +20,7 @@ class ViewsController < ApplicationController
 
   before_action :set_scope
   before_action { |c| c.set_date(1.year) }
+  # before_action { |c| c.set_last_id(9999999999999) }
 
   def show
     if @view = View.for_user.find_by_name(params[:id])
@@ -35,9 +36,12 @@ class ViewsController < ApplicationController
         @events = @events.where("interventions.referral_category = ?", params[:pint_category]) unless params[:pint_category] == 'All';
       else
         @events =
+          # @scope.where("event_date < ?", @date).where("events.id < ?", params[:last_paged_id]).
+          # where(:transition => @view.transitions, :eventable_type => @view.events).
+          # limit( (request.format=="pdf" ? 20000 : (request.format=="json" ? 2000 : 20)) )
           @scope.where("event_date < ?", @date).
           where(:transition => @view.transitions, :eventable_type => @view.events).
-          limit( (request.format=="pdf" ? 20000 : (request.format=="json" ? 2000 : 20)) )
+          limit( (request.format=="pdf" ? 20000 : (request.format=="json" ? 2000 : 20)) )          
       end
       if Settings.home_page == "progress"
         @notifiedEvents = @events.joins(:notifications).where(:notifications => {:notified => false, :person_id => @user.id})

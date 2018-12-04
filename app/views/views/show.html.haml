@@ -30,6 +30,7 @@
     There are currently no #{@view.label.pluralize} to view.
 - else
   #more_events_div{:style => "text-align:center"}
+    / = link_to view_url(@view,{:all => params[:all], :filter => params[:filter], :date => @events.last.event_date, :last_paged_id => @events.last.id, :pi_type => params[:pi_type], :pint_category => params[:pint_category], :int_text => params[:int_text]}.merge(@topic.as_param)), :remote => true, :id => "more_events", :class => "btn" do
     = link_to view_url(@view,{:all => params[:all], :filter => params[:filter], :date => @events.last.event_date, :pi_type => params[:pi_type], :pint_category => params[:pint_category], :int_text => params[:int_text]}.merge(@topic.as_param)), :remote => true, :id => "more_events", :class => "btn" do
       %i.icon-arrow-down
       Load more events

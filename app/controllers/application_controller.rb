@@ -25,6 +25,10 @@ class ApplicationController < ActionController::Base
   before_action :set_topic
   before_action :get_views
 
+  # def set_last_id(default_id = 9999999999999)
+  #   @last_paged_id = params[:last_paged_id] || nil
+  # end
+
   def set_date(default_offset = 0)
     begin
       @date = if params[:date]
