@@ -843,7 +843,7 @@ ul.token-input-list {
     overflow: hidden; 
     height: auto !important; 
     height: 1%;
-    //width: 400px;
+    /*width: 400px; */
     border: 1px solid #999;
     cursor: text;
     font-size: 12px;
@@ -1067,7 +1067,7 @@ li a.sidebar_button div.col-xs-2 {
     padding-left: 0px !important;
 }
 
-input#q, input#intervention_incident_date, input#login {
+input#q, input#intervention_incident_date, input#login, input.span3, input.span2, .span5 input {
     height: 30px !important;
 }
 
