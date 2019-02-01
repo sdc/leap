@@ -36,11 +36,11 @@ gem 'sprockets-rails', "2.3.3"
 platforms :ruby do
   gem 'mysql2', '0.3.21'
   gem 'therubyracer'
-  # gem 'activerecord-sqlserver-adapter'
-  gem 'activerecord-oracle_enhanced-adapter', '1.5.6'
+  gem 'activerecord-sqlserver-adapter'
+  # gem 'activerecord-oracle_enhanced-adapter', '1.5.6'
   gem 'activerecord-mysql-adapter'
-  gem 'ruby-oci8', "2.2.5.1"
-  # gem 'tiny_tds', "1.3.0"
+  # gem 'ruby-oci8', "2.2.5.1"
+  gem 'tiny_tds', "1.3.0"
   gem 'sqlite3'
 end
   

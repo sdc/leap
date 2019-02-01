@@ -103,6 +103,8 @@ class Ebs::Absence < Ebs::Model
   # self.table_name= "addresses"
   self.table_name= "sdc_ilp_absences"
 
+  self.primary_key= "id"
+
   # default_scope where(:owner_type => "P")
   # self.primary_key= "owner_ref"
 
