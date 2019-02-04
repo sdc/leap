@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
-gem 'rails', "4.0.13"
+# gem 'rails', "4.0.13"
+gem 'rails', "~> 4.2.0"
 gem 'coffee-rails', '~> 4.0.0'
 gem 'haml'
 gem "less-rails"
