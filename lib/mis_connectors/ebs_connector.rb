@@ -283,7 +283,7 @@ module MisPerson
       )
       nq.update_attribute("mis_id",la.id)
     end
-    where_clause = (( Rails.configuration.database_configuration['ebs']['adapter'] || "none" ) == 'sqlserver' ?
+    where_clause = (( Rails.configuration.database_configuration['ebs']['adapter'] || "none" ) == 'sqlserver' ) ?
         "NOT (upper(description) LIKE '%%NOT APPLICABLE%%' and source = 'PLR data') and upper(grade) NOT LIKE 'NA%%' and upper(grade) NOT LIKE 'OTH%%' and upper(grade) NOT LIKE '%%UNCLASSIFIED%%' and upper(grade) NOT LIKE '%%NO SHOW%%' and upper(grade) NOT LIKE '%%P ALPHA-NUMERIC VALUE%%' and upper(grade) != '01' and dbo.RegExIsMatch(ltrim(rtrim(fes_qualification_aim)), '^[0-9]') = 1"
         :
         "NOT (upper(description) LIKE '%%NOT APPLICABLE%%' and source = 'PLR data') and upper(grade) NOT LIKE 'NA%%' and upper(grade) NOT LIKE 'OTH%%' and upper(grade) NOT LIKE '%%UNCLASSIFIED%%' and upper(grade) NOT LIKE '%%NO SHOW%%' and upper(grade) NOT LIKE '%%P ALPHA-NUMERIC VALUE%%' and upper(grade) != '01' and regexp_like(trim(fes_qualification_aim), '^[0-9]')"
