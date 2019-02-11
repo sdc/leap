@@ -22,12 +22,12 @@ class Ebs::Model < ActiveRecord::Base
 
   # for MS SQL Server that uses auto incrementing IDENTITY(1,1) primary key ID to stop
   # TinyTds::Error: Cannot insert the value NULL into column 'ID'
-  # and for IDs that are auto generated from a DEFAULT value from a SEQUENCE number (assume all non identity ones)
+  # and for IDs that are auto generated from a DEFAULT value from a SEQUENCE number (assume all non identity ones). (schema_id: 1 == dbo)
   def create_or_update(*args, &block)
     if Ebs::Model.using_sqlserver? && self.respond_to?(:id) && [nil,0].include?(self.id)
       if self.class.columns_hash['id'].is_identity?
         self.id = self.class.maximum(:id).to_i + 1
-      elsif self.class.find_by_sql "select top 1 'x' from sys.sequences where name = '#{self.class.table_name.downcase+'_SEQ'}'"
+      elsif self.class.find_by_sql "select top 1 'x' from sys.sequences where name = '#{self.class.table_name.downcase+'_SEQ'}' and schema_id = 1 and "
         self.id = self.class.find_by_sql "select NEXT VALUE FOR [dbo].[#{self.class.table_name.downcase+'_SEQ'}] AS id"
       end
     end
