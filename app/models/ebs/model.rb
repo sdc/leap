@@ -20,4 +20,28 @@ class Ebs::Model < ActiveRecord::Base
   self.abstract_class = true
   establish_connection :ebs
 
+  # for MS SQL Server that uses auto incrementing IDENTITY(1,1) primary key ID to stop
+  # TinyTds::Error: Cannot insert the value NULL into column 'ID'
+  def create_or_update(*args, &block)
+    if Ebs::Model.using_sqlserver? && self.respond_to?(:id) && [nil,0].include?(self.id)
+      if self.class.columns_hash['id'].is_identity?
+        self.id = self.class.maximum(:id).to_i + 1
+      elsif self.class.find_by_sql "select top 1 'x' from sys.sequences where name = '#{self.class.table_name.downcase+'_SEQ'}'"
+        self.id = self.class.find_by_sql "select NEXT VALUE FOR [dbo].[#{self.class.table_name.downcase+'_SEQ'}] AS id"
+      end
+    end
+    super
+  rescue ActiveRecord::RecordNotUnique
+    if Ebs::Model.using_sqlserver? && self.respond_to?(:id)
+      self.id = nil
+      retry
+    else
+      raise
+    end
+  end
+
+  def self.using_sqlserver?
+    (( Rails.configuration.database_configuration['ebs']['adapter'] || "none" ) == 'sqlserver')
+  end
+
 end

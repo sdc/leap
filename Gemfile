@@ -37,6 +37,7 @@ platforms :ruby do
   gem 'mysql2', '0.3.21'
   gem 'therubyracer'
   gem 'activerecord-sqlserver-adapter'
+  # gem 'sqlserver-sequence'
   # gem 'activerecord-oracle_enhanced-adapter', '1.5.6'
   gem 'activerecord-mysql-adapter'
   # gem 'ruby-oci8', "2.2.5.1"

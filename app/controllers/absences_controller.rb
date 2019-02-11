@@ -12,7 +12,8 @@ class AbsencesController < ApplicationController
       params[:absence][:contact] = params[:absence][:contact_category]
 
       @absence = Ebs::Absence.new(params[:absence])
-      @absence.save!
+      # @absence.save!
+      @absence.create_or_update
 
       slot_ids = []
 
@@ -27,10 +28,12 @@ class AbsencesController < ApplicationController
 
       slot_ids.each do |si|
         @absence_slot = Ebs::AbsenceSlot.new(absence_id: @absence.id, register_event_details_slot_id: si)
-        @absence_slot.save!
+        # @absence_slot.save!
+        @absence_slot.create_or_update
         slot = Ebs::RegisterEventDetailsSlot.where(id: si)[0]
         slot.usage_code = @absence.usage_code
-        slot.save!
+        # slot.save!
+        slot.create_or_update
         if Rails.env == "development"
           teachers = []
           teacher = Ebs::Person.find(30141843)
