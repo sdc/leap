@@ -22,6 +22,7 @@ class Ebs::Model < ActiveRecord::Base
 
   # for MS SQL Server that uses auto incrementing IDENTITY(1,1) primary key ID to stop
   # TinyTds::Error: Cannot insert the value NULL into column 'ID'
+  # and for IDs that are auto generated from a DEFAULT value from a SEQUENCE number (assume all non identity ones)
   def create_or_update(*args, &block)
     if Ebs::Model.using_sqlserver? && self.respond_to?(:id) && [nil,0].include?(self.id)
       if self.class.columns_hash['id'].is_identity?
@@ -32,7 +33,7 @@ class Ebs::Model < ActiveRecord::Base
     end
     super
   rescue ActiveRecord::RecordNotUnique
-    if Ebs::Model.using_sqlserver? && self.respond_to?(:id)
+    if Ebs::Model.using_sqlserver? && self.respond_to?(:id) && self.class.columns_hash['id'].is_identity?
       self.id = nil
       retry
     else
