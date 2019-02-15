@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 gem 'rails', "4.0.13"
+# gem 'rails', "~> 4.2.0"
 gem 'coffee-rails', '~> 4.0.0'
 gem 'haml'
 gem "less-rails"
@@ -41,8 +42,7 @@ platforms :ruby do
   # gem 'activerecord-oracle_enhanced-adapter', '1.5.6'
   gem 'activerecord-mysql-adapter'
   # gem 'ruby-oci8', "2.2.5.1"
-  # gem 'tiny_tds', "1.3.0"
-  gem 'tiny_tds', "1.0.2"
+  gem 'tiny_tds', "0.7.0"
   gem 'sqlite3'
 end
   
