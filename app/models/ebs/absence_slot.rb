@@ -9,4 +9,8 @@ class Ebs::AbsenceSlot < Ebs::Model
 
   self.primary_key= "id"
 
+  def self.sqlserver_sequence_name
+    "sdc_ilp_absence_slots_SEQ"
+  end
+
 end

@@ -114,4 +114,8 @@ class Ebs::Absence < Ebs::Model
   #   (uk_post_code_pt1 || "") + " " + (uk_post_code_pt2 || "")
   # end
 
+  def self.sqlserver_sequence_name
+    "sdc_ilp_absences_SEQ"
+  end
+
 end

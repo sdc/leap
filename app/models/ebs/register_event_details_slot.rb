@@ -18,9 +18,10 @@ class Ebs::RegisterEventDetailsSlot < Ebs::Model
 
   attr_accessible :usage_code
   
-  self.table_name= "register_event_details_slots"  
+  self.table_name= "register_event_details_slots"
   # self.primary_key= :id
   self.primary_key= :id
+
   belongs_to :register_event_detail
   belongs_to :register_event
   belongs_to :register_event_slot
@@ -54,6 +55,10 @@ class Ebs::RegisterEventDetailsSlot < Ebs::Model
     when "N" then "incomplete"
     else "unknown"
     end
+  end
+
+  def self.sqlserver_sequence_name
+    "REGISTER_EVENT_DET_SLOTS_SEQ"
   end
 
 end

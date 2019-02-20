@@ -27,8 +27,8 @@ class Ebs::Model < ActiveRecord::Base
     if Ebs::Model.using_sqlserver? && self.respond_to?(:id) && [nil,0].include?(self.id)
       if self.class.columns_hash['id'].is_identity?
         self.id = self.class.maximum(:id).to_i + 1
-      elsif self.class.find_by_sql "select top 1 'x' from sys.sequences where name = '#{self.class.table_name.downcase+'_SEQ'}' and schema_id = 1"
-        next_id = self.class.find_by_sql "select NEXT VALUE FOR [dbo].[#{self.class.table_name.downcase+'_SEQ'}] AS id"
+      elsif self.class.find_by_sql "select top 1 'x' from sys.sequences where name = '#{self.class.sqlserver_sequence_name}' and schema_id = 1"
+        next_id = self.class.find_by_sql "select NEXT VALUE FOR [dbo].[#{self.class.sqlserver_sequence_name}] AS id"
         self.id = next_id[0]['id']
       end
     end
