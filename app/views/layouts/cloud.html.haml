@@ -64,7 +64,7 @@
         - if request.path_info.include?('timetable')          
           .row
             .h4
-              Absences  
+              Absences
             %table{:class => "table-striped", :id => "absence-table", :style => "width:100%"}
               %thead= render "thead" 
               - date = @date.strftime('%d-%m-%Y')

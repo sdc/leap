@@ -133,7 +133,7 @@
           - if params[:date] && params[:date].to_date.is_a?(Date)
             = f.hidden_field(:date, :value => params[:date])
           = f.submit :class => "btn btn-primary", :onclick => "getRegEventIds()"
-.modal.fade#no-slots-modal  
+.modal.fade#no-slots-modal
   .modal-dialog
     .modal-content   
       .modal-header   
