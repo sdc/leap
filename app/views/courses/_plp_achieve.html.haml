@@ -5,7 +5,6 @@
 -#new pr = ProgressReview.find(:all, :conditions => { :id => pr_with_newest_ids }, :select => "progress_reviews.*, progresses.course_type", :joins => "join progresses on progresses.id = progress_reviews.progress_id").map{|x| {:review => x, :type => x.course_type} }
 -#new irs_with_newest_ids = InitialReview.where(:person_id => pids).joins(:progress).where("progresses.id = initial_reviews.progress_id and progresses.course_year=? and LOWER(progresses.course_type) in('core','english','maths')",@topic.year).select("max(initial_reviews.id) as max_id").group("initial_reviews.person_id, initial_reviews.progress_id").map(&:max_id)
 -#new tgs = InitialReview.find(:all, :conditions => { :id => irs_with_newest_ids }, :select => "initial_reviews.*, progresses.course_type", :joins => "join progresses on progresses.id = initial_reviews.progress_id").map{|x| {:review => x, :type => x.course_type} }
--# binding.pry
 -# atts = Attendance.find(:all, :conditions => { :person_id => pids, :week_beginning => MISC::MiscDates.startdate_from_acyr('15/16')..MISC::MiscDates.enddate_from_acyr('15/16') })
 -# atts_with_newest_ids = Attendance.where(:person_id => pids).select("max(initial_reviews.id) as max_id").group("initial_reviews.person_id, initial_reviews.progress_id").map(&:max_id)
 -#new atts = Attendance.where(:person_id => pids).order(:week_beginning).find(:all, :conditions => { :week_beginning => MISC::MiscDates.startdate_from_acyr(@topic.year)..MISC::MiscDates.enddate_from_acyr(@topic.year) })
