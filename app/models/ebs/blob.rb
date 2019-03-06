@@ -19,6 +19,6 @@ class Ebs::Blob < Ebs::Model
   self.primary_key= :id
 
   belongs_to :person,  :foreign_key => "owner_ref"
-  scope :photos, -> { where(:blob_name => "PERSON_PICTURE") }
+  scope :photos, -> { where(:blob_name => "PERSON_PICTURE", :domain => "PEOPLE", :blob_type => "JPG") }
   
 end
