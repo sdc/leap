@@ -1,10 +1,10 @@
-.timetable-event{:id => cloud_slot.respond_to?(:mis_id) ? cloud_slot.mis_id : '', :style => "top:#{cloud_slot.timetable_margin + 37}px;height:#{cloud_slot.timetable_height}px", :value => cloud_slot.timetable_start.strftime("%Y-%m-%d %H:%M:%S"),
-  :class => "bg-#{cloud_slot.cl_status}", :onclick => "selectRegEvent(this.id)"}
+.timetable-event{:id => cloud_slot.respond_to?(:mis_id) ? cloud_slot.mis_id.to_s+"_"+(cloud_slot.timetable_start.strftime('%Y%m%d%H%M%S')||"x")+"_"+(cloud_slot.timetable_end.strftime('%Y%m%d%H%M%S')||"y") : nil, :style => "top:#{cloud_slot.timetable_margin + 37}px;height:#{cloud_slot.timetable_height}px", :value => cloud_slot.timetable_start.strftime("%Y-%m-%d %H:%M:%S"),
+       :class => "bg-#{cloud_slot.cl_status}", :onclick => ( ( Person.user.admin? && cloud_slot.respond_to?(:mis_id) ) ? "selectRegEvent(this.id)" : nil )}
   %h5= cloud_slot.title
   %ul
     %li
       = cloud_slot.timetable_start.strftime('%H.%M')
-      - if cloud_slot.timetable_end 
+      - if cloud_slot.timetable_end
         = "- #{cloud_slot.timetable_end.strftime('%H.%M')}"
     - if cloud_slot.kind_of? TimetableEvent
       %li= cloud_slot.rooms.join ", "
@@ -13,7 +13,7 @@
       .mark{:class => "text-#{cloud_slot.cl_status}", :style => "background:transparent"}= cloud_slot.mark
       - if Person.user.staff?
         %li
-          Learner count: 
+          Learner count:
           = Ebs::RegisterEventDetailsSlot.where(register_event_id: cloud_slot.mis_id, object_type: 'L', planned_start_date: cloud_slot.timetable_start).count
     - elsif cloud_slot.kind_of? Event
       .body= cloud_slot.body
@@ -21,6 +21,7 @@
     = link_to cloud_slot, :method => :delete, :class => "btn btn-danger btn-xs pull-right", :confirm => "Are you sure?" do
       %i.fa.fa-trash
       Delete
+
 %script{:type=>"text/javascript"}
   :plain
     function selectRegEvent(regEventId) {
@@ -35,9 +36,9 @@
       }
       else {
         regEvent.style.border = '2px solid red';
-        regEvent.classList.add('checked');  
+        regEvent.classList.add('checked');
       }
-    
 
-    }      
-      
+
+    }
+
