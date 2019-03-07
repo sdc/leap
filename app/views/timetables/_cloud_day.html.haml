@@ -7,24 +7,25 @@
     %h4.visible-xs.text-center= Date::ABBR_DAYNAMES[cloud_day.wday]
   = render :partial => "cloud_slot", :collection => slots
 
-%script{:type=>"text/javascript"}
-  :plain
-    function selectMultipleSlots(cbId) {
-      dayId = cbId.split('_')[0] + '_id';
-      thisDay = document.getElementById(dayId);
-      for(i=0;i<thisDay.childNodes.length;i++){
-        if(thisDay.childNodes[i].classList) {
-          if(thisDay.childNodes[i].classList.contains('timetable-event') && typeof(thisDay.childNodes[i].id) != 'undefined' && !thisDay.childNodes[i].classList.contains('bg-info')) {
-            if ($('#' + cbId).is(":checked")){
-              thisDay.childNodes[i].style.border = '2px solid red';
-              thisDay.childNodes[i].classList.add('checked');
-            }
-            else {
-              thisDay.childNodes[i].style.border = '1px solid #ccc';
-              thisDay.childNodes[i].classList.remove('checked');
+- if Person.user.admin?
+  %script{:type=>"text/javascript"}
+    :plain
+      function selectMultipleSlots(cbId) {
+        dayId = cbId.split('_')[0] + '_id';
+        thisDay = document.getElementById(dayId);
+        for(i=0;i<thisDay.childNodes.length;i++){
+          if(thisDay.childNodes[i].classList) {
+            if(thisDay.childNodes[i].classList.contains('timetable-event') && typeof(thisDay.childNodes[i].id) != 'undefined' && !thisDay.childNodes[i].classList.contains('bg-info')) {
+              if ($('#' + cbId).is(":checked")){
+                thisDay.childNodes[i].style.border = '2px solid red';
+                thisDay.childNodes[i].classList.add('checked');
+              }
+              else {
+                thisDay.childNodes[i].style.border = '1px solid #ccc';
+                thisDay.childNodes[i].classList.remove('checked');
+              }
             }
           }
         }
       }
-    }
 

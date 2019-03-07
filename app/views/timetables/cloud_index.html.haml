@@ -90,90 +90,93 @@
           %button.btn.btn-default{"data-dismiss" => "modal"} Close
           %button.btn.btn-primary Add
 
-.modal.fade#add-absence-modal
-  .modal-dialog
-    .modal-content
-      = form_for Absence.new do |f|
+- if Person.user.admin?
+  .modal.fade#add-absence-modal
+    .modal-dialog
+      .modal-content
+        = form_for Absence.new do |f|
+          .modal-header
+            %button.close{"data-dismiss" => "modal"}
+              %span &times;
+            %h4 Report New Absence
+          .modal-body
+            .row
+              .form-group.col-xs-6
+                = f.label :category, "Reason"
+                = f.select :category, Absence::REASONS, {:include_blank => "Choose one"}, :class => "form-control", :required => "required"
+              .form-group.col-xs-6
+                = f.label :usage_code, "Mark"
+                - usage_codes = ["K","L","E","O","A"]
+                - usage_codes << "/" if Person.user.superuser?
+                = f.select :usage_code, usage_codes, {:include_blank => "Choose one"}, :class => "form-control", :required => "required"
+            .row
+              .form-group.col-xs-6
+                = f.label :notified_at, "Notified at"
+                = f.text_field :notified_at, :class => "form-control", "data-provide" => "datepicker", :value => Time.now.to_date, "data-date-format" => "d MM, yyyy"
+                / = f.date_select :notified_at
+              .form-group.col-xs-6
+                = f.label :notified_at, "Time"
+                .row
+                  .form-group.col-xs-5
+                    = f.select :hours, '00'..'23', {:selected => Time.now.strftime("%H")}, :class => "form-control", :style => "width: 100%"
+                  .form-group.col-xs-1 :
+                  - mins = ['00','05','10','15','20','25','30','35','40','45','50','55']
+                  .form-group.col-xs-5
+                    = f.select :mins, mins, {:selected => ((Time.now.strftime("%M").to_i/5)*5).to_s}, :class => "form-control", :style => "width: 100%"
+            .row
+              .form-group.col-xs-6
+                = f.label :contact_category, "Method of Contact"
+                = f.select :contact_category, Absence::CONTACT, {:include_blank => "Choose one"}, :class => "form-control", :required => "required"
+            .row
+              .form-group.col-xs-12
+                = f.label :body, "Extra Details"
+                = f.text_area :body, :class => "form-control", :rows => 5
+
+            %input{:type => "hidden", :id => "reg-ids", :name => "reg_ids"}
+            = f.hidden_field(:person_id, :value => @topic.mis_id)
+            - if params[:date] && params[:date].to_date.is_a?(Date)
+              = f.hidden_field(:date, :value => params[:date])
+            = f.submit :class => "btn btn-primary", :onclick => "getRegEventIds()"
+  .modal.fade#no-slots-modal
+    .modal-dialog
+      .modal-content
         .modal-header
-          %button.close{"data-dismiss" => "modal"}
-            %span &times;
-          %h4 Report New Absence
+          %h4 No Slots Selected
         .modal-body
-          .row
-            .form-group.col-xs-6
-              = f.label :category, "Reason"
-              = f.select :category, Absence::REASONS, {:include_blank => "Choose one"}, :class => "form-control", :required => "required"
-            .form-group.col-xs-6
-              = f.label :usage_code, "Mark"
-              = f.select :usage_code, ["K","L","E","O","A"], {:include_blank => "Choose one"}, :class => "form-control", :required => "required"
-          .row
-            .form-group.col-xs-6
-              = f.label :notified_at, "Notified at"
-              = f.text_field :notified_at, :class => "form-control", "data-provide" => "datepicker", :value => Time.now.to_date, "data-date-format" => "d MM, yyyy"
-              / = f.date_select :notified_at
-            .form-group.col-xs-6
-              = f.label :notified_at, "Time"
-              .row
-                .form-group.col-xs-5
-                  = f.select :hours, '00'..'23', {:selected => Time.now.strftime("%H")}, :class => "form-control", :style => "width: 100%"
-                .form-group.col-xs-1 :
-                - mins = ['00','05','10','15','20','25','30','35','40','45','50','55']
-                .form-group.col-xs-5
-                  = f.select :mins, mins, {:selected => ((Time.now.strftime("%M").to_i/5)*5).to_s}, :class => "form-control", :style => "width: 100%"
-          .row
-            .form-group.col-xs-6
-              = f.label :contact_category, "Method of Contact"
-              = f.select :contact_category, Absence::CONTACT, {:include_blank => "Choose one"}, :class => "form-control", :required => "required"
-          .row
-            .form-group.col-xs-12
-              = f.label :body, "Extra Details"
-              = f.text_area :body, :class => "form-control", :rows => 5
+          %p Please select slots from the timetable.
 
-          %input{:type => "hidden", :id => "reg-ids", :name => "reg_ids"}
-          = f.hidden_field(:person_id, :value => @topic.mis_id)
-          - if params[:date] && params[:date].to_date.is_a?(Date)
-            = f.hidden_field(:date, :value => params[:date])
-          = f.submit :class => "btn btn-primary", :onclick => "getRegEventIds()"
-.modal.fade#no-slots-modal
-  .modal-dialog
-    .modal-content
-      .modal-header
-        %h4 No Slots Selected
-      .modal-body
-        %p Please select slots from the timetable.
+  %script{:type=>"text/javascript"}
+    :plain
+      function getRegEventIds() {
 
-%script{:type=>"text/javascript"}
-  :plain
-    function getRegEventIds() {
+        var ids = $('.checked').map(function(){
+          return $(this).attr('id').split("_")[0];
+        }).get();
 
-      var ids = $('.checked').map(function(){
-        return $(this).attr('id').split("_")[0];
-      }).get();
+        var dates = $('.checked').map(function(){
+          return $(this).attr('value');
+        }).get();
 
-      var dates = $('.checked').map(function(){
-        return $(this).attr('value');
-      }).get();
+        var event_vars = [];
+        event_vars.push(ids);
+        event_vars.push(dates);
 
-      var event_vars = [];
-      event_vars.push(ids);
-      event_vars.push(dates);
+        var regIds = document.getElementById('reg-ids');
 
-      var regIds = document.getElementById('reg-ids');
+        regIds.value = JSON.stringify(event_vars);
 
-      regIds.value = JSON.stringify(event_vars);
+        console.log(event_vars);
 
-      console.log(event_vars);
+      }
 
-    }
+      function countSlots() {
 
-    function countSlots() {
+        var ids = $('.checked').map(function(){
+          return $(this).attr('id');
+        }).get();
 
-      var ids = $('.checked').map(function(){
-        return $(this).attr('id');
-      }).get();
+        ids.length == 0 ? $('#no-slots-modal').modal('show') : $('#add-absence-modal').modal('show');
 
-      ids.length == 0 ? $('#no-slots-modal').modal('show') : $('#add-absence-modal').modal('show');
+        console.log(ids.length);
 
-      console.log(ids.length);
-
-    }
+      }

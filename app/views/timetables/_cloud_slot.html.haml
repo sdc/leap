@@ -22,23 +22,24 @@
       %i.fa.fa-trash
       Delete
 
-%script{:type=>"text/javascript"}
-  :plain
-    function selectRegEvent(regEventId) {
+- if Person.user.admin?
+  %script{:type=>"text/javascript"}
+    :plain
+      function selectRegEvent(regEventId) {
 
-      console.log(regEventId);
+        console.log(regEventId);
 
-      regEvent = document.getElementById(regEventId);
+        regEvent = document.getElementById(regEventId);
 
-      if(regEvent.classList.contains('checked')) {
-        regEvent.style.border = '1px solid #ccc';
-        regEvent.classList.remove('checked');
+        if(regEvent.classList.contains('checked')) {
+          regEvent.style.border = '1px solid #ccc';
+          regEvent.classList.remove('checked');
+        }
+        else {
+          regEvent.style.border = '2px solid red';
+          regEvent.classList.add('checked');
+        }
+
+
       }
-      else {
-        regEvent.style.border = '2px solid red';
-        regEvent.classList.add('checked');
-      }
-
-
-    }
 
