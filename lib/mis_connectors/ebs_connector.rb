@@ -62,9 +62,11 @@ module MisPerson
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
       options.reverse_merge! Hash[Settings.ebs_import_options.split(",").map{|o| [o.to_sym,true]}]
       logger.info "Importing user #{mis_id}"
-      if (ep = (Ebs::Person.find_by( person_code: (mis_id.to_s.match(/\d{3}/) ? mis_id.to_s.tr('^0-9','') : mis_id) ) or
-                Ebs::Person.where(Settings.ebs_username_field => mis_id.to_s).first
-          ))
+      # if (ep = (Ebs::Person.find_by( person_code: (mis_id.to_s.match(/\d{3}/) ? mis_id.to_s.tr('^0-9','') : mis_id) ) or
+      #           Ebs::Person.where(Settings.ebs_username_field => mis_id.to_s).first
+      #     ))
+      ep = ( (mis_id.to_i > 0) ? (Ebs::Person.find_by( person_code: ( mis_id.to_i ) )) : ( mis_id.to_s.match(/\d{3}/) ? Ebs::Person.find_by( person_code: ( mis_id.to_s.tr('^0-9','') ) ) : Ebs::Person.where(Settings.ebs_username_field => mis_id.to_s).first ) ) rescue nil
+      if ( ep )
         @person = Person.find_by(mis_id: ep.id) || Person.new(:mis_id => ep.id)
         #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil)
         if @person.new_record? or ep.updated_date.nil? or (@person.updated_at < ep.updated_date)
