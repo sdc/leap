@@ -1,6 +1,6 @@
 .col-xs-2.day{:id => "#{Date::ABBR_DAYNAMES[cloud_day.wday].downcase}_id", :class => [cloud_day.cwday > 5 ? "weekend" : "weekday", Date::DAYNAMES[cloud_day.wday].downcase,cloud_day == Date.today ? "bg-warning" : nil]}
   - if Person.user.admin?
-    .day_cb{:style => "padding-left: 40%; padding-right: 40%"} 
+    .day_cb{:style => "padding-left: 40%; padding-right: 40%"}
       %input{:type => "checkbox", :id => "#{Date::ABBR_DAYNAMES[cloud_day.wday].downcase}_cb", :onclick => "selectMultipleSlots(this.id)"}
   .daytitle
     %h4.hidden-xs.text-center= Date::DAYNAMES[cloud_day.wday]
@@ -8,23 +8,23 @@
   = render :partial => "cloud_slot", :collection => slots
 
 %script{:type=>"text/javascript"}
-  :plain 
+  :plain
     function selectMultipleSlots(cbId) {
       dayId = cbId.split('_')[0] + '_id';
       thisDay = document.getElementById(dayId);
       for(i=0;i<thisDay.childNodes.length;i++){
         if(thisDay.childNodes[i].classList) {
-          if(thisDay.childNodes[i].classList.contains('timetable-event')) {
+          if(thisDay.childNodes[i].classList.contains('timetable-event') && typeof(thisDay.childNodes[i].id) != 'undefined' && !thisDay.childNodes[i].classList.contains('bg-info')) {
             if ($('#' + cbId).is(":checked")){
               thisDay.childNodes[i].style.border = '2px solid red';
-              thisDay.childNodes[i].classList.add('checked'); 
+              thisDay.childNodes[i].classList.add('checked');
             }
             else {
               thisDay.childNodes[i].style.border = '1px solid #ccc';
-              thisDay.childNodes[i].classList.remove('checked');            
-            }  
-          }          
+              thisDay.childNodes[i].classList.remove('checked');
+            }
+          }
         }
-      }     
+      }
     }
 
