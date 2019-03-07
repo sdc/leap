@@ -79,6 +79,7 @@ module MisPerson
             :town          => ep.address ? ep.address.town : "",
             :postcode      => ep.address ? [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" ") : "",
             # :photo         => Ebs::Blob.table_exists? && ep.blobs.photos.first.try(:binary_object),
+            # :photo         => Ebs::Blob.find_by( owner_ref: mis_id.to_s ).try(:binary_object),
             :photo         => Ebs::Blob.photos.find_by( owner_ref: ep.id ).try(:binary_object),
             :mobile_number => ep.mobile_phone_number,
             :next_of_kin   => [ep.fes_next_of_kin, ep.fes_nok_contact_no].join(" "),
