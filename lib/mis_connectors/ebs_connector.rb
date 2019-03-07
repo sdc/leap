@@ -42,7 +42,7 @@ module MisPerson
       # Ebs::Person.includes(:people_units).find_each(:conditions => "people_units.calocc_code = '#{yr}' and people.person_code >= '30135368' ") do |ep|
       Ebs::Person.includes(:people_units).find_each(:conditions => "people_units.calocc_code = '#{yr}' and people.person_code >= #{starting_mis_id}") do |ep|
         begin
-        break if do_count >= 0 && count >= do_count   # for testing 
+        break if do_count >= 0 && count >= do_count   # for testing
 	  skipcount +=1
           next unless ep.people_units.detect{|pc| pc.calocc_code == yr} if yr
           count += 1
@@ -56,7 +56,7 @@ module MisPerson
       end
       puts Time.zone.now.strftime("%Y-%m-%d %T") + " Finished!"
     end
-          
+
 
     def import(mis_id, options = {})
       mis_id = mis_id.id if mis_id.kind_of? Ebs::Person
@@ -66,7 +66,7 @@ module MisPerson
                 Ebs::Person.where(Settings.ebs_username_field => mis_id.to_s).first
           ))
         @person = Person.find_by(mis_id: ep.id) || Person.new(:mis_id => ep.id)
-        #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil) 
+        #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil)
         if @person.new_record? or ep.updated_date.nil? or (@person.updated_at < ep.updated_date)
           @person.update_attributes(
             :forename      => ep.known_as.blank? ? ep.forename : ep.known_as,
@@ -77,7 +77,7 @@ module MisPerson
             :town          => ep.address ? ep.address.town : "",
             :postcode      => ep.address ? [ep.address.uk_post_code_pt1,ep.address.uk_post_code_pt2].join(" ") : "",
             # :photo         => Ebs::Blob.table_exists? && ep.blobs.photos.first.try(:binary_object),
-            :photo         => Ebs::Blob.find_by( owner_ref: mis_id.to_s ).try(:binary_object),
+            :photo         => Ebs::Blob.photos.find_by( owner_ref: ep.id ).try(:binary_object),
             :mobile_number => ep.mobile_phone_number,
             :next_of_kin   => [ep.fes_next_of_kin, ep.fes_nok_contact_no].join(" "),
             :date_of_birth => ep.date_of_birth,
@@ -92,7 +92,7 @@ module MisPerson
           )
           if @person.contact_allowed != (Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
             @person.update_attribute("contact_allowed", Settings.ebs_no_contact.blank? || ep.send(Settings.ebs_no_contact) != "Y")
-            @person.save if options[:save] 
+            @person.save if options[:save]
           end
         else
           puts Time.zone.now.strftime("%Y-%m-%d %T") + " [#{@person.mis_id}] #{@person.name} - Update not needed since #{@person.updated_at} >= #{ep.updated_date}"
@@ -111,7 +111,7 @@ module MisPerson
 
   def mis_search_for(query)
     Ebs::Person.search_for(query).order("surname,forename").limit(50).map{|p| import(p,:save => false, :people=> false)}
-  end 
+  end
 
   def csv_import(files)
     old_logger_level, logger.level = logger.level, Logger::ERROR if logger
@@ -130,7 +130,7 @@ module MisPerson
       end
       if Ebs::Model.connection.table_exists? tname
         print "Table exists\n"
-      else 
+      else
 	print "Creating table\n"
 	csv = CSV.open file, :encoding => "ISO-8859-1"
         cols = csv.shift.map{|col| col.try(:downcase)}
@@ -164,7 +164,7 @@ module MisPerson
       to   = (options[:to  ] || from.end_of_week)#.strftime("%Y-%d-%m %H:%M:%S")
       Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => ['L','T'], :planned_start_date => from..to)
     end
-    reds.map do |s| 
+    reds.map do |s|
       t = TimetableEvent.new
       t.mis_id          = s.register_event_id
       t.title           = s.description.split(/\[/).first
@@ -189,7 +189,7 @@ module MisPerson
       # pc= PersonCourse.find_or_create_by_person_id_and_course_id(id,course.id)
       pc= PersonCourse.find_or_create_by(:person_id => id, :course_id => course.id)
       # pc = PersonCourse.where(:person_id => id, :course_id => course.id).first_or_create
-      if pu.unit_type == "A" 
+      if pu.unit_type == "A"
         pc.update_attributes({:status => :not_started,
                               :start_date       => pu.unit_instance_occurrence.qual_start_date,
                               :application_date => pu.created_date,
@@ -271,7 +271,7 @@ module MisPerson
   def import_quals
     last_update = ( qualifications.order("updated_at DESC").first.try(:updated_at) ) || ( Date.today - 5.years )
     mis_person.learner_aims.where("uio_id IS NOT NULL and grade IS NOT NULL and updated_date > ? and upper(learning_aim) not like 'Z%%' and upper(learning_aim) != 'ENRICH'",last_update).each do |la|
-      next unless la.unit_instance_occurrence 
+      next unless la.unit_instance_occurrence
       next unless Qualification.where(:mis_id => la.id, "import_type" => "la").empty?
       nq=qualifications.create(
         :title       => la.unit_instance_occurrence.title,
@@ -306,7 +306,7 @@ module MisPerson
   def import_absences
     Ebs::Absence.where(person_id: mis_id).load.each do |a|
       register_event_details_slot_ids = []
-      register_event_details_slot_dates = []      
+      register_event_details_slot_dates = []
       a.absence_slots.each do |as|
         register_event_details_slot_ids << as.register_event_details_slot_id
       end
@@ -322,7 +322,7 @@ module MisPerson
         # start_date = register_event_details_slot_dates.min.nil? ? '' : register_event_details_slot_dates.min
         # end_date = register_event_details_slot_dates.max.nil? ? '' : register_event_details_slot_dates.max
         start_date = register_event_details_slot_dates.min
-        end_date = register_event_details_slot_dates.max        
+        end_date = register_event_details_slot_dates.max
       end
       next if absences.detect{|ab| a.created_at == ab.created_at}
       next unless a.notified_at
@@ -401,7 +401,7 @@ module MisCourse
     #mis_course.people_units.where("updated_date > ?",last_update).order("progress_date").each do |pu|
       person = Person.import(pu.person_code, {:courses => false})
       pc= PersonCourse.find_or_create_by( person_id: person.id, course_id: id )
-      if pu.unit_type == "A" 
+      if pu.unit_type == "A"
         pc.update_attributes({:status => :not_started,
                               :start_date       => pu.unit_instance_occurrence.qual_start_date,
                               :application_date => pu.created_date,
@@ -433,8 +433,8 @@ module MisCourse
       to   = (options[:to  ] || from.end_of_week)#.strftime("%Y-%d-%m %H:%M:%S")
       Ebs::RegisterEventDetailsSlot.where(:object_id => mis_id, :object_type => 'U', :planned_start_date => from..to)
     end
-    reds.map do |s| 
-      t = TimetableEvent.new 
+    reds.map do |s|
+      t = TimetableEvent.new
       t.mis_id          = s.register_event_id,
       t.title           = s.description.split(/\[/).first,
       t.timetable_start = s.actual_start_date || s.planned_start_date,
@@ -450,7 +450,7 @@ module MisCourse
 
     def mis_search_for(query)
       Ebs::UnitInstanceOccurrence.search_for(query).order( "calocc_occurrence_code desc, long_description" ).limit(50).map{|p| import(p.uio_id,:save => false, :courses => false)}
-    end 
+    end
 
     def import(mis_id, options = {})
       options.reverse_merge! :save => true, :people => false
