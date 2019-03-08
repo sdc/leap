@@ -308,6 +308,8 @@ module MisPerson
 
   def import_absences
     Ebs::Absence.where(person_id: mis_id).load.each do |a|
+      next if absences.detect{|ab| a.created_at == ab.created_at}
+      next unless a.notified_at
       register_event_details_slot_ids = []
       register_event_details_slot_dates = []
       a.absence_slots.each do |as|
@@ -327,8 +329,6 @@ module MisPerson
         start_date = register_event_details_slot_dates.min
         end_date = register_event_details_slot_dates.max
       end
-      next if absences.detect{|ab| a.created_at == ab.created_at}
-      next unless a.notified_at
       na = absences.create(
         :body => a.reason_extra,
         :category => a.reason,
