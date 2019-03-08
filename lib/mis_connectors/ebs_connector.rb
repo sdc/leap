@@ -309,7 +309,7 @@ module MisPerson
   def import_absences
     Ebs::Absence.where(person_id: mis_id).load.each do |a|
       next if absences.detect{|ab| a.created_at.round == ab.created_at.round}
-      next unless a.notified_at
+      next unless a.notified_at && a.created_at
       register_event_details_slot_ids = []
       register_event_details_slot_dates = []
       a.absence_slots.each do |as|
