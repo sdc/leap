@@ -12,6 +12,7 @@
             = link_to :all => true, :date => @date do
               %i.icon-user
               Everyone
+        -# if @topic && (Person.user.admin? || Person.user.superuser?)
         - if @topic
           %li.has-popover{"data-title" => "Refresh Data.",
                           "data-content" => "Load current data from MIS. This may take some time, especially on course pages",
