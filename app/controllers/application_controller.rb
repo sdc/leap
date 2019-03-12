@@ -82,8 +82,10 @@ class ApplicationController < ActionController::Base
   def set_topic
     if @affiliation == "staff"
       if params[:person_id]
+        # @topic = Person.get(params[:person_id],((params[:refresh] == "true" && (@user.admin? || @user.superuser?)) ? params[:refresh] : nil)) or redirect_to "/404.html"
         @topic = Person.get(params[:person_id],params[:refresh]) or redirect_to "/404.html"
       elsif params[:course_id]
+        # @topic = Course.get(params[:course_id],((params[:refresh] == "true" && (@user.admin? || @user.superuser?)) ? params[:refresh] : nil)) or redirect_to "/404.html"
         @topic = Course.get(params[:course_id],params[:refresh]) or redirect_to "/404.html"
         @tutorgroup = params[:tutorgroup]
       else
