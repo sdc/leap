@@ -6,8 +6,8 @@
     %td{:style => "text-align: center"}= absence.lessons_missed
     %td{ :title => (Person.user.superuser? ? "Created on #{absence.created_at.strftime("%d-%m-%Y %H.%M")}#{(Person::find_by( id: absence.created_by_id ).present?) ? ' by ' + Person::find_by( id: absence.created_by_id ).try(:name) : '' }" : "" ) }= absence.notified_at.strftime("%d-%m-%Y %H.%M")
     %td= absence.contact_category
-    %td= absence.start_date.strftime("%d-%m-%Y")
-    %td= absence.end_date.strftime("%d-%m-%Y")
+    %td{ :title => (Person.user.superuser? ? "#{absence.start_date.strftime("%d-%m-%Y %H.%M")}" : "" ) }= absence.start_date.strftime("%d-%m-%Y")
+    %td{ :title => (Person.user.superuser? ? "#{absence.end_date.strftime("%d-%m-%Y %H.%M")}" : "" ) }= absence.end_date.strftime("%d-%m-%Y")
     %td= check_box_tag(dom_id(absence) + "_cb", 1, false, :disabled => !(params[:validate]))
 - rescue
   %td= "ERROR in abs#{absence.id}"
