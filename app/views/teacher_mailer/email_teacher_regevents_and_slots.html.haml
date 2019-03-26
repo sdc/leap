@@ -1,0 +1,14 @@
+Dear #{@teacher.forename},
+%br
+%br
+Learner #{@learner.forename} #{@learner.surname} (#{@learner.person_code}) will be absent from your session(s) 
+%br
+%br
+- @register_event_slots.each do |res|
+	- @register_event = res[:regevent]
+	- @slot = res[:slot]
+	= render :partial => 'email_teachers_regevents_slots.html.haml'
+Kind regards,
+%br
+%br
+Absence Team
