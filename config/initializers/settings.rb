@@ -162,3 +162,7 @@ Settings.defaults[:absence_line_email] = "helpzone@southdevon.ac.uk"
 
 # Superuser Settings - applicable only to Superusers
 Settings.defaults[:su_send_emails]  = "off"
+
+# Developer Settings - applicable only to Developers
+Settings.defaults[:dev_send_to_test_email]  = "on"
+Settings.defaults[:dev_test_email]  = ""

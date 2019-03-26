@@ -6,601 +6,630 @@
 
 = form_for :settings, :html => {:class => "form-horizontal", :id => "admin-settings-form"} do
 
-  %h2 Administration
+  %h1 Settings!
+  .settings
 
-  .control-group
-    %label.control-label Admin Users
-    .controls
-      = text_field_tag "admin_users", Settings.admin_users
-  :coffeescript
-    $("#admin_users").tokenInput "/people/select", 
-      prePopulate : #{Settings.admin_users.map{|p| Person.find(p)}.map{|p| {:id => p.id, :name => p.name + ((defined?( p.staff ) && p.staff?) ? '' : ' (Not staff)') , :readonly => (p == @user), :staff => p.staff}}.to_json}
-  .control-group
-    %label.control-label Home Page Advert Box
-    .controls
-      = text_area_tag "advert_box_html", Settings.advert_box_html
+    %h2 Administration
 
-  .control-group
-    %label.control-label Home Page selector
-    .controls
-      = select_tag "home_page", options_for_select(["old","new","progress"], Settings.home_page)
-      .help-text
-        Use the old setting unless you're at South Devon College because this currently depends on the extra Moodle integration done there.
-        This stuff will me merged into main Leap with a future release. Promise!
-
-  - ["staff","student","applicant","affiliate"].each do |aff|
     .control-group
-      %label.control-label Home Page for #{aff}
+      %label.control-label Admin Users
       .controls
-        = select_tag "home_page_#{aff}", options_for_select([nil,"old","new","progress"], eval("Settings.home_page_#{aff}") )
+        = text_field_tag "admin_users", Settings.admin_users
+    :coffeescript
+      $("#admin_users").tokenInput "/people/select",
+        prePopulate : #{Settings.admin_users.map{|p| Person.find(p)}.map{|p| {:id => p.id, :name => p.name + ((defined?( p.staff ) && p.staff?) ? '' : ' (Not staff)') , :readonly => (p == @user), :staff => p.staff}}.to_json}
+    .control-group
+      %label.control-label Home Page Advert Box
+      .controls
+        = text_area_tag "advert_box_html", Settings.advert_box_html
+
+    .control-group
+      %label.control-label Home Page selector
+      .controls
+        = select_tag "home_page", options_for_select(["old","new","progress"], Settings.home_page)
         .help-text
-          If left blank the Home Page selector setting will be used.
+          Use the old setting unless you're at South Devon College because this currently depends on the extra Moodle integration done there.
+          This stuff will me merged into main Leap with a future release. Promise!
 
-  .control-group
-    %label.control-label Custom Stylesheet
-    .controls
-      = text_area_tag "custom_css", Settings.custom_css
-      .help-text 
-        Any CSS put in here will be dumped into a &lt;style&gt; tag in the layout head. Use it
-        sparingly to adjust the look &amp; feel to your preferences. Be carefull, you can
-        make Leap temporarily unusable with this, although you can't lose any data.
+    - ["staff","student","applicant","affiliate"].each do |aff|
+      .control-group
+        %label.control-label Home Page for #{aff}
+        .controls
+          = select_tag "home_page_#{aff}", options_for_select([nil,"old","new","progress"], eval("Settings.home_page_#{aff}") )
+          .help-text
+            If left blank the Home Page selector setting will be used.
 
-  .control-group
-    %label.control-label Sidebar Links
-    .controls
-      = text_area_tag "clidebar_links", Settings.clidebar_links
-      .help-text
-        %p
-          This controls the extra links for the new home pages (and soon to be everywhere). Each menu starts with a | 
-          and has text and an icon from
-          = link_to "Font Awesome", "http://fortawesome.github.io/Font-Awesome/icons/" 
-          separated by pipes. 
-        %p
-          Each link in that menu does not start with a pipe and has text, a url and a Font Awesome icon. Like so:
-        %pre
-          :preserve     
-            |Menu One|fa-music
-            First Item in the Menu|http://example.com|fa-music
-            Second Item in the Menu|http://example.info|fa-paw
-            |Menu Two|fa-pencil
-            An Item in the Second Menu|http://example.org|fa-money
-            You can have as many links as you like|http://example.net|fa-star
-            
+    .control-group
+      %label.control-label Custom Stylesheet
+      .controls
+        = text_area_tag "custom_css", Settings.custom_css
+        .help-text
+          Any CSS put in here will be dumped into a &lt;style&gt; tag in the layout head. Use it
+          sparingly to adjust the look &amp; feel to your preferences. Be carefull, you can
+          make Leap temporarily unusable with this, although you can't lose any data.
 
-  %h2 Attendance Import
-  .control-group
-    %label.control-label Table name
-    .controls
-      = text_field_tag "attendance_table", Settings.attendance_table
-  .control-group
-    %label.control-label Culmulative attendance column 
-    .controls
-      = text_field_tag "attendance_culm_column", Settings.attendance_culm_column
-  .control-group
-    %label.control-label Weekly attendance column
-    .controls
-      =text_field_tag "attendance_week_column", Settings.attendance_week_column
-  .control-group
-    %label.control-label Week date column
-    .controls
-      =text_field_tag "attendance_date_column", Settings.attendance_date_column
-  .control-group
-    %label.control-label Course type column
-    .controls
-      =text_field_tag "attendance_type_column", Settings.attendance_type_column
-      .help-text
-        %p 
-          If you put a column name in here, the attendance import will import the data from here as the course type. Overall attendances should
-          then be recorded as "overall" in this field. Extra functionality will be added, but to begin with, "maths","english" and "core" will split
-          attendances for those course types for the course-overview related to the grade tracker moodle functionality!
-  .control-group
-    %label Bad - OK - Good - Exceed attendance percentages
-    .controls
-      %span.add-on
-        = "Bad < "
-      = number_field_tag "attendance_low_score", Settings.attendance_low_score, :in => 0..100, :class => "span1 inline"
-      %span.add-on
-        = " < OK < "
-      = number_field_tag "attendance_high_score", Settings.attendance_high_score, :in => 0..100, :class => "span1 inline"
-      %span.add-on
-        = " < Good < "
-      = number_field_tag "attendance_exceed_score", Settings.attendance_exceed_score, :in => 0..100, :class => "span1 inline"
-      %span.add-on
-        = " < Exceed"
+    .control-group
+      %label.control-label Sidebar Links
+      .controls
+        = text_area_tag "clidebar_links", Settings.clidebar_links
+        .help-text
+          %p
+            This controls the extra links for the new home pages (and soon to be everywhere). Each menu starts with a |
+            and has text and an icon from
+            = link_to "Font Awesome", "http://fortawesome.github.io/Font-Awesome/icons/"
+            separated by pipes.
+          %p
+            Each link in that menu does not start with a pipe and has text, a url and a Font Awesome icon. Like so:
+          %pre
+            :preserve
+              |Menu One|fa-music
+              First Item in the Menu|http://example.com|fa-music
+              Second Item in the Menu|http://example.info|fa-paw
+              |Menu Two|fa-pencil
+              An Item in the Second Menu|http://example.org|fa-money
+              You can have as many links as you like|http://example.net|fa-star
 
-  %h2 BKSB
-  .well
-    If you enter correct BKSB settings here, then BKSB results can be automatically imported for users. Leave these
-    blank to disable this.
-  .alert.alert-warning
-    You may need to restart Leap for these settings to take effect.
-  .control-group
-    %label.control-label BKSB URL
-    .controls
-      .input-prepend<
-        %span.add-on http://
-        = text_field_tag "bksb_url", Settings.bksb_url
-  .control-group
-    %label.control-label BKSB API Password
-    .controls
-      .input-prepend<
+
+    %h2 Attendance Import
+    .control-group
+      %label.control-label Table name
+      .controls
+        = text_field_tag "attendance_table", Settings.attendance_table
+    .control-group
+      %label.control-label Culmulative attendance column
+      .controls
+        = text_field_tag "attendance_culm_column", Settings.attendance_culm_column
+    .control-group
+      %label.control-label Weekly attendance column
+      .controls
+        =text_field_tag "attendance_week_column", Settings.attendance_week_column
+    .control-group
+      %label.control-label Week date column
+      .controls
+        =text_field_tag "attendance_date_column", Settings.attendance_date_column
+    .control-group
+      %label.control-label Course type column
+      .controls
+        =text_field_tag "attendance_type_column", Settings.attendance_type_column
+        .help-text
+          %p
+            If you put a column name in here, the attendance import will import the data from here as the course type. Overall attendances should
+            then be recorded as "overall" in this field. Extra functionality will be added, but to begin with, "maths","english" and "core" will split
+            attendances for those course types for the course-overview related to the grade tracker moodle functionality!
+    .control-group
+      %label Bad - OK - Good - Exceed attendance percentages
+      .controls
         %span.add-on
-          %i.icon-lock
-        = password_field_tag "bksb_pwd", Settings.bksb_pwd
-  .control-group
-    %label.control-label BKSB IIS Username
-    .controls
-      .input-prepend<
+          = "Bad < "
+        = number_field_tag "attendance_low_score", Settings.attendance_low_score, :in => 0..100, :class => "span1 inline"
         %span.add-on
-          %i.icon-user
-        = text_field_tag "bksb_iis_username", Settings.bksb_iis_username
-  .control-group
-    %label.control-label BKSB IIS Password
-    .controls
-      .input-prepend<
+          = " < OK < "
+        = number_field_tag "attendance_high_score", Settings.attendance_high_score, :in => 0..100, :class => "span1 inline"
         %span.add-on
-          %i.icon-lock
-        = password_field_tag "bksb_iis_pwd", Settings.bksb_iis_pwd
+          = " < Good < "
+        = number_field_tag "attendance_exceed_score", Settings.attendance_exceed_score, :in => 0..100, :class => "span1 inline"
+        %span.add-on
+          = " < Exceed"
 
-  %h2 Event Notes
-  .well
-    %p
-      Event notes are notes which can be added to any event. They can be seen by anyone who can see the parent event attached to the
-      events as children with a datestamp instead of a title.  This setting affects who can add the notes:
-      %dl
-        %dt Off
-        %dd No-one can add notes; the feature is disabled
-        %dt Staff
-        %dd Only staff users can add notes
-        %dt Students
-        %dd 
-          Staff <em>and</em> students can add notes. Remember to add <tt>event_notes</tt> to the <strong>student_create_events</strong>
-          option or the create will fail.
-  .control-group
-    %label.control-label Who can add event notes
-    .controls
-      = select_tag "event_notes", options_for_select(["off","staff","students"], Settings.event_notes)
+    %h2 BKSB
+    .well
+      If you enter correct BKSB settings here, then BKSB results can be automatically imported for users. Leave these
+      blank to disable this.
+    .alert.alert-warning
+      You may need to restart Leap for these settings to take effect.
+    .control-group
+      %label.control-label BKSB URL
+      .controls
+        .input-prepend<
+          %span.add-on http://
+          = text_field_tag "bksb_url", Settings.bksb_url
+    .control-group
+      %label.control-label BKSB API Password
+      .controls
+        .input-prepend<
+          %span.add-on
+            %i.icon-lock
+          = password_field_tag "bksb_pwd", Settings.bksb_pwd
+    .control-group
+      %label.control-label BKSB IIS Username
+      .controls
+        .input-prepend<
+          %span.add-on
+            %i.icon-user
+          = text_field_tag "bksb_iis_username", Settings.bksb_iis_username
+    .control-group
+      %label.control-label BKSB IIS Password
+      .controls
+        .input-prepend<
+          %span.add-on
+            %i.icon-lock
+          = password_field_tag "bksb_iis_pwd", Settings.bksb_iis_pwd
 
-  %h2 Moodle Integration
-  %h3 Setup
-  .well
-    Configuring integration with your Moodle adds new features such as linking to users' moodle courses from their
-    Leap home pages, and much more to come. This requires a plugin installed into Moodle. For details on how
-    to do this bit, see <a href="https://github.com/sdc/leap/tree/master/moodle-local_leapwebservices#moodle-2-web-services-for-leap">here.</a>
-  .control-group
-    %label.control-label Moodle host name
-    .controls
-      = text_field_tag "moodle_host",Settings.moodle_host
-      .help-text URL of your Moodle server, without any path but including <tt>http://</tt>
-  .control-group
-    %label.control-label Moodle path
-    .controls
-      = text_field_tag "moodle_path",Settings.moodle_path
-      .help-text Path to your Moodle on the host. Leave blank if Moodle runs at the root.
-  .control-group
-    %label.control-label Moodle token
-    .controls
-      = text_field_tag "moodle_token",Settings.moodle_token
-      .help-text The long hex token generated by Moodle during the plugin installation process.
-  .control-group
-    %label.control-label Moodle user postfix
-    .controls
-      = text_field_tag "moodle_user_postfix",Settings.moodle_user_postfix
-      .help-text If your Leap usernames need anything added to become Moodle usernames (such as the shibboleth scope) then add this here, otherwise leave blank.
-  %h3 Moodle User Home Block
-  .control-group
-    %label.control-label Open Moodle Links in New Window
-    .controls
-      = select_tag "moodle_link_target",options_for_select([["Open links in same window", "_self"], ["Open links in new window", "_blank"]], Settings.moodle_link_target)
-  %h3 Moodle Integration Features
-  .control-group
-    %label.control-label Import Moodle Grade Tracker info
-    .controls
-      = select_tag "moodle_grade_track_import", options_for_select(["on","off"], Settings.moodle_grade_track_import)
-      .help-text 
-        Don't select this unless you have the moodle gradebook integration setup from SDC - this stuff
-        will be rolled into the mainstream Leap release soon!
-  .control-group
-    %label.control-label Import Moodle Badges
-    .controls
-      = select_tag "moodle_badge_import", options_for_select(["on","off"], Settings.moodle_badge_import)
-      .help-text Moodle badges earned will be imported into Leap
-  .control-group
-    %label.control-label Moodle Badge Block Courses
-    .controls
-      = text_field_tag "moodle_badge_block_courses", Settings.moodle_badge_block_courses
-      .help-text List moodle course ids here and badges earned on those courses will be collected together on a home page block
-      
-      
+    %h2 Event Notes
+    .well
+      %p
+        Event notes are notes which can be added to any event. They can be seen by anyone who can see the parent event attached to the
+        events as children with a datestamp instead of a title.  This setting affects who can add the notes:
+        %dl
+          %dt Off
+          %dd No-one can add notes; the feature is disabled
+          %dt Staff
+          %dd Only staff users can add notes
+          %dt Students
+          %dd
+            Staff <em>and</em> students can add notes. Remember to add <tt>event_notes</tt> to the <strong>student_create_events</strong>
+            option or the create will fail.
+    .control-group
+      %label.control-label Who can add event notes
+      .controls
+        = select_tag "event_notes", options_for_select(["off","staff","students"], Settings.event_notes)
 
-  %h2 Pathways
-  .control-group
-    %label.control-label Pathway choices
-    .controls
-      = text_area_tag "pathways", Settings.pathways
-
-  %h2 Qualifications
-  %h3 Editing Quals
-  .control-group
-    %label.control-label Editable quals
-    .controls
-      = select_tag "quals_editing", options_for_select(["on","off"], Settings.quals_editing)
-  %h3 Quick Quals on Entry Input
-  .well
-    %p
-      These are comma separated lists for each of the fields in the Quick Quals on Entry input control. There's three ways of using it, you
-      can choose which with the "Selection Type" setting.
-      %dl
-        %dt Buttons
-        %dd 
-          The lists become a column of buttons below each field which, when pressed, will load that text into the input box. 
-          This is quick for bulk input and also still allows arbitrary entries.
-        %dt Select
-        %dd 
-          Standard drop-down selections. To allow arbitrary input, add an option "OTHER"; when this is selected
-          select box will be replaced with a text field          
-        %dt None
-        %dd Ignores the lists and just shows text boxes.
-      
-
-  .control-group
-    %label.control-label Selection Type
-    .controls
-      = select_tag "qqoe_select_type", options_for_select(["Select","Button","None"], Settings.qqoe_select_type)
-  .control-group
-    %label.control-label Qualification Types
-    .controls
-      = text_area_tag "qqoe_qual_type", Settings.qqoe_qual_type
-  .control-group
-    %label.control-label Awarding Bodies
-    .controls
-      = text_area_tag "qqoe_awarding_body", Settings.qqoe_awarding_body
-  .control-group
-    %label.control-label Subjects
-    .controls
-      = text_area_tag "qqoe_subject", Settings.qqoe_subject
-  .control-group
-    %label.control-label Grades
-    .controls
-      = text_area_tag "qqoe_grade", Settings.qqoe_grade
-
-  %h2 Reviews
-
-  %h3 Score Titles
-  .well Select the labels used for the four scoring categories on Reviews
-  .control-group
-    %label.control-label Quality
-    .controls
-      = text_field_tag "review_cat_quality", Settings.review_cat_quality
-  .control-group
-    %label.control-label Punctuality
-    .controls
-      = text_field_tag "review_cat_punctuality", Settings.review_cat_punctuality
-  .control-group
-    %label.control-label Attitude
-    .controls
-      = text_field_tag "review_cat_attitude", Settings.review_cat_attitude
-  .control-group
-    %label.control-label Completion
-    .controls
-      = text_field_tag "review_cat_completion", Settings.review_cat_completion
-
-  .control-group 
-    %label.control-label One-to-one Review Questions and Prompts
-    .controls
-      = text_area_tag "one_to_one_prompts", Settings.one_to_one_prompts
+    %h2 Moodle Integration
+    %h3 Setup
+    .well
+      Configuring integration with your Moodle adds new features such as linking to users' moodle courses from their
+      Leap home pages, and much more to come. This requires a plugin installed into Moodle. For details on how
+      to do this bit, see <a href="https://github.com/sdc/leap/tree/master/moodle-local_leapwebservices#moodle-2-web-services-for-leap">here.</a>
+    .control-group
+      %label.control-label Moodle host name
+      .controls
+        = text_field_tag "moodle_host",Settings.moodle_host
+        .help-text URL of your Moodle server, without any path but including <tt>http://</tt>
+    .control-group
+      %label.control-label Moodle path
+      .controls
+        = text_field_tag "moodle_path",Settings.moodle_path
+        .help-text Path to your Moodle on the host. Leave blank if Moodle runs at the root.
+    .control-group
+      %label.control-label Moodle token
+      .controls
+        = text_field_tag "moodle_token",Settings.moodle_token
+        .help-text The long hex token generated by Moodle during the plugin installation process.
+    .control-group
+      %label.control-label Moodle user postfix
+      .controls
+        = text_field_tag "moodle_user_postfix",Settings.moodle_user_postfix
+        .help-text If your Leap usernames need anything added to become Moodle usernames (such as the shibboleth scope) then add this here, otherwise leave blank.
+    %h3 Moodle User Home Block
+    .control-group
+      %label.control-label Open Moodle Links in New Window
+      .controls
+        = select_tag "moodle_link_target",options_for_select([["Open links in same window", "_self"], ["Open links in new window", "_blank"]], Settings.moodle_link_target)
+    %h3 Moodle Integration Features
+    .control-group
+      %label.control-label Import Moodle Grade Tracker info
+      .controls
+        = select_tag "moodle_grade_track_import", options_for_select(["on","off"], Settings.moodle_grade_track_import)
+        .help-text
+          Don't select this unless you have the moodle gradebook integration setup from SDC - this stuff
+          will be rolled into the mainstream Leap release soon!
+    .control-group
+      %label.control-label Import Moodle Badges
+      .controls
+        = select_tag "moodle_badge_import", options_for_select(["on","off"], Settings.moodle_badge_import)
+        .help-text Moodle badges earned will be imported into Leap
+    .control-group
+      %label.control-label Moodle Badge Block Courses
+      .controls
+        = text_field_tag "moodle_badge_block_courses", Settings.moodle_badge_block_courses
+        .help-text List moodle course ids here and badges earned on those courses will be collected together on a home page block
 
 
-  %h4 Grades
-  .control-group
-    %label.control-label Review Grades
-    .controls
-      = text_field_tag "review_grades", Settings.review_grades
-      .help-text Comma separated list of the selection of grades you can choose for reviews. May break old grades horrifically.
-  .control-group
-    %label.control-label Grade order
-    .controls
-      = select_tag "reverse_scores", options_for_select(["Forward","Reverse"],Settings.reverse_scores)
-      .help-text Show review grades in forward or reverse order
 
-  %h3 Windows
-  .control-group
-    %label.control-label Open Review Windows
-    .controls
-      = text_field_tag "review_windows", Settings.review_windows
-      .help-text Comma-seperated list of windows allowed to be selected from the dropdown when creating reviews
-  .control-group
-    %label.control-label Current Review Window
-    .controls
-      = select_tag "current_review_window", options_for_select(Settings.review_windows.split(","),Settings.current_review_window), :include_blank => "No current window"
-      .help-text 
-        Which of the review-windows to show on the group print on course pages. You'll have to save changes to the
-        list of windows before you can select one here.
+    %h2 Pathways
+    .control-group
+      %label.control-label Pathway choices
+      .controls
+        = text_area_tag "pathways", Settings.pathways
 
-  %h3 Progress Reviews
-  .control-group
-    %label.control-label Number of Progress Reviews
-    .controls
-      = number_field_tag "num_progress_reviews", Settings.num_progress_reviews, :in => 0..10, :class => "span1 inline"
-      .help-text The number of Progress Reviews conducted in a year.
-  .control-group
-    %label.control-label PARs Active
-    .controls
-      = text_field_tag "par_active", Settings.par_active
-      .help-text List of the active PAR reviews.  i.e. I,1,2,3,4,5
-  .control-group
-    %label.control-label Restrict by PARs Active
-    .controls
-      = select_tag "par_restrict_active", options_for_select(["off","on"], Settings.par_restrict_active)
-  .control-group
-    %label.control-label PAR Date Ranges
-    .controls
-      = text_field_tag "par_date_ranges", Settings.par_date_ranges, :style => "width: 100%"
-      .help-text
-        Optional date ranges for each PAR.  Format: review;start_date;end_date;acyr  Multiple ranges can be seperated by |  Example:
-        %pre
-          :preserve     
-            I;02/10/2017;13/10/2017;17/18|1;30/10/2017;17/11/2017;17/18|2;30/11/2017;26/01/2018;17/18|3;19/02/2018;09/03/2018;17/18|4;16/04/2018;04/05/2018;17/18|5;04/06/2018;29/06/2018;17/18|I;01/10/2018;12/10/2018;18/19|1;29/10/2018;23/11/2018;18/19|2;07/01/2019;25/01/2019;18/19|3;25/02/2019;15/03/2019;18/19|4;22/04/2019;10/05/2019;18/19|5;10/06/2019;28/06/2019;18/19
-  .control-group
-    %label.control-label Restrict by Date Ranges
-    .controls
-      = text_field_tag "par_restrict_date_ranges", Settings.par_restrict_date_ranges
-      .help-text Restrict PAR by Date Ranges if PAR is listed here.  i.e. I,1,2,3,4,5
-  .control-group
-    %label.control-label Edit Window
-    .controls
-      = number_field_tag "par_edit_window", Settings.par_edit_window, :in => 0..31.days, :class => "span1 inline", :style => "width: 100px"
-      .help-text Duration where review can be edited (in seconds) after last update time.  1 day is: 86400
-  .control-group
-    %label.control-label Restrict Edit By
-    .controls
-      = select_tag "par_window_type", options_for_select([nil,"Date Range","Edit Window"],Settings.par_window_type)
-      .help-text Restrict the period PARs are allowed to be edited by either PAR Date Range or by the Edit Window setting.
-  .control-group
-    %label.control-label Guidance Text Enabled
-    .controls
-      = select_tag "par_guidance_active", options_for_select(["off","on"], Settings.par_guidance_active)
-      .help-text Enable/disable the guidance text.
-  .control-group
-    %label.control-label Guidance Text
-    .controls
-      -# = text_field_tag "par_guidance", Settings.par_guidance, :style => "width: 100%"
-      = text_area_tag "par_guidance", Settings.par_guidance
-      .help-text
-        Guidance text for each par.  Individual PARs can be given their own text.  Format: list_of_par_numbers#optional_heading||text1#optional_class|text2|text3  Multiple guidance blocks can be seperated by |||  Example:
-        %pre
-          :preserve
-            1,2,4,5#Guidance:||Overall Learner/Tutor Comments|Review improvement targets from previous PAR – have these been met? How has this been evidenced?#par-guidance-previous|Improvement targets for next PAR (including any carried over from previous PAR)#par-guidance-next|||3#Guidance:||Overall Learner/Tutor Comments|Review improvement targets from previous PAR – have these been met? How has this been evidenced?#par-guidance-previous|Improvement targets for next PAR (including any carried over from previous PAR). Please focus on skills and knowledge for improvement targets#par-guidance-next
- 
+    %h2 Qualifications
+    %h3 Editing Quals
+    .control-group
+      %label.control-label Editable quals
+      .controls
+        = select_tag "quals_editing", options_for_select(["on","off"], Settings.quals_editing)
+    %h3 Quick Quals on Entry Input
+    .well
+      %p
+        These are comma separated lists for each of the fields in the Quick Quals on Entry input control. There's three ways of using it, you
+        can choose which with the "Selection Type" setting.
+        %dl
+          %dt Buttons
+          %dd
+            The lists become a column of buttons below each field which, when pressed, will load that text into the input box.
+            This is quick for bulk input and also still allows arbitrary entries.
+          %dt Select
+          %dd
+            Standard drop-down selections. To allow arbitrary input, add an option "OTHER"; when this is selected
+            select box will be replaced with a text field
+          %dt None
+          %dd Ignores the lists and just shows text boxes.
 
-  %h2 Simple Poll
-  .well
-    Select the poll to be displayed on users' home pages. If blank, the HTML from the "Home Page Advert Box" setting will be displayed.
-  .control-group
-    %label.control-label Current Simple Poll
-    .controls
-      = select_tag "current_simple_poll", options_from_collection_for_select(SimplePoll.all,:id,:question,Settings.current_simple_poll), 
-                   :include_blank => "** NO POLL **"
 
-  %h2 Unusual
-  .well
-    Some options you may not want to use. Some of them do have uses other than my own amusement. These uses may not be obvious.
-  .control-group
-    %label.control-label Anonymised pictures
-    .controls
-      = select_tag "lorem_pictures", options_for_select(["abstract","animals","business","cats","city","food","nightlife",
-                                                         "fashion","people","nature","sports","technics","transport"],
-                                                        Settings.lorem_pictures), 
-                    :include_blank => "Normal pictures"
-      .help-text
-        Leave blank to show users' photos or select a category to show random pictures from that category. I suggest "cats."
+    .control-group
+      %label.control-label Selection Type
+      .controls
+        = select_tag "qqoe_select_type", options_for_select(["Select","Button","None"], Settings.qqoe_select_type)
+    .control-group
+      %label.control-label Qualification Types
+      .controls
+        = text_area_tag "qqoe_qual_type", Settings.qqoe_qual_type
+    .control-group
+      %label.control-label Awarding Bodies
+      .controls
+        = text_area_tag "qqoe_awarding_body", Settings.qqoe_awarding_body
+    .control-group
+      %label.control-label Subjects
+      .controls
+        = text_area_tag "qqoe_subject", Settings.qqoe_subject
+    .control-group
+      %label.control-label Grades
+      .controls
+        = text_area_tag "qqoe_grade", Settings.qqoe_grade
 
-  %h2 Web Services
-  .well
-    Turning this off will mean that passing the token specified as a url parameter called "token" will automatically log
-    you in as the user specified. How this gets past your Shibboleth authentication in the first place is left as an excercise for
-    the user ;)
-  .control-group
-    %label.control-label Web Services User
-    .controls
-      = text_field_tag "ws_user", Settings.ws_user
-  .control-group
-    %label.control-label Web Services Token
-    .controls
-      = text_field_tag "ws_token", Settings.ws_token
+    %h2 Reviews
 
-  %h2 PLP Tabs
-  .well
-    Select the PLP Overview layout you would like to use.  Currently there are two, Old and Progress.
-  .control-group
-    %label.control-label PLP Overview Screen
-    .controls
-      = select_tag "plp_overview", options_for_select(["old","progress"], Settings.plp_overview)
-      .help-text
-        Use the old setting unless you're at South Devon College because this currently depends on the extra integration done there.
-  .control-group
-    %label.control-label Moodle Badges for PLP
-    .controls
-      = text_field_tag "moodle_badge_plp_courses", Settings.moodle_badge_plp_courses
-      .help-text List moodle course ids here and badges earned on those courses will be shown on the PLP Badges overview
-  .control-group
-    %label.control-label Active Tabs
-    .controls
-      = text_field_tag "plp_tabs", Settings.plp_tabs
-      .help-text List active tabs.  i.e. photos,overview,reviews,support,checklist,badges,achievement
-  .control-group
-    %label.control-label PI Groups
-    .controls
-      = text_field_tag "plp_pi_groups", Settings.plp_pi_groups
-      .help-text PI group types to show on PLP Support tab.  i.e. PIA,PIB,PII,PIP
-  .control-group
-    %label.control-label PI Group breakdown
-    .controls
-      = select_tag "plp_pi_groups_breakdown", options_for_select(["off","on"], Settings.plp_pi_groups_breakdown)
-      .help-text Enable/disable seperate PI totals on PLP Support tab for each of the groups named above.
-  .control-group
-    %label.control-label Attendance Benchmark Date Ranges
-    .controls
-      = text_field_tag "plp_attendance_bm_date_ranges", Settings.plp_attendance_bm_date_ranges, :style => "width: 100%"
-      .help-text
-        Progress tab date ranges for each attendance benchmark period.  Format: review;start_date;end_date;acyr  Multiple ranges can be seperated by |  Example:
-        %pre
-          :preserve     
-            I;03/09/2018;01/10/2018;18/19|1;03/09/2018;19/10/2018;18/19|2;29/10/2018;21/12/2018;18/19|3;08/01/2019;15/02/2019;18/19|4;25/02/2019;05/04/2019;18/19|5;23/04/2019;24/05/2019;18/19
-  .control-group
-    %label.control-label Progress Benchmark Date Ranges
-    .controls
-      = text_field_tag "plp_progress_bm_date_ranges", Settings.plp_progress_bm_date_ranges, :style => "width: 100%"
-      .help-text
-        Progress tab date ranges for each progress benchmark period.  Format: review;start_date;end_date;acyr  Multiple ranges can be seperated by |  Example:
-        %pre
-          :preserve     
-            I;01/10/2018;12/10/2018;18/19|1;13/10/2018;16/11/2018;18/19|2;17/11/2018;25/01/2019;18/19|3;26/01/2019;15/03/2019;18/19|4;16/03/2019;10/05/2019;18/19|5;11/05/2019;21/06/2019;18/19
+    %h3 Score Titles
+    .well Select the labels used for the four scoring categories on Reviews
+    .control-group
+      %label.control-label Quality
+      .controls
+        = text_field_tag "review_cat_quality", Settings.review_cat_quality
+    .control-group
+      %label.control-label Punctuality
+      .controls
+        = text_field_tag "review_cat_punctuality", Settings.review_cat_punctuality
+    .control-group
+      %label.control-label Attitude
+      .controls
+        = text_field_tag "review_cat_attitude", Settings.review_cat_attitude
+    .control-group
+      %label.control-label Completion
+      .controls
+        = text_field_tag "review_cat_completion", Settings.review_cat_completion
 
-  %h2 Induction
-  .well
-    Checklist of topics to be discussed over the induction period.
-  .control-group
-    %label.control-label Induction Questions
-    .controls
-      = text_field_tag "induction_questions", Settings.induction_questions, :style => "width: 100%"
-      .help-text
-        Seperate each induction question name with a ; (semi-colon)
-  .control-group
-    %label.control-label Induction Badges
-    .controls
-      = text_field_tag "induction_question_badges", Settings.induction_question_badges, :style => "width: 100%"
-      .help-text
-        Seperate each induction question badge list with a ; (semi-colon).  Seperate the list of badges for each question with a , (comma).  The ordering of the badge groups must match the ordering of the questions names above.
+    .control-group
+      %label.control-label One-to-one Review Questions and Prompts
+      .controls
+        = text_area_tag "one_to_one_prompts", Settings.one_to_one_prompts
 
-  %h2 e-LAAF
-  .well
-    e-LAAF link settings.
-  .control-group
-    %label.control-label e-LAAF link enabled
-    .controls
-      = text_field_tag "elaaf_link_enabled", Settings.elaaf_link_enabled
-      .help-text
-        0 is disabled, 1 is enabled
-  .control-group
-    %label.control-label e-LAAF link icon
-    .controls
-      = text_field_tag "elaaf_link_icon", Settings.elaaf_link_icon, :style => "width: 100%"
-      .help-text
-        Suggested default: fa-random
-  .control-group
-    %label.control-label e-LAAF link name
-    .controls
-      = text_field_tag "elaaf_link_name", Settings.elaaf_link_name, :style => "width: 100%"
-      .help-text
-        As it should appear on screen to the user.  Suggested default: e-LAAF
-  .control-group
-    %label.control-label e-LAAF base url
-    .controls
-      = text_field_tag "elaaf_base_url", Settings.elaaf_base_url, :style => "width: 100%"
-      .help-text
-        Fully qualified path to the e-LAAF site.  Optionally drop in the place holder defined below to have it exchanged for the Student Number.
-  .control-group
-    %label.control-label e-LAAF Student Number place holder
-    .controls
-      = text_field_tag "elaaf_student_number_place_holder", Settings.elaaf_student_number_place_holder, :style => "width: 100%"
-      .help-text
-        Optional place holder value to represent the Student Number.  Place in e-LAAF base url above.  Suggested default: @sn
 
-  %h2 Continuing Learning
-  .well
-    Continuing Learning settings.
-  .control-group
-    %label.control-label Show
-    .controls
-      = text_field_tag "continuing_learning_rev_enabled", Settings.continuing_learning_rev_enabled
-      .help-text
-        0 is disabled, 1 is enabled
-  .control-group
-    %label.control-label Colour mapping
-    .controls
-      = text_field_tag "continuing_learning_colours", Settings.continuing_learning_colours, :style => "width: 100%"
-      .help-text
-        Database to screen colour mappings.  Example: red;red|amber;amber|green;green|purple;purple
-  .control-group
-    %label.control-label Categories and icons
-    .controls
-      = text_field_tag "continuing_learning_icons", Settings.continuing_learning_icons, :style => "width: 100%"
-      .help-text
-        Example: Cat1;fa-icon1|Cat2;fa-icon2|CatX;fa-iconx
-  .control-group
-    %label.control-label Default colour
-    .controls
-      = text_field_tag "continuing_learning_default_colour", Settings.continuing_learning_default_colour, :style => "width: 100%"
-      .help-text
-        Suggested default: grey
-  .control-group
-    %label.control-label Default icon
-    .controls
-      = text_field_tag "continuing_learning_default_icon", Settings.continuing_learning_default_icon, :style => "width: 100%"
-      .help-text
-        Suggested default: fa-question
+    %h4 Grades
+    .control-group
+      %label.control-label Review Grades
+      .controls
+        = text_field_tag "review_grades", Settings.review_grades
+        .help-text Comma separated list of the selection of grades you can choose for reviews. May break old grades horrifically.
+    .control-group
+      %label.control-label Grade order
+      .controls
+        = select_tag "reverse_scores", options_for_select(["Forward","Reverse"],Settings.reverse_scores)
+        .help-text Show review grades in forward or reverse order
 
-  %h2 Network
-  .well
-    Network settings.
-  .control-group
-    %label.control-label IP address ranges
-    .controls
-      = text_field_tag "network_ip_ranges", Settings.network_ip_ranges, :style => "width: 100%"
-      .help-text
-        Define network ranges that are treated as internal.  First match is evaluated.  Format: internal_0_or_1;ip_from;ip_to;comment  Multiple ranges can be seperated by |  Example:
-        %pre
-          :preserve     
-            1;192.168.0.1;192.168.255.254;Private network Class C|1;172.16.0.1;172.31.255.254;Private network Class B|1;10.0.0.1;10.255.255.254;Private network Class A|1;127.0.0.1;127.255.255.254;localhost
+    %h3 Windows
+    .control-group
+      %label.control-label Open Review Windows
+      .controls
+        = text_field_tag "review_windows", Settings.review_windows
+        .help-text Comma-seperated list of windows allowed to be selected from the dropdown when creating reviews
+    .control-group
+      %label.control-label Current Review Window
+      .controls
+        = select_tag "current_review_window", options_for_select(Settings.review_windows.split(","),Settings.current_review_window), :include_blank => "No current window"
+        .help-text
+          Which of the review-windows to show on the group print on course pages. You'll have to save changes to the
+          list of windows before you can select one here.
 
-  %h2 Timetable Registers
-  .well
-    Optionally restrict the viewing of timetabled register events to the current academic year.  Do this by setting a threshold day/month which has to be passed before staff can view the new academic year's registers.  This is so that staff do not see registers that are still being configured for the new academic year.
-  .control-group
-    %label.control-label Threshold date
-    .controls
-      = text_field_tag "timetable_registers_threshold", Settings.timetable_registers_threshold
-      .help-text
-        Suggested default: 01/08
+    %h3 Progress Reviews
+    .control-group
+      %label.control-label Number of Progress Reviews
+      .controls
+        = number_field_tag "num_progress_reviews", Settings.num_progress_reviews, :in => 0..10, :class => "span1 inline"
+        .help-text The number of Progress Reviews conducted in a year.
+    .control-group
+      %label.control-label PARs Active
+      .controls
+        = text_field_tag "par_active", Settings.par_active
+        .help-text List of the active PAR reviews.  i.e. I,1,2,3,4,5
+    .control-group
+      %label.control-label Restrict by PARs Active
+      .controls
+        = select_tag "par_restrict_active", options_for_select(["off","on"], Settings.par_restrict_active)
+    .control-group
+      %label.control-label PAR Date Ranges
+      .controls
+        = text_field_tag "par_date_ranges", Settings.par_date_ranges, :style => "width: 100%"
+        .help-text
+          Optional date ranges for each PAR.  Format: review;start_date;end_date;acyr  Multiple ranges can be seperated by |  Example:
+          %pre
+            :preserve
+              I;02/10/2017;13/10/2017;17/18|1;30/10/2017;17/11/2017;17/18|2;30/11/2017;26/01/2018;17/18|3;19/02/2018;09/03/2018;17/18|4;16/04/2018;04/05/2018;17/18|5;04/06/2018;29/06/2018;17/18|I;01/10/2018;12/10/2018;18/19|1;29/10/2018;23/11/2018;18/19|2;07/01/2019;25/01/2019;18/19|3;25/02/2019;15/03/2019;18/19|4;22/04/2019;10/05/2019;18/19|5;10/06/2019;28/06/2019;18/19
+    .control-group
+      %label.control-label Restrict by Date Ranges
+      .controls
+        = text_field_tag "par_restrict_date_ranges", Settings.par_restrict_date_ranges
+        .help-text Restrict PAR by Date Ranges if PAR is listed here.  i.e. I,1,2,3,4,5
+    .control-group
+      %label.control-label Edit Window
+      .controls
+        = number_field_tag "par_edit_window", Settings.par_edit_window, :in => 0..31.days, :class => "span1 inline", :style => "width: 100px"
+        .help-text Duration where review can be edited (in seconds) after last update time.  1 day is: 86400
+    .control-group
+      %label.control-label Restrict Edit By
+      .controls
+        = select_tag "par_window_type", options_for_select([nil,"Date Range","Edit Window"],Settings.par_window_type)
+        .help-text Restrict the period PARs are allowed to be edited by either PAR Date Range or by the Edit Window setting.
+    .control-group
+      %label.control-label Guidance Text Enabled
+      .controls
+        = select_tag "par_guidance_active", options_for_select(["off","on"], Settings.par_guidance_active)
+        .help-text Enable/disable the guidance text.
+    .control-group
+      %label.control-label Guidance Text
+      .controls
+        -# = text_field_tag "par_guidance", Settings.par_guidance, :style => "width: 100%"
+        = text_area_tag "par_guidance", Settings.par_guidance
+        .help-text
+          Guidance text for each par.  Individual PARs can be given their own text.  Format: list_of_par_numbers#optional_heading||text1#optional_class|text2|text3  Multiple guidance blocks can be seperated by |||  Example:
+          %pre
+            :preserve
+              1,2,4,5#Guidance:||Overall Learner/Tutor Comments|Review improvement targets from previous PAR – have these been met? How has this been evidenced?#par-guidance-previous|Improvement targets for next PAR (including any carried over from previous PAR)#par-guidance-next|||3#Guidance:||Overall Learner/Tutor Comments|Review improvement targets from previous PAR – have these been met? How has this been evidenced?#par-guidance-previous|Improvement targets for next PAR (including any carried over from previous PAR). Please focus on skills and knowledge for improvement targets#par-guidance-next
 
-  %h3 Positive Intervention
-  .control-group
-    %label.control-label Intervention Types
-    .controls
-      = text_field_tag "intervention_types", Settings.intervention_types, :style => "width: 100%"
-      .help-text
-        Positive Intervention lookups.  Format: type,optional_guidance_text:category1,category2,...  Multiple groups can be seperated by ;  Example:
-        %pre
-          :preserve     
-            Pastoral:Personal Issues;Advice & Guidance:Careers & employability Advice,possible course transfer or withdrawal,Progression Guidance;Alleged Bullying:Investigation;Amber Alert Behaviour,Personal Tutor to process – select 'No' under refer.:Inappropriate work production,Academic related Conduct,Theft,Bullying,Violent or Threatening,Substance misuse,Classroom conduct & Behaviour,Damage to College Property,Other;Stage 1 Behaviour Disc,If you would like to refer to the Positive Intervention Team please select 'Yes' under 'Refer.' Learners can only be referred for one Stage 1 Behaviour Disciplinary per year.:Continuation from AAD,Inappropriate work production,Academic related Conduct,Theft,Bullying,Violent or Threatening,Substance misuse,Classroom conduct & Behaviour,Damage to College Property,Other;Stage 2 Behaviour Disc,Email your section head to action. Learners can only be referred for one Stage 2 Behaviour Disciplinary per year.:Continuation from Stage 1, Inappropriate work production,Academic related Conduct,Theft,Bullying,Violent or Threatening,Substance misuse,Classroom conduct & Behaviour,Damage to College Property,Other;Stage 3 Behaviour Disc,Email your section head and Assistant Principal to action – select 'Yes' under refer. Learners can only be referred for one Stage 3 Behaviour Disciplinary per year.:Continuation from Stage 2,Inappropriate work production,Academic related Conduct,Theft,Bullying,Violent or Threatening,Substance misuse,Classroom conduct & Behaviour,Damage to College Property,Other;Amber Alert Attendance,Personal Tutor to process – select 'No' under refer.:Erratic Attendance,Punctuality,Decreasing Attendance;Stage 1 Attendance Disc,Personal Tutor to process – select 'No' under refer.  Learners can only be referred for one Stage 1 Attendance Disciplinary per year.:Continuation from AAA,Erratic Attendance,Punctuality,Decreasing Attendance,Core Programme,Maths,English;Stage 2 Attendance Disc,Email section Head to action – select 'No' under refer. Learners can only be referred for one Stage 2 Attendance Disciplinary per year.:Continuation from Stage 1,Erratic Attendance,Punctuality,Decreasing Attendance,Core Programme,Maths,English;Stage 3 Attendance Disc,Email your section head and Assistant Principal to action. Learners can only be referred for one Stage 3 Attendance Disciplinary per year.:Continuation from Stage 2,Erratic Attendance,Punctuality,Decreasing Attendance,Core Programme,Maths,English;Stage 1 Progress Intervention,Stage 1 Red PAR rating:Core Programme,Maths,English,More than one;Stage 2 Progress Intervention,Stage 2 Red PAR rating:Core Programme,Maths,English,More than one;Stage 3 Progress Intervention,Stage 3 Red PAR rating:Core Programme,Maths,English,More than one
-  .control-group
-    %label.control-label Intervention Groups
-    .controls
-      = text_field_tag "intervention_groups", Settings.intervention_groups, :style => "width: 100%"
-      .help-text
-        Positive Intervention Groups.  Format: Group name:Group title:entry1;entry2;...  Multiple groups can be seperated by |  Example:
-        %pre
-          :preserve     
-            PII:Positive Intervention Pastoral:Pastoral;Advice & Guidance;Alleged Bullying|PIB:Positive Intervention Behaviour:Amber Alert Disciplinary;Amber Alert Behaviour;Stage 1 Behaviour Disc;Stage 2 Behaviour Disc;Stage 3 Behaviour Disc|PIA:Positive Intervention Attendance:Amber Alert Attendance;Stage 1 Attendance Disc;Stage 2 Attendance Disc;Stage 3 Attendance Disc|PIP:Positive Intervention Progress:Stage 1 Progress Intervention;Stage 2 Progress Intervention;Stage 3 Progress Intervention
 
-  %h3 Absences
-  .control-group
-    %label.control-label Absence Line Email Address
-    .controls
-      = text_field_tag "absence_line_email", Settings.absence_line_email, :style => "width: 100%"   
-      .help-text
-        Example:
-        %pre
-          :preserve
-            helpzone@southdevon.ac.uk
+    %h2 Simple Poll
+    .well
+      Select the poll to be displayed on users' home pages. If blank, the HTML from the "Home Page Advert Box" setting will be displayed.
+    .control-group
+      %label.control-label Current Simple Poll
+      .controls
+        = select_tag "current_simple_poll", options_from_collection_for_select(SimplePoll.all,:id,:question,Settings.current_simple_poll),
+                     :include_blank => "** NO POLL **"
 
-  %h3 Superuser
-  .control-group
-    %label.control-label Send Emails
-    .controls
-      = select_tag "su_send_emails", options_for_select(["off","on"], Settings.su_send_emails)
-      .help-text Enable/disable sending of Emails.  Set to off when testing as a Superuser.
+    %h2 Unusual
+    .well
+      Some options you may not want to use. Some of them do have uses other than my own amusement. These uses may not be obvious.
+    .control-group
+      %label.control-label Anonymised pictures
+      .controls
+        = select_tag "lorem_pictures", options_for_select(["abstract","animals","business","cats","city","food","nightlife",
+                                                           "fashion","people","nature","sports","technics","transport"],
+                                                          Settings.lorem_pictures),
+                      :include_blank => "Normal pictures"
+        .help-text
+          Leave blank to show users' photos or select a category to show random pictures from that category. I suggest "cats."
+
+    %h2 Web Services
+    .well
+      Turning this off will mean that passing the token specified as a url parameter called "token" will automatically log
+      you in as the user specified. How this gets past your Shibboleth authentication in the first place is left as an excercise for
+      the user ;)
+    .control-group
+      %label.control-label Web Services User
+      .controls
+        = text_field_tag "ws_user", Settings.ws_user
+    .control-group
+      %label.control-label Web Services Token
+      .controls
+        = text_field_tag "ws_token", Settings.ws_token
+
+    %h2 PLP Tabs
+    .well
+      Select the PLP Overview layout you would like to use.  Currently there are two, Old and Progress.
+    .control-group
+      %label.control-label PLP Overview Screen
+      .controls
+        = select_tag "plp_overview", options_for_select(["old","progress"], Settings.plp_overview)
+        .help-text
+          Use the old setting unless you're at South Devon College because this currently depends on the extra integration done there.
+    .control-group
+      %label.control-label Moodle Badges for PLP
+      .controls
+        = text_field_tag "moodle_badge_plp_courses", Settings.moodle_badge_plp_courses
+        .help-text List moodle course ids here and badges earned on those courses will be shown on the PLP Badges overview
+    .control-group
+      %label.control-label Active Tabs
+      .controls
+        = text_field_tag "plp_tabs", Settings.plp_tabs
+        .help-text List active tabs.  i.e. photos,overview,reviews,support,checklist,badges,achievement
+    .control-group
+      %label.control-label PI Groups
+      .controls
+        = text_field_tag "plp_pi_groups", Settings.plp_pi_groups
+        .help-text PI group types to show on PLP Support tab.  i.e. PIA,PIB,PII,PIP
+    .control-group
+      %label.control-label PI Group breakdown
+      .controls
+        = select_tag "plp_pi_groups_breakdown", options_for_select(["off","on"], Settings.plp_pi_groups_breakdown)
+        .help-text Enable/disable seperate PI totals on PLP Support tab for each of the groups named above.
+    .control-group
+      %label.control-label Attendance Benchmark Date Ranges
+      .controls
+        = text_field_tag "plp_attendance_bm_date_ranges", Settings.plp_attendance_bm_date_ranges, :style => "width: 100%"
+        .help-text
+          Progress tab date ranges for each attendance benchmark period.  Format: review;start_date;end_date;acyr  Multiple ranges can be seperated by |  Example:
+          %pre
+            :preserve
+              I;03/09/2018;01/10/2018;18/19|1;03/09/2018;19/10/2018;18/19|2;29/10/2018;21/12/2018;18/19|3;08/01/2019;15/02/2019;18/19|4;25/02/2019;05/04/2019;18/19|5;23/04/2019;24/05/2019;18/19
+    .control-group
+      %label.control-label Progress Benchmark Date Ranges
+      .controls
+        = text_field_tag "plp_progress_bm_date_ranges", Settings.plp_progress_bm_date_ranges, :style => "width: 100%"
+        .help-text
+          Progress tab date ranges for each progress benchmark period.  Format: review;start_date;end_date;acyr  Multiple ranges can be seperated by |  Example:
+          %pre
+            :preserve
+              I;01/10/2018;12/10/2018;18/19|1;13/10/2018;16/11/2018;18/19|2;17/11/2018;25/01/2019;18/19|3;26/01/2019;15/03/2019;18/19|4;16/03/2019;10/05/2019;18/19|5;11/05/2019;21/06/2019;18/19
+
+    %h2 Induction
+    .well
+      Checklist of topics to be discussed over the induction period.
+    .control-group
+      %label.control-label Induction Questions
+      .controls
+        = text_field_tag "induction_questions", Settings.induction_questions, :style => "width: 100%"
+        .help-text
+          Seperate each induction question name with a ; (semi-colon)
+    .control-group
+      %label.control-label Induction Badges
+      .controls
+        = text_field_tag "induction_question_badges", Settings.induction_question_badges, :style => "width: 100%"
+        .help-text
+          Seperate each induction question badge list with a ; (semi-colon).  Seperate the list of badges for each question with a , (comma).  The ordering of the badge groups must match the ordering of the questions names above.
+
+    %h2 e-LAAF
+    .well
+      e-LAAF link settings.
+    .control-group
+      %label.control-label e-LAAF link enabled
+      .controls
+        = text_field_tag "elaaf_link_enabled", Settings.elaaf_link_enabled
+        .help-text
+          0 is disabled, 1 is enabled
+    .control-group
+      %label.control-label e-LAAF link icon
+      .controls
+        = text_field_tag "elaaf_link_icon", Settings.elaaf_link_icon, :style => "width: 100%"
+        .help-text
+          Suggested default: fa-random
+    .control-group
+      %label.control-label e-LAAF link name
+      .controls
+        = text_field_tag "elaaf_link_name", Settings.elaaf_link_name, :style => "width: 100%"
+        .help-text
+          As it should appear on screen to the user.  Suggested default: e-LAAF
+    .control-group
+      %label.control-label e-LAAF base url
+      .controls
+        = text_field_tag "elaaf_base_url", Settings.elaaf_base_url, :style => "width: 100%"
+        .help-text
+          Fully qualified path to the e-LAAF site.  Optionally drop in the place holder defined below to have it exchanged for the Student Number.
+    .control-group
+      %label.control-label e-LAAF Student Number place holder
+      .controls
+        = text_field_tag "elaaf_student_number_place_holder", Settings.elaaf_student_number_place_holder, :style => "width: 100%"
+        .help-text
+          Optional place holder value to represent the Student Number.  Place in e-LAAF base url above.  Suggested default: @sn
+
+    %h2 Continuing Learning
+    .well
+      Continuing Learning settings.
+    .control-group
+      %label.control-label Show
+      .controls
+        = text_field_tag "continuing_learning_rev_enabled", Settings.continuing_learning_rev_enabled
+        .help-text
+          0 is disabled, 1 is enabled
+    .control-group
+      %label.control-label Colour mapping
+      .controls
+        = text_field_tag "continuing_learning_colours", Settings.continuing_learning_colours, :style => "width: 100%"
+        .help-text
+          Database to screen colour mappings.  Example: red;red|amber;amber|green;green|purple;purple
+    .control-group
+      %label.control-label Categories and icons
+      .controls
+        = text_field_tag "continuing_learning_icons", Settings.continuing_learning_icons, :style => "width: 100%"
+        .help-text
+          Example: Cat1;fa-icon1|Cat2;fa-icon2|CatX;fa-iconx
+    .control-group
+      %label.control-label Default colour
+      .controls
+        = text_field_tag "continuing_learning_default_colour", Settings.continuing_learning_default_colour, :style => "width: 100%"
+        .help-text
+          Suggested default: grey
+    .control-group
+      %label.control-label Default icon
+      .controls
+        = text_field_tag "continuing_learning_default_icon", Settings.continuing_learning_default_icon, :style => "width: 100%"
+        .help-text
+          Suggested default: fa-question
+
+    %h2 Network
+    .well
+      Network settings.
+    .control-group
+      %label.control-label IP address ranges
+      .controls
+        = text_field_tag "network_ip_ranges", Settings.network_ip_ranges, :style => "width: 100%"
+        .help-text
+          Define network ranges that are treated as internal.  First match is evaluated.  Format: internal_0_or_1;ip_from;ip_to;comment  Multiple ranges can be seperated by |  Example:
+          %pre
+            :preserve
+              1;192.168.0.1;192.168.255.254;Private network Class C|1;172.16.0.1;172.31.255.254;Private network Class B|1;10.0.0.1;10.255.255.254;Private network Class A|1;127.0.0.1;127.255.255.254;localhost
+
+    %h2 Timetable Registers
+    .well
+      Optionally restrict the viewing of timetabled register events to the current academic year.  Do this by setting a threshold day/month which has to be passed before staff can view the new academic year's registers.  This is so that staff do not see registers that are still being configured for the new academic year.
+    .control-group
+      %label.control-label Threshold date
+      .controls
+        = text_field_tag "timetable_registers_threshold", Settings.timetable_registers_threshold
+        .help-text
+          Suggested default: 01/08
+
+    %h3 Positive Intervention
+    .control-group
+      %label.control-label Intervention Types
+      .controls
+        = text_field_tag "intervention_types", Settings.intervention_types, :style => "width: 100%"
+        .help-text
+          Positive Intervention lookups.  Format: type,optional_guidance_text:category1,category2,...  Multiple groups can be seperated by ;  Example:
+          %pre
+            :preserve
+              Pastoral:Personal Issues;Advice & Guidance:Careers & employability Advice,possible course transfer or withdrawal,Progression Guidance;Alleged Bullying:Investigation;Amber Alert Behaviour,Personal Tutor to process – select 'No' under refer.:Inappropriate work production,Academic related Conduct,Theft,Bullying,Violent or Threatening,Substance misuse,Classroom conduct & Behaviour,Damage to College Property,Other;Stage 1 Behaviour Disc,If you would like to refer to the Positive Intervention Team please select 'Yes' under 'Refer.' Learners can only be referred for one Stage 1 Behaviour Disciplinary per year.:Continuation from AAD,Inappropriate work production,Academic related Conduct,Theft,Bullying,Violent or Threatening,Substance misuse,Classroom conduct & Behaviour,Damage to College Property,Other;Stage 2 Behaviour Disc,Email your section head to action. Learners can only be referred for one Stage 2 Behaviour Disciplinary per year.:Continuation from Stage 1, Inappropriate work production,Academic related Conduct,Theft,Bullying,Violent or Threatening,Substance misuse,Classroom conduct & Behaviour,Damage to College Property,Other;Stage 3 Behaviour Disc,Email your section head and Assistant Principal to action – select 'Yes' under refer. Learners can only be referred for one Stage 3 Behaviour Disciplinary per year.:Continuation from Stage 2,Inappropriate work production,Academic related Conduct,Theft,Bullying,Violent or Threatening,Substance misuse,Classroom conduct & Behaviour,Damage to College Property,Other;Amber Alert Attendance,Personal Tutor to process – select 'No' under refer.:Erratic Attendance,Punctuality,Decreasing Attendance;Stage 1 Attendance Disc,Personal Tutor to process – select 'No' under refer.  Learners can only be referred for one Stage 1 Attendance Disciplinary per year.:Continuation from AAA,Erratic Attendance,Punctuality,Decreasing Attendance,Core Programme,Maths,English;Stage 2 Attendance Disc,Email section Head to action – select 'No' under refer. Learners can only be referred for one Stage 2 Attendance Disciplinary per year.:Continuation from Stage 1,Erratic Attendance,Punctuality,Decreasing Attendance,Core Programme,Maths,English;Stage 3 Attendance Disc,Email your section head and Assistant Principal to action. Learners can only be referred for one Stage 3 Attendance Disciplinary per year.:Continuation from Stage 2,Erratic Attendance,Punctuality,Decreasing Attendance,Core Programme,Maths,English;Stage 1 Progress Intervention,Stage 1 Red PAR rating:Core Programme,Maths,English,More than one;Stage 2 Progress Intervention,Stage 2 Red PAR rating:Core Programme,Maths,English,More than one;Stage 3 Progress Intervention,Stage 3 Red PAR rating:Core Programme,Maths,English,More than one
+    .control-group
+      %label.control-label Intervention Groups
+      .controls
+        = text_field_tag "intervention_groups", Settings.intervention_groups, :style => "width: 100%"
+        .help-text
+          Positive Intervention Groups.  Format: Group name:Group title:entry1;entry2;...  Multiple groups can be seperated by |  Example:
+          %pre
+            :preserve
+              PII:Positive Intervention Pastoral:Pastoral;Advice & Guidance;Alleged Bullying|PIB:Positive Intervention Behaviour:Amber Alert Disciplinary;Amber Alert Behaviour;Stage 1 Behaviour Disc;Stage 2 Behaviour Disc;Stage 3 Behaviour Disc|PIA:Positive Intervention Attendance:Amber Alert Attendance;Stage 1 Attendance Disc;Stage 2 Attendance Disc;Stage 3 Attendance Disc|PIP:Positive Intervention Progress:Stage 1 Progress Intervention;Stage 2 Progress Intervention;Stage 3 Progress Intervention
+
+    %h3 Absences
+    .control-group
+      %label.control-label Absence Line Email Address
+      .controls
+        = text_field_tag "absence_line_email", Settings.absence_line_email, :style => "width: 100%"
+        .help-text
+          Example:
+          %pre
+            :preserve
+              helpzone@southdevon.ac.uk
+
+
+  %h1 Superuser!
+  .superuser-settings
+
+    %h3 Absences
+    .control-group
+      %label.control-label Send Emails
+      .controls
+        = select_tag "su_send_emails", options_for_select(["off","on"], Settings.su_send_emails)
+        .help-text Enable/disable sending of Emails.  Set to off when testing as a Superuser.
+
+
+  %h1 Developer!
+  .developer-settings
+
+    %h3 Absences
+    .control-group
+      %label.control-label Send to test Email address
+      .controls
+        = select_tag "dev_send_to_test_email", options_for_select(["off","on"], Settings.dev_send_to_test_email)
+        .help-text Enable/disable sending of Emails to test email address instead of real email recipient.  Set to on when testing as a Developer.
+
+    .control-group
+      %label.control-label Test Email address
+      .controls
+        = text_field_tag "dev_test_email", Settings.dev_test_email, :style => "width: 100%"
+        .help-text
+          Example:
+          %pre
+            :preserve
+              webteam@southdevon.ac.uk
+
 
   %h1 Old Settings!
   .old-settings
@@ -621,7 +650,7 @@
                                  "continuing_learning_rev_enabled","continuing_learning_colours","continuing_learning_icons","continuing_learning_default_colour","continuing_learning_default_icon",
                                  "network_ip_ranges","timetable_registers_threshold","par_active","plp_tabs","par_date_ranges","par_edit_window","par_window_type","par_restrict_active","par_restrict_date_ranges",
                                  "intervention_types","intervention_groups","plp_pi_groups","plp_pi_groups_breakdown","par_guidance_active","par_guidance","absence_line_email","plp_attendance_bm_date_ranges","plp_progress_bm_date_ranges",
-                                 "su_send_emails"]
+                                 "su_send_emails","dev_send_to_test_email","dev_test_email"]
     - @settings2.each do |setting|
       .control-group
         %label.control-label{:for => setting}= setting.humanize
