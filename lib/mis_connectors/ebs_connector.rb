@@ -308,7 +308,18 @@ module MisPerson
 
   def import_absences
     Ebs::Absence.where(person_id: mis_id).load.each do |a|
-      next if absences.detect{|ab| a.created_at.change(usec: 0) == ab.created_at.change(usec: 0)}
+      next if absences.detect{|ab| ab.created_at.change(usec: 0) == a.created_at.change(usec: 0)}
+      next if absences.detect{|ab| # also stop duplicating older formatted absence where created_at (Leap) was set to notified_at (EBS) and notificed_at (Leap) was null
+                                  ab.body == a.reason_extra and
+                                  ab.category == a.reason and
+                                  ab.usage_code == a.usage_code and
+                                  ab.created_at.change(usec: 0) == a.notified_at.change(usec: 0) and
+                                  ab.lessons_missed == a.absence_slots_count and
+                                  ab.contact_category == a.contact and
+                                  ab.notified_at.nil? and
+                                  ab.start_date.nil? and
+                                  ab.end_date.nil?
+                              }
       next unless a.notified_at && a.created_at
       register_event_details_slot_ids = []
       register_event_details_slot_dates = []
