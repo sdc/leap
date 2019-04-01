@@ -3,7 +3,8 @@
     .row
       = image_tag person_url(topic.mis_id, :format => :jpg), :id => "person-photo", :class => "img-responsive col-xs-5"
       .col-xs-7.person-info
-        %h4= topic.name
+        -# %h4= topic.name
+        %h4{:title => ( topic.last_active.present? && ( @user.superuser? or Rails.env == "development") ) ? "Last accessed: #{topic.last_active.try(:strftime, "%-d %B %Y")}" : ""}= topic.name
         %h4
           %small= topic.mis_id
         - if @affiliation == "staff"
