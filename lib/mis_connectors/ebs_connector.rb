@@ -69,7 +69,7 @@ module MisPerson
       if ( ep )
         @person = Person.find_by(mis_id: ep.id) || Person.new(:mis_id => ep.id)
         #@person.update_attribute(:tutor, ep.tutor ? Person.get(ep.tutor).id : nil)
-        if @person.new_record? or ep.updated_date.nil? or (@person.updated_at < ep.updated_date)
+        if @person.new_record? or (@person.updated_at < ( ep.updated_date || ep.created_date ) )
           @person.update_attributes(
             :forename      => ep.known_as.blank? ? ep.forename : ep.known_as,
             :surname       => ep.surname,
@@ -104,7 +104,6 @@ module MisPerson
         @person.import_attendances if options[:attendances]
         @person.import_quals if options[:quals]
         @person.import_absences if options[:absences]
-        # @person.import_absences
         @person.import_support_plps if options[:support_plps]
         return @person
       else
