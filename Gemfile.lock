@@ -145,7 +145,7 @@ GEM
       activesupport (= 4.0.13)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (12.3.1)
+    rake (13.0.1)
     ref (2.0.0)
     ruby-oci8 (2.2.5.1)
     scoped_search (3.3.0)
