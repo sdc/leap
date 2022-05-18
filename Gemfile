@@ -15,7 +15,7 @@ gem 'rails_autolink'
 # gem 'uglifier', '>= 1.3.0'
 gem 'uglifier'
 gem 'rails-latex'
-gem 'nokogiri', "~> 1.8.1"
+gem 'nokogiri', "~> 1.13.5"
 gem 'coffee-filter', "0.1.3"
 gem 'yui-compressor'
 gem 'icalendar'
