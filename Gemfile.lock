@@ -174,7 +174,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (1.4.1)
-    tzinfo (0.3.54)
+    tzinfo (0.3.61)
     uglifier (4.1.18)
       execjs (>= 0.3.0, < 3)
     whenever (0.10.0)
